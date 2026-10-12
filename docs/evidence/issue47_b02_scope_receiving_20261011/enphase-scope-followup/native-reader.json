@@ -1,0 +1,533 @@
+{
+  "filing": {
+    "form": "10-K",
+    "reportDate": "2024-12-31",
+    "filingDate": "2025-02-10",
+    "accessionNumber": "0001463101-25-000024",
+    "primaryDocument": "enph-20241231.htm"
+  },
+  "period": {
+    "fiscal_year": 2024,
+    "period_start": "2024-01-01",
+    "period_end": "2024-12-31"
+  },
+  "source_reference": {
+    "record_type": "SOURCE_REFERENCE",
+    "source_reference_id": "sha256:a1606a8a8171ba34d8979b41e1f129d0684cd87f2d9eacb9c1e0c0b379c83b7a",
+    "raw_asset_id": "sha256:275bc6e2e21fc31a5eab74232ee05f3572c1f36573608d5bd84e3e6eaec79bfe",
+    "company_id": "enphase_energy",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310125000024/enph-20241231.htm",
+    "accession": "0001463101-25-000024",
+    "document_name": "enph-20241231.htm",
+    "source_role": "target_primary",
+    "request_attempt_id": "request:attempt:d25e7d5d2b939217145df533934cc451ef3334d042fd6141ae577f23dee912ea"
+  },
+  "current_native_reports": [
+    {
+      "concept": "us-gaap:CostOfRevenue",
+      "value": "701245000",
+      "unit": "USD",
+      "period_start": "2024-01-01",
+      "period_end": "2024-12-31",
+      "decimals": "-3",
+      "ordinal": 160,
+      "context_ref": "c-1",
+      "context": {
+        "context_ref": "c-1",
+        "dimensions": {},
+        "entity_identifier": "0001463101",
+        "period_end": "2024-12-31",
+        "period_start": "2024-01-01",
+        "typed_dimension_count": 0
+      },
+      "context_proof": {
+        "context_ref": "c-1",
+        "identifiers": [
+          {
+            "value": "0001463101",
+            "scheme": "http://www.sec.gov/CIK"
+          }
+        ],
+        "period_fields": [
+          {
+            "kind": "startdate",
+            "value": "2024-01-01"
+          },
+          {
+            "kind": "enddate",
+            "value": "2024-12-31"
+          }
+        ],
+        "dimensions": [],
+        "typed_dimension_count": 0
+      },
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:a1606a8a8171ba34d8979b41e1f129d0684cd87f2d9eacb9c1e0c0b379c83b7a",
+        "raw_asset_id": "sha256:275bc6e2e21fc31a5eab74232ee05f3572c1f36573608d5bd84e3e6eaec79bfe",
+        "company_id": "enphase_energy",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310125000024/enph-20241231.htm",
+        "accession": "0001463101-25-000024",
+        "document_name": "enph-20241231.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:d25e7d5d2b939217145df533934cc451ef3334d042fd6141ae577f23dee912ea"
+      }
+    },
+    {
+      "concept": "us-gaap:GrossProfit",
+      "value": "629138000",
+      "unit": "USD",
+      "period_start": "2024-01-01",
+      "period_end": "2024-12-31",
+      "decimals": "-3",
+      "ordinal": 163,
+      "context_ref": "c-1",
+      "context": {
+        "context_ref": "c-1",
+        "dimensions": {},
+        "entity_identifier": "0001463101",
+        "period_end": "2024-12-31",
+        "period_start": "2024-01-01",
+        "typed_dimension_count": 0
+      },
+      "context_proof": {
+        "context_ref": "c-1",
+        "identifiers": [
+          {
+            "value": "0001463101",
+            "scheme": "http://www.sec.gov/CIK"
+          }
+        ],
+        "period_fields": [
+          {
+            "kind": "startdate",
+            "value": "2024-01-01"
+          },
+          {
+            "kind": "enddate",
+            "value": "2024-12-31"
+          }
+        ],
+        "dimensions": [],
+        "typed_dimension_count": 0
+      },
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:a1606a8a8171ba34d8979b41e1f129d0684cd87f2d9eacb9c1e0c0b379c83b7a",
+        "raw_asset_id": "sha256:275bc6e2e21fc31a5eab74232ee05f3572c1f36573608d5bd84e3e6eaec79bfe",
+        "company_id": "enphase_energy",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310125000024/enph-20241231.htm",
+        "accession": "0001463101-25-000024",
+        "document_name": "enph-20241231.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:d25e7d5d2b939217145df533934cc451ef3334d042fd6141ae577f23dee912ea"
+      }
+    },
+    {
+      "concept": "us-gaap:OperatingIncomeLoss",
+      "value": "77292000",
+      "unit": "USD",
+      "period_start": "2024-01-01",
+      "period_end": "2024-12-31",
+      "decimals": "-3",
+      "ordinal": 181,
+      "context_ref": "c-1",
+      "context": {
+        "context_ref": "c-1",
+        "dimensions": {},
+        "entity_identifier": "0001463101",
+        "period_end": "2024-12-31",
+        "period_start": "2024-01-01",
+        "typed_dimension_count": 0
+      },
+      "context_proof": {
+        "context_ref": "c-1",
+        "identifiers": [
+          {
+            "value": "0001463101",
+            "scheme": "http://www.sec.gov/CIK"
+          }
+        ],
+        "period_fields": [
+          {
+            "kind": "startdate",
+            "value": "2024-01-01"
+          },
+          {
+            "kind": "enddate",
+            "value": "2024-12-31"
+          }
+        ],
+        "dimensions": [],
+        "typed_dimension_count": 0
+      },
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:a1606a8a8171ba34d8979b41e1f129d0684cd87f2d9eacb9c1e0c0b379c83b7a",
+        "raw_asset_id": "sha256:275bc6e2e21fc31a5eab74232ee05f3572c1f36573608d5bd84e3e6eaec79bfe",
+        "company_id": "enphase_energy",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310125000024/enph-20241231.htm",
+        "accession": "0001463101-25-000024",
+        "document_name": "enph-20241231.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:d25e7d5d2b939217145df533934cc451ef3334d042fd6141ae577f23dee912ea"
+      }
+    },
+    {
+      "concept": "us-gaap:NetIncomeLoss",
+      "value": "102658000",
+      "unit": "USD",
+      "period_start": "2024-01-01",
+      "period_end": "2024-12-31",
+      "decimals": "-3",
+      "ordinal": 202,
+      "context_ref": "c-1",
+      "context": {
+        "context_ref": "c-1",
+        "dimensions": {},
+        "entity_identifier": "0001463101",
+        "period_end": "2024-12-31",
+        "period_start": "2024-01-01",
+        "typed_dimension_count": 0
+      },
+      "context_proof": {
+        "context_ref": "c-1",
+        "identifiers": [
+          {
+            "value": "0001463101",
+            "scheme": "http://www.sec.gov/CIK"
+          }
+        ],
+        "period_fields": [
+          {
+            "kind": "startdate",
+            "value": "2024-01-01"
+          },
+          {
+            "kind": "enddate",
+            "value": "2024-12-31"
+          }
+        ],
+        "dimensions": [],
+        "typed_dimension_count": 0
+      },
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:a1606a8a8171ba34d8979b41e1f129d0684cd87f2d9eacb9c1e0c0b379c83b7a",
+        "raw_asset_id": "sha256:275bc6e2e21fc31a5eab74232ee05f3572c1f36573608d5bd84e3e6eaec79bfe",
+        "company_id": "enphase_energy",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310125000024/enph-20241231.htm",
+        "accession": "0001463101-25-000024",
+        "document_name": "enph-20241231.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:d25e7d5d2b939217145df533934cc451ef3334d042fd6141ae577f23dee912ea"
+      }
+    },
+    {
+      "concept": "us-gaap:NetIncomeLoss",
+      "value": "102658000",
+      "unit": "USD",
+      "period_start": "2024-01-01",
+      "period_end": "2024-12-31",
+      "decimals": "-3",
+      "ordinal": 217,
+      "context_ref": "c-1",
+      "context": {
+        "context_ref": "c-1",
+        "dimensions": {},
+        "entity_identifier": "0001463101",
+        "period_end": "2024-12-31",
+        "period_start": "2024-01-01",
+        "typed_dimension_count": 0
+      },
+      "context_proof": {
+        "context_ref": "c-1",
+        "identifiers": [
+          {
+            "value": "0001463101",
+            "scheme": "http://www.sec.gov/CIK"
+          }
+        ],
+        "period_fields": [
+          {
+            "kind": "startdate",
+            "value": "2024-01-01"
+          },
+          {
+            "kind": "enddate",
+            "value": "2024-12-31"
+          }
+        ],
+        "dimensions": [],
+        "typed_dimension_count": 0
+      },
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:a1606a8a8171ba34d8979b41e1f129d0684cd87f2d9eacb9c1e0c0b379c83b7a",
+        "raw_asset_id": "sha256:275bc6e2e21fc31a5eab74232ee05f3572c1f36573608d5bd84e3e6eaec79bfe",
+        "company_id": "enphase_energy",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310125000024/enph-20241231.htm",
+        "accession": "0001463101-25-000024",
+        "document_name": "enph-20241231.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:d25e7d5d2b939217145df533934cc451ef3334d042fd6141ae577f23dee912ea"
+      }
+    },
+    {
+      "concept": "us-gaap:NetIncomeLoss",
+      "value": "102658000",
+      "unit": "USD",
+      "period_start": "2024-01-01",
+      "period_end": "2024-12-31",
+      "decimals": "-3",
+      "ordinal": 298,
+      "context_ref": "c-1",
+      "context": {
+        "context_ref": "c-1",
+        "dimensions": {},
+        "entity_identifier": "0001463101",
+        "period_end": "2024-12-31",
+        "period_start": "2024-01-01",
+        "typed_dimension_count": 0
+      },
+      "context_proof": {
+        "context_ref": "c-1",
+        "identifiers": [
+          {
+            "value": "0001463101",
+            "scheme": "http://www.sec.gov/CIK"
+          }
+        ],
+        "period_fields": [
+          {
+            "kind": "startdate",
+            "value": "2024-01-01"
+          },
+          {
+            "kind": "enddate",
+            "value": "2024-12-31"
+          }
+        ],
+        "dimensions": [],
+        "typed_dimension_count": 0
+      },
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:a1606a8a8171ba34d8979b41e1f129d0684cd87f2d9eacb9c1e0c0b379c83b7a",
+        "raw_asset_id": "sha256:275bc6e2e21fc31a5eab74232ee05f3572c1f36573608d5bd84e3e6eaec79bfe",
+        "company_id": "enphase_energy",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310125000024/enph-20241231.htm",
+        "accession": "0001463101-25-000024",
+        "document_name": "enph-20241231.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:d25e7d5d2b939217145df533934cc451ef3334d042fd6141ae577f23dee912ea"
+      }
+    },
+    {
+      "concept": "us-gaap:NetIncomeLoss",
+      "value": "102658000",
+      "unit": "USD",
+      "period_start": "2024-01-01",
+      "period_end": "2024-12-31",
+      "decimals": "-3",
+      "ordinal": 314,
+      "context_ref": "c-1",
+      "context": {
+        "context_ref": "c-1",
+        "dimensions": {},
+        "entity_identifier": "0001463101",
+        "period_end": "2024-12-31",
+        "period_start": "2024-01-01",
+        "typed_dimension_count": 0
+      },
+      "context_proof": {
+        "context_ref": "c-1",
+        "identifiers": [
+          {
+            "value": "0001463101",
+            "scheme": "http://www.sec.gov/CIK"
+          }
+        ],
+        "period_fields": [
+          {
+            "kind": "startdate",
+            "value": "2024-01-01"
+          },
+          {
+            "kind": "enddate",
+            "value": "2024-12-31"
+          }
+        ],
+        "dimensions": [],
+        "typed_dimension_count": 0
+      },
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:a1606a8a8171ba34d8979b41e1f129d0684cd87f2d9eacb9c1e0c0b379c83b7a",
+        "raw_asset_id": "sha256:275bc6e2e21fc31a5eab74232ee05f3572c1f36573608d5bd84e3e6eaec79bfe",
+        "company_id": "enphase_energy",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310125000024/enph-20241231.htm",
+        "accession": "0001463101-25-000024",
+        "document_name": "enph-20241231.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:d25e7d5d2b939217145df533934cc451ef3334d042fd6141ae577f23dee912ea"
+      }
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "value": "1330383000",
+      "unit": "USD",
+      "period_start": "2024-01-01",
+      "period_end": "2024-12-31",
+      "decimals": "-3",
+      "ordinal": 543,
+      "context_ref": "c-1",
+      "context": {
+        "context_ref": "c-1",
+        "dimensions": {},
+        "entity_identifier": "0001463101",
+        "period_end": "2024-12-31",
+        "period_start": "2024-01-01",
+        "typed_dimension_count": 0
+      },
+      "context_proof": {
+        "context_ref": "c-1",
+        "identifiers": [
+          {
+            "value": "0001463101",
+            "scheme": "http://www.sec.gov/CIK"
+          }
+        ],
+        "period_fields": [
+          {
+            "kind": "startdate",
+            "value": "2024-01-01"
+          },
+          {
+            "kind": "enddate",
+            "value": "2024-12-31"
+          }
+        ],
+        "dimensions": [],
+        "typed_dimension_count": 0
+      },
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:a1606a8a8171ba34d8979b41e1f129d0684cd87f2d9eacb9c1e0c0b379c83b7a",
+        "raw_asset_id": "sha256:275bc6e2e21fc31a5eab74232ee05f3572c1f36573608d5bd84e3e6eaec79bfe",
+        "company_id": "enphase_energy",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310125000024/enph-20241231.htm",
+        "accession": "0001463101-25-000024",
+        "document_name": "enph-20241231.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:d25e7d5d2b939217145df533934cc451ef3334d042fd6141ae577f23dee912ea"
+      }
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "value": "1330383000",
+      "unit": "USD",
+      "period_start": "2024-01-01",
+      "period_end": "2024-12-31",
+      "decimals": "-3",
+      "ordinal": 552,
+      "context_ref": "c-1",
+      "context": {
+        "context_ref": "c-1",
+        "dimensions": {},
+        "entity_identifier": "0001463101",
+        "period_end": "2024-12-31",
+        "period_start": "2024-01-01",
+        "typed_dimension_count": 0
+      },
+      "context_proof": {
+        "context_ref": "c-1",
+        "identifiers": [
+          {
+            "value": "0001463101",
+            "scheme": "http://www.sec.gov/CIK"
+          }
+        ],
+        "period_fields": [
+          {
+            "kind": "startdate",
+            "value": "2024-01-01"
+          },
+          {
+            "kind": "enddate",
+            "value": "2024-12-31"
+          }
+        ],
+        "dimensions": [],
+        "typed_dimension_count": 0
+      },
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:a1606a8a8171ba34d8979b41e1f129d0684cd87f2d9eacb9c1e0c0b379c83b7a",
+        "raw_asset_id": "sha256:275bc6e2e21fc31a5eab74232ee05f3572c1f36573608d5bd84e3e6eaec79bfe",
+        "company_id": "enphase_energy",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310125000024/enph-20241231.htm",
+        "accession": "0001463101-25-000024",
+        "document_name": "enph-20241231.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:d25e7d5d2b939217145df533934cc451ef3334d042fd6141ae577f23dee912ea"
+      }
+    },
+    {
+      "concept": "us-gaap:NetIncomeLoss",
+      "value": "102658000",
+      "unit": "USD",
+      "period_start": "2024-01-01",
+      "period_end": "2024-12-31",
+      "decimals": "-3",
+      "ordinal": 1709,
+      "context_ref": "c-1",
+      "context": {
+        "context_ref": "c-1",
+        "dimensions": {},
+        "entity_identifier": "0001463101",
+        "period_end": "2024-12-31",
+        "period_start": "2024-01-01",
+        "typed_dimension_count": 0
+      },
+      "context_proof": {
+        "context_ref": "c-1",
+        "identifiers": [
+          {
+            "value": "0001463101",
+            "scheme": "http://www.sec.gov/CIK"
+          }
+        ],
+        "period_fields": [
+          {
+            "kind": "startdate",
+            "value": "2024-01-01"
+          },
+          {
+            "kind": "enddate",
+            "value": "2024-12-31"
+          }
+        ],
+        "dimensions": [],
+        "typed_dimension_count": 0
+      },
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:a1606a8a8171ba34d8979b41e1f129d0684cd87f2d9eacb9c1e0c0b379c83b7a",
+        "raw_asset_id": "sha256:275bc6e2e21fc31a5eab74232ee05f3572c1f36573608d5bd84e3e6eaec79bfe",
+        "company_id": "enphase_energy",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310125000024/enph-20241231.htm",
+        "accession": "0001463101-25-000024",
+        "document_name": "enph-20241231.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:d25e7d5d2b939217145df533934cc451ef3334d042fd6141ae577f23dee912ea"
+      }
+    }
+  ],
+  "note": "The dimensional statement revenue is excluded before scope inspection; note totals remain distinct",
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

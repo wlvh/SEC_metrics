@@ -1,0 +1,2901 @@
+{
+  "filing": {
+    "form": "10-K",
+    "reportDate": "2024-12-31",
+    "filingDate": "2025-02-10",
+    "accessionNumber": "0001463101-25-000024",
+    "primaryDocument": "enph-20241231.htm"
+  },
+  "period": {
+    "fiscal_year": 2024,
+    "period_start": "2024-01-01",
+    "period_end": "2024-12-31"
+  },
+  "source_reference": {
+    "record_type": "SOURCE_REFERENCE",
+    "source_reference_id": "sha256:a1606a8a8171ba34d8979b41e1f129d0684cd87f2d9eacb9c1e0c0b379c83b7a",
+    "raw_asset_id": "sha256:275bc6e2e21fc31a5eab74232ee05f3572c1f36573608d5bd84e3e6eaec79bfe",
+    "company_id": "enphase_energy",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310125000024/enph-20241231.htm",
+    "accession": "0001463101-25-000024",
+    "document_name": "enph-20241231.htm",
+    "source_role": "target_primary",
+    "request_attempt_id": "request:attempt:d25e7d5d2b939217145df533934cc451ef3334d042fd6141ae577f23dee912ea"
+  },
+  "segment_text": [
+    {
+      "text": "In November 2023, the Financial Accounting Standard Board (\u201cFASB\u201d) issued Accounting Standards Update (\u201cASU\u201d) 2023-07, \u201cSegment Reporting (Topic 280): Improvements to Reportable Segment Disclosures\u201d (\u201cASU 2023-07\u201d). ASU 2023-07 requires additional disclosures for segment reporting, including disclosure of the title and position of the Chief Operating Decision Maker and requires a public entity that has a single reportable segment to provide all the disclosures required by the amendments in ASU 2023-07, and all existing segment disclosures in Topic 280. ASU 2023-07 is effective for fiscal periods beginning after December 15, 2023, and interim periods within fiscal years beginning after December 15, 2024. The Company adopted ASU 2023-07 effective for its Annual Report on Form 10-K for the year ended December 31, 2024 and subsequent interim periods. Since ASU 2023-07 addresses only disclosures, the adoption of ASU 2023-07 did not have a significant impact on its consolidated financial statements.",
+      "start": 1557029,
+      "end": 1558085,
+      "linked": false,
+      "emphasized": false,
+      "leading_emphasis": null,
+      "quoted_context": false
+    },
+    {
+      "text": "The Company\u2019s chief operating decision maker is the Chief Executive Officer (the \u201cCEO\u201d). The Company has one business activity, which entails the design, development, manufacture and sale of solutions for the solar PV industry. There are no segment managers who are held accountable for operations, operating results or plans for levels or components below the consolidated unit level. Accordingly, management has determined that the Company has a single operating and reportable segment. The accounting policies related to operating and reportable segments are the same as those described in Note 2, \u201cSummary of Significant Accounting Policies\u201d. The primary measure of segment profit or loss is consolidated net income as presented below and is used the by CEO for the purpose of evaluating segment performance and allocation of budget to support business expansion, new product development and operational efficiencies.",
+      "start": 2721616,
+      "end": 2723145,
+      "linked": true,
+      "emphasized": false,
+      "leading_emphasis": null,
+      "quoted_context": false
+    },
+    {
+      "text": "The segment assets are not reviewed by the CODM at a different asset level or category and is reviewed at the consolidated level.",
+      "start": 2780060,
+      "end": 2780189,
+      "linked": false,
+      "emphasized": false,
+      "leading_emphasis": null,
+      "quoted_context": false
+    }
+  ],
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "relevant_facts": [
+    {
+      "fact": {
+        "tag": "ix:nonfraction",
+        "qualified_name": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "context_ref": "c-6",
+        "unit_ref": "usd",
+        "scale": "3",
+        "sign": "",
+        "ordinal": 157,
+        "text": "1,330,383"
+      },
+      "context": {
+        "context_ref": "c-6",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "enph:ReportableSegmentMember"
+        },
+        "entity_identifier": "0001463101",
+        "period_end": "2024-12-31",
+        "period_start": "2024-01-01",
+        "typed_dimension_count": 0
+      },
+      "table_id": "table_000095",
+      "row": 3,
+      "column": 16
+    },
+    {
+      "fact": {
+        "tag": "ix:nonfraction",
+        "qualified_name": "us-gaap:CostOfRevenue",
+        "context_ref": "c-1",
+        "unit_ref": "usd",
+        "scale": "3",
+        "sign": "",
+        "ordinal": 160,
+        "text": "701,245"
+      },
+      "context": {
+        "context_ref": "c-1",
+        "dimensions": {},
+        "entity_identifier": "0001463101",
+        "period_end": "2024-12-31",
+        "period_start": "2024-01-01",
+        "typed_dimension_count": 0
+      },
+      "table_id": "table_000095",
+      "row": 4,
+      "column": 15
+    },
+    {
+      "fact": {
+        "tag": "ix:nonfraction",
+        "qualified_name": "us-gaap:GrossProfit",
+        "context_ref": "c-1",
+        "unit_ref": "usd",
+        "scale": "3",
+        "sign": "",
+        "ordinal": 163,
+        "text": "629,138"
+      },
+      "context": {
+        "context_ref": "c-1",
+        "dimensions": {},
+        "entity_identifier": "0001463101",
+        "period_end": "2024-12-31",
+        "period_start": "2024-01-01",
+        "typed_dimension_count": 0
+      },
+      "table_id": "table_000095",
+      "row": 5,
+      "column": 15
+    },
+    {
+      "fact": {
+        "tag": "ix:nonfraction",
+        "qualified_name": "us-gaap:OperatingIncomeLoss",
+        "context_ref": "c-1",
+        "unit_ref": "usd",
+        "scale": "3",
+        "sign": "",
+        "ordinal": 181,
+        "text": "77,292"
+      },
+      "context": {
+        "context_ref": "c-1",
+        "dimensions": {},
+        "entity_identifier": "0001463101",
+        "period_end": "2024-12-31",
+        "period_start": "2024-01-01",
+        "typed_dimension_count": 0
+      },
+      "table_id": "table_000095",
+      "row": 12,
+      "column": 15
+    },
+    {
+      "fact": {
+        "tag": "ix:nonfraction",
+        "qualified_name": "us-gaap:NetIncomeLoss",
+        "context_ref": "c-1",
+        "unit_ref": "usd",
+        "scale": "3",
+        "sign": "",
+        "ordinal": 202,
+        "text": "102,658"
+      },
+      "context": {
+        "context_ref": "c-1",
+        "dimensions": {},
+        "entity_identifier": "0001463101",
+        "period_end": "2024-12-31",
+        "period_start": "2024-01-01",
+        "typed_dimension_count": 0
+      },
+      "table_id": "table_000095",
+      "row": 23,
+      "column": 16
+    },
+    {
+      "fact": {
+        "tag": "ix:nonfraction",
+        "qualified_name": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "context_ref": "c-68",
+        "unit_ref": "usd",
+        "scale": "3",
+        "sign": "",
+        "ordinal": 537,
+        "text": "934,690"
+      },
+      "context": {
+        "context_ref": "c-68",
+        "dimensions": {
+          "srt:StatementGeographicalAxis": "country:US"
+        },
+        "entity_identifier": "0001463101",
+        "period_end": "2024-12-31",
+        "period_start": "2024-01-01",
+        "typed_dimension_count": 0
+      },
+      "table_id": "table_000117",
+      "row": 6,
+      "column": 16
+    },
+    {
+      "fact": {
+        "tag": "ix:nonfraction",
+        "qualified_name": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "context_ref": "c-71",
+        "unit_ref": "usd",
+        "scale": "3",
+        "sign": "",
+        "ordinal": 540,
+        "text": "395,693"
+      },
+      "context": {
+        "context_ref": "c-71",
+        "dimensions": {
+          "srt:StatementGeographicalAxis": "enph:InternationalMember"
+        },
+        "entity_identifier": "0001463101",
+        "period_end": "2024-12-31",
+        "period_start": "2024-01-01",
+        "typed_dimension_count": 0
+      },
+      "table_id": "table_000117",
+      "row": 11,
+      "column": 15
+    },
+    {
+      "fact": {
+        "tag": "ix:nonfraction",
+        "qualified_name": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "context_ref": "c-1",
+        "unit_ref": "usd",
+        "scale": "3",
+        "sign": "",
+        "ordinal": 543,
+        "text": "1,330,383"
+      },
+      "context": {
+        "context_ref": "c-1",
+        "dimensions": {},
+        "entity_identifier": "0001463101",
+        "period_end": "2024-12-31",
+        "period_start": "2024-01-01",
+        "typed_dimension_count": 0
+      },
+      "table_id": "table_000117",
+      "row": 12,
+      "column": 16
+    },
+    {
+      "fact": {
+        "tag": "ix:nonfraction",
+        "qualified_name": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "context_ref": "c-74",
+        "unit_ref": "usd",
+        "scale": "3",
+        "sign": "",
+        "ordinal": 546,
+        "text": "1,204,367"
+      },
+      "context": {
+        "context_ref": "c-74",
+        "dimensions": {
+          "us-gaap:TimingOfTransferOfGoodOrServiceAxis": "us-gaap:TransferredAtPointInTimeMember"
+        },
+        "entity_identifier": "0001463101",
+        "period_end": "2024-12-31",
+        "period_start": "2024-01-01",
+        "typed_dimension_count": 0
+      },
+      "table_id": "table_000117",
+      "row": 15,
+      "column": 16
+    },
+    {
+      "fact": {
+        "tag": "ix:nonfraction",
+        "qualified_name": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "context_ref": "c-77",
+        "unit_ref": "usd",
+        "scale": "3",
+        "sign": "",
+        "ordinal": 549,
+        "text": "126,016"
+      },
+      "context": {
+        "context_ref": "c-77",
+        "dimensions": {
+          "us-gaap:TimingOfTransferOfGoodOrServiceAxis": "us-gaap:TransferredOverTimeMember"
+        },
+        "entity_identifier": "0001463101",
+        "period_end": "2024-12-31",
+        "period_start": "2024-01-01",
+        "typed_dimension_count": 0
+      },
+      "table_id": "table_000117",
+      "row": 16,
+      "column": 15
+    },
+    {
+      "fact": {
+        "tag": "ix:nonfraction",
+        "qualified_name": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "context_ref": "c-1",
+        "unit_ref": "usd",
+        "scale": "3",
+        "sign": "",
+        "ordinal": 552,
+        "text": "1,330,383"
+      },
+      "context": {
+        "context_ref": "c-1",
+        "dimensions": {},
+        "entity_identifier": "0001463101",
+        "period_end": "2024-12-31",
+        "period_start": "2024-01-01",
+        "typed_dimension_count": 0
+      },
+      "table_id": "table_000117",
+      "row": 17,
+      "column": 16
+    },
+    {
+      "fact": {
+        "tag": "ix:nonfraction",
+        "qualified_name": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "context_ref": "c-6",
+        "unit_ref": "usd",
+        "scale": "3",
+        "sign": "",
+        "ordinal": 1769,
+        "text": "1,330,383"
+      },
+      "context": {
+        "context_ref": "c-6",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "enph:ReportableSegmentMember"
+        },
+        "entity_identifier": "0001463101",
+        "period_end": "2024-12-31",
+        "period_start": "2024-01-01",
+        "typed_dimension_count": 0
+      },
+      "table_id": "table_000203",
+      "row": 5,
+      "column": 4
+    },
+    {
+      "fact": {
+        "tag": "ix:nonfraction",
+        "qualified_name": "us-gaap:OperatingIncomeLoss",
+        "context_ref": "c-6",
+        "unit_ref": "usd",
+        "scale": "3",
+        "sign": "",
+        "ordinal": 1799,
+        "text": "77,292"
+      },
+      "context": {
+        "context_ref": "c-6",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "enph:ReportableSegmentMember"
+        },
+        "entity_identifier": "0001463101",
+        "period_end": "2024-12-31",
+        "period_start": "2024-01-01",
+        "typed_dimension_count": 0
+      },
+      "table_id": "table_000203",
+      "row": 16,
+      "column": 3
+    },
+    {
+      "fact": {
+        "tag": "ix:nonfraction",
+        "qualified_name": "us-gaap:NetIncomeLoss",
+        "context_ref": "c-6",
+        "unit_ref": "usd",
+        "scale": "3",
+        "sign": "",
+        "ordinal": 1811,
+        "text": "102,658"
+      },
+      "context": {
+        "context_ref": "c-6",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "enph:ReportableSegmentMember"
+        },
+        "entity_identifier": "0001463101",
+        "period_end": "2024-12-31",
+        "period_start": "2024-01-01",
+        "typed_dimension_count": 0
+      },
+      "table_id": "table_000203",
+      "row": 20,
+      "column": 4
+    }
+  ],
+  "table_rows": [
+    {
+      "table_id": "table_000095",
+      "grid_sha256": "sha256:e87af8ea9afd0c86463ada77ceac706437392b448bf93e4cb84b71b88187f8e1",
+      "rows": [
+        {
+          "row_index": 0,
+          "cells": []
+        },
+        {
+          "row_index": 1,
+          "cells": [
+            {
+              "row_index": 1,
+              "column_index": 9,
+              "origin_row_index": 1,
+              "origin_column_index": 9,
+              "rowspan": 1,
+              "colspan": 15,
+              "raw_text": "Years Ended December 31,",
+              "text": "Years Ended December 31,"
+            }
+          ]
+        },
+        {
+          "row_index": 2,
+          "cells": [
+            {
+              "row_index": 2,
+              "column_index": 15,
+              "origin_row_index": 2,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "2024",
+              "text": "2024"
+            },
+            {
+              "row_index": 2,
+              "column_index": 21,
+              "origin_row_index": 2,
+              "origin_column_index": 21,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "2023",
+              "text": "2023"
+            },
+            {
+              "row_index": 2,
+              "column_index": 27,
+              "origin_row_index": 2,
+              "origin_column_index": 27,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "2022",
+              "text": "2022"
+            }
+          ]
+        },
+        {
+          "row_index": 3,
+          "cells": [
+            {
+              "row_index": 3,
+              "column_index": 0,
+              "origin_row_index": 3,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Net revenues",
+              "text": "Net revenues"
+            },
+            {
+              "row_index": 3,
+              "column_index": 15,
+              "origin_row_index": 3,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "$",
+              "text": "$"
+            },
+            {
+              "row_index": 3,
+              "column_index": 16,
+              "origin_row_index": 3,
+              "origin_column_index": 16,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "1,330,383&#160;",
+              "text": "1,330,383"
+            },
+            {
+              "row_index": 3,
+              "column_index": 21,
+              "origin_row_index": 3,
+              "origin_column_index": 21,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "$",
+              "text": "$"
+            },
+            {
+              "row_index": 3,
+              "column_index": 22,
+              "origin_row_index": 3,
+              "origin_column_index": 22,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "2,290,786&#160;",
+              "text": "2,290,786"
+            },
+            {
+              "row_index": 3,
+              "column_index": 27,
+              "origin_row_index": 3,
+              "origin_column_index": 27,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "$",
+              "text": "$"
+            },
+            {
+              "row_index": 3,
+              "column_index": 28,
+              "origin_row_index": 3,
+              "origin_column_index": 28,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "2,330,853&#160;",
+              "text": "2,330,853"
+            }
+          ]
+        },
+        {
+          "row_index": 4,
+          "cells": [
+            {
+              "row_index": 4,
+              "column_index": 0,
+              "origin_row_index": 4,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Cost of revenues",
+              "text": "Cost of revenues"
+            },
+            {
+              "row_index": 4,
+              "column_index": 15,
+              "origin_row_index": 4,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "701,245&#160;",
+              "text": "701,245"
+            },
+            {
+              "row_index": 4,
+              "column_index": 21,
+              "origin_row_index": 4,
+              "origin_column_index": 21,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "1,232,398&#160;",
+              "text": "1,232,398"
+            },
+            {
+              "row_index": 4,
+              "column_index": 27,
+              "origin_row_index": 4,
+              "origin_column_index": 27,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "1,356,258&#160;",
+              "text": "1,356,258"
+            }
+          ]
+        },
+        {
+          "row_index": 5,
+          "cells": [
+            {
+              "row_index": 5,
+              "column_index": 0,
+              "origin_row_index": 5,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Gross profit",
+              "text": "Gross profit"
+            },
+            {
+              "row_index": 5,
+              "column_index": 15,
+              "origin_row_index": 5,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "629,138&#160;",
+              "text": "629,138"
+            },
+            {
+              "row_index": 5,
+              "column_index": 21,
+              "origin_row_index": 5,
+              "origin_column_index": 21,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "1,058,388&#160;",
+              "text": "1,058,388"
+            },
+            {
+              "row_index": 5,
+              "column_index": 27,
+              "origin_row_index": 5,
+              "origin_column_index": 27,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "974,595&#160;",
+              "text": "974,595"
+            }
+          ]
+        },
+        {
+          "row_index": 6,
+          "cells": [
+            {
+              "row_index": 6,
+              "column_index": 0,
+              "origin_row_index": 6,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Operating expenses:",
+              "text": "Operating expenses:"
+            }
+          ]
+        },
+        {
+          "row_index": 7,
+          "cells": [
+            {
+              "row_index": 7,
+              "column_index": 0,
+              "origin_row_index": 7,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Research and development",
+              "text": "Research and development"
+            },
+            {
+              "row_index": 7,
+              "column_index": 15,
+              "origin_row_index": 7,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "201,315&#160;",
+              "text": "201,315"
+            },
+            {
+              "row_index": 7,
+              "column_index": 21,
+              "origin_row_index": 7,
+              "origin_column_index": 21,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "227,336&#160;",
+              "text": "227,336"
+            },
+            {
+              "row_index": 7,
+              "column_index": 27,
+              "origin_row_index": 7,
+              "origin_column_index": 27,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "168,846&#160;",
+              "text": "168,846"
+            }
+          ]
+        },
+        {
+          "row_index": 8,
+          "cells": [
+            {
+              "row_index": 8,
+              "column_index": 0,
+              "origin_row_index": 8,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Sales and marketing",
+              "text": "Sales and marketing"
+            },
+            {
+              "row_index": 8,
+              "column_index": 15,
+              "origin_row_index": 8,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "206,552&#160;",
+              "text": "206,552"
+            },
+            {
+              "row_index": 8,
+              "column_index": 21,
+              "origin_row_index": 8,
+              "origin_column_index": 21,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "231,792&#160;",
+              "text": "231,792"
+            },
+            {
+              "row_index": 8,
+              "column_index": 27,
+              "origin_row_index": 8,
+              "origin_column_index": 27,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "215,102&#160;",
+              "text": "215,102"
+            }
+          ]
+        },
+        {
+          "row_index": 9,
+          "cells": [
+            {
+              "row_index": 9,
+              "column_index": 0,
+              "origin_row_index": 9,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "General and administrative",
+              "text": "General and administrative"
+            },
+            {
+              "row_index": 9,
+              "column_index": 15,
+              "origin_row_index": 9,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "130,825&#160;",
+              "text": "130,825"
+            },
+            {
+              "row_index": 9,
+              "column_index": 21,
+              "origin_row_index": 9,
+              "origin_column_index": 21,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "137,835&#160;",
+              "text": "137,835"
+            },
+            {
+              "row_index": 9,
+              "column_index": 27,
+              "origin_row_index": 9,
+              "origin_column_index": 27,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "140,002&#160;",
+              "text": "140,002"
+            }
+          ]
+        },
+        {
+          "row_index": 10,
+          "cells": [
+            {
+              "row_index": 10,
+              "column_index": 0,
+              "origin_row_index": 10,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Restructuring and asset impairment charges",
+              "text": "Restructuring and asset impairment charges"
+            },
+            {
+              "row_index": 10,
+              "column_index": 15,
+              "origin_row_index": 10,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "13,154&#160;",
+              "text": "13,154"
+            },
+            {
+              "row_index": 10,
+              "column_index": 21,
+              "origin_row_index": 10,
+              "origin_column_index": 21,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "15,684&#160;",
+              "text": "15,684"
+            },
+            {
+              "row_index": 10,
+              "column_index": 27,
+              "origin_row_index": 10,
+              "origin_column_index": 27,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "2,384&#160;",
+              "text": "2,384"
+            }
+          ]
+        },
+        {
+          "row_index": 11,
+          "cells": [
+            {
+              "row_index": 11,
+              "column_index": 0,
+              "origin_row_index": 11,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Total operating expenses",
+              "text": "Total operating expenses"
+            },
+            {
+              "row_index": 11,
+              "column_index": 15,
+              "origin_row_index": 11,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "551,846&#160;",
+              "text": "551,846"
+            },
+            {
+              "row_index": 11,
+              "column_index": 21,
+              "origin_row_index": 11,
+              "origin_column_index": 21,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "612,647&#160;",
+              "text": "612,647"
+            },
+            {
+              "row_index": 11,
+              "column_index": 27,
+              "origin_row_index": 11,
+              "origin_column_index": 27,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "526,334&#160;",
+              "text": "526,334"
+            }
+          ]
+        },
+        {
+          "row_index": 12,
+          "cells": [
+            {
+              "row_index": 12,
+              "column_index": 0,
+              "origin_row_index": 12,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Income from operations",
+              "text": "Income from operations"
+            },
+            {
+              "row_index": 12,
+              "column_index": 15,
+              "origin_row_index": 12,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "77,292&#160;",
+              "text": "77,292"
+            },
+            {
+              "row_index": 12,
+              "column_index": 21,
+              "origin_row_index": 12,
+              "origin_column_index": 21,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "445,741&#160;",
+              "text": "445,741"
+            },
+            {
+              "row_index": 12,
+              "column_index": 27,
+              "origin_row_index": 12,
+              "origin_column_index": 27,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "448,261&#160;",
+              "text": "448,261"
+            }
+          ]
+        },
+        {
+          "row_index": 13,
+          "cells": [
+            {
+              "row_index": 13,
+              "column_index": 0,
+              "origin_row_index": 13,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Other income, net",
+              "text": "Other income, net"
+            }
+          ]
+        },
+        {
+          "row_index": 14,
+          "cells": [
+            {
+              "row_index": 14,
+              "column_index": 0,
+              "origin_row_index": 14,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Interest income",
+              "text": "Interest income"
+            },
+            {
+              "row_index": 14,
+              "column_index": 15,
+              "origin_row_index": 14,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "77,306&#160;",
+              "text": "77,306"
+            },
+            {
+              "row_index": 14,
+              "column_index": 21,
+              "origin_row_index": 14,
+              "origin_column_index": 21,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "69,728&#160;",
+              "text": "69,728"
+            },
+            {
+              "row_index": 14,
+              "column_index": 27,
+              "origin_row_index": 14,
+              "origin_column_index": 27,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "13,656&#160;",
+              "text": "13,656"
+            }
+          ]
+        },
+        {
+          "row_index": 15,
+          "cells": [
+            {
+              "row_index": 15,
+              "column_index": 0,
+              "origin_row_index": 15,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Interest expense",
+              "text": "Interest expense"
+            },
+            {
+              "row_index": 15,
+              "column_index": 15,
+              "origin_row_index": 15,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "(8,905)",
+              "text": "(8,905)"
+            },
+            {
+              "row_index": 15,
+              "column_index": 21,
+              "origin_row_index": 15,
+              "origin_column_index": 21,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "(8,839)",
+              "text": "(8,839)"
+            },
+            {
+              "row_index": 15,
+              "column_index": 27,
+              "origin_row_index": 15,
+              "origin_column_index": 27,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "(9,438)",
+              "text": "(9,438)"
+            }
+          ]
+        },
+        {
+          "row_index": 16,
+          "cells": [
+            {
+              "row_index": 16,
+              "column_index": 0,
+              "origin_row_index": 16,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Other income (expense), net",
+              "text": "Other income (expense), net"
+            },
+            {
+              "row_index": 16,
+              "column_index": 15,
+              "origin_row_index": 16,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "(25,534)",
+              "text": "(25,534)"
+            },
+            {
+              "row_index": 16,
+              "column_index": 21,
+              "origin_row_index": 16,
+              "origin_column_index": 21,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "6,509&#160;",
+              "text": "6,509"
+            },
+            {
+              "row_index": 16,
+              "column_index": 27,
+              "origin_row_index": 16,
+              "origin_column_index": 27,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "(431)",
+              "text": "(431)"
+            }
+          ]
+        },
+        {
+          "row_index": 17,
+          "cells": []
+        },
+        {
+          "row_index": 18,
+          "cells": []
+        },
+        {
+          "row_index": 19,
+          "cells": []
+        },
+        {
+          "row_index": 20,
+          "cells": [
+            {
+              "row_index": 20,
+              "column_index": 0,
+              "origin_row_index": 20,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Total other income, net",
+              "text": "Total other income, net"
+            },
+            {
+              "row_index": 20,
+              "column_index": 15,
+              "origin_row_index": 20,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "42,867&#160;",
+              "text": "42,867"
+            },
+            {
+              "row_index": 20,
+              "column_index": 21,
+              "origin_row_index": 20,
+              "origin_column_index": 21,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "67,398&#160;",
+              "text": "67,398"
+            },
+            {
+              "row_index": 20,
+              "column_index": 27,
+              "origin_row_index": 20,
+              "origin_column_index": 27,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "3,787&#160;",
+              "text": "3,787"
+            }
+          ]
+        },
+        {
+          "row_index": 21,
+          "cells": [
+            {
+              "row_index": 21,
+              "column_index": 0,
+              "origin_row_index": 21,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Income before income taxes",
+              "text": "Income before income taxes"
+            },
+            {
+              "row_index": 21,
+              "column_index": 15,
+              "origin_row_index": 21,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "120,159&#160;",
+              "text": "120,159"
+            },
+            {
+              "row_index": 21,
+              "column_index": 21,
+              "origin_row_index": 21,
+              "origin_column_index": 21,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "513,139&#160;",
+              "text": "513,139"
+            },
+            {
+              "row_index": 21,
+              "column_index": 27,
+              "origin_row_index": 21,
+              "origin_column_index": 27,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "452,048&#160;",
+              "text": "452,048"
+            }
+          ]
+        },
+        {
+          "row_index": 22,
+          "cells": [
+            {
+              "row_index": 22,
+              "column_index": 0,
+              "origin_row_index": 22,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Income tax provision",
+              "text": "Income tax provision"
+            },
+            {
+              "row_index": 22,
+              "column_index": 15,
+              "origin_row_index": 22,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "(17,501)",
+              "text": "(17,501)"
+            },
+            {
+              "row_index": 22,
+              "column_index": 21,
+              "origin_row_index": 22,
+              "origin_column_index": 21,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "(74,203)",
+              "text": "(74,203)"
+            },
+            {
+              "row_index": 22,
+              "column_index": 27,
+              "origin_row_index": 22,
+              "origin_column_index": 27,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "(54,686)",
+              "text": "(54,686)"
+            }
+          ]
+        },
+        {
+          "row_index": 23,
+          "cells": [
+            {
+              "row_index": 23,
+              "column_index": 0,
+              "origin_row_index": 23,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Net income ",
+              "text": "Net income"
+            },
+            {
+              "row_index": 23,
+              "column_index": 15,
+              "origin_row_index": 23,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "$",
+              "text": "$"
+            },
+            {
+              "row_index": 23,
+              "column_index": 16,
+              "origin_row_index": 23,
+              "origin_column_index": 16,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "102,658&#160;",
+              "text": "102,658"
+            },
+            {
+              "row_index": 23,
+              "column_index": 21,
+              "origin_row_index": 23,
+              "origin_column_index": 21,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "$",
+              "text": "$"
+            },
+            {
+              "row_index": 23,
+              "column_index": 22,
+              "origin_row_index": 23,
+              "origin_column_index": 22,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "438,936&#160;",
+              "text": "438,936"
+            },
+            {
+              "row_index": 23,
+              "column_index": 27,
+              "origin_row_index": 23,
+              "origin_column_index": 27,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "$",
+              "text": "$"
+            },
+            {
+              "row_index": 23,
+              "column_index": 28,
+              "origin_row_index": 23,
+              "origin_column_index": 28,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "397,362&#160;",
+              "text": "397,362"
+            }
+          ]
+        },
+        {
+          "row_index": 24,
+          "cells": [
+            {
+              "row_index": 24,
+              "column_index": 0,
+              "origin_row_index": 24,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Net income per share",
+              "text": "Net income per share"
+            }
+          ]
+        },
+        {
+          "row_index": 25,
+          "cells": [
+            {
+              "row_index": 25,
+              "column_index": 0,
+              "origin_row_index": 25,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Basic",
+              "text": "Basic"
+            },
+            {
+              "row_index": 25,
+              "column_index": 15,
+              "origin_row_index": 25,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "$",
+              "text": "$"
+            },
+            {
+              "row_index": 25,
+              "column_index": 16,
+              "origin_row_index": 25,
+              "origin_column_index": 16,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "0.76&#160;",
+              "text": "0.76"
+            },
+            {
+              "row_index": 25,
+              "column_index": 21,
+              "origin_row_index": 25,
+              "origin_column_index": 21,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "$",
+              "text": "$"
+            },
+            {
+              "row_index": 25,
+              "column_index": 22,
+              "origin_row_index": 25,
+              "origin_column_index": 22,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "3.22&#160;",
+              "text": "3.22"
+            },
+            {
+              "row_index": 25,
+              "column_index": 27,
+              "origin_row_index": 25,
+              "origin_column_index": 27,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "$",
+              "text": "$"
+            },
+            {
+              "row_index": 25,
+              "column_index": 28,
+              "origin_row_index": 25,
+              "origin_column_index": 28,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "2.94&#160;",
+              "text": "2.94"
+            }
+          ]
+        },
+        {
+          "row_index": 26,
+          "cells": [
+            {
+              "row_index": 26,
+              "column_index": 0,
+              "origin_row_index": 26,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Diluted",
+              "text": "Diluted"
+            },
+            {
+              "row_index": 26,
+              "column_index": 15,
+              "origin_row_index": 26,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "$",
+              "text": "$"
+            },
+            {
+              "row_index": 26,
+              "column_index": 16,
+              "origin_row_index": 26,
+              "origin_column_index": 16,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "0.75&#160;",
+              "text": "0.75"
+            },
+            {
+              "row_index": 26,
+              "column_index": 21,
+              "origin_row_index": 26,
+              "origin_column_index": 21,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "$",
+              "text": "$"
+            },
+            {
+              "row_index": 26,
+              "column_index": 22,
+              "origin_row_index": 26,
+              "origin_column_index": 22,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "3.08&#160;",
+              "text": "3.08"
+            },
+            {
+              "row_index": 26,
+              "column_index": 27,
+              "origin_row_index": 26,
+              "origin_column_index": 27,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "$",
+              "text": "$"
+            },
+            {
+              "row_index": 26,
+              "column_index": 28,
+              "origin_row_index": 26,
+              "origin_column_index": 28,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "2.77&#160;",
+              "text": "2.77"
+            }
+          ]
+        },
+        {
+          "row_index": 27,
+          "cells": [
+            {
+              "row_index": 27,
+              "column_index": 0,
+              "origin_row_index": 27,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Shares used in per share calculation:",
+              "text": "Shares used in per share calculation:"
+            }
+          ]
+        },
+        {
+          "row_index": 28,
+          "cells": [
+            {
+              "row_index": 28,
+              "column_index": 0,
+              "origin_row_index": 28,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Basic",
+              "text": "Basic"
+            },
+            {
+              "row_index": 28,
+              "column_index": 15,
+              "origin_row_index": 28,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "135,167&#160;",
+              "text": "135,167"
+            },
+            {
+              "row_index": 28,
+              "column_index": 21,
+              "origin_row_index": 28,
+              "origin_column_index": 21,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "136,376&#160;",
+              "text": "136,376"
+            },
+            {
+              "row_index": 28,
+              "column_index": 27,
+              "origin_row_index": 28,
+              "origin_column_index": 27,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "135,349&#160;",
+              "text": "135,349"
+            }
+          ]
+        },
+        {
+          "row_index": 29,
+          "cells": [
+            {
+              "row_index": 29,
+              "column_index": 0,
+              "origin_row_index": 29,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Diluted",
+              "text": "Diluted"
+            },
+            {
+              "row_index": 29,
+              "column_index": 15,
+              "origin_row_index": 29,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "140,004&#160;",
+              "text": "140,004"
+            },
+            {
+              "row_index": 29,
+              "column_index": 21,
+              "origin_row_index": 29,
+              "origin_column_index": 21,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "143,290&#160;",
+              "text": "143,290"
+            },
+            {
+              "row_index": 29,
+              "column_index": 27,
+              "origin_row_index": 29,
+              "origin_column_index": 27,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "144,390&#160;",
+              "text": "144,390"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "table_id": "table_000117",
+      "grid_sha256": "sha256:acdab790db31dca8baebb594d5ca8c0857b667758637d0a92be5a5d1c464e974",
+      "rows": [
+        {
+          "row_index": 0,
+          "cells": []
+        },
+        {
+          "row_index": 1,
+          "cells": [
+            {
+              "row_index": 1,
+              "column_index": 9,
+              "origin_row_index": 1,
+              "origin_column_index": 9,
+              "rowspan": 1,
+              "colspan": 15,
+              "raw_text": "Years Ended December 31,",
+              "text": "Years Ended December 31,"
+            }
+          ]
+        },
+        {
+          "row_index": 2,
+          "cells": [
+            {
+              "row_index": 2,
+              "column_index": 15,
+              "origin_row_index": 2,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "2024",
+              "text": "2024"
+            },
+            {
+              "row_index": 2,
+              "column_index": 21,
+              "origin_row_index": 2,
+              "origin_column_index": 21,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "2023",
+              "text": "2023"
+            },
+            {
+              "row_index": 2,
+              "column_index": 27,
+              "origin_row_index": 2,
+              "origin_column_index": 27,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "2022",
+              "text": "2022"
+            }
+          ]
+        },
+        {
+          "row_index": 3,
+          "cells": []
+        },
+        {
+          "row_index": 4,
+          "cells": [
+            {
+              "row_index": 4,
+              "column_index": 15,
+              "origin_row_index": 4,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 15,
+              "raw_text": "(In thousands)",
+              "text": "(In thousands)"
+            }
+          ]
+        },
+        {
+          "row_index": 5,
+          "cells": [
+            {
+              "row_index": 5,
+              "column_index": 0,
+              "origin_row_index": 5,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Primary geographical markets:",
+              "text": "Primary geographical markets:"
+            }
+          ]
+        },
+        {
+          "row_index": 6,
+          "cells": [
+            {
+              "row_index": 6,
+              "column_index": 0,
+              "origin_row_index": 6,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "United States",
+              "text": "United States"
+            },
+            {
+              "row_index": 6,
+              "column_index": 15,
+              "origin_row_index": 6,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "$",
+              "text": "$"
+            },
+            {
+              "row_index": 6,
+              "column_index": 16,
+              "origin_row_index": 6,
+              "origin_column_index": 16,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "934,690&#160;",
+              "text": "934,690"
+            },
+            {
+              "row_index": 6,
+              "column_index": 21,
+              "origin_row_index": 6,
+              "origin_column_index": 21,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "$",
+              "text": "$"
+            },
+            {
+              "row_index": 6,
+              "column_index": 22,
+              "origin_row_index": 6,
+              "origin_column_index": 22,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "1,469,108&#160;",
+              "text": "1,469,108"
+            },
+            {
+              "row_index": 6,
+              "column_index": 27,
+              "origin_row_index": 6,
+              "origin_column_index": 27,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "$",
+              "text": "$"
+            },
+            {
+              "row_index": 6,
+              "column_index": 28,
+              "origin_row_index": 6,
+              "origin_column_index": 28,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "1,761,846&#160;",
+              "text": "1,761,846"
+            }
+          ]
+        },
+        {
+          "row_index": 7,
+          "cells": []
+        },
+        {
+          "row_index": 8,
+          "cells": []
+        },
+        {
+          "row_index": 9,
+          "cells": []
+        },
+        {
+          "row_index": 10,
+          "cells": []
+        },
+        {
+          "row_index": 11,
+          "cells": [
+            {
+              "row_index": 11,
+              "column_index": 0,
+              "origin_row_index": 11,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "\nInternational (1)",
+              "text": "International (1)"
+            },
+            {
+              "row_index": 11,
+              "column_index": 15,
+              "origin_row_index": 11,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "395,693&#160;",
+              "text": "395,693"
+            },
+            {
+              "row_index": 11,
+              "column_index": 21,
+              "origin_row_index": 11,
+              "origin_column_index": 21,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "821,678&#160;",
+              "text": "821,678"
+            },
+            {
+              "row_index": 11,
+              "column_index": 27,
+              "origin_row_index": 11,
+              "origin_column_index": 27,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "569,007&#160;",
+              "text": "569,007"
+            }
+          ]
+        },
+        {
+          "row_index": 12,
+          "cells": [
+            {
+              "row_index": 12,
+              "column_index": 0,
+              "origin_row_index": 12,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Total",
+              "text": "Total"
+            },
+            {
+              "row_index": 12,
+              "column_index": 15,
+              "origin_row_index": 12,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "$",
+              "text": "$"
+            },
+            {
+              "row_index": 12,
+              "column_index": 16,
+              "origin_row_index": 12,
+              "origin_column_index": 16,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "1,330,383&#160;",
+              "text": "1,330,383"
+            },
+            {
+              "row_index": 12,
+              "column_index": 21,
+              "origin_row_index": 12,
+              "origin_column_index": 21,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "$",
+              "text": "$"
+            },
+            {
+              "row_index": 12,
+              "column_index": 22,
+              "origin_row_index": 12,
+              "origin_column_index": 22,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "2,290,786&#160;",
+              "text": "2,290,786"
+            },
+            {
+              "row_index": 12,
+              "column_index": 27,
+              "origin_row_index": 12,
+              "origin_column_index": 27,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "$",
+              "text": "$"
+            },
+            {
+              "row_index": 12,
+              "column_index": 28,
+              "origin_row_index": 12,
+              "origin_column_index": 28,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "2,330,853&#160;",
+              "text": "2,330,853"
+            }
+          ]
+        },
+        {
+          "row_index": 13,
+          "cells": []
+        },
+        {
+          "row_index": 14,
+          "cells": [
+            {
+              "row_index": 14,
+              "column_index": 0,
+              "origin_row_index": 14,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Timing of revenue recognition:",
+              "text": "Timing of revenue recognition:"
+            }
+          ]
+        },
+        {
+          "row_index": 15,
+          "cells": [
+            {
+              "row_index": 15,
+              "column_index": 0,
+              "origin_row_index": 15,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Products delivered at a point in time",
+              "text": "Products delivered at a point in time"
+            },
+            {
+              "row_index": 15,
+              "column_index": 15,
+              "origin_row_index": 15,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "$",
+              "text": "$"
+            },
+            {
+              "row_index": 15,
+              "column_index": 16,
+              "origin_row_index": 15,
+              "origin_column_index": 16,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "1,204,367&#160;",
+              "text": "1,204,367"
+            },
+            {
+              "row_index": 15,
+              "column_index": 21,
+              "origin_row_index": 15,
+              "origin_column_index": 21,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "$",
+              "text": "$"
+            },
+            {
+              "row_index": 15,
+              "column_index": 22,
+              "origin_row_index": 15,
+              "origin_column_index": 22,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "2,181,099&#160;",
+              "text": "2,181,099"
+            },
+            {
+              "row_index": 15,
+              "column_index": 27,
+              "origin_row_index": 15,
+              "origin_column_index": 27,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "$",
+              "text": "$"
+            },
+            {
+              "row_index": 15,
+              "column_index": 28,
+              "origin_row_index": 15,
+              "origin_column_index": 28,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "2,253,645&#160;",
+              "text": "2,253,645"
+            }
+          ]
+        },
+        {
+          "row_index": 16,
+          "cells": [
+            {
+              "row_index": 16,
+              "column_index": 0,
+              "origin_row_index": 16,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Products and services delivered over time",
+              "text": "Products and services delivered over time"
+            },
+            {
+              "row_index": 16,
+              "column_index": 15,
+              "origin_row_index": 16,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "126,016&#160;",
+              "text": "126,016"
+            },
+            {
+              "row_index": 16,
+              "column_index": 21,
+              "origin_row_index": 16,
+              "origin_column_index": 21,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "109,687&#160;",
+              "text": "109,687"
+            },
+            {
+              "row_index": 16,
+              "column_index": 27,
+              "origin_row_index": 16,
+              "origin_column_index": 27,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "77,208&#160;",
+              "text": "77,208"
+            }
+          ]
+        },
+        {
+          "row_index": 17,
+          "cells": [
+            {
+              "row_index": 17,
+              "column_index": 0,
+              "origin_row_index": 17,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Total",
+              "text": "Total"
+            },
+            {
+              "row_index": 17,
+              "column_index": 15,
+              "origin_row_index": 17,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "$",
+              "text": "$"
+            },
+            {
+              "row_index": 17,
+              "column_index": 16,
+              "origin_row_index": 17,
+              "origin_column_index": 16,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "1,330,383&#160;",
+              "text": "1,330,383"
+            },
+            {
+              "row_index": 17,
+              "column_index": 21,
+              "origin_row_index": 17,
+              "origin_column_index": 21,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "$",
+              "text": "$"
+            },
+            {
+              "row_index": 17,
+              "column_index": 22,
+              "origin_row_index": 17,
+              "origin_column_index": 22,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "2,290,786&#160;",
+              "text": "2,290,786"
+            },
+            {
+              "row_index": 17,
+              "column_index": 27,
+              "origin_row_index": 17,
+              "origin_column_index": 27,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "$",
+              "text": "$"
+            },
+            {
+              "row_index": 17,
+              "column_index": 28,
+              "origin_row_index": 17,
+              "origin_column_index": 28,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "2,330,853&#160;",
+              "text": "2,330,853"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "table_id": "table_000203",
+      "grid_sha256": "sha256:effdfb05074caed2e3a69f6a9d37b2dfbeb295990e77f0b97edd04aaef54affb",
+      "rows": [
+        {
+          "row_index": 0,
+          "cells": []
+        },
+        {
+          "row_index": 1,
+          "cells": [
+            {
+              "row_index": 1,
+              "column_index": 3,
+              "origin_row_index": 1,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 15,
+              "raw_text": "Years Ended December 31,",
+              "text": "Years Ended December 31,"
+            }
+          ]
+        },
+        {
+          "row_index": 2,
+          "cells": [
+            {
+              "row_index": 2,
+              "column_index": 3,
+              "origin_row_index": 2,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "2024",
+              "text": "2024"
+            },
+            {
+              "row_index": 2,
+              "column_index": 9,
+              "origin_row_index": 2,
+              "origin_column_index": 9,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "2023",
+              "text": "2023"
+            },
+            {
+              "row_index": 2,
+              "column_index": 15,
+              "origin_row_index": 2,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "2022",
+              "text": "2022"
+            }
+          ]
+        },
+        {
+          "row_index": 3,
+          "cells": []
+        },
+        {
+          "row_index": 4,
+          "cells": [
+            {
+              "row_index": 4,
+              "column_index": 3,
+              "origin_row_index": 4,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 15,
+              "raw_text": "(In thousands)",
+              "text": "(In thousands)"
+            }
+          ]
+        },
+        {
+          "row_index": 5,
+          "cells": [
+            {
+              "row_index": 5,
+              "column_index": 0,
+              "origin_row_index": 5,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Net revenues",
+              "text": "Net revenues"
+            },
+            {
+              "row_index": 5,
+              "column_index": 3,
+              "origin_row_index": 5,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "$",
+              "text": "$"
+            },
+            {
+              "row_index": 5,
+              "column_index": 4,
+              "origin_row_index": 5,
+              "origin_column_index": 4,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "1,330,383&#160;",
+              "text": "1,330,383"
+            },
+            {
+              "row_index": 5,
+              "column_index": 9,
+              "origin_row_index": 5,
+              "origin_column_index": 9,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "$",
+              "text": "$"
+            },
+            {
+              "row_index": 5,
+              "column_index": 10,
+              "origin_row_index": 5,
+              "origin_column_index": 10,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "2,290,786&#160;",
+              "text": "2,290,786"
+            },
+            {
+              "row_index": 5,
+              "column_index": 15,
+              "origin_row_index": 5,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "$",
+              "text": "$"
+            },
+            {
+              "row_index": 5,
+              "column_index": 16,
+              "origin_row_index": 5,
+              "origin_column_index": 16,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "2,330,853&#160;",
+              "text": "2,330,853"
+            }
+          ]
+        },
+        {
+          "row_index": 6,
+          "cells": [
+            {
+              "row_index": 6,
+              "column_index": 0,
+              "origin_row_index": 6,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Less:",
+              "text": "Less:"
+            }
+          ]
+        },
+        {
+          "row_index": 7,
+          "cells": [
+            {
+              "row_index": 7,
+              "column_index": 0,
+              "origin_row_index": 7,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "\nOther cost of revenues(1)",
+              "text": "Other cost of revenues(1)"
+            },
+            {
+              "row_index": 7,
+              "column_index": 3,
+              "origin_row_index": 7,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "798,425&#160;",
+              "text": "798,425"
+            },
+            {
+              "row_index": 7,
+              "column_index": 9,
+              "origin_row_index": 7,
+              "origin_column_index": 9,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "1,253,328&#160;",
+              "text": "1,253,328"
+            },
+            {
+              "row_index": 7,
+              "column_index": 15,
+              "origin_row_index": 7,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "1,336,837&#160;",
+              "text": "1,336,837"
+            }
+          ]
+        },
+        {
+          "row_index": 8,
+          "cells": [
+            {
+              "row_index": 8,
+              "column_index": 0,
+              "origin_row_index": 8,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Income-based government grants",
+              "text": "Income-based government grants"
+            },
+            {
+              "row_index": 8,
+              "column_index": 3,
+              "origin_row_index": 8,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "(157,538)",
+              "text": "(157,538)"
+            },
+            {
+              "row_index": 8,
+              "column_index": 9,
+              "origin_row_index": 8,
+              "origin_column_index": 9,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "(53,470)",
+              "text": "(53,470)"
+            },
+            {
+              "row_index": 8,
+              "column_index": 15,
+              "origin_row_index": 8,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "&#8212;&#160;",
+              "text": "\u2014"
+            }
+          ]
+        },
+        {
+          "row_index": 9,
+          "cells": [
+            {
+              "row_index": 9,
+              "column_index": 0,
+              "origin_row_index": 9,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "\nIncremental cost for manufacturing in the United States(2)",
+              "text": "Incremental cost for manufacturing in the United States(2)"
+            },
+            {
+              "row_index": 9,
+              "column_index": 3,
+              "origin_row_index": 9,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "38,351&#160;",
+              "text": "38,351"
+            },
+            {
+              "row_index": 9,
+              "column_index": 9,
+              "origin_row_index": 9,
+              "origin_column_index": 9,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "11,603&#160;",
+              "text": "11,603"
+            },
+            {
+              "row_index": 9,
+              "column_index": 15,
+              "origin_row_index": 9,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "&#8212;&#160;",
+              "text": "\u2014"
+            }
+          ]
+        },
+        {
+          "row_index": 10,
+          "cells": [
+            {
+              "row_index": 10,
+              "column_index": 0,
+              "origin_row_index": 10,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Stock-based compensation expense",
+              "text": "Stock-based compensation expense"
+            },
+            {
+              "row_index": 10,
+              "column_index": 3,
+              "origin_row_index": 10,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "211,360&#160;",
+              "text": "211,360"
+            },
+            {
+              "row_index": 10,
+              "column_index": 9,
+              "origin_row_index": 10,
+              "origin_column_index": 9,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "212,857&#160;",
+              "text": "212,857"
+            },
+            {
+              "row_index": 10,
+              "column_index": 15,
+              "origin_row_index": 10,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "216,802&#160;",
+              "text": "216,802"
+            }
+          ]
+        },
+        {
+          "row_index": 11,
+          "cells": [
+            {
+              "row_index": 11,
+              "column_index": 0,
+              "origin_row_index": 11,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Acquisition related amortization",
+              "text": "Acquisition related amortization"
+            },
+            {
+              "row_index": 11,
+              "column_index": 3,
+              "origin_row_index": 11,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "20,380&#160;",
+              "text": "20,380"
+            },
+            {
+              "row_index": 11,
+              "column_index": 9,
+              "origin_row_index": 11,
+              "origin_column_index": 9,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "22,897&#160;",
+              "text": "22,897"
+            },
+            {
+              "row_index": 11,
+              "column_index": 15,
+              "origin_row_index": 11,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "22,845&#160;",
+              "text": "22,845"
+            }
+          ]
+        },
+        {
+          "row_index": 12,
+          "cells": [
+            {
+              "row_index": 12,
+              "column_index": 0,
+              "origin_row_index": 12,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "\nOther restructuring and asset impairment charges(3)",
+              "text": "Other restructuring and asset impairment charges(3)"
+            },
+            {
+              "row_index": 12,
+              "column_index": 3,
+              "origin_row_index": 12,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "12,887&#160;",
+              "text": "12,887"
+            },
+            {
+              "row_index": 12,
+              "column_index": 9,
+              "origin_row_index": 12,
+              "origin_column_index": 9,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "15,684&#160;",
+              "text": "15,684"
+            },
+            {
+              "row_index": 12,
+              "column_index": 15,
+              "origin_row_index": 12,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "2,384&#160;",
+              "text": "2,384"
+            }
+          ]
+        },
+        {
+          "row_index": 13,
+          "cells": [
+            {
+              "row_index": 13,
+              "column_index": 0,
+              "origin_row_index": 13,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "\nOther research and development(4)",
+              "text": "Other research and development(4)"
+            },
+            {
+              "row_index": 13,
+              "column_index": 3,
+              "origin_row_index": 13,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "115,814&#160;",
+              "text": "115,814"
+            },
+            {
+              "row_index": 13,
+              "column_index": 9,
+              "origin_row_index": 13,
+              "origin_column_index": 9,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "138,969&#160;",
+              "text": "138,969"
+            },
+            {
+              "row_index": 13,
+              "column_index": 15,
+              "origin_row_index": 13,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "99,764&#160;",
+              "text": "99,764"
+            }
+          ]
+        },
+        {
+          "row_index": 14,
+          "cells": [
+            {
+              "row_index": 14,
+              "column_index": 0,
+              "origin_row_index": 14,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "\nOther sales and marketing(5)",
+              "text": "Other sales and marketing(5)"
+            },
+            {
+              "row_index": 14,
+              "column_index": 3,
+              "origin_row_index": 14,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "128,549&#160;",
+              "text": "128,549"
+            },
+            {
+              "row_index": 14,
+              "column_index": 9,
+              "origin_row_index": 14,
+              "origin_column_index": 9,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "150,772&#160;",
+              "text": "150,772"
+            },
+            {
+              "row_index": 14,
+              "column_index": 15,
+              "origin_row_index": 14,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "119,762&#160;",
+              "text": "119,762"
+            }
+          ]
+        },
+        {
+          "row_index": 15,
+          "cells": [
+            {
+              "row_index": 15,
+              "column_index": 0,
+              "origin_row_index": 15,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "\nOther general and administrative(6)",
+              "text": "Other general and administrative(6)"
+            },
+            {
+              "row_index": 15,
+              "column_index": 3,
+              "origin_row_index": 15,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "84,863&#160;",
+              "text": "84,863"
+            },
+            {
+              "row_index": 15,
+              "column_index": 9,
+              "origin_row_index": 15,
+              "origin_column_index": 9,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "92,405&#160;",
+              "text": "92,405"
+            },
+            {
+              "row_index": 15,
+              "column_index": 15,
+              "origin_row_index": 15,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "84,198&#160;",
+              "text": "84,198"
+            }
+          ]
+        },
+        {
+          "row_index": 16,
+          "cells": [
+            {
+              "row_index": 16,
+              "column_index": 0,
+              "origin_row_index": 16,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Income from operations",
+              "text": "Income from operations"
+            },
+            {
+              "row_index": 16,
+              "column_index": 3,
+              "origin_row_index": 16,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "77,292&#160;",
+              "text": "77,292"
+            },
+            {
+              "row_index": 16,
+              "column_index": 9,
+              "origin_row_index": 16,
+              "origin_column_index": 9,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "445,741&#160;",
+              "text": "445,741"
+            },
+            {
+              "row_index": 16,
+              "column_index": 15,
+              "origin_row_index": 16,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "448,261&#160;",
+              "text": "448,261"
+            }
+          ]
+        },
+        {
+          "row_index": 17,
+          "cells": [
+            {
+              "row_index": 17,
+              "column_index": 0,
+              "origin_row_index": 17,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Total other income, net",
+              "text": "Total other income, net"
+            },
+            {
+              "row_index": 17,
+              "column_index": 3,
+              "origin_row_index": 17,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "42,867&#160;",
+              "text": "42,867"
+            },
+            {
+              "row_index": 17,
+              "column_index": 9,
+              "origin_row_index": 17,
+              "origin_column_index": 9,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "67,398&#160;",
+              "text": "67,398"
+            },
+            {
+              "row_index": 17,
+              "column_index": 15,
+              "origin_row_index": 17,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "3,787&#160;",
+              "text": "3,787"
+            }
+          ]
+        },
+        {
+          "row_index": 18,
+          "cells": [
+            {
+              "row_index": 18,
+              "column_index": 0,
+              "origin_row_index": 18,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Income from income taxes",
+              "text": "Income from income taxes"
+            },
+            {
+              "row_index": 18,
+              "column_index": 3,
+              "origin_row_index": 18,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "120,159&#160;",
+              "text": "120,159"
+            },
+            {
+              "row_index": 18,
+              "column_index": 9,
+              "origin_row_index": 18,
+              "origin_column_index": 9,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "513,139&#160;",
+              "text": "513,139"
+            },
+            {
+              "row_index": 18,
+              "column_index": 15,
+              "origin_row_index": 18,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "452,048&#160;",
+              "text": "452,048"
+            }
+          ]
+        },
+        {
+          "row_index": 19,
+          "cells": [
+            {
+              "row_index": 19,
+              "column_index": 0,
+              "origin_row_index": 19,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Income tax provision",
+              "text": "Income tax provision"
+            },
+            {
+              "row_index": 19,
+              "column_index": 3,
+              "origin_row_index": 19,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "(17,501)",
+              "text": "(17,501)"
+            },
+            {
+              "row_index": 19,
+              "column_index": 9,
+              "origin_row_index": 19,
+              "origin_column_index": 9,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "(74,203)",
+              "text": "(74,203)"
+            },
+            {
+              "row_index": 19,
+              "column_index": 15,
+              "origin_row_index": 19,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "(54,686)",
+              "text": "(54,686)"
+            }
+          ]
+        },
+        {
+          "row_index": 20,
+          "cells": [
+            {
+              "row_index": 20,
+              "column_index": 0,
+              "origin_row_index": 20,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Net Income",
+              "text": "Net Income"
+            },
+            {
+              "row_index": 20,
+              "column_index": 3,
+              "origin_row_index": 20,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "$",
+              "text": "$"
+            },
+            {
+              "row_index": 20,
+              "column_index": 4,
+              "origin_row_index": 20,
+              "origin_column_index": 4,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "102,658&#160;",
+              "text": "102,658"
+            },
+            {
+              "row_index": 20,
+              "column_index": 9,
+              "origin_row_index": 20,
+              "origin_column_index": 9,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "$",
+              "text": "$"
+            },
+            {
+              "row_index": 20,
+              "column_index": 10,
+              "origin_row_index": 20,
+              "origin_column_index": 10,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "438,936&#160;",
+              "text": "438,936"
+            },
+            {
+              "row_index": 20,
+              "column_index": 15,
+              "origin_row_index": 20,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "$",
+              "text": "$"
+            },
+            {
+              "row_index": 20,
+              "column_index": 16,
+              "origin_row_index": 20,
+              "origin_column_index": 16,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "397,362&#160;",
+              "text": "397,362"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
