@@ -223,7 +223,7 @@ class CurrentReportedRevenueTest(unittest.TestCase):
         from vnext import ordinary_current_update as update
         root = Path(__file__).resolve().parents[2]
         original_hash = update.sha256_file
-        for relative in ('scripts/vnext/selected_reported_revenue_v2.py', 'scripts/vnext/historical_fiscal_labels.py'):
+        for relative in ('scripts/vnext/selected_reported_revenue_v2.py', 'scripts/vnext/historical_fiscal_labels.py', 'scripts/vnext/selected_income_calculation.py'):
             for metric in ('B01', 'B02', 'B03', 'C01'):
                 with self.subTest(path=relative, metric=metric):
                     before = update._configuration(root, 'pfizer', metric)

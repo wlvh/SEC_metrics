@@ -158,6 +158,27 @@ class CompletedWithheldUpdateTest(unittest.TestCase):
 
 
 class CurrentProcessingConfigurationTest(unittest.TestCase):
+    def test_debt_note_change_does_not_invalidate_saved_d04_configuration(self):
+        original=update.sha256_file
+        before={metric:update._configuration(ROOT,'marriott_international',metric)
+                for metric in ('D04','B06')}
+        with patch.object(update,'sha256_file',side_effect=lambda *,path:
+                'changed-unconsumed-debt-note' if path==ROOT/'scripts/vnext/b06_note_carrying.py' else original(path=path)):
+            after={metric:update._configuration(ROOT,'marriott_international',metric) for metric in before}
+        self.assertEqual(before['D04'],after['D04'])
+        self.assertNotEqual(before['B06'],after['B06'])
+
+    def test_consumed_d04_review_and_source_changes_still_invalidate_configuration(self):
+        original=update.sha256_file
+        before=update._configuration(ROOT,'marriott_international','D04')
+        for relative in ('scripts/vnext/d04_native_assessment.py',
+                         'scripts/vnext/capacity_update_input.py','scripts/vnext/normal_annual_input.py'):
+            with self.subTest(used=relative):
+                with patch.object(update,'sha256_file',side_effect=lambda *,path,selected=ROOT/relative:
+                        'changed-used-d04-rule' if path==selected else original(path=path)):
+                    after=update._configuration(ROOT,'marriott_international','D04')
+                self.assertNotEqual(before,after)
+
     def test_unused_recorded_source_session_does_not_change_current_configuration(self):
         original = update.sha256_file
         for metric in ('B01', 'C01', 'B12', 'B10'):
@@ -169,6 +190,41 @@ class CurrentProcessingConfigurationTest(unittest.TestCase):
                     after = update._configuration(ROOT, 'marriott_international', metric)
                 self.assertEqual(before, after)
                 self.assertNotIn('scripts/vnext/ordinary_source_session.py', after['processing_files'])
+
+    def test_debt_note_only_change_does_not_invalidate_revenue_configuration(self):
+        original=update.sha256_file
+        debt_note=ROOT/'scripts/vnext/b06_note_carrying.py'
+        before={metric:update._configuration(ROOT,'marriott_international',metric)
+                for metric in ('B01','B02','B03','B06')}
+        with patch.object(update,'sha256_file',side_effect=lambda *,path:
+                'changed-debt-note-grammar' if path==debt_note else original(path=path)):
+            after={metric:update._configuration(ROOT,'marriott_international',metric)
+                   for metric in before}
+        for metric in ('B01','B02','B03'):
+            with self.subTest(metric=metric):self.assertEqual(before[metric],after[metric])
+        self.assertNotEqual(before['B06'],after['B06'])
+
+    def test_debt_family_paths_remain_on_b06_and_outside_zero_ai_routes(self):
+        original=update.sha256_file
+        debt_paths=('scripts/vnext/b06_bond_leases.py','scripts/vnext/b06_current_input.py',
+            'scripts/vnext/b06_financing_inventory.py','scripts/vnext/b06_inclusive_table.py',
+            'scripts/vnext/b06_note_carrying.py','scripts/vnext/normal_bond_debt_results.py',
+            'scripts/vnext/normal_inclusive_debt_results.py','scripts/vnext/normal_note_debt_results.py',
+            'scripts/vnext/ordinary_debt_guard.py','scripts/vnext/ordinary_special_debt_scope.py',
+            'config/b06_bond_debt_set_v1.json','config/b06_bond_leases_v1.json',
+            'config/b06_current_input_v1.json','config/b06_financing_inventory_v1.json',
+            'config/b06_inclusive_table_v1.json','config/b06_note_carrying_v1.json',
+            'config/b06_special_scope_v1.json','catalog/r5/B06_bond_leases_v5.md',
+            'catalog/r5/B06_inclusive_table_v6.md','catalog/r5/B06_note_carrying_v4.md')
+        before={m:update._configuration(ROOT,'marriott_international',m) for m in ('B01','B03','B07','B06')}
+        with patch.object(update,'sha256_file',side_effect=lambda *,path:
+                'changed-b06-only-family' if str(path.relative_to(ROOT)) in debt_paths else original(path=path)):
+            after={m:update._configuration(ROOT,'marriott_international',m) for m in before}
+        for metric in ('B01','B03','B07'):
+            self.assertEqual(before[metric],after[metric])
+            self.assertFalse(set(debt_paths)&set(after[metric]['processing_files']))
+        for path in debt_paths:self.assertEqual(after['B06']['processing_files'][path],'changed-b06-only-family')
+        self.assertNotEqual(before['B06'],after['B06'])
 
     def test_changed_annual_selection_and_saved_input_checks_are_not_cached(self):
         original=update.sha256_file
@@ -337,8 +393,12 @@ class SelectedPeriodUpdateTest(unittest.TestCase):
         self.assertEqual(observed['status'],'INPUT_OR_EXECUTION_FAILED')
         self.assertEqual(observed['reason'],'CONSTRUCTED_A13_FACTORY_BOUNDARY_NO_BUSINESS_RESULT')
 
-    def test_a13_without_explicit_year_and_other_unsupported_family_stay_closed(self):
-        for metric,extra in [('A13',{}),('D03',{'fiscal_year':2021,'case_factory':self.factory})]:
+    def test_new_current_a13_dispatch_and_unreceived_family_boundary(self):
+        with patch.object(update,'_configuration',side_effect=ValueError('CONTROL_CURRENT_A13_DISPATCH')):
+            current=update.run_once(state_root=self.root,source_root=ROOT,
+                company_id='marriott_international',metric_id='A13')
+        self.assertEqual(current['reason'],'CONTROL_CURRENT_A13_DISPATCH')
+        for metric,extra in [('D03',{'fiscal_year':2021,'case_factory':self.factory})]:
             with self.subTest(metric=metric),self.assertRaisesRegex(ValueError,'CURRENT_UPDATE_METRIC_UNSUPPORTED'):
                 update.run_once(state_root=self.root,source_root=ROOT,
                     company_id='marriott_international',metric_id=metric,**extra)

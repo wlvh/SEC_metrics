@@ -1,0 +1,6 @@
+ACTUAL_AFTER 2023 {}
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/docs/evidence/issue28_revenue_note_reference_20261011/verify_original_cases.py", line 44, in <module>
+    assert 'Total revenues' in visible and '(Note 4)' in visible,visible
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Marketable securities ( 175 ) ( 423 ) 272

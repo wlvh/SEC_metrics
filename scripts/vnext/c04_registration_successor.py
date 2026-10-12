@@ -122,6 +122,33 @@ def _checked_inventory_rows(payload, *, inventory_name, shard=None, block_last_d
     return rows
 
 
+def _check_selected_annual_label(labelled, original):
+    """Catch stale/mixed fiscal-label objects before reading auditor sources.
+
+    This checks the supplied ordinary input and the existing label decision;
+    it does not choose a new year or establish a new source policy.
+    """
+    from .normal_annual_input_v2 import _choose_fiscal_year
+    _need(labelled.get('input_id') == content_hash(value={
+        key: value for key, value in labelled.items() if key != 'input_id'}),
+        'C04_SELECTED_ANNUAL_LABEL_IDENTITY_CHANGED')
+    period = labelled['table_input']['target_period']
+    resolution = labelled['fiscal_year_label_resolution']
+    inspected = resolution['source_inspection']
+    year, basis = _choose_fiscal_year(inspected)
+    _need(type(period['fiscal_year']) is int
+          and period['fiscal_year'] == resolution['selected_fiscal_year'] == year
+          and labelled['companyfacts_input']['target_period'] == period
+          and resolution['basis'] == basis
+          and resolution['source_inspection_status'] == inspected['status']
+          and resolution['metadata_conflict_retained'] == (inspected['status'] == 'SOURCE_LABEL_CONFLICT')
+          and resolution['original_dei_fiscal_year'] == inspected['dei_fiscal_year']
+              == original['table_input']['target_period']['fiscal_year']
+          and resolution['original_companyfacts_fiscal_year_values'] == inspected['companyfacts_fiscal_year_values']
+          and resolution['actual_dates_changed'] is False,
+          'C04_SELECTED_ANNUAL_LABEL_FIELDS_CHANGED')
+
+
 def prepare_c04_registration_case(*, repo_root: Path, company_id: str,
                                   event_forms, selected_base=None,
                                   labelled_annual=None, dei_release="YEAR_ONLY"):
@@ -172,6 +199,7 @@ def prepare_c04_registration_case(*, repo_root: Path, company_id: str,
                     for proof in binding['source_proofs']),
                     'C04_SELECTED_ANNUAL_SOURCE_PROOF_MISSING')
         _check_selected_annual_census(binding, arguments)
+        _check_selected_annual_label(labelled, prepared)
         verify_ordinary_source_proofs(data_root=repo_root, proofs=binding['source_proofs'])
     _need(labelled['original_input'] == binding['prepared_annual_input']
           and all(labelled['table_input']['target_period'][key] == annual[key]

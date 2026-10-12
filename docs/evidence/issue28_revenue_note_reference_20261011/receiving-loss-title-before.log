@@ -1,0 +1,41 @@
+test_standard_income_loss_title_keeps_native_loss_labels_and_scope_qualifiers (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_standard_income_loss_title_keeps_native_loss_labels_and_scope_qualifiers) ... 
+  test_standard_income_loss_title_keeps_native_loss_labels_and_scope_qualifiers (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_standard_income_loss_title_keeps_native_loss_labels_and_scope_qualifiers) (reader='reported_revenue_scope') ... ERROR
+  test_standard_income_loss_title_keeps_native_loss_labels_and_scope_qualifiers (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_standard_income_loss_title_keeps_native_loss_labels_and_scope_qualifiers) (reader='selected_revenue_scope') ... ERROR
+
+======================================================================
+ERROR: test_standard_income_loss_title_keeps_native_loss_labels_and_scope_qualifiers (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_standard_income_loss_title_keeps_native_loss_labels_and_scope_qualifiers) (reader='reported_revenue_scope')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 25, in test_standard_income_loss_title_keeps_native_loss_labels_and_scope_qualifiers
+    scope=reader(primary=changed(primary,raw),xml=xml,annual=annual,approved_concepts=APPROVED)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 128, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=True)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 144, in _statement_scope
+    _need(bool(titles) or bool(caption), 'CONSOLIDATED_STATEMENT_TITLE_UNPROVEN')
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_CONSOLIDATED_STATEMENT_TITLE_UNPROVEN
+
+======================================================================
+ERROR: test_standard_income_loss_title_keeps_native_loss_labels_and_scope_qualifiers (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_standard_income_loss_title_keeps_native_loss_labels_and_scope_qualifiers) (reader='selected_revenue_scope')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 25, in test_standard_income_loss_title_keeps_native_loss_labels_and_scope_qualifiers
+    scope=reader(primary=changed(primary,raw),xml=xml,annual=annual,approved_concepts=APPROVED)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 303, in selected_revenue_scope
+    statement_scope = _statement_scope(raw, index, parsed, table)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 144, in _statement_scope
+    _need(bool(titles) or bool(caption), 'CONSOLIDATED_STATEMENT_TITLE_UNPROVEN')
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_CONSOLIDATED_STATEMENT_TITLE_UNPROVEN
+
+----------------------------------------------------------------------
+Ran 1 test in 0.164s
+
+FAILED (errors=2)
+{"allowed_skips": 0, "errors": 2, "failures": 0, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_standard_income_loss_title_keeps_native_loss_labels_and_scope_qualifiers"]}
