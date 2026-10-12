@@ -1,0 +1,40 @@
+2026-10-12T14:24:56.3614351Z 
+2026-10-12T14:24:56.3614505Z ======================================================================
+2026-10-12T14:24:56.3615662Z ERROR: test_default_configuration_matches_main_with_identical_program_inputs (tests.vnext.test_current_risk_heading_case.DefaultCurrentConfigurationPreservationTest.test_default_configuration_matches_main_with_identical_program_inputs)
+2026-10-12T14:24:56.3616913Z ----------------------------------------------------------------------
+2026-10-12T14:24:56.3617349Z Traceback (most recent call last):
+2026-10-12T14:24:56.3623274Z   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_current_risk_heading_case.py", line 189, in test_default_configuration_matches_main_with_identical_program_inputs
+2026-10-12T14:24:56.3624395Z     baseline=subprocess.check_output(['git','show',
+2026-10-12T14:24:56.3624835Z         '2f24282ca9cdefbae07f788b91d88b204c01ed2e:scripts/vnext/ordinary_current_update.py'],text=True)
+2026-10-12T14:24:56.3625435Z   File "/opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/subprocess.py", line 473, in check_output
+2026-10-12T14:24:56.3625899Z     return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+2026-10-12T14:24:56.3626297Z            ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-12T14:24:56.3626661Z                **kwargs).stdout
+2026-10-12T14:24:56.3626944Z                ^^^^^^^^^
+2026-10-12T14:24:56.3627370Z   File "/opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/subprocess.py", line 578, in run
+2026-10-12T14:24:56.3627767Z     raise CalledProcessError(retcode, process.args,
+2026-10-12T14:24:56.3628035Z                              output=stdout, stderr=stderr)
+2026-10-12T14:24:56.3628635Z subprocess.CalledProcessError: Command '['git', 'show', '2f24282ca9cdefbae07f788b91d88b204c01ed2e:scripts/vnext/ordinary_current_update.py']' returned non-zero exit status 128.
+2026-10-12T14:24:56.3629130Z 
+2026-10-12T14:24:56.3629261Z ----------------------------------------------------------------------
+2026-10-12T14:24:56.3629539Z Ran 98 tests in 19.613s
+2026-10-12T14:24:56.3629655Z 
+2026-10-12T14:24:56.3629732Z FAILED (errors=1)
+2026-10-12T14:24:56.3630356Z {"allowed_skips": 0, "errors": 1, "failures": 0, "run": 98, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_current_risk_heading_case", "tests.vnext.test_company_current_records", "tests.vnext.test_ordinary_current_update"]}
+2026-10-12T14:24:56.4251162Z ##[error]Process completed with exit code 1.
+2026-10-12T14:24:56.4365145Z Post job cleanup.
+2026-10-12T14:24:56.5080272Z [command]/usr/bin/git version
+2026-10-12T14:24:56.5117644Z git version 2.55.0
+2026-10-12T14:24:56.5150314Z Temporarily overriding HOME='/home/runner/work/_temp/a262d5ac-3c7c-49bc-a7a6-bf99a7999c7f' before making global git config changes
+2026-10-12T14:24:56.5151471Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-12T14:24:56.5155546Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/SEC_metrics/SEC_metrics
+2026-10-12T14:24:56.5186432Z Removing SSH command configuration
+2026-10-12T14:24:56.5192184Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-12T14:24:56.5223135Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-12T14:24:56.5442663Z Removing HTTP extra header
+2026-10-12T14:24:56.5448735Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-12T14:24:56.5481193Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-12T14:24:56.5718123Z Removing includeIf entries pointing to credentials config files
+2026-10-12T14:24:56.5720272Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-12T14:24:56.5759836Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-12T14:24:56.6135566Z Cleaning up orphan processes

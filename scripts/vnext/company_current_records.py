@@ -60,7 +60,7 @@ def _defects(result, registry):
 def run_saved_company(*, company_id, source_root, work_dir, output_dir,
                       metric_ids=None, defects_file=None, fiscal_years=None, case_factory=None,
                       processing_files=(), case_factories=None, processing_files_by_metric=None,
-                      processing_inputs_by_metric=None):
+                      current_case_factories=None, processing_inputs_by_metric=None):
     """Calculate changed inputs and read durable results into ordinary CSVs."""
     from .normal_annual_input import _registry_rows
     from .deterministic_router import shared_xbrl_parses
@@ -81,6 +81,11 @@ def run_saved_company(*, company_id, source_root, work_dir, output_dir,
     selected = sorted(configured) if metric_ids is None else list(metric_ids)
     _need(selected and len(selected) == len(set(selected)) and set(selected) <= set(configured),
           'COMPANY_CURRENT_METRIC_SCOPE_INVALID')
+    _need(current_case_factories is None or type(current_case_factories) is dict
+          and fiscal_years is None and case_factory is None and case_factories is None
+          and set(current_case_factories) <= set(selected) & EXPLICIT_CASE_METRICS
+          and all(callable(f) for f in current_case_factories.values()),
+          'COMPANY_CURRENT_CURRENT_FACTORIES_INVALID')
     _need(fiscal_years is None or type(fiscal_years) in (list,tuple) and 0<len(fiscal_years)<=5
           and all(type(y) is int and 1900<=y<=9998 for y in fiscal_years)
           and len(fiscal_years)==len(set(fiscal_years)), 'COMPANY_CURRENT_FISCAL_YEAR_SCOPE_INVALID')
@@ -122,7 +127,8 @@ def run_saved_company(*, company_id, source_root, work_dir, output_dir,
             controller = work/'updates'/metric
             period_controller = controller if year is None else controller/'periods'/('FY'+str(year))
             explicit_case = (case_factories is not None and metric in EXPLICIT_CASE_METRICS
-                             and metric in case_factories)
+                             and metric in case_factories) or (
+                             current_case_factories is not None and metric in current_case_factories)
             if metric not in CURRENT_METRICS and not explicit_case:
                 observation = {'metric_id': metric, 'status': 'PROCESSING_INPUT_OR_IMPLEMENTATION_REQUIRED',
                                'reason': 'This saved-source branch has no complete current processing interface for '+metric}
@@ -135,7 +141,9 @@ def run_saved_company(*, company_id, source_root, work_dir, output_dir,
                         processing_files=processing_files if processing_files_by_metric is None
                             else processing_files_by_metric.get(metric, ()),
                         processing_inputs=() if processing_inputs_by_metric is None
-                            else processing_inputs_by_metric.get(metric, ()))}
+                            else processing_inputs_by_metric.get(metric, ()),
+                        **({'current_case_factory':current_case_factories[metric]}
+                           if current_case_factories is not None and metric in current_case_factories else {}))}
                 except Exception as error:
                     observation = {'metric_id': metric, 'status': 'INPUT_OR_EXECUTION_FAILED',
                                    'reason': str(error), 'error_type': type(error).__name__}

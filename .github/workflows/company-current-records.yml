@@ -77,6 +77,10 @@ name: Company saved-source records
     - tests/vnext/test_selected_source_requirements.py
     - tests/vnext/test_company_fiscal_range.py
     - tests/vnext/test_selected_historical_fiscal_label.py
+    - tests/vnext/test_historical_compensation_case.py
+    - tests/vnext/test_text_item_capacity.py
+    - tests/vnext/test_current_risk_heading_case.py
+    - tests/vnext/test_d01_explicit_running_headers.py
     - tests/fixtures/lodging_selected_table.html
     - config/**
     - catalog/**
@@ -274,6 +278,14 @@ jobs:
         tests.vnext.test_historical_filing_inventory_small
         tests.vnext.test_income_amendment_paragraph_dispatch tests.vnext.test_instant_amendment_paragraph_api
         tests.vnext.test_amendment_note_layout
+    - name: Explicit D01 successor and ordinary factory admission
+      env:
+        PYTHONDONTWRITEBYTECODE: '1'
+      run: python3 tests/required_unittests.py tests.vnext.test_d01_explicit_running_headers
+    - name: Current D01 source selection and company consumer
+      env:
+        PYTHONDONTWRITEBYTECODE: '1'
+      run: python3 tests/required_unittests.py tests.vnext.test_current_risk_heading_case tests.vnext.test_company_current_records tests.vnext.test_ordinary_current_update
   company-current:
     needs:
     - company-records

@@ -1,0 +1,121 @@
+Independent repair-only review
+Start: 2026-10-10T04:08:07Z
+Base: b4afa87aec04354bc1e0abf3e6aa4aed65a4105d
+Head: 4a99f5c269422790bbf23c1a41ee107884e1e9b0
+Scope: PROCESSING_FILES two additions and one new regression test. Old review inherited, not restarted.
+Protected baseline SHA256: {"catalog/r6/text_results_v2_policy.json": "16d9b7e46aa73d61f678ff06b0b9b24c1bedb9849840e2d84e90fd3919ce7d3c", "docs/evidence/issue28_current_risk_headings_20261010/independent-review/结论.md": "0ff92e05a9459d65b926d97ebe546e282748d7a533cabac0775f44dc8282e446", "scripts/vnext/current_risk_heading_case.py": "4d6803ba81a5a8fed54f96ac3cd1ad41f6c63fa49681af7c2ae886a961ebd754", "scripts/vnext/text_results_v2.py": "26a0fe518cdbb76377d6afcfde82e0a886eb7e9fc730254abd875012ecf1cc93", "tests/vnext/test_current_risk_heading_case.py": "6b7bb413ee124af47c898c345bd19296b3188506fecb12dcf534a510526bb888"}
+Command: TMPDIR=/private/tmp PYTHONDONTWRITEBYTECODE=1 python3 tests/required_unittests.py tests.vnext.test_current_risk_heading_case
+{"allowed_skips": 0, "errors": 0, "failures": 0, "run": 8, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_current_risk_heading_case"]}
+test_changed_successor_scope_is_refused (tests.vnext.test_current_risk_heading_case.CurrentRiskHeadingCaseTest.test_changed_successor_scope_is_refused) ... ok
+test_cli_selects_current_d01_without_opening_shared_default (tests.vnext.test_current_risk_heading_case.CurrentRiskHeadingCaseTest.test_cli_selects_current_d01_without_opening_shared_default) ... ok
+test_complete_factory_uses_source_heading_and_current_period (tests.vnext.test_current_risk_heading_case.CurrentRiskHeadingCaseTest.test_complete_factory_uses_source_heading_and_current_period) ... ok
+test_consumed_fiscal_parser_and_policy_change_reprocess_once (tests.vnext.test_current_risk_heading_case.CurrentRiskHeadingCaseTest.test_consumed_fiscal_parser_and_policy_change_reprocess_once)
+Real config hashes; small source/record doubles isolate the controller. ... ok
+test_current_factory_is_incompatible_with_historical_selection (tests.vnext.test_current_risk_heading_case.CurrentRiskHeadingCaseTest.test_current_factory_is_incompatible_with_historical_selection) ... ok
+test_old_capacity_is_kept_and_only_true_overflow_uses_successor (tests.vnext.test_current_risk_heading_case.CurrentRiskHeadingCaseTest.test_old_capacity_is_kept_and_only_true_overflow_uses_successor) ... ok
+test_source_error_does_not_enter_capacity_fallback (tests.vnext.test_current_risk_heading_case.CurrentRiskHeadingCaseTest.test_source_error_does_not_enter_capacity_fallback) ... ok
+test_zero_and_129_never_become_partial_results (tests.vnext.test_current_risk_heading_case.CurrentRiskHeadingCaseTest.test_zero_and_129_never_become_partial_results) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.214s
+
+OK
+Command exit code: 0
+
+Independent real-byte digest probe (temporary copies only)
+Actual run_once, _configuration, dependency path resolution and SHA256 reader; source census/proof selection and business writer/reader are small doubles. Factory source file is a temporary helper. Neither parser execution nor business content acceptance is claimed.
+For parser copy append a comment; for policy copy remove CIK schemes. SHA256 reads real bytes from the temporary target copy; all other repository hashes use the original reader.
+[
+  {
+    "dependency": "scripts/vnext/text_results_v2.py",
+    "mode": "repaired",
+    "before_sha256": "26a0fe518cdbb76377d6afcfde82e0a886eb7e9fc730254abd875012ecf1cc93",
+    "changed_sha256": "9193a543855cb4b7c6de01157075f6c8329b6b830d790a3a3526d3590181d491",
+    "statuses": [
+      "CANDIDATE_READY",
+      "CANDIDATE_READY",
+      "NO_SOURCE_CONTENT_CHANGE"
+    ],
+    "factory_calls": 2,
+    "first_saved_file_bytes_unchanged": true,
+    "same_repaired_version_reused": true,
+    "old_saved_files": {
+      "saved-probe.json": "7f638cfd2bdeec9921e567ce6ec6df45223db90d13a6b655ed9177c6c4ac6c87"
+    },
+    "all_new_calls_zero": true
+  },
+  {
+    "dependency": "scripts/vnext/text_results_v2.py",
+    "mode": "old_declaration_negative_control",
+    "before_sha256": "26a0fe518cdbb76377d6afcfde82e0a886eb7e9fc730254abd875012ecf1cc93",
+    "changed_sha256": "9193a543855cb4b7c6de01157075f6c8329b6b830d790a3a3526d3590181d491",
+    "statuses": [
+      "CANDIDATE_READY",
+      "NO_SOURCE_CONTENT_CHANGE",
+      "NO_SOURCE_CONTENT_CHANGE"
+    ],
+    "factory_calls": 1,
+    "first_saved_file_bytes_unchanged": true,
+    "same_repaired_version_reused": true,
+    "old_saved_files": {
+      "saved-probe.json": "7f638cfd2bdeec9921e567ce6ec6df45223db90d13a6b655ed9177c6c4ac6c87"
+    },
+    "all_new_calls_zero": true
+  },
+  {
+    "dependency": "catalog/r6/text_results_v2_policy.json",
+    "mode": "repaired",
+    "before_sha256": "16d9b7e46aa73d61f678ff06b0b9b24c1bedb9849840e2d84e90fd3919ce7d3c",
+    "changed_sha256": "b84e6cd4f8857cda7c27a1b5d07569f7f6c7f943fbbf83d158b295be6721ac64",
+    "statuses": [
+      "CANDIDATE_READY",
+      "CANDIDATE_READY",
+      "NO_SOURCE_CONTENT_CHANGE"
+    ],
+    "factory_calls": 2,
+    "first_saved_file_bytes_unchanged": true,
+    "same_repaired_version_reused": true,
+    "old_saved_files": {
+      "saved-probe.json": "7f638cfd2bdeec9921e567ce6ec6df45223db90d13a6b655ed9177c6c4ac6c87"
+    },
+    "all_new_calls_zero": true
+  },
+  {
+    "dependency": "catalog/r6/text_results_v2_policy.json",
+    "mode": "old_declaration_negative_control",
+    "before_sha256": "16d9b7e46aa73d61f678ff06b0b9b24c1bedb9849840e2d84e90fd3919ce7d3c",
+    "changed_sha256": "b84e6cd4f8857cda7c27a1b5d07569f7f6c7f943fbbf83d158b295be6721ac64",
+    "statuses": [
+      "CANDIDATE_READY",
+      "NO_SOURCE_CONTENT_CHANGE",
+      "NO_SOURCE_CONTENT_CHANGE"
+    ],
+    "factory_calls": 1,
+    "first_saved_file_bytes_unchanged": true,
+    "same_repaired_version_reused": true,
+    "old_saved_files": {
+      "saved-probe.json": "7f638cfd2bdeec9921e567ce6ec6df45223db90d13a6b655ed9177c6c4ac6c87"
+    },
+    "all_new_calls_zero": true
+  }
+]
+
+Final source/declaration check
+{
+  "current_head": "4a99f5c269422790bbf23c1a41ee107884e1e9b0",
+  "reviewed_worktree_bytes_equal_commit": true,
+  "old_processing_file_count": 15,
+  "new_processing_file_count": 17,
+  "exact_additions": [
+    "scripts/vnext/text_results_v2.py",
+    "catalog/r6/text_results_v2_policy.json"
+  ],
+  "no_dependency_removed": true,
+  "protected_bytes_unchanged": true,
+  "check_utc": "2026-10-10T04:10:43.108208+00:00"
+}
+
+Repair review conclusion: PASS_LIMITED_DEPENDENCY_REPAIR
+End: 2026-10-10T04:11:42.050198+00:00
+Accounting including final read-only verification: wrapper=10, nested_exec_command=14, nested_clock=1, total=25; ordinary_messages=1 (final), questions=0.
+Final artifact/source verification completed: 2026-10-10T04:12:00.659870+00:00; exact two review artifacts; protected bytes unchanged; total tools=25; ordinary messages=1.

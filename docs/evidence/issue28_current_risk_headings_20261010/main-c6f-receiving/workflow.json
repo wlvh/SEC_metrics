@@ -1,0 +1,33 @@
+{
+  "main": "c6f5c90f",
+  "all_main_steps_and_paths_preserved": true,
+  "all_jobs_gate_and_timeouts_unchanged": true,
+  "added_steps": [
+    {
+      "name": "Explicit text capacity and retained excerpt contracts",
+      "env": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "run": "python3 tests/required_unittests.py tests.vnext.test_text_item_capacity tests.vnext.test_text_results tests.vnext.test_spec_compiler"
+    },
+    {
+      "name": "Explicit D01 successor and ordinary factory admission",
+      "env": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "run": "python3 tests/required_unittests.py tests.vnext.test_d01_explicit_running_headers"
+    },
+    {
+      "name": "Current D01 source selection and company consumer",
+      "env": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "run": "python3 tests/required_unittests.py tests.vnext.test_current_risk_heading_case tests.vnext.test_company_current_records tests.vnext.test_ordinary_current_update"
+    }
+  ],
+  "added_paths": [
+    "tests/vnext/test_current_risk_heading_case.py",
+    "tests/vnext/test_d01_explicit_running_headers.py",
+    "tests/vnext/test_text_item_capacity.py"
+  ]
+}

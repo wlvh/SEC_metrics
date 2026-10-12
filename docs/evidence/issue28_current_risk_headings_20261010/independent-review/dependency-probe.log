@@ -1,0 +1,14 @@
+{
+  "probe": "actual dependency digest changed in memory without editing files",
+  "missing_dependency": "scripts/vnext/text_results_v2.py",
+  "is_hashed": false,
+  "config_equal_after_virtual_dependency_change": true,
+  "dependency_call": "fiscal_year_labels._MetadataSpans inherits _ReportedFactMetadata; inspect_fiscal_year_labels invokes _verified_context",
+  "run_once_effect": "configuration comparison at ordinary_current_update.py:236 can take unchanged-input return before current factory",
+  "physical_file_mutations": 0,
+  "business_calls": [
+    0,
+    0,
+    0
+  ]
+}
