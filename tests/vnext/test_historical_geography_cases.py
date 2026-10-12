@@ -9,6 +9,21 @@ from vnext import historical_geography_cases as geography
 
 
 class HistoricalGeographyCaseTest(TestCase):
+    def test_exact_original_inventory_reader_is_a_processing_dependency(self):
+        import json
+        from pathlib import Path
+        from tests.vnext.processing_dependency_checks import processing_calls
+        from vnext.zero_ai_r2 import _filing_from_inventory
+        root=Path(__file__).resolve().parents[2]
+        raw=json.dumps({'accessionNumber':['selected'], 'form':['10-K'],
+                        'filingDate':['2022-02-01']}).encode()
+        with processing_calls(root) as observed:
+            self.assertEqual(('10-K','2022-02-01'),
+                             _filing_from_inventory(inventory_bytes=raw,accession='selected'))
+        path='scripts/vnext/zero_ai_r2.py'
+        self.assertIn('_filing_from_inventory',observed[path])
+        self.assertIn(path,geography.PROCESSING_FILES)
+
     def prepare(self, *, applicable=True, amendments=None, mode='CONTINUOUS_PRIMARY',
                 inspector=None):
         period = {'fiscal_year': 2021, 'period_start': '2021-01-01', 'period_end': '2021-12-31'}

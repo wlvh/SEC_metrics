@@ -9,6 +9,23 @@ from vnext import historical_b03_case as cases
 
 
 class HistoricalB03SourcesTest(TestCase):
+    def test_actual_precision_and_table_helpers_are_declared(self):
+        from tests.vnext.test_ordinary_depreciation_sources import DepreciationSourcesTest
+        from tests.vnext.test_b03_current_input_scope import ContractAggregateTest
+        from tests.vnext.processing_dependency_checks import processing_calls
+        from vnext.ordinary_depreciation_sources import inspect_depreciation_sources
+        root=Path(__file__).resolve().parents[2]
+        with processing_calls(root) as observed:
+            result=inspect_depreciation_sources(**DepreciationSourcesTest().packet())
+            contract=ContractAggregateTest()
+            self.assertIsNotNone(contract.check(contract.material()))
+        self.assertFalse(result['definition_complete'])
+        self.assertFalse(result['metric_result_created'])
+        for name in ('r5_b06_scope','b06_disclosure','r5_b06_structured'):
+            path='scripts/vnext/'+name+'.py'
+            self.assertIn(path,observed)
+            self.assertIn(path,cases.PROCESSING_FILES)
+
     def setUp(self):
         self.annual = {'company_id': 'constructed', 'entity': '12345',
             'filing': {'accessionNumber': 'old-selected', 'form': '10-K'},
