@@ -1,0 +1,36 @@
+{
+  "code_head": "d859065629dc64a83cf936ae1aca2b46339ed1bc",
+  "seconds": 8.975395250003203,
+  "exit_code": 2,
+  "arguments": [
+    "run",
+    "--company",
+    "enphase_energy",
+    "--period",
+    "fiscal-years",
+    "--fiscal-year-start",
+    "2024",
+    "--fiscal-year-end",
+    "2024",
+    "--metric",
+    "B02",
+    "--source-root",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "--work-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/enphase-b02-single-segment-consumer-20261012-47/state",
+    "--output-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/enphase-b02-single-segment-consumer-20261012-47/baseline-output"
+  ],
+  "stdout": "{\n  \"elapsed_seconds\": 8.96117629201035,\n  \"record_type\": \"ORDINARY_COMPANY_EXECUTION_V1\",\n  \"company_id\": \"enphase_energy\",\n  \"run_id\": \"20261012T153435Z-7d2f9a42\",\n  \"status\": \"FLOW_COMPLETED_WITH_LIMITATIONS\",\n  \"selected_metrics\": [\n    \"B02\"\n  ],\n  \"metrics\": [\n    {\n      \"metric_id\": \"B02\",\n      \"status\": \"CANDIDATE_WITHHELD\",\n      \"attempt_id\": \"c9d3024f5cd64923a065b92d314f606b\",\n      \"version\": \"876bf0f792f4455d8fe39a7f69d8d9a2\",\n      \"result_id\": \"sha256:01dcc4df61360e4ab6adbbf81455b1ca83a35b8e69927c7aca61d350538fb46d\",\n      \"result_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/enphase-b02-single-segment-consumer-20261012-47/state/updates/B02/periods/FY2024/results/876bf0f792f4455d8fe39a7f69d8d9a2\",\n      \"calculation_performed\": true,\n      \"new_candidate_created\": true,\n      \"result_reason_code\": \"HISTORICAL_PAIRED_REVENUE_SCOPE_UNRESOLVED\",\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"requested_fiscal_year\": 2024,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:01dcc4df61360e4ab6adbbf81455b1ca83a35b8e69927c7aca61d350538fb46d\",\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/enphase-b02-single-segment-consumer-20261012-47/state/updates/B02/periods/FY2024/results/876bf0f792f4455d8fe39a7f69d8d9a2\",\n      \"program_version\": {\n        \"commit\": \"d859065629dc64a83cf936ae1aca2b46339ed1bc\",\n        \"has_uncommitted_changes\": true\n      }\n    }\n  ],\n  \"source_root\": \"/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs\",\n  \"program_root\": \"/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics\",\n  \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/enphase-b02-single-segment-consumer-20261012-47/state\",\n  \"output_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/enphase-b02-single-segment-consumer-20261012-47/baseline-output/20261012T153435Z-7d2f9a42\",\n  \"source_mode\": \"SAVED_ONLY_NO_ONLINE_DISCOVERY\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false,\n  \"selected_fiscal_years\": [\n    2024\n  ]\n}\n",
+  "stderr": "",
+  "source_hashes": {
+    "config/company_registry.csv": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+    "evidence/requests_log.csv": "61252ac5844ad1c5917040f753c04a7ed4f6e1d75e2fb0803804773fd6c0eef9",
+    "evidence/requests_log_manifest.json": "e91193401733b86ddc28c69cbae0debd74eeb899a328e60fcfb32532ed6a85ab"
+  },
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

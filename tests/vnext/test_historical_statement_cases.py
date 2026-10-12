@@ -273,6 +273,7 @@ class HistoricalPairedRevenueAdmissionTest(unittest.TestCase):
                    return_value={'complete_scope_proven': False}) as shared:
             admitted, scope = self.admit(reader, annual, claims, concepts)
         self.assertIs(True, shared.call_args.kwargs['allow_statement_group_totals'])
+        self.assertIs(True, shared.call_args.kwargs['allow_single_segment_revenue'])
         self.assertIs(True, shared.call_args.kwargs['allow_single_revenue_line'])
         self.assertEqual(annual['filing'], shared.call_args.kwargs['annual']['filing'])
         self.assertEqual(annual['table_input']['target_period'],
