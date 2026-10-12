@@ -274,6 +274,8 @@ class HistoricalPairedRevenueAdmissionTest(unittest.TestCase):
             admitted, scope = self.admit(reader, annual, claims, concepts)
         self.assertIs(True, shared.call_args.kwargs['allow_statement_group_totals'])
         self.assertIs(True, shared.call_args.kwargs['allow_single_revenue_line'])
+        self.assertEqual('YEAR_QUARTER_OR_DATE', shared.call_args.kwargs['dei_release'])
+        self.assertEqual('YEAR_OR_DATE_RELEASE', shared.call_args.kwargs['namespace_policy'])
         self.assertEqual(annual['filing'], shared.call_args.kwargs['annual']['filing'])
         self.assertEqual(annual['table_input']['target_period'],
                          shared.call_args.kwargs['annual']['table_input']['target_period'])
@@ -284,6 +286,24 @@ class HistoricalPairedRevenueAdmissionTest(unittest.TestCase):
             cases.PAIRED_REVENUE_PROCESSING_FILES))
         self.assertEqual(len(cases.PAIRED_REVENUE_PROCESSING_FILES),
                          len(set(cases.PAIRED_REVENUE_PROCESSING_FILES)))
+
+    def test_official_quarter_release_keeps_original_claim_and_scope_binding(self):
+        from types import SimpleNamespace
+        from tests.vnext.test_statement_group_totals import closed_statement
+        from tests.vnext.test_selected_reported_revenue_v2 import changed
+        primary, annual = closed_statement()
+        primary = changed(primary, primary['raw_bytes'].replace(
+            b'http://xbrl.sec.gov/dei/2025', b'http://xbrl.sec.gov/dei/2025q4'))
+        primary['raw_blob'] = {'media_type': 'text/html'}
+        xml = {**primary, 'raw_blob': {'media_type': 'application/xml'}}
+        reader = SimpleNamespace(auditor_filing=lambda f: [primary, xml],
+                                 read=lambda *a, **k: {'raw_bytes': b'{}'})
+        _, _, claims, concepts = self.prepared_claims()
+        admitted, scope = self.admit(reader, annual, claims, concepts)
+        self.assertTrue(scope['complete_scope_proven'])
+        self.assertEqual('YEAR_QUARTER_OR_DATE', scope['dei_release'])
+        self.assertEqual([claims[1]], admitted)
+        self.assertIs(claims[1], admitted[0])
 
     def prepared_claims(self):
         from tests.vnext.test_selected_revenue_scope_v1 import originals, facts, APPROVED
