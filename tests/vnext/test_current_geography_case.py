@@ -41,6 +41,17 @@ class CurrentGeographyCaseTest(TestCase):
             after={m:update._configuration(REPO_ROOT,'jpmorgan_chase',m) for m in before}
         self.assertEqual(before['B01'],after['B01']);self.assertNotEqual(before['A13'],after['A13'])
 
+    def test_consumed_scope_contract_change_invalidates_a13_without_unrelated_b01(self):
+        original = update.sha256_file
+        before = {m: update._configuration(REPO_ROOT, 'jpmorgan_chase', m) for m in ('B01', 'A13')}
+        path = REPO_ROOT/'scripts/vnext/scope_contract.py'
+        with patch.object(update, 'sha256_file', side_effect=lambda *, path:
+                'changed-business-scope-contract' if path == REPO_ROOT/'scripts/vnext/scope_contract.py'
+                else original(path=path)):
+            after = {m: update._configuration(REPO_ROOT, 'jpmorgan_chase', m) for m in before}
+        self.assertNotEqual(before['A13'], after['A13'])
+        self.assertEqual(before['B01'], after['B01'])
+
     def test_default_financial_source_reader_retains_old_annual_entry(self):
         with patch.object(financial,'prepare_saved_annual_input',side_effect=ValueError('CONTROL_OLD_ANNUAL')) as old:
             with self.assertRaisesRegex(ValueError,'CONTROL_OLD_ANNUAL'):

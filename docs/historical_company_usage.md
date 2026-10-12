@@ -26,7 +26,7 @@ python3 tools/vnext_company.py run --help
 
 其他既有历史材料仍由 PR52 的已提交 `evidence/issue47_acquired/` 承接。若已经有恢复结果，复用它的实际 `source-inputs` 根，不重新恢复整树。确实需要首次恢复时，使用保留的 `task/sec-history-five-year` 入口：`python tools/vnext_historical_sec.py restore --export evidence/issue47_acquired --out <不存在的新目录>`，并读取返回的 `data_root`；父目录本身不是来源根。恢复不发出 SEC GET，不给未成熟指标授予计算能力。它是既有材料恢复步骤，尚未统一到新公司历史来源准备流程。
 
-[PR205／206已合入main31e4a00d](https://github.com/wlvh/SEC_metrics/pull/206#issuecomment-6130593297)，Enphase历史B02的FY2022–FY2025已核原件并经同一公司入口保存、复跑与独立读取；FY2021仍有前期FY2020原表章节标题识别缺口，不能写成缺原件或已经五年完成。同时新审查确认跨列年表头可能把相邻列成本／净利润错误用于收入范围证明：[准确反例](https://github.com/wlvh/SEC_metrics/pull/206#issuecomment-6130715631)。四个已核原件值继续保留，通用列关联修补由公共侧[PR209](https://github.com/wlvh/SEC_metrics/pull/209)候选交付，历史侧已验证其拒绝反例及一份实际新任务，但本指南main31e4尚未包含该修补；不能把原合入记录当作该反例已经解决。
+[PR205／206已合入main31e4a00d](https://github.com/wlvh/SEC_metrics/pull/206#issuecomment-6130593297)，Enphase历史B02的FY2022–FY2025已核原件并经同一公司入口保存、复跑与独立读取；main31e4中FY2021仍有前期FY2020原表章节标题识别缺口；公共[PR210](https://github.com/wlvh/SEC_metrics/pull/210)候选已读出两期各自原件并给出0.7846131000，历史侧原扣留任务迁移、零计算复跑及子集读取通过。该候选尚未入此main，也不能据此声称本轮重跑了完整五年或所有指标。同时新审查确认跨列年表头可能把相邻列成本／净利润错误用于收入范围证明：[准确反例](https://github.com/wlvh/SEC_metrics/pull/206#issuecomment-6130715631)。四个已核原件值继续保留，通用列关联修补由公共侧[PR209](https://github.com/wlvh/SEC_metrics/pull/209)候选交付，历史侧已验证其拒绝反例及一份实际新任务，但本指南main31e4尚未包含该修补；不能把原合入记录当作该反例已经解决。
 
 保存来源交付的新候选[PR208](https://github.com/wlvh/SEC_metrics/pull/208)尚未进入本指南main。它为B01／B02／B03提供 `export --history-years 5`，使用保存原件选出最近五个发行人财年并检查必要来源，生成供现有 `run --source-root` 消费的普通来源包；它不在线获取缺件，也不是旧native安装包。main31e4的旧历史export仍存在缺模块接缝，不应让用户直接执行候选命令。固定208与实际main的组合、参数及真实历史B02消费见[历史出口接收记录](evidence/issue47_history_export_receiving_20261013/README.md)；年度来源齐全不表示所有指标的依赖或五年业务已完成。
 

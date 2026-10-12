@@ -1,0 +1,54 @@
+[
+  {
+    "attributes": {
+      "accession": "0001463101-22-000016",
+      "deterministic_router_semantic_version": "2",
+      "entity": "1463101",
+      "filed": "2022-02-11",
+      "fiscal_period": "FY",
+      "form": "10-K",
+      "frame": ""
+    },
+    "claim_kind": "COMPANYFACTS_NUMERIC_FACT",
+    "company_id": "enphase_energy",
+    "locator": {
+      "concept": "RevenueFromContractWithCustomerExcludingAssessedTax",
+      "fact_id": "fact:sha256:3edc67f0701e2a7e1d3cbe58ed4b96248828bda5df9e640392aa6daaca91713a",
+      "period_end": "2021-12-31",
+      "period_start": "2021-01-01"
+    },
+    "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+    "source_reference_id": "sha256:ebdf30891011c7d7205644166621f859cc28a92fca6cb243002a004b31fb5bd4",
+    "source_role": "companyfacts",
+    "source_set_manifest_id": "sha256:f8f085ce42536bf2abd64373831f129338b00159291e3e4a9370f3c7cea5af03",
+    "unit": "USD",
+    "value": "1382049000",
+    "verified_claim_id": "sha256:8f65a232099ed12a17742d54709759b63397d88d1197b263c963d6349220d971"
+  },
+  {
+    "attributes": {
+      "accession": "0001463101-21-000016",
+      "deterministic_router_semantic_version": "2",
+      "entity": "1463101",
+      "filed": "2021-02-16",
+      "fiscal_period": "FY",
+      "form": "10-K",
+      "frame": ""
+    },
+    "claim_kind": "COMPANYFACTS_NUMERIC_FACT",
+    "company_id": "enphase_energy",
+    "locator": {
+      "concept": "RevenueFromContractWithCustomerExcludingAssessedTax",
+      "fact_id": "fact:sha256:b27e79844f06abce1aac0d255c28720698bafa40392edfa3e74a2cdb44ad7c3c",
+      "period_end": "2020-12-31",
+      "period_start": "2020-01-01"
+    },
+    "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+    "source_reference_id": "sha256:c219cb315f6a2a978f12dced1875c3963d80f97fce1651abce92c2ab21146801",
+    "source_role": "companyfacts",
+    "source_set_manifest_id": "sha256:45ae91241511f37f25698d685a5d35d9f013762f67dea7b5f47d5e9afd648262",
+    "unit": "USD",
+    "value": "774425000",
+    "verified_claim_id": "sha256:851255da72261fcb72d3e5a5a56fe4d2cdf6d9b59a94989acc85cafd5491144c"
+  }
+]
