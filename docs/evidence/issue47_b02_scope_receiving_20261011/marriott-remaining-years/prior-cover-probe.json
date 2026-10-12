@@ -1,0 +1,146 @@
+{
+  "rows": [
+    {
+      "fy": 2022,
+      "filing": {
+        "form": "10-K",
+        "reportDate": "2022-12-31",
+        "filingDate": "2023-02-14",
+        "accessionNumber": "0001628280-23-003485",
+        "primaryDocument": "mar-20221231.htm"
+      },
+      "period": {
+        "fiscal_year": 2022,
+        "period_start": "2022-01-01",
+        "period_end": "2022-12-31"
+      },
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:5c52fe5d4bfa948787dcbb4dc0c94753b4386277e72cb5de0faa16d51132e16c",
+        "raw_asset_id": "sha256:c041a0501c788a5cc6bb2e6155e6ea345834e1baca2d6165d6d7af22e1b5e95d",
+        "company_id": "marriott_international",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828023003485/mar-20221231.htm",
+        "accession": "0001628280-23-003485",
+        "document_name": "mar-20221231.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:5836da53826ffe45979f0e9f98d74d08d6dbf8e96fb514089e19cb748bde4924"
+      },
+      "headers": {
+        "patterns": [
+          "weighted average number of common shares outstanding:",
+          "amounts attributable to marriott\\ international\\ inc\\ /md/:",
+          "(?:basic|diluted) net earnings \\(loss\\) per common share attributable to marriott\\ international\\ inc\\ /md/:",
+          "amounts attributable to marriott\\ international,\\ inc\\.:",
+          "(?:basic|diluted) net earnings \\(loss\\) per common share attributable to marriott\\ international,\\ inc\\.:"
+        ],
+        "definitions": [
+          {
+            "same_source_cover_name_binding": {
+              "dei_facts": [
+                {
+                  "namespace": "http://xbrl.sec.gov/dei/2022",
+                  "fact": {
+                    "tag": "ix:nonnumeric",
+                    "qualified_name": "dei:EntityRegistrantName",
+                    "context_ref": "ibaf0fd9f3f5b41649a46ca07be058e34_D20220101-20221231",
+                    "unit_ref": "",
+                    "scale": "0",
+                    "sign": "",
+                    "ordinal": 4,
+                    "text": "MARRIOTT INTERNATIONAL INC /MD/"
+                  },
+                  "context": {
+                    "context_ref": "ibaf0fd9f3f5b41649a46ca07be058e34_D20220101-20221231",
+                    "dimensions": {},
+                    "entity_identifier": "0001048286",
+                    "period_end": "2022-12-31",
+                    "period_start": "2022-01-01",
+                    "typed_dimension_count": 0
+                  }
+                }
+              ],
+              "invalid_dei_contexts": [],
+              "cover_name": {
+                "source_reference_id": "sha256:5c52fe5d4bfa948787dcbb4dc0c94753b4386277e72cb5de0faa16d51132e16c",
+                "raw_asset_id": "sha256:c041a0501c788a5cc6bb2e6155e6ea345834e1baca2d6165d6d7af22e1b5e95d",
+                "document_id": "sha256:afb0206fbb1ab4ec55fea144e1a7e4a9d824dc605ee388766bd87d80f7ff6c04",
+                "section_id": "ANNUAL_COVER",
+                "labels": [
+                  "EXPLICIT_REGISTRANT_CHARTER_NAME"
+                ],
+                "block_index": 11,
+                "text": "MARRIOTT INTERNATIONAL, INC.",
+                "raw_start_byte": 158526,
+                "raw_end_byte": 158554,
+                "raw_span_sha256": "67dbf625b33e878a070ab52aeafcbd82d7596710ff367865a58c8495f27a03ff"
+              },
+              "cover_caption": {
+                "source_reference_id": "sha256:5c52fe5d4bfa948787dcbb4dc0c94753b4386277e72cb5de0faa16d51132e16c",
+                "raw_asset_id": "sha256:c041a0501c788a5cc6bb2e6155e6ea345834e1baca2d6165d6d7af22e1b5e95d",
+                "document_id": "sha256:afb0206fbb1ab4ec55fea144e1a7e4a9d824dc605ee388766bd87d80f7ff6c04",
+                "section_id": "ANNUAL_COVER",
+                "labels": [
+                  "EXACT_NAME_OF_REGISTRANT_LABEL"
+                ],
+                "block_index": 12,
+                "text": "(Exact name of registrant as specified in its charter)",
+                "raw_start_byte": 158714,
+                "raw_end_byte": 158768,
+                "raw_span_sha256": "83c9ba74048e5a956ba8180409324361523cafc335d3b988dae1124b8086a332"
+              },
+              "relation": {
+                "relation": "SAME_SUBSTANTIVE_WORDS_AND_TERMINAL_LEGAL_FORM",
+                "removed_dei_terminal_marker": "/MD/",
+                "marker_jurisdiction_meaning_asserted": false,
+                "terminal_legal_form": "incorporated"
+              },
+              "accepted_source_names": [
+                "MARRIOTT INTERNATIONAL INC /MD/",
+                "MARRIOTT INTERNATIONAL, INC."
+              ],
+              "status": "SAME_SOURCE_COVER_AND_CURRENT_DEI_NAME_BOUND"
+            }
+          }
+        ],
+        "heading_patterns": [
+          "marriott\\ international\\ inc\\ /md/",
+          "marriott\\ international,\\ inc\\."
+        ]
+      },
+      "status": "PROVED"
+    },
+    {
+      "fy": 2021,
+      "filing": {
+        "form": "10-K",
+        "reportDate": "2021-12-31",
+        "filingDate": "2022-02-15",
+        "accessionNumber": "0001628280-22-002666",
+        "primaryDocument": "mar-20211231.htm"
+      },
+      "period": {
+        "fiscal_year": 2021,
+        "period_start": "2021-01-01",
+        "period_end": "2021-12-31"
+      },
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:d0c992921c09a5397ceb543f3ceadb77c0de62273773b81ceec4836d559e37b0",
+        "raw_asset_id": "sha256:54effe78b84966cd0793dcb23b8db4ad30b0614ea3d42074f3ece89adebe8bf5",
+        "company_id": "marriott_international",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828022002666/mar-20211231.htm",
+        "accession": "0001628280-22-002666",
+        "document_name": "mar-20211231.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:36f896c0fded2624677e9814f876621965fe1f061b3e483c1e706c578c541637"
+      },
+      "status": "REJECTED",
+      "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING"
+    }
+  ],
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
