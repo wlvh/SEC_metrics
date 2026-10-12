@@ -42,7 +42,8 @@ def _label_key(text):
 
 
 def _statement_scope(raw, index, parsed, table, *, adjacent_heading=False,
-                     extra_unit_headers=(), extra_section_headers=(), bind_statement_page=False):
+                     extra_unit_headers=(), extra_section_headers=(), bind_statement_page=False,
+                     extra_heading_headers=()):
     """Bind the actual consolidated statement title and unassigned prose.
 
     An unfamiliar local scope statement is unresolved, not silently ignored.
@@ -162,10 +163,12 @@ def _statement_scope(raw, index, parsed, table, *, adjacent_heading=False,
         _need(all(b in navigation or company_key(b['visible_text']) in issuer_lines
                   or re.fullmatch(title_pattern,_label_key(b['visible_text']))
                   or any(re.fullmatch(p,b['visible_text'].strip(),re.I) for p in unit_headers)
+                  or any(re.fullmatch(p,b['visible_text'].strip(),re.I) for p in extra_heading_headers)
                   for b in intro), 'STATEMENT_HEADING_SCOPE_UNRESOLVED')
     after_title = [b for b in intro if titles and b['start_byte'] >= titles[-1]['end_byte']]
     _need(all(company_key(b['visible_text']) in issuer_lines
               or adjacent_heading and any(re.fullmatch(p,b['visible_text'].strip(),re.I) for p in unit_headers)
+              or adjacent_heading and any(re.fullmatch(p,b['visible_text'].strip(),re.I) for p in extra_heading_headers)
               for b in after_title),
           'STATEMENT_INTRODUCTION_SCOPE_UNRESOLVED')
     # Capture every nonempty explanatory row, not just a cancellation keyword.

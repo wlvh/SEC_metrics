@@ -1,0 +1,19 @@
+SOURCE HEADING DIAGNOSTIC [('Table of Contents\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0', 917348, 918203), ('MARRIOTT INTERNATIONAL, INC. ', 918209, 918414), ('CONSOLIDATED STATEMENTS OF INCOME', 918414, 918608), ('Fiscal Years 2024, 2023, and 2022', 918608, 918802), ('(in millions, except per share amounts)', 918802, 919002)]
+Traceback (most recent call last):
+  File "<stdin>", line 17, in <module>
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 157, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=True)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 162, in _statement_scope
+    _need(all(b in navigation or company_key(b['visible_text']) in issuer_lines
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              or re.fullmatch(title_pattern,_label_key(b['visible_text']))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              or any(re.fullmatch(p,b['visible_text'].strip(),re.I) for p in unit_headers)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              for b in intro), 'STATEMENT_HEADING_SCOPE_UNRESOLVED')
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_SCOPE_UNRESOLVED

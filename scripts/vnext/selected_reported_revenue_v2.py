@@ -14,17 +14,33 @@ from .selected_revenue_scope_v1 import UNIT_HEADER, STATEMENT_CONCEPTS, _label, 
 from .xbrl_namespace_policy import YEAR_ONLY
 
 
+# Explicit consumers of the section-closing contract add these dependencies
+# to their existing processing identity. No old consumer is opted in here.
+STATEMENT_GROUP_PROCESSING_FILES = (
+    'scripts/vnext/selected_reported_revenue_v2.py',
+    'scripts/vnext/selected_revenue_scope_v1.py',
+    'scripts/vnext/going_concern_source.py',
+    'scripts/vnext/text_business_candidates.py',
+    'scripts/vnext/text_coverage.py',
+    'scripts/vnext/normal_annual_input_v2.py',
+    'catalog/r6/going_concern_source_rules_v1.json',
+    'catalog/r6/text_business_candidates_v1.json',
+)
+
+
 def _need(condition,reason):
     if not condition:raise IncomeSourceError('SELECTED_REPORTED_REVENUE_'+reason)
 
 
 def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
                            namespace_policy=YEAR_ONLY,annual_period_reader=None,
-                           fiscal_label_resolution=None,allow_single_revenue_line=False):
+                           fiscal_label_resolution=None,allow_single_revenue_line=False,
+                           allow_statement_group_totals=False):
     from .financial_structured import _InlineTableIndex,_fact_cells
     from .financial_duration import _column_period,_cell_proof,_MONTH,_DATE,_date
     from .deterministic_router import parse_accession_xbrl_source
     _need(type(allow_single_revenue_line) is bool,'SINGLE_REVENUE_OPTION_INVALID')
+    _need(type(allow_statement_group_totals) is bool,'STATEMENT_GROUP_OPTION_INVALID')
     concepts=sorted(set(approved_concepts)|set(STATEMENT_CONCEPTS))
     options={'namespace_policy':namespace_policy,'annual_period_reader':annual_period_reader}
     rows=native_income_reports(primary,annual,concepts,**options)
@@ -60,7 +76,9 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
             _label(table,cell).casefold().split()) == 'operating revenue'
         single=allow_single_revenue_line and (label in {'revenue','revenues'} or single_operating)
         operating = ' '.join(_label(table,cell).casefold().split()) == 'total operating revenues'
-        if label not in {'total revenue','total revenues','total net revenues'} and not (single or operating):continue
+        group_total=allow_statement_group_totals and label==''
+        if group_total and xml is None:continue
+        if label not in {'total revenue','total revenues','total net revenues'} and not (single or operating or group_total):continue
         if (row['period_start'],row['period_end'])!=(period['period_start'],period['period_end']):continue
         same=[r for r in rows if r['context_ref']==row['context_ref'] and r['ordinal'] in bound
               and bound[r['ordinal']][0]['table_id']==table['table_id']
@@ -78,10 +96,11 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
                     in {'total operating expenses', 'total operating expenses, net'}]
         names={r['concept'].casefold() for r in same}
         complete_expenses=None
-        if single and not (names & {'us-gaap:costofrevenue','us-gaap:costofgoodsandservicessold'}):
+        if group_total or (single and not (names & {'us-gaap:costofrevenue','us-gaap:costofgoodsandservicessold'})):
             try:
                 complete_expenses=_complete_expense_statement(primary,xml,annual,options,
-                    index,parsed,table,cell,row,same,column_year=column_year)
+                    index,parsed,table,cell,row,same,column_year=column_year,
+                    **({'section_closed':True} if group_total else {}))
             except IncomeSourceError as error:
                 # Failure of this added proof is not failure of the source or
                 # permission to replace the caller's existing fallback. Only
@@ -94,7 +113,10 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
         if not(names & {'us-gaap:netincomeloss','us-gaap:profitloss'}
                and (names & {'us-gaap:costofrevenue','us-gaap:costofgoodsandservicessold'}
                     or operating_costs or complete_expenses)):continue
+        if group_total and complete_expenses is None:continue
         extra_units=(r'\(?(?:in |dollars in )?(?:millions|thousands), except per share amounts\)?',) if operating else ()
+        if group_total:
+            extra_units=(r'\(?(?:in )?(?:millions|thousands), except per share amounts\)?',)
         if single_operating:
             extra_units = (r'\(?dollars in (?:millions|thousands), except per share amounts, and shares in thousands\)?',)
         unit_headers=UNIT_HEADER+extra_units
@@ -145,11 +167,17 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
                         r'weighted average common stock outstanding')
         issuer_headers=None
         if complete_expenses:
-            issuer_headers=_defined_income_headers(primary,parsed,annual)
+            issuer_headers=_defined_income_headers(primary,parsed,annual,
+                **({'include_cover':True} if group_total else {}))
             sections=(*sections,*issuer_headers['patterns'])
+        if group_total:
+            sections=(*sections,r'operating costs and expenses:?',r'earnings per share')
         statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
             extra_unit_headers=extra_units,
-            extra_section_headers=sections, bind_statement_page=True)
+            extra_section_headers=sections, bind_statement_page=True,
+            **({'extra_heading_headers':(*issuer_headers['heading_patterns'],
+                r'fiscal years '+str(column_year)+r', '+str(column_year-1)+
+                r', and '+str(column_year-2))} if group_total else {}))
         unit_stop = cell['row_index'] if single_operating else column['row_index']+1
         units=[{'kind':'visible_cell','proof':_cell_proof(table=table,cell=c),'text':c['text']}
                for r in table['rows'][:unit_stop] for c in r['cells']
@@ -164,6 +192,7 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
         _need(xml_rows is None or matches,'PRIMARY_XML_TOTAL_DIFFERS')
         selected.append({**({'operating_expense_reports':operating_costs} if operating else {}),'total':row,'total_cell':_cell_proof(table=table,cell=cell),
                          **({'complete_expense_statement':complete_expenses} if complete_expenses else {}),
+                         **({'statement_group_total':True} if group_total else {}),
                          **({'issuer_header_definition':issuer_headers['definitions']} if issuer_headers else {}),
                          'statement_scope':statement,'unit_sources':units,
                          'year_headers':[_cell_proof(table=table,cell=h) for h,_,_ in headers],
@@ -178,13 +207,15 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
           'complete_scope_proven':bool(selected),'original_reports':rows}
     if complete_expense_rejections:
         body['complete_expense_rejections']=complete_expense_rejections
+    if allow_statement_group_totals:
+        body['statement_group_totals_allowed']=True
     if allow_single_revenue_line:
         body.update(method='SELECTED_REPORTED_SINGLE_REVENUE_LINE_V1',
                     single_revenue_line_allowed=True)
     return {**body,'scope_id':content_hash(value=body)}
 
 
-def _defined_income_headers(primary,parsed,annual):
+def _defined_income_headers(primary,parsed,annual,*,include_cover=False):
     """Exact issuer headings from its explicit consolidated alias definition."""
     from .fiscal_year_labels import _DefinitionBlocks
     from .text_results_v2 import _ReportedFactMetadata
@@ -202,6 +233,19 @@ def _defined_income_headers(primary,parsed,annual):
         and parsed.contexts[f['context_ref']]['period_start']==annual['table_input']['target_period']['period_start']
         and parsed.contexts[f['context_ref']]['period_end']==annual['table_input']['target_period']['period_end']}
     aliases=set(names);definitions=[]
+    if include_cover and any(re.search(r'\s+/[A-Za-z]{2}/\s*$',name) for name in names):
+        from .text_coverage import build_text_document
+        from .going_concern_source import _registrant_name_binding
+        document=build_text_document(raw_bytes=raw,raw_blob=primary['raw_blob'],
+            source_reference=primary['source_reference'],expected_company_id=annual['company_id'],
+            expected_cik=annual['entity'],expected_period_end=annual['filing']['reportDate'])
+        binding=_registrant_name_binding(document,parsed,meta)
+        from .normal_annual_input_v2 import exact_json_value
+        binding=exact_json_value(binding)
+        _need(binding['status']=='SAME_SOURCE_COVER_AND_CURRENT_DEI_NAME_BOUND',
+              'COMPLETE_EXPENSE_COVER_NAME_NOT_BOUND')
+        aliases.update(binding['accepted_source_names'])
+        definitions.append({'same_source_cover_name_binding':binding})
     blocks=_DefinitionBlocks(text);blocks.feed(text);blocks.close();blocks._flush()
     for block in blocks.blocks:
         if block['quoted_context'] or block['linked']:continue
@@ -224,10 +268,12 @@ def _defined_income_headers(primary,parsed,annual):
         escaped=re.escape(name.casefold())
         patterns.extend([r'amounts attributable to '+escaped+r':',
             r'(?:basic|diluted) net earnings \(loss\) per common share attributable to '+escaped+r':'])
-    return {'patterns':patterns,'definitions':definitions}
+    return {'patterns':patterns,'definitions':definitions,
+            **({'heading_patterns':tuple(re.escape(name.casefold()) for name in sorted(aliases))}
+               if include_cover else {})}
 
 
-def _complete_expense_statement(primary,xml,annual,options,index,parsed,table,cell,revenue,following,*,column_year=None):
+def _complete_expense_statement(primary,xml,annual,options,index,parsed,table,cell,revenue,following,*,column_year=None,section_closed=False):
     """The full expense group and its reported operating result in one column."""
     if column_year is None:column_year=annual['table_input']['target_period']['fiscal_year']
     from decimal import Decimal
@@ -241,12 +287,18 @@ def _complete_expense_statement(primary,xml,annual,options,index,parsed,table,ce
     if not candidates:return None
     _need(len(candidates)==1,'COMPLETE_EXPENSE_TOTAL_AMBIGUOUS')
     expense=candidates[0];expense_cell=bound[expense['ordinal']][1]
-    _need(' '.join(_label(table,expense_cell).casefold().split())=='total costs and expenses',
+    _need((_label(table,expense_cell).strip()=='' if section_closed else
+           ' '.join(_label(table,expense_cell).casefold().split())=='total costs and expenses'),
           'COMPLETE_EXPENSE_TOTAL_LABEL_UNPROVEN')
+    closed_sections=[]
+    if section_closed:
+        for amount,header in ((cell,r'revenues:?'),(expense_cell,r'operating costs and expenses:?')):
+            closed_sections.append(_closed_section_total(table,amount,header=header))
     group=[]
     for gridrow in table['rows'][cell['row_index']+1:expense_cell['row_index']]:
         origins=[c for c in gridrow['cells'] if c['is_origin'] and c['text'].strip()]
-        if len(origins)==1 and origins[0]['text'].strip().casefold()=='costs and expenses:':
+        if len(origins)==1 and (re.fullmatch(r'operating costs and expenses:?',origins[0]['text'].strip(),re.I)
+                if section_closed else origins[0]['text'].strip().casefold()=='costs and expenses:'):
             group.append(origins[0])
     _need(len(group)==1,'COMPLETE_EXPENSE_GROUP_UNPROVEN')
     operating=native_income_reports(primary,annual,['us-gaap:OperatingIncomeLoss'],**options)
@@ -312,7 +364,35 @@ def _complete_expense_statement(primary,xml,annual,options,index,parsed,table,ce
             'operating_income':income,'operating_cell':_cell_proof(table=table,cell=income_cell),
             'neutral_intermediate_reports':neutral,
             'annual_period':annual['table_input']['target_period'],'xml_matches':matches,
-            'xml_check':'MATCH' if xml is not None else 'NOT_SUPPLIED'}
+            'xml_check':'MATCH' if xml is not None else 'NOT_SUPPLIED',
+            **({'closed_sections':closed_sections} if section_closed else {})}
+
+
+def _closed_section_total(table,cell,*,header):
+    """A blank reported total must close its explicitly named section."""
+    before=[]
+    for row in table['rows'][:cell['row_index']]:
+        cells=[c for c in row['cells'] if c['is_origin'] and c['text'].strip()]
+        if len(cells)==1 and re.fullmatch(header,cells[0]['text'].strip(),re.I):
+            before.append(cells[0])
+    _need(len(before)==1,'COMPLETE_EXPENSE_SECTION_HEADER_UNPROVEN')
+    _need(any(c['is_origin'] and c['text'].strip()
+        and c['column_index']<=cell['column_index']<c['column_index']+c['colspan']
+        for row in table['rows'][before[0]['row_index']+1:cell['row_index']] for c in row['cells']),
+        'COMPLETE_EXPENSE_SECTION_COMPONENTS_MISSING')
+    _need(not _label(table,cell).strip(),'COMPLETE_EXPENSE_SECTION_TOTAL_NOT_BLANK')
+    following=[row for row in table['rows'][cell['row_index']+1:]
+               if any(c['is_origin'] and c['text'].strip() for c in row['cells'])]
+    _need(bool(following),'COMPLETE_EXPENSE_SECTION_END_MISSING')
+    next_label=' '.join(' '.join(c['text'] for c in following[0]['cells']
+        if c['is_origin'] and c['column_index']<cell['column_index']).casefold().split())
+    expected=(r'operating costs and expenses:?' if header==r'revenues:?'
+              else r'operating (?:income|loss)(?: \(loss\))?')
+    _need(re.fullmatch(expected,next_label,re.I) is not None,
+          'COMPLETE_EXPENSE_SECTION_END_UNPROVEN')
+    from .financial_duration import _cell_proof
+    return {'section_header':_cell_proof(table=table,cell=before[0]),
+            'total_row':cell['row_index'],'next_section_row':following[0]['row_index']}
 
 
 def _single_revenue_line(index,parsed,table,cell,row,column,following,*,extra_unit_headers=(),first_cost_row=None):
