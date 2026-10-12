@@ -1,0 +1,26 @@
+test_explicit_net_revenue_top_line_has_the_same_complete_statement_checks (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_explicit_net_revenue_top_line_has_the_same_complete_statement_checks) ... 
+  test_explicit_net_revenue_top_line_has_the_same_complete_statement_checks (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_explicit_net_revenue_top_line_has_the_same_complete_statement_checks) (label=b'Net revenue') ... FAIL
+  test_explicit_net_revenue_top_line_has_the_same_complete_statement_checks (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_explicit_net_revenue_top_line_has_the_same_complete_statement_checks) (label=b'Net revenues') ... FAIL
+
+======================================================================
+FAIL: test_explicit_net_revenue_top_line_has_the_same_complete_statement_checks (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_explicit_net_revenue_top_line_has_the_same_complete_statement_checks) (label=b'Net revenue')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/tests/vnext/test_single_revenue_line.py", line 31, in test_explicit_net_revenue_top_line_has_the_same_complete_statement_checks
+    self.assertTrue(result['complete_scope_proven'])
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_explicit_net_revenue_top_line_has_the_same_complete_statement_checks (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_explicit_net_revenue_top_line_has_the_same_complete_statement_checks) (label=b'Net revenues')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/tests/vnext/test_single_revenue_line.py", line 31, in test_explicit_net_revenue_top_line_has_the_same_complete_statement_checks
+    self.assertTrue(result['complete_scope_proven'])
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 1 test in 0.032s
+
+FAILED (failures=2)

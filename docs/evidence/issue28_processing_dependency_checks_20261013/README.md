@@ -108,3 +108,12 @@ commit records the tested bytes; its future SHA was not claimed at execution
 time. Remote head/tree equality and CI are tracked separately. No new SEC,
 provider or paid calls; no old ledger/root reset, frozen-run signing, adoption,
 Ready, merge, deployment or active switch.
+
+
+## Returned receiving increment: actual A13 and current main
+
+Actual feedback6130757933 was read. The same observer on the complete saved JPM A13 factory reproduces precisely the missing scope_contract module: validate_scope_contract, scope_satisfies_contract and scope_contract_hash really execute; a13-before.log is red28.511s. Add scope_contract to current_geography_case.PROCESSING_FILES only. a13-after.log28.482s verifies the complete real factory and a deliberately removed effective dependency must still fail. No factory/parser success mock or invented result.
+
+The configuration control also proves this relevant scope rule change changes A13 configuration while unrelated B01 remains reusable. Current main31e4 is normally merged: only two adjacent workflow/runner append sections conflict, resolved as a union preserving cover/single-segment/processing fast selectors, processing source material, and every explicit step. Function bodies and timeouts unchanged; Python AST and Ruby YAML actually checked. a13-main-controls.log:88 tests0.944s, zero skip; a13-main-material.log:2 tests44.846s, combining the existing EnphaseB01/B04 factories with real JPM A13. Original source/CLI B04 evidence is reused only for unchanged responsibilities; no repeat of the large company chain.
+
+Historical average-risk declarations/tests are owned by the historical agent; no parallel core or edits to its workspace. The receiver's trace of other current metrics is read evidence, not a claim this author independently repeated all of it. E01 was not covered by that receiver probe. This increment does not turn module coverage into complete business acceptance. Actual tested main-merge HEAD is e56ba5aa with only output logs/docs uncommitted; subsequent evidence commit preserves those production/test bytes. New public head/tree are in the PR reply; old8ef green does not certify the new head. 0/0/0 new business calls; no body write to project receivingIssue153.
