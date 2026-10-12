@@ -213,6 +213,7 @@ FAST_TESTS += ('tests.vnext.test_historical_auditor_case',)
 FAST_TESTS += ("tests.vnext.test_statement_group_totals",)
 FAST_TESTS += ("tests.vnext.test_cover_dei_release",)
 FAST_TESTS += ("tests.vnext.test_single_segment_revenue",)
+FAST_TESTS += ("tests.vnext.test_income_section_captions",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # The unchanged full original-source module passed on head 698b9a45 in
