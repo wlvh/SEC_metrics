@@ -1,0 +1,38 @@
+FFF.
+======================================================================
+FAIL: test_shared_year_header_does_not_bind_another_amount_column (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_shared_year_header_does_not_bind_another_amount_column) (shifted=('Cost of sales',))
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/tests/vnext/test_single_segment_revenue.py", line 43, in test_shared_year_header_does_not_bind_another_amount_column
+    with self.subTest(shifted=shifted), self.assertRaisesRegex(ValueError,
+                                        ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+            'SINGLE_SEGMENT_STATEMENT_COLUMN_CONFLICT'):
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_shared_year_header_does_not_bind_another_amount_column (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_shared_year_header_does_not_bind_another_amount_column) (shifted=('Net income',))
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/tests/vnext/test_single_segment_revenue.py", line 43, in test_shared_year_header_does_not_bind_another_amount_column
+    with self.subTest(shifted=shifted), self.assertRaisesRegex(ValueError,
+                                        ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+            'SINGLE_SEGMENT_STATEMENT_COLUMN_CONFLICT'):
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_shared_year_header_does_not_bind_another_amount_column (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_shared_year_header_does_not_bind_another_amount_column) (shifted=('Cost of sales', 'Net income'))
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/tests/vnext/test_single_segment_revenue.py", line 43, in test_shared_year_header_does_not_bind_another_amount_column
+    with self.subTest(shifted=shifted), self.assertRaisesRegex(ValueError,
+                                        ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+            'SINGLE_SEGMENT_STATEMENT_COLUMN_CONFLICT'):
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.066s
+
+FAILED (failures=3)

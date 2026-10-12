@@ -145,9 +145,11 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
                 if following['concept'].casefold() not in {'us-gaap:netincomeloss','us-gaap:profitloss',
                         'us-gaap:costofrevenue','us-gaap:costofgoodsandservicessold'}:continue
                 following_cell=bound[following['ordinal']][1]
+                covers_revenue_column=(following_cell['column_index'] <= cell['column_index']
+                    < following_cell['column_index']+following_cell['colspan'])
                 following_column,following_headers,reason=_column_period(table=table,selected=following_cell,
                     extra_header_descriptors=unit_headers)
-                _need(not reason and following_column['year']==column_year
+                _need(covers_revenue_column and not reason and following_column['year']==column_year
                     and {(h['origin_row_index'],h['origin_column_index']) for h,_,_ in following_headers}==year_group,
                     'SINGLE_SEGMENT_STATEMENT_COLUMN_CONFLICT')
                 _need(int(native_by_ordinal[following['ordinal']]['scale'] or 0)
