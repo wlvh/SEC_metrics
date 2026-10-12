@@ -1,0 +1,198 @@
+test_bank_consumers_declare_the_actual_fiscal_text_readers (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_bank_consumers_declare_the_actual_fiscal_text_readers) ... 
+  test_bank_consumers_declare_the_actual_fiscal_text_readers (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_bank_consumers_declare_the_actual_fiscal_text_readers) (metric='A03') ... FAIL
+  test_bank_consumers_declare_the_actual_fiscal_text_readers (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_bank_consumers_declare_the_actual_fiscal_text_readers) (metric='A12') ... FAIL
+  test_bank_consumers_declare_the_actual_fiscal_text_readers (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_bank_consumers_declare_the_actual_fiscal_text_readers) (metric='A04') ... FAIL
+  test_bank_consumers_declare_the_actual_fiscal_text_readers (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_bank_consumers_declare_the_actual_fiscal_text_readers) (metric='A09') ... FAIL
+  test_bank_consumers_declare_the_actual_fiscal_text_readers (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_bank_consumers_declare_the_actual_fiscal_text_readers) (metric='A11') ... FAIL
+test_bank_fiscal_text_changes_process_once_then_reuse (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_bank_fiscal_text_changes_process_once_then_reuse) ... 
+  test_bank_fiscal_text_changes_process_once_then_reuse (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_bank_fiscal_text_changes_process_once_then_reuse) (metric='A03', module='text_coverage') ... FAIL
+  test_bank_fiscal_text_changes_process_once_then_reuse (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_bank_fiscal_text_changes_process_once_then_reuse) (metric='A03', module='text_results_v2') ... FAIL
+  test_bank_fiscal_text_changes_process_once_then_reuse (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_bank_fiscal_text_changes_process_once_then_reuse) (metric='A12', module='text_coverage') ... FAIL
+  test_bank_fiscal_text_changes_process_once_then_reuse (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_bank_fiscal_text_changes_process_once_then_reuse) (metric='A12', module='text_results_v2') ... FAIL
+  test_bank_fiscal_text_changes_process_once_then_reuse (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_bank_fiscal_text_changes_process_once_then_reuse) (metric='A04', module='text_coverage') ... FAIL
+  test_bank_fiscal_text_changes_process_once_then_reuse (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_bank_fiscal_text_changes_process_once_then_reuse) (metric='A04', module='text_results_v2') ... FAIL
+  test_bank_fiscal_text_changes_process_once_then_reuse (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_bank_fiscal_text_changes_process_once_then_reuse) (metric='A09', module='text_coverage') ... FAIL
+  test_bank_fiscal_text_changes_process_once_then_reuse (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_bank_fiscal_text_changes_process_once_then_reuse) (metric='A09', module='text_results_v2') ... FAIL
+  test_bank_fiscal_text_changes_process_once_then_reuse (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_bank_fiscal_text_changes_process_once_then_reuse) (metric='A11', module='text_coverage') ... FAIL
+  test_bank_fiscal_text_changes_process_once_then_reuse (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_bank_fiscal_text_changes_process_once_then_reuse) (metric='A11', module='text_results_v2') ... FAIL
+
+======================================================================
+FAIL: test_bank_consumers_declare_the_actual_fiscal_text_readers (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_bank_consumers_declare_the_actual_fiscal_text_readers) (metric='A03')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_selected_historical_fiscal_label.py", line 41, in test_bank_consumers_declare_the_actual_fiscal_text_readers
+    assert_processing_calls(observed,configuration,consumer.PROCESSING_FILES)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/processing_dependency_checks.py", line 46, in assert_processing_calls
+    raise AssertionError('PROCESSING_DEPENDENCY_UNDECLARED: '+detail)
+AssertionError: PROCESSING_DEPENDENCY_UNDECLARED: scripts/vnext/text_coverage.py:<genexpr>,__init__,_byte_offsets,_flush,_need,_offset,_part,handle_data,handle_endtag,handle_starttag; scripts/vnext/text_results_v2.py:<genexpr>,__init__,_iso,_need,_verified_context,handle_data,handle_endtag,handle_starttag
+
+======================================================================
+FAIL: test_bank_consumers_declare_the_actual_fiscal_text_readers (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_bank_consumers_declare_the_actual_fiscal_text_readers) (metric='A12')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_selected_historical_fiscal_label.py", line 41, in test_bank_consumers_declare_the_actual_fiscal_text_readers
+    assert_processing_calls(observed,configuration,consumer.PROCESSING_FILES)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/processing_dependency_checks.py", line 46, in assert_processing_calls
+    raise AssertionError('PROCESSING_DEPENDENCY_UNDECLARED: '+detail)
+AssertionError: PROCESSING_DEPENDENCY_UNDECLARED: scripts/vnext/text_coverage.py:<genexpr>,__init__,_byte_offsets,_flush,_need,_offset,_part,handle_data,handle_endtag,handle_starttag; scripts/vnext/text_results_v2.py:<genexpr>,__init__,_iso,_need,_verified_context,handle_data,handle_endtag,handle_starttag
+
+======================================================================
+FAIL: test_bank_consumers_declare_the_actual_fiscal_text_readers (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_bank_consumers_declare_the_actual_fiscal_text_readers) (metric='A04')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_selected_historical_fiscal_label.py", line 41, in test_bank_consumers_declare_the_actual_fiscal_text_readers
+    assert_processing_calls(observed,configuration,consumer.PROCESSING_FILES)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/processing_dependency_checks.py", line 46, in assert_processing_calls
+    raise AssertionError('PROCESSING_DEPENDENCY_UNDECLARED: '+detail)
+AssertionError: PROCESSING_DEPENDENCY_UNDECLARED: scripts/vnext/text_coverage.py:<genexpr>,__init__,_byte_offsets,_flush,_need,_offset,_part,handle_data,handle_endtag,handle_starttag; scripts/vnext/text_results_v2.py:<genexpr>,__init__,_iso,_need,_verified_context,handle_data,handle_endtag,handle_starttag
+
+======================================================================
+FAIL: test_bank_consumers_declare_the_actual_fiscal_text_readers (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_bank_consumers_declare_the_actual_fiscal_text_readers) (metric='A09')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_selected_historical_fiscal_label.py", line 41, in test_bank_consumers_declare_the_actual_fiscal_text_readers
+    assert_processing_calls(observed,configuration,consumer.PROCESSING_FILES)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/processing_dependency_checks.py", line 46, in assert_processing_calls
+    raise AssertionError('PROCESSING_DEPENDENCY_UNDECLARED: '+detail)
+AssertionError: PROCESSING_DEPENDENCY_UNDECLARED: scripts/vnext/text_coverage.py:<genexpr>,__init__,_byte_offsets,_flush,_need,_offset,_part,handle_data,handle_endtag,handle_starttag; scripts/vnext/text_results_v2.py:<genexpr>,__init__,_iso,_need,_verified_context,handle_data,handle_endtag,handle_starttag
+
+======================================================================
+FAIL: test_bank_consumers_declare_the_actual_fiscal_text_readers (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_bank_consumers_declare_the_actual_fiscal_text_readers) (metric='A11')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_selected_historical_fiscal_label.py", line 41, in test_bank_consumers_declare_the_actual_fiscal_text_readers
+    assert_processing_calls(observed,configuration,consumer.PROCESSING_FILES)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/processing_dependency_checks.py", line 46, in assert_processing_calls
+    raise AssertionError('PROCESSING_DEPENDENCY_UNDECLARED: '+detail)
+AssertionError: PROCESSING_DEPENDENCY_UNDECLARED: scripts/vnext/text_coverage.py:<genexpr>,__init__,_byte_offsets,_flush,_need,_offset,_part,handle_data,handle_endtag,handle_starttag; scripts/vnext/text_results_v2.py:<genexpr>,__init__,_iso,_need,_verified_context,handle_data,handle_endtag,handle_starttag
+
+======================================================================
+FAIL: test_bank_fiscal_text_changes_process_once_then_reuse (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_bank_fiscal_text_changes_process_once_then_reuse) (metric='A03', module='text_coverage')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_selected_history_result_state.py", line 115, in test_bank_fiscal_text_changes_process_once_then_reuse
+    self.assertEqual('CANDIDATE_READY',changed['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'CANDIDATE_READY' != 'NO_SOURCE_CONTENT_CHANGE'
+- CANDIDATE_READY
++ NO_SOURCE_CONTENT_CHANGE
+
+
+======================================================================
+FAIL: test_bank_fiscal_text_changes_process_once_then_reuse (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_bank_fiscal_text_changes_process_once_then_reuse) (metric='A03', module='text_results_v2')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_selected_history_result_state.py", line 115, in test_bank_fiscal_text_changes_process_once_then_reuse
+    self.assertEqual('CANDIDATE_READY',changed['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'CANDIDATE_READY' != 'NO_SOURCE_CONTENT_CHANGE'
+- CANDIDATE_READY
++ NO_SOURCE_CONTENT_CHANGE
+
+
+======================================================================
+FAIL: test_bank_fiscal_text_changes_process_once_then_reuse (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_bank_fiscal_text_changes_process_once_then_reuse) (metric='A12', module='text_coverage')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_selected_history_result_state.py", line 115, in test_bank_fiscal_text_changes_process_once_then_reuse
+    self.assertEqual('CANDIDATE_READY',changed['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'CANDIDATE_READY' != 'NO_SOURCE_CONTENT_CHANGE'
+- CANDIDATE_READY
++ NO_SOURCE_CONTENT_CHANGE
+
+
+======================================================================
+FAIL: test_bank_fiscal_text_changes_process_once_then_reuse (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_bank_fiscal_text_changes_process_once_then_reuse) (metric='A12', module='text_results_v2')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_selected_history_result_state.py", line 115, in test_bank_fiscal_text_changes_process_once_then_reuse
+    self.assertEqual('CANDIDATE_READY',changed['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'CANDIDATE_READY' != 'NO_SOURCE_CONTENT_CHANGE'
+- CANDIDATE_READY
++ NO_SOURCE_CONTENT_CHANGE
+
+
+======================================================================
+FAIL: test_bank_fiscal_text_changes_process_once_then_reuse (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_bank_fiscal_text_changes_process_once_then_reuse) (metric='A04', module='text_coverage')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_selected_history_result_state.py", line 115, in test_bank_fiscal_text_changes_process_once_then_reuse
+    self.assertEqual('CANDIDATE_READY',changed['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'CANDIDATE_READY' != 'NO_SOURCE_CONTENT_CHANGE'
+- CANDIDATE_READY
++ NO_SOURCE_CONTENT_CHANGE
+
+
+======================================================================
+FAIL: test_bank_fiscal_text_changes_process_once_then_reuse (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_bank_fiscal_text_changes_process_once_then_reuse) (metric='A04', module='text_results_v2')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_selected_history_result_state.py", line 115, in test_bank_fiscal_text_changes_process_once_then_reuse
+    self.assertEqual('CANDIDATE_READY',changed['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'CANDIDATE_READY' != 'NO_SOURCE_CONTENT_CHANGE'
+- CANDIDATE_READY
++ NO_SOURCE_CONTENT_CHANGE
+
+
+======================================================================
+FAIL: test_bank_fiscal_text_changes_process_once_then_reuse (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_bank_fiscal_text_changes_process_once_then_reuse) (metric='A09', module='text_coverage')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_selected_history_result_state.py", line 115, in test_bank_fiscal_text_changes_process_once_then_reuse
+    self.assertEqual('CANDIDATE_READY',changed['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'CANDIDATE_READY' != 'NO_SOURCE_CONTENT_CHANGE'
+- CANDIDATE_READY
++ NO_SOURCE_CONTENT_CHANGE
+
+
+======================================================================
+FAIL: test_bank_fiscal_text_changes_process_once_then_reuse (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_bank_fiscal_text_changes_process_once_then_reuse) (metric='A09', module='text_results_v2')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_selected_history_result_state.py", line 115, in test_bank_fiscal_text_changes_process_once_then_reuse
+    self.assertEqual('CANDIDATE_READY',changed['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'CANDIDATE_READY' != 'NO_SOURCE_CONTENT_CHANGE'
+- CANDIDATE_READY
++ NO_SOURCE_CONTENT_CHANGE
+
+
+======================================================================
+FAIL: test_bank_fiscal_text_changes_process_once_then_reuse (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_bank_fiscal_text_changes_process_once_then_reuse) (metric='A11', module='text_coverage')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_selected_history_result_state.py", line 115, in test_bank_fiscal_text_changes_process_once_then_reuse
+    self.assertEqual('CANDIDATE_READY',changed['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'CANDIDATE_READY' != 'NO_SOURCE_CONTENT_CHANGE'
+- CANDIDATE_READY
++ NO_SOURCE_CONTENT_CHANGE
+
+
+======================================================================
+FAIL: test_bank_fiscal_text_changes_process_once_then_reuse (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_bank_fiscal_text_changes_process_once_then_reuse) (metric='A11', module='text_results_v2')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_selected_history_result_state.py", line 115, in test_bank_fiscal_text_changes_process_once_then_reuse
+    self.assertEqual('CANDIDATE_READY',changed['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'CANDIDATE_READY' != 'NO_SOURCE_CONTENT_CHANGE'
+- CANDIDATE_READY
++ NO_SOURCE_CONTENT_CHANGE
+
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.263s
+
+FAILED (failures=15)
+{"allowed_skips": 0, "errors": 0, "failures": 15, "run": 2, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_bank_consumers_declare_the_actual_fiscal_text_readers", "tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_bank_fiscal_text_changes_process_once_then_reuse"]}

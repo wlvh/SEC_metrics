@@ -1,0 +1,9 @@
+A03 first 0.122 2
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/work/bank-fiscal-text-dependencies/verify_company.py", line 33, in <module>
+    with patch.object(consumer,name,side_effect=observed_factory):first,first_record=invoke('first',args)
+                                                                                     ~~~~~~^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/work/bank-fiscal-text-dependencies/verify_company.py", line 31, in invoke
+    record={'seconds':time.perf_counter()-start,'exit_code':code,'arguments':args,'stdout':stream.getvalue()};(output/(phase+'.json')).write_text(json.dumps(record,indent=2)+'\n');print(metric,phase,round(record['seconds'],3),code,flush=True);assert code==0
+                                                                                                                                                                                                                                                          ^^^^^^^
+AssertionError

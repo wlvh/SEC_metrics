@@ -1,0 +1,122 @@
+{
+  "year": 2021,
+  "observed": {
+    "scripts/vnext/canonical.py": [
+      "<lambda>",
+      "_canonicalize",
+      "_pairs_to_object",
+      "_parse_json_integer",
+      "_validate_tree_unicode",
+      "_validate_unicode",
+      "canonical_json_bytes",
+      "content_hash",
+      "parse_decimal",
+      "sha256_bytes",
+      "sha256_file",
+      "strict_json_file",
+      "strict_json_loads"
+    ],
+    "scripts/vnext/historical_fiscal_labels.py": [
+      "require_actual_definition_scope",
+      "resolve_selected_fiscal_year_label",
+      "widen_inspection"
+    ],
+    "scripts/vnext/historical_dei.py": [
+      "<genexpr>",
+      "_class_view",
+      "_codes",
+      "_followed",
+      "_frozen_pattern",
+      "_function_view",
+      "_held_cells",
+      "_in_package",
+      "_is_view",
+      "_members",
+      "_package_module",
+      "_refuse_unredirectable",
+      "annual_period",
+      "asks_the_dei_question",
+      "fullmatch",
+      "reaches_the_dei_question",
+      "release_aware",
+      "view"
+    ],
+    "scripts/vnext/fiscal_year_labels.py": [
+      "<genexpr>",
+      "__init__",
+      "_definitions",
+      "_flush",
+      "_need",
+      "_offset",
+      "_part",
+      "handle_endtag",
+      "handle_starttag",
+      "inspect_fiscal_year_labels"
+    ],
+    "scripts/vnext/normal_annual_input.py": [
+      "<genexpr>",
+      "_cik",
+      "_date",
+      "_need",
+      "annual_period",
+      "dei",
+      "dei_namespace_pattern"
+    ],
+    "scripts/vnext/deterministic_router.py": [
+      "<genexpr>",
+      "__init__",
+      "_freeze_xbrl_owned",
+      "_local_tag",
+      "_parse_xbrl_parts",
+      "contexts",
+      "facts",
+      "handle_data",
+      "handle_endtag",
+      "handle_starttag",
+      "parse_accession_xbrl_source"
+    ],
+    "scripts/vnext/governance_signals.py": [
+      "__init__",
+      "_need",
+      "_qname",
+      "handle_data",
+      "handle_endtag",
+      "handle_starttag"
+    ],
+    "scripts/vnext/text_results_v2.py": [
+      "<genexpr>",
+      "__init__",
+      "_iso",
+      "_need",
+      "_verified_context",
+      "handle_data",
+      "handle_endtag",
+      "handle_starttag"
+    ],
+    "scripts/vnext/text_coverage.py": [
+      "<genexpr>",
+      "__init__",
+      "_byte_offsets",
+      "_flush",
+      "_need",
+      "_offset",
+      "_part",
+      "handle_data",
+      "handle_endtag",
+      "handle_starttag"
+    ],
+    "scripts/vnext/normal_annual_input_v2.py": [
+      "_choose_fiscal_year"
+    ]
+  },
+  "missing": {
+    "A03": [
+      "scripts/vnext/text_coverage.py",
+      "scripts/vnext/text_results_v2.py"
+    ],
+    "A04": [
+      "scripts/vnext/text_coverage.py",
+      "scripts/vnext/text_results_v2.py"
+    ]
+  }
+}

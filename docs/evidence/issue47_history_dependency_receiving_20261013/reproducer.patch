@@ -1,0 +1,101 @@
+diff --git a/scripts/vnext/historical_average_risk_cases.py b/scripts/vnext/historical_average_risk_cases.py
+index 7174e89e..aaa912c6 100644
+--- a/scripts/vnext/historical_average_risk_cases.py
++++ b/scripts/vnext/historical_average_risk_cases.py
+@@ -25,7 +25,7 @@ PROCESSING_FILES = tuple('scripts/vnext/' + name + '.py' for name in (
+     'financial_duration', 'financial_relationships', 'composite_scope', 'constraints',
+     'r4_task_contracts', 'table_task_contracts', 'resource_limits', 'table_grid',
+     'zero_ai_r2', 'deterministic_router', 'ordinary_source_authority', 'traits', 'specs',
+-    'scope_contract')) + (
++    'scope_contract', 'text_coverage', 'text_results_v2')) + (
+     'config/normal_period_selection_v1.json', 'config/normal_fiscal_year_labels_v1.json',
+     'catalog/r4_normal/A03_liquidity_coverage_ratio.md', 'catalog/r4_normal/A12_trading_exposure.md',
+     'catalog/r4_v2/A03_liquidity_coverage_ratio.md', 'catalog/r4_v2/A12_trading_exposure.md',
+diff --git a/scripts/vnext/historical_bank_scope_cases.py b/scripts/vnext/historical_bank_scope_cases.py
+index 92fdf755..44bad86d 100644
+--- a/scripts/vnext/historical_bank_scope_cases.py
++++ b/scripts/vnext/historical_bank_scope_cases.py
+@@ -25,7 +25,7 @@ PROCESSING_FILES = tuple('scripts/vnext/' + name + '.py' for name in (
+     'financial_structured', 'financial_duration', 'financial_relationships', 'composite_scope', 'constraints',
+     'r4_task_contracts', 'table_task_contracts', 'resource_limits', 'table_grid',
+     'zero_ai_r2', 'deterministic_router', 'ordinary_source_authority', 'traits', 'specs',
+-    'scope_contract')) + (
++    'scope_contract', 'text_coverage', 'text_results_v2')) + (
+     'config/normal_period_selection_v1.json', 'config/normal_fiscal_year_labels_v1.json',
+     'catalog/r4_normal/A04_net_interest_margin.md', 'catalog/r4_normal/A09_nonperforming_loan_ratio.md',
+     'catalog/r4_normal/A11_assets_under_management.md',
+diff --git a/tests/vnext/test_selected_historical_fiscal_label.py b/tests/vnext/test_selected_historical_fiscal_label.py
+index 160b6622..f5ff2ec9 100644
+--- a/tests/vnext/test_selected_historical_fiscal_label.py
++++ b/tests/vnext/test_selected_historical_fiscal_label.py
+@@ -20,6 +20,30 @@ def facts(year=2021,cik=19617,accession=None):
+ 
+ 
+ class SelectedHistoricalFiscalLabelTest(unittest.TestCase):
++    def test_bank_consumers_declare_the_actual_fiscal_text_readers(self):
++        from pathlib import Path
++        from tests.vnext.processing_dependency_checks import processing_calls, assert_processing_calls
++        from vnext.ordinary_current_update import _configuration
++        from vnext import historical_average_risk_cases as average, historical_bank_scope_cases as bank
++        root=Path(__file__).resolve().parents[2]
++        with processing_calls(root) as observed:
++            result=self.resolve()
++        self.assertEqual(2021,result['selected_fiscal_year'])
++        paths=('scripts/vnext/text_coverage.py','scripts/vnext/text_results_v2.py')
++        for path in paths:
++            self.assertIn(path,observed)
++        # The same annual label reader is used by each of these consumers.
++        # It parses the real small DEI/body fixture, not a mocked label result.
++        for metric,consumer in (('A03',average),('A12',average),
++                                ('A04',bank),('A09',bank),('A11',bank)):
++            with self.subTest(metric=metric):
++                configuration=_configuration(root,'jpmorgan_chase',metric)
++                assert_processing_calls(observed,configuration,consumer.PROCESSING_FILES)
++                for path in paths:
++                    without=tuple(p for p in consumer.PROCESSING_FILES if p!=path)
++                    with self.assertRaisesRegex(AssertionError,path.split('/')[-1]):
++                        assert_processing_calls(observed,configuration,without)
++
+     def resolve(self,raw=None,cf=None,**changes):
+         raw=raw or annual();cf=cf or facts()
+         args={'primary_bytes':raw,'companyfacts_bytes':cf,'expected_primary_sha256':sha256_bytes(content=raw),
+diff --git a/tests/vnext/test_selected_history_result_state.py b/tests/vnext/test_selected_history_result_state.py
+index e660c1a9..52adc52e 100644
+--- a/tests/vnext/test_selected_history_result_state.py
++++ b/tests/vnext/test_selected_history_result_state.py
+@@ -93,6 +93,35 @@ class SelectedHistoryResultStateTest(TestCase):
+     def period_root(self, year, metric="B10"):
+         return self.root.resolve() / metric / "periods" / ("FY" + str(year))
+ 
++    def test_bank_fiscal_text_changes_process_once_then_reuse(self):
++        from vnext import historical_average_risk_cases as average, historical_bank_scope_cases as bank
++        original_hash=update.sha256_file
++        for metric,consumer in (('A03',average),('A12',average),
++                                ('A04',bank),('A09',bank),('A11',bank)):
++            for year,name in enumerate(('text_coverage','text_results_v2'),2021):
++                with self.subTest(metric=metric,module=name):
++                    self.forbid_factory=False
++                    first=self.run_control(year,metric,consumer.PROCESSING_FILES)
++                    count=len(self.factory_calls)
++                    self.forbid_factory=True
++                    self.assertEqual('NO_SOURCE_CONTENT_CHANGE',
++                        self.run_control(year,metric,consumer.PROCESSING_FILES)['status'])
++                    target=ROOT/('scripts/vnext/'+name+'.py')
++                    def changed_hash(*,path):
++                        return 'CONSTRUCTED_BANK_FISCAL_TEXT_CHANGE' if path==target else original_hash(path=path)
++                    self.forbid_factory=False
++                    with patch.object(update,'sha256_file',side_effect=changed_hash):
++                        changed=self.run_control(year,metric,consumer.PROCESSING_FILES)
++                        self.assertEqual('CANDIDATE_READY',changed['status'])
++                        self.assertTrue(changed['calculation_performed'])
++                        self.assertEqual(count+1,len(self.factory_calls))
++                        self.assertNotEqual(first['version'],changed['version'])
++                        self.forbid_factory=True
++                        repeat=self.run_control(year,metric,consumer.PROCESSING_FILES)
++                        self.assertEqual('NO_SOURCE_CONTENT_CHANGE',repeat['status'])
++                        self.assertEqual(changed['version'],repeat['version'])
++                    self.assertEqual(count+1,len(self.factory_calls))
++
+     def test_average_scope_dependency_change_processes_once_then_reuses(self):
+         from vnext.historical_average_risk_cases import PROCESSING_FILES
+         original_hash=update.sha256_file
