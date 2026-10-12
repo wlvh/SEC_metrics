@@ -19,8 +19,18 @@ from .records import validate_record
 METRIC_IDS = frozenset(installed_ordinary_spec_documents())
 LODGING_METRIC_IDS = frozenset({'B10','B11'})
 SAVED_MODEL_METRIC_IDS = frozenset({'D04'})
-SAVED_METRIC_IDS = METRIC_IDS | LODGING_METRIC_IDS | SAVED_MODEL_METRIC_IDS | {'B06','C04'}
-EXPLICIT_CASE_METRICS = frozenset({'A03','A04','A09','A11','A12','A13','C03','C04','D01'})
+SAVED_METRIC_IDS = METRIC_IDS | LODGING_METRIC_IDS | SAVED_MODEL_METRIC_IDS | {'B06','C04','A13'}
+EXPLICIT_CASE_METRICS = frozenset({'A03','A04','A09','A11','A12','A13','C03','C04','D01','E01'})
+CURRENT_E01_SPEC_PATH = 'catalog/r6/E01_content_confirmed_ma_v1.md'
+
+
+def current_e01_scope(saved):
+    """Saved item-code results do not acquire the successor's meaning.
+
+    The existing reader verifies the saved Spec/result relationship; this
+    marker is written only for the explicitly selected successor case.
+    """
+    return saved['manifest'].get('selected_spec_path') == CURRENT_E01_SPEC_PATH
 
 
 def _program_version(root):
@@ -94,6 +104,9 @@ def create_saved_result(*, source_root, output_root, company_id, metric_id, shar
     """Prepare through the existing Calculator and save its actual records."""
     _need(metric_id in SAVED_METRIC_IDS, 'SAVED_RESULT_ROUTE_NOT_IMPLEMENTED')
     def prepare(source):
+        if metric_id == 'A13':
+            from .current_geography_case import prepare_current_geography_case
+            return prepare_current_geography_case(source_root=source,company_id=company_id)
         if metric_id == 'C04':
             from .current_auditor_case import prepare_current_auditor_case
             return prepare_current_auditor_case(source_root=source,company_id=company_id)
@@ -172,6 +185,8 @@ def _save_case(*, source_root, output_root, company_id, metric_id, factory, calc
                 'compiled_specs': case['compiled_specs'],
                 'calculation_performed_by_writer': calculation_performed,
                 'new_calls': {'provider': 0, 'paid': 0, 'sec': 0}, 'production_authorized': False}
+            if metric_id == 'E01' and case['spec_paths'][metric_id] == CURRENT_E01_SPEC_PATH:
+                manifest['selected_spec_path'] = CURRENT_E01_SPEC_PATH
             from .ordinary_projection import render_ordinary_records
             rendered = render_ordinary_records(data_root=source_root, manifest=manifest,
                 records=records, case=case, receipt_status='CALCULATED_SAVED_SOURCE' if calculation_performed else 'SAVED_PRECALCULATED_CASE',

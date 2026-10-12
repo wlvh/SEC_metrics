@@ -2,7 +2,7 @@
 
 ## 按实际运行版本选检查
 
-2026-10-06当前CI快测：`python3 tools/run_foundation_ci.py --suite fast --jobs 1`使用一个进程及unittest类/模块准备，记录每项失败、导入错误与明确跳过；测试stdout/stderr进入报告，不破坏JSON。完整年报的`NormalAnnualInputTest`归材料层（`--suite source-material`），选择器仍全部对账、未删除业务断言。旧runner保持供旧版本诊断，本改动不宣布公司run或所有材料验收完成。主要测量见 `docs/evidence/issue28_fast_feedback_20261006/README.md`。
+2026-10-06当前CI快测：`python3 tools/run_foundation_ci.py --suite fast --jobs 4`使用一个进程及unittest类/模块准备，记录每项失败、导入错误与明确跳过；测试stdout/stderr进入报告，不破坏JSON。完整年报的`NormalAnnualInputTest`归材料层（`--suite source-material`），选择器仍全部对账、未删除业务断言。旧runner保持供旧版本诊断，本改动不宣布公司run或所有材料验收完成。主要测量见 `docs/evidence/issue28_fast_feedback_20261006/README.md`。
 
 - main 的 PR57 原生版本：下述 company handoff/source-authority/native 检查用于原程序及保留任务；固定依赖按原身份读取。不要用旧快照要求当前新开发文件永远不变。
 - main 已接收的 PR67 普通记录：快速业务例及保存原件集成验证公司/期间/单位/引用、已知错误、成功/稳定扣留复用、计数、失败隔离、中断恢复和旧读取。实际命令及终态以 [PR67](https://github.com/wlvh/SEC_metrics/pull/67)主要验证记录为准，共用快测准备/材料分层已由PR61进入main；公司检查见当前 Company saved-source records 工作流。
@@ -11,7 +11,7 @@
 
 main 已交付的有限在线 B01/B02 接线检查：`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_company_online -v`核原计数、UNKNOWN、落盘中断摘要、前期依赖隔离；正式CLI HTTP边界录制与原件/计算/读取实际链见 `docs/evidence/issue28_company_online_20261009/README.md`，不授真实SEC或业务接受。下述旧原生/独立信任检查只解释保留版本，不恢复为新普通记录前置。
 
-当前 main 采用已接收的 PR61共享进程/类准备与完整材料分层；`python3 tools/run_foundation_ci.py --suite fast --jobs 1`一次加载选中小测试，失败/导入错误/skip显式输出。原选择器以fast/source-material/retired完整对账；仅已取消的旧祖先防伪模块退休，业务断言保留。PR61原测量见 `docs/evidence/issue28_fast_feedback_20261006/README.md`，PR67 实际候选测量见 `docs/evidence/issue28_company_records_20261007/README.md`，不能拼成同场景提速。
+当前 main 采用已接收的 PR61共享进程/类准备与完整材料分层；`python3 tools/run_foundation_ci.py --suite fast --jobs 4`一次加载选中小测试，失败/导入错误/skip显式输出。原选择器以fast/source-material/retired完整对账；仅已取消的旧祖先防伪模块退休，业务断言保留。PR61原测量见 `docs/evidence/issue28_fast_feedback_20261006/README.md`，PR67 实际候选测量见 `docs/evidence/issue28_company_records_20261007/README.md`，不能拼成同场景提速。
 
 本地公司薄编排：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_local -v`，6项明确模拟阶段，覆盖只获取/请求上限、一次计算、39项状态、相对别名、阶段失败不冒充成功及旧原生结果保留。加入当前fast清单；不是实网获取或财报内容验收。新 `issue_54_v4` 实际空来源录制捕获、绑定header/错公司/模式负例、UID1000只读程序和Marriott B01+D01首次/另进程复用，见 `docs/evidence/issue54_company/local-run/README.md`。既有Marriott真实SEC首次与重复运行已按其原许可完成；录制测试不转成LIVE信用，业务结果仍分别等待接受。
 已退出的creator journal/伪造sidecar/冻结前缀拒绝不再作为当前来源必过测试；原版本在Git历史保留。原件/header/attempt/申报/最新失败检查见test_saved_source_checks，旧checkpoint导出及UNKNOWN保护仍保留。
@@ -57,7 +57,7 @@ PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_annual_publicatio
 
 ## 历史固定版本：普通年度候选完整发布链隔离验收
 
-`tools/run_fast_tests.py` 的白名单入口包括
+旧 `tools/run_fast_tests.py` 在对应保存版本中的白名单入口包括
 `tests.vnext.test_annual_publication` 整个模块（4项短边界测试）。GitHub fast CI
 执行同一入口；CI日志中的模块名、实际测试数、退出码和非SKIP结果共同证明覆盖。
 完整真实包演练仍是单独集成层，不能用fast绿色替代。
@@ -120,15 +120,15 @@ execution-authority bytes绑定在其受审提交，不能在新代码重签后�
 
 本文件是项目测试策略、真实命令、full/light 边界和测试副作用的权威入口。所有命令默认在仓库根目录执行；完整阶段顺序以 `README_RUN.md` 为准。
 
-## Issue #15 D-26 快速验收执行政策
+## Issue #15 D-26 历史快速验收政策（仅原保存版本）
 
-Issue #15 的自包含 Decision Register 以 post-freeze D-26 effective tip 继承并替换父 R4 测试政策。必跑快速入口保持：
+Issue #15 的自包含 Decision Register 以 post-freeze D-26 effective tip 继承并替换父 R4 测试政策。该历史版本的快速入口为：
 
 ```bash
 PYTHONDONTWRITEBYTECODE=1 python3 tools/run_fast_tests.py --jobs 4
 ```
 
-`.github/workflows/vnext-fast.yml` 在每次 `pull_request` 上以只读 repository 权限、无业务 secret、固定 Python 3.14 执行同一命令；该 GitHub check 只把 fast boundary 自动化，不运行 provider、SEC、portable R3 closure 或 full acceptance。它并发执行直接、非隔离边界用例，每例硬上限 30 秒；Requirement smoke现在加载profile-driven `issue_28_v1`及其exact `issue_15_v1` parent，其余WB-2/WB-2B/WB-3/R1及Stage-C/D用例继续覆盖producer scope、39指标registry、E01 parity、invocation故障矩阵、JPM guard terminal、历史packet/attestation/usage和formal predecessor smoke。recorded acceptance 的任一快速/静态 gate 硬上限 60 秒。不得把全仓 discover、Python 3.9 双跑、临时 Git repository/worktree 或长串行套件列为必跑项。runner 的最高证据层级仍是 `PASSED_FAST_LOCAL_ONLY`：本地 PASS 不等于 GitHub check 已运行，CI green 也不等于 successor full acceptance。
+当时的 `.github/workflows/vnext-fast.yml` 使用下述旧集合；当前main已改用文件开头的 `run_foundation_ci.py` 入口，不能在当前树把旧快照失败当成CI失败。该历史检查以只读 repository 权限、无业务 secret、固定 Python 3.14 执行旧命令；该 GitHub check 只把 fast boundary 自动化，不运行 provider、SEC、portable R3 closure 或 full acceptance。它并发执行直接、非隔离边界用例，每例硬上限 30 秒；Requirement smoke现在加载profile-driven `issue_28_v1`及其exact `issue_15_v1` parent，其余WB-2/WB-2B/WB-3/R1及Stage-C/D用例继续覆盖producer scope、39指标registry、E01 parity、invocation故障矩阵、JPM guard terminal、历史packet/attestation/usage和formal predecessor smoke。recorded acceptance 的任一快速/静态 gate 硬上限 60 秒。不得把全仓 discover、Python 3.9 双跑、临时 Git repository/worktree 或长串行套件列为必跑项。runner 的最高证据层级仍是 `PASSED_FAST_LOCAL_ONLY`：本地 PASS 不等于 GitHub check 已运行，CI green 也不等于 successor full acceptance。
 
 <!-- capability-anchor: BEHAVIOR.r4_fast_concurrent_test_policy -->
 
@@ -283,7 +283,7 @@ Facts读取前停止。合成输入不改写任何历史原始材料或收据。
 |---|---|---:|---:|---|---|
 | R4 新绑定正常执行路径 | `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_r4_bound_label_execution -v` | 无 provider/SEC；worker network-none | 仅当前新版本的临时副本及一个 recorded scoped Run/三个零调用前置 Run | 正常 acceptance→FROZEN→新进程 replay；当前源码哈希真实校验；发布侧版本读取 | live 资格、完整12次aggregate、发布、性能benchmark |
 | R4 标签候选与失败收尾定向回归 | `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_r4_label_representation -v` | provider/SEC/socket 均禁止；本地 Docker worker 保持 network-none | 仅临时 source-input 副本与 recorded Run | 真实原响应旧规则拒绝、新候选经过 Reader/Evidence/Review/Calculator；九份请求、错误主体/值/期间/scope/位置负例；真实失败 finalizer 终态与后续零调用 | 候选政策批准、旧失败追认、新 live qualification、完整生产 freeze/publication；输入副本保存旧证书绑定，测试执行候选 Python，明确不冒充新 execution authority |
-| vNext 快速回归 | `PYTHONDONTWRITEBYTECODE=1 python3 tools/run_fast_tests.py --jobs 4`；同一命令由 `.github/workflows/vnext-fast.yml` 在 PR 上执行 | 否 | 否；32个子进程条目只读当前工作树，负例只写小型临时数据 | 保留原29条，并加release aggregate shape、typed publication hook、registry/Spec exact-grid三个短边界；全部返回0并标记`FAST_LOCAL_ONLY`。不在30秒tier重放完整source/portable R3，未提高timeout | 真实来源R4离线资格、10倍性能、live/full acceptance |
+| 历史vNext快速回归（仅原保存版本） | `PYTHONDONTWRITEBYTECODE=1 python3 tools/run_fast_tests.py --jobs 4`；当前PR改用本文件开头的foundation入口 | 否 | 否；32个子进程条目只读当前工作树，负例只写小型临时数据 | 保留原29条，并加release aggregate shape、typed publication hook、registry/Spec exact-grid三个短边界；全部返回0并标记`FAST_LOCAL_ONLY`。不在30秒tier重放完整source/portable R3，未提高timeout | 真实来源R4离线资格、10倍性能、live/full acceptance |
 | PR-B successor release gates | `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_r4_release_gate tests.vnext.test_r4_projection tests.vnext.test_r4_publication_boundaries -v` | 否 | 只写小型临时数据/原生N/A Run；真实merge ancestry使用独立临时Git | aggregate重绑定、owner/activation/merge/head、六Spec/6+54 exact set、native zero-source terminal、recorded/private capability、legacy API及pointer/recovery hooks | 完整15-Run资格或真实发布；形状测试不冒充这些证据 |
 | PR-B portable dependency preflight | `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_r4_portable_dependencies -v` | 否 | 复制绑定的authority数据；scanner输出只写临时目录；macOS OS禁止网络、原checkout读取与副本写入 | 新进程加载successor ReleasePlan/六Spec/6+54，并运行原生产semantic/scalability扫描；legacy foundation的四个immutable receipt及旧ReleasePlan进入封存闭包 | 不替代完整15-Run或60-coordinate bundle回放 |
 | PR-B recorded release rehearsal | `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_r4_live_qualification -v`中的`test_z_isolated_successor_release_readback_rollback_restore_no_credit` | 否；cold child OS禁止网络及bundle写入/读取原checkout | 仅在独立复制root生成60-coordinate batch、R4 bundle和临时switch receipts；真实R3不变 | 同一15-Run recorded执行选择六生产值、54原生N/A、strict compatibility、冻结authority新进程回放、R4→R3→R4及crash/mirror负例；credit始终NONE_RECORDED_REHEARSAL | G4、真实publication/live资格/模型准确率；与16-case performance final replay分别报告 |
@@ -323,7 +323,7 @@ Facts读取前停止。合成输入不改写任何历史原始材料或收据。
 
 ## 4. 快速回归覆盖
 
-本节的既有覆盖目录是历史测试资产清单，不把其中 freeze/replay、隔离 Git fixture 或大规模场景升级为 R4 必跑项；R4 的精确测试集合只由 `tools/run_fast_tests.py` 定义。
+本节的既有覆盖目录是历史测试资产清单，不把其中 freeze/replay、隔离 Git fixture 或大规模场景升级为 R4 必跑项；旧R4保存实现的测试集合由其 `tools/run_fast_tests.py` 定义；当前main的分层以 `run_foundation_ci.py` 和实际workflow为准。
 
 ### 4.1 vNext recorded / formal Cutover 实现
 
@@ -501,9 +501,9 @@ legacy candidate publication开始时会使旧provenance失效；formal active�
 
 ## 9. 推荐执行顺序
 
-### 9.1 普通代码改动
+### 9.1 当前普通代码改动
 
-1. 运行 `python3 tools/run_fast_tests.py --jobs 4`。
+1. 运行 `python3 tools/run_foundation_ci.py --suite fast --jobs 4`；只改说明文字时核对命令/链接，不机械全量重跑。
 2. 运行受影响的静态结构检查。
 3. 检查 `git status`，确认没有引入非预期 artifact。
 
@@ -524,7 +524,7 @@ legacy candidate publication开始时会使旧provenance失效；formal active�
 4. 运行固定上游对应的 workflow docs 机械检查。
 5. 记录机械检查只证明最终文件状态，不证明分析、审计或测试历史。
 
-### 9.4 vNext recorded / formal Cutover 改动
+### 9.4 旧vNext recorded / formal Cutover（仅保留版本）
 
 1. 先运行 `python3 tools/run_fast_tests.py --jobs 4`。Requirement transition还必须运行Issue #28完整tamper/identity suite、Issue #15 authority regressions和Issue #28 historical read-back integration；后者完整重放active R3→exact R2/R1，不能塞回30秒fast tier。不得把全量 `tests/vnext/`、Python 3.9 双跑或无关长串行套件扩大为必跑项。
 2. 在 commit 后运行 `python3 tools/check_capability_contract_alignment.py`；工作树未提交时 checker 按设计拒绝 HEAD/worktree bytes 不一致，必须如实记录，不能把 JSON parse 成功替代 alignment。

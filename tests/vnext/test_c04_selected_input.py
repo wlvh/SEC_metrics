@@ -21,6 +21,26 @@ def filing_with_release(release, *, entity='12345'):
     return {k:args[k] for k in ('raw_bytes','raw_blob','source_reference')}
 
 
+def labelled_fixture(annual):
+    from copy import deepcopy
+    period=deepcopy(annual['table_input']['target_period'])
+    inspection={'status':'METADATA_LABEL_ONLY','source_defined_fiscal_year':None,
+        'invalid_companyfacts_fy_rows':[],'dei_fiscal_year':period['fiscal_year'],
+        'companyfacts_fiscal_year_values':[period['fiscal_year']]}
+    resolution={'record_type':'ORDINARY_FISCAL_YEAR_LABEL_RESOLUTION',
+        'policy_sha256':'constructed-label-policy-not-business-credit',
+        'selected_fiscal_year':period['fiscal_year'],'basis':'CONSISTENT_SOURCE_METADATA',
+        'original_dei_fiscal_year':period['fiscal_year'],
+        'original_companyfacts_fiscal_year_values':[period['fiscal_year']],
+        'source_inspection_status':'METADATA_LABEL_ONLY','metadata_conflict_retained':False,
+        'actual_dates_changed':False,'historical_input_or_run_changed':False,
+        'source_inspection':inspection}
+    body={'original_input':deepcopy(annual),'table_input':{'target_period':deepcopy(period)},
+        'companyfacts_input':{'target_period':deepcopy(period)},
+        'fiscal_year_label_resolution':resolution}
+    return {**body,'input_id':content_hash(value=body)}
+
+
 class SelectedC04InputTest(unittest.TestCase):
     def test_selected_history_reuses_index_derived_gap_boundary_and_all_row_count(self):
         from copy import deepcopy
@@ -147,8 +167,7 @@ class SelectedC04InputTest(unittest.TestCase):
             'expected_cik':'12345','target_accession':current_filing['accessionNumber'],
             'current_filings':[[current,extra]],'prior_filings':[[prior]],'prior_sources':[],
             'prior_period_end':'2024-12-31'}
-        labels={'original_input':annual,'table_input':annual['table_input'],
-            'fiscal_year_label_resolution':{'metadata_conflict_retained':False}}
+        labels=labelled_fixture(annual)
         for changed in ('missing-document','missing-filing','missing-current-filing','duplicate-document','wrong-accession'):
             args=deepcopy(arguments)
             if changed=='missing-document':args['current_filings']=[[current]]
@@ -288,3 +307,70 @@ class SharedAuditorShardBoundaryTest(unittest.TestCase):
     def test_wrong_shard_entity_is_rejected(self):
         with self.assertRaisesRegex(ValueError, 'HISTORY_SHARD_ENTITY_CONFLICT'):
             self.load(body={**self.columns(self.gap), 'cik': '54321'})
+
+
+class SelectedC04LabelIdentityTest(unittest.TestCase):
+    def inputs(self):
+        annual={'company_id':'sample_entity','entity':'12345','table_input':{'target_period':
+            {'fiscal_year':2025,'period_start':'2025-01-01','period_end':'2025-12-31'}}}
+        filing={'accessionNumber':'0000012345-26-000001','reportDate':'2025-12-31'}
+        binding={'company_id':'sample_entity','prepared_annual_input':annual,
+            'selection':{'current_filing_chain':[filing]},
+            'metric_input_status':{'C04':'PREPARED'},'history_alignment_conflicts':[],
+            'source_proofs':[],'accession_source_sets':[]}
+        arguments={'target':{'company_id':'sample_entity','period_start':'2025-01-01','period_end':'2025-12-31'},
+            'expected_cik':'12345','target_accession':filing['accessionNumber'],
+            'current_filings':[],'prior_filings':None,'prior_sources':[]}
+        return ({'input_binding':{**binding,'input_binding_id':content_hash(value=binding)},
+            'resolver_inputs':{'c04':{'arguments':arguments}}},labelled_fixture(annual))
+
+    def prepare(self,base,labels):
+        # This boundary signal proves an invalid label cannot reach sources or
+        # calculation. It is not a mocked successful business result.
+        with patch('vnext.c04_registration_successor._check_selected_annual_census'), \
+             patch('vnext.c04_registration_successor.verify_ordinary_source_proofs'), \
+             patch('vnext.c04_registration_successor._Sources',side_effect=AssertionError('LABEL_REACHED_SOURCE_READER')):
+            return prepare_c04_registration_case(repo_root=ROOT,company_id='sample_entity',
+                event_forms=EVENT_FORMS,selected_base=base,labelled_annual=labels)
+
+    def test_mutated_year_or_resolution_with_old_input_identity_refuses(self):
+        from copy import deepcopy
+        base,original=self.inputs()
+        for field in ('table-year','resolution-year','resolution-basis'):
+            labels=deepcopy(original)
+            if field=='table-year':labels['table_input']['target_period']['fiscal_year']=2026
+            elif field=='resolution-year':labels['fiscal_year_label_resolution']['selected_fiscal_year']=2026
+            else:labels['fiscal_year_label_resolution']['basis']='CALLER_CHOICE'
+            with self.subTest(field=field),self.assertRaisesRegex(ValueError,'C04_SELECTED_ANNUAL_LABEL_IDENTITY_CHANGED'):
+                self.prepare(base,labels)
+
+    def test_rehashed_inconsistent_label_fields_still_refuse(self):
+        from copy import deepcopy
+        base,original=self.inputs()
+        for field in ('table-year','companyfacts-year','resolution-year','resolution-basis','conflict-status'):
+            labels=deepcopy(original)
+            if field=='table-year':labels['table_input']['target_period']['fiscal_year']=2026
+            elif field=='companyfacts-year':labels['companyfacts_input']['target_period']['fiscal_year']=2026
+            elif field=='resolution-year':labels['fiscal_year_label_resolution']['selected_fiscal_year']=2026
+            elif field=='resolution-basis':labels['fiscal_year_label_resolution']['basis']='CALLER_CHOICE'
+            else:labels['fiscal_year_label_resolution']['metadata_conflict_retained']=True
+            labels['input_id']=content_hash(value={k:v for k,v in labels.items() if k!='input_id'})
+            with self.subTest(field=field),self.assertRaisesRegex(ValueError,'C04_SELECTED_ANNUAL_LABEL_FIELDS_CHANGED'):
+                self.prepare(base,labels)
+
+    def test_complete_consistent_label_reaches_source_reader(self):
+        base,labels=self.inputs()
+        with self.assertRaisesRegex(AssertionError,'LABEL_REACHED_SOURCE_READER'):
+            self.prepare(base,labels)
+
+    def test_explicit_issuer_fiscal_year_conflict_remains_valid(self):
+        base,labels=self.inputs()
+        period=labels['table_input']['target_period'];period['fiscal_year']=2026
+        labels['companyfacts_input']['target_period']=dict(period)
+        resolution=labels['fiscal_year_label_resolution']
+        resolution.update(selected_fiscal_year=2026,basis='EXPLICIT_SOURCE_ISSUER_DEFINITION',
+            source_inspection_status='SOURCE_LABEL_CONFLICT',metadata_conflict_retained=True)
+        resolution['source_inspection'].update(status='SOURCE_LABEL_CONFLICT',source_defined_fiscal_year=2026)
+        labels['input_id']=content_hash(value={k:v for k,v in labels.items() if k!='input_id'})
+        with self.assertRaisesRegex(AssertionError,'LABEL_REACHED_SOURCE_READER'):
+            self.prepare(base,labels)

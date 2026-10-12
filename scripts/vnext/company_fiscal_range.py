@@ -17,7 +17,8 @@ from .normal_source_authority import ROOT
 from .normal_source_requirements import _Requirements
 from .selected_source_requirements import discover_selected_annual_requirements
 
-METRIC_IDS = frozenset({'B01', 'B02'})
+METRIC_IDS = frozenset({'B01', 'B02', 'B03'})
+RANGE_CASE_METRIC_IDS = frozenset({'B01', 'B02'})
 PROCESSING_FILES = (
     'scripts/vnext/company_fiscal_range.py',
     'scripts/vnext/selected_source_requirements.py',
@@ -160,7 +161,9 @@ def range_case_factories(*,company_id,fiscal_years,metric_ids,case_factories):
     """Operation-local lazy source discovery, only after the updater needs work."""
     years=tuple(fiscal_years)
     _need(bool(years) and years==tuple(_years(min(years),max(years))), 'YEARS_NOT_CONTIGUOUS')
-    selected=set(metric_ids)&METRIC_IDS
+    # Read-only B03 discovery is available; its business producer still owns
+    # selection and does not accept this wrapper's period_selection parameter.
+    selected=set(metric_ids)&RANGE_CASE_METRIC_IDS
     _need(selected<=set(case_factories),'BUSINESS_CASE_MISSING')
     cache={}; result=dict(case_factories); expected_company=company_id
     def make(producer,metric):

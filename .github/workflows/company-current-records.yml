@@ -3,7 +3,12 @@ name: Company saved-source records
 'on':
   pull_request:
     paths:
+    - tests/vnext/test_b06_guarded_result_v3.py
+    - docs/evidence/issue28_selected_b06_release_20261012/**
     - scripts/**
+    - tests/vnext/test_historical_e01_incorporated_input.py
+    - tests/vnext/test_historical_e01_company_case.py
+    - tests/vnext/test_explicit_e01_company.py
     - tests/vnext/test_selected_dei_text_scope.py
     - tests/vnext/fixtures/text_document_year_only_3c2.json
     - tests/vnext/test_historical_filing_inventory_small.py
@@ -19,11 +24,16 @@ name: Company saved-source records
     - tools/vnext_company.py
     - tests/vnext/test_company_current_records.py
     - tests/vnext/test_current_b06_case.py
+    - tests/vnext/test_current_geography_case.py
+    - docs/evidence/issue28_current_geography_20261011/**
     - tests/vnext/test_current_auditor_case.py
+    - tests/vnext/test_c04_selected_input.py
+    - docs/evidence/issue28_c04_label_identity_20261012/**
     - tests/vnext/test_single_revenue_line.py
     - tests/vnext/test_selected_income_calculation.py
     - tests/vnext/test_historical_b03_case.py
     - tests/vnext/test_selected_reported_revenue_v2.py
+    - docs/evidence/issue28_complete_expense_scope_20261012/**
     - tests/vnext/test_paired_measure_contradiction.py
     - tests/vnext/test_current_d04_company.py
     - tests/vnext/test_b06_note_source_forms.py
@@ -37,6 +47,7 @@ name: Company saved-source records
     - tests/vnext/test_company_parse_reuse.py
     - tests/vnext/test_precalculated_case.py
     - tests/vnext/test_saved_source_checks.py
+    - tests/vnext/test_request_binding_batch.py
     - tests/vnext/test_runtime_tools.py
     - tests/vnext/test_b03_current_input_scope.py
     - tests/vnext/test_xbrl_namespace_policy.py
@@ -76,6 +87,10 @@ name: Company saved-source records
     - tests/vnext/test_text_item_capacity.py
     - tests/vnext/test_d01_explicit_running_headers.py
     - tests/vnext/test_historical_risk_heading_case.py
+    - tests/vnext/test_historical_d04_selection.py
+    - tests/vnext/test_historical_d04_case.py
+    - tests/vnext/test_saved_d04_replay.py
+    - tests/vnext/test_b06_fallback_source_forms.py
 permissions:
   contents: read
 jobs:
@@ -96,6 +111,10 @@ jobs:
         tests.vnext.test_company_current_records tests.vnext.test_ordinary_current_update tests.vnext.test_company_parse_reuse
         tests.vnext.test_precalculated_case tests.vnext.test_runtime_tools tests.vnext.test_reporting_company_projection
         -v
+    - name: Current source batch proofs and source-check-only reuse
+      env:
+        PYTHONDONTWRITEBYTECODE: '1'
+      run: python3 tests/required_unittests.py tests.vnext.test_request_binding_batch
   company-source:
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -106,6 +125,10 @@ jobs:
     - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
       with:
         python-version: '3.14'
+    - name: Current international net revenue uses the existing source inspector
+      env:
+        PYTHONDONTWRITEBYTECODE: '1'
+      run: python3 tests/required_unittests.py tests.vnext.test_current_geography_case
     - name: Source subjects, units, periods and lodging
       env:
         PYTHONDONTWRITEBYTECODE: '1'
@@ -123,6 +146,11 @@ jobs:
         PYTHONDONTWRITEBYTECODE: '1'
         PYTHONPATH: scripts:.
       run: python3 tests/required_unittests.py tests.vnext.test_b06_note_source_forms tests.vnext.test_b06_note_source_material
+    - name: Debt certificates and standard pension source boundaries
+      env:
+        PYTHONDONTWRITEBYTECODE: '1'
+        PYTHONPATH: scripts:.
+      run: python3 tests/required_unittests.py tests.vnext.test_b06_fallback_source_forms
   company-financial:
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -159,7 +187,7 @@ jobs:
     - name: Current auditor changes use the shared four-form source core
       env:
         PYTHONDONTWRITEBYTECODE: '1'
-      run: python3 tests/required_unittests.py tests.vnext.test_current_auditor_case
+      run: python3 tests/required_unittests.py tests.vnext.test_current_auditor_case tests.vnext.test_c04_selected_input
     - name: Paired reported comparisons and exact revenue defect
       env:
         PYTHONDONTWRITEBYTECODE: '1'
@@ -178,6 +206,8 @@ jobs:
       env:
         PYTHONDONTWRITEBYTECODE: '1'
       run: python3 tests/required_unittests.py tests.vnext.test_selected_event_source_v1 tests.vnext.test_registered_event_projection
+        tests.vnext.test_explicit_e01_company tests.vnext.test_historical_e01_company_case
+        tests.vnext.test_historical_e01_incorporated_input tests.vnext.test_historical_ma_confirmation
     - name: Historical selected event scope and record retention
       env:
         PYTHONDONTWRITEBYTECODE: '1'
@@ -206,6 +236,15 @@ jobs:
       env:
         PYTHONDONTWRITEBYTECODE: '1'
       run: python3 tests/required_unittests.py tests.vnext.test_d01_explicit_running_headers tests.vnext.test_historical_risk_heading_case.HistoricalRiskHeadingCaseTest
+    - name: Original saved D04 replay and selected update retention
+      env:
+        PYTHONDONTWRITEBYTECODE: '1'
+      run: python3 tests/required_unittests.py tests.vnext.test_saved_d04_replay tests.vnext.test_current_d04_company
+        tests.vnext.test_ordinary_current_update.SelectedPeriodUpdateTest tests.vnext.test_company_current_records
+    - name: Historical D04 selected source and saved response consumer
+      env:
+        PYTHONDONTWRITEBYTECODE: '1'
+      run: python3 tests/required_unittests.py tests.vnext.test_historical_d04_selection tests.vnext.test_historical_d04_case
   source-contracts:
     runs-on: ubuntu-latest
     timeout-minutes: 5

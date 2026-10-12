@@ -22,3 +22,12 @@ def is_fasb_namespace(uri, *, taxonomy='us-gaap', namespace_policy=YEAR_ONLY):
         raise ValueError('XBRL_NAMESPACE_POLICY_UNSUPPORTED')
     suffix='' if namespace_policy==YEAR_ONLY else r'(?:-\d{2}-\d{2})?'
     return isinstance(uri,str) and re.fullmatch(r'https?://fasb\.org/'+taxonomy+r'/[0-9]{4}'+suffix,uri) is not None
+
+
+def source_reader_options(*, dei_release=YEAR_ONLY, namespace_policy=YEAR_ONLY):
+    """Validate explicit source release options; keep the old empty call shape."""
+    is_sec_namespace('', taxonomy='dei', namespace_policy=dei_release)
+    is_fasb_namespace('', namespace_policy=namespace_policy)
+    return {key: value for key, value in {
+        'dei_release': dei_release, 'namespace_policy': namespace_policy}.items()
+        if value != YEAR_ONLY}

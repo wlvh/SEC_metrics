@@ -1,5 +1,6 @@
 """Ordinary B06 native records for reconciled bonds and separate finance leases."""
 from pathlib import Path
+from .xbrl_namespace_policy import is_fasb_namespace, source_reader_options
 from .b06_bond_leases import POLICY, POLICY_PATH, BondLeaseError, inspect_bond_debt_scope
 from .calculator import withheld_metric_result
 from .canonical import content_hash, sha256_file, strict_json_file
@@ -38,7 +39,8 @@ def _spec(root):
     return spec
 
 
-def prepare_bond_debt_case(*, repo_root, company_id, rules_root=None, preparation=None, annual_input=None):
+def prepare_bond_debt_case(*, repo_root, company_id, rules_root=None, preparation=None, annual_input=None, dei_release='YEAR_ONLY', namespace_policy='YEAR_ONLY'):
+    reader_options = source_reader_options(dei_release=dei_release, namespace_policy=namespace_policy)
     from .deterministic_router import parse_accession_xbrl_source
     rules = repo_root if rules_root is None else Path(rules_root)
     preparation = (_prepare_b06(repo_root=repo_root,company_id=company_id)
@@ -65,7 +67,7 @@ def prepare_bond_debt_case(*, repo_root, company_id, rules_root=None, preparatio
         if company['industry_profile'] == 'financial_institution' or any(any(str(m).split(':')[-1] in restricted for m in c['dimensions'].values())
                 for c in parsed.contexts.values() if c['period_end'] == end):
             raise BondLeaseError('BOND_LEASE_SEPARATE_BANK_OR_INDUSTRIAL_SCOPE_REQUIRED')
-        source_proof = inspect_bond_debt_scope(primary=preparation['primary'],xml=preparation['xml'],prepared=original)
+        source_proof = inspect_bond_debt_scope(primary=preparation['primary'],xml=preparation['xml'],prepared=original, **reader_options)
         path = rules/rule['debt_set_registry']; _need(sha256_file(path=path) == rule['debt_set_registry_sha256'],
                                                          'ORDINARY_BOND_DEBT_REGISTRY_CHANGED')
         registry = strict_json_file(path=path); model = registry['debt_set_models'][MODEL_ID]

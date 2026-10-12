@@ -164,7 +164,7 @@ Issue #28 / `issue_28_v1` 已经由PR #29合并及独立治理receipt激活；�
 - `SOP.md`：标准流程的一级导航，只保留动作、权威引用与验收。
 - `PR_Checklist.md`：仅在用户明确要求发布时使用的发布治理流程，不属于批次 acceptance source。
 - `.github/pull_request_template.md`：长期 PR body 发布治理模板，不属于批次 acceptance source。
-- `.github/workflows/vnext-fast.yml`：PR fast-suite CI；只运行 `tools/run_fast_tests.py`，不替代integration、live或full acceptance。
+- `.github/workflows/vnext-fast.yml`：当前PR快测运行 `python3 tools/run_foundation_ci.py --suite fast --jobs 4`，并另列公司/来源边界检查；不替代完整业务验收或真实调用。旧 `tools/run_fast_tests.py` 仅用于其保存运行版本，不作为当前main的快测入口。
 - `.gitignore`：本地缓存、环境与临时 PR 草稿的忽略规则。
 - `requirements/issue_28_v1/`：Issue #28 successor 的五文件profile-driven snapshot；Decision Register拥有policy content，typed invariant profile、transfer classification、parent/R3/R2/archive与validator binding共同形成新closure。
 - `requirements/issue_15_v1/`：Issue #15 的 exact Contract、自包含 Decision Register、post-freeze tips、parent transfer/baseline、legacy producer/matrix/foundation证据；只作为不可变R1–R3历史兼容authority，不再承载successor policy。
@@ -327,7 +327,7 @@ Issue #28 / `issue_28_v1` 已经由PR #29合并及独立治理receipt激活；�
 
 ## 6. Review 与测试
 
-- Issue #15 的 historical D-26 保留 fast/local 主入口 `python3 tools/run_fast_tests.py --jobs 4`；fast set以`issue_28_v1` smoke同时覆盖successor与其exact historical parent，`.github/workflows/vnext-fast.yml` 在PR上运行同一集合。不把全仓/双解释器、隔离 repository/worktree 或长串行套件列为必跑项。`PASSED_FAST_LOCAL_ONLY` 只界定证据范围；CI green仍不是live、full acceptance或Cutover。
+- Issue #15 historical D-26 的 `python3 tools/run_fast_tests.py --jobs 4`、Requirement smoke及 `PASSED_FAST_LOCAL_ONLY` 是对应保存程序的历史入口与证据范围，保留原义。当前main/PR使用 `python3 tools/run_foundation_ci.py --suite fast --jobs 4` 和实际受影响的公司检查；不得把旧快照要求移回新开发。CI通过仍不等于真实模型、完整业务验收或生产切换。
 - 发现 Bug 时遵循 `TESTING.md`：先补稳定复现，再修实现；跨阶段问题同时补场景级证据。
 - 不用 quick unittest 替代 Golden、repair gate、snapshot checker 或完整场景，也不用 light review 冒充 full validation。
 - 真实运营中会写 `evidence/`、`outputs/` 或报告的命令仍须遵循其受控 authority；它们不是 R4 测试。

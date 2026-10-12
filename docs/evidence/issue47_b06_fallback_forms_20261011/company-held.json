@@ -1,0 +1,164 @@
+{
+  "records": [
+    {
+      "name": "southwest_airlines-first",
+      "seconds": 8.984548292000909,
+      "exit": 2,
+      "stdout": "{\n  \"elapsed_seconds\": 8.920787041999574,\n  \"record_type\": \"ORDINARY_COMPANY_EXECUTION_V1\",\n  \"company_id\": \"southwest_airlines\",\n  \"run_id\": \"20261011T055802Z-7f4a0707\",\n  \"status\": \"FLOW_COMPLETED_WITH_LIMITATIONS\",\n  \"selected_metrics\": [\n    \"B06\"\n  ],\n  \"metrics\": [\n    {\n      \"metric_id\": \"B06\",\n      \"status\": \"CANDIDATE_WITHHELD\",\n      \"attempt_id\": \"2f09cf0e9236404d875c8099e716349b\",\n      \"version\": \"6e728d9fe2d34fc8929f3b6a1904f5e4\",\n      \"result_id\": \"sha256:ea0bff4b3b038cb0cac19a149d283d57923027cff8f6d21fe4045608755183b2\",\n      \"result_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/fallback-b06-company-3jycxfsq/southwest_airlines/state/updates/B06/periods/FY2022/results/6e728d9fe2d34fc8929f3b6a1904f5e4\",\n      \"calculation_performed\": true,\n      \"new_candidate_created\": true,\n      \"result_reason_code\": \"B06_SOURCE_RELATIONSHIP_UNRESOLVED\",\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"requested_fiscal_year\": 2022,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:ea0bff4b3b038cb0cac19a149d283d57923027cff8f6d21fe4045608755183b2\",\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/fallback-b06-company-3jycxfsq/southwest_airlines/state/updates/B06/periods/FY2022/results/6e728d9fe2d34fc8929f3b6a1904f5e4\",\n      \"program_version\": {\n        \"commit\": \"5c9d94a7e5bf51f58ea722f38cc05f1dca623eff\",\n        \"has_uncommitted_changes\": true\n      }\n    }\n  ],\n  \"source_root\": \"/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs\",\n  \"program_root\": \"/Users/lyuhongwang/.codex/worktrees/issue47-guide-received-main-20261011/SEC_metrics\",\n  \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/fallback-b06-company-3jycxfsq/southwest_airlines/state\",\n  \"output_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/fallback-b06-company-3jycxfsq/southwest_airlines/runs/20261011T055802Z-7f4a0707\",\n  \"source_mode\": \"SAVED_ONLY_NO_ONLINE_DISCOVERY\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false,\n  \"selected_fiscal_years\": [\n    2022\n  ]\n}\n",
+      "stderr": "",
+      "arguments": [
+        "run",
+        "--company",
+        "southwest_airlines",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2022",
+        "--fiscal-year-end",
+        "2022",
+        "--metric",
+        "B06",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/fallback-b06-company-3jycxfsq/southwest_airlines/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/fallback-b06-company-3jycxfsq/southwest_airlines/runs"
+      ]
+    },
+    {
+      "name": "repeat-held",
+      "seconds": 1.0787315420002415,
+      "exit": 2,
+      "stdout": "{\n  \"elapsed_seconds\": 0.5916271250007412,\n  \"record_type\": \"ORDINARY_COMPANY_EXECUTION_V1\",\n  \"company_id\": \"southwest_airlines\",\n  \"run_id\": \"20261011T055929Z-fb4d2c1f\",\n  \"status\": \"FLOW_COMPLETED_WITH_LIMITATIONS\",\n  \"selected_metrics\": [\n    \"B06\"\n  ],\n  \"metrics\": [\n    {\n      \"metric_id\": \"B06\",\n      \"status\": \"PREVIOUS_INPUT_WITHHELD\",\n      \"attempt_id\": \"a4722c48cebd43b290d588b5a2696f14\",\n      \"version\": \"6e728d9fe2d34fc8929f3b6a1904f5e4\",\n      \"result_id\": \"sha256:ea0bff4b3b038cb0cac19a149d283d57923027cff8f6d21fe4045608755183b2\",\n      \"result_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/fallback-b06-company-3jycxfsq/southwest_airlines/state/updates/B06/periods/FY2022/results/6e728d9fe2d34fc8929f3b6a1904f5e4\",\n      \"result_reason_code\": \"B06_SOURCE_RELATIONSHIP_UNRESOLVED\",\n      \"raw_input_unchanged\": true,\n      \"calculation_performed\": false,\n      \"new_candidate_created\": false,\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"requested_fiscal_year\": 2022,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:ea0bff4b3b038cb0cac19a149d283d57923027cff8f6d21fe4045608755183b2\",\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/fallback-b06-company-3jycxfsq/southwest_airlines/state/updates/B06/periods/FY2022/results/6e728d9fe2d34fc8929f3b6a1904f5e4\",\n      \"program_version\": {\n        \"commit\": \"5c9d94a7e5bf51f58ea722f38cc05f1dca623eff\",\n        \"has_uncommitted_changes\": true\n      }\n    }\n  ],\n  \"source_root\": \"/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs\",\n  \"program_root\": \"/Users/lyuhongwang/.codex/worktrees/issue47-guide-received-main-20261011/SEC_metrics\",\n  \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/fallback-b06-company-3jycxfsq/southwest_airlines/state\",\n  \"output_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/fallback-b06-company-3jycxfsq/southwest_airlines/runs/20261011T055929Z-fb4d2c1f\",\n  \"source_mode\": \"SAVED_ONLY_NO_ONLINE_DISCOVERY\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false,\n  \"selected_fiscal_years\": [\n    2022\n  ]\n}\n",
+      "stderr": "",
+      "arguments": [
+        "run",
+        "--company",
+        "southwest_airlines",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2022",
+        "--fiscal-year-end",
+        "2022",
+        "--metric",
+        "B06",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/fallback-b06-company-3jycxfsq/southwest_airlines/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/fallback-b06-company-3jycxfsq/southwest_airlines/runs"
+      ]
+    },
+    {
+      "name": "read-held",
+      "seconds": 0.5508621249991847,
+      "exit": 0,
+      "stdout": "{\n  \"elapsed_seconds\": 0.08387808299994504,\n  \"record_type\": \"ORDINARY_COMPANY_RESULT_VIEW_V1\",\n  \"company_id\": \"southwest_airlines\",\n  \"source_root\": \"/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs\",\n  \"metrics\": [\n    {\n      \"metric_id\": \"B06\",\n      \"result_id\": \"sha256:ea0bff4b3b038cb0cac19a149d283d57923027cff8f6d21fe4045608755183b2\",\n      \"period_start\": \"2022-12-31\",\n      \"period_end\": \"2022-12-31\",\n      \"fiscal_year\": 2022,\n      \"value\": null,\n      \"unit\": null,\n      \"publication\": \"WITHHELD\",\n      \"quality\": \"NONE\",\n      \"reason_code\": \"B06_SOURCE_RELATIONSHIP_UNRESOLVED\",\n      \"result_validity\": \"SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED\",\n      \"defect_holds\": [],\n      \"latest_observation\": \"PREVIOUS_INPUT_WITHHELD\",\n      \"requested_in_latest_execution\": true,\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/fallback-b06-company-3jycxfsq/southwest_airlines/state/updates/B06/periods/FY2022/results/6e728d9fe2d34fc8929f3b6a1904f5e4\"\n    }\n  ],\n  \"source_freshness\": \"NOT_CHECKED_BY_SAVED_READER\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false,\n  \"output_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/fallback-b06-company-3jycxfsq/read\"\n}\n",
+      "stderr": "",
+      "arguments": [
+        "results",
+        "--company",
+        "southwest_airlines",
+        "--state-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/fallback-b06-company-3jycxfsq/southwest_airlines/state",
+        "--output-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/fallback-b06-company-3jycxfsq/read"
+      ]
+    }
+  ],
+  "row": {
+    "company": "Southwest Airlines",
+    "cik": "92380",
+    "metric_id": "B06",
+    "metric_name": "Debt-to-equity",
+    "value": "",
+    "unit": "ratio",
+    "status": "WITHHELD",
+    "source_class": "DERIVED",
+    "formula": "defined carrying debt / shareholders equity",
+    "period_start": "2022-12-31",
+    "period_end": "2022-12-31",
+    "fiscal_year": "2022",
+    "fiscal_period": "TARGET_PERIOD",
+    "accession": "",
+    "form": "10-K",
+    "filed_date": "2023-02-07",
+    "concept_or_section": "",
+    "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2022, \"period_end\": \"2022-12-31\", \"period_start\": \"2022-01-01\"}, \"measurement_kind\": \"TARGET_PERIOD\", \"scope\": {\"entity_scope\": \"consolidated\"}, \"selection\": {\"calculation\": {}, \"classification\": \"SOURCE_OR_RELATIONSHIP_UNRESOLVED\", \"reason\": \"B06_REPORTED_INTEREST_DEBT_SCOPE_UNRESOLVED\", \"selection_detail_id\": \"sha256:76d937e82dc564cce89b8aed2cea2a41687f355b391fea11b85549ba772eec8d\"}, \"source_reference_ids\": [\"sha256:5333d6f398f1f48b63dc970d5eedf5119ea5a7a59ffc0c975caeac6064bb1a97\", \"sha256:11d8e0e98fb7291b823486e7b38d22dfb5f82f4c4d1017fd4480cd71e61d0b1e\", \"sha256:2e2180f3094a88513a665242fcb078b7c9b098ed857568c3422ca14aa5007bda\", \"sha256:6af4d4f248f490c0515a0ac6352f1f513dccdb1a94d8b9343e0a4ef6e971c0c6\", \"sha256:14f3fd5cc6200d46487f18c2524772cb781ee886da3791e53d286fd09cd27647\"]}",
+    "confidence": "",
+    "notes": "Recognized borrowing, bond and finance lease carrying amounts divided by source-verified shareholders equity. No accepted value is asserted for this target period. Native state: WITHHELD; reason: B06_SOURCE_RELATIONSHIP_UNRESOLVED.",
+    "company_id": "southwest_airlines",
+    "result_id": "sha256:ea0bff4b3b038cb0cac19a149d283d57923027cff8f6d21fe4045608755183b2",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/fallback-b06-company-3jycxfsq/southwest_airlines/state/updates/B06/periods/FY2022/results/6e728d9fe2d34fc8929f3b6a1904f5e4",
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "local_metric_status": "PREVIOUS_INPUT_WITHHELD",
+    "period_role": "REQUESTED_RESULT",
+    "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+    "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+    "defect_holds": "[]",
+    "requested_in_latest_execution": "True"
+  },
+  "interest": [
+    {
+      "concept": "InterestPayableCurrent",
+      "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231",
+      "ordinal": 1617,
+      "period_end": "2022-12-31",
+      "source_kind": "primary",
+      "source_reference": {
+        "accession": "0000092380-23-000010",
+        "company_id": "southwest_airlines",
+        "document_name": "luv-20221231.htm",
+        "raw_asset_id": "sha256:a6e2bc5f40c8f2bc933cf35538b9b371c1f7e96f6a305bbda1ca9d09a5b926c2",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:177763edbcbc7b590f3d0af2c5aede04eada6da47eb97f491bde18cef5f327ad",
+        "source_reference_id": "sha256:6af4d4f248f490c0515a0ac6352f1f513dccdb1a94d8b9343e0a4ef6e971c0c6",
+        "source_role": "target_primary",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238023000010/luv-20221231.htm"
+      },
+      "unit": "USD",
+      "value": "45000000"
+    },
+    {
+      "concept": "interestpayablecurrent",
+      "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231",
+      "ordinal": 1617,
+      "period_end": "2022-12-31",
+      "source_kind": "xml",
+      "source_reference": {
+        "accession": "0000092380-23-000010",
+        "company_id": "southwest_airlines",
+        "document_name": "luv-20221231_htm.xml",
+        "raw_asset_id": "sha256:729e907ac0560ceef06f4b0e9361791e7eaeb22bf8cc84a8aa30628799053929",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:404f36c4dff8409fc1ece46b2eff23ca8896e19fcfa9afe8b00042cbc44844ae",
+        "source_reference_id": "sha256:14f3fd5cc6200d46487f18c2524772cb781ee886da3791e53d286fd09cd27647",
+        "source_role": "auditor_facts",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238023000010/luv-20221231_htm.xml"
+      },
+      "unit": "USD",
+      "value": "45000000"
+    }
+  ],
+  "protected_files": {
+    "company-task.json": "f0949d77eb7b1400bcc73cd2df54987d144f9d12f686dbc15305582b6697d5b0",
+    "updates/B06/periods/FY2022/completed-check.json": "3b52ca28ab77a4cbd34de2b546121d6e11657216ce73d06d50cce706715f3f5b",
+    "updates/B06/periods/FY2022/results/6e728d9fe2d34fc8929f3b6a1904f5e4/metrics_matrix.csv": "1c16a289a439a876af267f51c89359dce33d4136706d8350282a1d9e0c524aa5",
+    "updates/B06/periods/FY2022/results/6e728d9fe2d34fc8929f3b6a1904f5e4/metric_evidence.csv": "d5890c5affa63b84603efcee20665991218b44b094e60f3abba99eb96e0341c8",
+    "updates/B06/periods/FY2022/results/6e728d9fe2d34fc8929f3b6a1904f5e4/records.jsonl": "52eb54ac63d77d5749746d39107b7d5192412581622db5f14a8e037cbd1ebbc9",
+    "updates/B06/periods/FY2022/results/6e728d9fe2d34fc8929f3b6a1904f5e4/input-assessments.json": "57b2f18e29db791b5d52aba86942e377b116f24d07cc6c692961046cc4ad7c3e",
+    "updates/B06/periods/FY2022/results/6e728d9fe2d34fc8929f3b6a1904f5e4/manifest.json": "ae691664498cb1faa1b7b1a7334c950cd5278de8ab6a63489af55ef4777084bc",
+    "updates/B06/periods/FY2022/results/6e728d9fe2d34fc8929f3b6a1904f5e4/write.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "updates/B06/periods/FY2022/results/6e728d9fe2d34fc8929f3b6a1904f5e4/receipt.json": "cf35435f4815f0018914d2a11ddd5bac32bad302c8a23d8aae77372e4d2e1e62"
+  },
+  "read_state_files_unchanged": 17,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "limit": "component ratio .756807 is supported; current accrued-interest relationship still unproved; no full B06 value"
+}

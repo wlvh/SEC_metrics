@@ -40,6 +40,32 @@ class CurrentUpdateTest(unittest.TestCase):
         return update.run_once(state_root=self.root,source_root=ROOT,
                                company_id='marriott_international',metric_id='B01')
 
+    def test_source_check_only_version_change_revalidates_but_does_not_recalculate(self):
+        self.config['processing_files']={'scripts/vnext/ordinary_current_update.py':'old',
+            'scripts/vnext/request_bindings.py':'old-check','scripts/vnext/calculator.py':'same'}
+        first=self.run_update();old_configuration=(self.root/'completed-check.json').read_bytes()
+        self.config['processing_files']['scripts/vnext/request_bindings.py']='new-check'
+        self.config['processing_files']['scripts/vnext/ordinary_current_update.py']='new-controller'
+        with patch.object(update,'create_saved_result',side_effect=AssertionError('No calculation')), \
+             patch.object(update,'_current_sources',return_value=[dict(self.proof)]) as source_check:
+            again=self.run_update()
+        self.assertEqual(again['status'],'NO_SOURCE_CONTENT_CHANGE')
+        self.assertEqual(again['result_id'],first['result_id']);source_check.assert_called_once()
+        self.assertEqual(again['source_check_versions']['scripts/vnext/request_bindings.py'],'new-check')
+        self.assertEqual((self.root/'completed-check.json').read_bytes(),old_configuration)
+        self.config['processing_files']['scripts/vnext/calculator.py']='changed-formula'
+        self.assertTrue(self.run_update()['calculation_performed'])
+
+    def test_new_source_checker_failure_still_blocks_old_success_reuse(self):
+        self.config['processing_files']={'scripts/vnext/request_bindings.py':'old'}
+        self.run_update();old=(self.root/'current-result.json').read_bytes()
+        self.config['processing_files']['scripts/vnext/request_bindings.py']='new'
+        with patch.object(update,'_current_sources',side_effect=ValueError('CURRENT_BODY_CORRUPT')), \
+             patch.object(update,'create_saved_result',side_effect=AssertionError('No calculation')):
+            failed=self.run_update()
+        self.assertEqual(failed['status'],'INPUT_OR_EXECUTION_FAILED')
+        self.assertEqual((self.root/'current-result.json').read_bytes(),old)
+
     def test_identical_raw_and_config_never_enters_calculation(self):
         first=self.run_update()
         with patch.object(update,'create_saved_result',side_effect=AssertionError('No calculation')):
@@ -393,8 +419,12 @@ class SelectedPeriodUpdateTest(unittest.TestCase):
         self.assertEqual(observed['status'],'INPUT_OR_EXECUTION_FAILED')
         self.assertEqual(observed['reason'],'CONSTRUCTED_A13_FACTORY_BOUNDARY_NO_BUSINESS_RESULT')
 
-    def test_a13_without_explicit_year_and_other_unsupported_family_stay_closed(self):
-        for metric,extra in [('A13',{}),('D03',{'fiscal_year':2021,'case_factory':self.factory})]:
+    def test_new_current_a13_dispatch_and_unreceived_family_boundary(self):
+        with patch.object(update,'_configuration',side_effect=ValueError('CONTROL_CURRENT_A13_DISPATCH')):
+            current=update.run_once(state_root=self.root,source_root=ROOT,
+                company_id='marriott_international',metric_id='A13')
+        self.assertEqual(current['reason'],'CONTROL_CURRENT_A13_DISPATCH')
+        for metric,extra in [('D03',{'fiscal_year':2021,'case_factory':self.factory})]:
             with self.subTest(metric=metric),self.assertRaisesRegex(ValueError,'CURRENT_UPDATE_METRIC_UNSUPPORTED'):
                 update.run_once(state_root=self.root,source_root=ROOT,
                     company_id='marriott_international',metric_id=metric,**extra)
@@ -403,7 +433,7 @@ class SelectedPeriodUpdateTest(unittest.TestCase):
         self.factory_calls=getattr(self,'factory_calls',0)+1
         return {'target_period':{'fiscal_year':fiscal_year}}
 
-    def selected(self,year,factory=None,processing_files=()):
+    def selected(self,year,factory=None,processing_files=(),processing_inputs=()):
         def save(**kwargs):
             y=kwargs['case']['target_period']['fiscal_year'];path=kwargs['output_root'];path.mkdir(parents=True)
             value={'manifest':{'company_id':'marriott_international','metric_id':'B01','source_proofs':[self.proof]},
@@ -413,7 +443,34 @@ class SelectedPeriodUpdateTest(unittest.TestCase):
             return value
         with patch.object(update,'save_calculated_case',side_effect=save):
             return update.run_once(state_root=self.root,source_root=ROOT,company_id='marriott_international',
-                metric_id='B01',fiscal_year=year,case_factory=factory or self.factory,processing_files=processing_files)
+                metric_id='B01',fiscal_year=year,case_factory=factory or self.factory,
+                processing_files=processing_files,processing_inputs=processing_inputs)
+
+    def test_saved_answer_input_change_rechecks_once_then_reuses_withheld(self):
+        self.publication='WITHHELD'
+        package=Path(self.temp.name)/'answers.tar.gz';package.write_bytes(b'original-small-state')
+        first=self.selected(2024,processing_inputs=[package])
+        package.write_bytes(b'changed-small-state')
+        second=self.selected(2024,processing_inputs=[package])
+        self.assertNotEqual(first['version'],second['version'])
+        self.assertEqual(self.factory_calls,2)
+        with patch.object(update,'save_calculated_case',side_effect=AssertionError('No repeated answer processing')):
+            repeated=update.run_once(state_root=self.root,source_root=ROOT,company_id='marriott_international',
+                metric_id='B01',fiscal_year=2024,case_factory=self.factory,processing_inputs=[package])
+        self.assertEqual(repeated['status'],'PREVIOUS_INPUT_WITHHELD')
+        self.assertFalse(repeated['calculation_performed'])
+        self.assertEqual(repeated['version'],second['version'])
+        self.assertEqual(self.factory_calls,2)
+
+    def test_missing_saved_answer_input_does_not_reuse_old_success(self):
+        package=Path(self.temp.name)/'answers.tar.gz';package.write_bytes(b'small-state')
+        self.selected(2024,processing_inputs=[package])
+        pointer=self.root/'periods/FY2024/current-result.json';old=pointer.read_bytes()
+        package.unlink()
+        observed=self.selected(2024,processing_inputs=[package])
+        self.assertEqual(observed['status'],'INPUT_OR_EXECUTION_FAILED')
+        self.assertIn('PROCESSING_INPUT_MISSING',observed['reason'])
+        self.assertEqual(pointer.read_bytes(),old)
 
     def test_two_selected_periods_have_separate_pointers_and_current_layout_stays(self):
         first=self.selected(2024);second=self.selected(2025)

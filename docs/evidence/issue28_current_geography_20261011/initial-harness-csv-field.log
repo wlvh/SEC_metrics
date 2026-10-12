@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-geography/SEC_metrics/docs/evidence/issue28_current_geography_20261011/verify_company.py", line 59, in <module>
+    print(company,row['value'],row['applicability'],round(first_seconds,3),round(repeat_seconds,3),round(read_seconds,3),flush=True)
+                               ~~~^^^^^^^^^^^^^^^^^
+KeyError: 'applicability'

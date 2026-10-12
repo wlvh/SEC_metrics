@@ -10,6 +10,7 @@ from decimal import Decimal
 import datetime
 import re
 
+from .xbrl_namespace_policy import is_fasb_namespace, source_reader_options
 from . import b06_disclosure as disclosure
 from .canonical import content_hash, decimal_text, sha256_bytes, strict_json_file
 from .constraints import parse_numeric_claim
@@ -59,13 +60,14 @@ def _value(fact, metadata):
     return '0'
 
 
-def _source(source, prepared, kind):
+def _source(source, prepared, kind, *, dei_release='YEAR_ONLY', namespace_policy='YEAR_ONLY'):
+    reader_options = source_reader_options(dei_release=dei_release, namespace_policy=namespace_policy)
     raw = source['raw_bytes']; ref = source['source_reference']
     period = prepared['table_input']['target_period']
     _need(ref['raw_asset_id'] == 'sha256:'+sha256_bytes(content=raw)
           and ref['accession'] == prepared['filing']['accessionNumber']
           and ref['company_id'] == prepared['company_id'], 'SOURCE_BINDING_CHANGED')
-    _need(annual_period(raw=raw,cik=prepared['entity'],filing=prepared['filing']) == period,
+    _need(annual_period(raw=raw,cik=prepared['entity'],filing=prepared['filing'], **({'dei_release': dei_release} if dei_release != 'YEAR_ONLY' else {})) == period,
           'SOURCE_IDENTITY_CONFLICT')
     parsed = parse_accession_xbrl_source(raw_bytes=raw)
     meta = _ReportedFactMetadata(); meta.feed(raw.decode('utf-8-sig')); meta.close()
@@ -84,7 +86,7 @@ def _source(source, prepared, kind):
         if c['dimensions'] or c['typed_dimension_count']:
             potential = re.search(POLICY['potential_financing_concept_pattern']+'|deferredfinancecosts',local,re.I)
             if fact['unit_ref'] and c['period_start'] == c['period_end'] and potential:
-                standard = re.fullmatch(r'https?://fasb\.org/us-gaap/[0-9]{4}',uri) is not None
+                standard = is_fasb_namespace(uri, namespace_policy=namespace_policy)
                 unit = meta.units.get(fact['unit_ref'])
                 usd = unit == {'measures':[('http://www.xbrl.org/2003/iso4217','USD')],'divided':False}
                 role = next((v for k,v in POLICY['dimension_concept_roles'].items() if k.casefold() == local.casefold()),None)
@@ -114,7 +116,7 @@ def _source(source, prepared, kind):
                 inventory.append(record)
             continue
         _need(str(int(c['entity_identifier'])) == prepared['entity'], 'SUBJECT_CONFLICT')
-        standard = re.fullmatch(r'https?://fasb\.org/us-gaap/[0-9]{4}',uri) is not None
+        standard = is_fasb_namespace(uri, namespace_policy=namespace_policy)
         roles = [k for k,v in POLICY['monetary_concepts'].items() if v.casefold() == local.casefold()]
         note_roles = [k for k,v in POLICY['note_concepts'].items() if v.casefold() == local.casefold()]
         if roles or note_roles:
@@ -379,10 +381,11 @@ def _related_tables_inventory(notes):
     return result
 
 
-def inspect_note_carrying(*, primary, xml, prepared):
+def inspect_note_carrying(*, primary, xml, prepared, dei_release='YEAR_ONLY', namespace_policy='YEAR_ONLY'):
     """Rebuild a bounded semantic proof from two complete original documents."""
-    xnotes,xrelated,xreports,xinventory = _source(xml,prepared,'xml')
-    inotes,irelated,ireports,iinventory = _source(primary,prepared,'primary')
+    reader_options = source_reader_options(dei_release=dei_release, namespace_policy=namespace_policy)
+    xnotes,xrelated,xreports,xinventory = _source(xml,prepared,'xml', **reader_options)
+    inotes,irelated,ireports,iinventory = _source(primary,prepared,'primary', **reader_options)
     raw = primary['raw_bytes'].decode('utf-8-sig')
     blocks = _DefinitionBlocks(raw); blocks.feed(raw); blocks.close(); blocks._flush()
     _need(not blocks.structural_errors and (blocks.html_count,blocks.body_count,blocks.html_closed,blocks.body_closed) == (1,1,1,1),

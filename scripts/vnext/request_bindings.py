@@ -231,6 +231,56 @@ def request_attempt_binding(
     }
 
 
+def _validate_named_row(*, repo_root, row_index, row, source_url, content_sha256,
+                        accession, document_name, require_immutable):
+    """Identical single/batch source and locator checks; never trust a cached pass."""
+    if type(require_immutable) is not bool:
+        raise BatchWorkflowError("Request binding tier must be explicit")
+    archive_accession = request_accession(source_url=source_url)
+    # The requested document identity is the URL's final path component.
+    # A pinned immutable attempt may retain a different local storage name;
+    # its original path/header pair is still validated using the logged name.
+    logical_name = Path(urlsplit(source_url).path).name
+    immutable_storage_name = str(row["repo_relative_path"]).startswith("evidence/request_attempts/")
+    document_matches = (row["document_name"] == document_name
+                        or (immutable_storage_name and document_name == logical_name and bool(logical_name)))
+    if (
+        row["method"] != "GET"
+        or row["status_code"] != "200"
+        or row["error"]
+        or row["source_url"] != source_url
+        or row["content_sha256"] != content_sha256
+        or not document_matches
+        or (
+            (row["accession"] != archive_accession or accession != archive_accession)
+            if archive_accession
+            else row["accession"] not in {"", accession}
+        )
+    ):
+        raise BatchWorkflowError(
+            "Planned request attempt differs from its SEC source"
+        )
+    proof = _verified_request_locator(
+        repo_root=repo_root,
+        row=row,
+        source_url=source_url,
+        content_sha256=content_sha256,
+        document_name=row["document_name"],
+    )
+    if require_immutable and proof["request_locator_kind"] != (
+        "IMMUTABLE_ATTEMPT"
+    ):
+        raise BatchWorkflowError(
+            "Live request attempt is not an immutable SEC artifact"
+        )
+    return {
+        **proof,
+        "request_attempt_id": request_log_attempt_id(
+            row_index=row_index, row=row,
+        ),
+    }
+
+
 def validate_request_attempt_binding(
     *,
     repo_root: Path,
@@ -284,49 +334,53 @@ def validate_request_attempt_binding(
     if len(matches) != 1:
         raise BatchWorkflowError("Planned request attempt is absent")
     row_index, row = matches[0]
-    archive_accession = request_accession(source_url=source_url)
-    # The requested document identity is the URL's final path component.
-    # A pinned immutable attempt may retain a different local storage name;
-    # its original path/header pair is still validated using the logged name.
-    logical_name = Path(urlsplit(source_url).path).name
-    immutable_storage_name = str(row["repo_relative_path"]).startswith("evidence/request_attempts/")
-    document_matches = (row["document_name"] == document_name
-                        or (immutable_storage_name and document_name == logical_name and bool(logical_name)))
-    if (
-        row["method"] != "GET"
-        or row["status_code"] != "200"
-        or row["error"]
-        or row["source_url"] != source_url
-        or row["content_sha256"] != content_sha256
-        or not document_matches
-        or (
-            (row["accession"] != archive_accession or accession != archive_accession)
-            if archive_accession
-            else row["accession"] not in {"", accession}
-        )
-    ):
-        raise BatchWorkflowError(
-            "Planned request attempt differs from its SEC source"
-        )
-    proof = _verified_request_locator(
-        repo_root=repo_root,
-        row=row,
-        source_url=source_url,
-        content_sha256=content_sha256,
-        document_name=row["document_name"],
-    )
-    if require_immutable and proof["request_locator_kind"] != (
-        "IMMUTABLE_ATTEMPT"
-    ):
-        raise BatchWorkflowError(
-            "Live request attempt is not an immutable SEC artifact"
-        )
-    return {
-        **proof,
-        "request_attempt_id": request_log_attempt_id(
-            row_index=row_index, row=row,
-        ),
-    }
+    return _validate_named_row(repo_root=repo_root,row_index=row_index,row=row,
+        source_url=source_url,content_sha256=content_sha256,accession=accession,
+        document_name=document_name,require_immutable=require_immutable)
+
+
+def validate_request_attempt_bindings(*, repo_root: Path, requests,
+                                      expected_log_sha256=None):
+    """Validate one operation's named proofs from one current log snapshot.
+
+    This is not a persistent cache. Every body/header pair still goes through
+    the exact single-proof checks. Log changes during this operation refuse,
+    and an independent call rereads the log, bodies and headers.
+    """
+    if type(requests) not in (list,tuple):
+        raise BatchWorkflowError("Request binding batch must be a sequence")
+    fields = {'source_url','content_sha256','accession','document_name',
+              'request_attempt_id','require_immutable'}
+    if any(type(r) is not dict or set(r)!=fields for r in requests):
+        raise BatchWorkflowError("Request binding batch fields differ")
+    log_path = repo_root/'evidence/requests_log.csv'
+    try:
+        raw = log_path.read_bytes()
+        digest = sha256_bytes(content=raw)
+        if expected_log_sha256 is not None and digest!=expected_log_sha256:
+            raise BatchWorkflowError("Request ledger changed during current source check")
+        validate_request_log_manifest(log_path=log_path)
+        rows = parse_request_log_rows(text=raw.decode('utf-8'))
+        if sha256_bytes(content=log_path.read_bytes())!=digest:
+            raise BatchWorkflowError("Request ledger changed during current source check")
+    except (OSError,UnicodeDecodeError,ValueError) as error:
+        raise BatchWorkflowError("Request ledger is unavailable or invalid") from error
+    index = {request_log_attempt_id(row_index=i,row=row):(i,row)
+             for i,row in enumerate(rows)}
+    output = []
+    for request in requests:
+        found=index.get(request['request_attempt_id'])
+        if found is None:
+            raise BatchWorkflowError("Planned request attempt is absent")
+        i,row=found
+        output.append(_validate_named_row(repo_root=repo_root,row_index=i,row=row,
+            **{k:v for k,v in request.items() if k!='request_attempt_id'}))
+    if sha256_bytes(content=log_path.read_bytes())!=digest:
+        raise BatchWorkflowError("Request ledger changed during current source check")
+    validate_request_log_manifest(log_path=log_path)
+    if sha256_bytes(content=log_path.read_bytes())!=digest:
+        raise BatchWorkflowError("Request ledger changed during current source check")
+    return output
 
 
 def validate_planned_request_binding(

@@ -13,9 +13,23 @@ class HistoryCompanyDispatchTest(TestCase):
         from vnext.historical_risk_heading_case import prepare_historical_risk_heading_year_case, PROCESSING_FILES
         from vnext.historical_lodging_results import prepare_historical_lodging_year_case
         from vnext.historical_statement_cases import prepare_historical_statement_year_case
-        with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared:
-            self.run_history(metric_ids=['D01','B10','B04','B06','C04','B03','B01'])
+        from vnext.historical_e01_company_case import prepare_historical_e01_year_case, PROCESSING_FILES as e01_files
+        from vnext.historical_d04_case import PROCESSING_FILES as d04_files
+        package = Path('/saved/original-d04-package')
+        def constructed_d04_factory(**kwargs):
+            raise AssertionError('Dispatch control does not process a filing')
+        with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared, \
+             patch('vnext.historical_d04_case.historical_d04_factory',
+                   return_value=constructed_d04_factory) as d04:
+            self.run_history(metric_ids=['E01','D04','D01','B10','B04','B06','C04','B03','B01'],
+                             saved_call_package=package)
         args = shared.call_args.kwargs
+        d04.assert_called_once_with(saved_call_package=package)
+        self.assertIs(args['case_factories']['E01'], prepare_historical_e01_year_case)
+        self.assertEqual(args['processing_files_by_metric']['E01'], e01_files)
+        self.assertIs(args['case_factories']['D04'], constructed_d04_factory)
+        self.assertEqual(args['processing_files_by_metric']['D04'], d04_files)
+        self.assertEqual({'D04': (package,)}, args['processing_inputs_by_metric'])
         self.assertIs(args['case_factories']['D01'], prepare_historical_risk_heading_year_case)
         self.assertEqual(args['processing_files_by_metric']['D01'], PROCESSING_FILES)
         self.assertIs(args['case_factories']['B10'], prepare_historical_lodging_year_case)
@@ -428,6 +442,17 @@ class HistoryCompanyDispatchTest(TestCase):
             self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric'][metric])
         self.assertIs(prepare_historical_capital_year_case, args['case_factories']['A01'])
         self.assert_range_income(args, 'B01')
+
+    def test_e01_uses_explicit_content_consumer_and_keeps_old_event_factory(self):
+        from vnext.historical_e01_company_case import prepare_historical_e01_year_case,PROCESSING_FILES
+        from vnext.historical_event_cases import prepare_historical_event_year_case
+        with patch('vnext.company_current_records.run_saved_company',return_value={}) as shared:
+            self.run_history(company_id='paramount_skydance_paramount_global',metric_ids=['E01','C01','E03'])
+        args=shared.call_args.kwargs
+        self.assertIs(prepare_historical_e01_year_case,args['case_factories']['E01'])
+        self.assertEqual(PROCESSING_FILES,args['processing_files_by_metric']['E01'])
+        self.assertIs(prepare_historical_event_year_case,args['case_factories']['C01'])
+        self.assertIs(prepare_historical_event_year_case,args['case_factories']['E03'])
 
 class HistoricalIncomeSharedDispatchTest(TestCase):
     setUp = HistoryCompanyDispatchTest.setUp

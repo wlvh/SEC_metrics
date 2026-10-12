@@ -1,0 +1,22 @@
+diff --git a/scripts/vnext/b06_disclosure.py b/scripts/vnext/b06_disclosure.py
+index 5ac3f4c8..cf41062a 100644
+--- a/scripts/vnext/b06_disclosure.py
++++ b/scripts/vnext/b06_disclosure.py
+@@ -242,7 +242,7 @@ def verify(*, raw, primary, source, spec, target, filed, data_root, proposal):
+             deductions.append((low,abs(v)));item['disposition']='RECONCILED_ADJUSTMENT'
+         elif re.fullmatch(r'finance leases',lab,re.I):
+             need(inclusive and v==Decimal(lease['value']),'FINANCE_LEASE_MEMBERSHIP_CONFLICT');components.append((lab,v));item['disposition']='INCLUDED_IN_SELECTED_SET'
+-        elif re.search(r'\b(?:notes|debentures|loan|credit agreement)\b',lab,re.I):
++        elif re.search(r'\b(?:notes|debentures|loan|credit agreement|certificates)\b',lab,re.I):
+             need(not re.search(r'\b(?:exclud\w*|not|except)\b',lab,re.I),'DEBT_MEMBERSHIP_NEGATED')
+             components.append((lab,v));item['disposition']='INCLUDED_IN_SELECTED_SET'
+         else:item['disposition']='UNRESOLVED'
+@@ -295,7 +295,7 @@ def verify(*, raw, primary, source, spec, target, filed, data_root, proposal):
+         elif name=='us-gaap:lettersofcreditoutstandingamount':
+             need('letters of credit are an off-balance sheet item' in debt_text.casefold(),'LETTER_OF_CREDIT_RECOGNITION_UNRESOLVED');disposition='EXCLUDED_DOCUMENTED_OFF_BALANCE_SHEET_STANDBY'
+         elif name in recognized or short in {'financeleaseliabilitycurrent','financeleaseliabilitynoncurrent'}:disposition='INCLUDED_OR_RECONCILED'
+-        elif name.startswith('us-gaap:') and re.search('asset|tax|receivables|availableforsale|operatinglease|lessor|rightofuse|weightedaverage|maturit|paymentsdue|undiscounted|collateral|revenueremainingperformanceobligation',short):disposition='EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE'
++        elif name.startswith('us-gaap:') and re.search('asset|tax|receivables|availableforsale|operatinglease|lessor|rightofuse|weightedaverage|maturit|paymentsdue|undiscounted|collateral|revenueremainingperformanceobligation|definedbenefitplan',short):disposition='EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE'
+         elif not name.startswith('us-gaap:') and (short.startswith(('deferredtaxassets','deferredtaxliabilities')) or short in {'revenueremainingperformanceobligationcurrent','revenueremainingperformanceobligationnoncurrent','leaserightofuseasset','lessoroperatingleasepaymentstobereceivednextfiveyears','lesseeoperatingleasecommitmentincludingleasenotyetcommencedamount'}):disposition='EXCLUDED_EXPLICIT_CUSTOM_TAX_ASSET_OR_OPERATING_NATURE'
+         elif short=='convertibledebtcurrent':
+             need(Decimal(f['text'])==values['current'],'BALANCE_SHEET_CURRENT_DEBT_CONFLICT');disposition='RECONCILED_CURRENT_BALANCE_SHEET_LINE'

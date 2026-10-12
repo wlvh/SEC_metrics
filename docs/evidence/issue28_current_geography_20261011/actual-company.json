@@ -1,0 +1,476 @@
+{
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-current-geography/SEC_metrics",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "source_hashes": {
+    "config/company_registry.csv": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+    "evidence/requests_log.csv": "61252ac5844ad1c5917040f753c04a7ed4f6e1d75e2fb0803804773fd6c0eef9",
+    "evidence/requests_log_manifest.json": "e91193401733b86ddc28c69cbae0debd74eeb899a328e60fcfb32532ed6a85ab"
+  },
+  "results": [
+    {
+      "company": "jpmorgan_chase",
+      "args": [
+        "run",
+        "--company",
+        "jpmorgan_chase",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--metric",
+        "A13",
+        "--work-dir",
+        "/private/tmp/issue28-a13-jpmorgan_chase-wz2b4bnq/state",
+        "--output-dir",
+        "/private/tmp/issue28-a13-jpmorgan_chase-wz2b4bnq/out"
+      ],
+      "first": {
+        "elapsed_seconds": 7.066297166998993,
+        "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+        "company_id": "jpmorgan_chase",
+        "run_id": "20261011T120955Z-0a6a222b",
+        "status": "FLOW_COMPLETED",
+        "selected_metrics": [
+          "A13"
+        ],
+        "metrics": [
+          {
+            "metric_id": "A13",
+            "status": "CANDIDATE_READY",
+            "attempt_id": "a157c55b59634bb79c5352c24ddd366b",
+            "version": "91e26d7843ea47dbae2fad256127efbc",
+            "result_id": "sha256:4661b0dec833b8d082b4031e3e45583cc7c4af9098a08c4c0c7e468f3f37b6ba",
+            "result_root": "/private/tmp/issue28-a13-jpmorgan_chase-wz2b4bnq/state/updates/A13/results/91e26d7843ea47dbae2fad256127efbc",
+            "calculation_performed": true,
+            "new_candidate_created": true,
+            "result_reason_code": "PASS",
+            "source_observation_errors": [],
+            "new_calls": {
+              "provider": 0,
+              "paid": 0,
+              "sec": 0
+            },
+            "production_authorized": false,
+            "defect_holds": [],
+            "read_result_id": "sha256:4661b0dec833b8d082b4031e3e45583cc7c4af9098a08c4c0c7e468f3f37b6ba",
+            "record_root": "/private/tmp/issue28-a13-jpmorgan_chase-wz2b4bnq/state/updates/A13/results/91e26d7843ea47dbae2fad256127efbc",
+            "program_version": {
+              "commit": "e24a5271325a2a39e8329df45f526f2629b543b0",
+              "has_uncommitted_changes": true
+            }
+          }
+        ],
+        "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-current-geography/SEC_metrics",
+        "record_root": "/private/tmp/issue28-a13-jpmorgan_chase-wz2b4bnq/state",
+        "output_root": "/private/tmp/issue28-a13-jpmorgan_chase-wz2b4bnq/out/20261011T120955Z-0a6a222b",
+        "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false
+      },
+      "first_seconds": 7.067363792000833,
+      "repeat": {
+        "elapsed_seconds": 0.2017637079989072,
+        "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+        "company_id": "jpmorgan_chase",
+        "run_id": "20261011T121002Z-bc6a219e",
+        "status": "FLOW_COMPLETED",
+        "selected_metrics": [
+          "A13"
+        ],
+        "metrics": [
+          {
+            "metric_id": "A13",
+            "status": "NO_SOURCE_CONTENT_CHANGE",
+            "attempt_id": "9403458bee2c4e488b95fa69305b20ce",
+            "version": "91e26d7843ea47dbae2fad256127efbc",
+            "result_id": "sha256:4661b0dec833b8d082b4031e3e45583cc7c4af9098a08c4c0c7e468f3f37b6ba",
+            "result_root": "/private/tmp/issue28-a13-jpmorgan_chase-wz2b4bnq/state/updates/A13/results/91e26d7843ea47dbae2fad256127efbc",
+            "result_reason_code": "PASS",
+            "raw_input_unchanged": true,
+            "calculation_performed": false,
+            "new_candidate_created": false,
+            "source_observation_errors": [],
+            "new_calls": {
+              "provider": 0,
+              "paid": 0,
+              "sec": 0
+            },
+            "production_authorized": false,
+            "defect_holds": [],
+            "read_result_id": "sha256:4661b0dec833b8d082b4031e3e45583cc7c4af9098a08c4c0c7e468f3f37b6ba",
+            "record_root": "/private/tmp/issue28-a13-jpmorgan_chase-wz2b4bnq/state/updates/A13/results/91e26d7843ea47dbae2fad256127efbc",
+            "program_version": {
+              "commit": "e24a5271325a2a39e8329df45f526f2629b543b0",
+              "has_uncommitted_changes": true
+            }
+          }
+        ],
+        "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-current-geography/SEC_metrics",
+        "record_root": "/private/tmp/issue28-a13-jpmorgan_chase-wz2b4bnq/state",
+        "output_root": "/private/tmp/issue28-a13-jpmorgan_chase-wz2b4bnq/out/20261011T121002Z-bc6a219e",
+        "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false
+      },
+      "repeat_seconds": 0.202746416998707,
+      "read_seconds": 0.414229083002283,
+      "csv": {
+        "company": "JPMorgan Chase",
+        "cik": "19617",
+        "metric_id": "A13",
+        "metric_name": "International net revenue",
+        "value": "42758000000",
+        "unit": "USD",
+        "status": "XBRL_OK",
+        "source_class": "XBRL",
+        "formula": "source-reported international net revenue",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "fiscal_year": "2025",
+        "fiscal_period": "ANNUAL",
+        "accession": "0001628280-26-008131",
+        "form": "10-K",
+        "filed_date": "2026-02-13",
+        "concept_or_section": "International net revenue",
+        "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2025, \"period_end\": \"2025-12-31\", \"period_start\": \"2025-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"geography_scope\": \"international\"}, \"selection\": {\"classification\": \"VERIFIED_SOURCE_FACT\", \"reason_code\": \"PASS\", \"source_semantics_passed\": true, \"source_summary\": {\"outcome\": \"STRUCTURED_PRIMARY_RESOLVED\", \"regional_sum_used\": false, \"selected\": [{\"geography\": \"Total international\", \"locator\": {\"context_ref\": \"c-2126\", \"ordinal\": 7898, \"qualified_name\": \"us-gaap:Revenues\"}, \"revenue_meaning\": \"SOURCE_DEFINED_NET_INTEREST_PLUS_NONINTEREST_REVENUE\", \"source_reference_id\": \"sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff\"}]}}, \"source_reference_ids\": [\"sha256:bcf78b70159412290d6bfc4b71699c3c5ca686fc76d2d225e57ba2c1b88f1d6e\", \"sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff\", \"sha256:c5ccf6cd0074d9e75c227a3c7b8a104aa996d54894d8926ca4eb1869a7c9c03d\"]}",
+        "confidence": "",
+        "notes": "International net revenue for the actual interval, not regional gross revenue or an inferred regional sum. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+        "company_id": "jpmorgan_chase",
+        "result_id": "sha256:4661b0dec833b8d082b4031e3e45583cc7c4af9098a08c4c0c7e468f3f37b6ba",
+        "record_root": "/private/tmp/issue28-a13-jpmorgan_chase-wz2b4bnq/state/updates/A13/results/91e26d7843ea47dbae2fad256127efbc",
+        "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+        "period_role": "REQUESTED_RESULT",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+        "defect_holds": "[]",
+        "requested_in_latest_execution": "True"
+      },
+      "record_files_unchanged": true,
+      "read_state_unchanged": true,
+      "new_calls": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "company": "marriott_international",
+      "args": [
+        "run",
+        "--company",
+        "marriott_international",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--metric",
+        "A13",
+        "--work-dir",
+        "/private/tmp/issue28-a13-marriott_international-cn_gchw9/state",
+        "--output-dir",
+        "/private/tmp/issue28-a13-marriott_international-cn_gchw9/out"
+      ],
+      "first": {
+        "elapsed_seconds": 1.488407417000417,
+        "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+        "company_id": "marriott_international",
+        "run_id": "20261011T121003Z-e7ae5859",
+        "status": "FLOW_COMPLETED",
+        "selected_metrics": [
+          "A13"
+        ],
+        "metrics": [
+          {
+            "metric_id": "A13",
+            "status": "CANDIDATE_READY",
+            "attempt_id": "d469841ef4a84f368eed4f45e36b78e5",
+            "version": "8828d4a95571423989adc9b158877051",
+            "result_id": "sha256:d4c25b1caed57a386b2b92ff8f7f5c026619ed0c5c6a8167cd12380c24172550",
+            "result_root": "/private/tmp/issue28-a13-marriott_international-cn_gchw9/state/updates/A13/results/8828d4a95571423989adc9b158877051",
+            "calculation_performed": true,
+            "new_candidate_created": true,
+            "result_reason_code": "TRAIT_NOT_APPLICABLE",
+            "source_observation_errors": [],
+            "new_calls": {
+              "provider": 0,
+              "paid": 0,
+              "sec": 0
+            },
+            "production_authorized": false,
+            "defect_holds": [],
+            "read_result_id": "sha256:d4c25b1caed57a386b2b92ff8f7f5c026619ed0c5c6a8167cd12380c24172550",
+            "record_root": "/private/tmp/issue28-a13-marriott_international-cn_gchw9/state/updates/A13/results/8828d4a95571423989adc9b158877051",
+            "program_version": {
+              "commit": "e24a5271325a2a39e8329df45f526f2629b543b0",
+              "has_uncommitted_changes": true
+            }
+          }
+        ],
+        "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-current-geography/SEC_metrics",
+        "record_root": "/private/tmp/issue28-a13-marriott_international-cn_gchw9/state",
+        "output_root": "/private/tmp/issue28-a13-marriott_international-cn_gchw9/out/20261011T121003Z-e7ae5859",
+        "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false
+      },
+      "first_seconds": 1.489393541996833,
+      "repeat": {
+        "elapsed_seconds": 0.17071758300153306,
+        "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+        "company_id": "marriott_international",
+        "run_id": "20261011T121004Z-ff886291",
+        "status": "FLOW_COMPLETED",
+        "selected_metrics": [
+          "A13"
+        ],
+        "metrics": [
+          {
+            "metric_id": "A13",
+            "status": "NO_SOURCE_CONTENT_CHANGE",
+            "attempt_id": "1ec91bc206084952b9ddbf6976381c42",
+            "version": "8828d4a95571423989adc9b158877051",
+            "result_id": "sha256:d4c25b1caed57a386b2b92ff8f7f5c026619ed0c5c6a8167cd12380c24172550",
+            "result_root": "/private/tmp/issue28-a13-marriott_international-cn_gchw9/state/updates/A13/results/8828d4a95571423989adc9b158877051",
+            "result_reason_code": "TRAIT_NOT_APPLICABLE",
+            "raw_input_unchanged": true,
+            "calculation_performed": false,
+            "new_candidate_created": false,
+            "source_observation_errors": [],
+            "new_calls": {
+              "provider": 0,
+              "paid": 0,
+              "sec": 0
+            },
+            "production_authorized": false,
+            "defect_holds": [],
+            "read_result_id": "sha256:d4c25b1caed57a386b2b92ff8f7f5c026619ed0c5c6a8167cd12380c24172550",
+            "record_root": "/private/tmp/issue28-a13-marriott_international-cn_gchw9/state/updates/A13/results/8828d4a95571423989adc9b158877051",
+            "program_version": {
+              "commit": "e24a5271325a2a39e8329df45f526f2629b543b0",
+              "has_uncommitted_changes": true
+            }
+          }
+        ],
+        "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-current-geography/SEC_metrics",
+        "record_root": "/private/tmp/issue28-a13-marriott_international-cn_gchw9/state",
+        "output_root": "/private/tmp/issue28-a13-marriott_international-cn_gchw9/out/20261011T121004Z-ff886291",
+        "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false
+      },
+      "repeat_seconds": 0.17171279099784442,
+      "read_seconds": 0.41289987500204006,
+      "csv": {
+        "company": "Marriott International",
+        "cik": "1048286",
+        "metric_id": "A13",
+        "metric_name": "International net revenue",
+        "value": "",
+        "unit": "USD",
+        "status": "N_A_STRUCTURAL",
+        "source_class": "NOT_AVAILABLE",
+        "formula": "source-reported international net revenue",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "fiscal_year": "2025",
+        "fiscal_period": "STRUCTURAL",
+        "accession": "",
+        "form": "",
+        "filed_date": "",
+        "concept_or_section": "",
+        "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2025, \"period_end\": \"2025-12-31\", \"period_start\": \"2025-01-01\"}, \"measurement_kind\": \"STRUCTURAL\", \"scope\": {\"geography_scope\": \"international\"}, \"selection\": {\"classification\": \"STRUCTURAL\", \"reason_code\": \"TRAIT_NOT_APPLICABLE\", \"source_semantics_passed\": false}, \"source_reference_ids\": [\"sha256:a05aee971225683791b3b3195ae4a4322be7d2d9fcc66180b13a17882560fb80\", \"sha256:40127921b5837f721fb7ec41028d9eeeefb0855d09261b0fef4a1985f5298d4b\", \"sha256:3109bea68ae11f5e3c6ebd77114cda1d6f17d60e772b2630baffdb2639c483e9\"]}",
+        "confidence": "",
+        "notes": "Trait applicability is structurally false. No financial measurement is asserted; dates retain the filing group. Native state: PUBLISHED; reason: TRAIT_NOT_APPLICABLE.",
+        "company_id": "marriott_international",
+        "result_id": "sha256:d4c25b1caed57a386b2b92ff8f7f5c026619ed0c5c6a8167cd12380c24172550",
+        "record_root": "/private/tmp/issue28-a13-marriott_international-cn_gchw9/state/updates/A13/results/8828d4a95571423989adc9b158877051",
+        "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+        "period_role": "REQUESTED_RESULT",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+        "defect_holds": "[]",
+        "requested_in_latest_execution": "True"
+      },
+      "record_files_unchanged": true,
+      "read_state_unchanged": true,
+      "new_calls": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "company": "salesforce",
+      "args": [
+        "run",
+        "--company",
+        "salesforce",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--metric",
+        "A13",
+        "--work-dir",
+        "/private/tmp/issue28-a13-salesforce-f7n9u24n/state",
+        "--output-dir",
+        "/private/tmp/issue28-a13-salesforce-f7n9u24n/out"
+      ],
+      "first": {
+        "elapsed_seconds": 1.7115643340002862,
+        "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+        "company_id": "salesforce",
+        "run_id": "20261011T121005Z-5baad0c3",
+        "status": "FLOW_COMPLETED",
+        "selected_metrics": [
+          "A13"
+        ],
+        "metrics": [
+          {
+            "metric_id": "A13",
+            "status": "CANDIDATE_READY",
+            "attempt_id": "85eb5fafdb4244a6a6506062ca6f8236",
+            "version": "be1231396fd946248a248a40b403bd08",
+            "result_id": "sha256:73a66db65b35452cabd9440e96b12392fecfb11910dc5b31f9ebd1768131601c",
+            "result_root": "/private/tmp/issue28-a13-salesforce-f7n9u24n/state/updates/A13/results/be1231396fd946248a248a40b403bd08",
+            "calculation_performed": true,
+            "new_candidate_created": true,
+            "result_reason_code": "TRAIT_NOT_APPLICABLE",
+            "source_observation_errors": [],
+            "new_calls": {
+              "provider": 0,
+              "paid": 0,
+              "sec": 0
+            },
+            "production_authorized": false,
+            "defect_holds": [],
+            "read_result_id": "sha256:73a66db65b35452cabd9440e96b12392fecfb11910dc5b31f9ebd1768131601c",
+            "record_root": "/private/tmp/issue28-a13-salesforce-f7n9u24n/state/updates/A13/results/be1231396fd946248a248a40b403bd08",
+            "program_version": {
+              "commit": "e24a5271325a2a39e8329df45f526f2629b543b0",
+              "has_uncommitted_changes": true
+            }
+          }
+        ],
+        "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-current-geography/SEC_metrics",
+        "record_root": "/private/tmp/issue28-a13-salesforce-f7n9u24n/state",
+        "output_root": "/private/tmp/issue28-a13-salesforce-f7n9u24n/out/20261011T121005Z-5baad0c3",
+        "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false
+      },
+      "first_seconds": 1.7125588749986491,
+      "repeat": {
+        "elapsed_seconds": 0.1752946249980596,
+        "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+        "company_id": "salesforce",
+        "run_id": "20261011T121007Z-d0d94a82",
+        "status": "FLOW_COMPLETED",
+        "selected_metrics": [
+          "A13"
+        ],
+        "metrics": [
+          {
+            "metric_id": "A13",
+            "status": "NO_SOURCE_CONTENT_CHANGE",
+            "attempt_id": "fb47cb76803f4c7b9cfd12f81534272b",
+            "version": "be1231396fd946248a248a40b403bd08",
+            "result_id": "sha256:73a66db65b35452cabd9440e96b12392fecfb11910dc5b31f9ebd1768131601c",
+            "result_root": "/private/tmp/issue28-a13-salesforce-f7n9u24n/state/updates/A13/results/be1231396fd946248a248a40b403bd08",
+            "result_reason_code": "TRAIT_NOT_APPLICABLE",
+            "raw_input_unchanged": true,
+            "calculation_performed": false,
+            "new_candidate_created": false,
+            "source_observation_errors": [],
+            "new_calls": {
+              "provider": 0,
+              "paid": 0,
+              "sec": 0
+            },
+            "production_authorized": false,
+            "defect_holds": [],
+            "read_result_id": "sha256:73a66db65b35452cabd9440e96b12392fecfb11910dc5b31f9ebd1768131601c",
+            "record_root": "/private/tmp/issue28-a13-salesforce-f7n9u24n/state/updates/A13/results/be1231396fd946248a248a40b403bd08",
+            "program_version": {
+              "commit": "e24a5271325a2a39e8329df45f526f2629b543b0",
+              "has_uncommitted_changes": true
+            }
+          }
+        ],
+        "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-current-geography/SEC_metrics",
+        "record_root": "/private/tmp/issue28-a13-salesforce-f7n9u24n/state",
+        "output_root": "/private/tmp/issue28-a13-salesforce-f7n9u24n/out/20261011T121007Z-d0d94a82",
+        "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false
+      },
+      "repeat_seconds": 0.17627695800183574,
+      "read_seconds": 0.4150473339977907,
+      "csv": {
+        "company": "Salesforce",
+        "cik": "1108524",
+        "metric_id": "A13",
+        "metric_name": "International net revenue",
+        "value": "",
+        "unit": "USD",
+        "status": "N_A_STRUCTURAL",
+        "source_class": "NOT_AVAILABLE",
+        "formula": "source-reported international net revenue",
+        "period_start": "2025-02-01",
+        "period_end": "2026-01-31",
+        "fiscal_year": "2026",
+        "fiscal_period": "STRUCTURAL",
+        "accession": "",
+        "form": "",
+        "filed_date": "",
+        "concept_or_section": "",
+        "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2026, \"period_end\": \"2026-01-31\", \"period_start\": \"2025-02-01\"}, \"measurement_kind\": \"STRUCTURAL\", \"scope\": {\"geography_scope\": \"international\"}, \"selection\": {\"classification\": \"STRUCTURAL\", \"reason_code\": \"TRAIT_NOT_APPLICABLE\", \"source_semantics_passed\": false}, \"source_reference_ids\": [\"sha256:5680af9cfdc4c67942d6ca6e3933507bcb23beddbe83c4f6db99990fe80e4084\", \"sha256:92c50df49d0a3e20b61a31bddbf5d82ce8d61ed2e2f2752cb78fc6afffb4506c\", \"sha256:7e357b7e0f442af5ba845d6a7e47b6fe332ba51b2afb1b2e036f3daeb8fc9a1f\"]}",
+        "confidence": "",
+        "notes": "Trait applicability is structurally false. No financial measurement is asserted; dates retain the filing group. Native state: PUBLISHED; reason: TRAIT_NOT_APPLICABLE. Fiscal label follows the explicit issuer definition; original DEI/Company Facts labels remain in the source binding.",
+        "company_id": "salesforce",
+        "result_id": "sha256:73a66db65b35452cabd9440e96b12392fecfb11910dc5b31f9ebd1768131601c",
+        "record_root": "/private/tmp/issue28-a13-salesforce-f7n9u24n/state/updates/A13/results/be1231396fd946248a248a40b403bd08",
+        "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+        "period_role": "REQUESTED_RESULT",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+        "defect_holds": "[]",
+        "requested_in_latest_execution": "True"
+      },
+      "record_files_unchanged": true,
+      "read_state_unchanged": true,
+      "new_calls": [
+        0,
+        0,
+        0
+      ]
+    }
+  ]
+}

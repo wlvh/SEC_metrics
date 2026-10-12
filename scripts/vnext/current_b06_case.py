@@ -7,6 +7,7 @@ from pathlib import Path
 from decimal import Decimal
 import re
 
+from .xbrl_namespace_policy import is_fasb_namespace, source_reader_options
 from .canonical import content_hash
 from .normal_source_authority import ROOT
 from .normal_governance_input import prepare_saved_original_financial_sources
@@ -47,6 +48,9 @@ PROCESSING_FILES=tuple('scripts/vnext/'+name+'.py' for name in (
 # their dependencies. Current default consumers do not load those readers.
 INLINE_NOTE_PROCESSING_FILES=PROCESSING_FILES+tuple('scripts/vnext/'+name+'.py' for name in (
     'annual_amendment_scope_v2','instant_balance_amendment_v2','amendment_note_layout'))
+
+SELECTED_RELEASE_PROCESSING_FILES=INLINE_NOTE_PROCESSING_FILES+(
+    'scripts/vnext/normal_annual_input.py','scripts/vnext/xbrl_namespace_policy.py')
 
 
 class CurrentB06Error(ValueError):
@@ -96,13 +100,14 @@ def _display_selection(selection):
     return displayed
 
 
-def _unresolved_current_interest(preparation, annual):
+def _unresolved_current_interest(preparation, annual, *, dei_release='YEAR_ONLY', namespace_policy='YEAR_ONLY'):
     """Retain reported current interest whose debt-set relation is unproved.
 
     The existing bond inventory does not select InterestPayableCurrent.
     Its positive amount cannot silently disappear from a completeness claim;
     neither adding it nor excluding it is authorized by this check.
     """
+    reader_options = source_reader_options(dei_release=dei_release, namespace_policy=namespace_policy)
     from .deterministic_router import parse_accession_xbrl_source
     from .text_results_v2 import _ReportedFactMetadata
     from .governance_signals import _source_value
@@ -114,7 +119,7 @@ def _unresolved_current_interest(preparation, annual):
         metadata=_ReportedFactMetadata();metadata.feed(raw.decode('utf-8-sig'));metadata.close()
         for fact in parsed.facts:
             item=metadata.facts[fact['ordinal']];namespace,name=item['concept']
-            if name.casefold()!='interestpayablecurrent' or not re.fullmatch(r'https?://fasb\.org/us-gaap/[0-9]{4}',namespace):
+            if name.casefold()!='interestpayablecurrent' or not is_fasb_namespace(namespace,namespace_policy=namespace_policy):
                 continue
             context=parsed.contexts[fact['context_ref']]
             if (context['period_start']!=end or context['period_end']!=end
@@ -141,13 +146,14 @@ def prepare_current_b06_case(*, source_root, company_id):
         preparation=preparation,annual=annual,packet=packet)
 
 
-def prepare_selected_b06_case(*, source_root, company_id, preparation, annual, packet):
+def prepare_selected_b06_case(*, source_root, company_id, preparation, annual, packet, dei_release='YEAR_ONLY', namespace_policy='YEAR_ONLY'):
     """Compose the existing B06 route for an already source-selected period.
 
     The consumer prepares original sources, issuer year and amendment effects;
     this shared route keeps source identity checks and the current cascade.
     It does not discover another year or accept a supplied numerical answer.
     """
+    reader_options = source_reader_options(dei_release=dei_release, namespace_policy=namespace_policy)
     source=Path(source_root)
     original=preparation['input_binding']['prepared_annual_input']
     _need(original['company_id']==annual['company_id']==company_id
@@ -166,7 +172,7 @@ def prepare_selected_b06_case(*, source_root, company_id, preparation, annual, p
             rules_root=ROOT,preparation=preparation,annual_input=annual)
     else:
         guard=prepare_current_guarded_b06_result(repo_root=source,company_id=company_id,
-            rules_root=ROOT,preparation=preparation)
+            rules_root=ROOT,preparation=preparation, **reader_options)
         if guard['status']=='NOT_MEANINGFUL':
             case=_case_from_resolution(preparation=preparation,annual=annual,
                 spec_path=guard['spec_path'],resolution={
@@ -176,13 +182,13 @@ def prepare_selected_b06_case(*, source_root, company_id, preparation, annual, p
         elif guard['reason_code']=='EXISTING_SPECIAL_SCOPE_REQUIRED':
             from .ordinary_reported_lease_scope import prepare_reported_lease_case
             case=prepare_reported_lease_case(repo_root=source,company_id=company_id,
-                rules_root=ROOT,preparation=preparation)
+                rules_root=ROOT,preparation=preparation, **reader_options)
             _need(case is not None,'B06_SEPARATE_BANK_OR_INDUSTRIAL_SCOPE_NOT_IMPLEMENTED')
         else:
             case=None
             for producer in (prepare_note_debt_case,prepare_bond_debt_case,prepare_inclusive_debt_case):
                 case=producer(repo_root=source,company_id=company_id,rules_root=ROOT,
-                    preparation=preparation,annual_input=annual)
+                    preparation=preparation,annual_input=annual, **reader_options)
                 if case is not None:break
             if case is None:
                 spec_path,resolution=_b06_resolution(data_root=ROOT,preparation=preparation)
@@ -191,7 +197,7 @@ def prepare_selected_b06_case(*, source_root, company_id, preparation, annual, p
         if (case['results']['B06']['publication']=='PUBLISHED'
                 and case['results']['B06']['quality']!='NOT_MEANINGFUL'
                 and case['traces']['B06']['calculation_target']['scope'].get('entity_scope')=='consolidated'):
-            unresolved=_unresolved_current_interest(preparation,annual)
+            unresolved=_unresolved_current_interest(preparation,annual, **reader_options)
             if unresolved:
                 original_target=case['traces']['B06']['calculation_target']
                 target={k:original_target[k] for k in
@@ -205,6 +211,9 @@ def prepare_selected_b06_case(*, source_root, company_id, preparation, annual, p
                             'reason':'B06_REPORTED_INTEREST_DEBT_SCOPE_UNRESOLVED',
                             'reported_interest':unresolved,'component_selection':case['selection']}})
         case=bind_current_debt_input(case=case,packet=packet,repo_root=source)
+    if reader_options:
+        case={**case,'input_binding':{**case.get('input_binding',{}),
+            'source_reader_options':reader_options}}
     return {**case,'prepared_annual_input':annual,'rules_root':str(ROOT),
         'selection':_display_selection(case['selection']),
         'input_assessments':{'B06':{'selection_detail_id':content_hash(value=case['selection']),

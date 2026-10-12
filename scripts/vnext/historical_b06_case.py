@@ -15,7 +15,7 @@ from .ordinary_source_authority import verify_ordinary_source_proofs
 
 METRICS = ('B06',)
 NOTE_LAYOUT = 'inline-paragraphs-v2'
-from .current_b06_case import INLINE_NOTE_PROCESSING_FILES as SHARED_B06_FILES
+from .current_b06_case import SELECTED_RELEASE_PROCESSING_FILES as SHARED_B06_FILES
 
 PROCESSING_FILES = tuple(dict.fromkeys((*SHARED_B06_FILES, *(
     'scripts/vnext/'+name+'.py' for name in (
@@ -114,5 +114,6 @@ def prepare_historical_b06_year_case(*, repo_root, company_id, metric_id, fiscal
     packet = prepare_selected_debt_input(repo_root=repo_root, selected=selected)
     from .current_b06_case import prepare_selected_b06_case
     case = prepare_selected_b06_case(source_root=repo_root, company_id=company_id,
-        preparation=selected['preparation'], annual=selected['annual'], packet=packet)
+        preparation=selected['preparation'], annual=selected['annual'], packet=packet,
+        dei_release='YEAR_QUARTER_OR_DATE', namespace_policy='YEAR_OR_DATE_RELEASE')
     return {**case, 'historical_period_selection': selected['selection']}
