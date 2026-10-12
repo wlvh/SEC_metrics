@@ -1,0 +1,87 @@
+{
+  "result": {
+    "applicability": "APPLICABLE",
+    "company_id": "salesforce",
+    "metric_id": "D04",
+    "period_end": "2026-01-31",
+    "period_start": "2025-02-01",
+    "publication": "WITHHELD",
+    "quality": "NONE",
+    "reason_code": "D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE",
+    "record_type": "METRIC_RESULT",
+    "result_id": "sha256:04d871d8e70b59a77db1b2aa305d21c2588c2600be542bb87920b27735f55207",
+    "scope_key": "sha256:67535b8a9820504920a8438781c188f880158f05a55cc222a801becf9b588d93",
+    "spec_closure_hash": "sha256:b72e137f2ba802a2ca8c2e8874f9e3388114600acb19c976aeaff4c309aa05ba",
+    "text_payload": null,
+    "trace_id": "sha256:04d788c705dfe6ac5ebda311ed94132ee8228498bdd08cd25728d5eb210bcd98",
+    "unit": null,
+    "value": null,
+    "value_kind": "TEXT_V1"
+  },
+  "public_rows": [
+    {
+      "company": "Salesforce",
+      "cik": "1108524",
+      "metric_id": "D04",
+      "metric_name": "Going concern source statements and defined-scope assessment",
+      "value": "",
+      "unit": "text",
+      "status": "TEXT_QUAL",
+      "source_class": "10-K",
+      "formula": "source-reported going concern statements",
+      "period_start": "2025-02-01",
+      "period_end": "2026-01-31",
+      "fiscal_year": "2026",
+      "fiscal_period": "",
+      "accession": "0001108524-26-000060",
+      "form": "10-K",
+      "filed_date": "2026-03-02",
+      "concept_or_section": "",
+      "context_or_dimension": "",
+      "confidence": "",
+      "notes": "未披露持续经营疑虑：已检查保存的完整年报及本期修订、原生事实和续接对象；这不表示对未来财务状况作保证。 Fiscal label follows the explicit issuer definition; original DEI/Company Facts labels remain in the source binding."
+    }
+  ],
+  "source_rows": [
+    {
+      "company": "Salesforce",
+      "cik": "1108524",
+      "metric_id": "D04",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm",
+      "repo_relative_path": "evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm",
+      "content_sha256": "d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+      "accession": "0001108524-26-000060",
+      "document_name": "crm-20260131.htm",
+      "concept_or_section": "Defined source scope",
+      "context_or_dimension": "{\"assessment_mode\": \"LIVE\", \"assessment_set_id\": \"sha256:48a4ea21bad61d04b9a5d39c41f260471abcd52c5b95988244353236203cb98c\", \"scope\": \"SAVED_ANNUAL_PRIMARY_AND_ALL_CURRENT_ANNUAL_AMENDMENTS_VISIBLE_AND_NATIVE\", \"source_unit_ids\": [\"sha256:958563cdbadefbc11a075632545e905deb167e58131dc1264b7bb21d3a8ebc21\", \"sha256:5419b5bac9b15968c05ece0454ae1f2a1d244e12d776bf860ed81d1a3fbeeef0\", \"sha256:de0285a73ea375955d6696e533706d56b7dcf0acbd05c217faed858a0a124364\", \"sha256:b0ab1191cfa240af550d8ead86cc61a5d9a5c16f5dfe6892f09603ac8888c53b\", \"sha256:79e4e370d9cc52acacc96ea3e45e2c25d74d92b225d849ccea5bb7a54d988863\", \"sha256:f62880d91edc5c588b3368625cf7971190a28a51e5aae6b859e60c1d9f217e7e\", \"sha256:29360fbb7a03cbc261349b0a2697cf5ea66fc9f90285751b8f1475e118029a20\", \"sha256:27eb71eabfb6c6951698c017d250db2b99855cc5257790882dded368a8be1e75\", \"sha256:91cbc002547175abd6a663f628f03c30e553e8c2915c519528c485c12b57178a\", \"sha256:132956a5daa00fe3c7fe5655a75d21e1e3187e76b7729d45e758d4ee06ceebb2\", \"sha256:07b14169e8f9fe63ffceb53fb9f93e801ec19d3b05e579eca09b8d3fec1ccd1e\", \"sha256:4e43c1f74fb0e914569b7b4680efab469a87ef307fd6980e71f6833a89558a59\", \"sha256:d15f33efa3ffc726d24799c90ad25e44c0d361b3f0ffbee544297e1499db5846\", \"sha256:916867dffd76abbd822d634e7824d1c4373bfe9e4421e6af74c334ac7fc12fda\", \"sha256:cf8fa189e3f6469329dd2d4259b91de6f31324d0ef3e1ebb54173f7afdb4ceeb\", \"sha256:a9c07f0375c73f757e553ddcba5de48161fb1e0428a2319f0167502fb0a8b799\", \"sha256:5b8fce72465ec3a157d66c5e68ff3c3d9e406a073971d015cfc1bfc0fe058f9b\", \"sha256:241a28977cad4a5dc3f71b682d36397e7b30b5bbf44d9cebfdea93d91b37e2e3\", \"sha256:bf14f312354c6c555474dc7b7c7682ab989d83bf6c5d7454c6695c8923ab6207\", \"sha256:9f853f672c049d442793238047bd87c3bce844e9aef7ea7b576754fb3add9b15\", \"sha256:4934f93ab339074176f3bd6cc41938aea4eca059992dc3913911fec2d6fe232e\", \"sha256:a74c3f48d6d9c4225c3ed6ae98cfbd0f306980fb52c16e6cb9123cf68506db9a\", \"sha256:be4e8a522639ddfb660e9921fdef4101c60e73414d2d9c5c6e88a13562df9970\", \"sha256:2b2ecf7c92a7718d3fa0540a334e629ad4d75a3e56b41f40dfb239c3667c15e9\", \"sha256:3c82a46dad6dcac15af36599afaabfce768232098aa3ceb2bea604c81bfd8e13\"]}",
+      "unit": "text",
+      "period_start": "2025-02-01",
+      "period_end": "2026-01-31",
+      "value_raw": "",
+      "value_normalized": "",
+      "evidence_quote": "Host scope-check record; no source quotation or numeric value is asserted.",
+      "extraction_method": "complete_native_d04_assessment",
+      "parser_version": "capacity_run"
+    }
+  ],
+  "ordinary_result_files": {
+    "metrics_matrix.csv": "b8b735be5d53e0f2f06a8192bf24dee001c1ba2008e40fbf203b40823ef5ac7d",
+    "metric_evidence.csv": "30789b163f4c2dc4b81a3b9b083dc776d6e55e0ec540ef333aa06f8bc4f3be2c",
+    "records.jsonl": "08b5b139e7af70864990582bc81a0527020bfdf204721d626b7525261b5f6302",
+    "input-assessments.json": "fc8e2cd022c0ce57d91e0ae921fbb22edb8950cda98ccf969d6dc56e6949582e",
+    "manifest.json": "7c9366bdc9ae418321d3f2d2d88c861d7af77961aac3972005232cd3c2570cef",
+    "write.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "receipt.json": "cd19a4c55610ed6141c29482560548ee530f5be69498d7d9f63ef510f3a38829"
+  },
+  "completed_bytes": 33420,
+  "original_ordinals": [
+    152,
+    153,
+    154,
+    155,
+    156
+  ],
+  "response_findings": 0,
+  "response_units": 25,
+  "scope": "Real original responses and complete ordinary company processing; not new model correctness, online refresh, or formal adoption"
+}
