@@ -1,0 +1,53 @@
+{
+  "elapsed_seconds": 4.599036624887958,
+  "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+  "company_id": "ford_motor_company",
+  "run_id": "20261010T080418Z-42df800b",
+  "status": "FLOW_COMPLETED",
+  "selected_metrics": [
+    "C04"
+  ],
+  "metrics": [
+    {
+      "metric_id": "C04",
+      "status": "NO_SOURCE_CONTENT_CHANGE",
+      "attempt_id": "53e95afc2f984211b645168caff5d797",
+      "version": "b7366f229c8448e39055a360417de6e0",
+      "result_id": "sha256:0ec6c7d627150e95e00673fe8009110585104fa91fc269bf9d553671909760da",
+      "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/ford-auditor-company-vgu2kjwz/state/updates/C04/periods/FY2022/results/b7366f229c8448e39055a360417de6e0",
+      "result_reason_code": "PASS",
+      "raw_input_unchanged": true,
+      "calculation_performed": false,
+      "new_candidate_created": false,
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2022,
+      "defect_holds": [],
+      "read_result_id": "sha256:0ec6c7d627150e95e00673fe8009110585104fa91fc269bf9d553671909760da",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/ford-auditor-company-vgu2kjwz/state/updates/C04/periods/FY2022/results/b7366f229c8448e39055a360417de6e0",
+      "program_version": {
+        "commit": "241622760c1fe409298da5a5cff0b6fc904fcfcb",
+        "has_uncommitted_changes": true
+      }
+    }
+  ],
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics",
+  "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/ford-auditor-company-vgu2kjwz/state",
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/ford-auditor-company-vgu2kjwz/runs/20261010T080418Z-42df800b",
+  "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false,
+  "selected_fiscal_years": [
+    2022
+  ]
+}

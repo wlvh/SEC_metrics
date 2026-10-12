@@ -1,5 +1,6 @@
 """Small source originals/logs through the actual read-only public preflight."""
 import hashlib
+import csv
 import io
 import json
 from pathlib import Path
@@ -15,6 +16,7 @@ from tests.vnext.test_dei_release_selection import annual
 from sec_urls import accession_directory_url, accession_document_url, companyfacts_url, submissions_url
 from sec_http import parse_request_log_rows, request_log_csv_bytes, refresh_request_log_manifest
 from vnext.recorded_sec_http import RecordedSecHttpClient
+from vnext.request_bindings import BatchWorkflowError
 from vnext import selected_source_requirements as preflight
 from tools.vnext_company import main
 
@@ -67,6 +69,52 @@ class SelectedSourceRequirementsTest(unittest.TestCase):
     def digest_tree(self):
         return {str(p.relative_to(self.root)):hashlib.sha256(p.read_bytes()).hexdigest()
                 for p in self.root.rglob('*') if p.is_file()}
+
+    def rewrite_registry(self, company_id, **changes):
+        path=self.root/'config/company_registry.csv'
+        with path.open(newline='') as stream:
+            reader=csv.DictReader(stream);fields=reader.fieldnames;rows=list(reader)
+        for row in rows:
+            if row['company_id']==company_id:row.update(changes)
+        with path.open('w',newline='') as stream:
+            writer=csv.DictWriter(stream,fieldnames=fields);writer.writeheader();writer.writerows(rows)
+
+    def test_unrelated_registered_company_change_does_not_block_selected_sources(self):
+        expected=self.plan()
+        self.rewrite_registry('pfizer',display_name='Pfizer source-package display')
+        before=self.digest_tree();actual=self.plan()
+        self.assertEqual(actual,expected)
+        self.assertEqual(before,self.digest_tree())
+
+    def test_unrelated_program_registry_change_preserves_selected_sources(self):
+        expected=self.plan()
+        program=self.root.parent/'program';(program/'config').mkdir(parents=True)
+        (program/'config/company_registry.csv').write_bytes((REPO_ROOT/'config/company_registry.csv').read_bytes()
+            .replace(b'pfizer,Pfizer,',b'pfizer,Pfizer unrelated program display,'))
+        policy='config/normal_period_selection_v1.json'
+        (program/policy).write_bytes((REPO_ROOT/policy).read_bytes())
+        with patch.object(preflight,'ROOT',program):
+            self.assertEqual(self.plan(),expected)
+
+    def test_target_registry_context_changes_are_not_accepted(self):
+        path=self.root/'config/company_registry.csv';original=path.read_bytes()
+        changes={'primary_cik':'19617','roles':'primary:19617','industry_profile':'pharma',
+                 'fiscal_year_end':'0131','target_period_policy':'changed',
+                 'entity_continuity_status':'changed','related_ciks':'19617'}
+        for field,value in changes.items():
+            with self.subTest(field=field):
+                path.write_bytes(original);self.rewrite_registry(COMPANY,**{field:value})
+                with self.assertRaisesRegex(ValueError,'COMPANY_REGISTRY_CHANGED'):self.plan()
+
+    def test_invalid_unrelated_registry_rows_still_block_source_planning(self):
+        path=self.root/'config/company_registry.csv';original=path.read_bytes()
+        for raw in (original+original.splitlines(keepends=True)[2],
+                    original.replace(b'pfizer,Pfizer,78003,',b'pfizer,Pfizer,not-a-cik,'),
+                    original.replace(b'company_id,display_name,',b'company_id,company_id,'),
+                    original.replace(b'pfizer,Pfizer,78003,PFE,',b'pfizer,Pfizer,78003,')):
+            with self.subTest(raw=raw[-70:]):
+                path.write_bytes(raw)
+                with self.assertRaises((ValueError,BatchWorkflowError)):self.plan()
 
     def test_selected_task_preserves_complete_groups_and_is_read_only_not_acceptance(self):
         before=self.digest_tree();value=self.plan()

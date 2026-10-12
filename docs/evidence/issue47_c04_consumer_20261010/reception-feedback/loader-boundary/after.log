@@ -1,0 +1,10 @@
+test_derived_boundary_does_not_relax_all_row_count_or_outside_dates (tests.vnext.test_historical_auditor_selection.HistoricalAuditorShardBoundaryTest.test_derived_boundary_does_not_relax_all_row_count_or_outside_dates) ... ok
+test_gap_day_shard_is_loaded_before_an_older_irrelevant_block (tests.vnext.test_historical_auditor_selection.HistoricalAuditorShardBoundaryTest.test_gap_day_shard_is_loaded_before_an_older_irrelevant_block) ... ok
+test_unread_derived_boundary_reaches_requested_end (tests.vnext.test_historical_auditor_selection.HistoricalAuditorShardBoundaryTest.test_unread_derived_boundary_reaches_requested_end) ... ok
+test_wrong_shard_entity_is_rejected (tests.vnext.test_historical_auditor_selection.HistoricalAuditorShardBoundaryTest.test_wrong_shard_entity_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.004s
+
+OK
+{"allowed_skips": 0, "errors": 0, "failures": 0, "run": 4, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_historical_auditor_selection.HistoricalAuditorShardBoundaryTest"]}

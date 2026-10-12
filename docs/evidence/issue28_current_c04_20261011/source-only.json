@@ -1,0 +1,74 @@
+{
+  "args": [
+    "run",
+    "--company",
+    "marriott_international",
+    "--source-root",
+    "/private/tmp/issue28-current-c04-source-only-cjt8rnj4/source",
+    "--metric",
+    "C04",
+    "--work-dir",
+    "/private/tmp/issue28-current-c04-source-only-cjt8rnj4/state",
+    "--output-dir",
+    "/private/tmp/issue28-current-c04-source-only-cjt8rnj4/out"
+  ],
+  "seconds": 9.992411582999921,
+  "exit_code": 0,
+  "report": {
+    "elapsed_seconds": 9.984509290999995,
+    "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+    "company_id": "marriott_international",
+    "run_id": "20261011T115228Z-6cf32f18",
+    "status": "FLOW_COMPLETED",
+    "selected_metrics": [
+      "C04"
+    ],
+    "metrics": [
+      {
+        "metric_id": "C04",
+        "status": "CANDIDATE_READY",
+        "attempt_id": "89219e0070c84870bd4afebba75a6ac8",
+        "version": "4526dcdc56f14a37b781ac9ffcccbe92",
+        "result_id": "sha256:a5517d36ec92517b057a4e8e5f1277cc8f2850d9108d563a1adb2ad71cb7c3f9",
+        "result_root": "/private/tmp/issue28-current-c04-source-only-cjt8rnj4/state/updates/C04/results/4526dcdc56f14a37b781ac9ffcccbe92",
+        "calculation_performed": true,
+        "new_candidate_created": true,
+        "result_reason_code": "PASS",
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "defect_holds": [],
+        "read_result_id": "sha256:a5517d36ec92517b057a4e8e5f1277cc8f2850d9108d563a1adb2ad71cb7c3f9",
+        "record_root": "/private/tmp/issue28-current-c04-source-only-cjt8rnj4/state/updates/C04/results/4526dcdc56f14a37b781ac9ffcccbe92",
+        "program_version": {
+          "commit": "e24a5271325a2a39e8329df45f526f2629b543b0",
+          "has_uncommitted_changes": true
+        }
+      }
+    ],
+    "source_root": "/private/tmp/issue28-current-c04-source-only-cjt8rnj4/source",
+    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04/SEC_metrics",
+    "record_root": "/private/tmp/issue28-current-c04-source-only-cjt8rnj4/state",
+    "output_root": "/private/tmp/issue28-current-c04-source-only-cjt8rnj4/out/20261011T115228Z-6cf32f18",
+    "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false
+  },
+  "copied_source_files": 61,
+  "copied_rules": false,
+  "same_result_id": true,
+  "source_files_unchanged": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

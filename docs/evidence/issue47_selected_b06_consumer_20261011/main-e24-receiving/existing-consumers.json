@@ -1,0 +1,373 @@
+{
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue47-b06-main-ac365-receiving-20261011/SEC_metrics",
+  "records": [
+    {
+      "company": "enphase_energy",
+      "changed_declared_processing_files": {},
+      "migration": {
+        "seconds": 8.677,
+        "exit": 0,
+        "reuse_of_completed_phase_after_harness_fix": true,
+        "metrics": [
+          {
+            "metric_id": "B06",
+            "status": "CANDIDATE_READY",
+            "attempt_id": "6821bea5f0e74f9d9db22d7eff5376f3",
+            "version": "de4caff6a5194648b66a1e413de05918",
+            "result_id": "sha256:fd16acda5e3c00d11d5324eb14a3fb81c03ce60cefb91624627606616bd2472a",
+            "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-b06-company-fo41o0__/enphase_energy/state/updates/B06/periods/FY2024/results/de4caff6a5194648b66a1e413de05918",
+            "calculation_performed": true,
+            "new_candidate_created": true,
+            "result_reason_code": "PASS",
+            "source_observation_errors": [],
+            "new_calls": {
+              "provider": 0,
+              "paid": 0,
+              "sec": 0
+            },
+            "production_authorized": false,
+            "requested_fiscal_year": 2024,
+            "defect_holds": [],
+            "read_result_id": "sha256:fd16acda5e3c00d11d5324eb14a3fb81c03ce60cefb91624627606616bd2472a",
+            "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-b06-company-fo41o0__/enphase_energy/state/updates/B06/periods/FY2024/results/de4caff6a5194648b66a1e413de05918",
+            "program_version": {
+              "commit": "1fc13d15bd087b969c34a1c6a9a18c6fc87d0568",
+              "has_uncommitted_changes": true
+            }
+          }
+        ],
+        "reproduction_arguments": [
+          "run",
+          "--company",
+          "enphase_energy",
+          "--period",
+          "fiscal-years",
+          "--fiscal-year-start",
+          "2024",
+          "--fiscal-year-end",
+          "2024",
+          "--metric",
+          "B06",
+          "--source-root",
+          "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+          "--work-dir",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-b06-company-fo41o0__/enphase_energy/state",
+          "--output-dir",
+          "<new external run output; original actual result output retained>"
+        ],
+        "original_arguments_available_in_driver": true
+      },
+      "repeat": {
+        "seconds": 1.068,
+        "exit": 0,
+        "reuse_of_completed_phase_after_harness_fix": true,
+        "metrics": [
+          {
+            "metric_id": "B06",
+            "status": "NO_SOURCE_CONTENT_CHANGE",
+            "attempt_id": "8882df0eebdb4ab09def018c307a7885",
+            "version": "de4caff6a5194648b66a1e413de05918",
+            "result_id": "sha256:fd16acda5e3c00d11d5324eb14a3fb81c03ce60cefb91624627606616bd2472a",
+            "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-b06-company-fo41o0__/enphase_energy/state/updates/B06/periods/FY2024/results/de4caff6a5194648b66a1e413de05918",
+            "result_reason_code": "PASS",
+            "raw_input_unchanged": true,
+            "calculation_performed": false,
+            "new_candidate_created": false,
+            "source_observation_errors": [],
+            "new_calls": {
+              "provider": 0,
+              "paid": 0,
+              "sec": 0
+            },
+            "production_authorized": false,
+            "requested_fiscal_year": 2024,
+            "defect_holds": [],
+            "read_result_id": "sha256:fd16acda5e3c00d11d5324eb14a3fb81c03ce60cefb91624627606616bd2472a",
+            "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-b06-company-fo41o0__/enphase_energy/state/updates/B06/periods/FY2024/results/de4caff6a5194648b66a1e413de05918",
+            "program_version": {
+              "commit": "1fc13d15bd087b969c34a1c6a9a18c6fc87d0568",
+              "has_uncommitted_changes": true
+            }
+          }
+        ],
+        "reproduction_arguments": [
+          "run",
+          "--company",
+          "enphase_energy",
+          "--period",
+          "fiscal-years",
+          "--fiscal-year-start",
+          "2024",
+          "--fiscal-year-end",
+          "2024",
+          "--metric",
+          "B06",
+          "--source-root",
+          "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+          "--work-dir",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-b06-company-fo41o0__/enphase_energy/state",
+          "--output-dir",
+          "<new external run output; original actual result output retained>"
+        ],
+        "original_arguments_available_in_driver": true
+      },
+      "read": {
+        "arguments": [
+          "results",
+          "--company",
+          "enphase_energy",
+          "--state-root",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-b06-company-fo41o0__/enphase_energy/state",
+          "--output-root",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-b06-company-fo41o0__/enphase_energy/main-e24-read-1791716913948922000"
+        ],
+        "seconds": 0.569,
+        "exit": 0,
+        "reuse_of_completed_phase_after_harness_fix": true
+      },
+      "rows": [
+        {
+          "company_id": "enphase_energy",
+          "metric_id": "B06",
+          "fiscal_year": "2024",
+          "period_start": "2024-12-31",
+          "period_end": "2024-12-31",
+          "value": "1.563451362278755750189672227",
+          "unit": "ratio",
+          "status": "OK",
+          "result_id": "sha256:fd16acda5e3c00d11d5324eb14a3fb81c03ce60cefb91624627606616bd2472a",
+          "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+          "requested": null
+        },
+        {
+          "company_id": "enphase_energy",
+          "metric_id": "B06",
+          "fiscal_year": "2025",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "value": "1.107959077222837051285943352",
+          "unit": "ratio",
+          "status": "OK",
+          "result_id": "sha256:2983956c0931dd39384f3e2ebeb6fff4cef9f770a6d12b5d9acc0c0e4b85d26c",
+          "local_metric_status": "NOT_REQUESTED_IN_LATEST_EXECUTION",
+          "requested": null
+        }
+      ],
+      "protected_old_result_files": 21,
+      "independent_read_state_files_unchanged": 50,
+      "initial_migration_dependency_change": {
+        "scripts/vnext/normal_history_catalog.py": {
+          "saved_sha256": "dfca9ac9ee1907d7b5ddc1ec98b682a0fc8d0792c4c2c0a8fd0fcd89fde1f2c3",
+          "current_sha256": "d17455098c0c91ceabeb20d5e3c4e944dc5a983b5e5d98d37e69b9be9f2a5487"
+        }
+      },
+      "protected_original_result_files_before_first_migration": 14,
+      "initial_migration_and_read_old_result_hash_assertions_passed_before_harness_comparison_failure": true
+    },
+    {
+      "company": "marriott_international",
+      "changed_declared_processing_files": {
+        "scripts/vnext/normal_history_catalog.py": {
+          "saved_sha256": "dfca9ac9ee1907d7b5ddc1ec98b682a0fc8d0792c4c2c0a8fd0fcd89fde1f2c3",
+          "current_sha256": "d17455098c0c91ceabeb20d5e3c4e944dc5a983b5e5d98d37e69b9be9f2a5487"
+        }
+      },
+      "migration_not_run": "Unchanged business evidence reused; only independent read required here",
+      "read": {
+        "arguments": [
+          "results",
+          "--company",
+          "marriott_international",
+          "--state-root",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-b06-company-fo41o0__/marriott_international/state",
+          "--output-root",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-b06-company-fo41o0__/marriott_international/main-e24-read-1791717009488374000"
+        ],
+        "seconds": 0.5427152080010273,
+        "exit": 0
+      },
+      "rows": [
+        {
+          "company_id": "marriott_international",
+          "metric_id": "B06",
+          "fiscal_year": "2024",
+          "period_start": "2024-12-31",
+          "period_end": "2024-12-31",
+          "value": "",
+          "unit": "ratio",
+          "status": "NOT_MEANINGFUL",
+          "result_id": "sha256:15db5510274673c7857fffd71b10134e98c74489e4b5a0249890bbdd766e022c",
+          "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+          "requested": null
+        }
+      ],
+      "protected_old_result_files": 7,
+      "independent_read_state_files_unchanged": 20
+    },
+    {
+      "company": "macys",
+      "changed_declared_processing_files": {
+        "scripts/vnext/normal_history_catalog.py": {
+          "saved_sha256": "dfca9ac9ee1907d7b5ddc1ec98b682a0fc8d0792c4c2c0a8fd0fcd89fde1f2c3",
+          "current_sha256": "d17455098c0c91ceabeb20d5e3c4e944dc5a983b5e5d98d37e69b9be9f2a5487"
+        }
+      },
+      "migration": {
+        "arguments": [
+          "run",
+          "--company",
+          "macys",
+          "--period",
+          "fiscal-years",
+          "--fiscal-year-start",
+          "2024",
+          "--fiscal-year-end",
+          "2024",
+          "--metric",
+          "B06",
+          "--source-root",
+          "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+          "--work-dir",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-b06-held-ya2q75ox/state",
+          "--output-dir",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-b06-held-ya2q75ox/main-e24-run-1791717010047589000"
+        ],
+        "seconds": 6.908560375002708,
+        "exit": 2,
+        "metrics": [
+          {
+            "metric_id": "B06",
+            "status": "CANDIDATE_WITHHELD",
+            "attempt_id": "100bdba9faa1410cb47c96a35b7775ab",
+            "version": "f44a43407c374b729d7de466a850a135",
+            "result_id": "sha256:4bdb9b24989e48efd58b5a51da4359c6ed7a3e4334c712d7f6646641755ae9cb",
+            "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-b06-held-ya2q75ox/state/updates/B06/periods/FY2024/results/f44a43407c374b729d7de466a850a135",
+            "calculation_performed": true,
+            "new_candidate_created": true,
+            "result_reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+            "source_observation_errors": [],
+            "new_calls": {
+              "provider": 0,
+              "paid": 0,
+              "sec": 0
+            },
+            "production_authorized": false,
+            "requested_fiscal_year": 2024,
+            "defect_holds": [],
+            "read_result_id": "sha256:4bdb9b24989e48efd58b5a51da4359c6ed7a3e4334c712d7f6646641755ae9cb",
+            "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-b06-held-ya2q75ox/state/updates/B06/periods/FY2024/results/f44a43407c374b729d7de466a850a135",
+            "program_version": {
+              "commit": "1fc13d15bd087b969c34a1c6a9a18c6fc87d0568",
+              "has_uncommitted_changes": true
+            }
+          }
+        ]
+      },
+      "repeat": {
+        "arguments": [
+          "run",
+          "--company",
+          "macys",
+          "--period",
+          "fiscal-years",
+          "--fiscal-year-start",
+          "2024",
+          "--fiscal-year-end",
+          "2024",
+          "--metric",
+          "B06",
+          "--source-root",
+          "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+          "--work-dir",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-b06-held-ya2q75ox/state",
+          "--output-dir",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-b06-held-ya2q75ox/main-e24-run-1791717010047589000"
+        ],
+        "seconds": 1.0426517920022889,
+        "exit": 2,
+        "metrics": [
+          {
+            "metric_id": "B06",
+            "status": "PREVIOUS_INPUT_WITHHELD",
+            "attempt_id": "3b971f15f97741a69db17a919fb5bf33",
+            "version": "f44a43407c374b729d7de466a850a135",
+            "result_id": "sha256:4bdb9b24989e48efd58b5a51da4359c6ed7a3e4334c712d7f6646641755ae9cb",
+            "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-b06-held-ya2q75ox/state/updates/B06/periods/FY2024/results/f44a43407c374b729d7de466a850a135",
+            "result_reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+            "raw_input_unchanged": true,
+            "calculation_performed": false,
+            "new_candidate_created": false,
+            "source_observation_errors": [],
+            "new_calls": {
+              "provider": 0,
+              "paid": 0,
+              "sec": 0
+            },
+            "production_authorized": false,
+            "requested_fiscal_year": 2024,
+            "defect_holds": [],
+            "read_result_id": "sha256:4bdb9b24989e48efd58b5a51da4359c6ed7a3e4334c712d7f6646641755ae9cb",
+            "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-b06-held-ya2q75ox/state/updates/B06/periods/FY2024/results/f44a43407c374b729d7de466a850a135",
+            "program_version": {
+              "commit": "1fc13d15bd087b969c34a1c6a9a18c6fc87d0568",
+              "has_uncommitted_changes": true
+            }
+          }
+        ]
+      },
+      "read": {
+        "arguments": [
+          "results",
+          "--company",
+          "macys",
+          "--state-root",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-b06-held-ya2q75ox/state",
+          "--output-root",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-b06-held-ya2q75ox/main-e24-read-1791717018020150000"
+        ],
+        "seconds": 0.5444822500030568,
+        "exit": 0
+      },
+      "rows": [
+        {
+          "company_id": "macys",
+          "metric_id": "B06",
+          "fiscal_year": "2024",
+          "period_start": "2025-02-01",
+          "period_end": "2025-02-01",
+          "value": "",
+          "unit": "ratio",
+          "status": "WITHHELD",
+          "result_id": "sha256:4bdb9b24989e48efd58b5a51da4359c6ed7a3e4334c712d7f6646641755ae9cb",
+          "local_metric_status": "PREVIOUS_INPUT_WITHHELD",
+          "requested": null
+        },
+        {
+          "company_id": "macys",
+          "metric_id": "B06",
+          "fiscal_year": "2027",
+          "period_start": "",
+          "period_end": "",
+          "value": "",
+          "unit": "",
+          "status": "INPUT_OR_EXECUTION_FAILED",
+          "result_id": "",
+          "local_metric_status": "INPUT_OR_EXECUTION_FAILED",
+          "requested": null
+        }
+      ],
+      "protected_old_result_files": 7,
+      "independent_read_state_files_unchanged": 36
+    }
+  ],
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "actual_source_metadata_unchanged_since_preceding_source_validation": {
+    "config/company_registry.csv": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+    "evidence/requests_log.csv": "61252ac5844ad1c5917040f753c04a7ed4f6e1d75e2fb0803804773fd6c0eef9",
+    "evidence/requests_log_manifest.json": "e91193401733b86ddc28c69cbae0debd74eeb899a328e60fcfb32532ed6a85ab"
+  }
+}

@@ -1,0 +1,25 @@
+....E............................
+======================================================================
+ERROR: test_invalid_unrelated_registry_rows_still_block_source_planning (tests.vnext.test_selected_source_requirements.SelectedSourceRequirementsTest.test_invalid_unrelated_registry_rows_still_block_source_planning) (raw=b'rtation, Scheduled",airline,1231,latest_10k,continuous,,primary:92380\n')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-source-registry-scope/SEC_metrics/tests/vnext/test_selected_source_requirements.py", line 104, in test_invalid_unrelated_registry_rows_still_block_source_planning
+    with self.assertRaises(ValueError):self.plan()
+                                       ~~~~~~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-source-registry-scope/SEC_metrics/tests/vnext/test_selected_source_requirements.py", line 60, in plan
+    return preflight.discover_selected_annual_requirements(repo_root=self.root,
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+        company_id=COMPANY,report_end='2025-12-31',metric_ids=list(metrics),**kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-source-registry-scope/SEC_metrics/scripts/vnext/selected_source_requirements.py", line 134, in discover_selected_annual_requirements
+    company = registered_company_row(repo_root=source, company_id=company_id)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-source-registry-scope/SEC_metrics/scripts/vnext/ordinary_registry_scope.py", line 7, in registered_company_row
+    rows=_registry_rows(repo_root=repo_root)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-source-registry-scope/SEC_metrics/scripts/vnext/company_registry.py", line 29, in _registry_rows
+    raise BatchWorkflowError("Company registry identities are ambiguous")
+vnext.request_bindings.BatchWorkflowError: Company registry identities are ambiguous
+
+----------------------------------------------------------------------
+Ran 33 tests in 1.919s
+
+FAILED (errors=1)

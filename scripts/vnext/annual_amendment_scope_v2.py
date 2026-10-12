@@ -6,6 +6,7 @@ from .annual_amendment_scope import (AmendmentScopeError, POLICY, _need, _source
     _words, _item15, _link_note_identity)
 from .canonical import content_hash
 from .normal_annual_input_v2 import exact_json_value
+from .xbrl_namespace_policy import YEAR_ONLY, is_sec_namespace
 
 def _note(doc, raw=None):
     blocks=doc['blocks'];indices=[i for i,b in enumerate(blocks) if not b['linked'] and re.fullmatch(POLICY['explanatory_heading_pattern'],b['text'],re.I)]
@@ -25,17 +26,19 @@ def _note(doc, raw=None):
     return {'start':start,'end':end,'blocks':blocks[start:end],'text':text}
 
 def inspect_annual_amendment_scope(*, original, amendment, company_id, cik,
-                                   note_layout='blocks-v1'):
+                                   note_layout='blocks-v1', namespace_policy=YEAR_ONLY):
     """Inspect hash-bound source arguments; this pure API grants no acquisition."""
-    if note_layout == 'blocks-v1':
+    is_sec_namespace('', taxonomy='dei', namespace_policy=namespace_policy)
+    if note_layout == 'blocks-v1' and namespace_policy==YEAR_ONLY:
         return legacy.inspect_annual_amendment_scope(original=original, amendment=amendment, company_id=company_id, cik=cik)
     _need(note_layout in {'blocks-v1','inline-paragraphs-v2'}, 'AMENDMENT_NOTE_LAYOUT_UNSUPPORTED')
     _need(original['filing']['form']=='10-K' and amendment['filing']['form']=='10-K/A',"AMENDMENT_SOURCE_FORMS_REQUIRED")
     end=original['filing']['reportDate']
     _need(amendment['filing']['reportDate']==end and amendment['filing']['filingDate']>=original['filing']['filingDate'],
           "AMENDMENT_SAME_FILING_PERIOD_REQUIRED")
-    old=_source(**original,company_id=company_id,cik=cik,period_end=end)
-    new=_source(**amendment,company_id=company_id,cik=cik,period_end=end)
+    options={} if namespace_policy==YEAR_ONLY else {'namespace_policy':namespace_policy}
+    old=_source(**original,company_id=company_id,cik=cik,period_end=end,**options)
+    new=_source(**amendment,company_id=company_id,cik=cik,period_end=end,**options)
     period_equal=old['period']==new['period']
     note=_note(new['document'], **({'raw':amendment['raw']} if note_layout!='blocks-v1' else {}));text=note['text']
     unquoted=not (set(range(note['start'],note['end'])) & set(new['quoted_block_indices']))
@@ -105,7 +108,7 @@ def inspect_annual_amendment_scope(*, original, amendment, company_id, cik,
         items={re.match(POLICY['item_heading_pattern'],b['text'],re.I).group(1) for b in item_headers}
         statements=[b for b in new['document']['blocks'] if re.search(POLICY['no_financial_statement_pattern'],b['text'],re.I)]
         details={'parts':sorted(parts),'items':sorted(items),'no_new_financial_statement_declarations':statements}
-        only_governance_facts=all(re.fullmatch(r'https?://xbrl\.sec\.gov/ecd/[0-9]{4}',f['concept'][0]) for f in new['non_dei_native_facts'])
+        only_governance_facts=all(is_sec_namespace(f['concept'][0],taxonomy='ecd',namespace_policy=namespace_policy) for f in new['non_dei_native_facts'])
         details['non_dei_facts_are_governance_taxonomy']=only_governance_facts
         if parts=={'PART III','PART IV'} and items=={'10','11','12','13','14','15'} and len(statements)==1 and only_governance_facts:
             rule='PART_III_ADDITION_WITH_EXPLICIT_NO_NEW_FINANCIAL_STATEMENTS'
@@ -123,5 +126,6 @@ def inspect_annual_amendment_scope(*, original, amendment, company_id, cik,
         'not_covered_metric_ids':POLICY['not_covered_metric_ids'],'policy_hash':content_hash(value=POLICY),
         'source_acquisition_credit':False,'native_run_created':False,'production_authorized':False}
     if note_layout!='blocks-v1':body['note_layout']=note_layout
+    if namespace_policy!=YEAR_ONLY:body['namespace_policy']=namespace_policy
     body=exact_json_value(body)
     return {**body,'scope_id':content_hash(value=body)}

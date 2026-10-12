@@ -1,0 +1,31 @@
+{
+  "company": "lumen_technologies",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/issue28-source-proof-main-c6f/SEC_metrics",
+  "result": {
+    "company_id": "lumen_technologies",
+    "metric_id": "B02",
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31",
+    "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+    "spec_closure_hash": "sha256:7f569259f31e7d0bd237ca8ba6bc368cbf55d47453f86915c4cf8e0638868a76",
+    "applicability": "APPLICABLE",
+    "quality": "NONE",
+    "publication": "WITHHELD",
+    "reason_code": "NORMAL_COMPANYFACTS_ROUTE_UNRESOLVED",
+    "value": null,
+    "unit": null,
+    "trace_id": "sha256:e168747f08169749cfbf21b9b746e5e9f9867d955d979f4f1c8ff59ab684ad9a",
+    "record_type": "METRIC_RESULT",
+    "result_id": "sha256:49168949817ad3c31496c2d7de5dd5302d799a7c33acf1118904144022668b15"
+  },
+  "selection": {
+    "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/18926/000001892625000010/lumn-20241231.htm",
+    "error_type": "NormalGovernanceInputError",
+    "category": "SOURCE_OR_IMPLEMENTATION_UNRESOLVED"
+  },
+  "source_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  }
+}

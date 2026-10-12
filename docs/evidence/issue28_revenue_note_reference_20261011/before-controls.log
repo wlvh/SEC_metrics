@@ -1,0 +1,89 @@
+test_numeric_note_reference_is_not_a_total_label_or_scope_change (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_numeric_note_reference_is_not_a_total_label_or_scope_change) ... 
+  test_numeric_note_reference_is_not_a_total_label_or_scope_change (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_numeric_note_reference_is_not_a_total_label_or_scope_change) (marker='(Note 4)') ... FAIL
+  test_numeric_note_reference_is_not_a_total_label_or_scope_change (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_numeric_note_reference_is_not_a_total_label_or_scope_change) (marker='(note 17)') ... FAIL
+test_geographic_or_subsidiary_parenthesis_is_not_a_footnote (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_geographic_or_subsidiary_parenthesis_is_not_a_footnote) ... 
+  test_geographic_or_subsidiary_parenthesis_is_not_a_footnote (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_geographic_or_subsidiary_parenthesis_is_not_a_footnote) (marker='(Europe)') ... FAIL
+  test_geographic_or_subsidiary_parenthesis_is_not_a_footnote (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_geographic_or_subsidiary_parenthesis_is_not_a_footnote) (marker='(Subsidiary)') ... FAIL
+  test_geographic_or_subsidiary_parenthesis_is_not_a_footnote (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_geographic_or_subsidiary_parenthesis_is_not_a_footnote) (marker='(US)') ... FAIL
+test_numeric_note_total_reference_keeps_component_scope_and_scope_words_do_not_disappear (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_numeric_note_total_reference_keeps_component_scope_and_scope_words_do_not_disappear) ... 
+  test_numeric_note_total_reference_keeps_component_scope_and_scope_words_do_not_disappear (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_numeric_note_total_reference_keeps_component_scope_and_scope_words_do_not_disappear) (marker='(Note 4)') ... FAIL
+  test_numeric_note_total_reference_keeps_component_scope_and_scope_words_do_not_disappear (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_numeric_note_total_reference_keeps_component_scope_and_scope_words_do_not_disappear) (marker='(Europe)') ... FAIL
+  test_numeric_note_total_reference_keeps_component_scope_and_scope_words_do_not_disappear (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_numeric_note_total_reference_keeps_component_scope_and_scope_words_do_not_disappear) (marker='(Subsidiary)') ... FAIL
+
+======================================================================
+FAIL: test_numeric_note_reference_is_not_a_total_label_or_scope_change (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_numeric_note_reference_is_not_a_total_label_or_scope_change) (marker='(Note 4)')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 24, in test_numeric_note_reference_is_not_a_total_label_or_scope_change
+    self.assertTrue(scope['complete_scope_proven'])
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_numeric_note_reference_is_not_a_total_label_or_scope_change (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_numeric_note_reference_is_not_a_total_label_or_scope_change) (marker='(note 17)')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 24, in test_numeric_note_reference_is_not_a_total_label_or_scope_change
+    self.assertTrue(scope['complete_scope_proven'])
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_geographic_or_subsidiary_parenthesis_is_not_a_footnote (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_geographic_or_subsidiary_parenthesis_is_not_a_footnote) (marker='(Europe)')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 34, in test_geographic_or_subsidiary_parenthesis_is_not_a_footnote
+    self.assertFalse(scope['complete_scope_proven'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_geographic_or_subsidiary_parenthesis_is_not_a_footnote (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_geographic_or_subsidiary_parenthesis_is_not_a_footnote) (marker='(Subsidiary)')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 34, in test_geographic_or_subsidiary_parenthesis_is_not_a_footnote
+    self.assertFalse(scope['complete_scope_proven'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_geographic_or_subsidiary_parenthesis_is_not_a_footnote (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_geographic_or_subsidiary_parenthesis_is_not_a_footnote) (marker='(US)')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 34, in test_geographic_or_subsidiary_parenthesis_is_not_a_footnote
+    self.assertFalse(scope['complete_scope_proven'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_numeric_note_total_reference_keeps_component_scope_and_scope_words_do_not_disappear (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_numeric_note_total_reference_keeps_component_scope_and_scope_words_do_not_disappear) (marker='(Note 4)')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_selected_revenue_scope_v1.py", line 54, in test_numeric_note_total_reference_keeps_component_scope_and_scope_words_do_not_disappear
+    self.assertEqual(scope['complete_scope_proven'],allowed)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False != True
+
+======================================================================
+FAIL: test_numeric_note_total_reference_keeps_component_scope_and_scope_words_do_not_disappear (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_numeric_note_total_reference_keeps_component_scope_and_scope_words_do_not_disappear) (marker='(Europe)')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_selected_revenue_scope_v1.py", line 54, in test_numeric_note_total_reference_keeps_component_scope_and_scope_words_do_not_disappear
+    self.assertEqual(scope['complete_scope_proven'],allowed)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True != False
+
+======================================================================
+FAIL: test_numeric_note_total_reference_keeps_component_scope_and_scope_words_do_not_disappear (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_numeric_note_total_reference_keeps_component_scope_and_scope_words_do_not_disappear) (marker='(Subsidiary)')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_selected_revenue_scope_v1.py", line 54, in test_numeric_note_total_reference_keeps_component_scope_and_scope_words_do_not_disappear
+    self.assertEqual(scope['complete_scope_proven'],allowed)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True != False
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.214s
+
+FAILED (failures=8)
+{"allowed_skips": 0, "errors": 0, "failures": 8, "run": 3, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_numeric_note_reference_is_not_a_total_label_or_scope_change", "tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_geographic_or_subsidiary_parenthesis_is_not_a_footnote", "tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_numeric_note_total_reference_keeps_component_scope_and_scope_words_do_not_disappear"]}

@@ -1,0 +1,50 @@
+test_numeric_note_reference_preserves_original_total_but_scope_parentheses_do_not (tests.vnext.test_historical_statement_cases.HistoricalPairedRevenueAdmissionTest.test_numeric_note_reference_preserves_original_total_but_scope_parentheses_do_not) ... 
+  test_numeric_note_reference_preserves_original_total_but_scope_parentheses_do_not (tests.vnext.test_historical_statement_cases.HistoricalPairedRevenueAdmissionTest.test_numeric_note_reference_preserves_original_total_but_scope_parentheses_do_not) (label='Total revenues (Note 4)') ... ERROR
+  test_numeric_note_reference_preserves_original_total_but_scope_parentheses_do_not (tests.vnext.test_historical_statement_cases.HistoricalPairedRevenueAdmissionTest.test_numeric_note_reference_preserves_original_total_but_scope_parentheses_do_not) (label='Total revenues (Europe)') ... FAIL
+  test_numeric_note_reference_preserves_original_total_but_scope_parentheses_do_not (tests.vnext.test_historical_statement_cases.HistoricalPairedRevenueAdmissionTest.test_numeric_note_reference_preserves_original_total_but_scope_parentheses_do_not) (label='Total revenues (Subsidiary)') ... FAIL
+
+======================================================================
+ERROR: test_numeric_note_reference_preserves_original_total_but_scope_parentheses_do_not (tests.vnext.test_historical_statement_cases.HistoricalPairedRevenueAdmissionTest.test_numeric_note_reference_preserves_original_total_but_scope_parentheses_do_not) (label='Total revenues (Note 4)')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-b02-scope-consumer-20261011/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 296, in test_numeric_note_reference_preserves_original_total_but_scope_parentheses_do_not
+    admitted, scope = self.admit(selected, annual, claims, concepts)
+                      ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-b02-scope-consumer-20261011/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 266, in admit
+    return cases._revenue_claims_admitted_by_original(reader=reader, prepared=annual,
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        filing=annual['filing'], period=annual['table_input']['target_period'],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        claims=claims, concepts=concepts)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-b02-scope-consumer-20261011/SEC_metrics/scripts/vnext/historical_statement_cases.py", line 98, in _revenue_claims_admitted_by_original
+    return revenue_claims_admitted_by_original(reader=reader, prepared=prepared,
+        filing=filing, period=period, claims=claims, concepts=concepts,
+        allow_single_revenue_line=PAIRED_SINGLE_REVENUE_LINE_ENABLED)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-b02-scope-consumer-20261011/SEC_metrics/scripts/vnext/historical_paired_revenue.py", line 47, in revenue_claims_admitted_by_original
+    raise StatementCaseError('HISTORICAL_PAIRED_REVENUE_COMPLETE_SCOPE_UNPROVEN',
+        'IMPLEMENTATION_GAP', revenue_scope=scope)
+vnext.historical_statement_cases.StatementCaseError: HISTORICAL_PAIRED_REVENUE_COMPLETE_SCOPE_UNPROVEN
+
+======================================================================
+FAIL: test_numeric_note_reference_preserves_original_total_but_scope_parentheses_do_not (tests.vnext.test_historical_statement_cases.HistoricalPairedRevenueAdmissionTest.test_numeric_note_reference_preserves_original_total_but_scope_parentheses_do_not) (label='Total revenues (Europe)')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-b02-scope-consumer-20261011/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 301, in test_numeric_note_reference_preserves_original_total_but_scope_parentheses_do_not
+    with self.assertRaisesRegex(ValueError, 'COMPLETE_SCOPE_UNPROVEN'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_numeric_note_reference_preserves_original_total_but_scope_parentheses_do_not (tests.vnext.test_historical_statement_cases.HistoricalPairedRevenueAdmissionTest.test_numeric_note_reference_preserves_original_total_but_scope_parentheses_do_not) (label='Total revenues (Subsidiary)')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-b02-scope-consumer-20261011/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 301, in test_numeric_note_reference_preserves_original_total_but_scope_parentheses_do_not
+    with self.assertRaisesRegex(ValueError, 'COMPLETE_SCOPE_UNPROVEN'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.058s
+
+FAILED (failures=2, errors=1)

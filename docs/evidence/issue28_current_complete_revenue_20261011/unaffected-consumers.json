@@ -1,0 +1,89 @@
+[
+  {
+    "company": "pfizer",
+    "elapsed_seconds": 15.999933915998554,
+    "B02": {
+      "company_id": "pfizer",
+      "metric_id": "B02",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:7f569259f31e7d0bd237ca8ba6bc368cbf55d47453f86915c4cf8e0638868a76",
+      "applicability": "APPLICABLE",
+      "quality": "EXACT",
+      "publication": "PUBLISHED",
+      "reason_code": "PASS",
+      "value": "-0.01647099501783833906989171264",
+      "unit": "ratio",
+      "trace_id": "sha256:bb67c39de20d8794badaa3d6c18550f6d14b4360f9d19708dace0632c5746b4a",
+      "record_type": "METRIC_RESULT",
+      "result_id": "sha256:b1d89f891ff2675af4f478a103e46abdb2d09052f7111ab93751e33e93b59ac9"
+    },
+    "other_ten_metrics_unchanged": true,
+    "scope_statuses": {
+      "current": {
+        "status": "REPORTED_CONSOLIDATED_TOTAL",
+        "complete_scope_proven": true
+      },
+      "prior": {
+        "status": "REPORTED_CONSOLIDATED_TOTAL",
+        "complete_scope_proven": true
+      }
+    }
+  },
+  {
+    "company": "jpmorgan_chase",
+    "elapsed_seconds": 15.62565133300086,
+    "B02": {
+      "record_type": "METRIC_RESULT",
+      "result_id": "sha256:e6251d33bd7e2f6a31db9bf53eda28c2b6feafedbdd5eea76403aee115a3dbf1",
+      "company_id": "jpmorgan_chase",
+      "metric_id": "B02",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:7f569259f31e7d0bd237ca8ba6bc368cbf55d47453f86915c4cf8e0638868a76",
+      "applicability": "N_A_STRUCTURAL",
+      "quality": "NONE",
+      "publication": "PUBLISHED",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "value": null,
+      "unit": null,
+      "trace_id": "sha256:251f827044776971b9446f0f67579462b3778cf6e2e2c386c6172c527e2a3529"
+    },
+    "other_ten_metrics_unchanged": true,
+    "scope_statuses": {}
+  },
+  {
+    "company": "salesforce",
+    "elapsed_seconds": 8.9533488340021,
+    "B02": {
+      "company_id": "salesforce",
+      "metric_id": "B02",
+      "period_start": "2025-02-01",
+      "period_end": "2026-01-31",
+      "scope_key": "sha256:e7b39850392dd409a89568f7dd6dce40c37fe1de0e6e3faab45e77651898ba15",
+      "spec_closure_hash": "sha256:7f569259f31e7d0bd237ca8ba6bc368cbf55d47453f86915c4cf8e0638868a76",
+      "applicability": "APPLICABLE",
+      "quality": "EXACT",
+      "publication": "PUBLISHED",
+      "reason_code": "PASS",
+      "value": "0.09579100145137880986937590711",
+      "unit": "ratio",
+      "trace_id": "sha256:cd6db1013e8c6c606787199580ffc51b97443a572659b567f1b12082553138dc",
+      "record_type": "METRIC_RESULT",
+      "result_id": "sha256:eb7fa21951e00bd2fef189ac0be33f001eeebe121b68d75d1bb206d6f1627976"
+    },
+    "other_ten_metrics_unchanged": true,
+    "scope_statuses": {
+      "current": {
+        "status": "REPORTED_CONSOLIDATED_TOTAL",
+        "complete_scope_proven": true
+      },
+      "prior": {
+        "status": "REPORTED_CONSOLIDATED_TOTAL",
+        "complete_scope_proven": true
+      }
+    }
+  }
+]

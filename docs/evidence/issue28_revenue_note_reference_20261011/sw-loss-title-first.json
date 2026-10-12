@@ -1,0 +1,268 @@
+{
+  "seconds": 61.51670858300349,
+  "exit": 0,
+  "report": {
+    "elapsed_seconds": 61.515506040996115,
+    "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+    "company_id": "southwest_airlines",
+    "run_id": "20261011T165822Z-7ddb4d1b",
+    "status": "FLOW_COMPLETED",
+    "selected_metrics": [
+      "B01",
+      "B02",
+      "B03"
+    ],
+    "metrics": [
+      {
+        "metric_id": "B01",
+        "status": "CANDIDATE_READY",
+        "attempt_id": "9a0462f910124191bbddd2c4f8b693dc",
+        "version": "5770f410dbb641a2a7e11997306bb644",
+        "result_id": "sha256:b4f733af9bc97d8ec52492130cd2697b5436deeb72ef6d4a5310a387d5438977",
+        "result_root": "/private/tmp/issue28-sw-loss-title-3rv4_5ds/state/updates/B01/periods/FY2021/results/5770f410dbb641a2a7e11997306bb644",
+        "calculation_performed": true,
+        "new_candidate_created": true,
+        "result_reason_code": "PASS",
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2021,
+        "defect_holds": [],
+        "read_result_id": "sha256:b4f733af9bc97d8ec52492130cd2697b5436deeb72ef6d4a5310a387d5438977",
+        "record_root": "/private/tmp/issue28-sw-loss-title-3rv4_5ds/state/updates/B01/periods/FY2021/results/5770f410dbb641a2a7e11997306bb644",
+        "program_version": {
+          "commit": "f75a95b6bc0061f4071e778af6c3c8252786fc44",
+          "has_uncommitted_changes": true
+        }
+      },
+      {
+        "metric_id": "B02",
+        "status": "CANDIDATE_READY",
+        "attempt_id": "35008e66d50f4037b3e15a0c9e84154d",
+        "version": "a28dd681f7164c4d9c553e3b84986090",
+        "result_id": "sha256:87ab0affdc2695ea2e540ef516ee000eae5a5bd43bb080a0867d6506fa729698",
+        "result_root": "/private/tmp/issue28-sw-loss-title-3rv4_5ds/state/updates/B02/periods/FY2021/results/a28dd681f7164c4d9c553e3b84986090",
+        "calculation_performed": true,
+        "new_candidate_created": true,
+        "result_reason_code": "PASS",
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2021,
+        "defect_holds": [],
+        "read_result_id": "sha256:87ab0affdc2695ea2e540ef516ee000eae5a5bd43bb080a0867d6506fa729698",
+        "record_root": "/private/tmp/issue28-sw-loss-title-3rv4_5ds/state/updates/B02/periods/FY2021/results/a28dd681f7164c4d9c553e3b84986090",
+        "program_version": {
+          "commit": "f75a95b6bc0061f4071e778af6c3c8252786fc44",
+          "has_uncommitted_changes": true
+        }
+      },
+      {
+        "metric_id": "B03",
+        "status": "CANDIDATE_READY",
+        "attempt_id": "5bffc08d283d47399dc0c7b31d93aae4",
+        "version": "bbc49ab34e0041a48098c113297ebe64",
+        "result_id": "sha256:7b9b5a7ab1ba19e8bafb825b4b24bf66f7cc9ac81827763b77559cb0bb88b40f",
+        "result_root": "/private/tmp/issue28-sw-loss-title-3rv4_5ds/state/updates/B03/periods/FY2021/results/bbc49ab34e0041a48098c113297ebe64",
+        "calculation_performed": true,
+        "new_candidate_created": true,
+        "result_reason_code": "PASS",
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2021,
+        "defect_holds": [],
+        "read_result_id": "sha256:7b9b5a7ab1ba19e8bafb825b4b24bf66f7cc9ac81827763b77559cb0bb88b40f",
+        "record_root": "/private/tmp/issue28-sw-loss-title-3rv4_5ds/state/updates/B03/periods/FY2021/results/bbc49ab34e0041a48098c113297ebe64",
+        "program_version": {
+          "commit": "f75a95b6bc0061f4071e778af6c3c8252786fc44",
+          "has_uncommitted_changes": true
+        }
+      },
+      {
+        "metric_id": "B01",
+        "status": "CANDIDATE_READY",
+        "attempt_id": "66eb0a8de43e458cadb81f130b507882",
+        "version": "8c5ee4996268439e970c2a28cf80600d",
+        "result_id": "sha256:3848c4aea06a647daa20af5a2d10ac1ee26c974f2a86b943b768aa89faa00bd1",
+        "result_root": "/private/tmp/issue28-sw-loss-title-3rv4_5ds/state/updates/B01/periods/FY2022/results/8c5ee4996268439e970c2a28cf80600d",
+        "calculation_performed": true,
+        "new_candidate_created": true,
+        "result_reason_code": "PASS",
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2022,
+        "defect_holds": [],
+        "read_result_id": "sha256:3848c4aea06a647daa20af5a2d10ac1ee26c974f2a86b943b768aa89faa00bd1",
+        "record_root": "/private/tmp/issue28-sw-loss-title-3rv4_5ds/state/updates/B01/periods/FY2022/results/8c5ee4996268439e970c2a28cf80600d",
+        "program_version": {
+          "commit": "f75a95b6bc0061f4071e778af6c3c8252786fc44",
+          "has_uncommitted_changes": true
+        }
+      },
+      {
+        "metric_id": "B02",
+        "status": "CANDIDATE_READY",
+        "attempt_id": "f768b66aec1240a2af1856a2ac66f3ba",
+        "version": "168c79e0562c4ba8b6f5c2c2dbade8da",
+        "result_id": "sha256:baf9e4dcbe0c80a388279077b7dcb98f1c9173c8a3ad144f4b9b09b194237662",
+        "result_root": "/private/tmp/issue28-sw-loss-title-3rv4_5ds/state/updates/B02/periods/FY2022/results/168c79e0562c4ba8b6f5c2c2dbade8da",
+        "calculation_performed": true,
+        "new_candidate_created": true,
+        "result_reason_code": "PASS",
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2022,
+        "defect_holds": [],
+        "read_result_id": "sha256:baf9e4dcbe0c80a388279077b7dcb98f1c9173c8a3ad144f4b9b09b194237662",
+        "record_root": "/private/tmp/issue28-sw-loss-title-3rv4_5ds/state/updates/B02/periods/FY2022/results/168c79e0562c4ba8b6f5c2c2dbade8da",
+        "program_version": {
+          "commit": "f75a95b6bc0061f4071e778af6c3c8252786fc44",
+          "has_uncommitted_changes": true
+        }
+      },
+      {
+        "metric_id": "B03",
+        "status": "CANDIDATE_READY",
+        "attempt_id": "4aec15252ef14b039c48df343b36a6b9",
+        "version": "3bc1811875b8426c8eb54c5b5c4ef65c",
+        "result_id": "sha256:72a045b2af9608daff4ac93e31a4c8410de9d036d2ad3c1fe9169acdb9ebe2d1",
+        "result_root": "/private/tmp/issue28-sw-loss-title-3rv4_5ds/state/updates/B03/periods/FY2022/results/3bc1811875b8426c8eb54c5b5c4ef65c",
+        "calculation_performed": true,
+        "new_candidate_created": true,
+        "result_reason_code": "PASS",
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2022,
+        "defect_holds": [],
+        "read_result_id": "sha256:72a045b2af9608daff4ac93e31a4c8410de9d036d2ad3c1fe9169acdb9ebe2d1",
+        "record_root": "/private/tmp/issue28-sw-loss-title-3rv4_5ds/state/updates/B03/periods/FY2022/results/3bc1811875b8426c8eb54c5b5c4ef65c",
+        "program_version": {
+          "commit": "f75a95b6bc0061f4071e778af6c3c8252786fc44",
+          "has_uncommitted_changes": true
+        }
+      },
+      {
+        "metric_id": "B01",
+        "status": "CANDIDATE_READY",
+        "attempt_id": "ab3140e95ff0451381bdc8f9abb6407d",
+        "version": "3849b165ddff4e8b93d5bfa8733f82b1",
+        "result_id": "sha256:06b9aa145e1235055f682355a755a7539a82091173e57338d0aadb4ed7232f62",
+        "result_root": "/private/tmp/issue28-sw-loss-title-3rv4_5ds/state/updates/B01/periods/FY2023/results/3849b165ddff4e8b93d5bfa8733f82b1",
+        "calculation_performed": true,
+        "new_candidate_created": true,
+        "result_reason_code": "PASS",
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2023,
+        "defect_holds": [],
+        "read_result_id": "sha256:06b9aa145e1235055f682355a755a7539a82091173e57338d0aadb4ed7232f62",
+        "record_root": "/private/tmp/issue28-sw-loss-title-3rv4_5ds/state/updates/B01/periods/FY2023/results/3849b165ddff4e8b93d5bfa8733f82b1",
+        "program_version": {
+          "commit": "f75a95b6bc0061f4071e778af6c3c8252786fc44",
+          "has_uncommitted_changes": true
+        }
+      },
+      {
+        "metric_id": "B02",
+        "status": "CANDIDATE_READY",
+        "attempt_id": "c7b1ca93e173444ead145add5d7b7cb6",
+        "version": "110553ada92c41b0bf53a625dee50ea8",
+        "result_id": "sha256:1496d825ac477bf00ad206a266f7dcf3cd7d8d716f488c6b081513ea67639213",
+        "result_root": "/private/tmp/issue28-sw-loss-title-3rv4_5ds/state/updates/B02/periods/FY2023/results/110553ada92c41b0bf53a625dee50ea8",
+        "calculation_performed": true,
+        "new_candidate_created": true,
+        "result_reason_code": "PASS",
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2023,
+        "defect_holds": [],
+        "read_result_id": "sha256:1496d825ac477bf00ad206a266f7dcf3cd7d8d716f488c6b081513ea67639213",
+        "record_root": "/private/tmp/issue28-sw-loss-title-3rv4_5ds/state/updates/B02/periods/FY2023/results/110553ada92c41b0bf53a625dee50ea8",
+        "program_version": {
+          "commit": "f75a95b6bc0061f4071e778af6c3c8252786fc44",
+          "has_uncommitted_changes": true
+        }
+      },
+      {
+        "metric_id": "B03",
+        "status": "CANDIDATE_READY",
+        "attempt_id": "ad0872a976d444f1bb7b569647d151d0",
+        "version": "3770c1a2ca89496d9d30d3b245f8188d",
+        "result_id": "sha256:b29679e35528ecd810903704963d8b79d37d34ab9b818d058db4611e8a8fab07",
+        "result_root": "/private/tmp/issue28-sw-loss-title-3rv4_5ds/state/updates/B03/periods/FY2023/results/3770c1a2ca89496d9d30d3b245f8188d",
+        "calculation_performed": true,
+        "new_candidate_created": true,
+        "result_reason_code": "PASS",
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2023,
+        "defect_holds": [],
+        "read_result_id": "sha256:b29679e35528ecd810903704963d8b79d37d34ab9b818d058db4611e8a8fab07",
+        "record_root": "/private/tmp/issue28-sw-loss-title-3rv4_5ds/state/updates/B03/periods/FY2023/results/3770c1a2ca89496d9d30d3b245f8188d",
+        "program_version": {
+          "commit": "f75a95b6bc0061f4071e778af6c3c8252786fc44",
+          "has_uncommitted_changes": true
+        }
+      }
+    ],
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics",
+    "record_root": "/private/tmp/issue28-sw-loss-title-3rv4_5ds/state",
+    "output_root": "/private/tmp/issue28-sw-loss-title-3rv4_5ds/output/20261011T165822Z-7ddb4d1b",
+    "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false,
+    "selected_fiscal_years": [
+      2021,
+      2022,
+      2023
+    ]
+  }
+}
