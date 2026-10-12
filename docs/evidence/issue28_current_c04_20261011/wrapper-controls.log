@@ -1,0 +1,11 @@
+test_current_producer_explicitly_selects_the_same_four_form_core (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_current_producer_explicitly_selects_the_same_four_form_core) ... ok
+test_changed_period_not_projected_as_current (tests.vnext.test_current_auditor_case.CurrentAuditorCaseTest.test_changed_period_not_projected_as_current) ... ok
+test_current_case_selects_explicit_core_and_keeps_noncalendar_period (tests.vnext.test_current_auditor_case.CurrentAuditorCaseTest.test_current_case_selects_explicit_core_and_keeps_noncalendar_period) ... ok
+test_only_c04_consumes_new_wrapper_dependency (tests.vnext.test_current_auditor_case.CurrentAuditorCaseTest.test_only_c04_consumes_new_wrapper_dependency) ... ok
+test_writer_selects_current_c04_without_zero_ai_formula (tests.vnext.test_current_auditor_case.CurrentAuditorCaseTest.test_writer_selects_current_c04_without_zero_ai_formula) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.020s
+
+OK
+{"allowed_skips": 0, "errors": 0, "failures": 0, "run": 5, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_current_producer_explicitly_selects_the_same_four_form_core", "tests.vnext.test_current_auditor_case"]}

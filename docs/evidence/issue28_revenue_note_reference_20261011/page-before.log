@@ -1,0 +1,28 @@
+E
+======================================================================
+ERROR: test_income_statement_page_does_not_consume_the_prior_audit_report (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_income_statement_page_does_not_consume_the_prior_audit_report)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 23, in test_income_statement_page_does_not_consume_the_prior_audit_report
+    scope=reported_revenue_scope(primary=changed(primary,raw),xml=xml,annual=annual,approved_concepts=APPROVED)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 128, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=single_operating)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 162, in _statement_scope
+    _need(all(b in navigation or company_key(b['visible_text']) in issuer_lines
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              or re.fullmatch(title_pattern,_label_key(b['visible_text']))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              or any(re.fullmatch(p,b['visible_text'].strip(),re.I) for p in unit_headers)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              for b in intro), 'STATEMENT_HEADING_SCOPE_UNRESOLVED')
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_SCOPE_UNRESOLVED
+
+----------------------------------------------------------------------
+Ran 1 test in 0.160s
+
+FAILED (errors=1)

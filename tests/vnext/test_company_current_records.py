@@ -2,6 +2,7 @@
 import csv
 import fcntl
 import json
+import shutil
 from pathlib import Path
 import tempfile
 import unittest
@@ -56,6 +57,72 @@ class CurrentCompanyTest(unittest.TestCase):
         self.assertEqual(r['calls'],{'provider':0,'paid':0,'sec':0})
         self.assertFalse((self.work/'programs').exists());self.assertFalse((self.work/'source').exists())
         self.assertTrue(all(row['source_root']==str(self.source) for row in self.rows(r)))
+
+    def restored_task(self):
+        self.run_company(['B01'])
+        restored=self.root/'restored';shutil.copytree(self.work,restored)
+        old=self.work/'updates/B01/results/first';new=restored/'updates/B01/results/first'
+        self.values[str(new)]=self.values[str(old)]
+        shutil.rmtree(self.work)  # Test-owned state only; original location is unavailable.
+        return restored,new
+
+    def test_restored_task_reads_its_local_result_without_original_location(self):
+        restored,new=self.restored_task()
+        with patch.object(current,'run_once',side_effect=AssertionError('No recalculation')):
+            view=current.read_current_company(state_root=restored,company_id='marriott_international',
+                defects_file=self.registry,output_root=self.root/'reader')
+        with (self.root/'reader'/'metrics_matrix.csv').open() as stream:
+            self.assertEqual(list(csv.DictReader(stream))[0]['value'],'100')
+        self.assertEqual(view['metrics'][0]['record_root'],str(new))
+        self.assertEqual(len(view['metrics']),1)
+
+    def test_restored_task_does_not_map_an_unrelated_external_record(self):
+        restored,new=self.restored_task();p=restored/'latest-execution.json';d=json.loads(p.read_text())
+        d['metrics'][0]['record_root']=str(self.root/'unrelated/results/first')
+        d['metrics'][0]['result_root']=d['metrics'][0]['record_root'];p.write_text(json.dumps(d))
+        with self.assertRaisesRegex(ValueError,'RECORD_OUTSIDE_STATE'):
+            current.read_current_company(state_root=restored,company_id='marriott_international',defects_file=self.registry)
+
+    def test_restored_task_still_checks_result_identity(self):
+        restored,new=self.restored_task();self.values[str(new)]['result']['result_id']='wrong-result'
+        with self.assertRaisesRegex(ValueError,'READ_COORDINATE_CHANGED'):
+            current.read_current_company(state_root=restored,company_id='marriott_international',defects_file=self.registry)
+
+    def test_restored_task_rejects_wrong_metric_hierarchy_or_version(self):
+        restored,new=self.restored_task();p=restored/'latest-execution.json';base=json.loads(p.read_text())
+        for kind in ('metric','version'):
+            d=json.loads(json.dumps(base))
+            if kind=='metric':
+                d['metrics'][0]['record_root']=str(self.work/'updates/B02/results/first')
+            else:d['metrics'][0]['version']='other-version'
+            p.write_text(json.dumps(d))
+            with self.subTest(kind=kind),self.assertRaisesRegex(ValueError,'RESTORED_RECORD_(LAYOUT|VERSION)_CHANGED'):
+                current.read_current_company(state_root=restored,company_id='marriott_international',defects_file=self.registry)
+
+    def test_restored_task_does_not_follow_a_result_symlink_outside_state(self):
+        restored,new=self.restored_task();outside=self.root/'outside';outside.mkdir()
+        shutil.rmtree(new);new.symlink_to(outside,target_is_directory=True)
+        with self.assertRaisesRegex(ValueError,'RECORD_OUTSIDE_STATE'):
+            current.read_current_company(state_root=restored,company_id='marriott_international',defects_file=self.registry)
+
+    def test_restored_declared_history_year_must_match_saved_result(self):
+        restored,new=self.restored_task();p=restored/'latest-execution.json';d=json.loads(p.read_text())
+        d['metrics'][0]['requested_fiscal_year']=2025;p.write_text(json.dumps(d))
+        view=current.read_current_company(state_root=restored,company_id='marriott_international',defects_file=self.registry)
+        self.assertEqual(view['metrics'][0]['fiscal_year'],2025)
+        d['metrics'][0]['requested_fiscal_year']=2024;p.write_text(json.dumps(d))
+        with self.assertRaisesRegex(ValueError,'REQUESTED_PERIOD_CHANGED'):
+            current.read_current_company(state_root=restored,company_id='marriott_international',defects_file=self.registry)
+
+    def test_restored_fiscal_directory_must_match_saved_manifest_year(self):
+        restored,new=self.restored_task();target=restored/'updates/B01/periods/FY2024/results/first'
+        target.parent.mkdir(parents=True);shutil.move(str(new),target)
+        self.values[str(target)]=self.values[str(new)]
+        p=restored/'latest-execution.json';d=json.loads(p.read_text())
+        d['metrics'][0]['record_root']=str(self.work/'updates/B01/periods/FY2024/results/first')
+        p.write_text(json.dumps(d))
+        with self.assertRaisesRegex(ValueError,'RESULT_PERIOD_PATH_CHANGED'):
+            current.read_current_company(state_root=restored,company_id='marriott_international',defects_file=self.registry)
 
     def test_existing_local_entry_selects_saved_branch_without_configure_task(self):
         from vnext.company_local import run_local
@@ -469,7 +536,12 @@ class PerMetricProducerTest(unittest.TestCase):
             period=kw['state_root']/'periods'/'FY2021'
             observation=original_update(**{**kw,'state_root':period})
             value=self.values[observation['result_root']]
-            value['result'].update(value='100',unit='USD',publication='PUBLISHED')
+            value['result'].update(value='100',unit='USD',publication='PUBLISHED',
+                                  period_start='2021-01-01',period_end='2021-12-31')
+            value['manifest']['target_period']['fiscal_year']=2021
+            row=next(csv.DictReader(value['files']['metrics_matrix.csv'].decode().splitlines()))
+            row.update(fiscal_year='2021',period_start='2021-01-01',period_end='2021-12-31')
+            value['files']['metrics_matrix.csv']=_csv_bytes(rows=[row],fieldnames=METRIC_FIELDS)
             pointer=period/'current-result.json'
             state=json.loads(pointer.read_text());state['requested_fiscal_year']=2021
             pointer.write_text(json.dumps(state))

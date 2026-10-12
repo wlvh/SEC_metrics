@@ -164,3 +164,9 @@ The evidence-only follow-up adds the executable evidence directory to the
 existing CI trigger; no test content, layer, timeout or required step changes.
 `workflow-trigger.log` verifies YAML and the single required A13 step. The
 100-test and actual company implementation bytes remain unchanged.
+
+## Receiving main ea7818ce (2026-10-12)
+
+Responding to6109676375 and6116618233, the candidate normally combines actualmain ea7818 with reviewedd70a (localc3fa has exactly the same complete treeb8defa). Three conflicts are limited to the CI trigger list, current configuration and saved-result dispatch. Both C04 and A13 dependency sets and factories are retained, together with main's D04/debt-specific exclusions. Original current geography adapter and financial source method are byte-identical to the accepted version. No new metrics, online scope or product meaning.
+
+102 combined currentA13/currentC04/store/update/D04 controls9.096s, zero errors/failures/skips (main-ea-controls.log). Both required CI paths are present in the five-layer layout; nomain step/gate is removed. Previously executed true source-only JPM42,758m and Marriott/Salesforce structural applicability, forbiddenfactory repeats, failure isolation and independentreads remain valid for unchanged adapter logic and sources; no complete financial run repeated just for list integration. Receiver's actualmain/publicsource JPM result6207802f remains distinct from author's separate verified-source4661b0de identity. Current testedworking tree and later publictree equality are reported separately. No business/production acceptance or actualcalls added.

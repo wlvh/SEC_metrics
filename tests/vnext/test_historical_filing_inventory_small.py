@@ -1,7 +1,7 @@
 """Small metadata controls; real historical rows are covered by the pilot CLI."""
 import json
 import unittest
-from vnext.historical_filing_inventory import HistoricalFilingInventoryError, filing_inventory
+from vnext.historical_filing_inventory import HistoricalFilingInventoryError, filing_inventory, prior_filing
 
 class _MemoryReader:
     """Serves in-memory documents under their SEC names; nothing else."""
@@ -87,3 +87,51 @@ class ABlockIsHeldToThePriorYearWalksChecks(unittest.TestCase):
                       _refusal(documents, [name, MAIN], ROW_B[0]))
 
 
+class ExplicitPriorOriginalSelection(unittest.TestCase):
+    """Constructed metadata controls, not financial amendment admission."""
+
+    def setUp(self):
+        self.amendment = ("0000000001-19-000002", "2019-03-10", "2018-12-31", "10-K/A", "ba.htm")
+        body = {"cik": "1", "filings": {"recent": _rows(ROW_A, ROW_B, self.amendment), "files": []}}
+        self.reader = _MemoryReader({MAIN: body})
+        self.inventory = self.reader.read(MAIN, role="sec_submissions_inventory", media_type="x")
+        names = ("accessionNumber", "filingDate", "reportDate", "form", "primaryDocument")
+        self.prior = dict(zip(names, ROW_B))
+        self.amended = dict(zip(names, self.amendment))
+        self.prepared = {"entity": "1", "filing": {"reportDate": ROW_A[2]}}
+        self.selection = {"prior_filing": self.prior, "prior_report_end": ROW_B[2],
+                          "prior_amendments": [self.amended]}
+
+    def test_default_still_refuses_a_prior_amendment(self):
+        with self.assertRaisesRegex(ValueError, "PRIOR_AMENDMENT_REPLAY_NOT_IMPLEMENTED"):
+            prior_filing(self.reader, self.inventory, self.prepared)
+
+    def test_explicit_complete_chain_selects_only_the_original(self):
+        row, inventory = prior_filing(self.reader, self.inventory, self.prepared,
+                                     period_selection=self.selection)
+        self.assertEqual(self.prior, {key: row[key] for key in self.prior})
+        self.assertEqual({"inventory_name": MAIN, "row_index": 1}, row["metadata_origin"])
+        self.assertIs(self.inventory, inventory)
+        self.assertEqual("10-K", row["form"])
+
+    def test_missing_extra_or_wrong_chain_cannot_select_values(self):
+        for changed in ({"prior_amendments": []}, {"prior_amendments": [self.amended, self.amended]},
+                        {"prior_filing": self.amended}, {"prior_report_end": "2017-12-31"}):
+            with self.subTest(changed=changed), self.assertRaisesRegex(ValueError, "PRIOR_SELECTION_CHAIN_CHANGED"):
+                prior_filing(self.reader, self.inventory, self.prepared,
+                             period_selection={**self.selection, **changed})
+
+    def test_all_amendments_are_required_in_selected_order(self):
+        second=("0000000001-19-000003","2019-04-10","2018-12-31","10-K/A","bb.htm")
+        body={"cik":"1","filings":{"recent":_rows(ROW_A,ROW_B,second,self.amendment),"files":[]}}
+        reader=_MemoryReader({MAIN:body})
+        inventory=reader.read(MAIN,role="sec_submissions_inventory",media_type="x")
+        names=("accessionNumber","filingDate","reportDate","form","primaryDocument")
+        second_identity=dict(zip(names,second))
+        complete={**self.selection,"prior_amendments":[self.amended,second_identity]}
+        self.assertEqual(ROW_B[0],prior_filing(reader,inventory,self.prepared,
+                                            period_selection=complete)[0]["accessionNumber"])
+        for amendments in ([self.amended],[second_identity,self.amended]):
+            with self.subTest(amendments=amendments),self.assertRaisesRegex(ValueError,"PRIOR_SELECTION_CHAIN_CHANGED"):
+                prior_filing(reader,inventory,self.prepared,
+                             period_selection={**complete,"prior_amendments":amendments})

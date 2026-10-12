@@ -1,0 +1,46 @@
+test_default_legacy_scope_still_uses_the_same_helper (tests.vnext.test_income_amendment_paragraph_dispatch.IncomeParagraphDispatchTest.test_default_legacy_scope_still_uses_the_same_helper) ... ok
+test_explicit_existing_paragraph_property_is_used (tests.vnext.test_income_amendment_paragraph_dispatch.IncomeParagraphDispatchTest.test_explicit_existing_paragraph_property_is_used) ... ERROR
+test_inline_income_correction_and_unknown_layout_do_not_gain_credit (tests.vnext.test_income_amendment_paragraph_dispatch.IncomeParagraphDispatchTest.test_inline_income_correction_and_unknown_layout_do_not_gain_credit) ... 
+  test_inline_income_correction_and_unknown_layout_do_not_gain_credit (tests.vnext.test_income_amendment_paragraph_dispatch.IncomeParagraphDispatchTest.test_inline_income_correction_and_unknown_layout_do_not_gain_credit) (extra='<div>Our reve<div style="display:inline">nue</div> has been rev<div style="display:inline">ised</div>.</div>') ... FAIL
+test_inline_income_correction_and_unknown_layout_do_not_gain_credit (tests.vnext.test_income_amendment_paragraph_dispatch.IncomeParagraphDispatchTest.test_inline_income_correction_and_unknown_layout_do_not_gain_credit) ... FAIL
+test_real_correction_flag_and_quoted_note_stay_refused (tests.vnext.test_income_amendment_paragraph_dispatch.IncomeParagraphDispatchTest.test_real_correction_flag_and_quoted_note_stay_refused) ... ok
+
+======================================================================
+ERROR: test_explicit_existing_paragraph_property_is_used (tests.vnext.test_income_amendment_paragraph_dispatch.IncomeParagraphDispatchTest.test_explicit_existing_paragraph_property_is_used)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-income-paragraph-dispatch/SEC_metrics/tests/vnext/test_income_amendment_paragraph_dispatch.py", line 34, in test_explicit_existing_paragraph_property_is_used
+    result=inspect_income_amendment(scope,raw,RULES)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-income-paragraph-dispatch/SEC_metrics/scripts/vnext/ordinary_income_input.py", line 40, in inspect_income_amendment
+    detail=_part_iii_details(scope,raw)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-income-paragraph-dispatch/SEC_metrics/scripts/vnext/instant_balance_amendment.py", line 61, in _part_iii_details
+    _need(match is not None,'INSTANT_AMENDMENT_COMPLETE_NOTE_UNSUPPORTED')
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-income-paragraph-dispatch/SEC_metrics/scripts/vnext/instant_balance_amendment.py", line 29, in _need
+    if not condition:raise InstantAmendmentError(reason)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+vnext.instant_balance_amendment.InstantAmendmentError: INSTANT_AMENDMENT_COMPLETE_NOTE_UNSUPPORTED
+
+======================================================================
+FAIL: test_inline_income_correction_and_unknown_layout_do_not_gain_credit (tests.vnext.test_income_amendment_paragraph_dispatch.IncomeParagraphDispatchTest.test_inline_income_correction_and_unknown_layout_do_not_gain_credit) (extra='<div>Our reve<div style="display:inline">nue</div> has been rev<div style="display:inline">ised</div>.</div>')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-income-paragraph-dispatch/SEC_metrics/tests/vnext/test_income_amendment_paragraph_dispatch.py", line 44, in test_inline_income_correction_and_unknown_layout_do_not_gain_credit
+    with self.subTest(extra=extra),self.assertRaisesRegex(ValueError,'CORRECTION.*UNRESOLVED'):
+                                   ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_inline_income_correction_and_unknown_layout_do_not_gain_credit (tests.vnext.test_income_amendment_paragraph_dispatch.IncomeParagraphDispatchTest.test_inline_income_correction_and_unknown_layout_do_not_gain_credit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-income-paragraph-dispatch/SEC_metrics/tests/vnext/test_income_amendment_paragraph_dispatch.py", line 47, in test_inline_income_correction_and_unknown_layout_do_not_gain_credit
+    with self.assertRaisesRegex(ValueError,'NOTE_LAYOUT_UNSUPPORTED'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.041s
+
+FAILED (failures=2, errors=1)
+{"allowed_skips": 0, "errors": 1, "failures": 2, "run": 4, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_income_amendment_paragraph_dispatch"]}

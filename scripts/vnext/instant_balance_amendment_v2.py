@@ -9,6 +9,7 @@ from .annual_amendment_scope_v2 import inspect_annual_amendment_scope
 from .canonical import content_hash, sha256_file, strict_json_file
 from .normal_annual_input_v2 import exact_json_value
 from .normal_source_authority import ROOT
+from .xbrl_namespace_policy import YEAR_ONLY, is_sec_namespace
 
 def _text_units(blocks, raw, note_layout):
     if note_layout=='inline-paragraphs-v2':
@@ -57,7 +58,8 @@ def _part_iii_details(scope,raw):
     _need(len(declarations)==1 and re.fullmatch(POLICY['no_new_statements_pattern'],declarations[0]['text'])
           and declarations[0]['block_index'] not in quoted,
           'INSTANT_AMENDMENT_NO_STATEMENTS_DECLARATION_UNSUPPORTED')
-    flag=_correction_flag(raw,scope)
+    namespace_policy=scope.get('namespace_policy',YEAR_ONLY)
+    flag=_correction_flag(raw,scope,**({} if namespace_policy==YEAR_ONLY else {'namespace_policy':namespace_policy}))
     # Candidate language is checked across the whole document, not just Part III
     # navigation. Only the exact conditional compensation clause is removed;
     # nearby assertions and any other correction remain in the residual text.
@@ -94,12 +96,14 @@ def _part_iii_details(scope,raw):
             'conditional_compensation_references':conditionals,'unresolved_correction_blocks':conflicts}
 
 def inspect_instant_balance_amendment(*,original,amendment,company_id,cik,
-                                      note_layout='blocks-v1'):
-    if note_layout == 'blocks-v1':
+                                      note_layout='blocks-v1', namespace_policy=YEAR_ONLY):
+    is_sec_namespace('',taxonomy='dei',namespace_policy=namespace_policy)
+    if note_layout == 'blocks-v1' and namespace_policy==YEAR_ONLY:
         return legacy.inspect_instant_balance_amendment(original=original, amendment=amendment, company_id=company_id, cik=cik)
     _need(strict_json_file(path=ROOT/POLICY_PATH)==POLICY,'INSTANT_AMENDMENT_POLICY_CHANGED_DURING_PROCESS')
     scope=inspect_annual_amendment_scope(original=original,amendment=amendment,company_id=company_id,cik=cik,
-        **({} if note_layout=='blocks-v1' else {'note_layout':note_layout}))
+        **({} if note_layout=='blocks-v1' else {'note_layout':note_layout}),
+        **({} if namespace_policy==YEAR_ONLY else {'namespace_policy':namespace_policy}))
     issues=[];details={};decision='WITHHELD'
     try:
         _need(scope['fiscal_window_unchanged'] and not scope['issues'],'INSTANT_AMENDMENT_SOURCE_SCOPE_UNRESOLVED')
@@ -120,4 +124,5 @@ def inspect_instant_balance_amendment(*,original,amendment,company_id,cik,
         'annual_continuity_proven':False,'debt_completeness_proven':False,'metric_result_created':False,
         'production_authorized':False})
     if note_layout!='blocks-v1':body['note_layout']=note_layout
+    if namespace_policy!=YEAR_ONLY:body['namespace_policy']=namespace_policy
     return {**body,'instant_scope_id':content_hash(value=body)}

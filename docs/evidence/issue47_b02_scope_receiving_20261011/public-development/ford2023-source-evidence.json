@@ -1,0 +1,630 @@
+{
+  "row": {
+    "company": "Ford Motor Company",
+    "cik": "37996",
+    "metric_id": "B02",
+    "metric_name": "Revenue YoY growth",
+    "value": "0.1147307616872394136292603301",
+    "unit": "ratio",
+    "status": "OK",
+    "source_class": "DERIVED",
+    "formula": "",
+    "period_start": "2023-01-01",
+    "period_end": "2023-12-31",
+    "fiscal_year": "2023",
+    "fiscal_period": "ANNUAL",
+    "accession": "0000037996-24-000009;0000037996-23-000012",
+    "form": "10-K",
+    "filed_date": "2024-02-07;2023-02-03",
+    "concept_or_section": "Revenue YoY growth",
+    "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2023, \"period_end\": \"2023-12-31\", \"period_start\": \"2023-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"coverage\": \"deterministic_source_set\", \"fiscal_year\": 2023}, \"selection\": {\"paired_revenue_scopes\": {\"current\": {\"complete_scope_proven\": true, \"scope_id\": \"sha256:ac1af2d41e44271d876a39331c9a3793c971b92645bc22f159d7545af836ae26\", \"status\": \"REPORTED_CONSOLIDATED_TOTAL\"}, \"prior\": {\"complete_scope_proven\": true, \"scope_id\": \"sha256:17f0a228fbb89df45dbeaa6a5d09058209b987176fee19c2e99ca0b8e5f959ac\", \"status\": \"REPORTED_CONSOLIDATED_TOTAL\"}}}, \"source_reference_ids\": [\"sha256:9fc7f567ee31f33b929df0694303cc3e5522c88e7afb25640fe347d2250c80d6\", \"sha256:6eb6a378ba9a2c92578561143ddf479d2a42fe32f9d750f2de472237b15267b2\", \"sha256:f16dd851855da054b859e2bf36cf56efb4d840402cdd70d2c05bf805e1b520ca\", \"sha256:85c8a9e6cfeaf791526a2f0c11649a6f7fb1429d4328c5742125b554d0a59d47\", \"sha256:cd95ad087a70a883f0b507cd20f371602020594dfd58b682124550bb6ff701c1\", \"sha256:4ff8a2a69bcb97864482dfddced88dca53cee4f68d0a387a6017b88ce5c51b7a\", \"sha256:2a0140043c725b0a25ab027b2b94b131825bae146f422a132bdac9ec38481f43\", \"sha256:5e21bf412fc93956a4de40b7aac95b653707ccf77c6e3ec172759db94a9c5a1b\", \"sha256:75c14364edc20126d456bd0ad9f41f87684c0aa5d45ff85891f2f380e43904a6\"]}",
+    "confidence": "",
+    "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+    "company_id": "ford_motor_company",
+    "result_id": "sha256:d21eeec77aa5dac0187905c55a494082b1c560732926e818af5cdbc98afa1972",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b02-ford-note-fixed-20261011-47/ford_motor_company/state/updates/B02/periods/FY2023/results/3023161b7e644e3cbe99994b2f0ac77c",
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+    "period_role": "REQUESTED_RESULT",
+    "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+    "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+    "defect_holds": "[]",
+    "requested_in_latest_execution": "True"
+  },
+  "claims": [
+    {
+      "attributes": {
+        "accession": "0000037996-24-000009",
+        "deterministic_router_semantic_version": "2",
+        "entity": "37996",
+        "filed": "2024-02-07",
+        "fiscal_period": "FY",
+        "form": "10-K",
+        "frame": ""
+      },
+      "claim_kind": "COMPANYFACTS_NUMERIC_FACT",
+      "company_id": "ford_motor_company",
+      "locator": {
+        "concept": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "fact_id": "fact:sha256:357b3d76e58d117b00691acbcbdc75242a28ecdf11c216c517cb26a3dd8cf3e1",
+        "period_end": "2023-12-31",
+        "period_start": "2023-01-01"
+      },
+      "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+      "source_reference_id": "sha256:f16dd851855da054b859e2bf36cf56efb4d840402cdd70d2c05bf805e1b520ca",
+      "source_role": "companyfacts",
+      "source_set_manifest_id": "sha256:a81a554da565c6069046bd0ae52eb27ebb23bc84e5fd065014094f4c8b27e012",
+      "unit": "USD",
+      "value": "176191000000",
+      "verified_claim_id": "sha256:ccdca85e6a03662fe0724b902e0e86bb5240cba16d687629c5480f3672976902"
+    },
+    {
+      "attributes": {
+        "accession": "0000037996-23-000012",
+        "deterministic_router_semantic_version": "2",
+        "entity": "37996",
+        "filed": "2023-02-03",
+        "fiscal_period": "FY",
+        "form": "10-K",
+        "frame": ""
+      },
+      "claim_kind": "COMPANYFACTS_NUMERIC_FACT",
+      "company_id": "ford_motor_company",
+      "locator": {
+        "concept": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "fact_id": "fact:sha256:4541235051de2d38cae85235cf83abe51e01911920b9f5fcf0fbb4cdd08d6e1a",
+        "period_end": "2022-12-31",
+        "period_start": "2022-01-01"
+      },
+      "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+      "source_reference_id": "sha256:cd95ad087a70a883f0b507cd20f371602020594dfd58b682124550bb6ff701c1",
+      "source_role": "companyfacts",
+      "source_set_manifest_id": "sha256:36eb0525d19b3093a1f58eb047da60f6fc928a2e628552c7f8d5e830329a4a45",
+      "unit": "USD",
+      "value": "158057000000",
+      "verified_claim_id": "sha256:8d3f26793b2fc62d80ed1d280d5c503c905f5a9974a9d222a50ebcd016b124e2"
+    }
+  ],
+  "scopes": {
+    "current": {
+      "scope_id": "sha256:ac1af2d41e44271d876a39331c9a3793c971b92645bc22f159d7545af836ae26",
+      "total": {
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "context": {
+          "context_ref": "c-1",
+          "dimensions": {},
+          "entity_identifier": "0000037996",
+          "period_end": "2023-12-31",
+          "period_start": "2023-01-01",
+          "typed_dimension_count": 0
+        },
+        "context_proof": {
+          "context_ref": "c-1",
+          "dimensions": [],
+          "identifiers": [
+            {
+              "scheme": "http://www.sec.gov/CIK",
+              "value": "0000037996"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "startdate",
+              "value": "2023-01-01"
+            },
+            {
+              "kind": "enddate",
+              "value": "2023-12-31"
+            }
+          ],
+          "typed_dimension_count": 0
+        },
+        "context_ref": "c-1",
+        "decimals": "-6",
+        "ordinal": 243,
+        "period_end": "2023-12-31",
+        "period_start": "2023-01-01",
+        "source_reference": {
+          "accession": "0000037996-24-000009",
+          "company_id": "ford_motor_company",
+          "document_name": "f-20231231.htm",
+          "raw_asset_id": "sha256:9a6f395ed1ed0084f1555151a3e4f72a69583aa86985527ae414a1259796132f",
+          "record_type": "SOURCE_REFERENCE",
+          "request_attempt_id": "request:attempt:f7fe511d64e2275a340a24e319334dc7cb7fb80d13db1348cc998620a46c01df",
+          "source_reference_id": "sha256:6eb6a378ba9a2c92578561143ddf479d2a42fe32f9d750f2de472237b15267b2",
+          "source_role": "target_primary",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799624000009/f-20231231.htm"
+        },
+        "unit": "USD",
+        "value": "176191000000"
+      },
+      "unit_sources": [
+        {
+          "kind": "heading_block",
+          "proof": {
+            "attributes": [
+              [
+                "style",
+                "text-align:center"
+              ]
+            ],
+            "clipped_at_table_start": true,
+            "end_byte": 2607980,
+            "inside_table": false,
+            "span_sha256": "2f9155692630cc0ee17cec8e5f881b4c660dc70f8667fc3f2eaebd39f64cedc3",
+            "start_byte": 2607796,
+            "structure_path": [
+              "div:2"
+            ],
+            "tag": "div",
+            "visible_text": "(in millions, except per share amounts)"
+          },
+          "text": "(in millions, except per share amounts)"
+        }
+      ],
+      "year_headers": [
+        {
+          "colspan": 3,
+          "column_index": 15,
+          "grid_sha256": "sha256:23ae48d5ddf4f399d002ee72f9e95689be5e5a70a17d70b4731b904c59b991da",
+          "origin_column_index": 15,
+          "origin_row_index": 2,
+          "raw_text": "2023",
+          "row_index": 2,
+          "rowspan": 1,
+          "table_id": "table_000078",
+          "text": "2023"
+        }
+      ],
+      "statement_scope": {
+        "adjacent_heading_table": null,
+        "caption": "",
+        "intervening_sources": [
+          {
+            "attributes": [
+              [
+                "style",
+                "text-align:center"
+              ]
+            ],
+            "end_byte": 2606967,
+            "inside_table": false,
+            "span_sha256": "5eb61b6575472bb29bbf0c0210180831f12397698a61d0a0473dd257c5e2d9ad",
+            "start_byte": 2606744,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:1953"
+            ],
+            "tag": "div",
+            "visible_text": "The accompanying notes are part of the consolidated financial statements."
+          },
+          {
+            "attributes": [
+              [
+                "style",
+                "text-align:center"
+              ]
+            ],
+            "end_byte": 2607226,
+            "inside_table": false,
+            "span_sha256": "eaed29e495bcea9fbf2fc5ab5807a5e722482c7fd87fd3d123dabf39772526c7",
+            "start_byte": 2607072,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:1954",
+              "div:1",
+              "div:1"
+            ],
+            "tag": "div",
+            "visible_text": "108"
+          },
+          {
+            "attributes": [
+              [
+                "style",
+                "text-align:center"
+              ]
+            ],
+            "end_byte": 2607615,
+            "inside_table": false,
+            "span_sha256": "745f52da4b43f14ec36a9b0dc7af76443a9a78228fbdf3202e3b16ddaabde080",
+            "start_byte": 2607429,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:1957"
+            ],
+            "tag": "div",
+            "visible_text": "FORD MOTOR COMPANY AND SUBSIDIARIES"
+          },
+          {
+            "attributes": [
+              [
+                "style",
+                "text-align:center"
+              ]
+            ],
+            "end_byte": 2607796,
+            "inside_table": false,
+            "span_sha256": "676ad9e621877d984831117f81274561e2e3a34abf05649e71da78bca6260738",
+            "start_byte": 2607615,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:1958"
+            ],
+            "tag": "div",
+            "visible_text": "CONSOLIDATED INCOME STATEMENTS"
+          },
+          {
+            "attributes": [
+              [
+                "style",
+                "text-align:center"
+              ]
+            ],
+            "clipped_at_table_start": true,
+            "end_byte": 2607980,
+            "inside_table": false,
+            "span_sha256": "2f9155692630cc0ee17cec8e5f881b4c660dc70f8667fc3f2eaebd39f64cedc3",
+            "start_byte": 2607796,
+            "structure_path": [
+              "div:2"
+            ],
+            "tag": "div",
+            "visible_text": "(in millions, except per share amounts)"
+          }
+        ],
+        "preceding_navigation_sources": [
+          {
+            "attributes": [
+              [
+                "style",
+                "text-align:center"
+              ]
+            ],
+            "end_byte": 2606967,
+            "inside_table": false,
+            "span_sha256": "5eb61b6575472bb29bbf0c0210180831f12397698a61d0a0473dd257c5e2d9ad",
+            "start_byte": 2606744,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:1953"
+            ],
+            "tag": "div",
+            "visible_text": "The accompanying notes are part of the consolidated financial statements."
+          },
+          {
+            "attributes": [
+              [
+                "style",
+                "text-align:center"
+              ]
+            ],
+            "end_byte": 2607226,
+            "inside_table": false,
+            "span_sha256": "eaed29e495bcea9fbf2fc5ab5807a5e722482c7fd87fd3d123dabf39772526c7",
+            "start_byte": 2607072,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:1954",
+              "div:1",
+              "div:1"
+            ],
+            "tag": "div",
+            "visible_text": "108"
+          }
+        ],
+        "table_span": {
+          "end_byte": 2656097,
+          "span_sha256": "78eb58641178882526909de6cf06cd725b1d61608edb653f8e2a343ab73465be",
+          "start_byte": 2607980,
+          "structure_path": [
+            "html:1",
+            "body:1",
+            "div:1959",
+            "table:1"
+          ],
+          "table_order": 77
+        },
+        "title_sources": [
+          {
+            "attributes": [
+              [
+                "style",
+                "text-align:center"
+              ]
+            ],
+            "end_byte": 2607796,
+            "inside_table": false,
+            "span_sha256": "676ad9e621877d984831117f81274561e2e3a34abf05649e71da78bca6260738",
+            "start_byte": 2607615,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:1958"
+            ],
+            "tag": "div",
+            "visible_text": "CONSOLIDATED INCOME STATEMENTS"
+          }
+        ],
+        "unresolved_annotations": []
+      },
+      "xml_check": "MATCH"
+    },
+    "prior": {
+      "scope_id": "sha256:17f0a228fbb89df45dbeaa6a5d09058209b987176fee19c2e99ca0b8e5f959ac",
+      "total": {
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "context": {
+          "context_ref": "id5d9282c4298481b80715ab6fa2e69d3_D20220101-20221231",
+          "dimensions": {},
+          "entity_identifier": "0000037996",
+          "period_end": "2022-12-31",
+          "period_start": "2022-01-01",
+          "typed_dimension_count": 0
+        },
+        "context_proof": {
+          "context_ref": "id5d9282c4298481b80715ab6fa2e69d3_D20220101-20221231",
+          "dimensions": [],
+          "identifiers": [
+            {
+              "scheme": "http://www.sec.gov/CIK",
+              "value": "0000037996"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "startdate",
+              "value": "2022-01-01"
+            },
+            {
+              "kind": "enddate",
+              "value": "2022-12-31"
+            }
+          ],
+          "typed_dimension_count": 0
+        },
+        "context_ref": "id5d9282c4298481b80715ab6fa2e69d3_D20220101-20221231",
+        "decimals": "-6",
+        "ordinal": 245,
+        "period_end": "2022-12-31",
+        "period_start": "2022-01-01",
+        "source_reference": {
+          "accession": "0000037996-23-000012",
+          "company_id": "ford_motor_company",
+          "document_name": "f-20221231.htm",
+          "raw_asset_id": "sha256:34ba99b0c91bdd15e6c80bc08e0287f7a7e6c1f388c1f49cb15784bbd3a4db80",
+          "record_type": "SOURCE_REFERENCE",
+          "request_attempt_id": "request:attempt:1d0357b19f86c09fce4eb485bc6042ba106e8521b1679d5f0bf3c0e8ebfc3447",
+          "source_reference_id": "sha256:85c8a9e6cfeaf791526a2f0c11649a6f7fb1429d4328c5742125b554d0a59d47",
+          "source_role": "target_primary",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799623000012/f-20221231.htm"
+        },
+        "unit": "USD",
+        "value": "158057000000"
+      },
+      "unit_sources": [
+        {
+          "kind": "heading_block",
+          "proof": {
+            "attributes": [
+              [
+                "style",
+                "text-align:center"
+              ]
+            ],
+            "clipped_at_table_start": true,
+            "end_byte": 2969424,
+            "inside_table": false,
+            "span_sha256": "2f9155692630cc0ee17cec8e5f881b4c660dc70f8667fc3f2eaebd39f64cedc3",
+            "start_byte": 2969240,
+            "structure_path": [
+              "div:2"
+            ],
+            "tag": "div",
+            "visible_text": "(in millions, except per share amounts)"
+          },
+          "text": "(in millions, except per share amounts)"
+        }
+      ],
+      "year_headers": [
+        {
+          "colspan": 3,
+          "column_index": 15,
+          "grid_sha256": "sha256:db119b519076192f9f628fd6c21df5a2e5f09cfcd72780d6f5afc59ed888b33a",
+          "origin_column_index": 15,
+          "origin_row_index": 2,
+          "raw_text": "2022",
+          "row_index": 2,
+          "rowspan": 1,
+          "table_id": "table_000092",
+          "text": "2022"
+        }
+      ],
+      "statement_scope": {
+        "adjacent_heading_table": null,
+        "caption": "",
+        "intervening_sources": [
+          {
+            "attributes": [
+              [
+                "style",
+                "text-align:center"
+              ]
+            ],
+            "end_byte": 2968411,
+            "inside_table": false,
+            "span_sha256": "5eb61b6575472bb29bbf0c0210180831f12397698a61d0a0473dd257c5e2d9ad",
+            "start_byte": 2968188,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:1958"
+            ],
+            "tag": "div",
+            "visible_text": "The accompanying notes are part of the consolidated financial statements."
+          },
+          {
+            "attributes": [
+              [
+                "style",
+                "text-align:center"
+              ]
+            ],
+            "end_byte": 2968670,
+            "inside_table": false,
+            "span_sha256": "3e48b800b5528d1a59a66facf8a342ea91d0273863a2dab7d8589f695500c01f",
+            "start_byte": 2968516,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:1959",
+              "div:1",
+              "div:1"
+            ],
+            "tag": "div",
+            "visible_text": "109"
+          },
+          {
+            "attributes": [
+              [
+                "style",
+                "text-align:center"
+              ]
+            ],
+            "end_byte": 2969059,
+            "inside_table": false,
+            "span_sha256": "745f52da4b43f14ec36a9b0dc7af76443a9a78228fbdf3202e3b16ddaabde080",
+            "start_byte": 2968873,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:1962"
+            ],
+            "tag": "div",
+            "visible_text": "FORD MOTOR COMPANY AND SUBSIDIARIES"
+          },
+          {
+            "attributes": [
+              [
+                "style",
+                "text-align:center"
+              ]
+            ],
+            "end_byte": 2969240,
+            "inside_table": false,
+            "span_sha256": "676ad9e621877d984831117f81274561e2e3a34abf05649e71da78bca6260738",
+            "start_byte": 2969059,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:1963"
+            ],
+            "tag": "div",
+            "visible_text": "CONSOLIDATED INCOME STATEMENTS"
+          },
+          {
+            "attributes": [
+              [
+                "style",
+                "text-align:center"
+              ]
+            ],
+            "clipped_at_table_start": true,
+            "end_byte": 2969424,
+            "inside_table": false,
+            "span_sha256": "2f9155692630cc0ee17cec8e5f881b4c660dc70f8667fc3f2eaebd39f64cedc3",
+            "start_byte": 2969240,
+            "structure_path": [
+              "div:2"
+            ],
+            "tag": "div",
+            "visible_text": "(in millions, except per share amounts)"
+          }
+        ],
+        "preceding_navigation_sources": [
+          {
+            "attributes": [
+              [
+                "style",
+                "text-align:center"
+              ]
+            ],
+            "end_byte": 2968411,
+            "inside_table": false,
+            "span_sha256": "5eb61b6575472bb29bbf0c0210180831f12397698a61d0a0473dd257c5e2d9ad",
+            "start_byte": 2968188,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:1958"
+            ],
+            "tag": "div",
+            "visible_text": "The accompanying notes are part of the consolidated financial statements."
+          },
+          {
+            "attributes": [
+              [
+                "style",
+                "text-align:center"
+              ]
+            ],
+            "end_byte": 2968670,
+            "inside_table": false,
+            "span_sha256": "3e48b800b5528d1a59a66facf8a342ea91d0273863a2dab7d8589f695500c01f",
+            "start_byte": 2968516,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:1959",
+              "div:1",
+              "div:1"
+            ],
+            "tag": "div",
+            "visible_text": "109"
+          }
+        ],
+        "table_span": {
+          "end_byte": 3043751,
+          "span_sha256": "e45735e1d493869df57a4a55e48904388b4a2a325d395b886ebbef49968fa4b5",
+          "start_byte": 2969424,
+          "structure_path": [
+            "html:1",
+            "body:1",
+            "div:1964",
+            "table:1"
+          ],
+          "table_order": 91
+        },
+        "title_sources": [
+          {
+            "attributes": [
+              [
+                "style",
+                "text-align:center"
+              ]
+            ],
+            "end_byte": 2969240,
+            "inside_table": false,
+            "span_sha256": "676ad9e621877d984831117f81274561e2e3a34abf05649e71da78bca6260738",
+            "start_byte": 2969059,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:1963"
+            ],
+            "tag": "div",
+            "visible_text": "CONSOLIDATED INCOME STATEMENTS"
+          }
+        ],
+        "unresolved_annotations": []
+      },
+      "xml_check": "MATCH"
+    }
+  }
+}
