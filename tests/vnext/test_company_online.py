@@ -1,5 +1,5 @@
 """Small count/failure checks; real HTTP-boundary CLI evidence is separate."""
-import io,json
+import io,json,csv
 from pathlib import Path
 import tempfile,unittest
 from unittest.mock import patch
@@ -26,6 +26,53 @@ class CompanyOnlineTest(unittest.TestCase):
             'requirement_id':'ordinary-company-capture-v1','requirement_closure_hash':content_hash(value={'recorded':True})}
         self.url='https://data.sec.gov/submissions/CIK0001048286.json'
         self.capture=online.Capture(self.root/'source',self.ledger,self.context,5)
+
+    def edit_registry(self, company, **changes):
+        path=self.capture.source/'config/company_registry.csv'
+        with path.open(newline='') as stream:
+            reader=csv.DictReader(stream);fields=reader.fieldnames;rows=list(reader)
+        next(row for row in rows if row['company_id']==company).update(changes)
+        with path.open('w',newline='') as stream:
+            writer=csv.DictWriter(stream,fieldnames=fields);writer.writeheader();writer.writerows(rows)
+
+    def test_resume_unrelated_registry_change_reuses_saved_response_without_claim(self):
+        with patch('vnext.recorded_sec_http.RecordedSecHttpClient.reply',return_value=(200,b'{"cik":1048286}',{},'')):
+            self.capture.get(self.url)
+        self.edit_registry('pfizer',display_name='Pfizer unrelated source display')
+        before={str(p.relative_to(self.capture.source)):p.read_bytes()
+                for p in self.capture.source.rglob('*') if p.is_file()}
+        with patch('vnext.recorded_sec_http.RecordedSecHttpClient.reply',side_effect=AssertionError('No repeated capture')) as transport:
+            resumed=online.Capture(self.capture.source,self.ledger,self.context,5)
+            response=resumed.get(self.url)
+        self.assertEqual(response['raw'],b'{"cik":1048286}')
+        transport.assert_not_called()
+        with self.ledger.locked():self.assertEqual(self.ledger.snapshot()['counts'],[0,0,1])
+        self.assertEqual(before,{str(p.relative_to(self.capture.source)):p.read_bytes()
+                for p in self.capture.source.rglob('*') if p.is_file()})
+
+    def test_invalid_unrelated_registry_stops_before_transport_or_claim(self):
+        from vnext.request_bindings import BatchWorkflowError
+        path=self.capture.source/'config/company_registry.csv';original=path.read_bytes()
+        for raw in (original+original.splitlines(keepends=True)[2],
+                    original.replace(b'pfizer,Pfizer,78003,',b'pfizer,Pfizer,not-a-cik,')):
+            with self.subTest(raw=raw[-50:]):
+                path.write_bytes(raw)
+                with patch('vnext.recorded_sec_http.RecordedSecHttpClient.__init__',side_effect=AssertionError('No invalid-registry client')):
+                    with self.assertRaises((ValueError,BatchWorkflowError)):
+                        online.Capture(self.capture.source,self.ledger,self.context,5)
+        with self.ledger.locked():self.assertEqual(self.ledger.snapshot()['counts'],[0,0,0])
+
+    def test_changed_target_registry_stops_before_claim_or_transport(self):
+        path=self.capture.source/'config/company_registry.csv';original=path.read_bytes()
+        for field,value in (('primary_cik','19617'),('roles','primary:19617'),
+                ('industry_profile','pharma'),('fiscal_year_end','0131'),
+                ('target_period_policy','changed'),('entity_continuity_status','changed')):
+            with self.subTest(field=field):
+                path.write_bytes(original);self.edit_registry('marriott_international',**{field:value})
+                with patch('vnext.recorded_sec_http.RecordedSecHttpClient.__init__',side_effect=AssertionError('No transport construction')):
+                    with self.assertRaisesRegex(ValueError,'REGISTRY_CHANGED'):
+                        online.Capture(self.capture.source,self.ledger,self.context,5)
+        with self.ledger.locked():self.assertEqual(self.ledger.snapshot()['counts'],[0,0,0])
 
     def test_one_native_http_attempt_uses_existing_count_and_no_retry(self):
         with patch('vnext.recorded_sec_http.RecordedSecHttpClient.reply',return_value=(200,b'{"cik":1048286}',{},'')) as transport:

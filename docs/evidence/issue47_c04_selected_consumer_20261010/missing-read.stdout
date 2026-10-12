@@ -1,0 +1,44 @@
+{
+  "elapsed_seconds": 0.30657208315096796,
+  "record_type": "ORDINARY_COMPANY_RESULT_VIEW_V1",
+  "company_id": "ford_motor_company",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "metrics": [
+    {
+      "metric_id": "C04",
+      "value": null,
+      "result_validity": "NO_CURRENT_RESULT",
+      "latest_observation": "INPUT_OR_EXECUTION_FAILED",
+      "fiscal_year": 2026,
+      "requested_in_latest_execution": true,
+      "reason": "ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_NOT_IN_SAVED_SUBMISSIONS",
+      "error_type": "PeriodSelectionError",
+      "error_category": "SOURCE_UNAVAILABLE"
+    },
+    {
+      "metric_id": "C04",
+      "result_id": "sha256:0ec6c7d627150e95e00673fe8009110585104fa91fc269bf9d553671909760da",
+      "period_start": "2022-01-01",
+      "period_end": "2022-12-31",
+      "fiscal_year": 2022,
+      "value": "0",
+      "unit": "flag",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "defect_holds": [],
+      "latest_observation": "NOT_REQUESTED_IN_LATEST_EXECUTION",
+      "requested_in_latest_execution": false,
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/ford-auditor-company-vgu2kjwz/state/updates/C04/periods/FY2022/results/b7366f229c8448e39055a360417de6e0"
+    }
+  ],
+  "source_freshness": "NOT_CHECKED_BY_SAVED_READER",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false,
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/ford-auditor-company-vgu2kjwz/missing-year-read"
+}

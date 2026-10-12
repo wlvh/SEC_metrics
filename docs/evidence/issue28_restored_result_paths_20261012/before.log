@@ -1,0 +1,23 @@
+test_restored_task_reads_its_local_result_without_original_location (tests.vnext.test_company_current_records.CurrentCompanyTest.test_restored_task_reads_its_local_result_without_original_location) ... ERROR
+
+======================================================================
+ERROR: test_restored_task_reads_its_local_result_without_original_location (tests.vnext.test_company_current_records.CurrentCompanyTest.test_restored_task_reads_its_local_result_without_original_location)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-restored-result-paths/SEC_metrics/tests/vnext/test_company_current_records.py", line 72, in test_restored_task_reads_its_local_result_without_original_location
+    view=current.read_current_company(state_root=restored,company_id='marriott_international',
+        defects_file=self.registry,output_root=self.root/'reader')
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-restored-result-paths/SEC_metrics/scripts/vnext/company_current_records.py", line 206, in read_current_company
+    return _read_current_company(root, company_id, defects_file, output_root)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-restored-result-paths/SEC_metrics/scripts/vnext/company_current_records.py", line 278, in _read_current_company
+    _need(root in record.parents, 'COMPANY_CURRENT_RECORD_OUTSIDE_STATE')
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-restored-result-paths/SEC_metrics/scripts/vnext/company_current_records.py", line 34, in _need
+    raise ValueError(reason)
+ValueError: COMPANY_CURRENT_RECORD_OUTSIDE_STATE
+
+----------------------------------------------------------------------
+Ran 1 test in 0.008s
+
+FAILED (errors=1)
+{"allowed_skips": 0, "errors": 1, "failures": 0, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_company_current_records.CurrentCompanyTest.test_restored_task_reads_its_local_result_without_original_location"]}

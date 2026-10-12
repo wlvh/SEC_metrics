@@ -259,13 +259,19 @@ class _Sources:
         return sources
 
 
-def prepare_saved_governance_input(*, repo_root: Path, company_id: str):
+def prepare_saved_governance_input(*, repo_root: Path, company_id: str, rules_root=None):
     """Prepare resolver inputs and portable records without executing metrics."""
     ledger_path = repo_root / "evidence/requests_log.csv"
     ledger_sha = sha256_file(path=ledger_path)
     registry_sha = sha256_file(path=repo_root / "config/company_registry.csv")
-    _need(registry_sha == sha256_file(path=_CODE_ROOT / "config/company_registry.csv"),
-          "GOVERNANCE_COMPANY_REGISTRY_DIFFERS_FROM_INSTALLED_SCOPE")
+    if rules_root is None:
+        _need(registry_sha == sha256_file(path=_CODE_ROOT / "config/company_registry.csv"),
+              "GOVERNANCE_COMPANY_REGISTRY_DIFFERS_FROM_INSTALLED_SCOPE")
+    else:
+        from .ordinary_registry_scope import registered_company_row
+        _need(registered_company_row(repo_root=repo_root,company_id=company_id)
+              == registered_company_row(repo_root=Path(rules_root),company_id=company_id),
+              "GOVERNANCE_COMPANY_REGISTRY_DIFFERS_FROM_INSTALLED_SCOPE")
     prepared = prepare_saved_annual_input(repo_root=repo_root, company_id=company_id)
     company = next(c for c in _registry_rows(repo_root=repo_root) if c["company_id"] == company_id)
     cik = prepared["subject_policy"]["selected_cik"]

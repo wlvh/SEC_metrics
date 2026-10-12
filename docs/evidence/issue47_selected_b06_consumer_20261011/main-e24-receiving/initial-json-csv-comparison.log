@@ -1,0 +1,8 @@
+enphase_energy-migration 8.677 0
+enphase_energy-repeat 1.068 0
+enphase_energy-read 0.569 0
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-b06-main-ac365-receiving-20261011/SEC_metrics/docs/evidence/issue47_selected_b06_consumer_20261011/main-e24-receiving/verify_existing_consumers.py", line 89, in <module>
+    assert [{k: r[k] for k in keys} for r in current_rows] == [{k: r[k] for k in keys} for r in old_rows]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

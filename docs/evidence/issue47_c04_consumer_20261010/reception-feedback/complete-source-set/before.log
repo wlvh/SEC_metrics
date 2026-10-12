@@ -1,0 +1,16 @@
+test_selected_base_carries_the_readers_complete_filing_sets (tests.vnext.test_historical_auditor_selection.HistoricalAuditorSelectionTest.test_selected_base_carries_the_readers_complete_filing_sets) ... ERROR
+
+======================================================================
+ERROR: test_selected_base_carries_the_readers_complete_filing_sets (tests.vnext.test_historical_auditor_selection.HistoricalAuditorSelectionTest.test_selected_base_carries_the_readers_complete_filing_sets)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_historical_auditor_selection.py", line 100, in test_selected_base_carries_the_readers_complete_filing_sets
+    self.assertIs(reader.file_sets, binding['accession_source_sets'])
+                                    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'accession_source_sets'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.065s
+
+FAILED (errors=1)
+{"allowed_skips": 0, "errors": 1, "failures": 0, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_historical_auditor_selection.HistoricalAuditorSelectionTest.test_selected_base_carries_the_readers_complete_filing_sets"]}

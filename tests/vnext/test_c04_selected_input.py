@@ -190,14 +190,21 @@ class SelectedC04InputTest(unittest.TestCase):
             period_end='2024-12-31',source_proofs=[],aliases=[])
         self.assertEqual(baseline['checked_filing'],checked)
 
-    def test_selected_gate_does_not_open_default_current_producer(self):
+    def test_current_producer_explicitly_selects_the_same_four_form_core(self):
         from vnext.ordinary_saved_result import EXPLICIT_CASE_METRICS, SAVED_METRIC_IDS
         from vnext.ordinary_current_update import run_once
         self.assertIn('C04',EXPLICIT_CASE_METRICS)
-        self.assertNotIn('C04',SAVED_METRIC_IDS)
-        with self.assertRaisesRegex(ValueError,'CURRENT_UPDATE_METRIC_UNSUPPORTED'):
-            run_once(state_root='/unused-state',source_root=ROOT,
+        self.assertIn('C04',SAVED_METRIC_IDS)
+        from vnext.current_auditor_case import PROCESSING_FILES
+        self.assertIn('scripts/vnext/c04_registration_successor.py',PROCESSING_FILES)
+        from tempfile import TemporaryDirectory
+        from pathlib import Path
+        from vnext import ordinary_current_update as updater
+        with TemporaryDirectory() as folder, patch.object(updater,'_configuration',side_effect=ValueError('CONTROL_CURRENT_C04_REACHED')):
+            observed=run_once(state_root=Path(folder)/'state',source_root=ROOT,
                 company_id='sample_entity',metric_id='C04')
+        self.assertEqual(observed['status'],'INPUT_OR_EXECUTION_FAILED')
+        self.assertEqual(observed['reason'],'CONTROL_CURRENT_C04_REACHED')
 
 
 class SharedAuditorShardBoundaryTest(unittest.TestCase):

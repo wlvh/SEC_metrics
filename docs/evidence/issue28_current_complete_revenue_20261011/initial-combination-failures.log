@@ -1,0 +1,34 @@
+======================================================================
+FAIL: test_saved_producer_opts_in_for_b01_and_b03_but_not_neighbours (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_saved_producer_opts_in_for_b01_and_b03_but_not_neighbours) (metric='B02')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-complete-revenue/SEC_metrics/tests/vnext/test_selected_revenue_scope_v1.py", line 204, in test_saved_producer_opts_in_for_b01_and_b03_but_not_neighbours
+    self.assertEqual(prepare.call_args.kwargs.get('validate_revenue_scope',False),metric in {'B01','B03'})
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True != False
+
+======================================================================
+FAIL: test_real_marriott_values_periods_and_source_links_reach_company_csv (tests.vnext.test_company_current_records.SavedSourceCompanyEntryTest.test_real_marriott_values_periods_and_source_links_reach_company_csv)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-complete-revenue/SEC_metrics/tests/vnext/test_company_current_records.py", line 373, in test_real_marriott_values_periods_and_source_links_reach_company_csv
+    self.assertEqual(self.report['status'],'FLOW_COMPLETED')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'FLOW_COMPLETED_WITH_LIMITATIONS' != 'FLOW_COMPLETED'
+- FLOW_COMPLETED_WITH_LIMITATIONS
++ FLOW_COMPLETED
+
+
+======================================================================
+FAIL: test_real_reentry_never_invokes_calculation_factory (tests.vnext.test_company_current_records.SavedSourceCompanyEntryTest.test_real_reentry_never_invokes_calculation_factory)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-complete-revenue/SEC_metrics/tests/vnext/test_company_current_records.py", line 388, in test_real_reentry_never_invokes_calculation_factory
+    self.assertTrue(all(m['status']=='NO_SOURCE_CONTENT_CHANGE' for m in report['metrics']))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 95 tests in 9.670s
+
+FAILED (failures=3)

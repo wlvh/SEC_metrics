@@ -1,0 +1,46 @@
+{
+  "runs": [
+    {
+      "args": [
+        "sources",
+        "--company",
+        "southwest_airlines",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--metric",
+        "B01",
+        "--report-end",
+        "2025-12-31"
+      ],
+      "baseline_seconds": 1.2700590420026856,
+      "unrelated_program_row_seconds": 1.2790982090009493,
+      "status": "SAVED_SOURCE_BYTES_AVAILABLE",
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "sources",
+        "--company",
+        "southwest_airlines",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--metric",
+        "B01",
+        "--fiscal-year-start",
+        "2025",
+        "--fiscal-year-end",
+        "2025"
+      ],
+      "baseline_seconds": 3.7825987500000338,
+      "unrelated_program_row_seconds": 3.7480524580023484,
+      "status": "FISCAL_RANGE_RESOLVED",
+      "exit_code": 0
+    }
+  ],
+  "source_bytes_unchanged": true,
+  "calls": {
+    "sec": 0,
+    "provider": 0,
+    "paid": 0
+  }
+}

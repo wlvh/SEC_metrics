@@ -30,7 +30,7 @@ PROCESSING_FILES=tuple('scripts/vnext/'+name+'.py' for name in (
     'b06_guarded_result_v3','ordinary_special_debt_scope','normal_note_debt_results',
     'normal_bond_debt_results','normal_inclusive_debt_results','b06_note_carrying',
     'b06_bond_leases','b06_inclusive_table','b06_financing_inventory',
-    'b06_combined_borrowings','b06_disclosure_v2','b06_disclosure','r5_b06_scope',
+    'b06_combined_borrowings','ordinary_reported_lease_scope','industrial_lease_relation','b06_disclosure_v2','b06_disclosure','r5_b06_scope',
     'r5_b06_measurement','ordinary_source_authority','text_results_v2',
 )) + (
     'config/b06_current_input_v1.json','config/annual_amendment_scope_v1.json',
@@ -83,6 +83,12 @@ def _display_selection(selection):
     audit=selection.get('audit') or selection.get('measurement') or {}
     displayed={key:selection[key] for key in ('classification','reason','reason_code','debt_completeness')
                if key in selection}
+    if selection.get('scope_class') is not None:
+        displayed.update({k:selection[k] for k in ('scope_class','reasons','reported_subtotal') if k in selection})
+        relationship=selection.get('scope_source',{}).get('lease_inclusion',{})
+        if relationship:
+            displayed['lease_inclusion']={k:relationship[k] for k in
+                ('status','additional_debt_amount','component_total') if k in relationship}
     displayed['selection_detail_id']=content_hash(value=selection)
     if isinstance(audit,dict):
         displayed['calculation']={key:audit[key] for key in
@@ -168,7 +174,8 @@ def prepare_selected_b06_case(*, source_root, company_id, preparation, annual, p
                     'selection':{'reason_code':guard['reason_code'],
                                  'debt_completeness':'NOT_EVALUATED','equity_proof':guard['equity_proof']}})
         elif guard['reason_code']=='EXISTING_SPECIAL_SCOPE_REQUIRED':
-            case=prepare_special_debt_case(repo_root=source,company_id=company_id,
+            from .ordinary_reported_lease_scope import prepare_reported_lease_case
+            case=prepare_reported_lease_case(repo_root=source,company_id=company_id,
                 rules_root=ROOT,preparation=preparation)
             _need(case is not None,'B06_SEPARATE_BANK_OR_INDUSTRIAL_SCOPE_NOT_IMPLEMENTED')
         else:
