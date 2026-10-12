@@ -185,12 +185,9 @@ class DefaultCurrentConfigurationPreservationTest(unittest.TestCase):
     def test_default_configuration_matches_main_with_identical_program_inputs(self):
         # Same actual program inputs: file version hashes remain real. This
         # does not assert unchanged hashes across two different code trees.
-        import subprocess
-        baseline=subprocess.check_output(['git','show',
-            '2f24282ca9cdefbae07f788b91d88b204c01ed2e:scripts/vnext/ordinary_current_update.py'],text=True)
-        namespace={'__name__':'vnext.reference_main_update','__package__':'vnext',
-                   '__file__':str(REPO_ROOT/'scripts/vnext/ordinary_current_update.py')}
-        exec(compile(baseline,'reference-main-update','exec'),namespace)
+        baseline=(REPO_ROOT/'tests/fixtures/current_configuration_main_2f.py.txt').read_text()
+        namespace=dict(update.__dict__)
+        exec(compile(baseline,'reference-main-configuration','exec'),namespace)
         for metric in ('B01','B02','D04','C04','A13'):
             with self.subTest(metric=metric):
                 expected=namespace['_configuration'](REPO_ROOT,'marriott_international',metric)
