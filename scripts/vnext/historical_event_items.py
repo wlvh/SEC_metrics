@@ -54,7 +54,8 @@ hiding: measured over the 56 candidate items of the 51 saved 8-Ks, every
 document carries hidden text somewhere and no item span does, and a rule that
 refused any inline colour, position or background would have refused 36 of
 the 56. An item must also end where exactly one reading says it ends: the item
-heading that ends it is that code's only heading after the item starts, and a
+heading that ends it is that code's only section after the item starts (a
+caption followed by distinct lettered parts is one section), and a
 span ended by the signatures meets only one of them - otherwise a
 cross-reference that looks like the next heading would cut the item short
 silently. Over the same corpus every end was unique, so neither check refuses
@@ -139,6 +140,11 @@ _CAPTIONS = {
     "8.01": "Other Events",
     "9.01": "Financial Statements and Exhibits",
 }
+# Endpoint recognition also includes the Form 8-K 5.02 caption. Keep it out
+# of the separate caption-only combined-body routing above.
+_END_CAPTIONS = {**_CAPTIONS,
+    "5.02": ("Departure of Directors or Certain Officers; Election of Directors; "
+             "Appointment of Certain Officers; Compensatory Arrangements of Certain Officers")}
 _LETTERS = re.compile(r"[^a-z]+")
 _EXHIBIT = re.compile(r"\bExhibits?\s+\d+(?:\.\d+)?", re.I)
 _CONTEXT = 240
@@ -366,7 +372,8 @@ def item_text(*, raw_bytes, item_code):
         end, marker = len(text), "END_OF_DOCUMENT"
     if marker == "NEXT_ITEM_HEADING":
         end_code = next(code for position, _, code in headings if position == end)
-        _need(sum(1 for position, _, code in headings if code == end_code and position > start) == 1,
+        _need(_unique_item_end(text=text, nodes=nodes, headings=headings,
+                               start=start, end=end, end_code=end_code),
               "EVENT_ITEM_END_HEADING_NOT_UNIQUE:" + item_code + ":" + end_code)
     elif marker == "SIGNATURES":
         _need(len(_SIGNATURES.findall(text, start)) == 1,
@@ -406,6 +413,46 @@ def _caption_only(gap, *, code):
     """True where ``gap`` - what follows an item's heading - is only that item's own caption."""
     caption = _CAPTIONS.get(code)
     return caption is not None and _LETTERS.sub("", gap.lower()) == _LETTERS.sub("", caption.lower())
+
+
+def _unique_item_end(*, text, nodes, headings, start, end, end_code):
+    """A single next heading, or its caption followed by distinct lettered parts.
+
+    Repeated base headings can be references that would cut the item short.
+    Consecutive 5.02, 5.02(b), 5.02(d) instead name one section. Admit that
+    shape only with the known caption and visible, unlinked headings; keep
+    repeated bases, repeated letters and separated sections ambiguous.
+    """
+    matching = [h for h in headings if h[0] > start and h[2] == end_code]
+    if len(matching) == 1:
+        return True
+    if not matching or matching[0][0] != end:
+        return False
+    first, second = matching[:2]
+    caption = _END_CAPTIONS.get(end_code)
+    gap = _LETTERS.sub("", text[first[1]:second[0]].lower())
+    if caption is None or gap != _LETTERS.sub("", caption.lower()):
+        return False
+    if (_hidden_in_span(nodes=nodes, start=first[0], end=second[0]) is not None
+            or _linked_in_span(nodes=nodes, start=first[0], end=second[0])
+            or _SIGNATURES.search(text, first[1], matching[-1][0])):
+        return False
+    between = [h for h in headings if first[0] <= h[0] <= matching[-1][0]]
+    if between != matching:
+        return False
+    base = r"Items?\s*" + re.escape(end_code)
+    if not re.fullmatch(base + r"\s*[.:\-\u2013\u2014]?\s*", text[first[0]:first[1]]):
+        return False
+    letters = []
+    for heading in matching[1:]:
+        part = re.fullmatch(base + r"\(([a-z])\)\s*[.:\-\u2013\u2014]?\s*",
+                            text[heading[0]:heading[1]])
+        if part is None or part.group(1) in letters:
+            return False
+        letters.append(part.group(1))
+    return all(not _linked_in_span(nodes=nodes, start=a, end=b)
+               and _hidden_in_span(nodes=nodes, start=a, end=b) is None
+               for a, b, _ in matching)
 
 
 def _primary_bytes(*, repo_root, records, reference_id):
