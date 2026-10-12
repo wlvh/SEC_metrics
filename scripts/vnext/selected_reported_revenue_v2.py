@@ -116,7 +116,7 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
         if group_total and complete_expenses is None:continue
         extra_units=(r'\(?(?:in |dollars in )?(?:millions|thousands), except per share amounts\)?',) if operating else ()
         if group_total:
-            extra_units=(r'\(?(?:in )?(?:millions|thousands), except per share amounts\)?',)
+            extra_units=(r'\(?(?:in |\$ in )?(?:millions|thousands), except per share amounts\)?',)
         if single_operating:
             extra_units = (r'\(?dollars in (?:millions|thousands), except per share amounts, and shares in thousands\)?',)
         unit_headers=UNIT_HEADER+extra_units
@@ -171,7 +171,7 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
                 **({'include_cover':True} if group_total else {}))
             sections=(*sections,*issuer_headers['patterns'])
         if group_total:
-            sections=(*sections,r'operating costs and expenses:?',r'earnings per share')
+            sections=(*sections,r'operating costs and expenses:?',r'earnings(?: \(loss\))? per share')
         statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
             extra_unit_headers=extra_units,
             extra_section_headers=sections, bind_statement_page=True,

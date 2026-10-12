@@ -1,0 +1,23 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-dollar-caption/SEC_metrics/docs/evidence/issue28_revenue_dollar_caption_20261012/verify_source.py", line 20, in <module>
+    scope=reported_revenue_scope(primary=primary,xml=xml,annual=annual,approved_concepts=['us-gaap:Revenues'],annual_period_reader=annual_period,namespace_policy=YEAR_OR_DATE_RELEASE,allow_single_revenue_line=True,allow_statement_group_totals=True)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-dollar-caption/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 175, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+    ...<2 lines>...
+            r'fiscal years '+str(column_year)+r', '+str(column_year-1)+
+            r', and '+str(column_year-2))} if group_total else {}))
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-dollar-caption/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 217, in _statement_scope
+    _need(not unknown, 'STATEMENT_LOCAL_SCOPE_UNRESOLVED')
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-dollar-caption/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_LOCAL_SCOPE_UNRESOLVED
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-dollar-caption/SEC_metrics/docs/evidence/issue28_revenue_dollar_caption_20261012/verify_source.py", line 22, in <module>
+    report['reason']=str(error);assert a.expect=='rejected' and report['reason']=='SELECTED_REVENUE_STATEMENT_HEADING_SCOPE_UNRESOLVED'
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
