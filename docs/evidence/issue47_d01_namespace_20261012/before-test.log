@@ -1,0 +1,47 @@
+test_official_quarter_dei_namespace_reaches_shared_source_and_replay (tests.vnext.test_historical_risk_heading_case.HistoricalRiskHeadingCaseTest.test_official_quarter_dei_namespace_reaches_shared_source_and_replay) ... ERROR
+
+======================================================================
+ERROR: test_official_quarter_dei_namespace_reaches_shared_source_and_replay (tests.vnext.test_historical_risk_heading_case.HistoricalRiskHeadingCaseTest.test_official_quarter_dei_namespace_reaches_shared_source_and_replay)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_historical_risk_heading_case.py", line 85, in test_official_quarter_dei_namespace_reaches_shared_source_and_replay
+    case=self.case(source=binding(raw))
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_historical_risk_heading_case.py", line 32, in case
+    return cases.prepare_historical_risk_heading_year_case(repo_root=Path('/constructed'),
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        company_id='sample_entity',metric_id='D01',fiscal_year=2025)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/historical_risk_heading_case.py", line 98, in prepare_historical_risk_heading_year_case
+    candidate = api.create_deterministic_text_candidate(**args)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/d01_emphasis_results.py", line 92, in create_deterministic_text_candidate
+    documents, coverages = prepare_text_sources(
+                           ~~~~~~~~~~~~~~~~~~~~^
+        compiled_spec=compiled_spec, target=target, source_references=source_references,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        raw_blobs=raw_blobs, raw_bytes_by_id=raw_bytes_by_id,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        d01_emphasis_policy=d01_emphasis_policy)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/d01_emphasis_results.py", line 55, in prepare_text_sources
+    document = build_text_document_admitting_underline(
+        raw_bytes=raw_bytes_by_id[raw_id], raw_blob=raw_blobs[raw_id],
+        source_reference=source, expected_company_id=target["company_id"],
+        expected_cik=target["entity"], expected_period_end=target["period_end"])
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/d01_emphasis_source.py", line 166, in build_text_document_admitting_underline
+    document = build_text_document(raw_bytes=raw_bytes, raw_blob=raw_blob,
+                                   source_reference=source_reference,
+                                   expected_company_id=expected_company_id,
+                                   expected_cik=expected_cik,
+                                   expected_period_end=expected_period_end)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/text_coverage.py", line 274, in build_text_document
+    _need(identities == {str(int(expected_cik))}, "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/text_coverage.py", line 54, in _need
+    raise TextCoverageError(reason)
+vnext.text_coverage.TextCoverageError: TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING
+
+----------------------------------------------------------------------
+Ran 1 test in 0.073s
+
+FAILED (errors=1)
+{"allowed_skips": 0, "errors": 1, "failures": 0, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_historical_risk_heading_case.HistoricalRiskHeadingCaseTest.test_official_quarter_dei_namespace_reaches_shared_source_and_replay"]}

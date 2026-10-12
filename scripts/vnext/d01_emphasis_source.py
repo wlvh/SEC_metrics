@@ -20,6 +20,7 @@ from __future__ import annotations
 import re
 
 from .canonical import content_hash, sha256_bytes
+from .xbrl_namespace_policy import YEAR_ONLY
 from .text_coverage import (TextCoverageError, _Blocks, _byte_offsets,
                             build_text_document)
 
@@ -156,7 +157,7 @@ class UnderlineBlocks(_Blocks):
 
 def build_text_document_admitting_underline(*, raw_bytes: bytes, raw_blob, source_reference,
                                             expected_company_id: str, expected_cik: str,
-                                            expected_period_end: str) -> dict:
+                                            expected_period_end: str, namespace_policy=YEAR_ONLY) -> dict:
     """The frozen document, with underline admitted into its emphasis fields.
 
     Everything except the two emphasis fields comes from the frozen builder and
@@ -167,7 +168,8 @@ def build_text_document_admitting_underline(*, raw_bytes: bytes, raw_blob, sourc
                                    source_reference=source_reference,
                                    expected_company_id=expected_company_id,
                                    expected_cik=expected_cik,
-                                   expected_period_end=expected_period_end)
+                                   expected_period_end=expected_period_end,
+                                   namespace_policy=namespace_policy)
     text = raw_bytes.decode("utf-8-sig", errors="strict")
     parser = UnderlineBlocks(text)
     parser.feed(text)

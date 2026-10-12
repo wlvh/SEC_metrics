@@ -1,0 +1,103 @@
+{
+  "code_head": "fcc9a4d1 (test-only default guard added during run; production unchanged)",
+  "phases": {
+    "processing": {
+      "seconds": 7.1847437910037115,
+      "exit": 0,
+      "arguments": [
+        "run",
+        "--company",
+        "salesforce",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2022",
+        "--fiscal-year-end",
+        "2022",
+        "--metric",
+        "D01",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/d01-namespace-20261012-47/salesforce-state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/d01-namespace-20261012-47/salesforce-after/runs"
+      ]
+    },
+    "repeat": {
+      "seconds": 0.702229125003214,
+      "exit": 0,
+      "arguments": [
+        "run",
+        "--company",
+        "salesforce",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2022",
+        "--fiscal-year-end",
+        "2022",
+        "--metric",
+        "D01",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/d01-namespace-20261012-47/salesforce-state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/d01-namespace-20261012-47/salesforce-after/runs"
+      ]
+    },
+    "read": {
+      "seconds": 0.3165044999914244,
+      "exit": 0,
+      "arguments": [
+        "results",
+        "--company",
+        "salesforce",
+        "--state-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/d01-namespace-20261012-47/salesforce-state",
+        "--output-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/d01-namespace-20261012-47/salesforce-after/read"
+      ]
+    }
+  },
+  "row": {
+    "company": "Salesforce",
+    "cik": "1108524",
+    "metric_id": "D01",
+    "metric_name": "Risk factors summary",
+    "value": "Risk Factor Summary\nOperational and Execution Risks\nStrategic and Industry Risks\nLegal and Regulatory Risks\nFinancial Risks\nRisks Related to Owning Our Common Stock\nGeneral Risks\nIf our security measures or those of our third-party data center hosting facilities, cloud computing platform providers or third-party service partners, or the underlying infrastructure of the Internet are breached, and unauthorized access is obtained to a customer\u2019s data, our data or our IT systems, or authorized access is blocked or disabled, our services may be perceived as not being secure, customers may curtail or stop using our services, and we may incur significant reputational harm, legal exposure and liabilities, or a negative financial impact.\nDefects or disruptions in our services could diminish demand for our services and subject us to substantial liability.\nAny interruptions or delays in services from third parties, including data center hosting facilities, cloud computing platform providers and other hardware and software vendors, or from our inability to adequately plan for and manage service interruptions or infrastructure capacity requirements, could impair the delivery of our services and harm our business.\nAs we acquire and invest in companies or technologies, we may not realize the expected business or financial benefits and the acquisitions could prove difficult to integrate, disrupt our business, dilute stockholder value and adversely affect our operating results and the market value of our common stock.\nWe may fail to realize all of the anticipated benefits of the Slack acquisition, and the integration and benefits of the acquisition may take longer to realize than expected.\nSupporting our existing and growing customer base could strain our personnel resources and infrastructure, and if we are unable to scale our operations and increase productivity, we may not be able to successfully implement our business plan.\nIf our customers do not renew their subscriptions for our services or if they reduce the number of paying subscriptions at the time of renewal, our revenue and current remaining performance obligation could decline and our business may suffer. If we cannot accurately predict subscription renewals or upgrade rates, we may not meet our revenue targets, which may adversely affect the market price of our common stock.\nPeriodic changes to our sales organization can be disruptive and may reduce our rate of growth.\nOur ability to deliver our services is dependent on the development and maintenance of the infrastructure of the Internet by third parties.\nSales to customers outside the United States expose us to risks inherent in international operations.\nAs more of our sales efforts are targeted at larger enterprise customers, our sales cycle may become more time-consuming and expensive, we may encounter pricing pressure and implementation and configuration challenges, and we may have to delay revenue recognition for some complex transactions, all of which could harm our business and operating results.\nWe may lose key members of our management team or development and operations personnel, and may be unable to attract and retain employees we need to support our operations and growth.\nAny failure in our delivery of high-quality professional and technical support services may adversely affect our relationships with our customers and our financial results.\nThe markets in which we participate are intensely competitive, and if we do not compete effectively, our operating results could be harmed.\nOur efforts to expand our service offerings and to develop and integrate our existing services in order to keep pace with technological developments may not succeed and may reduce our revenue growth rate and harm our business.\nOur continued success depends on our ability to maintain and enhance our brands.\nWe are subject to risks associated with our strategic investments, including partial or complete loss of invested capital. Significant changes in the fair value of this portfolio, including changes in the valuation of our investments in publicly traded and privately held companies, could negatively impact our financial results.\nIf third-party developers and providers do not continue to embrace our technology delivery model and enterprise cloud computing services, or if our customers seek warranties from us for third-party applications, integrations, data and content, our business could be harmed.\nSocial and ethical issues, including the use or capabilities of AI in our offerings, may result in reputational harm and liability.\nOur aspirations and disclosures related to environmental, social and governance (\u201cESG\u201d) matters expose us to risks that could adversely affect our reputation and performance.\nPrivacy concerns and laws as well as evolving regulation of cloud computing, cross-border data transfer restrictions and other domestic or foreign regulations may limit the use and adoption of our services and adversely affect our business.\nIndustry-specific regulations and other requirements and standards are evolving and unfavorable industry-specific laws, regulations, interpretive positions or standards could harm our business.\nWe have been and may in the future be sued by third parties for various claims, including alleged infringement of proprietary rights.\nAny failure to obtain registration or protection of our intellectual property rights could impair our ability to protect our proprietary technology and our brand, causing us to incur significant expenses and harm our business.\nWe may be subject to risks related to government contracts and related procurement regulations.\nWe are subject to governmental sanctions and export and import controls that could impair our ability to compete in international markets and may subject us to liability if we are not in full compliance with applicable laws.\nBecause we generally recognize revenue from subscriptions for our services over the term of the subscription, downturns or upturns in new business may not be immediately reflected in our operating results.\nIf we experience significant fluctuations in our rate of anticipated growth and fail to balance our expenses with our revenue forecasts, our business could be harmed and the market price of our common stock could decline.\nUnanticipated changes in our effective tax rate and additional tax liabilities and global tax developments may impact our financial results.\nWe are exposed to fluctuations in currency exchange rates that have in the past and could in the future negatively impact our financial results and cash flows from changes in the value of the U.S. Dollar versus local currencies.\nOur debt service obligations, lease commitments and other contractual obligations may adversely affect our financial condition, results of operations and cash flows.\nCurrent and future accounting pronouncements and other financial and nonfinancial reporting standards may negatively impact our financial results.\nOur quarterly results are likely to fluctuate, which may cause the value of our common stock to decline substantially.\nThe market price of our common stock is likely to be volatile and could subject us to litigation.\nProvisions in our amended and restated certificate of incorporation and bylaws and Delaware law might discourage, delay or prevent a change of control of our company or changes in our management and, therefore, depress the market price of our common stock.\nThe effects of the COVID-19 pandemic and related public health measures have materially affected how we and our customers are operating our businesses, and have in the past materially affected our operating results and cash flows; the duration and extent to which this will impact our future results of operations and cash flows remain uncertain.\nVolatile and significantly weakened global economic conditions have in the past and may in the future adversely affect our industry, business and results of operations.\nNatural disasters and other events beyond our control have in the past and may in the future materially adversely affect us.\nClimate change may have an impact on our business.",
+    "unit": "text",
+    "status": "TEXT_QUAL",
+    "source_class": "MDA",
+    "formula": "verbatim Item 1A headings",
+    "period_start": "2021-02-01",
+    "period_end": "2022-01-31",
+    "fiscal_year": "2022",
+    "fiscal_period": "FY",
+    "accession": "0001108524-22-000013",
+    "form": "10-K",
+    "filed_date": "2022-03-11",
+    "concept_or_section": "Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A",
+    "context_or_dimension": "registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures",
+    "confidence": "",
+    "notes": "Verbatim headings from the original annual filing. Disclosures do not assert that risks occurred.",
+    "company_id": "salesforce",
+    "result_id": "sha256:bb534def074aa36addbbc0f64a13ee79df0d64c618cbd79cc87c9653353d40fb",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/d01-namespace-20261012-47/salesforce-state/updates/D01/periods/FY2022/results/59f5c9a49c8e4dcb8841012617bd0012",
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+    "period_role": "REQUESTED_RESULT",
+    "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+    "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+    "defect_holds": "[]",
+    "requested_in_latest_execution": "True"
+  },
+  "heading_count": 46,
+  "read_state_files": 17,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
