@@ -36,7 +36,8 @@ def revenue_claims_admitted_by_original(*, reader, prepared, filing, period, cla
     scope = reported_revenue_scope(primary=primary, xml=xml, annual=annual,
         approved_concepts=qualified, namespace_policy=YEAR_OR_DATE_RELEASE,
         annual_period_reader=annual_period, fiscal_label_resolution=label,
-        allow_single_revenue_line=allow_single_revenue_line)
+        allow_single_revenue_line=allow_single_revenue_line,
+        allow_statement_group_totals=True)
     admit = admit_reported_revenue_facts
     if not scope['complete_scope_proven']:
         scope = selected_revenue_scope(primary=primary, xml=xml, annual=annual,
@@ -57,4 +58,3 @@ def revenue_claims_admitted_by_original(*, reader, prepared, filing, period, cla
             'verified_claim_id': claim['verified_claim_id']})
     allowed = {v['verified_claim_id'] for v in admit(facts=views, scope=scope)}
     return [claim for claim in claims if claim['verified_claim_id'] in allowed], scope
-

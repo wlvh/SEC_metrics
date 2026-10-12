@@ -82,8 +82,11 @@ INCOME_PROCESSING_FILES = (*PROCESSING_FILES,
 )
 
 
-PAIRED_REVENUE_PROCESSING_FILES = (*INCOME_PROCESSING_FILES,
-    'scripts/vnext/historical_paired_revenue.py')
+from .selected_reported_revenue_v2 import STATEMENT_GROUP_PROCESSING_FILES
+
+PAIRED_REVENUE_PROCESSING_FILES = tuple(dict.fromkeys((
+    *INCOME_PROCESSING_FILES, 'scripts/vnext/historical_paired_revenue.py',
+    *STATEMENT_GROUP_PROCESSING_FILES)))
 
 
 class StatementCaseError(ValueError):
