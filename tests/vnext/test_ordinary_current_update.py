@@ -393,8 +393,12 @@ class SelectedPeriodUpdateTest(unittest.TestCase):
         self.assertEqual(observed['status'],'INPUT_OR_EXECUTION_FAILED')
         self.assertEqual(observed['reason'],'CONSTRUCTED_A13_FACTORY_BOUNDARY_NO_BUSINESS_RESULT')
 
-    def test_a13_without_explicit_year_and_other_unsupported_family_stay_closed(self):
-        for metric,extra in [('A13',{}),('D03',{'fiscal_year':2021,'case_factory':self.factory})]:
+    def test_new_current_a13_dispatch_and_unreceived_family_boundary(self):
+        with patch.object(update,'_configuration',side_effect=ValueError('CONTROL_CURRENT_A13_DISPATCH')):
+            current=update.run_once(state_root=self.root,source_root=ROOT,
+                company_id='marriott_international',metric_id='A13')
+        self.assertEqual(current['reason'],'CONTROL_CURRENT_A13_DISPATCH')
+        for metric,extra in [('D03',{'fiscal_year':2021,'case_factory':self.factory})]:
             with self.subTest(metric=metric),self.assertRaisesRegex(ValueError,'CURRENT_UPDATE_METRIC_UNSUPPORTED'):
                 update.run_once(state_root=self.root,source_root=ROOT,
                     company_id='marriott_international',metric_id=metric,**extra)

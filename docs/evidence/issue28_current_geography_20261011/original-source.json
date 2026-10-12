@@ -1,0 +1,23 @@
+{
+  "method": "Direct original HTML/native context/linked footnote read, not a full visual audit",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026008131/jpm-20251231.htm",
+  "source_path": "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm",
+  "raw_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+  "original_table_sha256": "2e297e7c0d8f4370000b88a03eb365b50d78054d8b63080216db970f69084b0c",
+  "table_text": "As of or for the year ended December 31, (in millions) Revenue (b) Expense (c) Income before income tax expense Net income Total assets 2025 Europe/Middle East/Africa $ 24,478 $ 14,825 $ 9,653 $ 6,813 $ 641,190 (d) Asia-Pacific 14,065 8,271 5,794 4,101 343,520 Latin America/Caribbean 4,215 2,180 2,035 1,561 96,759 Total international 42,758 25,276 17,482 12,475 1,081,469 North America (a) 139,689 84,576 55,113 44,573 3,343,431 Total $ 182,447 $ 109,852 $ 72,595 $ 57,048 $ 4,424,900 2024 Europe/Middle East/Africa $ 22,353 $ 12,843 $ 9,510 $ 6,713 $ 552,407 (d) Asia-Pacific 11,995 6,922 5,073 3,615 296,430 Latin America/Caribbean 3,885 1,895 1,990 1,512 73,631 Total international 38,233 21,660 16,573 11,840 922,468 North America (a) 139,323 80,815 58,508 46,631 3,080,346 Total $ 177,556 $ 102,475 $ 75,081 $ 58,471 $ 4,002,814 2023 Europe/Middle East/Africa $ 20,974 $ 11,947 $ 9,027 $ 6,402 $ 529,335 (d) Asia-Pacific 10,605 6,550 4,055 2,709 251,588 Latin America/Caribbean 3,294 1,971 1,323 994 83,003 Total international 34,873 20,468 14,405 10,105 863,926 North America (a) 123,231 76,024 47,207 39,447 3,011,467 Total $ 158,104 $ 96,492 $ 61,612 $ 49,552 $ 3,875,393",
+  "international_row_text": "Total international 42,758 25,276 17,482 12,475 1,081,469",
+  "native_fact": "<ix:nonFraction unitRef=\"usd\" contextRef=\"c-2126\" decimals=\"-6\" name=\"us-gaap:Revenues\" format=\"ixt:num-dot-decimal\" scale=\"6\" id=\"f-7898\">42,758</ix:nonFraction>",
+  "native_context": "<xbrli:context id=\"c-2126\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0000019617</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"srt:StatementGeographicalAxis\">jpm:TotalInternationalMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2025-01-01</xbrli:startDate><xbrli:endDate>2025-12-31</xbrli:endDate></xbrli:period></xbrli:context>",
+  "definition": "Revenue is composed of net interest income and noninterest revenue.",
+  "scope": "Total international, source-defined net interest plus noninterest revenue",
+  "value": 42758000000,
+  "unit": "USD",
+  "period_start": "2025-01-01",
+  "period_end": "2025-12-31",
+  "regional_sum_used": false,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

@@ -231,6 +231,7 @@ class SemanticRequest:
     current_source_bytes: bytes = None
     current_source_ledger_sha256: str = None
     limits: object = DEFAULT_LIMITS
+    d04_saved_response_only: bool = False
 
     def validate(self, policy):
         need(self._factory is _FACTORY, 'CONTINUOUS_SOURCE_FACTORY_REQUIRED')
@@ -243,7 +244,9 @@ class SemanticRequest:
         allowed_control_root=Path(self.requirement['policy']['budget_root'])/'source-inputs'
         from .continuous_call_ledger import CallLedger, _FACTORY as ledger_factory
         registered_source = (type(self.source_ledger) is CallLedger and self.source_ledger._factory is ledger_factory)
-        allowed_registered = registered_source and (self.data_root == allowed_control_root if self.source_ledger.live else
+        allowed_registered = registered_source and (self.data_root == allowed_control_root or
+            self.d04_saved_response_only and self.replay_only and source['metric_id']=='D04'
+            if self.source_ledger.live else
             self.data_root != allowed_control_root and self.data_root != ROOT and ROOT not in self.data_root.parents)
         need((self.data_root in {ROOT,allowed_control_root} or allowed_registered)
              and not any(p.is_symlink() for p in [self.data_root,*self.data_root.parents]),
@@ -325,7 +328,7 @@ class SemanticRequest:
 
 def prepare_requests(*, company_id, metric_id='D04', prior_call_ordinal=None,control_id=None, native=False,
                      reference_context=False, complete_response_contract=False, source_root=None, source_ledger=None, program_quantity_roles=False,
-                     d03_replay_only_external=False, limits=None):
+                     d03_replay_only_external=False, limits=None, d04_saved_response_only=False):
     from .r6_semantic_source import prepare_d04_semantic_source
     from .current_request_configuration import load_current_configuration, transport_policy
     limits = configured_limits(limits)
@@ -334,6 +337,10 @@ def prepare_requests(*, company_id, metric_id='D04', prior_call_ordinal=None,con
     authority = control.prepare_current_invocation_context(repo_root=ROOT,
         configuration=requirement,transport=policy,limits=limits)
     need(metric_id in {'B13','D03','D04'},'CONTINUOUS_SEMANTIC_METRIC_REQUIRED')
+    need(type(d04_saved_response_only) is bool and (not d04_saved_response_only
+         or metric_id=='D04' and native and source_root is not None
+         and control_id is None and prior_call_ordinal is None),
+         'D04_SAVED_RESPONSE_ONLY_SCOPE_REQUIRED')
     need(type(d03_replay_only_external) is bool and
          (not d03_replay_only_external or (metric_id == 'D03' and source_root is not None
           and reference_context and not native and prior_call_ordinal is None)),
@@ -357,7 +364,7 @@ def prepare_requests(*, company_id, metric_id='D04', prior_call_ordinal=None,con
         need(type(source_ledger) is CallLedger and source_ledger._factory is ledger_factory,
              'CONTINUOUS_ORDINARY_SOURCE_LEDGER_REQUIRED')
         fixed=Path(requirement['policy']['budget_root'])/'source-inputs'
-        need((data_root in {ROOT,fixed} if source_ledger.live else data_root!=fixed)
+        need((data_root in {ROOT,fixed} or d04_saved_response_only if source_ledger.live else data_root!=fixed)
              and (not source_ledger.live or source_ledger.root==fixed.parent)
              and not any(p.is_symlink() for p in [Path(source_root),*Path(source_root).parents]),
              'CONTINUOUS_ORDINARY_SOURCE_ROOT_FORBIDDEN')
@@ -401,7 +408,8 @@ def prepare_requests(*, company_id, metric_id='D04', prior_call_ordinal=None,con
     raw = _source_json(source)
     return [SemanticRequest(_FACTORY,raw,_source_json(request),request_body(request,policy,limits=limits),
         _json(request['response_protocol']),requirement,authority,data_root,source_ledger,
-        replay_only=d03_replay_only_external, limits=limits) for request in source_requests(source)]
+        replay_only=d03_replay_only_external or d04_saved_response_only, limits=limits,
+        d04_saved_response_only=d04_saved_response_only) for request in source_requests(source)]
 
 
 def prepare_d03_replay_only_requests(*, company_id, source_root=None, source_ledger=None):
@@ -913,6 +921,7 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment,
                       scan_stage=False, two_stage_scan=None,
                       d03_recorded_native=False):
     from .r6_semantic_scope import validate_response
+    need(not prepared.d04_saved_response_only, 'D04_SAVED_RESPONSE_CANNOT_EXECUTE')
     request_fields=strict_json_loads(text=prepared.request_bytes.decode())
     if request_fields.get('metric_id') == 'D03':
         source_fields = strict_json_loads(text=prepared.source_bytes.decode())

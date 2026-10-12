@@ -41,6 +41,7 @@ python /path/to/SEC_metrics/tools/vnext_company.py results \
 | 当前入口 | 使用者能做什么 | 前提与限制 |
 |---|---|---|
 | main `run --source-root` | 对合法保存来源计算受支持指标，保存普通结果，再由 `results` 日常读取 | 来源只读，状态/输出另存；成功和稳定扣留均可未变复用。未接入项、缺件及已知错误继续显示；不是在线获取。 |
+| 当期 A13 候选 `task/issue28-current-geography` | 同一保存来源命令加 `--metric A13`，从完整当期原件形成国际净收入及出处，重复输入不重算 | 尚未进入 main。沿用金融行业适用规则；非金融公司返回结构性不适用，不能把其他公司的地域收入直接套用。仅保存来源；不新增在线获取或模型判断。验证范围见[唯一记录](evidence/issue28_current_geography_20261011/README.md)。 |
 | main `run --call-context`（PR83） | 从空来源完成当期 B01/B02 的发现、获取、计算和 CSV/证据 | 需要现存且用途适用的 SEC 计数上下文；录制 HTTP 的完整链已验证，不授新真实调用。尚未提供轻量在线39项或新AI能力。下文有完整参数。 |
 | main `run`（不带以上两个参数） | 保留原生新任务兼容路径，自动安装固定 `8588ccbb` 程序；已有任务保原程序 | 需完整 Git 对象和匹配依赖；代表性 Marriott B01/B02 从空目录的成对录制验证成立，不是全部39项业务接受。macOS系统/tmp别名已由PR87修正，旧任务仍保原程序；原LIVE代码分支的禁网测试不等于真实SEC获取。 |
 | main 历史调用 | 使用已交付的酒店、年度/余额、资本和银行表现消费者 | 来源、年份、财年标签、主体及修订范围见 [历史使用指南](historical_company_usage.md)；当期在线发现不等于历史在线采集。 |
@@ -154,7 +155,13 @@ python /path/to/SEC_metrics/tools/vnext_company.py run \
 
 录制上下文必须指定 `recorded_http_root`；该入口只从保存的HTTP原件读取回复，走原客户端的落盘/日志路径，不打开网络。LIVE上下文拒绝这个录制输入字段，使用正常HTTPS及原真实计数。录制模式不是一个可以免费访问SEC的通道；缺少回复不降级到真实网络。
 
-### 候选：当期审计师变更的保存来源路径
+### 候选：D04原件变化但完整任务输入未变
+
+`task/issue28-d04-parsed-update` 基于main已有D04保存回答路线，只增加完整任务比较：新结果保存已验证申报/主体/期间与完整正文、原生事实、表格、媒体、引用及引述关系摘要。原始来源和相关提示/模型/处理配置未变时直接读结果；原始字节变、配置未变且来源检查通过时才解析比较。内容相同可复用原`WITHHELD/null`结论和旧原件引用，不生成新Result或请求；新披露、期间/主体、单位/表格/媒体/引述关系、配置变化及来源失败不能借此复用。旧记录没有摘要时继续原完整处理，不补写旧身份。
+
+本候选还让保存回答回读选择合法独立来源根，显式请求对象只准读取旧响应，调用入口在申领前拒绝它；这不是新增实时用途。实际MarriottFY2025已有四组真实回答在正式`run --source-root`及独立`results`验证，仍为`TEXT_QUAL`/定义范围无疑虑披露，不能解读为财务健康保证。当前尚待接收，未宣称main已具备或全部D04材料都支持等价复用。
+
+### main：当期审计师变更的保存来源路径
 
 `task/issue28-current-c04` 接main已有C04四形式来源核心到最新完整财年：
 
@@ -163,7 +170,7 @@ python3 tools/vnext_company.py run --company marriott_international --source-roo
 python3 tools/vnext_company.py results --company marriott_international --state-root NEW_STATE --output-root SEPARATE_READ
 ```
 
-原件及完整事件清单充分时给0/1；缺同一注册人可比前期保留`WITHHELD/null`，缺必需文件报具体缺件，不借其他主体或旧结果。已验证MarriottFY2025和Salesforce发行人FY2026为0，Paramount保持不可比较。结果、完整输入证据、复跑和独立读取共用普通记录。此候选尚待main接收，在线捕获C04仍未接入；不因存在命令就声称新来源已在线获取或业务结果正式接受。
+原件及完整事件清单充分时给0/1；缺同一注册人可比前期保留`WITHHELD/null`，缺必需文件报具体缺件，不借其他主体或旧结果。已验证MarriottFY2025和Salesforce发行人FY2026为0，Paramount保持不可比较。结果、完整输入证据、复跑和独立读取共用普通记录。该路径已由PR174接收main；在线捕获C04仍未接入；不因存在命令就声称新来源已在线获取或业务结果正式接受。
 
 ### 候选：只检查指定报告期的来源
 

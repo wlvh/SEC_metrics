@@ -79,6 +79,9 @@ def _configuration(source, company, metric):
     if metric == 'B06':
         from .current_b06_case import PROCESSING_FILES
         paths.update(PROCESSING_FILES)
+    if metric == 'A13':
+        from .current_geography_case import PROCESSING_FILES
+        paths.update(PROCESSING_FILES)
     if metric == 'C04':
         from .current_auditor_case import PROCESSING_FILES
         paths.update(PROCESSING_FILES)
@@ -269,12 +272,28 @@ def run_once(*, state_root, source_root, company_id, metric_id, shared_input_roo
                 _need(saved['result']['result_id']==comparison['result_id'],
                       'CURRENT_UPDATE_COMPLETED_RESULT_ID_CHANGED')
                 current = _current_sources(source,saved['manifest']['source_proofs'])
-                old = [{k:p[k] for k in ('source_url','accession','document_name','content_sha256')}
+                old = comparison.get('compared_source_proofs') or [{k:p[k] for k in ('source_url','accession','document_name','content_sha256')}
                        for p in saved['manifest']['source_proofs']]
                 from .ordinary_update_compatibility import compatible_configuration
                 compatible = configuration != comparison['configuration'] and compatible_configuration(
                     comparison['configuration'], configuration)
-                if (configuration==comparison['configuration'] or compatible) and census==comparison.get('source_census') and current==old:
+                parsed_equivalent=False
+                if (metric_id=='D04' and fiscal_year is None
+                        and configuration==comparison['configuration'] and not source_errors
+                        and (current!=old or census!=comparison.get('source_census'))
+                        and {r['source_url'] for r in census}=={r['source_url'] for r in comparison.get('source_census',[])}):
+                    old_task=saved.get('input_assessments',{}).get('d04_task_input')
+                    if old_task is not None:
+                        from .ordinary_d04_task_input import fingerprint,same_task
+                        try:
+                            new_task=fingerprint(source_root=source,company_id=company_id)
+                        except ValueError:
+                            # Comparison failure is not a successful conclusion;
+                            # the original complete processor handles/records it.
+                            new_task=None
+                        parsed_equivalent=new_task is not None and same_task(old_task,new_task)
+                if ((configuration==comparison['configuration'] or compatible)
+                        and ((census==comparison.get('source_census') and current==old) or parsed_equivalent)):
                     status=('PREVIOUS_INPUT_WITHHELD' if saved['result']['publication']=='WITHHELD'
                             else 'NO_SOURCE_CONTENT_CHANGE')
                     report = {'status':status,'attempt_id':identity,
@@ -285,6 +304,14 @@ def run_once(*, state_root, source_root, company_id, metric_id, shared_input_roo
                         'source_observation_errors':source_errors,
                         'new_calls':{'provider':0,'paid':0,'sec':0},'production_authorized':False}
                     if fiscal_year is not None:report['requested_fiscal_year']=fiscal_year
+                    if parsed_equivalent:
+                        report['raw_input_unchanged']=False
+                        report['task_input_unchanged']=True
+                        report['source_comparison']='PARSED_D04_TASK_INPUT_UNCHANGED'
+                        # Keep the original Result and citations; only this
+                        # completed comparison advances to current raw inputs.
+                        report['completed_check']={**comparison,'source_census':census,
+                            'compared_source_proofs':current}
                     if compatible:
                         # A new check can recognize the same inputs; the old
                         # result, terminal and last success keep their identities.
@@ -293,7 +320,7 @@ def run_once(*, state_root, source_root, company_id, metric_id, shared_input_roo
                             'status':('CANDIDATE_WITHHELD' if status=='PREVIOUS_INPUT_WITHHELD'
                                       else 'CANDIDATE_READY')}
                     _write(attempt/'terminal.json',report)
-                    if compatible:_write(root/'completed-check.json', report['completed_check'])
+                    if compatible or parsed_equivalent:_write(root/'completed-check.json', report['completed_check'])
                     _write(root/'latest-check.json',report)
                     return {k:v for k,v in report.items() if k != 'completed_check'}
             # Full selection/period/subject checks only run for changed/new

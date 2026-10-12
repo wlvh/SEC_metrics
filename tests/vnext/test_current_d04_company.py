@@ -93,3 +93,126 @@ class CurrentD04DependencyUpdateTest(unittest.TestCase):
 
 
 if __name__=='__main__':unittest.main()
+
+
+class CurrentD04ParsedReuseTest(unittest.TestCase):
+    """Small controller states, constructed saved result and explicit parse stub."""
+    def setUp(self):
+        from tests.vnext.test_ordinary_current_update import CurrentUpdateTest
+        CurrentUpdateTest.setUp(self)
+        self.publication='WITHHELD'
+        self.old_task={'method':'ORDINARY_D04_COMPLETE_TASK_INPUT_V1','body':'complete-task-a'}
+        from vnext.canonical import content_hash
+        self.old_task['task_input_id']=content_hash(value=self.old_task)
+        self.new_task=dict(self.old_task)
+        self.current_proof=dict(self.proof)
+        self.created=[]
+        def create(**kwargs):
+            self.created.append(kwargs);path=kwargs['output_root'];path.mkdir(parents=True)
+            record={'manifest':{'company_id':'marriott_international','metric_id':'D04',
+                'source_proofs':[dict(self.current_proof)]},'result':{
+                'company_id':'marriott_international','metric_id':'D04','publication':self.publication,
+                'period_end':'2025-12-31','result_id':'d04-result-'+str(len(self.created)),
+                'reason_code':'SYNTHETIC_FULL_TASK'},
+                'input_assessments':{'d04_task_input':dict(self.new_task)}}
+            self.records[str(path)]=record;return record
+        p=patch.object(update,'create_saved_result',side_effect=create);p.start();self.addCleanup(p.stop)
+        p=patch.object(update,'_current_sources',side_effect=lambda *a:[dict(self.current_proof)]);p.start();self.addCleanup(p.stop)
+        p=patch('scripts.vnext.ordinary_d04_task_input.fingerprint',side_effect=lambda **kw:dict(self.new_task));p.start();self.addCleanup(p.stop)
+
+    def run_d04(self):
+        return update.run_once(state_root=self.root,source_root=Path(__file__).resolve().parents[2],
+            company_id='marriott_international',metric_id='D04')
+
+    def changed_raw(self):
+        self.current_proof['content_sha256']='script-only-new-bytes'
+        self.census[0]['content_sha256']='script-only-new-bytes'
+
+    def test_changed_raw_same_task_reuses_withheld_then_no_second_parse(self):
+        first=self.run_d04();self.changed_raw()
+        with patch.object(update,'create_saved_result',side_effect=AssertionError('No full assessment replay')):
+            same=self.run_d04()
+            self.assertEqual(same['status'],'PREVIOUS_INPUT_WITHHELD')
+            self.assertFalse(same['raw_input_unchanged']);self.assertTrue(same['task_input_unchanged'])
+            self.assertEqual(first['result_id'],same['result_id'])
+            with patch('scripts.vnext.ordinary_d04_task_input.fingerprint',side_effect=AssertionError('No second parse')):
+                third=self.run_d04()
+        self.assertEqual(third['status'],'PREVIOUS_INPUT_WITHHELD')
+        self.assertEqual(len(self.created),1)
+
+    def test_changed_business_input_or_configuration_does_not_reuse(self):
+        first=self.run_d04();self.changed_raw();self.new_task={'method':'ORDINARY_D04_COMPLETE_TASK_INPUT_V1','body':'new-business-task'}
+        from vnext.canonical import content_hash
+        self.new_task['task_input_id']=content_hash(value=self.new_task)
+        second=self.run_d04();self.assertEqual(len(self.created),2)
+        self.assertNotEqual(first['result_id'],second['result_id'])
+        self.config['processing_version']='two'
+        with patch('scripts.vnext.ordinary_d04_task_input.fingerprint',side_effect=AssertionError('Do not parse under changed rules')):
+            third=self.run_d04()
+        self.assertEqual(len(self.created),3)
+
+    def test_new_company_source_dependency_cannot_be_ignored_by_equal_parse(self):
+        self.run_d04();self.changed_raw()
+        self.census.append({'source_url':'new-annual-or-relation','content_sha256':'new',
+                            'status_code':'200','error':''})
+        with patch('scripts.vnext.ordinary_d04_task_input.fingerprint',side_effect=AssertionError('No incomplete census comparison')):
+            second=self.run_d04()
+        self.assertEqual(second['status'],'CANDIDATE_WITHHELD');self.assertEqual(len(self.created),2)
+
+    def test_parse_failure_falls_back_to_complete_processing(self):
+        self.run_d04();self.changed_raw()
+        with patch('scripts.vnext.ordinary_d04_task_input.fingerprint',side_effect=ValueError('Source parse unresolved')):
+            second=self.run_d04()
+        self.assertEqual(second['status'],'CANDIDATE_WITHHELD');self.assertEqual(len(self.created),2)
+
+    def test_success_and_withheld_both_preserve_original_credit_on_equal_task(self):
+        self.publication='PUBLISHED'
+        first=self.run_d04();self.changed_raw()
+        with patch.object(update,'create_saved_result',side_effect=AssertionError('No repeated company assessment')):
+            second=self.run_d04()
+        self.assertEqual(second['status'],'NO_SOURCE_CONTENT_CHANGE')
+        self.assertEqual(first['result_id'],second['result_id'])
+        self.assertEqual(len(self.created),1)
+
+    def test_old_record_without_task_assessment_uses_original_processing(self):
+        first=self.run_d04();self.records[first['result_root']].pop('input_assessments');self.changed_raw()
+        second=self.run_d04();self.assertEqual(len(self.created),2)
+        self.assertNotEqual(first['result_id'],second['result_id'])
+
+    def test_source_failures_are_not_cleared_by_equal_task(self):
+        self.run_d04();self.changed_raw();self.census[0]['status_code']='503'
+        with patch('scripts.vnext.ordinary_d04_task_input.fingerprint',side_effect=AssertionError('No parsed reuse during source failure')):
+            self.run_d04()
+        self.assertEqual(len(self.created),2)
+
+    def test_reuse_pointer_interruption_recovers_original_result(self):
+        first=self.run_d04();self.changed_raw();original=update._write
+        def interrupted(path,value):
+            if path.name=='completed-check.json':raise RuntimeError('after comparison terminal')
+            return original(path,value)
+        with patch.object(update,'_write',side_effect=interrupted),patch.object(update,'create_saved_result',side_effect=AssertionError('No new result')):
+            failed=self.run_d04()
+        self.assertEqual(failed['status'],'INPUT_OR_EXECUTION_FAILED')
+        # Existing failure recording overwrites the terminal, so this attempt
+        # must be safely recomputed as a comparison, never as a fake Result.
+        with patch.object(update,'create_saved_result',side_effect=AssertionError('No new result')):
+            recovered=self.run_d04()
+        self.assertEqual(first['result_id'],recovered['result_id'])
+        self.assertEqual(len(self.created),1)
+
+
+class D04SavedResponseOnlyBoundaryTest(unittest.TestCase):
+    def test_saved_response_object_cannot_execute_even_if_replay_flag_is_cleared(self):
+        from dataclasses import replace
+        from vnext import continuous_semantic_calls as calls
+        prepared=calls.SemanticRequest(calls._FACTORY,b'{}',b'{}',b'{}',b'{}',{}, {},
+            replay_only=True,d04_saved_response_only=True)
+        for value in (prepared,replace(prepared,replay_only=False)):
+            with self.subTest(replay=value.replay_only):
+                with self.assertRaisesRegex(ValueError,'D04_SAVED_RESPONSE_CANNOT_EXECUTE'):
+                    calls._execute_semantic(prepared=value,ledger=None,recorded_wire=None,native_assessment=True)
+
+    def test_default_request_is_not_saved_response_only(self):
+        from vnext import continuous_semantic_calls as calls
+        request=calls.SemanticRequest(calls._FACTORY,b'{}',b'{}',b'{}',b'{}',{}, {})
+        self.assertFalse(request.d04_saved_response_only)

@@ -1,0 +1,35 @@
+{
+  "program_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-a13-c04-union-hpvda4hd/SEC_metrics",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "combined_index_tree": "8419fb5b8fcbcb2ad3cbb545589dacb57ae8418d",
+  "rows": [
+    {
+      "company": "jpmorgan_chase",
+      "metric": "A13",
+      "value": "42758000000",
+      "unit": "USD",
+      "result_id": "sha256:4661b0dec833b8d082b4031e3e45583cc7c4af9098a08c4c0c7e468f3f37b6ba",
+      "record_root": "/private/tmp/issue28-union-A13-j7c89jjj/state/updates/A13/results/e3b66279ec5741ff82c9eb28109bca0f",
+      "first_seconds": 6.894773790998443,
+      "repeat_seconds": 0.2006736670009559,
+      "read_seconds": 0.4034102500008885
+    },
+    {
+      "company": "marriott_international",
+      "metric": "C04",
+      "value": "0",
+      "unit": "flag",
+      "result_id": "sha256:a5517d36ec92517b057a4e8e5f1277cc8f2850d9108d563a1adb2ad71cb7c3f9",
+      "record_root": "/private/tmp/issue28-union-C04-jx0c2ctr/state/updates/C04/results/6bd727fbf84a4e99b1562ea0b2b70288",
+      "first_seconds": 9.385537332993408,
+      "repeat_seconds": 1.02872650000063,
+      "read_seconds": 0.4175102910012356
+    }
+  ],
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "scope": "Explicit isolated175+174 union, not execution of either published head or author merge"
+}
