@@ -1,0 +1,103 @@
+{
+  "code_head": "c4177b4dae5548cd34e51f9cfb25d9078289e6cf",
+  "phases": {
+    "processing": {
+      "seconds": 7.486373207997531,
+      "exit_code": 2,
+      "arguments": [
+        "run",
+        "--company",
+        "enphase_energy",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2021",
+        "--fiscal-year-end",
+        "2021",
+        "--metric",
+        "B06",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-main-e3-two-consumers-20261012-47/enphase_energy/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-text-198-history-20261012-47/runs"
+      ]
+    },
+    "repeat": {
+      "seconds": 0.6783263749966864,
+      "exit_code": 2,
+      "arguments": [
+        "run",
+        "--company",
+        "enphase_energy",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2021",
+        "--fiscal-year-end",
+        "2021",
+        "--metric",
+        "B06",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-main-e3-two-consumers-20261012-47/enphase_energy/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-text-198-history-20261012-47/runs"
+      ]
+    },
+    "read": {
+      "seconds": 0.3548664580011973,
+      "exit_code": 0,
+      "arguments": [
+        "results",
+        "--company",
+        "enphase_energy",
+        "--state-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-main-e3-two-consumers-20261012-47/enphase_energy/state",
+        "--output-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-text-198-history-20261012-47/read"
+      ]
+    }
+  },
+  "row": {
+    "company": "Enphase Energy",
+    "cik": "1463101",
+    "metric_id": "B06",
+    "metric_name": "Debt-to-equity",
+    "value": "",
+    "unit": "ratio",
+    "status": "WITHHELD",
+    "source_class": "DERIVED",
+    "formula": "defined carrying debt / shareholders equity",
+    "period_start": "2021-12-31",
+    "period_end": "2021-12-31",
+    "fiscal_year": "2021",
+    "fiscal_period": "TARGET_PERIOD",
+    "accession": "",
+    "form": "10-K",
+    "filed_date": "2022-02-11",
+    "concept_or_section": "",
+    "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2021, \"period_end\": \"2021-12-31\", \"period_start\": \"2021-01-01\"}, \"measurement_kind\": \"TARGET_PERIOD\", \"scope\": {\"entity_scope\": \"consolidated\"}, \"selection\": {\"calculation\": {}, \"classification\": \"SOURCE_OR_RELATIONSHIP_UNRESOLVED\", \"reason\": \"NOTE_CARRYING_UNRESOLVED_FINANCING_FACT:debtinstrumentunamortizeddiscountpremiumanddebtissuancecostsnet\", \"selection_detail_id\": \"sha256:d40d4c994f1f66c4f5b8fe557780af81803f7b46182405c527f4b7558b7cc1b0\"}, \"source_reference_ids\": [\"sha256:b1869089f69b10998eb75396b0ef44bac2b7d06c684bd40e69b7ca0f54a8afc3\", \"sha256:ebdf30891011c7d7205644166621f859cc28a92fca6cb243002a004b31fb5bd4\", \"sha256:bb3aa02d4ac089813b2d0faa49de79ef7e0d8e13db0611ab9db6cd6c1bc914dd\", \"sha256:39808ae04e68862f11cf338bcf02a07e44498b167574f3360a8c11594c97297f\", \"sha256:b9969744eaa260edc3974b0d5c408aad451990e39c28f7e9cbc320914303c093\"]}",
+    "confidence": "",
+    "notes": "Recognized borrowing, bond and finance lease carrying amounts divided by source-verified shareholders equity. No accepted value is asserted for this target period. Native state: WITHHELD; reason: B06_SOURCE_RELATIONSHIP_UNRESOLVED.",
+    "company_id": "enphase_energy",
+    "result_id": "sha256:cadd0b9a50d990751a30967c134e1524bd274a5d76a7fe111d87245cc7ddbc2e",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-main-e3-two-consumers-20261012-47/enphase_energy/state/updates/B06/periods/FY2021/results/ce3b8ab2a5834f338970faf20fb8b887",
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "local_metric_status": "PREVIOUS_INPUT_WITHHELD",
+    "period_role": "REQUESTED_RESULT",
+    "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+    "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+    "defect_holds": "[]",
+    "requested_in_latest_execution": "True"
+  },
+  "old_result_files_unchanged": 7,
+  "read_state_files_unchanged": 28,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
