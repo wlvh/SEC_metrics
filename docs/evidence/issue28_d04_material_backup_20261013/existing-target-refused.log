@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-material-backup/SEC_metrics/docs/evidence/issue28_d04_material_backup_20261013/create_backup.py", line 16, in <module>
+    assert not destination.exists();stage=destination.with_name(destination.name+'.incomplete')
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

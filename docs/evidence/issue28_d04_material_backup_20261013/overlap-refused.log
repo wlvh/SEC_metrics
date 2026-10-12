@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-material-backup/SEC_metrics/docs/evidence/issue28_d04_material_backup_20261013/create_backup.py", line 15, in <module>
+    assert destination!=root and root not in destination.parents and destination not in root.parents,'Backup must be outside the original ledger'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Backup must be outside the original ledger

@@ -1,0 +1,22 @@
+{
+  "cases": [
+    {
+      "case": "missing",
+      "exit": 1,
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/private/tmp/issue28-d04-valid-negative-egucqcya/missing/calls/0173/wire/assistant-output.bin'",
+      "output_created": false
+    },
+    {
+      "case": "changed",
+      "exit": 1,
+      "error": "AssertionError: calls/0173/wire/assistant-output.bin",
+      "output_created": false
+    }
+  ],
+  "initial_harness_missing_pythonpath_not_a_valid_refusal_test": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
