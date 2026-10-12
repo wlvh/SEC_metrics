@@ -215,6 +215,7 @@ FAST_TESTS += ("tests.vnext.test_cover_dei_release",)
 FAST_TESTS += ("tests.vnext.test_single_segment_revenue",)
 FAST_TESTS += ("tests.vnext.test_processing_dependency_checks",)
 SOURCE_TESTS += ("tests.vnext.test_processing_dependency_material",)
+FAST_TESTS += ("tests.vnext.test_history_source_export",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # The unchanged full original-source module passed on head 698b9a45 in
