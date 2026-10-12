@@ -1,0 +1,7 @@
+# Main c226 consumer combination
+
+This evidence-only branch does not implement another candidate. Actual tested production is mainc2267ede plus PR193's event dependency path/test and PR195's two block-ID type guards/test, local76cca23a / tree8a8998d8. Their original full public heads can be normally merged in a new isolated checkout; evidence-only Markdown/log additions differ from this local cherry-picked test tree, and are not claimed as exact whole-tree equality. Source/test differences are the existing candidates, not uncommitted private files.
+
+101 required tests pass0.289s, zero errors/failures/skips; main-c226-controls.log is the actual output. Command uses existing required_unittests with test_legal_review_contract, test_historical_event_cases, test_historical_e01_company_case, test_historical_b06_case, test_history_company_dispatch, test_selected_history_result_state, test_historical_d04_case, test_saved_d04_replay. Current main retains received189/190's public/read/history B06; original11consumer and receiver50position material is reused, no financial/source/model calculation repeated.
+
+Mainc226 alone does not contain193/195; this is a candidate combination. It does not replace original first/repeat/read evidence, receiver's own review, full1950business acceptance or source discovery. Newcalls0, noauthorReady/merge/adoption/active. Individual issues and PRs continue the one existing queue.
