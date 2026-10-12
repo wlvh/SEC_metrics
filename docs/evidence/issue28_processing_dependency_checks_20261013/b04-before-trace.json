@@ -1,0 +1,316 @@
+{
+  "company": "enphase_energy",
+  "metric": "B04",
+  "result": "172133000",
+  "executed": {
+    "scripts/vnext/ordinary_saved_result.py": [
+      "_ordinary_case"
+    ],
+    "scripts/vnext/normal_run_inputs.py": [
+      "<genexpr>",
+      "_need",
+      "prepare_ordinary_zero_ai_run_input"
+    ],
+    "scripts/vnext/normal_run_specs.py": [
+      "_spec_document",
+      "installed_ordinary_spec_documents",
+      "validate_ordinary_spec_files"
+    ],
+    "scripts/vnext/deterministic_catalog.py": [
+      "<genexpr>",
+      "_compiled_deterministic_spec",
+      "_load_deterministic_catalog",
+      "_required_text",
+      "_validate_deterministic_branch",
+      "_validate_deterministic_component"
+    ],
+    "scripts/vnext/canonical.py": [
+      "<lambda>",
+      "_canonicalize",
+      "_pairs_to_object",
+      "_parse_json_decimal",
+      "_parse_json_integer",
+      "_validate_tree_unicode",
+      "_validate_unicode",
+      "canonical_json_bytes",
+      "content_hash",
+      "decimal_text",
+      "execution_semantics_hash",
+      "parse_decimal",
+      "sha256_bytes",
+      "sha256_file",
+      "strict_json_file",
+      "strict_json_loads"
+    ],
+    "scripts/vnext/deterministic_router.py": [
+      "<genexpr>",
+      "<lambda>",
+      "__init__",
+      "_compiled_event_spec",
+      "_exact_fields",
+      "_freeze_xbrl_owned",
+      "_local_tag",
+      "_object",
+      "_parse_xbrl_parts",
+      "_reference",
+      "_require_raw_bytes",
+      "_sha256_identity",
+      "_submissions_accessions",
+      "_text",
+      "_text_list",
+      "adapt_companyfacts",
+      "contexts",
+      "facts",
+      "handle_data",
+      "handle_endtag",
+      "handle_starttag",
+      "load_event_route_catalog",
+      "parse_accession_xbrl_source",
+      "source_set_manifest",
+      "validate_source_set_manifest",
+      "validate_verified_claim",
+      "verified_claim"
+    ],
+    "scripts/vnext/specs.py": [
+      "<genexpr>",
+      "_count_ast",
+      "_expand_selection_policy",
+      "_expression_roles",
+      "_require_string",
+      "_validate_concept_role",
+      "_validate_cross_check",
+      "_validate_dependencies",
+      "_validate_derived_role",
+      "_validate_executable_semantics",
+      "_validate_inputs",
+      "_validate_top_level_guards",
+      "_validate_traits",
+      "compile_spec",
+      "compile_spec_file",
+      "component_refs",
+      "parse_spec_document"
+    ],
+    "scripts/vnext/sources.py": [
+      "<genexpr>",
+      "_companyfacts_text",
+      "_iso_date",
+      "companyfacts_structured_facts",
+      "raw_blob_record",
+      "resolve_repository_file",
+      "source_reference_record"
+    ],
+    "scripts/vnext/normal_companyfacts_results.py": [
+      "<genexpr>",
+      "_authority",
+      "_filing_source",
+      "_need",
+      "_prior_filing",
+      "resolve_ordinary_companyfacts_metrics"
+    ],
+    "scripts/vnext/normal_annual_input_v2.py": [
+      "_choose_fiscal_year",
+      "exact_json_value",
+      "plain",
+      "prepare_saved_annual_input"
+    ],
+    "scripts/vnext/normal_annual_input.py": [
+      "<genexpr>",
+      "_cik",
+      "_date",
+      "_need",
+      "_subject_policy",
+      "annual_period",
+      "arguments",
+      "dei",
+      "dei_namespace_pattern",
+      "prepare_saved_annual_input",
+      "read",
+      "select_filing"
+    ],
+    "scripts/vnext/company_registry.py": [
+      "_registry_rows"
+    ],
+    "scripts/vnext/annual_sources.py": [
+      "_require",
+      "_rows",
+      "_utc",
+      "saved_source"
+    ],
+    "scripts/vnext/annual_input.py": [
+      "_saved_source"
+    ],
+    "scripts/vnext/request_bindings.py": [
+      "_validate_named_row",
+      "_verified_request_locator",
+      "request_attempt_binding",
+      "validate_request_attempt_binding"
+    ],
+    "scripts/vnext/governance_signals.py": [
+      "<genexpr>",
+      "__init__",
+      "_need",
+      "_qname",
+      "handle_data",
+      "handle_endtag",
+      "handle_startendtag",
+      "handle_starttag"
+    ],
+    "scripts/vnext/ordinary_source_authority.py": [
+      "verify_ordinary_source_proofs"
+    ],
+    "scripts/vnext/saved_source_checks.py": [
+      "_need",
+      "verify_saved_inputs"
+    ],
+    "scripts/vnext/fiscal_year_labels.py": [
+      "<genexpr>",
+      "__init__",
+      "_definitions",
+      "_flush",
+      "_inspect_prepared_input",
+      "_need",
+      "_offset",
+      "_part",
+      "handle_endtag",
+      "handle_starttag",
+      "inspect_fiscal_year_labels",
+      "raw_input"
+    ],
+    "scripts/vnext/text_results_v2.py": [
+      "<genexpr>",
+      "__init__",
+      "_iso",
+      "_need",
+      "_verified_context",
+      "handle_data",
+      "handle_endtag",
+      "handle_starttag"
+    ],
+    "scripts/vnext/text_coverage.py": [
+      "<genexpr>",
+      "__init__",
+      "_byte_offsets",
+      "_flush",
+      "_need",
+      "_offset",
+      "_part",
+      "handle_charref",
+      "handle_data",
+      "handle_endtag",
+      "handle_entityref",
+      "handle_startendtag",
+      "handle_starttag"
+    ],
+    "scripts/vnext/traits.py": [
+      "<genexpr>",
+      "derive_company_traits",
+      "repository_company_ciks",
+      "repository_company_traits"
+    ],
+    "scripts/vnext/normal_governance_input.py": [
+      "<genexpr>",
+      "<lambda>",
+      "__init__",
+      "_date",
+      "_filings",
+      "_history_index",
+      "_need",
+      "primary",
+      "read"
+    ],
+    "scripts/vnext/records.py": [
+      "<genexpr>",
+      "_expected_identifier",
+      "_validate_enums",
+      "_validate_field_types",
+      "_validate_record_semantics",
+      "_validate_record_status",
+      "metric_result_contract_hash",
+      "require_exact_fields",
+      "validate_identifier",
+      "validate_record"
+    ],
+    "scripts/vnext/zero_ai_r2.py": [
+      "<genexpr>",
+      "<lambda>",
+      "_claim_concept",
+      "_claim_matches_component",
+      "_claim_period",
+      "_deterministic_metric_graph",
+      "_exact_filing_source_set",
+      "_filing_from_inventory",
+      "_formula_value",
+      "_period_for_role",
+      "_select_component_claim",
+      "_select_deterministic_branch"
+    ],
+    "scripts/vnext/calculator.py": [
+      "_decimal_value",
+      "_manual_result_trace",
+      "_result_and_trace",
+      "calculate_observation_metric",
+      "metric_is_applicable"
+    ],
+    "scripts/vnext/observations.py": [
+      "<genexpr>",
+      "_build_observation",
+      "scope_key",
+      "structured_observation"
+    ],
+    "scripts/vnext/paired_measure_v1.py": [
+      "<genexpr>",
+      "_claim_view",
+      "_paired_concept_lists",
+      "paired_measure_problem"
+    ]
+  },
+  "undeclared": {
+    "scripts/vnext/text_results_v2.py": [
+      "<genexpr>",
+      "__init__",
+      "_iso",
+      "_need",
+      "_verified_context",
+      "handle_data",
+      "handle_endtag",
+      "handle_starttag"
+    ],
+    "scripts/vnext/text_coverage.py": [
+      "<genexpr>",
+      "__init__",
+      "_byte_offsets",
+      "_flush",
+      "_need",
+      "_offset",
+      "_part",
+      "handle_charref",
+      "handle_data",
+      "handle_endtag",
+      "handle_entityref",
+      "handle_startendtag",
+      "handle_starttag"
+    ],
+    "scripts/vnext/normal_governance_input.py": [
+      "<genexpr>",
+      "<lambda>",
+      "__init__",
+      "_date",
+      "_filings",
+      "_history_index",
+      "_need",
+      "primary",
+      "read"
+    ],
+    "scripts/vnext/paired_measure_v1.py": [
+      "<genexpr>",
+      "_claim_view",
+      "_paired_concept_lists",
+      "paired_measure_problem"
+    ]
+  },
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
