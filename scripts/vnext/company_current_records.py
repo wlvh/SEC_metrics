@@ -59,7 +59,8 @@ def _defects(result, registry):
 
 def run_saved_company(*, company_id, source_root, work_dir, output_dir,
                       metric_ids=None, defects_file=None, fiscal_years=None, case_factory=None,
-                      processing_files=(), case_factories=None, processing_files_by_metric=None):
+                      processing_files=(), case_factories=None, processing_files_by_metric=None,
+                      processing_inputs_by_metric=None):
     """Calculate changed inputs and read durable results into ordinary CSVs."""
     from .normal_annual_input import _registry_rows
     from .deterministic_router import shared_xbrl_parses
@@ -92,6 +93,10 @@ def run_saved_company(*, company_id, source_root, work_dir, output_dir,
           and not processing_files and set(processing_files_by_metric) <= set(selected)
           and all(type(paths) in (tuple,list) for paths in processing_files_by_metric.values()),
           'COMPANY_CURRENT_METRIC_PROCESSING_FILES_INVALID')
+    _need(processing_inputs_by_metric is None or type(processing_inputs_by_metric) is dict
+          and set(processing_inputs_by_metric)<=set(selected)
+          and all(type(paths) in (tuple,list) for paths in processing_inputs_by_metric.values()),
+          'COMPANY_CURRENT_METRIC_PROCESSING_INPUTS_INVALID')
     _need((fiscal_years is None and case_factory is None and case_factories is None)
           or fiscal_years is not None and (callable(case_factory) or case_factories is not None),
           'COMPANY_CURRENT_SELECTED_YEARS_REQUIRE_CASE_FACTORY')
@@ -128,7 +133,9 @@ def run_saved_company(*, company_id, source_root, work_dir, output_dir,
                         shared_input_root=work/'shared-inputs',fiscal_year=year,
                         case_factory=case_factory if case_factories is None else case_factories[metric],
                         processing_files=processing_files if processing_files_by_metric is None
-                            else processing_files_by_metric.get(metric, ()))}
+                            else processing_files_by_metric.get(metric, ()),
+                        processing_inputs=() if processing_inputs_by_metric is None
+                            else processing_inputs_by_metric.get(metric, ()))}
                 except Exception as error:
                     observation = {'metric_id': metric, 'status': 'INPUT_OR_EXECUTION_FAILED',
                                    'reason': str(error), 'error_type': type(error).__name__}
