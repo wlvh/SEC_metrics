@@ -85,6 +85,9 @@ name: Company saved-source records
     - .github/workflows/company-current-records.yml
     - tests/vnext/test_historical_auditor_selection.py
     - tests/vnext/test_historical_auditor_case.py
+    - tests/vnext/test_text_item_capacity.py
+    - tests/vnext/test_d01_explicit_running_headers.py
+    - tests/vnext/test_historical_risk_heading_case.py
     - tests/vnext/test_historical_d04_selection.py
     - tests/vnext/test_historical_d04_case.py
     - tests/vnext/test_saved_d04_replay.py
@@ -230,6 +233,10 @@ jobs:
       env:
         PYTHONDONTWRITEBYTECODE: '1'
       run: python3 tests/required_unittests.py tests.vnext.test_historical_auditor_selection tests.vnext.test_historical_auditor_case
+    - name: Explicit D01 successor and ordinary factory admission
+      env:
+        PYTHONDONTWRITEBYTECODE: '1'
+      run: python3 tests/required_unittests.py tests.vnext.test_d01_explicit_running_headers tests.vnext.test_historical_risk_heading_case.HistoricalRiskHeadingCaseTest
     - name: Original saved D04 replay and selected update retention
       env:
         PYTHONDONTWRITEBYTECODE: '1'
@@ -249,6 +256,11 @@ jobs:
     - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
       with:
         python-version: '3.14'
+    - name: Explicit text capacity and retained excerpt contracts
+      env:
+        PYTHONDONTWRITEBYTECODE: '1'
+      run: python3 tests/required_unittests.py tests.vnext.test_text_item_capacity tests.vnext.test_text_results
+        tests.vnext.test_spec_compiler
     - name: Explicit single revenue source and unchanged period defaults
       env:
         PYTHONDONTWRITEBYTECODE: '1'

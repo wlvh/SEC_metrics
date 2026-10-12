@@ -1,0 +1,27 @@
+test_changed_document_and_non_boolean_policy_are_refused (tests.vnext.test_d01_explicit_running_headers.ExplicitD01HeaderTest.test_changed_document_and_non_boolean_policy_are_refused) ... ok
+test_evidence_rebuilds_the_same_explicit_selection_and_rejects_old_candidate (tests.vnext.test_d01_explicit_running_headers.ExplicitD01HeaderTest.test_evidence_rebuilds_the_same_explicit_selection_and_rejects_old_candidate) ... ok
+test_explicit_company_factory_gate_does_not_open_default_d01 (tests.vnext.test_d01_explicit_running_headers.ExplicitD01HeaderTest.test_explicit_company_factory_gate_does_not_open_default_d01) ... FAIL
+test_explicit_successor_excludes_complete_header_default_and_v2_unchanged (tests.vnext.test_d01_explicit_running_headers.ExplicitD01HeaderTest.test_explicit_successor_excludes_complete_header_default_and_v2_unchanged) ... ok
+test_risk_sentence_with_the_same_prefix_is_kept_and_exact_span_preserved (tests.vnext.test_d01_explicit_running_headers.ExplicitD01HeaderTest.test_risk_sentence_with_the_same_prefix_is_kept_and_exact_span_preserved) ... ok
+test_underlined_heading_survives_while_repeated_combined_headers_do_not (tests.vnext.test_d01_explicit_running_headers.ExplicitD01HeaderTest.test_underlined_heading_survives_while_repeated_combined_headers_do_not) ... ok
+test_unknown_or_wrong_metric_successor_policy_is_rejected (tests.vnext.test_d01_explicit_running_headers.ExplicitD01HeaderTest.test_unknown_or_wrong_metric_successor_policy_is_rejected) ... ok
+test_wrong_entity_period_missing_section_and_changed_raw_still_refuse (tests.vnext.test_d01_explicit_running_headers.ExplicitD01HeaderTest.test_wrong_entity_period_missing_section_and_changed_raw_still_refuse) ... ok
+
+======================================================================
+FAIL: test_explicit_company_factory_gate_does_not_open_default_d01 (tests.vnext.test_d01_explicit_running_headers.ExplicitD01HeaderTest.test_explicit_company_factory_gate_does_not_open_default_d01)
+----------------------------------------------------------------------
+ValueError: CURRENT_UPDATE_METRIC_UNSUPPORTED
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-explicit-risk-headings/SEC_metrics/tests/vnext/test_d01_explicit_running_headers.py", line 96, in test_explicit_company_factory_gate_does_not_open_default_d01
+    with self.assertRaisesRegex(ValueError,'METRIC_NOT_IMPLEMENTED'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "METRIC_NOT_IMPLEMENTED" does not match "CURRENT_UPDATE_METRIC_UNSUPPORTED"
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.035s
+
+FAILED (failures=1)
+{"allowed_skips": 0, "errors": 0, "failures": 1, "run": 8, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_d01_explicit_running_headers"]}

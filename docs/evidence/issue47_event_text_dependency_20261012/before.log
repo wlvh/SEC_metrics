@@ -1,0 +1,16 @@
+test_amendment_text_reader_change_reprocesses_the_selected_completed_check (tests.vnext.test_historical_event_cases.HistoricalEventCaseTest.test_amendment_text_reader_change_reprocesses_the_selected_completed_check) ... FAIL
+
+======================================================================
+FAIL: test_amendment_text_reader_change_reprocesses_the_selected_completed_check (tests.vnext.test_historical_event_cases.HistoricalEventCaseTest.test_amendment_text_reader_change_reprocesses_the_selected_completed_check)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_historical_event_cases.py", line 50, in test_amendment_text_reader_change_reprocesses_the_selected_completed_check
+    self.assertTrue(changed['calculation_performed'])
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 1 test in 0.105s
+
+FAILED (failures=1)
+{"allowed_skips": 0, "errors": 0, "failures": 1, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_historical_event_cases.HistoricalEventCaseTest.test_amendment_text_reader_change_reprocesses_the_selected_completed_check"]}
