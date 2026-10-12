@@ -1,0 +1,890 @@
+{
+  "code_head": "1fa68a02128544f0643734cdb6badbe6f4bcd211",
+  "scope": "Nine existing FY2021 formerly default-DEI failures, not all50 B06",
+  "rows": [
+    {
+      "company": "marriott_international",
+      "fiscal_year": 2021,
+      "first_metric": {
+        "metric_id": "B06",
+        "status": "CANDIDATE_WITHHELD",
+        "attempt_id": "ae01e0b586274490801f43562e436b1d",
+        "version": "7a26c897a50a4b588c5fd30fd25efd14",
+        "result_id": "sha256:b87de66d0d428d76d5f44e614e17379250b5a739baded25865e12ab5fad21a33",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-remaining9-20261012-47/marriott_international/state/updates/B06/periods/FY2021/results/7a26c897a50a4b588c5fd30fd25efd14",
+        "calculation_performed": true,
+        "new_candidate_created": true,
+        "result_reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2021,
+        "defect_holds": [],
+        "read_result_id": "sha256:b87de66d0d428d76d5f44e614e17379250b5a739baded25865e12ab5fad21a33",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-remaining9-20261012-47/marriott_international/state/updates/B06/periods/FY2021/results/7a26c897a50a4b588c5fd30fd25efd14",
+        "program_version": {
+          "commit": "1fa68a02128544f0643734cdb6badbe6f4bcd211",
+          "has_uncommitted_changes": true
+        }
+      },
+      "first_seconds": 5.860666915992624,
+      "repeat_seconds": 0.5873221249930793,
+      "repeat_metric": {
+        "metric_id": "B06",
+        "status": "PREVIOUS_INPUT_WITHHELD",
+        "attempt_id": "81ecd3e618244fe2901d5a1170cdde9b",
+        "version": "7a26c897a50a4b588c5fd30fd25efd14",
+        "result_id": "sha256:b87de66d0d428d76d5f44e614e17379250b5a739baded25865e12ab5fad21a33",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-remaining9-20261012-47/marriott_international/state/updates/B06/periods/FY2021/results/7a26c897a50a4b588c5fd30fd25efd14",
+        "result_reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+        "raw_input_unchanged": true,
+        "calculation_performed": false,
+        "new_candidate_created": false,
+        "source_check_versions": {
+          "scripts/vnext/ordinary_current_update.py": "dea7fc5d0551287c4bb50d56d6b8d7e7a23aa649902edb0bf1b62206f02cf1e6",
+          "scripts/vnext/request_bindings.py": "d0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee"
+        },
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2021,
+        "defect_holds": [],
+        "read_result_id": "sha256:b87de66d0d428d76d5f44e614e17379250b5a739baded25865e12ab5fad21a33",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-remaining9-20261012-47/marriott_international/state/updates/B06/periods/FY2021/results/7a26c897a50a4b588c5fd30fd25efd14",
+        "program_version": {
+          "commit": "1fa68a02128544f0643734cdb6badbe6f4bcd211",
+          "has_uncommitted_changes": true
+        }
+      },
+      "protected_file_count": 9,
+      "read_seconds": 0.3161885000008624,
+      "read_state_files": 17,
+      "row": {
+        "company": "Marriott International",
+        "cik": "1048286",
+        "metric_id": "B06",
+        "metric_name": "Debt-to-equity",
+        "value": "",
+        "unit": "ratio",
+        "status": "WITHHELD",
+        "source_class": "DERIVED",
+        "formula": "defined carrying debt / shareholders equity",
+        "period_start": "2021-12-31",
+        "period_end": "2021-12-31",
+        "fiscal_year": "2021",
+        "fiscal_period": "TARGET_PERIOD",
+        "accession": "",
+        "form": "10-K",
+        "filed_date": "2022-02-15",
+        "concept_or_section": "",
+        "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2021, \"period_end\": \"2021-12-31\", \"period_start\": \"2021-01-01\"}, \"measurement_kind\": \"TARGET_PERIOD\", \"scope\": {\"entity_scope\": \"consolidated\"}, \"selection\": {\"calculation\": {}, \"classification\": \"IMPLEMENTATION_GAP\", \"reason\": \"DISCLOSURE_NOTE_MISSING_OR_AMBIGUOUS:us-gaap:DebtDisclosureTextBlock\", \"selection_detail_id\": \"sha256:e8540a4b800b1e588fbdf803de577338656ceb57444bd8609ad6beefa8cd4396\"}, \"source_reference_ids\": [\"sha256:85d85b88e6ff8005c129d0986a68ba4e3d643af4a67741c8117bc4802e124cb2\", \"sha256:7f8156c3c03d25d0dec877742adb193c86fa52ecb0a3816d0cb73dcc94c802fe\", \"sha256:7718849066b9ad05121e9ef79a05acfa9151524ad2c7e734c8afc9e2a9514856\", \"sha256:d0c992921c09a5397ceb543f3ceadb77c0de62273773b81ceec4836d559e37b0\", \"sha256:2b6e7dfd15eb65385b0da240d48ab60c9b0f3e45b47c1259d93fcd12fa887cf9\"]}",
+        "confidence": "",
+        "notes": "Recognized borrowing, bond and finance lease carrying amounts divided by source-verified shareholders equity. No accepted value is asserted for this target period. Native state: WITHHELD; reason: B06_SOURCE_RELATIONSHIP_UNRESOLVED.",
+        "company_id": "marriott_international",
+        "result_id": "sha256:b87de66d0d428d76d5f44e614e17379250b5a739baded25865e12ab5fad21a33",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-remaining9-20261012-47/marriott_international/state/updates/B06/periods/FY2021/results/7a26c897a50a4b588c5fd30fd25efd14",
+        "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "local_metric_status": "PREVIOUS_INPUT_WITHHELD",
+        "period_role": "REQUESTED_RESULT",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+        "defect_holds": "[]",
+        "requested_in_latest_execution": "True"
+      },
+      "selection": {
+        "classification": "IMPLEMENTATION_GAP",
+        "reason": "DISCLOSURE_NOTE_MISSING_OR_AMBIGUOUS:us-gaap:DebtDisclosureTextBlock"
+      }
+    },
+    {
+      "company": "southwest_airlines",
+      "fiscal_year": 2021,
+      "first_metric": {
+        "metric_id": "B06",
+        "status": "CANDIDATE_WITHHELD",
+        "attempt_id": "cada2ffc25404b0ca524bba0f4c25317",
+        "version": "1d1b8c2edc7b4a6b8fbec78b9adb616d",
+        "result_id": "sha256:59bff8a82172911d31d883d48598480e11281d0cb5d442f54ed1a121d456542d",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-remaining9-20261012-47/southwest_airlines/state/updates/B06/periods/FY2021/results/1d1b8c2edc7b4a6b8fbec78b9adb616d",
+        "calculation_performed": true,
+        "new_candidate_created": true,
+        "result_reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2021,
+        "defect_holds": [],
+        "read_result_id": "sha256:59bff8a82172911d31d883d48598480e11281d0cb5d442f54ed1a121d456542d",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-remaining9-20261012-47/southwest_airlines/state/updates/B06/periods/FY2021/results/1d1b8c2edc7b4a6b8fbec78b9adb616d",
+        "program_version": {
+          "commit": "1fa68a02128544f0643734cdb6badbe6f4bcd211",
+          "has_uncommitted_changes": true
+        }
+      },
+      "first_seconds": 8.08221591700567,
+      "repeat_seconds": 0.6002866249909857,
+      "repeat_metric": {
+        "metric_id": "B06",
+        "status": "PREVIOUS_INPUT_WITHHELD",
+        "attempt_id": "af91a3faaebe4304a9d331496fb1350f",
+        "version": "1d1b8c2edc7b4a6b8fbec78b9adb616d",
+        "result_id": "sha256:59bff8a82172911d31d883d48598480e11281d0cb5d442f54ed1a121d456542d",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-remaining9-20261012-47/southwest_airlines/state/updates/B06/periods/FY2021/results/1d1b8c2edc7b4a6b8fbec78b9adb616d",
+        "result_reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+        "raw_input_unchanged": true,
+        "calculation_performed": false,
+        "new_candidate_created": false,
+        "source_check_versions": {
+          "scripts/vnext/ordinary_current_update.py": "dea7fc5d0551287c4bb50d56d6b8d7e7a23aa649902edb0bf1b62206f02cf1e6",
+          "scripts/vnext/request_bindings.py": "d0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee"
+        },
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2021,
+        "defect_holds": [],
+        "read_result_id": "sha256:59bff8a82172911d31d883d48598480e11281d0cb5d442f54ed1a121d456542d",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-remaining9-20261012-47/southwest_airlines/state/updates/B06/periods/FY2021/results/1d1b8c2edc7b4a6b8fbec78b9adb616d",
+        "program_version": {
+          "commit": "1fa68a02128544f0643734cdb6badbe6f4bcd211",
+          "has_uncommitted_changes": true
+        }
+      },
+      "protected_file_count": 9,
+      "read_seconds": 0.3194006249977974,
+      "read_state_files": 17,
+      "row": {
+        "company": "Southwest Airlines",
+        "cik": "92380",
+        "metric_id": "B06",
+        "metric_name": "Debt-to-equity",
+        "value": "",
+        "unit": "ratio",
+        "status": "WITHHELD",
+        "source_class": "DERIVED",
+        "formula": "defined carrying debt / shareholders equity",
+        "period_start": "2021-12-31",
+        "period_end": "2021-12-31",
+        "fiscal_year": "2021",
+        "fiscal_period": "TARGET_PERIOD",
+        "accession": "",
+        "form": "10-K",
+        "filed_date": "2022-02-07",
+        "concept_or_section": "",
+        "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2021, \"period_end\": \"2021-12-31\", \"period_start\": \"2021-01-01\"}, \"measurement_kind\": \"TARGET_PERIOD\", \"scope\": {\"entity_scope\": \"consolidated\"}, \"selection\": {\"calculation\": {}, \"classification\": \"RELATIONSHIP_AMBIGUOUS\", \"reason\": \"UNRESOLVED_FINANCING_ITEM:[{'origin': 'balance_sheet', 'row': 36, 'label': 'Construction obligation', 'value': '0', 'disposition': 'UNRESOLVED'}, {'origin': 'all_instant_xbrl', 'concept': 'us-gaap:debtinstrumentconvertibleconversionprice1', 'ordinal': 635, 'value': '38.48', 'disposition': 'UNRESOLVED'}]\", \"selection_detail_id\": \"sha256:5909c598817d1600dbd7dd01ae8bab54781ec197857fd9bc3f05841f47e917c9\"}, \"source_reference_ids\": [\"sha256:5333d6f398f1f48b63dc970d5eedf5119ea5a7a59ffc0c975caeac6064bb1a97\", \"sha256:2d204b441fde789da5894f1d3cbf0966d6a50ede3c6c915535e0546cb354fb07\", \"sha256:b1a29942689034030cc13dcf57820ea81baa5538df1baf9b7d90111376242b97\", \"sha256:0d793193d1898121493eb7fc92c863e9a1af6bff6205f4df9341687acfa917a7\", \"sha256:5c608fcb41dda93347a20e3d8efb5f050a86f8dd66b09e875fa9c1b00b58ee10\"]}",
+        "confidence": "",
+        "notes": "Recognized borrowing, bond and finance lease carrying amounts divided by source-verified shareholders equity. No accepted value is asserted for this target period. Native state: WITHHELD; reason: B06_SOURCE_RELATIONSHIP_UNRESOLVED.",
+        "company_id": "southwest_airlines",
+        "result_id": "sha256:59bff8a82172911d31d883d48598480e11281d0cb5d442f54ed1a121d456542d",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-remaining9-20261012-47/southwest_airlines/state/updates/B06/periods/FY2021/results/1d1b8c2edc7b4a6b8fbec78b9adb616d",
+        "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "local_metric_status": "PREVIOUS_INPUT_WITHHELD",
+        "period_role": "REQUESTED_RESULT",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+        "defect_holds": "[]",
+        "requested_in_latest_execution": "True"
+      },
+      "selection": {
+        "classification": "RELATIONSHIP_AMBIGUOUS",
+        "reason": "UNRESOLVED_FINANCING_ITEM:[{'origin': 'balance_sheet', 'row': 36, 'label': 'Construction obligation', 'value': '0', 'disposition': 'UNRESOLVED'}, {'origin': 'all_instant_xbrl', 'concept': 'us-gaap:debtinstrumentconvertibleconversionprice1', 'ordinal': 635, 'value': '38.48', 'disposition': 'UNRESOLVED'}]"
+      }
+    },
+    {
+      "company": "ford_motor_company",
+      "fiscal_year": 2021,
+      "first_metric": {
+        "metric_id": "B06",
+        "status": "INPUT_OR_EXECUTION_FAILED",
+        "attempt_id": "06aef66f995c42cda9aabf259c69bfaa",
+        "error_type": "CurrentB06Error",
+        "reason": "B06_SEPARATE_BANK_OR_INDUSTRIAL_SCOPE_NOT_IMPLEMENTED",
+        "previous_result": null,
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2021,
+        "error_category": "IMPLEMENTATION_GAP"
+      },
+      "first_seconds": 10.394994665999548,
+      "repeat_not_run": "Execution failures are not stable completed checks; do not demand zero processing for an unresolved failure.",
+      "read_seconds": 0.31691420800052583,
+      "read_state_files": 7,
+      "row": {
+        "company": "",
+        "cik": "",
+        "metric_id": "B06",
+        "metric_name": "",
+        "value": "",
+        "unit": "",
+        "status": "INPUT_OR_EXECUTION_FAILED",
+        "source_class": "",
+        "formula": "",
+        "period_start": "",
+        "period_end": "",
+        "fiscal_year": "2021",
+        "fiscal_period": "",
+        "accession": "",
+        "form": "",
+        "filed_date": "",
+        "concept_or_section": "",
+        "context_or_dimension": "",
+        "confidence": "",
+        "notes": "reason: B06_SEPARATE_BANK_OR_INDUSTRIAL_SCOPE_NOT_IMPLEMENTED; error_type: CurrentB06Error; error_category: IMPLEMENTATION_GAP",
+        "company_id": "ford_motor_company",
+        "result_id": "",
+        "record_root": "",
+        "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "local_metric_status": "INPUT_OR_EXECUTION_FAILED",
+        "period_role": "REQUESTED_WITHOUT_RESULT",
+        "result_validity": "NO_CURRENT_RESULT",
+        "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+        "defect_holds": "",
+        "requested_in_latest_execution": "True"
+      }
+    },
+    {
+      "company": "pfizer",
+      "fiscal_year": 2021,
+      "first_metric": {
+        "metric_id": "B06",
+        "status": "CANDIDATE_WITHHELD",
+        "attempt_id": "418dad87231842f5892bd16bf13911b5",
+        "version": "e5ff96fc8b4d44dab1eb5167a734d217",
+        "result_id": "sha256:0ef9be15f5b6fbee78a55950955dfb2ccc52073cee362f6582c269c44312b319",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-remaining9-20261012-47/pfizer/state/updates/B06/periods/FY2021/results/e5ff96fc8b4d44dab1eb5167a734d217",
+        "calculation_performed": true,
+        "new_candidate_created": true,
+        "result_reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2021,
+        "defect_holds": [],
+        "read_result_id": "sha256:0ef9be15f5b6fbee78a55950955dfb2ccc52073cee362f6582c269c44312b319",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-remaining9-20261012-47/pfizer/state/updates/B06/periods/FY2021/results/e5ff96fc8b4d44dab1eb5167a734d217",
+        "program_version": {
+          "commit": "1fa68a02128544f0643734cdb6badbe6f4bcd211",
+          "has_uncommitted_changes": true
+        }
+      },
+      "first_seconds": 11.16260825000063,
+      "repeat_seconds": 0.6106937909935368,
+      "repeat_metric": {
+        "metric_id": "B06",
+        "status": "PREVIOUS_INPUT_WITHHELD",
+        "attempt_id": "3afbae57bcf84c21b4c2f2dae636df5b",
+        "version": "e5ff96fc8b4d44dab1eb5167a734d217",
+        "result_id": "sha256:0ef9be15f5b6fbee78a55950955dfb2ccc52073cee362f6582c269c44312b319",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-remaining9-20261012-47/pfizer/state/updates/B06/periods/FY2021/results/e5ff96fc8b4d44dab1eb5167a734d217",
+        "result_reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+        "raw_input_unchanged": true,
+        "calculation_performed": false,
+        "new_candidate_created": false,
+        "source_check_versions": {
+          "scripts/vnext/ordinary_current_update.py": "dea7fc5d0551287c4bb50d56d6b8d7e7a23aa649902edb0bf1b62206f02cf1e6",
+          "scripts/vnext/request_bindings.py": "d0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee"
+        },
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2021,
+        "defect_holds": [],
+        "read_result_id": "sha256:0ef9be15f5b6fbee78a55950955dfb2ccc52073cee362f6582c269c44312b319",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-remaining9-20261012-47/pfizer/state/updates/B06/periods/FY2021/results/e5ff96fc8b4d44dab1eb5167a734d217",
+        "program_version": {
+          "commit": "1fa68a02128544f0643734cdb6badbe6f4bcd211",
+          "has_uncommitted_changes": true
+        }
+      },
+      "protected_file_count": 9,
+      "read_seconds": 0.3248230000026524,
+      "read_state_files": 17,
+      "row": {
+        "company": "Pfizer",
+        "cik": "78003",
+        "metric_id": "B06",
+        "metric_name": "Debt-to-equity",
+        "value": "",
+        "unit": "ratio",
+        "status": "WITHHELD",
+        "source_class": "DERIVED",
+        "formula": "defined carrying debt / shareholders equity",
+        "period_start": "2021-12-31",
+        "period_end": "2021-12-31",
+        "fiscal_year": "2021",
+        "fiscal_period": "TARGET_PERIOD",
+        "accession": "",
+        "form": "10-K",
+        "filed_date": "2022-02-24",
+        "concept_or_section": "",
+        "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2021, \"period_end\": \"2021-12-31\", \"period_start\": \"2021-01-01\"}, \"measurement_kind\": \"TARGET_PERIOD\", \"scope\": {\"entity_scope\": \"consolidated\"}, \"selection\": {\"calculation\": {}, \"classification\": \"IMPLEMENTATION_GAP\", \"reason\": \"DISCLOSURE_NOTE_MISSING_OR_AMBIGUOUS:us-gaap:DebtDisclosureTextBlock\", \"selection_detail_id\": \"sha256:e8540a4b800b1e588fbdf803de577338656ceb57444bd8609ad6beefa8cd4396\"}, \"source_reference_ids\": [\"sha256:700a308c2f6fed921d630344f0d45de15dc47631700b146a0f13badb483b6b8f\", \"sha256:7b60567998bd49e5f2535c2a40b5e1eab87622b565f51eed4441dbe7de226a33\", \"sha256:6523a9093c5d2d0cd1a3f589875335e72be621d7b371aad3829372d247387483\", \"sha256:7d168d078d4719ad48a2bf1f5ccc6810144b9512890e75d52043d8df43f151d2\", \"sha256:29f1a98b583672e0ee00b6f0a3e2bdf865b2c95ef617b350d57b563e9f2add62\"]}",
+        "confidence": "",
+        "notes": "Recognized borrowing, bond and finance lease carrying amounts divided by source-verified shareholders equity. No accepted value is asserted for this target period. Native state: WITHHELD; reason: B06_SOURCE_RELATIONSHIP_UNRESOLVED.",
+        "company_id": "pfizer",
+        "result_id": "sha256:0ef9be15f5b6fbee78a55950955dfb2ccc52073cee362f6582c269c44312b319",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-remaining9-20261012-47/pfizer/state/updates/B06/periods/FY2021/results/e5ff96fc8b4d44dab1eb5167a734d217",
+        "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "local_metric_status": "PREVIOUS_INPUT_WITHHELD",
+        "period_role": "REQUESTED_RESULT",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+        "defect_holds": "[]",
+        "requested_in_latest_execution": "True"
+      },
+      "selection": {
+        "classification": "IMPLEMENTATION_GAP",
+        "reason": "DISCLOSURE_NOTE_MISSING_OR_AMBIGUOUS:us-gaap:DebtDisclosureTextBlock"
+      }
+    },
+    {
+      "company": "jpmorgan_chase",
+      "fiscal_year": 2021,
+      "first_metric": {
+        "metric_id": "B06",
+        "status": "CANDIDATE_WITHHELD",
+        "attempt_id": "27ff9e707ce84293a3eab64d46dd1094",
+        "version": "7399a1a4813a4df8862fd0559a21a0fe",
+        "result_id": "sha256:626955013a264407b185719141ea6aeb6f0a53526b7802568e070870fb173ef1",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-remaining9-20261012-47/jpmorgan_chase/state/updates/B06/periods/FY2021/results/7399a1a4813a4df8862fd0559a21a0fe",
+        "calculation_performed": true,
+        "new_candidate_created": true,
+        "result_reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2021,
+        "defect_holds": [],
+        "read_result_id": "sha256:626955013a264407b185719141ea6aeb6f0a53526b7802568e070870fb173ef1",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-remaining9-20261012-47/jpmorgan_chase/state/updates/B06/periods/FY2021/results/7399a1a4813a4df8862fd0559a21a0fe",
+        "program_version": {
+          "commit": "1fa68a02128544f0643734cdb6badbe6f4bcd211",
+          "has_uncommitted_changes": true
+        }
+      },
+      "first_seconds": 59.97251595900161,
+      "repeat_seconds": 0.8421675410063472,
+      "repeat_metric": {
+        "metric_id": "B06",
+        "status": "PREVIOUS_INPUT_WITHHELD",
+        "attempt_id": "841cddad49274e4a97681bf4da9dbf68",
+        "version": "7399a1a4813a4df8862fd0559a21a0fe",
+        "result_id": "sha256:626955013a264407b185719141ea6aeb6f0a53526b7802568e070870fb173ef1",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-remaining9-20261012-47/jpmorgan_chase/state/updates/B06/periods/FY2021/results/7399a1a4813a4df8862fd0559a21a0fe",
+        "result_reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+        "raw_input_unchanged": true,
+        "calculation_performed": false,
+        "new_candidate_created": false,
+        "source_check_versions": {
+          "scripts/vnext/ordinary_current_update.py": "dea7fc5d0551287c4bb50d56d6b8d7e7a23aa649902edb0bf1b62206f02cf1e6",
+          "scripts/vnext/request_bindings.py": "d0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee"
+        },
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2021,
+        "defect_holds": [],
+        "read_result_id": "sha256:626955013a264407b185719141ea6aeb6f0a53526b7802568e070870fb173ef1",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-remaining9-20261012-47/jpmorgan_chase/state/updates/B06/periods/FY2021/results/7399a1a4813a4df8862fd0559a21a0fe",
+        "program_version": {
+          "commit": "1fa68a02128544f0643734cdb6badbe6f4bcd211",
+          "has_uncommitted_changes": true
+        }
+      },
+      "protected_file_count": 9,
+      "read_seconds": 0.3887747910048347,
+      "read_state_files": 17,
+      "row": {
+        "company": "JPMorgan Chase",
+        "cik": "19617",
+        "metric_id": "B06",
+        "metric_name": "Debt-to-equity",
+        "value": "",
+        "unit": "ratio",
+        "status": "WITHHELD",
+        "source_class": "DERIVED",
+        "formula": "defined carrying debt / shareholders equity",
+        "period_start": "2021-12-31",
+        "period_end": "2021-12-31",
+        "fiscal_year": "2021",
+        "fiscal_period": "TARGET_PERIOD",
+        "accession": "",
+        "form": "10-K",
+        "filed_date": "2022-02-22",
+        "concept_or_section": "",
+        "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2021, \"period_end\": \"2021-12-31\", \"period_start\": \"2021-01-01\"}, \"measurement_kind\": \"TARGET_PERIOD\", \"scope\": {\"entity_scope\": \"consolidated\"}, \"selection\": {\"calculation\": {}, \"classification\": \"SOURCE_REBUILT_SPECIAL_SCOPE_LIMITATION\", \"lease_inclusion\": {\"status\": \"NOT_APPLICABLE_TO_BANK_SCOPE\"}, \"reasons\": [\"BANK_FINANCE_LEASE_COMPLETENESS_NOT_ESTABLISHED\"], \"reported_subtotal\": \"559689000000\", \"scope_class\": \"bank_funding\", \"selection_detail_id\": \"sha256:2bc0bd77d160b50289beb41fc62867b16dfe9576b02828fd742a3279f42ad829\"}, \"source_reference_ids\": [\"sha256:e1fa7c880827aeb254b0cdc181b9a6ad3848edecf210e1221ef0d225074e81c2\", \"sha256:1952f4ba4fb110b582edfc3c695849b795a114ea974893cbca559bd1a222bfd6\", \"sha256:425def3f158733ce39925542e00f8b9d06791cd0ba6b1f4378b355fb68ef4d02\", \"sha256:7a658afc2bc677dad3fa43df9855352a93dd04afa38766574ae0c3d094105cf0\", \"sha256:417bcc435a9d3d3e69d5e8c2c87b8798f58e038428115b6682efe199b7ed43d7\"]}",
+        "confidence": "",
+        "notes": "Recognized borrowing, bond and finance lease carrying amounts divided by source-verified shareholders equity. No accepted value is asserted for this target period. Native state: WITHHELD; reason: B06_SOURCE_RELATIONSHIP_UNRESOLVED.",
+        "company_id": "jpmorgan_chase",
+        "result_id": "sha256:626955013a264407b185719141ea6aeb6f0a53526b7802568e070870fb173ef1",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-remaining9-20261012-47/jpmorgan_chase/state/updates/B06/periods/FY2021/results/7399a1a4813a4df8862fd0559a21a0fe",
+        "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "local_metric_status": "PREVIOUS_INPUT_WITHHELD",
+        "period_role": "REQUESTED_RESULT",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+        "defect_holds": "[]",
+        "requested_in_latest_execution": "True"
+      },
+      "selection": {
+        "classification": "SOURCE_REBUILT_SPECIAL_SCOPE_LIMITATION",
+        "ratio": null,
+        "reported_subtotal": "559689000000",
+        "scope_class": "bank_funding"
+      }
+    },
+    {
+      "company": "salesforce",
+      "fiscal_year": 2021,
+      "first_metric": {
+        "metric_id": "B06",
+        "status": "CANDIDATE_WITHHELD",
+        "attempt_id": "318acb707e5e4d6fb66c17e47846e532",
+        "version": "e8ca7abb327544bd9f450ead79515bff",
+        "result_id": "sha256:a41207fea105ab44234b3d044a7f564351de2300c04bf1ba3e04ac58e8f72e0a",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-remaining9-20261012-47/salesforce/state/updates/B06/periods/FY2021/results/e8ca7abb327544bd9f450ead79515bff",
+        "calculation_performed": true,
+        "new_candidate_created": true,
+        "result_reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2021,
+        "defect_holds": [],
+        "read_result_id": "sha256:a41207fea105ab44234b3d044a7f564351de2300c04bf1ba3e04ac58e8f72e0a",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-remaining9-20261012-47/salesforce/state/updates/B06/periods/FY2021/results/e8ca7abb327544bd9f450ead79515bff",
+        "program_version": {
+          "commit": "1fa68a02128544f0643734cdb6badbe6f4bcd211",
+          "has_uncommitted_changes": true
+        }
+      },
+      "first_seconds": 8.416780875006225,
+      "repeat_seconds": 0.6087072919908678,
+      "repeat_metric": {
+        "metric_id": "B06",
+        "status": "PREVIOUS_INPUT_WITHHELD",
+        "attempt_id": "0cbc13c85c3145a59d2284222c2b8fb6",
+        "version": "e8ca7abb327544bd9f450ead79515bff",
+        "result_id": "sha256:a41207fea105ab44234b3d044a7f564351de2300c04bf1ba3e04ac58e8f72e0a",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-remaining9-20261012-47/salesforce/state/updates/B06/periods/FY2021/results/e8ca7abb327544bd9f450ead79515bff",
+        "result_reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+        "raw_input_unchanged": true,
+        "calculation_performed": false,
+        "new_candidate_created": false,
+        "source_check_versions": {
+          "scripts/vnext/ordinary_current_update.py": "dea7fc5d0551287c4bb50d56d6b8d7e7a23aa649902edb0bf1b62206f02cf1e6",
+          "scripts/vnext/request_bindings.py": "d0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee"
+        },
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2021,
+        "defect_holds": [],
+        "read_result_id": "sha256:a41207fea105ab44234b3d044a7f564351de2300c04bf1ba3e04ac58e8f72e0a",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-remaining9-20261012-47/salesforce/state/updates/B06/periods/FY2021/results/e8ca7abb327544bd9f450ead79515bff",
+        "program_version": {
+          "commit": "1fa68a02128544f0643734cdb6badbe6f4bcd211",
+          "has_uncommitted_changes": true
+        }
+      },
+      "protected_file_count": 9,
+      "read_seconds": 0.3260221660020761,
+      "read_state_files": 17,
+      "row": {
+        "company": "Salesforce",
+        "cik": "1108524",
+        "metric_id": "B06",
+        "metric_name": "Debt-to-equity",
+        "value": "",
+        "unit": "ratio",
+        "status": "WITHHELD",
+        "source_class": "DERIVED",
+        "formula": "defined carrying debt / shareholders equity",
+        "period_start": "2021-01-31",
+        "period_end": "2021-01-31",
+        "fiscal_year": "2021",
+        "fiscal_period": "TARGET_PERIOD",
+        "accession": "",
+        "form": "10-K",
+        "filed_date": "2021-03-17",
+        "concept_or_section": "",
+        "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2021, \"period_end\": \"2021-01-31\", \"period_start\": \"2020-02-01\"}, \"measurement_kind\": \"TARGET_PERIOD\", \"scope\": {\"entity_scope\": \"consolidated\"}, \"selection\": {\"calculation\": {}, \"classification\": \"IMPLEMENTATION_GAP\", \"reason\": \"DEBT_COMPONENT_RECONCILIATION_FAILED\", \"selection_detail_id\": \"sha256:24539cd4f8900e7fecfa33b3b7a44909b8e4028e03e51a1d55f3769eeef25f98\"}, \"source_reference_ids\": [\"sha256:8702d0c40ea647a7fa416913572cfc7ef0af01726c696406befbf651a4ce9bbc\", \"sha256:9177faf60b600c388cf0b7019d65eb0338d215431445a9191caf0a17ac4821ae\", \"sha256:29844e9d15060309723de15ab8bbed7d4108e041537ad76d9fec53112122e63c\", \"sha256:0cd9cb2298a620eea46fe585be1ea8080617c5f5677efbc9206e5655f3d8f3ef\", \"sha256:6d722fa154dee105e8edf7e3541acf5e926a460f0351a32c59d35405388495b6\"]}",
+        "confidence": "",
+        "notes": "Recognized borrowing, bond and finance lease carrying amounts divided by source-verified shareholders equity. No accepted value is asserted for this target period. Native state: WITHHELD; reason: B06_SOURCE_RELATIONSHIP_UNRESOLVED.",
+        "company_id": "salesforce",
+        "result_id": "sha256:a41207fea105ab44234b3d044a7f564351de2300c04bf1ba3e04ac58e8f72e0a",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-remaining9-20261012-47/salesforce/state/updates/B06/periods/FY2021/results/e8ca7abb327544bd9f450ead79515bff",
+        "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "local_metric_status": "PREVIOUS_INPUT_WITHHELD",
+        "period_role": "REQUESTED_RESULT",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+        "defect_holds": "[]",
+        "requested_in_latest_execution": "True"
+      },
+      "selection": {
+        "classification": "IMPLEMENTATION_GAP",
+        "reason": "DEBT_COMPONENT_RECONCILIATION_FAILED"
+      }
+    },
+    {
+      "company": "lumen_technologies",
+      "fiscal_year": 2021,
+      "first_metric": {
+        "metric_id": "B06",
+        "status": "CANDIDATE_WITHHELD",
+        "attempt_id": "80c4ad050a8947de9992779529f6cd52",
+        "version": "f0ec98a2290e4c5da7f8e94b81a1f160",
+        "result_id": "sha256:ba6eb000d88f01439ca030d03a407fd2dfbbfe3ac9764bca2ad18903e6d23994",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-remaining9-20261012-47/lumen_technologies/state/updates/B06/periods/FY2021/results/f0ec98a2290e4c5da7f8e94b81a1f160",
+        "calculation_performed": true,
+        "new_candidate_created": true,
+        "result_reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2021,
+        "defect_holds": [],
+        "read_result_id": "sha256:ba6eb000d88f01439ca030d03a407fd2dfbbfe3ac9764bca2ad18903e6d23994",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-remaining9-20261012-47/lumen_technologies/state/updates/B06/periods/FY2021/results/f0ec98a2290e4c5da7f8e94b81a1f160",
+        "program_version": {
+          "commit": "1fa68a02128544f0643734cdb6badbe6f4bcd211",
+          "has_uncommitted_changes": true
+        }
+      },
+      "first_seconds": 7.841567499999655,
+      "repeat_seconds": 0.6231846250011586,
+      "repeat_metric": {
+        "metric_id": "B06",
+        "status": "PREVIOUS_INPUT_WITHHELD",
+        "attempt_id": "76d2f92e3c12495986614131a116f2b6",
+        "version": "f0ec98a2290e4c5da7f8e94b81a1f160",
+        "result_id": "sha256:ba6eb000d88f01439ca030d03a407fd2dfbbfe3ac9764bca2ad18903e6d23994",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-remaining9-20261012-47/lumen_technologies/state/updates/B06/periods/FY2021/results/f0ec98a2290e4c5da7f8e94b81a1f160",
+        "result_reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+        "raw_input_unchanged": true,
+        "calculation_performed": false,
+        "new_candidate_created": false,
+        "source_check_versions": {
+          "scripts/vnext/ordinary_current_update.py": "dea7fc5d0551287c4bb50d56d6b8d7e7a23aa649902edb0bf1b62206f02cf1e6",
+          "scripts/vnext/request_bindings.py": "d0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee"
+        },
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2021,
+        "defect_holds": [],
+        "read_result_id": "sha256:ba6eb000d88f01439ca030d03a407fd2dfbbfe3ac9764bca2ad18903e6d23994",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-remaining9-20261012-47/lumen_technologies/state/updates/B06/periods/FY2021/results/f0ec98a2290e4c5da7f8e94b81a1f160",
+        "program_version": {
+          "commit": "1fa68a02128544f0643734cdb6badbe6f4bcd211",
+          "has_uncommitted_changes": true
+        }
+      },
+      "protected_file_count": 9,
+      "read_seconds": 0.35226016699743923,
+      "read_state_files": 17,
+      "row": {
+        "company": "Lumen Technologies",
+        "cik": "18926",
+        "metric_id": "B06",
+        "metric_name": "Debt-to-equity",
+        "value": "",
+        "unit": "ratio",
+        "status": "WITHHELD",
+        "source_class": "DERIVED",
+        "formula": "defined carrying debt / shareholders equity",
+        "period_start": "2021-12-31",
+        "period_end": "2021-12-31",
+        "fiscal_year": "2021",
+        "fiscal_period": "TARGET_PERIOD",
+        "accession": "",
+        "form": "10-K",
+        "filed_date": "2022-02-24",
+        "concept_or_section": "",
+        "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2021, \"period_end\": \"2021-12-31\", \"period_start\": \"2021-01-01\"}, \"measurement_kind\": \"TARGET_PERIOD\", \"scope\": {\"entity_scope\": \"consolidated\"}, \"selection\": {\"calculation\": {}, \"classification\": \"IMPLEMENTATION_GAP\", \"reason\": \"DISCLOSURE_NOTE_MISSING_OR_AMBIGUOUS:us-gaap:LesseeLeasesPolicyTextBlock\", \"selection_detail_id\": \"sha256:9cca65e1f3d7389832b582bee42716b73110c9506177166d3347e648734c54e5\"}, \"source_reference_ids\": [\"sha256:8ff9ed15547a13d0382bb5d828f2f524e3294d0c1638aca0f7b184e4b18d1222\", \"sha256:075207a964e118c36ddc6f32d0feea7bcb8598d29ce923c5c1df697411382412\", \"sha256:e86e84e640c7b5d151cf62f73ac3e1d53edfaa7601b154b9e8cae082d8aae40e\", \"sha256:d626b0f1499ffac5781242462a1f5a490d64a1f31ebd15508c5b9c123310e02c\", \"sha256:a142977f6b116401863423cc0c9969e535fe39b2287baeedb5d546a5216e6a41\"]}",
+        "confidence": "",
+        "notes": "Recognized borrowing, bond and finance lease carrying amounts divided by source-verified shareholders equity. No accepted value is asserted for this target period. Native state: WITHHELD; reason: B06_SOURCE_RELATIONSHIP_UNRESOLVED.",
+        "company_id": "lumen_technologies",
+        "result_id": "sha256:ba6eb000d88f01439ca030d03a407fd2dfbbfe3ac9764bca2ad18903e6d23994",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-remaining9-20261012-47/lumen_technologies/state/updates/B06/periods/FY2021/results/f0ec98a2290e4c5da7f8e94b81a1f160",
+        "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "local_metric_status": "PREVIOUS_INPUT_WITHHELD",
+        "period_role": "REQUESTED_RESULT",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+        "defect_holds": "[]",
+        "requested_in_latest_execution": "True"
+      },
+      "selection": {
+        "classification": "IMPLEMENTATION_GAP",
+        "reason": "DISCLOSURE_NOTE_MISSING_OR_AMBIGUOUS:us-gaap:LesseeLeasesPolicyTextBlock"
+      }
+    },
+    {
+      "company": "macys",
+      "fiscal_year": 2021,
+      "first_metric": {
+        "metric_id": "B06",
+        "status": "CANDIDATE_WITHHELD",
+        "attempt_id": "032b1bccc28f4b42b32f07f1c1e024fd",
+        "version": "22273c8cbcaa41418dcb9f35788f97b9",
+        "result_id": "sha256:b03185f79c3515d4ca98209735d112c514c40c3c972ebeba59a718f0037b3396",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-remaining9-20261012-47/macys/state/updates/B06/periods/FY2021/results/22273c8cbcaa41418dcb9f35788f97b9",
+        "calculation_performed": true,
+        "new_candidate_created": true,
+        "result_reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2021,
+        "defect_holds": [],
+        "read_result_id": "sha256:b03185f79c3515d4ca98209735d112c514c40c3c972ebeba59a718f0037b3396",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-remaining9-20261012-47/macys/state/updates/B06/periods/FY2021/results/22273c8cbcaa41418dcb9f35788f97b9",
+        "program_version": {
+          "commit": "1fa68a02128544f0643734cdb6badbe6f4bcd211",
+          "has_uncommitted_changes": true
+        }
+      },
+      "first_seconds": 12.494464792005601,
+      "repeat_seconds": 0.6304082080023363,
+      "repeat_metric": {
+        "metric_id": "B06",
+        "status": "PREVIOUS_INPUT_WITHHELD",
+        "attempt_id": "8666ff91505046b0b83a4fffaf94f913",
+        "version": "22273c8cbcaa41418dcb9f35788f97b9",
+        "result_id": "sha256:b03185f79c3515d4ca98209735d112c514c40c3c972ebeba59a718f0037b3396",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-remaining9-20261012-47/macys/state/updates/B06/periods/FY2021/results/22273c8cbcaa41418dcb9f35788f97b9",
+        "result_reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+        "raw_input_unchanged": true,
+        "calculation_performed": false,
+        "new_candidate_created": false,
+        "source_check_versions": {
+          "scripts/vnext/ordinary_current_update.py": "dea7fc5d0551287c4bb50d56d6b8d7e7a23aa649902edb0bf1b62206f02cf1e6",
+          "scripts/vnext/request_bindings.py": "d0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee"
+        },
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2021,
+        "defect_holds": [],
+        "read_result_id": "sha256:b03185f79c3515d4ca98209735d112c514c40c3c972ebeba59a718f0037b3396",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-remaining9-20261012-47/macys/state/updates/B06/periods/FY2021/results/22273c8cbcaa41418dcb9f35788f97b9",
+        "program_version": {
+          "commit": "1fa68a02128544f0643734cdb6badbe6f4bcd211",
+          "has_uncommitted_changes": true
+        }
+      },
+      "protected_file_count": 9,
+      "read_seconds": 0.3359155839862069,
+      "read_state_files": 17,
+      "row": {
+        "company": "Macy's",
+        "cik": "794367",
+        "metric_id": "B06",
+        "metric_name": "Debt-to-equity",
+        "value": "",
+        "unit": "ratio",
+        "status": "WITHHELD",
+        "source_class": "DERIVED",
+        "formula": "defined carrying debt / shareholders equity",
+        "period_start": "2022-01-29",
+        "period_end": "2022-01-29",
+        "fiscal_year": "2021",
+        "fiscal_period": "TARGET_PERIOD",
+        "accession": "",
+        "form": "10-K",
+        "filed_date": "2022-03-25",
+        "concept_or_section": "",
+        "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2021, \"period_end\": \"2022-01-29\", \"period_start\": \"2021-01-31\"}, \"measurement_kind\": \"TARGET_PERIOD\", \"scope\": {\"entity_scope\": \"consolidated\"}, \"selection\": {\"calculation\": {}, \"classification\": \"SOURCE_OR_RELATIONSHIP_UNRESOLVED\", \"reason\": \"BOND_LEASE_BALANCE_ROLE_MISSING:gross,premium,total_borrowing,fair_value,combined_lease\", \"selection_detail_id\": \"sha256:c586d0b2582235d5950564ba0a73867a112618320084474ceba6d670938fba9c\"}, \"source_reference_ids\": [\"sha256:f93f1ab12a0532e4741456f163fcc24f5d7aa5ee32a59fbfa661844fba9b4704\", \"sha256:d8682f44cd518458408f02fdb62b0b610d444d09760cb03dc418ece2683f21f3\", \"sha256:79dff8cb785e0e29a51d949d9d52c84b496f513950c92cadbdace3b7133479b0\", \"sha256:f8e7997df65c7004c62811415058a3df6777ac102fb67746577e83d4dd5e92db\", \"sha256:e9e13d1f852f5a40577389d02b98aa20841de88e1b9fff69b83298d34fdc39a5\"]}",
+        "confidence": "",
+        "notes": "Recognized borrowing, bond and finance lease carrying amounts divided by source-verified shareholders equity. No accepted value is asserted for this target period. Native state: WITHHELD; reason: B06_SOURCE_RELATIONSHIP_UNRESOLVED.",
+        "company_id": "macys",
+        "result_id": "sha256:b03185f79c3515d4ca98209735d112c514c40c3c972ebeba59a718f0037b3396",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-remaining9-20261012-47/macys/state/updates/B06/periods/FY2021/results/22273c8cbcaa41418dcb9f35788f97b9",
+        "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "local_metric_status": "PREVIOUS_INPUT_WITHHELD",
+        "period_role": "REQUESTED_RESULT",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+        "defect_holds": "[]",
+        "requested_in_latest_execution": "True"
+      },
+      "selection": {
+        "classification": "SOURCE_OR_RELATIONSHIP_UNRESOLVED",
+        "reason": "BOND_LEASE_BALANCE_ROLE_MISSING:gross,premium,total_borrowing,fair_value,combined_lease"
+      }
+    },
+    {
+      "company": "paramount_skydance_paramount_global",
+      "fiscal_year": 2021,
+      "first_metric": {
+        "metric_id": "B06",
+        "status": "CANDIDATE_WITHHELD",
+        "attempt_id": "58d9a74090d44105b918a27632066fed",
+        "version": "8e3d3e0c32a042e0a9e783cf5eb40771",
+        "result_id": "sha256:79a1425b70f8591ff960afc82f24afbb67d9589d41b06623d830807dfeec1f17",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-remaining9-20261012-47/paramount_skydance_paramount_global/state/updates/B06/periods/FY2021/results/8e3d3e0c32a042e0a9e783cf5eb40771",
+        "calculation_performed": true,
+        "new_candidate_created": true,
+        "result_reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2021,
+        "defect_holds": [],
+        "read_result_id": "sha256:79a1425b70f8591ff960afc82f24afbb67d9589d41b06623d830807dfeec1f17",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-remaining9-20261012-47/paramount_skydance_paramount_global/state/updates/B06/periods/FY2021/results/8e3d3e0c32a042e0a9e783cf5eb40771",
+        "program_version": {
+          "commit": "1fa68a02128544f0643734cdb6badbe6f4bcd211",
+          "has_uncommitted_changes": true
+        }
+      },
+      "first_seconds": 9.443142040996463,
+      "repeat_seconds": 0.6552384170063306,
+      "repeat_metric": {
+        "metric_id": "B06",
+        "status": "PREVIOUS_INPUT_WITHHELD",
+        "attempt_id": "d941868512e54d6a9a3002168571ec88",
+        "version": "8e3d3e0c32a042e0a9e783cf5eb40771",
+        "result_id": "sha256:79a1425b70f8591ff960afc82f24afbb67d9589d41b06623d830807dfeec1f17",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-remaining9-20261012-47/paramount_skydance_paramount_global/state/updates/B06/periods/FY2021/results/8e3d3e0c32a042e0a9e783cf5eb40771",
+        "result_reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+        "raw_input_unchanged": true,
+        "calculation_performed": false,
+        "new_candidate_created": false,
+        "source_check_versions": {
+          "scripts/vnext/ordinary_current_update.py": "dea7fc5d0551287c4bb50d56d6b8d7e7a23aa649902edb0bf1b62206f02cf1e6",
+          "scripts/vnext/request_bindings.py": "d0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee"
+        },
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2021,
+        "defect_holds": [],
+        "read_result_id": "sha256:79a1425b70f8591ff960afc82f24afbb67d9589d41b06623d830807dfeec1f17",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-remaining9-20261012-47/paramount_skydance_paramount_global/state/updates/B06/periods/FY2021/results/8e3d3e0c32a042e0a9e783cf5eb40771",
+        "program_version": {
+          "commit": "1fa68a02128544f0643734cdb6badbe6f4bcd211",
+          "has_uncommitted_changes": true
+        }
+      },
+      "protected_file_count": 9,
+      "read_seconds": 0.339473915999406,
+      "read_state_files": 17,
+      "row": {
+        "company": "Paramount Skydance / Paramount Global",
+        "cik": "813828",
+        "metric_id": "B06",
+        "metric_name": "Debt-to-equity",
+        "value": "",
+        "unit": "ratio",
+        "status": "WITHHELD",
+        "source_class": "DERIVED",
+        "formula": "defined carrying debt / shareholders equity",
+        "period_start": "2021-12-31",
+        "period_end": "2021-12-31",
+        "fiscal_year": "2021",
+        "fiscal_period": "TARGET_PERIOD",
+        "accession": "",
+        "form": "10-K",
+        "filed_date": "2022-02-15",
+        "concept_or_section": "",
+        "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2021, \"period_end\": \"2021-12-31\", \"period_start\": \"2021-01-01\"}, \"measurement_kind\": \"TARGET_PERIOD\", \"scope\": {\"entity_scope\": \"consolidated\"}, \"selection\": {\"calculation\": {}, \"classification\": \"IMPLEMENTATION_GAP\", \"reason\": \"DISCLOSURE_NOTE_MISSING_OR_AMBIGUOUS:us-gaap:ScheduleOfDebtInstrumentsTextBlock\", \"selection_detail_id\": \"sha256:63b3223bd05dd489a7430daaeb6b83af044185f5bfce8c5d7100b484cac6b75f\"}, \"source_reference_ids\": [\"sha256:6a1c7b4dcd5412be7ea6a7614e3de88e20456f1bf5b4e104c1ca400ab591320f\", \"sha256:2001a91e997b5b7c4d44648afff8b30906ba6f8c6f13ba4f1c9bd2cb7a45057f\", \"sha256:1486081eaed6da3e9f68bbac0c08c0f10250b9ce4ab2e75a0d44f8b36f814e86\", \"sha256:cc4b119849e582425aeeaf5b6d6be60f44cdc3fa998c1a97bdc2b8bfab4dd921\", \"sha256:08a1cb83980afb197a98550b561a304fa36c570a867a52b3852d1f8c4b1caded\"]}",
+        "confidence": "",
+        "notes": "Recognized borrowing, bond and finance lease carrying amounts divided by source-verified shareholders equity. No accepted value is asserted for this target period. Native state: WITHHELD; reason: B06_SOURCE_RELATIONSHIP_UNRESOLVED.",
+        "company_id": "paramount_skydance_paramount_global",
+        "result_id": "sha256:79a1425b70f8591ff960afc82f24afbb67d9589d41b06623d830807dfeec1f17",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b06-release-remaining9-20261012-47/paramount_skydance_paramount_global/state/updates/B06/periods/FY2021/results/8e3d3e0c32a042e0a9e783cf5eb40771",
+        "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "local_metric_status": "PREVIOUS_INPUT_WITHHELD",
+        "period_role": "REQUESTED_RESULT",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+        "defect_holds": "[]",
+        "requested_in_latest_execution": "True"
+      },
+      "selection": {
+        "classification": "IMPLEMENTATION_GAP",
+        "reason": "DISCLOSURE_NOTE_MISSING_OR_AMBIGUOUS:us-gaap:ScheduleOfDebtInstrumentsTextBlock"
+      }
+    }
+  ],
+  "source_metadata_hashes": {
+    "config/company_registry.csv": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+    "evidence/requests_log.csv": "61252ac5844ad1c5917040f753c04a7ed4f6e1d75e2fb0803804773fd6c0eef9",
+    "evidence/requests_log_manifest.json": "e91193401733b86ddc28c69cbae0debd74eeb899a328e60fcfb32532ed6a85ab"
+  },
+  "calls": [
+    0,
+    0,
+    0
+  ]
+}
