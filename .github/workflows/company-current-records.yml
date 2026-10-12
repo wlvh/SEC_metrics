@@ -20,6 +20,8 @@ name: Company saved-source records
     - tests/vnext/test_company_current_records.py
     - tests/vnext/test_current_b06_case.py
     - tests/vnext/test_current_auditor_case.py
+    - tests/vnext/test_c04_selected_input.py
+    - docs/evidence/issue28_c04_label_identity_20261012/**
     - tests/vnext/test_single_revenue_line.py
     - tests/vnext/test_selected_income_calculation.py
     - tests/vnext/test_historical_b03_case.py
@@ -156,7 +158,7 @@ jobs:
     - name: Current auditor changes use the shared four-form source core
       env:
         PYTHONDONTWRITEBYTECODE: '1'
-      run: python3 tests/required_unittests.py tests.vnext.test_current_auditor_case
+      run: python3 tests/required_unittests.py tests.vnext.test_current_auditor_case tests.vnext.test_c04_selected_input
     - name: Paired reported comparisons and exact revenue defect
       env:
         PYTHONDONTWRITEBYTECODE: '1'
