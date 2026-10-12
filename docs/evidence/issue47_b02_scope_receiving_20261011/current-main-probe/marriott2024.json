@@ -1,0 +1,233 @@
+{
+  "execution_code_tree": "f536b9999ed6603bc9409cb013736b79ba110fa6",
+  "execution_scope": "main e3 + public189 + history190; shared income files unchanged from main e3",
+  "company": "marriott_international",
+  "fiscal_year": 2024,
+  "filing": {
+    "form": "10-K",
+    "reportDate": "2024-12-31",
+    "filingDate": "2025-02-11",
+    "accessionNumber": "0001628280-25-004818",
+    "primaryDocument": "mar-20241231.htm"
+  },
+  "target_period": {
+    "fiscal_year": 2024,
+    "period_start": "2024-01-01",
+    "period_end": "2024-12-31"
+  },
+  "result": {
+    "company_id": "marriott_international",
+    "metric_id": "B02",
+    "period_start": "2024-01-01",
+    "period_end": "2024-12-31",
+    "scope_key": "sha256:f06038f2e9777c98996ef385a9dea78ca1e4f6d3c0dcb7aad3ceb958c192321e",
+    "spec_closure_hash": "sha256:7f569259f31e7d0bd237ca8ba6bc368cbf55d47453f86915c4cf8e0638868a76",
+    "applicability": "APPLICABLE",
+    "quality": "NONE",
+    "publication": "WITHHELD",
+    "reason_code": "HISTORICAL_PAIRED_REVENUE_SCOPE_UNRESOLVED",
+    "value": null,
+    "unit": null,
+    "trace_id": "sha256:d19c86f2ceaf103b7b0764e7efd15a0f7cd25554f457966a26723bd7899eff34",
+    "record_type": "METRIC_RESULT",
+    "result_id": "sha256:e60788028e67b18d555c11b5c37e824c6f5805d212925e284bf64a5f69480550"
+  },
+  "assessment": {
+    "category": "IMPLEMENTATION_GAP",
+    "reason": "HISTORICAL_PAIRED_REVENUE_COMPLETE_SCOPE_UNPROVEN",
+    "error_type": "StatementCaseError",
+    "unresolved_revenue_role": "current",
+    "paired_revenue_scopes": {
+      "current": {
+        "method": "SELECTED_REVENUE_COMPONENT_ADMISSION_V1",
+        "approved_concepts": [
+          "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+          "us-gaap:RevenueFromContractWithCustomerIncludingAssessedTax",
+          "us-gaap:Revenues",
+          "us-gaap:SalesRevenueNet"
+        ],
+        "splits": [],
+        "status": "NO_DEMONSTRATED_SPLIT",
+        "complete_scope_proven": false,
+        "scope_id": "sha256:fddd0f1ea9ea7dd0f6d0b45904455b3e5209024d2a47ccccac03de02ff4084fc",
+        "original_report_count": {
+          "primary": 8,
+          "xml": 8
+        },
+        "original_report_identities": {
+          "primary": [
+            {
+              "concept": "us-gaap:Revenues",
+              "ordinal": 92,
+              "context_ref": "c-1",
+              "value": "25100000000",
+              "unit": "USD",
+              "dimensions": null,
+              "period_start": "2024-01-01",
+              "period_end": "2024-12-31"
+            },
+            {
+              "concept": "us-gaap:NetIncomeLoss",
+              "ordinal": 134,
+              "context_ref": "c-1",
+              "value": "2375000000",
+              "unit": "USD",
+              "dimensions": null,
+              "period_start": "2024-01-01",
+              "period_end": "2024-12-31"
+            },
+            {
+              "concept": "us-gaap:NetIncomeLoss",
+              "ordinal": 143,
+              "context_ref": "c-1",
+              "value": "2375000000",
+              "unit": "USD",
+              "dimensions": null,
+              "period_start": "2024-01-01",
+              "period_end": "2024-12-31"
+            },
+            {
+              "concept": "us-gaap:NetIncomeLoss",
+              "ordinal": 226,
+              "context_ref": "c-1",
+              "value": "2375000000",
+              "unit": "USD",
+              "dimensions": null,
+              "period_start": "2024-01-01",
+              "period_end": "2024-12-31"
+            },
+            {
+              "concept": "us-gaap:NetIncomeLoss",
+              "ordinal": 366,
+              "context_ref": "c-1",
+              "value": "2375000000",
+              "unit": "USD",
+              "dimensions": null,
+              "period_start": "2024-01-01",
+              "period_end": "2024-12-31"
+            },
+            {
+              "concept": "us-gaap:NetIncomeLoss",
+              "ordinal": 459,
+              "context_ref": "c-1",
+              "value": "2375000000",
+              "unit": "USD",
+              "dimensions": null,
+              "period_start": "2024-01-01",
+              "period_end": "2024-12-31"
+            },
+            {
+              "concept": "us-gaap:NetIncomeLoss",
+              "ordinal": 468,
+              "context_ref": "c-1",
+              "value": "2375000000",
+              "unit": "USD",
+              "dimensions": null,
+              "period_start": "2024-01-01",
+              "period_end": "2024-12-31"
+            },
+            {
+              "concept": "us-gaap:Revenues",
+              "ordinal": 1164,
+              "context_ref": "c-1",
+              "value": "25100000000",
+              "unit": "USD",
+              "dimensions": null,
+              "period_start": "2024-01-01",
+              "period_end": "2024-12-31"
+            }
+          ],
+          "xml": [
+            {
+              "concept": "us-gaap:revenues",
+              "ordinal": 92,
+              "context_ref": "c-1",
+              "value": "25100000000",
+              "unit": "USD",
+              "dimensions": null,
+              "period_start": "2024-01-01",
+              "period_end": "2024-12-31"
+            },
+            {
+              "concept": "us-gaap:netincomeloss",
+              "ordinal": 134,
+              "context_ref": "c-1",
+              "value": "2375000000",
+              "unit": "USD",
+              "dimensions": null,
+              "period_start": "2024-01-01",
+              "period_end": "2024-12-31"
+            },
+            {
+              "concept": "us-gaap:netincomeloss",
+              "ordinal": 143,
+              "context_ref": "c-1",
+              "value": "2375000000",
+              "unit": "USD",
+              "dimensions": null,
+              "period_start": "2024-01-01",
+              "period_end": "2024-12-31"
+            },
+            {
+              "concept": "us-gaap:netincomeloss",
+              "ordinal": 226,
+              "context_ref": "c-1",
+              "value": "2375000000",
+              "unit": "USD",
+              "dimensions": null,
+              "period_start": "2024-01-01",
+              "period_end": "2024-12-31"
+            },
+            {
+              "concept": "us-gaap:netincomeloss",
+              "ordinal": 366,
+              "context_ref": "c-1",
+              "value": "2375000000",
+              "unit": "USD",
+              "dimensions": null,
+              "period_start": "2024-01-01",
+              "period_end": "2024-12-31"
+            },
+            {
+              "concept": "us-gaap:netincomeloss",
+              "ordinal": 459,
+              "context_ref": "c-1",
+              "value": "2375000000",
+              "unit": "USD",
+              "dimensions": null,
+              "period_start": "2024-01-01",
+              "period_end": "2024-12-31"
+            },
+            {
+              "concept": "us-gaap:netincomeloss",
+              "ordinal": 468,
+              "context_ref": "c-1",
+              "value": "2375000000",
+              "unit": "USD",
+              "dimensions": null,
+              "period_start": "2024-01-01",
+              "period_end": "2024-12-31"
+            },
+            {
+              "concept": "us-gaap:revenues",
+              "ordinal": 1164,
+              "context_ref": "c-1",
+              "value": "25100000000",
+              "unit": "USD",
+              "dimensions": null,
+              "period_start": "2024-01-01",
+              "period_end": "2024-12-31"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "scope_summary_only": true,
+  "full_case_reproducer": "../reproduce.py; full output generated exclusively at reviewer new --output path"
+}
