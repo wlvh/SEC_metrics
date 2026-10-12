@@ -41,7 +41,7 @@ class CurrentGeographyCaseTest(TestCase):
             after={m:update._configuration(REPO_ROOT,'jpmorgan_chase',m) for m in before}
         self.assertEqual(before['B01'],after['B01']);self.assertNotEqual(before['A13'],after['A13'])
 
-    def test_consumed_scope_contract_change_invalidates_a13_without_unrelated_b01(self):
+    def test_shared_scope_contract_change_invalidates_the_declared_configurations(self):
         original = update.sha256_file
         before = {m: update._configuration(REPO_ROOT, 'jpmorgan_chase', m) for m in ('B01', 'A13')}
         path = REPO_ROOT/'scripts/vnext/scope_contract.py'
@@ -50,7 +50,9 @@ class CurrentGeographyCaseTest(TestCase):
                 else original(path=path)):
             after = {m: update._configuration(REPO_ROOT, 'jpmorgan_chase', m) for m in before}
         self.assertNotEqual(before['A13'], after['A13'])
-        self.assertEqual(before['B01'], after['B01'])
+        # The finite common Spec dependency now declares this shared helper;
+        # it does not claim every B01 branch executes a non-null contract.
+        self.assertNotEqual(before['B01'], after['B01'])
 
     def test_default_financial_source_reader_retains_old_annual_entry(self):
         with patch.object(financial,'prepare_saved_annual_input',side_effect=ValueError('CONTROL_OLD_ANNUAL')) as old:

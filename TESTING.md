@@ -8,6 +8,7 @@
 - main 已接收的 PR67 普通记录：快速业务例及保存原件集成验证公司/期间/单位/引用、已知错误、成功/稳定扣留复用、计数、失败隔离、中断恢复和旧读取。实际命令及终态以 [PR67](https://github.com/wlvh/SEC_metrics/pull/67)主要验证记录为准，共用快测准备/材料分层已由PR61进入main；公司检查见当前 Company saved-source records 工作流。
 - 已退休的独立信任、防伪批准、祖先字节证明和封存要求不作为新路径必须通过的测试；保留源码供原版本诊断。退出专属测试不允许静默跳过仍适用的业务与普通故障反例。
 - 文档改动核对实际 CLI 参数、链接和能力范围，不默认重跑全部财报。新接线须经过用户入口的真实解析/保存/计算/读取；只替换外部 HTTP 的录制与真实 SEC 验收分开。
+- 普通更新依赖检查使用 `tests/vnext/processing_dependency_checks.py`：在测试中观察 `scripts/` 实际函数调用，材料例覆盖 `run_once` 的准备、计算、保存及公共行写出，不只观察工厂。纯写盘与每次重新执行的来源检查按具体函数说明例外，生产/网络函数不能继承整模块豁免；非Python配置仍显式登记。这不是运行时文件访问审计或递归导入平台。完整材料禁止读旧答案，只显式允许本次临时状态目录刚生成的CSV。主验证见 `docs/evidence/issue28_result_projection_dependencies_20261013/README.md`。
 
 main 已交付的有限在线 B01/B02 接线检查：`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_company_online -v`核原计数、UNKNOWN、落盘中断摘要、前期依赖隔离；正式CLI HTTP边界录制与原件/计算/读取实际链见 `docs/evidence/issue28_company_online_20261009/README.md`，不授真实SEC或业务接受。下述旧原生/独立信任检查只解释保留版本，不恢复为新普通记录前置。
 

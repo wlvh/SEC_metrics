@@ -198,7 +198,9 @@ class DefaultCurrentConfigurationPreservationTest(unittest.TestCase):
                 self.assertTrue(added <= {'scripts/vnext/text_coverage.py',
                     'scripts/vnext/normal_governance_input.py','scripts/vnext/text_results_v2.py',
                     'scripts/vnext/historical_dei.py','scripts/vnext/batch_workflow.py',
-                    'scripts/vnext/constraints.py','scripts/vnext/paired_measure_v1.py'})
+                    'scripts/vnext/constraints.py','scripts/vnext/paired_measure_v1.py',
+                    'scripts/vnext/scope_contract.py','scripts/vnext/normal_numeric_projection.py',
+                    'config/normal_numeric_projection_v1.json','scripts/sec_urls.py','scripts/sec_http.py'})
                 self.assertTrue(set(expected['processing_files']) <= set(actual['processing_files']))
                 self.assertTrue(all(actual['processing_files'][path]==digest
                     for path,digest in expected['processing_files'].items()))
