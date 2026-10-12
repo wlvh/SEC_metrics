@@ -1,0 +1,36 @@
+{
+ "record_type": "HISTORICAL_EVENT_ROUTE_SUCCESSOR",
+ "schema_version": 1,
+ "metric_id": "E01",
+ "decision": {
+  "decided_on": "2026-09-27",
+  "record": "docs/evidence/issue47_history/owner-decisions-2026-09-27/decisions.json",
+  "adopted_option": "CONTENT_CONFIRMED_M_AND_A_ANNOUNCEMENTS",
+  "packet": "docs/evidence/issue47_history/e01-keyword-branch/decision.json"
+ },
+ "predecessor": {
+  "catalog_path": "catalog/event_routes.json",
+  "route_hash": "sha256:ce19effee51b735250228b4071aeb85fd3ac43fae8c02cbb724ad981f0f759e4",
+  "kept_for": "the ordinary route and every Run frozen under it; its values are values of the approved item-rule definition and none of them carries over to this one"
+ },
+ "public_notes": "Count of 8-K items filed under 1.01, 2.01 or 8.01 in the fiscal-year event window whose own text was confirmed to report a merger, acquisition, disposition or business combination to which the registrant or a subsidiary is party; financing agreements, tender offers for the registrant's own securities, repurchases, compensation and shareholder agreements are not counted. A window with an item whose confirmation is not registered, or whose own text does not settle it, is withheld by name.",
+ "route": {
+  "metric_name": "M&A announcements (content-confirmed)",
+  "candidate_item_codes": ["1.01", "2.01", "8.01"],
+  "direct_item_codes": ["1.01", "2.01", "8.01"],
+  "keyword_item_rules": [],
+  "confirmation": {
+   "policy": "CONTENT_CONFIRMED_M_AND_A_ANNOUNCEMENT_V1",
+   "counts": "an item whose own text reports a merger, acquisition, disposition or business combination of a business or of an equity stake in one, to which the registrant or a subsidiary is party, announced, agreed or completed",
+   "does_not_count": "borrowing, note, credit or other financing agreements; tender offers for the registrant's own securities; share repurchases; compensation or employment agreements; use-of-proceeds statements; cooperation or settlement agreements with shareholders; transactions the registrant is not party to",
+   "unit": "one 8-K item",
+   "candidates": "every item filed under a candidate code in the fiscal-year event window, read from its own text; keywords only help find candidates and never confirm one",
+   "unconfirmed_candidates": "a window with any candidate item whose confirmation is not registered is withheld by name; a window with no candidate item is answered zero"
+  },
+  "shared_claim_group_id": "merger_acquisition_items",
+  "legacy_projection": {
+   "status": "8K_ITEM_OK",
+   "source_class": "8K_ITEM"
+  }
+ }
+}

@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/docs/evidence/issue28_current_c04_failure_detail_20261011/verify_company.py", line 61, in <module>
+    view=json.loads(read.stdout)['result'];assert snapshot(base/'after')==state_before
+         ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+KeyError: 'result'

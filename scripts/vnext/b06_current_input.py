@@ -24,8 +24,16 @@ def _need(condition, reason):
     if not condition: raise ValueError('B06_CURRENT_INPUT_'+reason)
 
 
-def inspect_current_debt_amendment(*, original, amendment, company_id, cik):
-    scope = inspect_annual_amendment_scope(original=original,amendment=amendment,company_id=company_id,cik=cik)
+def inspect_current_debt_amendment(*, original, amendment, company_id, cik,
+                                  note_layout='blocks-v1'):
+    _need(note_layout in {'blocks-v1','inline-paragraphs-v2'},'NOTE_LAYOUT_UNSUPPORTED')
+    scope_reader=inspect_annual_amendment_scope
+    balance_reader=_part_iii_details
+    if note_layout=='inline-paragraphs-v2':
+        from .annual_amendment_scope_v2 import inspect_annual_amendment_scope as scope_reader
+        from .instant_balance_amendment_v2 import _part_iii_details as balance_reader
+    scope = scope_reader(original=original,amendment=amendment,company_id=company_id,cik=cik,
+                         **({} if note_layout=='blocks-v1' else {'note_layout':note_layout}))
     decision = 'WITHHELD'; details = {}; issues = []
     try:
         _need(scope['fiscal_window_unchanged'] and not scope['issues'],'AMENDMENT_SCOPE_UNRESOLVED')
@@ -34,7 +42,7 @@ def inspect_current_debt_amendment(*, original, amendment, company_id, cik):
         else:
             _need(scope['classification']=='PART_III_ADDITION_WITH_EXPLICIT_NO_NEW_FINANCIAL_STATEMENTS',
                   'AMENDMENT_KIND_UNSUPPORTED')
-            details = _part_iii_details(scope,amendment['raw'])
+            details = balance_reader(scope,amendment['raw'])
             conflicts = []
             for block in scope['amendment']['document']['blocks']:
                 text = block['text']
@@ -51,6 +59,7 @@ def inspect_current_debt_amendment(*, original, amendment, company_id, cik):
         'policy_sha256':sha256_file(path=ROOT/POLICY_PATH),'original_accession':original['filing']['accessionNumber'],
         'amendment_accession':amendment['filing']['accessionNumber'],'source_acquisition_credit':False,
         'annual_continuity_proven':False,'debt_completeness_proven':False,'production_authorized':False})
+    if note_layout!='blocks-v1':body['note_layout']=note_layout
     return {**body,'effect_id':content_hash(value=body)}
 
 

@@ -1,0 +1,28 @@
+{
+  "base_head": "e24a5271325a2a39e8329df45f526f2629b543b0",
+  "had_uncommitted_changes": true,
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-current-geography/SEC_metrics",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "tested_files": {
+    ".github/workflows/company-current-records.yml": "3706c8254f21d173a9f8857fbcd0a44634c5fa8b23330f43d4095303ab494e64",
+    "scripts/vnext/ordinary_current_update.py": "ff0360559583c940c9a0f26985e2e3117449781a7077da240f1c6939f2dea1aa",
+    "scripts/vnext/ordinary_financial_results.py": "927a991712ca444d14edf4e7e7a38d099cfc4ffa90836018243e6e3360fd3b38",
+    "scripts/vnext/ordinary_saved_result.py": "cc1342cbecf414d51dd0924ac9b64311907931c17f5b284229fb6f8fa463318e",
+    "tests/vnext/test_company_current_records.py": "074a37a32cdd4ede5828025b37dd3f458a8c38c51c925221b7bf3e9fa7e24f5d",
+    "tests/vnext/test_ordinary_current_update.py": "ceb7407cd17a768f41f7cd192ef5a53dc5c911e1caf5d0be4f71b2f5789a84d4",
+    "scripts/vnext/current_geography_case.py": "ab67a1cb9c4c1a37c5b0027f0222f8aec4e41544b1e9a0e00b74fa138622b4e8",
+    "tests/vnext/test_current_geography_case.py": "cc860c0ee075a68b17d03022ce2907b3e13bbd43bb6ce8bb9f30bb3b043d4557"
+  },
+  "scope": "Actual tests/company runs used these source bytes on base HEAD; later publication metadata is separate",
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "posttest_trigger_only": {
+    "path": ".github/workflows/company-current-records.yml",
+    "sha256": "be27785091e5fea09629c43e8f342d1be1ce4cd0f7060e2c40fed3cbee215e32",
+    "change": "Add executable evidence trigger; no job or required-step change",
+    "verification": "Ruby YAML one required A13 step and script/test byte checks"
+  }
+}

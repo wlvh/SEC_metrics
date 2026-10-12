@@ -1,0 +1,15 @@
+test_history_dispatch_preserves_existing_factories_and_dependencies (tests.vnext.test_historical_compensation_case.HistoricalCompensationAdapterTest.test_history_dispatch_preserves_existing_factories_and_dependencies) ... FAIL
+
+======================================================================
+FAIL: test_history_dispatch_preserves_existing_factories_and_dependencies (tests.vnext.test_historical_compensation_case.HistoricalCompensationAdapterTest.test_history_dispatch_preserves_existing_factories_and_dependencies)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fiscal-range-entry/SEC_metrics/tests/vnext/test_historical_compensation_case.py", line 143, in test_history_dispatch_preserves_existing_factories_and_dependencies
+    self.assertIs(prepare_historical_statement_year_case,args['case_factories']['B01'])
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: <function prepare_historical_statement_year_case at 0x11373f7f0> is not <function prepared_fiscal_range_B01 at 0x113835900>
+
+----------------------------------------------------------------------
+Ran 1 test in 0.066s
+
+FAILED (failures=1)

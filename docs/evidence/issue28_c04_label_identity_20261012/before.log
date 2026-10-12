@@ -1,0 +1,172 @@
+test_complete_consistent_label_reaches_source_reader (tests.vnext.test_c04_selected_input.SelectedC04LabelIdentityTest.test_complete_consistent_label_reaches_source_reader) ... ok
+test_mutated_year_or_resolution_with_old_input_identity_refuses (tests.vnext.test_c04_selected_input.SelectedC04LabelIdentityTest.test_mutated_year_or_resolution_with_old_input_identity_refuses) ... 
+  test_mutated_year_or_resolution_with_old_input_identity_refuses (tests.vnext.test_c04_selected_input.SelectedC04LabelIdentityTest.test_mutated_year_or_resolution_with_old_input_identity_refuses) (field='table-year') ... ERROR
+  test_mutated_year_or_resolution_with_old_input_identity_refuses (tests.vnext.test_c04_selected_input.SelectedC04LabelIdentityTest.test_mutated_year_or_resolution_with_old_input_identity_refuses) (field='resolution-year') ... FAIL
+  test_mutated_year_or_resolution_with_old_input_identity_refuses (tests.vnext.test_c04_selected_input.SelectedC04LabelIdentityTest.test_mutated_year_or_resolution_with_old_input_identity_refuses) (field='resolution-basis') ... FAIL
+test_rehashed_inconsistent_label_fields_still_refuse (tests.vnext.test_c04_selected_input.SelectedC04LabelIdentityTest.test_rehashed_inconsistent_label_fields_still_refuse) ... 
+  test_rehashed_inconsistent_label_fields_still_refuse (tests.vnext.test_c04_selected_input.SelectedC04LabelIdentityTest.test_rehashed_inconsistent_label_fields_still_refuse) (field='table-year') ... ERROR
+  test_rehashed_inconsistent_label_fields_still_refuse (tests.vnext.test_c04_selected_input.SelectedC04LabelIdentityTest.test_rehashed_inconsistent_label_fields_still_refuse) (field='companyfacts-year') ... FAIL
+  test_rehashed_inconsistent_label_fields_still_refuse (tests.vnext.test_c04_selected_input.SelectedC04LabelIdentityTest.test_rehashed_inconsistent_label_fields_still_refuse) (field='resolution-year') ... FAIL
+  test_rehashed_inconsistent_label_fields_still_refuse (tests.vnext.test_c04_selected_input.SelectedC04LabelIdentityTest.test_rehashed_inconsistent_label_fields_still_refuse) (field='resolution-basis') ... FAIL
+  test_rehashed_inconsistent_label_fields_still_refuse (tests.vnext.test_c04_selected_input.SelectedC04LabelIdentityTest.test_rehashed_inconsistent_label_fields_still_refuse) (field='conflict-status') ... ERROR
+
+======================================================================
+ERROR: test_mutated_year_or_resolution_with_old_input_identity_refuses (tests.vnext.test_c04_selected_input.SelectedC04LabelIdentityTest.test_mutated_year_or_resolution_with_old_input_identity_refuses) (field='table-year')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c04-labelled-input/SEC_metrics/tests/vnext/test_c04_selected_input.py", line 344, in test_mutated_year_or_resolution_with_old_input_identity_refuses
+    self.prepare(base,labels)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c04-labelled-input/SEC_metrics/tests/vnext/test_c04_selected_input.py", line 332, in prepare
+    return prepare_c04_registration_case(repo_root=ROOT,company_id='sample_entity',
+        event_forms=EVENT_FORMS,selected_base=base,labelled_annual=labels)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c04-labelled-input/SEC_metrics/scripts/vnext/c04_registration_successor.py", line 187, in prepare_c04_registration_case
+    'policy_sha256': label_resolution['policy_sha256'],
+                     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+KeyError: 'policy_sha256'
+
+======================================================================
+ERROR: test_rehashed_inconsistent_label_fields_still_refuse (tests.vnext.test_c04_selected_input.SelectedC04LabelIdentityTest.test_rehashed_inconsistent_label_fields_still_refuse) (field='table-year')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c04-labelled-input/SEC_metrics/tests/vnext/test_c04_selected_input.py", line 358, in test_rehashed_inconsistent_label_fields_still_refuse
+    self.prepare(base,labels)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c04-labelled-input/SEC_metrics/tests/vnext/test_c04_selected_input.py", line 332, in prepare
+    return prepare_c04_registration_case(repo_root=ROOT,company_id='sample_entity',
+        event_forms=EVENT_FORMS,selected_base=base,labelled_annual=labels)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c04-labelled-input/SEC_metrics/scripts/vnext/c04_registration_successor.py", line 187, in prepare_c04_registration_case
+    'policy_sha256': label_resolution['policy_sha256'],
+                     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+KeyError: 'policy_sha256'
+
+======================================================================
+ERROR: test_rehashed_inconsistent_label_fields_still_refuse (tests.vnext.test_c04_selected_input.SelectedC04LabelIdentityTest.test_rehashed_inconsistent_label_fields_still_refuse) (field='conflict-status')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c04-labelled-input/SEC_metrics/tests/vnext/test_c04_selected_input.py", line 358, in test_rehashed_inconsistent_label_fields_still_refuse
+    self.prepare(base,labels)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c04-labelled-input/SEC_metrics/tests/vnext/test_c04_selected_input.py", line 332, in prepare
+    return prepare_c04_registration_case(repo_root=ROOT,company_id='sample_entity',
+        event_forms=EVENT_FORMS,selected_base=base,labelled_annual=labels)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c04-labelled-input/SEC_metrics/scripts/vnext/c04_registration_successor.py", line 187, in prepare_c04_registration_case
+    'policy_sha256': label_resolution['policy_sha256'],
+                     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+KeyError: 'policy_sha256'
+
+======================================================================
+FAIL: test_mutated_year_or_resolution_with_old_input_identity_refuses (tests.vnext.test_c04_selected_input.SelectedC04LabelIdentityTest.test_mutated_year_or_resolution_with_old_input_identity_refuses) (field='resolution-year')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c04-labelled-input/SEC_metrics/tests/vnext/test_c04_selected_input.py", line 344, in test_mutated_year_or_resolution_with_old_input_identity_refuses
+    self.prepare(base,labels)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c04-labelled-input/SEC_metrics/tests/vnext/test_c04_selected_input.py", line 332, in prepare
+    return prepare_c04_registration_case(repo_root=ROOT,company_id='sample_entity',
+        event_forms=EVENT_FORMS,selected_base=base,labelled_annual=labels)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c04-labelled-input/SEC_metrics/scripts/vnext/c04_registration_successor.py", line 194, in prepare_c04_registration_case
+    reader = _Sources(repo_root, company_id, cik)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+AssertionError: LABEL_REACHED_SOURCE_READER
+
+======================================================================
+FAIL: test_mutated_year_or_resolution_with_old_input_identity_refuses (tests.vnext.test_c04_selected_input.SelectedC04LabelIdentityTest.test_mutated_year_or_resolution_with_old_input_identity_refuses) (field='resolution-basis')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c04-labelled-input/SEC_metrics/tests/vnext/test_c04_selected_input.py", line 344, in test_mutated_year_or_resolution_with_old_input_identity_refuses
+    self.prepare(base,labels)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c04-labelled-input/SEC_metrics/tests/vnext/test_c04_selected_input.py", line 332, in prepare
+    return prepare_c04_registration_case(repo_root=ROOT,company_id='sample_entity',
+        event_forms=EVENT_FORMS,selected_base=base,labelled_annual=labels)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c04-labelled-input/SEC_metrics/scripts/vnext/c04_registration_successor.py", line 194, in prepare_c04_registration_case
+    reader = _Sources(repo_root, company_id, cik)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+AssertionError: LABEL_REACHED_SOURCE_READER
+
+======================================================================
+FAIL: test_rehashed_inconsistent_label_fields_still_refuse (tests.vnext.test_c04_selected_input.SelectedC04LabelIdentityTest.test_rehashed_inconsistent_label_fields_still_refuse) (field='companyfacts-year')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c04-labelled-input/SEC_metrics/tests/vnext/test_c04_selected_input.py", line 358, in test_rehashed_inconsistent_label_fields_still_refuse
+    self.prepare(base,labels)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c04-labelled-input/SEC_metrics/tests/vnext/test_c04_selected_input.py", line 332, in prepare
+    return prepare_c04_registration_case(repo_root=ROOT,company_id='sample_entity',
+        event_forms=EVENT_FORMS,selected_base=base,labelled_annual=labels)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c04-labelled-input/SEC_metrics/scripts/vnext/c04_registration_successor.py", line 194, in prepare_c04_registration_case
+    reader = _Sources(repo_root, company_id, cik)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+AssertionError: LABEL_REACHED_SOURCE_READER
+
+======================================================================
+FAIL: test_rehashed_inconsistent_label_fields_still_refuse (tests.vnext.test_c04_selected_input.SelectedC04LabelIdentityTest.test_rehashed_inconsistent_label_fields_still_refuse) (field='resolution-year')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c04-labelled-input/SEC_metrics/tests/vnext/test_c04_selected_input.py", line 358, in test_rehashed_inconsistent_label_fields_still_refuse
+    self.prepare(base,labels)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c04-labelled-input/SEC_metrics/tests/vnext/test_c04_selected_input.py", line 332, in prepare
+    return prepare_c04_registration_case(repo_root=ROOT,company_id='sample_entity',
+        event_forms=EVENT_FORMS,selected_base=base,labelled_annual=labels)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c04-labelled-input/SEC_metrics/scripts/vnext/c04_registration_successor.py", line 194, in prepare_c04_registration_case
+    reader = _Sources(repo_root, company_id, cik)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+AssertionError: LABEL_REACHED_SOURCE_READER
+
+======================================================================
+FAIL: test_rehashed_inconsistent_label_fields_still_refuse (tests.vnext.test_c04_selected_input.SelectedC04LabelIdentityTest.test_rehashed_inconsistent_label_fields_still_refuse) (field='resolution-basis')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c04-labelled-input/SEC_metrics/tests/vnext/test_c04_selected_input.py", line 358, in test_rehashed_inconsistent_label_fields_still_refuse
+    self.prepare(base,labels)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c04-labelled-input/SEC_metrics/tests/vnext/test_c04_selected_input.py", line 332, in prepare
+    return prepare_c04_registration_case(repo_root=ROOT,company_id='sample_entity',
+        event_forms=EVENT_FORMS,selected_base=base,labelled_annual=labels)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c04-labelled-input/SEC_metrics/scripts/vnext/c04_registration_successor.py", line 194, in prepare_c04_registration_case
+    reader = _Sources(repo_root, company_id, cik)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+AssertionError: LABEL_REACHED_SOURCE_READER
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.020s
+
+FAILED (failures=5, errors=3)
+{"allowed_skips": 0, "errors": 3, "failures": 5, "run": 3, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_c04_selected_input.SelectedC04LabelIdentityTest"]}

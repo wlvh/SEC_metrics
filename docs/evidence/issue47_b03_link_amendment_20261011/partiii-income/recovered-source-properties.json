@@ -1,0 +1,1398 @@
+{
+  "shared_annual_scope": {
+    "scope_id": "sha256:2aad479ae1eeaf9b0802a8b41a7fd508ead73758cacecd87be604a2dededb8fb",
+    "classification": "PART_III_ADDITION_WITH_EXPLICIT_NO_NEW_FINANCIAL_STATEMENTS",
+    "issues": [],
+    "fiscal_window_unchanged": true,
+    "unchanged_input_classes": [
+      "FISCAL_EVENT_WINDOW"
+    ],
+    "original_statement_admission_requires_further_review": true,
+    "note_layout": "inline-paragraphs-v2"
+  },
+  "per_metric": {
+    "B01": {
+      "observations": [
+        {
+          "approval_effect_hash": "",
+          "company_id": "paramount_skydance_paramount_global",
+          "metric_id": "B01",
+          "observation_id": "sha256:79009a99b4a55aed7664f2cb926d36878c7faeb5bd900c75876fecbcf7490769",
+          "period_end": "2024-12-31",
+          "period_start": "2024-01-01",
+          "quality": "EXACT",
+          "record_type": "VERIFIED_OBSERVATION",
+          "scope": {
+            "entity_scope": "registrant",
+            "period_basis": "source_annual_duration"
+          },
+          "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+          "semantic_role": "revenue",
+          "source_binding": {
+            "accession": "0000813828-25-000005",
+            "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+            "document_name": "CIK0000813828.json",
+            "duration_days": 366,
+            "entity": "813828",
+            "fact_id": "fact:sha256:14b39fbcff2aabd623422fb822a5371d66aa195497e2ce873ee36303d52da0b9",
+            "filed": "2025-02-26",
+            "fiscal_period": "FY",
+            "form": "10-K",
+            "frame": "CY2024",
+            "raw_asset_id": "sha256:c6173a017e1c2ed4efc0c746ca87c8d7e355c989c7b4b95a9a67165309cd490e",
+            "source_reference_id": "sha256:bd844e503713bd57c9fa596fdd49f9d874d6a245ce9474e3db0e0b56c866afcb",
+            "source_role": "companyfacts"
+          },
+          "unit": "USD",
+          "value": "29213000000"
+        }
+      ],
+      "income_property_reference": {
+        "source_scope_id": "sha256:2aad479ae1eeaf9b0802a8b41a7fd508ead73758cacecd87be604a2dededb8fb",
+        "metric_id": "B01",
+        "input_class": "CURRENT_ORIGINAL_INCOME_STATEMENT_VALUES"
+      }
+    },
+    "B02": {
+      "observations": [],
+      "scope_summary": {
+        "reason": "HISTORICAL_PAIRED_REVENUE_COMPLETE_SCOPE_UNPROVEN",
+        "category": "IMPLEMENTATION_GAP",
+        "unresolved_revenue_role": "current"
+      },
+      "paired_revenue_scope_summary": {
+        "current": {
+          "scope_id": "sha256:e7828b1ace3153ffc28c4a83ea2ef94dc926c13e916164bc0be39a85d43c8301",
+          "status": "NO_DEMONSTRATED_SPLIT",
+          "complete_scope_proven": false
+        }
+      },
+      "income_property_reference": {
+        "source_scope_id": "sha256:2aad479ae1eeaf9b0802a8b41a7fd508ead73758cacecd87be604a2dededb8fb",
+        "metric_id": "B02",
+        "input_class": "CURRENT_ORIGINAL_INCOME_STATEMENT_VALUES"
+      }
+    },
+    "B03": {
+      "observations": [
+        {
+          "approval_effect_hash": "",
+          "company_id": "paramount_skydance_paramount_global",
+          "metric_id": "B01",
+          "observation_id": "sha256:79009a99b4a55aed7664f2cb926d36878c7faeb5bd900c75876fecbcf7490769",
+          "period_end": "2024-12-31",
+          "period_start": "2024-01-01",
+          "quality": "EXACT",
+          "record_type": "VERIFIED_OBSERVATION",
+          "scope": {
+            "entity_scope": "registrant",
+            "period_basis": "source_annual_duration"
+          },
+          "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+          "semantic_role": "revenue",
+          "source_binding": {
+            "accession": "0000813828-25-000005",
+            "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+            "document_name": "CIK0000813828.json",
+            "duration_days": 366,
+            "entity": "813828",
+            "fact_id": "fact:sha256:14b39fbcff2aabd623422fb822a5371d66aa195497e2ce873ee36303d52da0b9",
+            "filed": "2025-02-26",
+            "fiscal_period": "FY",
+            "form": "10-K",
+            "frame": "CY2024",
+            "raw_asset_id": "sha256:c6173a017e1c2ed4efc0c746ca87c8d7e355c989c7b4b95a9a67165309cd490e",
+            "source_reference_id": "sha256:bd844e503713bd57c9fa596fdd49f9d874d6a245ce9474e3db0e0b56c866afcb",
+            "source_role": "companyfacts"
+          },
+          "unit": "USD",
+          "value": "29213000000"
+        },
+        {
+          "approval_effect_hash": "",
+          "company_id": "paramount_skydance_paramount_global",
+          "metric_id": "B03",
+          "observation_id": "sha256:0d5b27dd5e3d5c5b96378e3ceb5ca2ca9357cf3a7b51abfc1833b3d537df7831",
+          "period_end": "2024-12-31",
+          "period_start": "2024-01-01",
+          "quality": "EXACT",
+          "record_type": "VERIFIED_OBSERVATION",
+          "scope": {
+            "entity_scope": "registrant",
+            "period_basis": "source_annual_duration"
+          },
+          "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+          "semantic_role": "operating_income",
+          "source_binding": {
+            "accession": "0000813828-25-000005",
+            "concept": "us-gaap:OperatingIncomeLoss",
+            "document_name": "CIK0000813828.json",
+            "duration_days": 366,
+            "entity": "813828",
+            "fact_id": "fact:sha256:52288676224fcd6ce4be6422597c775c3e056bda27be769903bf5a4d2c5d6bda",
+            "filed": "2025-02-26",
+            "fiscal_period": "FY",
+            "form": "10-K",
+            "frame": "CY2024",
+            "raw_asset_id": "sha256:c6173a017e1c2ed4efc0c746ca87c8d7e355c989c7b4b95a9a67165309cd490e",
+            "source_reference_id": "sha256:bd844e503713bd57c9fa596fdd49f9d874d6a245ce9474e3db0e0b56c866afcb",
+            "source_role": "companyfacts"
+          },
+          "unit": "USD",
+          "value": "-5269000000"
+        },
+        {
+          "approval_effect_hash": "",
+          "company_id": "paramount_skydance_paramount_global",
+          "metric_id": "B03",
+          "observation_id": "sha256:0bfdfd071f3198b2b67ae5108de083718c7140a322e6c4e44f4b674a3490953a",
+          "period_end": "2024-12-31",
+          "period_start": "2024-01-01",
+          "quality": "EXACT",
+          "record_type": "VERIFIED_OBSERVATION",
+          "scope": {
+            "entity_scope": "registrant",
+            "period_basis": "source_annual_duration"
+          },
+          "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+          "semantic_role": "depreciation_and_amortization",
+          "source_binding": {
+            "accession": "0000813828-25-000005",
+            "concept": "us-gaap:DepreciationAndAmortization",
+            "document_name": "CIK0000813828.json",
+            "duration_days": 366,
+            "entity": "813828",
+            "fact_id": "fact:sha256:3b5ae79b2de05cfdaf033712642a95a7eb7b7408aa6c6a80634c9a10fab4e904",
+            "filed": "2025-02-26",
+            "fiscal_period": "FY",
+            "form": "10-K",
+            "frame": "CY2024",
+            "raw_asset_id": "sha256:c6173a017e1c2ed4efc0c746ca87c8d7e355c989c7b4b95a9a67165309cd490e",
+            "source_reference_id": "sha256:bd844e503713bd57c9fa596fdd49f9d874d6a245ce9474e3db0e0b56c866afcb",
+            "source_role": "companyfacts"
+          },
+          "unit": "USD",
+          "value": "392000000"
+        }
+      ],
+      "depreciation_scope": {
+        "chain_input": {
+          "concept": "DepreciationAndAmortization",
+          "value": "392000000"
+        },
+        "complete_business_scope_proven": false,
+        "entity": "813828",
+        "existing_scope_check": {
+          "blocked": false,
+          "complete_depreciation_scope_proven": false,
+          "primary_source_sha256": "5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+          "selected_fact_ordinals": [
+            98,
+            328
+          ],
+          "status": "NO_EXPLICIT_NARROW_SCOPE_FOUND"
+        },
+        "filing_answer": {
+          "candidates": [
+            {
+              "concept": "DepreciationAndAmortization",
+              "context_proof": {
+                "context_ref": "c-1",
+                "dimensions": [],
+                "identifiers": [
+                  {
+                    "scheme": "http://www.sec.gov/CIK",
+                    "value": "0000813828"
+                  }
+                ],
+                "period_fields": [
+                  {
+                    "kind": "startdate",
+                    "value": "2024-01-01"
+                  },
+                  {
+                    "kind": "enddate",
+                    "value": "2024-12-31"
+                  }
+                ],
+                "typed_dimension_count": 0
+              },
+              "context_ref": "c-1",
+              "decimals": "-6",
+              "fact_ordinal": 98,
+              "unit_ref": "usd",
+              "value": "392000000"
+            }
+          ],
+          "selected": {
+            "concept": "DepreciationAndAmortization",
+            "context_proof": {
+              "context_ref": "c-1",
+              "dimensions": [],
+              "identifiers": [
+                {
+                  "scheme": "http://www.sec.gov/CIK",
+                  "value": "0000813828"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "startdate",
+                  "value": "2024-01-01"
+                },
+                {
+                  "kind": "enddate",
+                  "value": "2024-12-31"
+                }
+              ],
+              "typed_dimension_count": 0
+            },
+            "context_ref": "c-1",
+            "decimals": "-6",
+            "fact_ordinal": 98,
+            "unit_ref": "usd",
+            "value": "392000000"
+          },
+          "status": "TAKE",
+          "why": "EVERY_DIRECT_CANDIDATE_AGREES"
+        },
+        "period": {
+          "fiscal_year": 2024,
+          "period_end": "2024-12-31",
+          "period_start": "2024-01-01"
+        },
+        "primary_sha256": "5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+        "source_facts": [
+          {
+            "concept": "DepreciationAndAmortization",
+            "context_proof": {
+              "context_ref": "c-1",
+              "dimensions": [],
+              "identifiers": [
+                {
+                  "scheme": "http://www.sec.gov/CIK",
+                  "value": "0000813828"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "startdate",
+                  "value": "2024-01-01"
+                },
+                {
+                  "kind": "enddate",
+                  "value": "2024-12-31"
+                }
+              ],
+              "typed_dimension_count": 0
+            },
+            "context_ref": "c-1",
+            "decimals": "-6",
+            "fact_ordinal": 98,
+            "unit_ref": "usd",
+            "value": "392000000"
+          },
+          {
+            "concept": "DepreciationAndAmortization",
+            "context_proof": {
+              "context_ref": "c-1",
+              "dimensions": [],
+              "identifiers": [
+                {
+                  "scheme": "http://www.sec.gov/CIK",
+                  "value": "0000813828"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "startdate",
+                  "value": "2024-01-01"
+                },
+                {
+                  "kind": "enddate",
+                  "value": "2024-12-31"
+                }
+              ],
+              "typed_dimension_count": 0
+            },
+            "context_ref": "c-1",
+            "decimals": "-6",
+            "fact_ordinal": 328,
+            "unit_ref": "usd",
+            "value": "392000000"
+          },
+          {
+            "concept": "Depreciation",
+            "context_proof": {
+              "context_ref": "c-1",
+              "dimensions": [],
+              "identifiers": [
+                {
+                  "scheme": "http://www.sec.gov/CIK",
+                  "value": "0000813828"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "startdate",
+                  "value": "2024-01-01"
+                },
+                {
+                  "kind": "enddate",
+                  "value": "2024-12-31"
+                }
+              ],
+              "typed_dimension_count": 0
+            },
+            "context_ref": "c-1",
+            "decimals": "-6",
+            "fact_ordinal": 670,
+            "unit_ref": "usd",
+            "value": "364000000"
+          },
+          {
+            "concept": "AmortizationOfIntangibleAssets",
+            "context_proof": {
+              "context_ref": "c-1",
+              "dimensions": [],
+              "identifiers": [
+                {
+                  "scheme": "http://www.sec.gov/CIK",
+                  "value": "0000813828"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "startdate",
+                  "value": "2024-01-01"
+                },
+                {
+                  "kind": "enddate",
+                  "value": "2024-12-31"
+                }
+              ],
+              "typed_dimension_count": 0
+            },
+            "context_ref": "c-1",
+            "decimals": "-6",
+            "fact_ordinal": 878,
+            "unit_ref": "usd",
+            "value": "28000000"
+          }
+        ],
+        "status": "KEEP",
+        "why": "EVERY_DIRECT_CANDIDATE_AGREES"
+      },
+      "revenue_scope_summary": {
+        "method": "SELECTED_REVENUE_COMPONENT_ADMISSION_V1",
+        "status": "NO_DEMONSTRATED_SPLIT",
+        "complete_scope_proven": false
+      },
+      "original_income_checks_summary": [
+        {
+          "observation_id": "sha256:79009a99b4a55aed7664f2cb926d36878c7faeb5bd900c75876fecbcf7490769",
+          "original_reports": {
+            "primary": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "context": {
+                  "context_ref": "c-1",
+                  "dimensions": {},
+                  "entity_identifier": "0000813828",
+                  "period_end": "2024-12-31",
+                  "period_start": "2024-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "c-1",
+                  "dimensions": [],
+                  "identifiers": [
+                    {
+                      "scheme": "http://www.sec.gov/CIK",
+                      "value": "0000813828"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2024-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2024-12-31"
+                    }
+                  ],
+                  "typed_dimension_count": 0
+                },
+                "context_ref": "c-1",
+                "decimals": "-6",
+                "ordinal": 86,
+                "period_end": "2024-12-31",
+                "period_start": "2024-01-01",
+                "source_reference": {
+                  "accession": "0000813828-25-000005",
+                  "company_id": "paramount_skydance_paramount_global",
+                  "document_name": "para-20241231.htm",
+                  "raw_asset_id": "sha256:5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+                  "record_type": "SOURCE_REFERENCE",
+                  "request_attempt_id": "request:attempt:255bb923386890b3db4f807546f3fac75d33f941ccdc035730d90d98d37c4b6e",
+                  "source_reference_id": "sha256:0f1a9b2a108d1f35340ea3a4a473d82a3a3b8710de577bd4402e408dbe712af5",
+                  "source_role": "target_primary",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231.htm"
+                },
+                "unit": "USD",
+                "value": "29213000000"
+              },
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "context": {
+                  "context_ref": "c-1",
+                  "dimensions": {},
+                  "entity_identifier": "0000813828",
+                  "period_end": "2024-12-31",
+                  "period_start": "2024-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "c-1",
+                  "dimensions": [],
+                  "identifiers": [
+                    {
+                      "scheme": "http://www.sec.gov/CIK",
+                      "value": "0000813828"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2024-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2024-12-31"
+                    }
+                  ],
+                  "typed_dimension_count": 0
+                },
+                "context_ref": "c-1",
+                "decimals": "-6",
+                "ordinal": 1002,
+                "period_end": "2024-12-31",
+                "period_start": "2024-01-01",
+                "source_reference": {
+                  "accession": "0000813828-25-000005",
+                  "company_id": "paramount_skydance_paramount_global",
+                  "document_name": "para-20241231.htm",
+                  "raw_asset_id": "sha256:5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+                  "record_type": "SOURCE_REFERENCE",
+                  "request_attempt_id": "request:attempt:255bb923386890b3db4f807546f3fac75d33f941ccdc035730d90d98d37c4b6e",
+                  "source_reference_id": "sha256:0f1a9b2a108d1f35340ea3a4a473d82a3a3b8710de577bd4402e408dbe712af5",
+                  "source_role": "target_primary",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231.htm"
+                },
+                "unit": "USD",
+                "value": "29213000000"
+              },
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "context": {
+                  "context_ref": "c-1",
+                  "dimensions": {},
+                  "entity_identifier": "0000813828",
+                  "period_end": "2024-12-31",
+                  "period_start": "2024-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "c-1",
+                  "dimensions": [],
+                  "identifiers": [
+                    {
+                      "scheme": "http://www.sec.gov/CIK",
+                      "value": "0000813828"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2024-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2024-12-31"
+                    }
+                  ],
+                  "typed_dimension_count": 0
+                },
+                "context_ref": "c-1",
+                "decimals": "-6",
+                "ordinal": 2026,
+                "period_end": "2024-12-31",
+                "period_start": "2024-01-01",
+                "source_reference": {
+                  "accession": "0000813828-25-000005",
+                  "company_id": "paramount_skydance_paramount_global",
+                  "document_name": "para-20241231.htm",
+                  "raw_asset_id": "sha256:5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+                  "record_type": "SOURCE_REFERENCE",
+                  "request_attempt_id": "request:attempt:255bb923386890b3db4f807546f3fac75d33f941ccdc035730d90d98d37c4b6e",
+                  "source_reference_id": "sha256:0f1a9b2a108d1f35340ea3a4a473d82a3a3b8710de577bd4402e408dbe712af5",
+                  "source_role": "target_primary",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231.htm"
+                },
+                "unit": "USD",
+                "value": "29213000000"
+              },
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "context": {
+                  "context_ref": "c-1",
+                  "dimensions": {},
+                  "entity_identifier": "0000813828",
+                  "period_end": "2024-12-31",
+                  "period_start": "2024-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "c-1",
+                  "dimensions": [],
+                  "identifiers": [
+                    {
+                      "scheme": "http://www.sec.gov/CIK",
+                      "value": "0000813828"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2024-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2024-12-31"
+                    }
+                  ],
+                  "typed_dimension_count": 0
+                },
+                "context_ref": "c-1",
+                "decimals": "-6",
+                "ordinal": 2170,
+                "period_end": "2024-12-31",
+                "period_start": "2024-01-01",
+                "source_reference": {
+                  "accession": "0000813828-25-000005",
+                  "company_id": "paramount_skydance_paramount_global",
+                  "document_name": "para-20241231.htm",
+                  "raw_asset_id": "sha256:5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+                  "record_type": "SOURCE_REFERENCE",
+                  "request_attempt_id": "request:attempt:255bb923386890b3db4f807546f3fac75d33f941ccdc035730d90d98d37c4b6e",
+                  "source_reference_id": "sha256:0f1a9b2a108d1f35340ea3a4a473d82a3a3b8710de577bd4402e408dbe712af5",
+                  "source_role": "target_primary",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231.htm"
+                },
+                "unit": "USD",
+                "value": "29213000000"
+              }
+            ],
+            "xml": [
+              {
+                "concept": "us-gaap:revenuefromcontractwithcustomerexcludingassessedtax",
+                "context": {
+                  "context_ref": "c-1",
+                  "dimensions": {},
+                  "entity_identifier": "0000813828",
+                  "period_end": "2024-12-31",
+                  "period_start": "2024-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "c-1",
+                  "dimensions": [],
+                  "identifiers": [
+                    {
+                      "scheme": "http://www.sec.gov/CIK",
+                      "value": "0000813828"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2024-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2024-12-31"
+                    }
+                  ],
+                  "typed_dimension_count": 0
+                },
+                "context_ref": "c-1",
+                "decimals": "-6",
+                "ordinal": 86,
+                "period_end": "2024-12-31",
+                "period_start": "2024-01-01",
+                "source_reference": {
+                  "accession": "0000813828-25-000005",
+                  "company_id": "paramount_skydance_paramount_global",
+                  "document_name": "para-20241231_htm.xml",
+                  "raw_asset_id": "sha256:e19bf7b9db2b6076c791220adbb3f2d66615dc8a26110a2a29a4d0c676a9fd8e",
+                  "record_type": "SOURCE_REFERENCE",
+                  "request_attempt_id": "request:attempt:1b55e8c2e5cc6e379def0e809d4f9d158aabe1b2a8d88ffaced1e6dbabd06909",
+                  "source_reference_id": "sha256:f5fbc8c1603235d141b2bd20721c58c8d9e6786a617f980f02523e4b58e71ee5",
+                  "source_role": "auditor_facts",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231_htm.xml"
+                },
+                "unit": "USD",
+                "value": "29213000000"
+              },
+              {
+                "concept": "us-gaap:revenuefromcontractwithcustomerexcludingassessedtax",
+                "context": {
+                  "context_ref": "c-1",
+                  "dimensions": {},
+                  "entity_identifier": "0000813828",
+                  "period_end": "2024-12-31",
+                  "period_start": "2024-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "c-1",
+                  "dimensions": [],
+                  "identifiers": [
+                    {
+                      "scheme": "http://www.sec.gov/CIK",
+                      "value": "0000813828"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2024-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2024-12-31"
+                    }
+                  ],
+                  "typed_dimension_count": 0
+                },
+                "context_ref": "c-1",
+                "decimals": "-6",
+                "ordinal": 1002,
+                "period_end": "2024-12-31",
+                "period_start": "2024-01-01",
+                "source_reference": {
+                  "accession": "0000813828-25-000005",
+                  "company_id": "paramount_skydance_paramount_global",
+                  "document_name": "para-20241231_htm.xml",
+                  "raw_asset_id": "sha256:e19bf7b9db2b6076c791220adbb3f2d66615dc8a26110a2a29a4d0c676a9fd8e",
+                  "record_type": "SOURCE_REFERENCE",
+                  "request_attempt_id": "request:attempt:1b55e8c2e5cc6e379def0e809d4f9d158aabe1b2a8d88ffaced1e6dbabd06909",
+                  "source_reference_id": "sha256:f5fbc8c1603235d141b2bd20721c58c8d9e6786a617f980f02523e4b58e71ee5",
+                  "source_role": "auditor_facts",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231_htm.xml"
+                },
+                "unit": "USD",
+                "value": "29213000000"
+              },
+              {
+                "concept": "us-gaap:revenuefromcontractwithcustomerexcludingassessedtax",
+                "context": {
+                  "context_ref": "c-1",
+                  "dimensions": {},
+                  "entity_identifier": "0000813828",
+                  "period_end": "2024-12-31",
+                  "period_start": "2024-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "c-1",
+                  "dimensions": [],
+                  "identifiers": [
+                    {
+                      "scheme": "http://www.sec.gov/CIK",
+                      "value": "0000813828"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2024-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2024-12-31"
+                    }
+                  ],
+                  "typed_dimension_count": 0
+                },
+                "context_ref": "c-1",
+                "decimals": "-6",
+                "ordinal": 2026,
+                "period_end": "2024-12-31",
+                "period_start": "2024-01-01",
+                "source_reference": {
+                  "accession": "0000813828-25-000005",
+                  "company_id": "paramount_skydance_paramount_global",
+                  "document_name": "para-20241231_htm.xml",
+                  "raw_asset_id": "sha256:e19bf7b9db2b6076c791220adbb3f2d66615dc8a26110a2a29a4d0c676a9fd8e",
+                  "record_type": "SOURCE_REFERENCE",
+                  "request_attempt_id": "request:attempt:1b55e8c2e5cc6e379def0e809d4f9d158aabe1b2a8d88ffaced1e6dbabd06909",
+                  "source_reference_id": "sha256:f5fbc8c1603235d141b2bd20721c58c8d9e6786a617f980f02523e4b58e71ee5",
+                  "source_role": "auditor_facts",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231_htm.xml"
+                },
+                "unit": "USD",
+                "value": "29213000000"
+              },
+              {
+                "concept": "us-gaap:revenuefromcontractwithcustomerexcludingassessedtax",
+                "context": {
+                  "context_ref": "c-1",
+                  "dimensions": {},
+                  "entity_identifier": "0000813828",
+                  "period_end": "2024-12-31",
+                  "period_start": "2024-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "c-1",
+                  "dimensions": [],
+                  "identifiers": [
+                    {
+                      "scheme": "http://www.sec.gov/CIK",
+                      "value": "0000813828"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2024-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2024-12-31"
+                    }
+                  ],
+                  "typed_dimension_count": 0
+                },
+                "context_ref": "c-1",
+                "decimals": "-6",
+                "ordinal": 2170,
+                "period_end": "2024-12-31",
+                "period_start": "2024-01-01",
+                "source_reference": {
+                  "accession": "0000813828-25-000005",
+                  "company_id": "paramount_skydance_paramount_global",
+                  "document_name": "para-20241231_htm.xml",
+                  "raw_asset_id": "sha256:e19bf7b9db2b6076c791220adbb3f2d66615dc8a26110a2a29a4d0c676a9fd8e",
+                  "record_type": "SOURCE_REFERENCE",
+                  "request_attempt_id": "request:attempt:1b55e8c2e5cc6e379def0e809d4f9d158aabe1b2a8d88ffaced1e6dbabd06909",
+                  "source_reference_id": "sha256:f5fbc8c1603235d141b2bd20721c58c8d9e6786a617f980f02523e4b58e71ee5",
+                  "source_role": "auditor_facts",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231_htm.xml"
+                },
+                "unit": "USD",
+                "value": "29213000000"
+              }
+            ]
+          }
+        },
+        {
+          "observation_id": "sha256:0d5b27dd5e3d5c5b96378e3ceb5ca2ca9357cf3a7b51abfc1833b3d537df7831",
+          "original_reports": {
+            "primary": [
+              {
+                "concept": "us-gaap:OperatingIncomeLoss",
+                "context": {
+                  "context_ref": "c-1",
+                  "dimensions": {},
+                  "entity_identifier": "0000813828",
+                  "period_end": "2024-12-31",
+                  "period_start": "2024-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "c-1",
+                  "dimensions": [],
+                  "identifiers": [
+                    {
+                      "scheme": "http://www.sec.gov/CIK",
+                      "value": "0000813828"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2024-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2024-12-31"
+                    }
+                  ],
+                  "typed_dimension_count": 0
+                },
+                "context_ref": "c-1",
+                "decimals": "-6",
+                "ordinal": 113,
+                "period_end": "2024-12-31",
+                "period_start": "2024-01-01",
+                "source_reference": {
+                  "accession": "0000813828-25-000005",
+                  "company_id": "paramount_skydance_paramount_global",
+                  "document_name": "para-20241231.htm",
+                  "raw_asset_id": "sha256:5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+                  "record_type": "SOURCE_REFERENCE",
+                  "request_attempt_id": "request:attempt:255bb923386890b3db4f807546f3fac75d33f941ccdc035730d90d98d37c4b6e",
+                  "source_reference_id": "sha256:0f1a9b2a108d1f35340ea3a4a473d82a3a3b8710de577bd4402e408dbe712af5",
+                  "source_role": "target_primary",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231.htm"
+                },
+                "unit": "USD",
+                "value": "-5269000000"
+              },
+              {
+                "concept": "us-gaap:OperatingIncomeLoss",
+                "context": {
+                  "context_ref": "c-1",
+                  "dimensions": {},
+                  "entity_identifier": "0000813828",
+                  "period_end": "2024-12-31",
+                  "period_start": "2024-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "c-1",
+                  "dimensions": [],
+                  "identifiers": [
+                    {
+                      "scheme": "http://www.sec.gov/CIK",
+                      "value": "0000813828"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2024-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2024-12-31"
+                    }
+                  ],
+                  "typed_dimension_count": 0
+                },
+                "context_ref": "c-1",
+                "decimals": "-6",
+                "ordinal": 2118,
+                "period_end": "2024-12-31",
+                "period_start": "2024-01-01",
+                "source_reference": {
+                  "accession": "0000813828-25-000005",
+                  "company_id": "paramount_skydance_paramount_global",
+                  "document_name": "para-20241231.htm",
+                  "raw_asset_id": "sha256:5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+                  "record_type": "SOURCE_REFERENCE",
+                  "request_attempt_id": "request:attempt:255bb923386890b3db4f807546f3fac75d33f941ccdc035730d90d98d37c4b6e",
+                  "source_reference_id": "sha256:0f1a9b2a108d1f35340ea3a4a473d82a3a3b8710de577bd4402e408dbe712af5",
+                  "source_role": "target_primary",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231.htm"
+                },
+                "unit": "USD",
+                "value": "-5269000000"
+              }
+            ],
+            "xml": [
+              {
+                "concept": "us-gaap:operatingincomeloss",
+                "context": {
+                  "context_ref": "c-1",
+                  "dimensions": {},
+                  "entity_identifier": "0000813828",
+                  "period_end": "2024-12-31",
+                  "period_start": "2024-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "c-1",
+                  "dimensions": [],
+                  "identifiers": [
+                    {
+                      "scheme": "http://www.sec.gov/CIK",
+                      "value": "0000813828"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2024-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2024-12-31"
+                    }
+                  ],
+                  "typed_dimension_count": 0
+                },
+                "context_ref": "c-1",
+                "decimals": "-6",
+                "ordinal": 113,
+                "period_end": "2024-12-31",
+                "period_start": "2024-01-01",
+                "source_reference": {
+                  "accession": "0000813828-25-000005",
+                  "company_id": "paramount_skydance_paramount_global",
+                  "document_name": "para-20241231_htm.xml",
+                  "raw_asset_id": "sha256:e19bf7b9db2b6076c791220adbb3f2d66615dc8a26110a2a29a4d0c676a9fd8e",
+                  "record_type": "SOURCE_REFERENCE",
+                  "request_attempt_id": "request:attempt:1b55e8c2e5cc6e379def0e809d4f9d158aabe1b2a8d88ffaced1e6dbabd06909",
+                  "source_reference_id": "sha256:f5fbc8c1603235d141b2bd20721c58c8d9e6786a617f980f02523e4b58e71ee5",
+                  "source_role": "auditor_facts",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231_htm.xml"
+                },
+                "unit": "USD",
+                "value": "-5269000000"
+              },
+              {
+                "concept": "us-gaap:operatingincomeloss",
+                "context": {
+                  "context_ref": "c-1",
+                  "dimensions": {},
+                  "entity_identifier": "0000813828",
+                  "period_end": "2024-12-31",
+                  "period_start": "2024-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "c-1",
+                  "dimensions": [],
+                  "identifiers": [
+                    {
+                      "scheme": "http://www.sec.gov/CIK",
+                      "value": "0000813828"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2024-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2024-12-31"
+                    }
+                  ],
+                  "typed_dimension_count": 0
+                },
+                "context_ref": "c-1",
+                "decimals": "-6",
+                "ordinal": 2118,
+                "period_end": "2024-12-31",
+                "period_start": "2024-01-01",
+                "source_reference": {
+                  "accession": "0000813828-25-000005",
+                  "company_id": "paramount_skydance_paramount_global",
+                  "document_name": "para-20241231_htm.xml",
+                  "raw_asset_id": "sha256:e19bf7b9db2b6076c791220adbb3f2d66615dc8a26110a2a29a4d0c676a9fd8e",
+                  "record_type": "SOURCE_REFERENCE",
+                  "request_attempt_id": "request:attempt:1b55e8c2e5cc6e379def0e809d4f9d158aabe1b2a8d88ffaced1e6dbabd06909",
+                  "source_reference_id": "sha256:f5fbc8c1603235d141b2bd20721c58c8d9e6786a617f980f02523e4b58e71ee5",
+                  "source_role": "auditor_facts",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231_htm.xml"
+                },
+                "unit": "USD",
+                "value": "-5269000000"
+              }
+            ]
+          }
+        },
+        {
+          "observation_id": "sha256:0bfdfd071f3198b2b67ae5108de083718c7140a322e6c4e44f4b674a3490953a",
+          "original_reports": {
+            "primary": [
+              {
+                "concept": "us-gaap:DepreciationAndAmortization",
+                "context": {
+                  "context_ref": "c-1",
+                  "dimensions": {},
+                  "entity_identifier": "0000813828",
+                  "period_end": "2024-12-31",
+                  "period_start": "2024-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "c-1",
+                  "dimensions": [],
+                  "identifiers": [
+                    {
+                      "scheme": "http://www.sec.gov/CIK",
+                      "value": "0000813828"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2024-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2024-12-31"
+                    }
+                  ],
+                  "typed_dimension_count": 0
+                },
+                "context_ref": "c-1",
+                "decimals": "-6",
+                "ordinal": 98,
+                "period_end": "2024-12-31",
+                "period_start": "2024-01-01",
+                "source_reference": {
+                  "accession": "0000813828-25-000005",
+                  "company_id": "paramount_skydance_paramount_global",
+                  "document_name": "para-20241231.htm",
+                  "raw_asset_id": "sha256:5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+                  "record_type": "SOURCE_REFERENCE",
+                  "request_attempt_id": "request:attempt:255bb923386890b3db4f807546f3fac75d33f941ccdc035730d90d98d37c4b6e",
+                  "source_reference_id": "sha256:0f1a9b2a108d1f35340ea3a4a473d82a3a3b8710de577bd4402e408dbe712af5",
+                  "source_role": "target_primary",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231.htm"
+                },
+                "unit": "USD",
+                "value": "392000000"
+              },
+              {
+                "concept": "us-gaap:DepreciationAndAmortization",
+                "context": {
+                  "context_ref": "c-1",
+                  "dimensions": {},
+                  "entity_identifier": "0000813828",
+                  "period_end": "2024-12-31",
+                  "period_start": "2024-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "c-1",
+                  "dimensions": [],
+                  "identifiers": [
+                    {
+                      "scheme": "http://www.sec.gov/CIK",
+                      "value": "0000813828"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2024-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2024-12-31"
+                    }
+                  ],
+                  "typed_dimension_count": 0
+                },
+                "context_ref": "c-1",
+                "decimals": "-6",
+                "ordinal": 328,
+                "period_end": "2024-12-31",
+                "period_start": "2024-01-01",
+                "source_reference": {
+                  "accession": "0000813828-25-000005",
+                  "company_id": "paramount_skydance_paramount_global",
+                  "document_name": "para-20241231.htm",
+                  "raw_asset_id": "sha256:5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+                  "record_type": "SOURCE_REFERENCE",
+                  "request_attempt_id": "request:attempt:255bb923386890b3db4f807546f3fac75d33f941ccdc035730d90d98d37c4b6e",
+                  "source_reference_id": "sha256:0f1a9b2a108d1f35340ea3a4a473d82a3a3b8710de577bd4402e408dbe712af5",
+                  "source_role": "target_primary",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231.htm"
+                },
+                "unit": "USD",
+                "value": "392000000"
+              }
+            ],
+            "xml": [
+              {
+                "concept": "us-gaap:depreciationandamortization",
+                "context": {
+                  "context_ref": "c-1",
+                  "dimensions": {},
+                  "entity_identifier": "0000813828",
+                  "period_end": "2024-12-31",
+                  "period_start": "2024-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "c-1",
+                  "dimensions": [],
+                  "identifiers": [
+                    {
+                      "scheme": "http://www.sec.gov/CIK",
+                      "value": "0000813828"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2024-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2024-12-31"
+                    }
+                  ],
+                  "typed_dimension_count": 0
+                },
+                "context_ref": "c-1",
+                "decimals": "-6",
+                "ordinal": 98,
+                "period_end": "2024-12-31",
+                "period_start": "2024-01-01",
+                "source_reference": {
+                  "accession": "0000813828-25-000005",
+                  "company_id": "paramount_skydance_paramount_global",
+                  "document_name": "para-20241231_htm.xml",
+                  "raw_asset_id": "sha256:e19bf7b9db2b6076c791220adbb3f2d66615dc8a26110a2a29a4d0c676a9fd8e",
+                  "record_type": "SOURCE_REFERENCE",
+                  "request_attempt_id": "request:attempt:1b55e8c2e5cc6e379def0e809d4f9d158aabe1b2a8d88ffaced1e6dbabd06909",
+                  "source_reference_id": "sha256:f5fbc8c1603235d141b2bd20721c58c8d9e6786a617f980f02523e4b58e71ee5",
+                  "source_role": "auditor_facts",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231_htm.xml"
+                },
+                "unit": "USD",
+                "value": "392000000"
+              },
+              {
+                "concept": "us-gaap:depreciationandamortization",
+                "context": {
+                  "context_ref": "c-1",
+                  "dimensions": {},
+                  "entity_identifier": "0000813828",
+                  "period_end": "2024-12-31",
+                  "period_start": "2024-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "c-1",
+                  "dimensions": [],
+                  "identifiers": [
+                    {
+                      "scheme": "http://www.sec.gov/CIK",
+                      "value": "0000813828"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2024-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2024-12-31"
+                    }
+                  ],
+                  "typed_dimension_count": 0
+                },
+                "context_ref": "c-1",
+                "decimals": "-6",
+                "ordinal": 328,
+                "period_end": "2024-12-31",
+                "period_start": "2024-01-01",
+                "source_reference": {
+                  "accession": "0000813828-25-000005",
+                  "company_id": "paramount_skydance_paramount_global",
+                  "document_name": "para-20241231_htm.xml",
+                  "raw_asset_id": "sha256:e19bf7b9db2b6076c791220adbb3f2d66615dc8a26110a2a29a4d0c676a9fd8e",
+                  "record_type": "SOURCE_REFERENCE",
+                  "request_attempt_id": "request:attempt:1b55e8c2e5cc6e379def0e809d4f9d158aabe1b2a8d88ffaced1e6dbabd06909",
+                  "source_reference_id": "sha256:f5fbc8c1603235d141b2bd20721c58c8d9e6786a617f980f02523e4b58e71ee5",
+                  "source_role": "auditor_facts",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231_htm.xml"
+                },
+                "unit": "USD",
+                "value": "392000000"
+              }
+            ]
+          }
+        }
+      ],
+      "income_property_reference": {
+        "source_scope_id": "sha256:2aad479ae1eeaf9b0802a8b41a7fd508ead73758cacecd87be604a2dededb8fb",
+        "metric_id": "B03",
+        "input_class": "CURRENT_ORIGINAL_INCOME_STATEMENT_VALUES"
+      }
+    }
+  },
+  "shared_income_property": {
+    "income_correction_blocks": [],
+    "input_class": "CURRENT_ORIGINAL_INCOME_STATEMENT_VALUES",
+    "original_scope_id": "sha256:2aad479ae1eeaf9b0802a8b41a7fd508ead73758cacecd87be604a2dededb8fb",
+    "part_iii_details": {
+      "conditional_compensation_references": [
+        {
+          "block": {
+            "block_indices": [
+              381
+            ],
+            "source_blocks": [
+              {
+                "block_index": 381,
+                "emphasized": false,
+                "leading_emphasis": null,
+                "linked": false,
+                "raw_end_byte": 152706,
+                "raw_span_sha256": "c6fb66250a91700db3ce1553dd77ac164d3d79e9b17e20a99f3cb4f41ff92662",
+                "raw_start_byte": 152170,
+                "text": "\u2713 Clawback Policy: In addition to maintaining a clawback policy as required by the Securities Exchange Act of 1934, as amended (the \u201cExchange Act\u201d) Rule 10D-1 and Nasdaq listing standards (which we apply beyond executive officers to other senior executives of the Company), provide for forfeiture, repayment or adjustment of incentive compensation in the event of a financial restatement without regard to misconduct in our NEOs\u2019 employment agreements"
+              }
+            ],
+            "text": "\u2713 Clawback Policy: In addition to maintaining a clawback policy as required by the Securities Exchange Act of 1934, as amended (the \u201cExchange Act\u201d) Rule 10D-1 and Nasdaq listing standards (which we apply beyond executive officers to other senior executives of the Company), provide for forfeiture, repayment or adjustment of incentive compensation in the event of a financial restatement without regard to misconduct in our NEOs\u2019 employment agreements"
+          },
+          "conditional_clause": "in the event of a financial restatement without regard to misconduct"
+        }
+      ],
+      "correction_cover": {
+        "block_indices": [
+          58,
+          59,
+          60
+        ],
+        "source_blocks": [
+          {
+            "block_index": 58,
+            "emphasized": false,
+            "leading_emphasis": null,
+            "linked": false,
+            "raw_end_byte": 26667,
+            "raw_span_sha256": "0b9fb6df187b9ba6ff6d2e1a5f13bd4d80a19f3aa61d92a99525eeab9de28ac0",
+            "raw_start_byte": 26486,
+            "text": "If securities are registered pursuant to Section 12(b) of the Act, indicate by check mark whether the financial statements of the registrant included in the filing reflect the"
+          },
+          {
+            "block_index": 59,
+            "emphasized": false,
+            "leading_emphasis": null,
+            "linked": false,
+            "raw_end_byte": 26718,
+            "raw_span_sha256": "cf321c24c1f37b19c8c34e80bb2583473d7a015089fef533eef9b5c1ece69afe",
+            "raw_start_byte": 26696,
+            "text": "correction of an error"
+          },
+          {
+            "block_index": 60,
+            "emphasized": false,
+            "leading_emphasis": null,
+            "linked": false,
+            "raw_end_byte": 26936,
+            "raw_span_sha256": "92909e059043041e6b710b6a6916bbffb4d360a9471abfe0c4b6b709bf340807",
+            "raw_start_byte": 26724,
+            "text": "to previously issued financial statements. \u2610"
+          }
+        ],
+        "text": "If securities are registered pursuant to Section 12(b) of the Act, indicate by check mark whether the financial statements of the registrant included in the filing reflect the correction of an error to previously issued financial statements. \u2610"
+      },
+      "native_correction_flag": {
+        "context_proof": {
+          "context_ref": "P01_01_2024To12_31_2024",
+          "dimensions": [],
+          "identifiers": [
+            {
+              "scheme": "http://www.sec.gov/CIK",
+              "value": "0000813828"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "startdate",
+              "value": "2024-01-01"
+            },
+            {
+              "kind": "enddate",
+              "value": "2024-12-31"
+            }
+          ],
+          "typed_dimension_count": 0
+        },
+        "fact": {
+          "context_ref": "P01_01_2024To12_31_2024",
+          "ordinal": 34,
+          "qualified_name": "dei:DocumentFinStmtErrorCorrectionFlag",
+          "scale": "0",
+          "sign": "",
+          "tag": "ix:nonnumeric",
+          "text": "\u2610",
+          "unit_ref": ""
+        },
+        "namespace": "http://xbrl.sec.gov/dei/2024",
+        "native_context": {
+          "context_ref": "P01_01_2024To12_31_2024",
+          "dimensions": {},
+          "entity_identifier": "0000813828",
+          "period_end": "2024-12-31",
+          "period_start": "2024-01-01",
+          "typed_dimension_count": 0
+        }
+      },
+      "no_new_statements_declaration": {
+        "block_index": 1806,
+        "emphasized": false,
+        "leading_emphasis": null,
+        "linked": false,
+        "raw_end_byte": 1033835,
+        "raw_span_sha256": "1b78dd16ad3ef4eddbfa98ff022e7cc767e3d4cadd2c3a50de5b8c113b31bdf6",
+        "raw_start_byte": 1033637,
+        "text": "No financial statements or supplemental data are filed with this Amendment. See Index to Financial Statements and Supplemental Data of the Initial Form 10-K."
+      },
+      "note_identity": {
+        "aliases": "\u201cParamount,\u201d the \u201cCompany,\u201d \u201cwe,\u201d \u201cus\u201d and \u201cour\u201d",
+        "end": "December 31, 2024",
+        "filed": "February 26, 2025",
+        "number": "1",
+        "registrant": "Paramount Global",
+        "scope_name": "Paramount Global"
+      },
+      "restatement_cover": {
+        "block_indices": [
+          61,
+          62,
+          63
+        ],
+        "source_blocks": [
+          {
+            "block_index": 61,
+            "emphasized": false,
+            "leading_emphasis": null,
+            "linked": false,
+            "raw_end_byte": 27308,
+            "raw_span_sha256": "649a60c6e9f1460a0f529561210cae289df5cfdb8f64698207c4970a47b85f03",
+            "raw_start_byte": 27054,
+            "text": "Indicate by check mark whether any of those error corrections are restatements that required a recovery analysis of incentive-based compensation received by any of the registrant\u2019s executive officers during the relevant recovery period pursuant to"
+          },
+          {
+            "block_index": 62,
+            "emphasized": false,
+            "leading_emphasis": null,
+            "linked": false,
+            "raw_end_byte": 27375,
+            "raw_span_sha256": "c2c9159901c4222c51bfe64ad6990a5f017abfb922e03654ba41602383be0abf",
+            "raw_start_byte": 27356,
+            "text": "\u00a7240.10D-1(b)."
+          },
+          {
+            "block_index": 63,
+            "emphasized": false,
+            "leading_emphasis": null,
+            "linked": false,
+            "raw_end_byte": 27390,
+            "raw_span_sha256": "08e84ef81fcd7b76253fe6d060fb8bdecc03b2273aadc875404aaabaa34f0a70",
+            "raw_start_byte": 27381,
+            "text": "\u2610"
+          }
+        ],
+        "text": "Indicate by check mark whether any of those error corrections are restatements that required a recovery analysis of incentive-based compensation received by any of the registrant\u2019s executive officers during the relevant recovery period pursuant to \u00a7240.10D-1(b). \u2610"
+      },
+      "unresolved_correction_blocks": []
+    }
+  }
+}
