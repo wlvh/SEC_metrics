@@ -38,9 +38,12 @@ def _authenticated_original(*, original, source, repo_root):
     from .continuous_semantic_calls import source_requests
     _need(type(source) is dict and type(source.get('company_id')) is str,
           'D03_ANCHOR_AUTHENTIC_SOURCE_REQUIRED')
+    _need('external_replay_only' not in source or type(source['external_replay_only']) is bool,
+          'D03_ANCHOR_SOURCE_MODE_INVALID')
     rebuilt = prepare_regulatory_semantic_source(repo_root=repo_root,
         company_id=source['company_id'],
-        request_context_format=source.get('request_context_format'))
+        request_context_format=source.get('request_context_format'),
+        **({'ordinary_registered':True} if source.get('external_replay_only') is True else {}))
     _need(source == rebuilt and original in source_requests(rebuilt),
           'D03_ANCHOR_AUTHENTIC_ORIGINAL_REQUIRED')
 
