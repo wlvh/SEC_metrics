@@ -1,5 +1,6 @@
 """Ordinary E01 consumer controls; constructed answers have no model credit."""
 from contextlib import ExitStack
+from pathlib import Path
 from types import SimpleNamespace
 from unittest import TestCase
 from unittest.mock import Mock,patch
@@ -104,6 +105,38 @@ class EventItemEndSubsectionTest(TestCase):
                 items.item_text(raw_bytes=raw, item_code='8.01')
 
 class HistoricalE01CompanyCaseTest(TestCase):
+    def test_shared_dependency_check_uses_the_content_consumer_for_unresolved_windows(self):
+        from tests.vnext.processing_dependency_checks import (
+            processing_calls, assert_processing_calls)
+        from vnext.ordinary_current_update import _configuration
+        root=Path(__file__).resolve().parents[2]
+        configuration=_configuration(root,'paramount_skydance_paramount_global','E01')
+        scenarios=(
+            ({},'E01_CONTENT_RESPONSE_NOT_AVAILABLE_FOR_REQUEST'),
+            ({'successor':True},'E01_SUCCESSOR_EVENT_WINDOW_NOT_RECEIVED'),
+            ({'dependency':{'saved_status':'MISSING_SAVED_SOURCE','source_url':'constructed'}},
+                'E01_REQUIRED_INCORPORATED_SOURCE_UNAVAILABLE'))
+        for arguments,reason in scenarios:
+            with self.subTest(reason=reason), processing_calls(root) as observed:
+                case,_,_=self.prepare(**arguments)
+            self.assertIsNone(case['results']['E01']['value'])
+            self.assertEqual(reason,case['results']['E01']['reason_code'])
+            self.assertIn('scripts/vnext/historical_e01_company_case.py',observed)
+            assert_processing_calls(observed,configuration,cases.PROCESSING_FILES)
+            if not arguments:
+                path='scripts/vnext/historical_ma_confirmation.py'
+                self.assertIn(path,observed)
+                reduced=tuple(p for p in cases.PROCESSING_FILES if p!=path)
+                with self.assertRaisesRegex(AssertionError,'historical_ma_confirmation.py'):
+                    assert_processing_calls(observed,configuration,reduced)
+        # The existing complete-walk zero fixture still uses the E01 content
+        # adapter and Calculator, not the ordinary keyword-count factory.
+        with processing_calls(root) as observed:
+            HistoricalE01ZeroCandidateTest().test_zero_requires_the_successful_complete_candidate_walk()
+        self.assertIn('scripts/vnext/historical_e01_company_case.py',observed)
+        self.assertIn('calculate_observation_metric',observed['scripts/vnext/calculator.py'])
+        assert_processing_calls(observed,configuration,cases.PROCESSING_FILES)
+
     def prepare(self, *, dependency=None, successor=False, packet_error=None, amendment_checks=None):
         annual={'company_id':'paramount_skydance_paramount_global','entity':'813828',
             'filing':{'accessionNumber':'constructed'},'amendments':[],

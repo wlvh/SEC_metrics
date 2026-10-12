@@ -1,0 +1,322 @@
+{
+  "seconds": 28.275444624989177,
+  "constructed_control": false,
+  "observed": {
+    "scripts/vnext/historical_e01_company_case.py": [
+      "_display_assessment",
+      "prepare_historical_e01_year_case"
+    ],
+    "scripts/vnext/normal_period_selection.py": [
+      "<genexpr>",
+      "_derive",
+      "_need",
+      "_policy",
+      "_report_end",
+      "_selected_company",
+      "check_selected_label",
+      "check_selected_period",
+      "issuer_fiscal_year",
+      "resolve_period_selection",
+      "selected_historical_filing"
+    ],
+    "scripts/vnext/company_registry.py": [
+      "_registry_rows"
+    ],
+    "scripts/vnext/normal_history_catalog.py": [
+      "<genexpr>",
+      "<lambda>",
+      "_company",
+      "_identity",
+      "_need",
+      "_reading_cik",
+      "annual_periods",
+      "block_last_days",
+      "catalog_identity",
+      "cutoff",
+      "load_history_for_period"
+    ],
+    "scripts/vnext/normal_annual_input.py": [
+      "<genexpr>",
+      "_cik",
+      "_date",
+      "_need",
+      "_subject_policy",
+      "annual_period",
+      "dei",
+      "dei_namespace_pattern"
+    ],
+    "scripts/vnext/normal_governance_input.py": [
+      "<genexpr>",
+      "<lambda>",
+      "__init__",
+      "_date",
+      "_filings",
+      "_history_index",
+      "_need",
+      "primary",
+      "read"
+    ],
+    "scripts/vnext/annual_sources.py": [
+      "_require",
+      "_rows",
+      "_utc",
+      "saved_source"
+    ],
+    "scripts/vnext/annual_input.py": [
+      "_saved_source"
+    ],
+    "scripts/vnext/request_bindings.py": [
+      "_validate_named_row",
+      "_verified_request_locator",
+      "request_attempt_binding",
+      "validate_request_attempt_binding"
+    ],
+    "scripts/vnext/sources.py": [
+      "<genexpr>",
+      "raw_blob_record",
+      "resolve_repository_file",
+      "source_reference_record"
+    ],
+    "scripts/vnext/canonical.py": [
+      "<lambda>",
+      "_canonicalize",
+      "_pairs_to_object",
+      "_parse_json_decimal",
+      "_parse_json_integer",
+      "_validate_tree_unicode",
+      "_validate_unicode",
+      "canonical_json_bytes",
+      "content_hash",
+      "execution_semantics_hash",
+      "parse_decimal",
+      "sha256_bytes",
+      "sha256_file",
+      "strict_json_file",
+      "strict_json_loads"
+    ],
+    "scripts/vnext/records.py": [
+      "<genexpr>",
+      "_expected_identifier",
+      "_validate_enums",
+      "_validate_field_types",
+      "_validate_record_semantics",
+      "_validate_record_status",
+      "metric_result_contract_hash",
+      "require_exact_fields",
+      "validate_identifier",
+      "validate_record"
+    ],
+    "scripts/vnext/historical_annual_input.py": [
+      "_need",
+      "arguments",
+      "prepare_historical_annual_input",
+      "prepare_original_historical_input",
+      "read"
+    ],
+    "scripts/vnext/historical_dei.py": [
+      "<genexpr>",
+      "_class_view",
+      "_codes",
+      "_followed",
+      "_frozen_pattern",
+      "_function_view",
+      "_held_cells",
+      "_in_package",
+      "_is_view",
+      "_members",
+      "_package_module",
+      "_refuse_unredirectable",
+      "annual_period",
+      "asks_the_dei_question",
+      "fullmatch",
+      "reaches_the_dei_question",
+      "release_aware",
+      "view"
+    ],
+    "scripts/vnext/deterministic_router.py": [
+      "<genexpr>",
+      "<lambda>",
+      "__init__",
+      "_exact_fields",
+      "_freeze_xbrl_owned",
+      "_hdr_item_codes",
+      "_local_tag",
+      "_normalize_item_code",
+      "_object",
+      "_parse_xbrl_parts",
+      "_primary_item_briefs",
+      "_reference",
+      "_require_raw_bytes",
+      "_sha256_identity",
+      "_submissions_accessions",
+      "_text",
+      "_text_list",
+      "_visible_text",
+      "acquisition_event_source_set_receipt",
+      "adapt_8k_item_index",
+      "contexts",
+      "facts",
+      "handle_data",
+      "handle_endtag",
+      "handle_starttag",
+      "load_event_route_catalog",
+      "parse_accession_xbrl_source",
+      "source_set_manifest",
+      "text",
+      "validate_source_set_manifest",
+      "validate_verified_claim",
+      "verified_claim",
+      "verify_source_set_completeness"
+    ],
+    "scripts/vnext/governance_signals.py": [
+      "<genexpr>",
+      "__init__",
+      "_need",
+      "_qname",
+      "handle_data",
+      "handle_endtag",
+      "handle_startendtag",
+      "handle_starttag"
+    ],
+    "scripts/vnext/ordinary_source_authority.py": [
+      "verify_ordinary_source_proofs"
+    ],
+    "scripts/vnext/saved_source_checks.py": [
+      "_need",
+      "verify_saved_inputs"
+    ],
+    "scripts/vnext/historical_fiscal_labels.py": [
+      "inspect_prepared_fiscal_year_labels",
+      "require_actual_definition_scope"
+    ],
+    "scripts/vnext/fiscal_year_labels.py": [
+      "<genexpr>",
+      "__init__",
+      "_definitions",
+      "_flush",
+      "_inspect_prepared_input",
+      "_need",
+      "_offset",
+      "_part",
+      "handle_endtag",
+      "handle_starttag",
+      "inspect_fiscal_year_labels",
+      "raw_input"
+    ],
+    "scripts/vnext/text_results_v2.py": [
+      "<genexpr>",
+      "__init__",
+      "_iso",
+      "_need",
+      "_verified_context",
+      "handle_data",
+      "handle_endtag",
+      "handle_starttag"
+    ],
+    "scripts/vnext/text_coverage.py": [
+      "<genexpr>",
+      "__init__",
+      "_byte_offsets",
+      "_flush",
+      "_need",
+      "_offset",
+      "_part",
+      "handle_charref",
+      "handle_data",
+      "handle_endtag",
+      "handle_entityref",
+      "handle_startendtag",
+      "handle_starttag"
+    ],
+    "scripts/vnext/normal_annual_input_v2.py": [
+      "_choose_fiscal_year",
+      "exact_json_value",
+      "plain"
+    ],
+    "scripts/vnext/specs.py": [
+      "<genexpr>",
+      "_count_ast",
+      "_expand_selection_policy",
+      "_require_string",
+      "_validate_dependencies",
+      "_validate_executable_semantics",
+      "_validate_inputs",
+      "_validate_top_level_guards",
+      "_validate_traits",
+      "compile_spec",
+      "compile_spec_file",
+      "parse_spec_document"
+    ],
+    "scripts/vnext/historical_event_items.py": [
+      "<genexpr>",
+      "__init__",
+      "_caption_only",
+      "_hidden_by_style",
+      "_hidden_in_span",
+      "_linked_in_span",
+      "_need",
+      "_number",
+      "_primary_bytes",
+      "_removed",
+      "_text_nodes",
+      "_unique_item_end",
+      "_visible_before",
+      "content_confirmation_candidates",
+      "handle_data",
+      "handle_endtag",
+      "handle_startendtag",
+      "handle_starttag",
+      "headed_item_codes",
+      "item_headings",
+      "item_text",
+      "successor_event_route"
+    ],
+    "scripts/vnext/observations.py": [
+      "scope_key"
+    ],
+    "scripts/vnext/historical_event_cases.py": [
+      "_event_amendment_checks"
+    ],
+    "scripts/vnext/selected_event_source_v1.py": [
+      "<genexpr>",
+      "_need",
+      "read_selected_event_sources"
+    ],
+    "scripts/vnext/traits.py": [
+      "<genexpr>",
+      "repository_company_ciks"
+    ],
+    "scripts/vnext/normal_zero_ai_results.py": [
+      "<genexpr>",
+      "<lambda>",
+      "_event_sources",
+      "_need"
+    ],
+    "scripts/vnext/zero_ai_r2.py": [
+      "_acquired_event_filings",
+      "_event_collection_manifest"
+    ],
+    "scripts/vnext/historical_ma_confirmation.py": [
+      "_need",
+      "confirmation_request",
+      "item_id"
+    ],
+    "scripts/vnext/calculator.py": [
+      "_result_and_trace",
+      "withheld_metric_result"
+    ]
+  },
+  "missing": {},
+  "result_id": "sha256:29806686aff92f5d5fd3dfb1fcda8351c698d400a77551f03fede5a03b2a29d0",
+  "value": null,
+  "reason": "E01_CONTENT_RESPONSE_NOT_AVAILABLE_FOR_REQUEST",
+  "request_id": "sha256:34507016c9b8da8e5bf9eb47b884f05e160758a43a3394593892d3ab6df283a5",
+  "candidate_count": 6,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "exact_saved_request_unchanged": true,
+  "source_reference": "docs/evidence/issue47_e01_subsections_20261012/saved-request.json"
+}

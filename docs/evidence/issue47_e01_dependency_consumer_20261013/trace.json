@@ -1,0 +1,236 @@
+{
+  "rows": [
+    {
+      "case": "no_response",
+      "constructed_control": true,
+      "observed": {
+        "scripts/vnext/canonical.py": [
+          "<lambda>",
+          "_canonicalize",
+          "_pairs_to_object",
+          "_parse_json_integer",
+          "_validate_tree_unicode",
+          "_validate_unicode",
+          "canonical_json_bytes",
+          "content_hash",
+          "execution_semantics_hash",
+          "parse_decimal",
+          "sha256_bytes",
+          "strict_json_file",
+          "strict_json_loads"
+        ],
+        "scripts/vnext/historical_e01_company_case.py": [
+          "_display_assessment",
+          "prepare_historical_e01_year_case"
+        ],
+        "scripts/vnext/specs.py": [
+          "<genexpr>",
+          "_count_ast",
+          "_expand_selection_policy",
+          "_require_string",
+          "_validate_dependencies",
+          "_validate_executable_semantics",
+          "_validate_inputs",
+          "_validate_top_level_guards",
+          "_validate_traits",
+          "compile_spec",
+          "compile_spec_file",
+          "parse_spec_document"
+        ],
+        "scripts/vnext/deterministic_router.py": [
+          "<genexpr>",
+          "_exact_fields",
+          "_object",
+          "_text",
+          "_text_list",
+          "load_event_route_catalog"
+        ],
+        "scripts/vnext/historical_event_items.py": [
+          "_need",
+          "successor_event_route"
+        ],
+        "scripts/vnext/observations.py": [
+          "scope_key"
+        ],
+        "scripts/vnext/historical_ma_confirmation.py": [
+          "_need",
+          "confirmation_request",
+          "item_id"
+        ],
+        "scripts/vnext/calculator.py": [
+          "_result_and_trace",
+          "withheld_metric_result"
+        ],
+        "scripts/vnext/records.py": [
+          "<genexpr>",
+          "_expected_identifier",
+          "_validate_enums",
+          "_validate_field_types",
+          "_validate_record_semantics",
+          "_validate_record_status",
+          "metric_result_contract_hash",
+          "require_exact_fields",
+          "validate_identifier",
+          "validate_record"
+        ]
+      },
+      "missing": {},
+      "reason": "E01_CONTENT_RESPONSE_NOT_AVAILABLE_FOR_REQUEST"
+    },
+    {
+      "case": "successor",
+      "constructed_control": true,
+      "observed": {
+        "scripts/vnext/canonical.py": [
+          "<lambda>",
+          "_canonicalize",
+          "_pairs_to_object",
+          "_parse_json_integer",
+          "_validate_tree_unicode",
+          "_validate_unicode",
+          "canonical_json_bytes",
+          "content_hash",
+          "execution_semantics_hash",
+          "parse_decimal",
+          "sha256_bytes",
+          "strict_json_file",
+          "strict_json_loads"
+        ],
+        "scripts/vnext/historical_e01_company_case.py": [
+          "_display_assessment",
+          "prepare_historical_e01_year_case"
+        ],
+        "scripts/vnext/specs.py": [
+          "<genexpr>",
+          "_count_ast",
+          "_expand_selection_policy",
+          "_require_string",
+          "_validate_dependencies",
+          "_validate_executable_semantics",
+          "_validate_inputs",
+          "_validate_top_level_guards",
+          "_validate_traits",
+          "compile_spec",
+          "compile_spec_file",
+          "parse_spec_document"
+        ],
+        "scripts/vnext/deterministic_router.py": [
+          "<genexpr>",
+          "_exact_fields",
+          "_object",
+          "_text",
+          "_text_list",
+          "load_event_route_catalog"
+        ],
+        "scripts/vnext/historical_event_items.py": [
+          "_need",
+          "successor_event_route"
+        ],
+        "scripts/vnext/observations.py": [
+          "scope_key"
+        ],
+        "scripts/vnext/calculator.py": [
+          "_result_and_trace",
+          "withheld_metric_result"
+        ],
+        "scripts/vnext/records.py": [
+          "<genexpr>",
+          "_expected_identifier",
+          "_validate_enums",
+          "_validate_field_types",
+          "_validate_record_semantics",
+          "_validate_record_status",
+          "metric_result_contract_hash",
+          "require_exact_fields",
+          "validate_identifier",
+          "validate_record"
+        ]
+      },
+      "missing": {},
+      "reason": "E01_SUCCESSOR_EVENT_WINDOW_NOT_RECEIVED"
+    },
+    {
+      "case": "missing_attachment",
+      "constructed_control": true,
+      "observed": {
+        "scripts/vnext/canonical.py": [
+          "<lambda>",
+          "_canonicalize",
+          "_pairs_to_object",
+          "_parse_json_integer",
+          "_validate_tree_unicode",
+          "_validate_unicode",
+          "canonical_json_bytes",
+          "content_hash",
+          "execution_semantics_hash",
+          "parse_decimal",
+          "sha256_bytes",
+          "strict_json_file",
+          "strict_json_loads"
+        ],
+        "scripts/vnext/historical_e01_company_case.py": [
+          "<genexpr>",
+          "_display_assessment",
+          "prepare_historical_e01_year_case"
+        ],
+        "scripts/vnext/specs.py": [
+          "<genexpr>",
+          "_count_ast",
+          "_expand_selection_policy",
+          "_require_string",
+          "_validate_dependencies",
+          "_validate_executable_semantics",
+          "_validate_inputs",
+          "_validate_top_level_guards",
+          "_validate_traits",
+          "compile_spec",
+          "compile_spec_file",
+          "parse_spec_document"
+        ],
+        "scripts/vnext/deterministic_router.py": [
+          "<genexpr>",
+          "_exact_fields",
+          "_object",
+          "_text",
+          "_text_list",
+          "load_event_route_catalog"
+        ],
+        "scripts/vnext/historical_event_items.py": [
+          "_need",
+          "successor_event_route"
+        ],
+        "scripts/vnext/observations.py": [
+          "scope_key"
+        ],
+        "scripts/vnext/historical_ma_confirmation.py": [
+          "_need",
+          "confirmation_request",
+          "item_id"
+        ],
+        "scripts/vnext/calculator.py": [
+          "_result_and_trace",
+          "withheld_metric_result"
+        ],
+        "scripts/vnext/records.py": [
+          "<genexpr>",
+          "_expected_identifier",
+          "_validate_enums",
+          "_validate_field_types",
+          "_validate_record_semantics",
+          "_validate_record_status",
+          "metric_result_contract_hash",
+          "require_exact_fields",
+          "validate_identifier",
+          "validate_record"
+        ]
+      },
+      "missing": {},
+      "reason": "E01_REQUIRED_INCORPORATED_SOURCE_UNAVAILABLE"
+    }
+  ],
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
