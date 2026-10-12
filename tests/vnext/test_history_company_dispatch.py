@@ -9,6 +9,22 @@ from vnext import company_local as local
 
 
 class HistoryCompanyDispatchTest(TestCase):
+    def test_selected_debt_keeps_received_income_and_balance_paths(self):
+        from vnext.historical_b06_case import prepare_historical_b06_year_case, PROCESSING_FILES
+        from vnext.historical_statement_cases import prepare_historical_statement_year_case
+        with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared:
+            self.run_history(company_id='enphase_energy', metric_ids=['B06', 'C04', 'B01', 'B02', 'B04'],
+                             fiscal_year_start=2024, fiscal_year_end=2024)
+        args = shared.call_args.kwargs
+        self.assertIs(prepare_historical_b06_year_case, args['case_factories']['B06'])
+        self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric']['B06'])
+        from vnext.historical_auditor_case import prepare_historical_auditor_year_case, PROCESSING_FILES as auditor_files
+        self.assertIs(prepare_historical_auditor_year_case, args['case_factories']['C04'])
+        self.assertEqual(auditor_files, args['processing_files_by_metric']['C04'])
+        self.assert_range_income(args, 'B01')
+        self.assert_range_income(args, 'B02')
+        self.assertIs(prepare_historical_statement_year_case, args['case_factories']['B04'])
+
     def test_auditor_selected_case_keeps_received_event_and_statement_factories(self):
         from vnext.historical_auditor_case import prepare_historical_auditor_year_case, PROCESSING_FILES
         from vnext.historical_event_cases import prepare_historical_event_year_case
@@ -392,3 +408,19 @@ class HistoryCompanyDispatchTest(TestCase):
             self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric'][metric])
         self.assertIs(prepare_historical_capital_year_case, args['case_factories']['A01'])
         self.assert_range_income(args, 'B01')
+
+class HistoricalIncomeSharedDispatchTest(TestCase):
+    setUp = HistoryCompanyDispatchTest.setUp
+    run_history = HistoryCompanyDispatchTest.run_history
+    assert_range_income = HistoryCompanyDispatchTest.assert_range_income
+    # Only the new mixed-family identity behavior; inherited financial tests
+    # are not installed again as a second suite.
+    def test_selected_b03_shares_company_controller_and_keeps_neighbours(self):
+        from vnext.historical_b03_case import prepare_historical_income_year_case, PROCESSING_FILES
+        with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared:
+            self.run_history(metric_ids=['B03','B01','B10'])
+        args=shared.call_args.kwargs
+        self.assertIs(prepare_historical_income_year_case,args['case_factories']['B03'])
+        self.assertEqual(PROCESSING_FILES,args['processing_files_by_metric']['B03'])
+        self.assert_range_income(args,'B01')
+        self.assertEqual('prepare_historical_lodging_year_case',args['case_factories']['B10'].__name__)

@@ -42,6 +42,21 @@ def _configuration(source, company, metric):
         paths.difference_update({'scripts/vnext/normal_lodging_results.py',
             'scripts/vnext/lodging_table_source.py', 'config/ordinary_lodging_table_v1.json',
             'catalog/ordinary_lodging/B10.md', 'catalog/ordinary_lodging/B11.md'})
+    if metric in METRIC_IDS or metric == 'D04':
+        # Neither zero-AI nor the saved D04 response producer calls B06 grammar.
+        # Shared annual selection, source checks and financial calculation
+        # remain below; an explicit historical consumer may add its own paths.
+        paths.difference_update({
+            'scripts/vnext/b06_bond_leases.py','scripts/vnext/b06_current_input.py',
+            'scripts/vnext/b06_financing_inventory.py','scripts/vnext/b06_inclusive_table.py',
+            'scripts/vnext/b06_note_carrying.py','scripts/vnext/normal_bond_debt_results.py',
+            'scripts/vnext/normal_inclusive_debt_results.py','scripts/vnext/normal_note_debt_results.py',
+            'scripts/vnext/ordinary_debt_guard.py','scripts/vnext/ordinary_special_debt_scope.py',
+            'config/b06_bond_debt_set_v1.json','config/b06_bond_leases_v1.json',
+            'config/b06_current_input_v1.json','config/b06_financing_inventory_v1.json',
+            'config/b06_inclusive_table_v1.json','config/b06_note_carrying_v1.json',
+            'config/b06_special_scope_v1.json','catalog/r5/B06_bond_leases_v5.md',
+            'catalog/r5/B06_inclusive_table_v6.md','catalog/r5/B06_note_carrying_v4.md'})
     paths.update({'scripts/vnext/ordinary_current_update.py','scripts/vnext/ordinary_saved_result.py',
                   'scripts/vnext/csv_output.py','scripts/vnext/ordinary_update_compatibility.py',
                   'config/issue28_normal_results_v2.json'})
@@ -63,12 +78,16 @@ def _configuration(source, company, metric):
     if metric == 'B06':
         from .current_b06_case import PROCESSING_FILES
         paths.update(PROCESSING_FILES)
+    if metric == 'C04':
+        from .current_auditor_case import PROCESSING_FILES
+        paths.update(PROCESSING_FILES)
     if metric == 'C02':
         # Only C02's existing selector now imports this pure name helper.
         # Explicit proxy C03 producers declare their own source dependencies.
         paths.add('scripts/vnext/organization_name_core.py')
     if metric in {'B01','B02','B03'}:
         paths.update('scripts/vnext/'+name+'.py' for name in (
+            'selected_income_calculation',
             'selected_revenue_scope_v1','selected_reported_revenue_v2','selected_fiscal_definition_scope_v1','selected_income_source_v1',
             'historical_fiscal_labels','financial_structured',
             'financial_duration','text_results_v2','xbrl_namespace_policy','composite_scope'))

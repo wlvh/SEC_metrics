@@ -1,0 +1,51 @@
+{
+  "seconds": 0.49342429199896287,
+  "exit_code": 0,
+  "arguments": [
+    "results",
+    "--company",
+    "southwest_airlines",
+    "--state-root",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b07-link-amendment-20261011-47/state",
+    "--output-root",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/partiii-b07-old-read-20261012-47"
+  ],
+  "row": {
+    "company": "Southwest Airlines",
+    "cik": "92380",
+    "metric_id": "B07",
+    "metric_name": "Interest coverage ratio",
+    "value": "2.562874251497005988023952096",
+    "unit": "ratio",
+    "status": "OK",
+    "source_class": "DERIVED",
+    "formula": "",
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31",
+    "fiscal_year": "2025",
+    "fiscal_period": "ANNUAL",
+    "accession": "0000092380-26-000004",
+    "form": "10-K",
+    "filed_date": "2026-02-05",
+    "concept_or_section": "Interest coverage ratio",
+    "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2025, \"period_end\": \"2025-12-31\", \"period_start\": \"2025-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"coverage\": \"deterministic_source_set\", \"fiscal_year\": 2025}, \"selection\": {\"statement_amendment_checks\": [{\"classification\": \"EXHIBIT_LINK_CORRECTION_WITH_IDENTICAL_ORIGINAL_ITEM15\", \"fiscal_window_unchanged\": true, \"issues\": [], \"policy_hash\": \"sha256:0aff3223e553748783b58ecde0366f0f51cfb5b8e9d95a6a065aad6ade219d49\", \"scope_id\": \"sha256:17be3f58c3af58b4931770450db5f490bf78e17c6cfb252e29930c8728f5b0bf\", \"unchanged_input_classes\": [\"FISCAL_EVENT_WINDOW\", \"ORIGINAL_STATEMENT_VALUES\"]}]}, \"source_reference_ids\": [\"sha256:5ebe30fc59e58bd25d28a13980bba3cc4a855dcf0318f64bfd4963e866ee2e07\", \"sha256:f5a2ff5e9b0679bafb13b01c365d215fc6f7fcec35ea398c9e102617f66038ff\", \"sha256:32c3693c118e87d3f36ed71cfc70c721cfc45ea754171362c3aad48dcef46664\", \"sha256:b8c01734eb46fb27c559caa6de8c91a2eb3d1392d1d1be3e01fff8cafa837f45\"]}",
+    "confidence": "",
+    "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+    "company_id": "southwest_airlines",
+    "result_id": "sha256:1dc8424e3bff62883070fb113de44842f208b0c17ee4e5d792f2656d9490260c",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b07-link-amendment-20261011-47/state/updates/B07/periods/FY2025/results/7dce1b3906d44576985a047b7e17f61e",
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+    "period_role": "REQUESTED_RESULT",
+    "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+    "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+    "defect_holds": "[]",
+    "requested_in_latest_execution": "True"
+  },
+  "unchanged_state_files": 33,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

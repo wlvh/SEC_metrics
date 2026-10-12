@@ -23,6 +23,7 @@ from .sources import raw_blob_record, source_reference_record, resolve_repositor
 from .text_coverage import build_text_document
 from .text_results_v2 import _ReportedFactMetadata, _verified_context
 from .fiscal_year_labels import _DefinitionBlocks
+from .xbrl_namespace_policy import YEAR_ONLY, is_sec_namespace
 
 
 POLICY_PATH = "config/annual_amendment_scope_v1.json"
@@ -66,9 +67,12 @@ class _Links(HTMLParser):
                 self.rows.append({'text':_norm(''.join(item['parts'])),'url':urljoin(self.url,item['href'])})
 
 
-def _source(*, raw, blob, reference, filing, company_id, cik, period_end):
+def _source(*, raw, blob, reference, filing, company_id, cik, period_end,
+            namespace_policy=YEAR_ONLY):
+    is_sec_namespace('', taxonomy='dei', namespace_policy=namespace_policy)
     doc=build_text_document(raw_bytes=raw,raw_blob=blob,source_reference=reference,
-        expected_company_id=company_id,expected_cik=cik,expected_period_end=period_end)
+        expected_company_id=company_id,expected_cik=cik,expected_period_end=period_end,
+        **({} if namespace_policy==YEAR_ONLY else {'namespace_policy':namespace_policy}))
     _need(set(doc['source_reasons']) <= {'TEXT_AMENDMENT_SOURCE_SET_REQUIRED'},"AMENDMENT_FULL_DOCUMENT_REQUIRED")
     parsed=parse_accession_xbrl_source(raw_bytes=raw)
     metadata=_ReportedFactMetadata();metadata.feed(raw.decode('utf-8-sig'));metadata.close()
@@ -77,7 +81,7 @@ def _source(*, raw, blob, reference, filing, company_id, cik, period_end):
     identity=[];flags=[];other_facts=[]
     for fact in parsed.facts:
         meta=metadata.facts[fact['ordinal']];uri,local=meta['concept']
-        dei=re.fullmatch(r'https?://xbrl\.sec\.gov/dei/[0-9]{4}',uri) is not None
+        dei=is_sec_namespace(uri, taxonomy='dei', namespace_policy=namespace_policy)
         if dei and local.casefold()=='amendmentflag':flags.append(fact['text'])
         if dei and local.casefold() in keys:
             native={**parsed.contexts[fact['context_ref']],'dimensions':dict(parsed.contexts[fact['context_ref']]['dimensions'])}

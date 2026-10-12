@@ -1,0 +1,106 @@
+{
+  "elapsed_seconds": 4.696787917004258,
+  "selection": {
+    "record_type": "ORDINARY_HISTORICAL_PERIOD_SELECTION",
+    "schema_version": 1,
+    "policy_id": "ordinary_period_selection_v1",
+    "policy_sha256": "6fd86440f7b62680e7ce2fa66de9f79b900f6a2b53fc8300aee590834967ab72",
+    "company_id": "marriott_international",
+    "reporting_cik": "1048286",
+    "subject_policy": {
+      "mode": "CONTINUOUS_PRIMARY",
+      "selected_cik": "1048286",
+      "cross_entity_combination_authorized": false
+    },
+    "target_report_end": "2021-12-31",
+    "requested_fiscal_year": 2021,
+    "current_filing": {
+      "form": "10-K",
+      "reportDate": "2021-12-31",
+      "filingDate": "2022-02-15",
+      "accessionNumber": "0001628280-22-002666",
+      "primaryDocument": "mar-20211231.htm"
+    },
+    "current_amendments": [],
+    "prior_report_end": "2020-12-31",
+    "prior_filing": {
+      "form": "10-K",
+      "reportDate": "2020-12-31",
+      "filingDate": "2021-02-18",
+      "accessionNumber": "0001628280-21-002433",
+      "primaryDocument": "mar-20201231.htm"
+    },
+    "prior_amendments": [
+      {
+        "form": "10-K/A",
+        "reportDate": "2020-12-31",
+        "filingDate": "2021-04-02",
+        "accessionNumber": "0001628280-21-006440",
+        "primaryDocument": "mar-20201231.htm"
+      }
+    ],
+    "prior_status": "SAME_CIK_PRIOR_DISCOVERED",
+    "dependency_filing_roles": {
+      "target_primary": "0001628280-22-002666",
+      "target_amendment_primary": [],
+      "prior_annual_primary": "0001628280-21-002433",
+      "prior_amendment_primary": [
+        "0001628280-21-006440"
+      ]
+    },
+    "filing_selection_policy_id": "PINNED_ANNUAL_REPORT_END_IN_COMPLETE_SAVED_SUBMISSIONS",
+    "value_selection_policy_id": "CURRENT_AND_PRIOR_EACH_FROM_ITS_OWN_SELECTED_FILING_FIRST_REPORT",
+    "amendment_policy_id": "AMENDMENTS_RETAINED_AS_SEPARATE_INPUTS_NOT_SUBSTITUTED",
+    "source_set_identity": "sha256:83acfd3b8dd65c5e435bb97471083758ad944d7b54cf144cd7bc57eaea859bb0",
+    "loaded_inventories": [
+      "CIK0001048286.json"
+    ],
+    "latest_restated_values_used": false,
+    "caller_supplied_selection_trusted": false,
+    "production_authorized": false,
+    "selection_id": "sha256:661d9d0aec0923aa77fe188cd229ef9de4ba2d5639e0b9ebbc667dcd146b003e"
+  },
+  "current_period": {
+    "fiscal_year": 2021,
+    "period_start": "2021-01-01",
+    "period_end": "2021-12-31"
+  },
+  "prior": {
+    "accessionNumber": "0001628280-21-002433",
+    "filingDate": "2021-02-18",
+    "reportDate": "2020-12-31",
+    "acceptanceDateTime": "2021-02-18T17:34:16.000Z",
+    "act": "34",
+    "form": "10-K",
+    "fileNumber": "001-13881",
+    "filmNumber": "21648633",
+    "items": "",
+    "core_type": "XBRL",
+    "size": 14028351,
+    "isXBRL": 1,
+    "isInlineXBRL": 1,
+    "isXBRLNumeric": null,
+    "primaryDocument": "mar-20201231.htm",
+    "primaryDocDescription": "10-K",
+    "metadata_origin": {
+      "inventory_name": "CIK0001048286.json",
+      "row_index": 675
+    }
+  },
+  "listed_in": {
+    "record_type": "SOURCE_REFERENCE",
+    "source_reference_id": "sha256:c37238976da80a6d94cfdac4177c453af617a627c1651f9bb071a20ad8ab2dfe",
+    "raw_asset_id": "sha256:e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8",
+    "company_id": "marriott_international",
+    "accession": "SUBMISSIONS-1048286",
+    "document_name": "CIK0001048286.json",
+    "source_role": "sec_submissions_inventory",
+    "request_attempt_id": "request:attempt:1c8bfa7163617de5a5d5665ced529ff5f2d6c623b630acdc0d74e10bf2eae085"
+  },
+  "default_failure": {
+    "reason": "NORMAL_COMPANYFACTS_PRIOR_AMENDMENT_REPLAY_NOT_IMPLEMENTED",
+    "error_type": "NormalCompanyfactsError"
+  },
+  "new_selection_only_not_value_admission": true,
+  "new_sec_calls": 0
+}

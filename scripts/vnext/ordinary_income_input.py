@@ -37,15 +37,27 @@ def inspect_income_amendment(scope,raw,rules):
         return {'original_scope_id':scope['scope_id'],'inherited_statement_proof':True}
     need(scope['classification']=='PART_III_ADDITION_WITH_EXPLICIT_NO_NEW_FINANCIAL_STATEMENTS',
          'AMENDMENT_KIND_UNSUPPORTED')
-    detail=_part_iii_details(scope,raw)
+    layout=scope.get('note_layout','blocks-v1')
+    need(layout in {'blocks-v1','inline-paragraphs-v2'},'AMENDMENT_NOTE_LAYOUT_UNSUPPORTED')
+    blocks=scope['amendment']['document']['blocks']
+    if layout=='inline-paragraphs-v2':
+        # Consume the existing explicit source property and the same complete
+        # visible paragraphs; do not retell its note in the old block format.
+        from .instant_balance_amendment_v2 import _part_iii_details as paragraph_details,_text_units
+        detail=paragraph_details(scope,raw)
+        units=_text_units(blocks,raw,layout)
+    else:
+        detail=_part_iii_details(scope,raw)
+        units=blocks
     conflicts=[]
-    for block in scope['amendment']['document']['blocks']:
+    for block in units:
         text=block['text']
         if (re.fullmatch(rules['statement_heading_pattern'],text,re.I)
                 or re.search(rules['income_subject_pattern'],text,re.I)
                 and re.search(AMENDMENT_RULE['revision_pattern'],text,re.I)):
             conflicts.append(block)
-    need(not conflicts,'AMENDMENT_INCOME_CORRECTION_UNRESOLVED:'+','.join(str(b['block_index']) for b in conflicts))
+    need(not conflicts,'AMENDMENT_INCOME_CORRECTION_UNRESOLVED:'+','.join(
+        str(i) for b in conflicts for i in b.get('block_indices',[b.get('block_index')])))
     return {'original_scope_id':scope['scope_id'],'part_iii_details':detail,
             'income_correction_blocks':conflicts,'input_class':rules['input_class']}
 

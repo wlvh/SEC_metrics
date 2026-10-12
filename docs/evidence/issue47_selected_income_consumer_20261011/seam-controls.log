@@ -1,0 +1,16 @@
+test_invalid_policy_refuses_before_reading_any_amount (tests.vnext.test_selected_income_calculation.SelectedIncomeCalculationContractTest.test_invalid_policy_refuses_before_reading_any_amount) ... ok
+test_latest_filing_selection_is_not_owned_by_selected_calculation (tests.vnext.test_selected_income_calculation.SelectedIncomeCalculationContractTest.test_latest_filing_selection_is_not_owned_by_selected_calculation) ... ok
+test_processing_closure_contains_shared_business_and_request_identity (tests.vnext.test_historical_b03_case.HistoricalB03ConsumerGuardTest.test_processing_closure_contains_shared_business_and_request_identity) ... ok
+test_wrong_metric_refuses_before_any_source_read (tests.vnext.test_historical_b03_case.HistoricalB03ConsumerGuardTest.test_wrong_metric_refuses_before_any_source_read) ... ok
+test_literal_and_resolved_labels_are_distinct_but_dates_must_match (tests.vnext.test_historical_b03_case.HistoricalB03SourcesTest.test_literal_and_resolved_labels_are_distinct_but_dates_must_match) ... ok
+test_missing_or_duplicate_media_cannot_become_a_selected_original (tests.vnext.test_historical_b03_case.HistoricalB03SourcesTest.test_missing_or_duplicate_media_cannot_become_a_selected_original) ... ok
+test_requested_year_reaches_same_source_readers_and_complete_proofs (tests.vnext.test_historical_b03_case.HistoricalB03SourcesTest.test_requested_year_reaches_same_source_readers_and_complete_proofs) ... ok
+test_unreceived_revision_or_subject_is_an_implementation_gap (tests.vnext.test_historical_b03_case.HistoricalB03SourcesTest.test_unreceived_revision_or_subject_is_an_implementation_gap) ... ok
+test_wrong_requested_label_refuses_before_original_reads (tests.vnext.test_historical_b03_case.HistoricalB03SourcesTest.test_wrong_requested_label_refuses_before_original_reads) ... ok
+test_selected_b03_shares_company_controller_and_keeps_neighbours (tests.vnext.test_history_company_dispatch.HistoricalIncomeSharedDispatchTest.test_selected_b03_shares_company_controller_and_keeps_neighbours) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.082s
+
+OK
+{"allowed_skips": 0, "errors": 0, "failures": 0, "run": 10, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_selected_income_calculation", "tests.vnext.test_historical_b03_case", "tests.vnext.test_history_company_dispatch.HistoricalIncomeSharedDispatchTest"]}

@@ -1,0 +1,54 @@
+{
+  "seconds": 0.4955505420002737,
+  "arguments": [
+    "results",
+    "--company",
+    "marriott_international",
+    "--state-root",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/shared-b03-coordinate-fixed-20261011-47/state",
+    "--output-root",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/shared-b03-coordinate-fixed-20261011-47/fixed166-read-1791711327238246000"
+  ],
+  "metrics": [
+    {
+      "metric_id": "B01",
+      "result_id": "sha256:c51c10da7dc6e8962d7732020129702937e33e3df76c13a01f3a98e0f6615eb0",
+      "period_start": "2024-01-01",
+      "period_end": "2024-12-31",
+      "fiscal_year": 2024,
+      "value": "25100000000",
+      "unit": "USD",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "defect_holds": [],
+      "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+      "requested_in_latest_execution": true,
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/shared-b03-coordinate-fixed-20261011-47/state/updates/B01/periods/FY2024/results/a0b5dca3f20d446fbdc6dbccb0af3ad7"
+    },
+    {
+      "metric_id": "B03",
+      "result_id": "sha256:9cf2d114ca9c1f492321975b26d7c45a208cd80768364177c4588721b9e2c783",
+      "period_start": "2024-01-01",
+      "period_end": "2024-12-31",
+      "fiscal_year": 2024,
+      "value": "0.1653386454183266932270916335",
+      "unit": "ratio",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "defect_holds": [],
+      "latest_observation": "NOT_REQUESTED_IN_LATEST_EXECUTION",
+      "requested_in_latest_execution": false,
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/shared-b03-coordinate-fixed-20261011-47/state/updates/B03/periods/FY2024/results/67ce1f2fd9f94b8195fbbccf9ebb16e1"
+    }
+  ],
+  "state_files_unchanged": 39,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

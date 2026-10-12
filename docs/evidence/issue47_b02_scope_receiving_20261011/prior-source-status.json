@@ -1,0 +1,66 @@
+[
+  {
+    "company": "marriott_international",
+    "fiscal_year": 2021,
+    "source_only": true,
+    "status": "FISCAL_YEAR_RESOLVED",
+    "limitations": [],
+    "source_preflight_status": "SAVED_SOURCE_BYTES_AVAILABLE",
+    "source_limitations": [],
+    "unresolved_dependency_urls": [],
+    "prior_filing": {
+      "form": "10-K",
+      "reportDate": "2020-12-31",
+      "filingDate": "2021-02-18",
+      "accessionNumber": "0001628280-21-002433",
+      "primaryDocument": "mar-20201231.htm"
+    },
+    "arguments": [
+      "sources",
+      "--company",
+      "marriott_international",
+      "--source-root",
+      "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "--fiscal-year-start",
+      "2021",
+      "--fiscal-year-end",
+      "2021",
+      "--metric",
+      "B02"
+    ],
+    "exit_code": 0
+  },
+  {
+    "company": "salesforce",
+    "fiscal_year": 2021,
+    "source_only": true,
+    "status": "FISCAL_YEAR_SOURCE_UNRESOLVED",
+    "limitations": [
+      {
+        "phase": "FISCAL_LABEL",
+        "reason": "COMPANY_FISCAL_RANGE_LABEL_SOURCE_MISSING",
+        "error_type": "ValueError",
+        "category": "SOURCE_OR_READER_ERROR",
+        "report_end": "2020-01-31"
+      }
+    ],
+    "source_preflight_status": null,
+    "source_limitations": null,
+    "unresolved_dependency_urls": null,
+    "prior_filing": null,
+    "arguments": [
+      "sources",
+      "--company",
+      "salesforce",
+      "--source-root",
+      "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "--fiscal-year-start",
+      "2021",
+      "--fiscal-year-end",
+      "2021",
+      "--metric",
+      "B02"
+    ],
+    "exit_code": 2
+  }
+]

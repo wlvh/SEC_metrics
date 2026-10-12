@@ -1,0 +1,72 @@
+{
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-dei-text-scope/SEC_metrics",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "seconds": 9.544145708001452,
+  "working_source_files_sha256": {
+    "scripts/vnext/text_coverage.py": "d1c10c8f0dee51ad4d8347c6e5fa1230b7ea364b36b5207a4c4bbb15453af59d",
+    "scripts/vnext/annual_amendment_scope.py": "6809c995b836963d6179cae9f8c2644db43dd3d22618ba2a3f27319b69787aa7",
+    "scripts/vnext/annual_amendment_scope_v2.py": "26feea4c50ef7428327b465e977be2a9898fab629d7b19918e9afb475ebe0c51",
+    "scripts/vnext/instant_balance_amendment.py": "ed19c399a6de54c4236a5c309b1f29c549f3659e4d43dd7110eadba614d9dc44",
+    "scripts/vnext/instant_balance_amendment_v2.py": "a171c6f005610c5fa007898a4c051e6a28ab17b2bf09d8a5b9bd3ffd1bdc786b"
+  },
+  "checks": [
+    {
+      "original": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:34153e7349860785153732671cdf349fc0738f8e952a92dea2e44686aeb07406",
+        "raw_asset_id": "sha256:3b4e35ef3b9aacae886c270b2f76bc98ae42184e2e8bdaef8a7252d9ca11c00d",
+        "company_id": "marriott_international",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828021002433/mar-20201231.htm",
+        "accession": "0001628280-21-002433",
+        "document_name": "mar-20201231.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:019fe8edb543d76193c04b83a18a48efc1158b5962b35db7239c6ae655d47468"
+      },
+      "amendment": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:40610e379077b8a33a5af2f7c56b937777227d9ceda8b6f41b9cc4a5a9d0df49",
+        "raw_asset_id": "sha256:f37221e249636c8a17667b412e7ddf0a038f7d5d6998af7c95c28de654ce2281",
+        "company_id": "marriott_international",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828021006440/mar-20201231.htm",
+        "accession": "0001628280-21-006440",
+        "document_name": "mar-20201231.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:4112bb5f8465e11f04ec5df9d611bff95c73566ea6149a14fd9109823a63b3d5"
+      },
+      "default_error": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+      "explicit_source_identity_passed": true,
+      "annual_scope_refusal": {
+        "reason": "AMENDMENT_EXPLANATORY_SCOPE_UNSUPPORTED",
+        "error_type": "AmendmentScopeError"
+      },
+      "original_period": {
+        "period_start": "2020-01-01",
+        "period_end": "2020-12-31"
+      },
+      "amended_period": {
+        "period_start": "2020-01-01",
+        "period_end": "2020-12-31"
+      },
+      "raw_amendment_flags": [
+        "false"
+      ],
+      "income_statement_admission_proven": false,
+      "correction_flag_observation": {
+        "status": "NOT_PROVEN",
+        "reason": "INSTANT_AMENDMENT_CORRECTION_FLAG_NOT_UNIQUE"
+      },
+      "explicit_namespace_policy": "YEAR_QUARTER_OR_DATE",
+      "exact_document_replay": true,
+      "text_document_ids": [
+        "sha256:664ac9c06b580ed8007565a257bdd20ffe04aa92b2fbf2bf0bba4b41487f28ca",
+        "sha256:219668c8da8c446371f52a90687f2b77c81726e577816036e6b23eedd6ed7020"
+      ]
+    }
+  ],
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "metric_result_created": false
+}
