@@ -53,11 +53,42 @@ class SelectedHistoryResultStateTest(TestCase):
         self.records[str(path)] = value
         return value
 
-    def run_control(self, year, metric="B10"):
+    def run_control(self, year, metric="B10", processing_files=()):
         with patch.object(update, "save_calculated_case", side_effect=self.save_control):
             return update.run_once(state_root=self.root / metric, source_root=ROOT,
                 company_id="marriott_international", metric_id=metric,
-                fiscal_year=year, case_factory=self.factory)
+                fiscal_year=year, case_factory=self.factory,
+                processing_files=processing_files)
+
+    def test_historical_d01_shared_dependency_changes_reprocess_then_reuse(self):
+        from vnext.historical_risk_heading_case import PROCESSING_FILES
+        actual_hash = update.sha256_file
+        # Only the digest is changed in memory. The source/code tree is never
+        # edited; these state substitutes are not financial source results.
+        for year, name in enumerate(('scope_contract', 'states', 'text_results_v2'), 2021):
+            with self.subTest(module=name):
+                self.forbid_factory = False
+                first = self.run_control(year, 'D01', PROCESSING_FILES)
+                count = len(self.factory_calls)
+                self.forbid_factory = True
+                self.assertEqual('NO_SOURCE_CONTENT_CHANGE',
+                    self.run_control(year, 'D01', PROCESSING_FILES)['status'])
+                self.assertEqual(count, len(self.factory_calls))
+                target = ROOT / ('scripts/vnext/' + name + '.py')
+                def changed_hash(*, path):
+                    return 'constructed-d01-dependency-change' if path == target else actual_hash(path=path)
+                self.forbid_factory = False
+                with patch.object(update, 'sha256_file', side_effect=changed_hash):
+                    changed = self.run_control(year, 'D01', PROCESSING_FILES)
+                    self.assertEqual('CANDIDATE_READY', changed['status'])
+                    self.assertTrue(changed['calculation_performed'])
+                    self.assertEqual(count + 1, len(self.factory_calls))
+                    self.assertNotEqual(first['version'], changed['version'])
+                    self.forbid_factory = True
+                    repeat = self.run_control(year, 'D01', PROCESSING_FILES)
+                    self.assertEqual('NO_SOURCE_CONTENT_CHANGE', repeat['status'])
+                    self.assertEqual(changed['version'], repeat['version'])
+                self.assertEqual(count + 1, len(self.factory_calls))
 
     def period_root(self, year, metric="B10"):
         return self.root.resolve() / metric / "periods" / ("FY" + str(year))
