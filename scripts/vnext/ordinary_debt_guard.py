@@ -11,7 +11,8 @@ from .ordinary_source_authority import verify_ordinary_source_proofs
 from .observations import scope_key
 
 
-def prepare_current_guarded_b06_result(*, repo_root: Path, company_id: str, rules_root=None, preparation=None):
+def prepare_current_guarded_b06_result(*, repo_root: Path, company_id: str, rules_root=None, preparation=None,
+                                       dei_release="YEAR_ONLY", namespace_policy="YEAR_ONLY"):
     """Return NOT_MEANINGFUL native records, or CONTINUE_DEBT_PATH; never a Run."""
     rules = repo_root if rules_root is None else Path(rules_root)
     spec, trait_hashes = _installed_spec(rules)
@@ -29,9 +30,10 @@ def prepare_current_guarded_b06_result(*, repo_root: Path, company_id: str, rule
         item = preparation[key]
         _need(item["source_reference"]["raw_asset_id"] == "sha256:" + sha256_bytes(content=item["raw_bytes"]),
               "B06_GUARD_SOURCE_CHANGED_AFTER_ADMISSION")
+    reader_options={} if dei_release == "YEAR_ONLY" and namespace_policy == "YEAR_ONLY" else {"dei_release":dei_release,"namespace_policy":namespace_policy}
     proof = _rebuild_equity(primary=preparation["primary"]["raw_bytes"], xml=preparation["xml"]["raw_bytes"],
         facts_raw=preparation["facts"]["raw_bytes"], facts_source=preparation["facts"]["source_reference"],
-        target=target, period=period, filing=prepared["filing"])
+        target=target, period=period, filing=prepared["filing"], **reader_options)
     company = next(c for c in _registry_rows(repo_root=rules) if c["company_id"] == company_id)
     parsed = parse_accession_xbrl_source(raw_bytes=preparation["xml"]["raw_bytes"])
     industrial = set(spec["compiled"]["quality_rule"]["scope_review_dimension_members"])
@@ -57,6 +59,7 @@ def prepare_current_guarded_b06_result(*, repo_root: Path, company_id: str, rule
         "source_references": [r for r in preparation["records"] if r["record_type"] == "SOURCE_REFERENCE"],
         "observations": observations, "trace": trace, "result": result, "native_run_status": "NOT_CREATED",
         "calls": {"provider": 0, "paid": 0, "sec": 0}, "production_authorized": False}
+    if reader_options:body["source_reader_options"]=reader_options
     # QName measures originate as Python tuples. The public component contract
     # is JSON, so return the same list shapes that a cold reader receives.
     body = strict_json_loads(text=canonical_json_bytes(value=body).decode("utf-8"))

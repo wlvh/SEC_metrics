@@ -1,0 +1,1767 @@
+{
+  "rows": [
+    {
+      "company": "enphase_energy",
+      "year": 2021,
+      "filing": {
+        "form": "10-K",
+        "reportDate": "2021-12-31",
+        "filingDate": "2022-02-11",
+        "accessionNumber": "0001463101-22-000016",
+        "primaryDocument": "enph-20211231.htm"
+      },
+      "actual_period": {
+        "fiscal_year": 2021,
+        "period_start": "2021-01-01",
+        "period_end": "2021-12-31"
+      },
+      "primary": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:39808ae04e68862f11cf338bcf02a07e44498b167574f3360a8c11594c97297f",
+        "raw_asset_id": "sha256:d27dbecccbedb373035c6458278895442f91d04bd38274e2ae9abd6b88ec9e7a",
+        "company_id": "enphase_energy",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310122000016/enph-20211231.htm",
+        "accession": "0001463101-22-000016",
+        "document_name": "enph-20211231.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:2f78da70da49e97934551e0e0112d2add95c200735e43570fefb97b8671030e0"
+      },
+      "xml": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:b9969744eaa260edc3974b0d5c408aad451990e39c28f7e9cbc320914303c093",
+        "raw_asset_id": "sha256:bd6a196da407db3bc23e174d9964c060bcd14f6216aaa914f1e703ddca69b4d5",
+        "company_id": "enphase_energy",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310122000016/enph-20211231_htm.xml",
+        "accession": "0001463101-22-000016",
+        "document_name": "enph-20211231_htm.xml",
+        "source_role": "auditor_facts",
+        "request_attempt_id": "request:attempt:918a8a7aced137a88c1e960c046c538e39e5846a2ce83de9d9909d0b4810c99a"
+      },
+      "before": {
+        "type": "NormalAnnualInputError",
+        "reason": "DEI_MISSING_OR_AMBIGUOUS:DocumentType"
+      },
+      "guard_status": "CONTINUE_DEBT_PATH",
+      "equity_proof": {
+        "debt_completeness": "NOT_EVALUATED",
+        "filing_period": {
+          "fiscal_year": 2021,
+          "period_end": "2021-12-31",
+          "period_start": "2021-01-01"
+        },
+        "observation_report": {
+          "context_ref": "id4610d8faee148ef8aae55c39ce34246_I20211231",
+          "decimals": "-3",
+          "ordinal": 137,
+          "value": "430168000"
+        },
+        "observation_source_kind": "xml",
+        "primary": {
+          "chosen": {
+            "context_ref": "id4610d8faee148ef8aae55c39ce34246_I20211231",
+            "decimals": "-3",
+            "ordinal": 137,
+            "raw_start_byte": 1219129,
+            "value": "430168000",
+            "visible_cell": {
+              "colspan": 2,
+              "column_index": 3,
+              "grid_sha256": "sha256:a180031a47acd55055411662e7b2eeddd541eb80819d39f133c8a6c2e2dfcd51",
+              "origin_column_index": 3,
+              "origin_row_index": 47,
+              "raw_text": "430,168&#160;",
+              "row_index": 47,
+              "rowspan": 1,
+              "table_id": "table_000100",
+              "text": "430,168"
+            }
+          },
+          "equity_census": [
+            {
+              "context": {
+                "context_ref": "id4610d8faee148ef8aae55c39ce34246_I20211231",
+                "dimensions": {},
+                "entity_identifier": "0001463101",
+                "period_end": "2021-12-31",
+                "period_start": "2021-12-31",
+                "typed_dimension_count": 0
+              },
+              "decimals": "-3",
+              "disposition": "CONSOLIDATED_CURRENT_EQUITY",
+              "native_unit_definition": {
+                "divided": false,
+                "measures": [
+                  [
+                    "http://www.xbrl.org/2003/iso4217",
+                    "USD"
+                  ]
+                ]
+              },
+              "ordinal": 137,
+              "value": "430168000"
+            },
+            {
+              "context": {
+                "context_ref": "i802383d34019447c806a8e55aac4e425_I20201231",
+                "dimensions": {},
+                "entity_identifier": "0001463101",
+                "period_end": "2020-12-31",
+                "period_start": "2020-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 138
+            },
+            {
+              "context": {
+                "context_ref": "ie2f579fc8cc94bbeab00bf9a6c79786a_I20181231",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:CommonStockMember"
+                },
+                "entity_identifier": "0001463101",
+                "period_end": "2018-12-31",
+                "period_start": "2018-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 227
+            },
+            {
+              "context": {
+                "context_ref": "i4bedb4cbc5df420bbc5ea2f1711e61b0_I20181231",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:AdditionalPaidInCapitalMember"
+                },
+                "entity_identifier": "0001463101",
+                "period_end": "2018-12-31",
+                "period_start": "2018-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 228
+            },
+            {
+              "context": {
+                "context_ref": "ieaaf15b44adc42708566028976fd7989_I20181231",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:RetainedEarningsMember"
+                },
+                "entity_identifier": "0001463101",
+                "period_end": "2018-12-31",
+                "period_start": "2018-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 229
+            },
+            {
+              "context": {
+                "context_ref": "i3c1cffbfcb654f769da6767c382b41d6_I20181231",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:AccumulatedOtherComprehensiveIncomeMember"
+                },
+                "entity_identifier": "0001463101",
+                "period_end": "2018-12-31",
+                "period_start": "2018-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 230
+            },
+            {
+              "context": {
+                "context_ref": "ib1da5bc1bdd747499d182aff05208f98_I20181231",
+                "dimensions": {},
+                "entity_identifier": "0001463101",
+                "period_end": "2018-12-31",
+                "period_start": "2018-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 231
+            },
+            {
+              "context": {
+                "context_ref": "ib1a0e1592a304b309e2482e00bf81160_I20181231",
+                "dimensions": {
+                  "srt:CumulativeEffectPeriodOfAdoptionAxis": "srt:CumulativeEffectPeriodOfAdoptionAdjustmentMember",
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:AdditionalPaidInCapitalMember"
+                },
+                "entity_identifier": "0001463101",
+                "period_end": "2018-12-31",
+                "period_start": "2018-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 232
+            },
+            {
+              "context": {
+                "context_ref": "i365fc6f962dc4831962b9e6fe3a4cf93_I20181231",
+                "dimensions": {
+                  "srt:CumulativeEffectPeriodOfAdoptionAxis": "srt:CumulativeEffectPeriodOfAdoptionAdjustmentMember",
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:RetainedEarningsMember"
+                },
+                "entity_identifier": "0001463101",
+                "period_end": "2018-12-31",
+                "period_start": "2018-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 233
+            },
+            {
+              "context": {
+                "context_ref": "i5aff4adca83b414da07bb6737e1902a4_I20181231",
+                "dimensions": {
+                  "srt:CumulativeEffectPeriodOfAdoptionAxis": "srt:CumulativeEffectPeriodOfAdoptionAdjustmentMember"
+                },
+                "entity_identifier": "0001463101",
+                "period_end": "2018-12-31",
+                "period_start": "2018-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 234
+            },
+            {
+              "context": {
+                "context_ref": "i7ce06886c4f9476d9c5f1ada0c6219b7_I20191231",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:CommonStockMember"
+                },
+                "entity_identifier": "0001463101",
+                "period_end": "2019-12-31",
+                "period_start": "2019-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 256
+            },
+            {
+              "context": {
+                "context_ref": "ib29a4e7ac3e04b318f34ba88e03f23ca_I20191231",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:AdditionalPaidInCapitalMember"
+                },
+                "entity_identifier": "0001463101",
+                "period_end": "2019-12-31",
+                "period_start": "2019-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 257
+            },
+            {
+              "context": {
+                "context_ref": "ibd0285f2570f4e93ac6bb4ec664fbfce_I20191231",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:RetainedEarningsMember"
+                },
+                "entity_identifier": "0001463101",
+                "period_end": "2019-12-31",
+                "period_start": "2019-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 258
+            },
+            {
+              "context": {
+                "context_ref": "ia4b53308aa7448659039fa25c4729c11_I20191231",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:AccumulatedOtherComprehensiveIncomeMember"
+                },
+                "entity_identifier": "0001463101",
+                "period_end": "2019-12-31",
+                "period_start": "2019-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 259
+            },
+            {
+              "context": {
+                "context_ref": "ib90ba5f6db3647dbace84ae07813023a_I20191231",
+                "dimensions": {},
+                "entity_identifier": "0001463101",
+                "period_end": "2019-12-31",
+                "period_start": "2019-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 260
+            },
+            {
+              "context": {
+                "context_ref": "i2d20173ec2514deca77776351ea5d341_I20201231",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:CommonStockMember"
+                },
+                "entity_identifier": "0001463101",
+                "period_end": "2020-12-31",
+                "period_start": "2020-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 288
+            },
+            {
+              "context": {
+                "context_ref": "id602b78749744bd8b5ff91845e21cfe3_I20201231",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:AdditionalPaidInCapitalMember"
+                },
+                "entity_identifier": "0001463101",
+                "period_end": "2020-12-31",
+                "period_start": "2020-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 289
+            },
+            {
+              "context": {
+                "context_ref": "i09b8e02901174a4a8ba24b9c8aeb4e6a_I20201231",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:RetainedEarningsMember"
+                },
+                "entity_identifier": "0001463101",
+                "period_end": "2020-12-31",
+                "period_start": "2020-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 290
+            },
+            {
+              "context": {
+                "context_ref": "ieea50283e4fc4096bc5f9164d5f33dcb_I20201231",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:AccumulatedOtherComprehensiveIncomeMember"
+                },
+                "entity_identifier": "0001463101",
+                "period_end": "2020-12-31",
+                "period_start": "2020-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 291
+            },
+            {
+              "context": {
+                "context_ref": "i802383d34019447c806a8e55aac4e425_I20201231",
+                "dimensions": {},
+                "entity_identifier": "0001463101",
+                "period_end": "2020-12-31",
+                "period_start": "2020-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 292
+            },
+            {
+              "context": {
+                "context_ref": "i0ed66bfe815e49c9aa587e326bb4bccf_I20211231",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:CommonStockMember"
+                },
+                "entity_identifier": "0001463101",
+                "period_end": "2021-12-31",
+                "period_start": "2021-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "DIMENSIONED_EQUITY_NOT_CONSOLIDATED_DENOMINATOR",
+              "ordinal": 324
+            },
+            {
+              "context": {
+                "context_ref": "i385dd788501d4d2b9d8111e44740b56e_I20211231",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:AdditionalPaidInCapitalMember"
+                },
+                "entity_identifier": "0001463101",
+                "period_end": "2021-12-31",
+                "period_start": "2021-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "DIMENSIONED_EQUITY_NOT_CONSOLIDATED_DENOMINATOR",
+              "ordinal": 325
+            },
+            {
+              "context": {
+                "context_ref": "i4029797f1a8d4d7085b0a438bc59922b_I20211231",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:RetainedEarningsMember"
+                },
+                "entity_identifier": "0001463101",
+                "period_end": "2021-12-31",
+                "period_start": "2021-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "DIMENSIONED_EQUITY_NOT_CONSOLIDATED_DENOMINATOR",
+              "ordinal": 326
+            },
+            {
+              "context": {
+                "context_ref": "i125c8a5897634f3dad02b0526667a046_I20211231",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:AccumulatedOtherComprehensiveIncomeMember"
+                },
+                "entity_identifier": "0001463101",
+                "period_end": "2021-12-31",
+                "period_start": "2021-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "DIMENSIONED_EQUITY_NOT_CONSOLIDATED_DENOMINATOR",
+              "ordinal": 327
+            },
+            {
+              "context": {
+                "context_ref": "id4610d8faee148ef8aae55c39ce34246_I20211231",
+                "dimensions": {},
+                "entity_identifier": "0001463101",
+                "period_end": "2021-12-31",
+                "period_start": "2021-12-31",
+                "typed_dimension_count": 0
+              },
+              "decimals": "-3",
+              "disposition": "CONSOLIDATED_CURRENT_EQUITY",
+              "native_unit_definition": {
+                "divided": false,
+                "measures": [
+                  [
+                    "http://www.xbrl.org/2003/iso4217",
+                    "USD"
+                  ]
+                ]
+              },
+              "ordinal": 328,
+              "value": "430168000"
+            }
+          ],
+          "kind": "primary_inline",
+          "reports": [
+            {
+              "context_ref": "id4610d8faee148ef8aae55c39ce34246_I20211231",
+              "decimals": "-3",
+              "ordinal": 137,
+              "raw_start_byte": 1219129,
+              "value": "430168000",
+              "visible_cell": {
+                "colspan": 2,
+                "column_index": 3,
+                "grid_sha256": "sha256:a180031a47acd55055411662e7b2eeddd541eb80819d39f133c8a6c2e2dfcd51",
+                "origin_column_index": 3,
+                "origin_row_index": 47,
+                "raw_text": "430,168&#160;",
+                "row_index": 47,
+                "rowspan": 1,
+                "table_id": "table_000100",
+                "text": "430,168"
+              }
+            },
+            {
+              "context_ref": "id4610d8faee148ef8aae55c39ce34246_I20211231",
+              "decimals": "-3",
+              "ordinal": 328,
+              "raw_start_byte": 1529174,
+              "value": "430168000",
+              "visible_cell": {
+                "colspan": 1,
+                "column_index": 34,
+                "grid_sha256": "sha256:5de9fab42f0eda96b777d2227bc4d9273a831c5086c73fb0103c21988e790d3b",
+                "origin_column_index": 34,
+                "origin_row_index": 17,
+                "raw_text": "430,168&#160;",
+                "row_index": 17,
+                "rowspan": 1,
+                "table_id": "table_000108",
+                "text": "430,168"
+              }
+            }
+          ],
+          "source_sha256": "d27dbecccbedb373035c6458278895442f91d04bd38274e2ae9abd6b88ec9e7a"
+        },
+        "record_type": "B06_DENOMINATOR_SOURCE_PROOF",
+        "same_filing_companyfacts": [
+          {
+            "accession": "0001463101-22-000016",
+            "concept": "us-gaap:StockholdersEquity",
+            "duration_days": 0,
+            "entity": "1463101",
+            "fact_id": "fact:sha256:2cc3de9f8eef4ca5c6deffc71281de42513b98b58a904357a90be8c8cc215070",
+            "filed": "2022-02-11",
+            "fiscal_period": "FY",
+            "form": "10-K",
+            "period_end": "2021-12-31",
+            "period_start": "2021-12-31",
+            "source_binding": {
+              "accession": "0001463101-22-000016",
+              "document_name": "CIK0001463101.json",
+              "entity": "1463101",
+              "frame": "",
+              "raw_asset_id": "sha256:ff43e841870f44069d6d009e39a56297c24e8ee277cd9c8a3789fcf9632fc6c3",
+              "source_reference_id": "sha256:ebdf30891011c7d7205644166621f859cc28a92fca6cb243002a004b31fb5bd4",
+              "source_role": "companyfacts"
+            },
+            "unit": "USD",
+            "value": "430168000"
+          }
+        ],
+        "target": {
+          "accession": "0001463101-22-000016",
+          "company_id": "enphase_energy",
+          "entity": "1463101",
+          "period_end": "2021-12-31",
+          "period_start": "2021-12-31",
+          "scope": {
+            "entity_scope": "consolidated"
+          },
+          "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b"
+        },
+        "unit": "USD",
+        "value": "430168000",
+        "xml": {
+          "chosen": {
+            "context_ref": "id4610d8faee148ef8aae55c39ce34246_I20211231",
+            "decimals": "-3",
+            "ordinal": 137,
+            "value": "430168000"
+          },
+          "equity_census": [
+            {
+              "context": {
+                "context_ref": "id4610d8faee148ef8aae55c39ce34246_I20211231",
+                "dimensions": {},
+                "entity_identifier": "0001463101",
+                "period_end": "2021-12-31",
+                "period_start": "2021-12-31",
+                "typed_dimension_count": 0
+              },
+              "decimals": "-3",
+              "disposition": "CONSOLIDATED_CURRENT_EQUITY",
+              "native_unit_definition": {
+                "divided": false,
+                "measures": [
+                  [
+                    "http://www.xbrl.org/2003/iso4217",
+                    "USD"
+                  ]
+                ]
+              },
+              "ordinal": 137,
+              "value": "430168000"
+            },
+            {
+              "context": {
+                "context_ref": "i802383d34019447c806a8e55aac4e425_I20201231",
+                "dimensions": {},
+                "entity_identifier": "0001463101",
+                "period_end": "2020-12-31",
+                "period_start": "2020-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 138
+            },
+            {
+              "context": {
+                "context_ref": "ie2f579fc8cc94bbeab00bf9a6c79786a_I20181231",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:CommonStockMember"
+                },
+                "entity_identifier": "0001463101",
+                "period_end": "2018-12-31",
+                "period_start": "2018-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 227
+            },
+            {
+              "context": {
+                "context_ref": "i4bedb4cbc5df420bbc5ea2f1711e61b0_I20181231",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:AdditionalPaidInCapitalMember"
+                },
+                "entity_identifier": "0001463101",
+                "period_end": "2018-12-31",
+                "period_start": "2018-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 228
+            },
+            {
+              "context": {
+                "context_ref": "ieaaf15b44adc42708566028976fd7989_I20181231",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:RetainedEarningsMember"
+                },
+                "entity_identifier": "0001463101",
+                "period_end": "2018-12-31",
+                "period_start": "2018-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 229
+            },
+            {
+              "context": {
+                "context_ref": "i3c1cffbfcb654f769da6767c382b41d6_I20181231",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:AccumulatedOtherComprehensiveIncomeMember"
+                },
+                "entity_identifier": "0001463101",
+                "period_end": "2018-12-31",
+                "period_start": "2018-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 230
+            },
+            {
+              "context": {
+                "context_ref": "ib1da5bc1bdd747499d182aff05208f98_I20181231",
+                "dimensions": {},
+                "entity_identifier": "0001463101",
+                "period_end": "2018-12-31",
+                "period_start": "2018-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 231
+            },
+            {
+              "context": {
+                "context_ref": "ib1a0e1592a304b309e2482e00bf81160_I20181231",
+                "dimensions": {
+                  "srt:CumulativeEffectPeriodOfAdoptionAxis": "srt:CumulativeEffectPeriodOfAdoptionAdjustmentMember",
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:AdditionalPaidInCapitalMember"
+                },
+                "entity_identifier": "0001463101",
+                "period_end": "2018-12-31",
+                "period_start": "2018-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 232
+            },
+            {
+              "context": {
+                "context_ref": "i365fc6f962dc4831962b9e6fe3a4cf93_I20181231",
+                "dimensions": {
+                  "srt:CumulativeEffectPeriodOfAdoptionAxis": "srt:CumulativeEffectPeriodOfAdoptionAdjustmentMember",
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:RetainedEarningsMember"
+                },
+                "entity_identifier": "0001463101",
+                "period_end": "2018-12-31",
+                "period_start": "2018-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 233
+            },
+            {
+              "context": {
+                "context_ref": "i5aff4adca83b414da07bb6737e1902a4_I20181231",
+                "dimensions": {
+                  "srt:CumulativeEffectPeriodOfAdoptionAxis": "srt:CumulativeEffectPeriodOfAdoptionAdjustmentMember"
+                },
+                "entity_identifier": "0001463101",
+                "period_end": "2018-12-31",
+                "period_start": "2018-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 234
+            },
+            {
+              "context": {
+                "context_ref": "i7ce06886c4f9476d9c5f1ada0c6219b7_I20191231",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:CommonStockMember"
+                },
+                "entity_identifier": "0001463101",
+                "period_end": "2019-12-31",
+                "period_start": "2019-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 256
+            },
+            {
+              "context": {
+                "context_ref": "ib29a4e7ac3e04b318f34ba88e03f23ca_I20191231",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:AdditionalPaidInCapitalMember"
+                },
+                "entity_identifier": "0001463101",
+                "period_end": "2019-12-31",
+                "period_start": "2019-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 257
+            },
+            {
+              "context": {
+                "context_ref": "ibd0285f2570f4e93ac6bb4ec664fbfce_I20191231",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:RetainedEarningsMember"
+                },
+                "entity_identifier": "0001463101",
+                "period_end": "2019-12-31",
+                "period_start": "2019-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 258
+            },
+            {
+              "context": {
+                "context_ref": "ia4b53308aa7448659039fa25c4729c11_I20191231",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:AccumulatedOtherComprehensiveIncomeMember"
+                },
+                "entity_identifier": "0001463101",
+                "period_end": "2019-12-31",
+                "period_start": "2019-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 259
+            },
+            {
+              "context": {
+                "context_ref": "ib90ba5f6db3647dbace84ae07813023a_I20191231",
+                "dimensions": {},
+                "entity_identifier": "0001463101",
+                "period_end": "2019-12-31",
+                "period_start": "2019-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 260
+            },
+            {
+              "context": {
+                "context_ref": "i2d20173ec2514deca77776351ea5d341_I20201231",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:CommonStockMember"
+                },
+                "entity_identifier": "0001463101",
+                "period_end": "2020-12-31",
+                "period_start": "2020-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 288
+            },
+            {
+              "context": {
+                "context_ref": "id602b78749744bd8b5ff91845e21cfe3_I20201231",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:AdditionalPaidInCapitalMember"
+                },
+                "entity_identifier": "0001463101",
+                "period_end": "2020-12-31",
+                "period_start": "2020-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 289
+            },
+            {
+              "context": {
+                "context_ref": "i09b8e02901174a4a8ba24b9c8aeb4e6a_I20201231",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:RetainedEarningsMember"
+                },
+                "entity_identifier": "0001463101",
+                "period_end": "2020-12-31",
+                "period_start": "2020-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 290
+            },
+            {
+              "context": {
+                "context_ref": "ieea50283e4fc4096bc5f9164d5f33dcb_I20201231",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:AccumulatedOtherComprehensiveIncomeMember"
+                },
+                "entity_identifier": "0001463101",
+                "period_end": "2020-12-31",
+                "period_start": "2020-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 291
+            },
+            {
+              "context": {
+                "context_ref": "i802383d34019447c806a8e55aac4e425_I20201231",
+                "dimensions": {},
+                "entity_identifier": "0001463101",
+                "period_end": "2020-12-31",
+                "period_start": "2020-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 292
+            },
+            {
+              "context": {
+                "context_ref": "i0ed66bfe815e49c9aa587e326bb4bccf_I20211231",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:CommonStockMember"
+                },
+                "entity_identifier": "0001463101",
+                "period_end": "2021-12-31",
+                "period_start": "2021-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "DIMENSIONED_EQUITY_NOT_CONSOLIDATED_DENOMINATOR",
+              "ordinal": 324
+            },
+            {
+              "context": {
+                "context_ref": "i385dd788501d4d2b9d8111e44740b56e_I20211231",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:AdditionalPaidInCapitalMember"
+                },
+                "entity_identifier": "0001463101",
+                "period_end": "2021-12-31",
+                "period_start": "2021-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "DIMENSIONED_EQUITY_NOT_CONSOLIDATED_DENOMINATOR",
+              "ordinal": 325
+            },
+            {
+              "context": {
+                "context_ref": "i4029797f1a8d4d7085b0a438bc59922b_I20211231",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:RetainedEarningsMember"
+                },
+                "entity_identifier": "0001463101",
+                "period_end": "2021-12-31",
+                "period_start": "2021-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "DIMENSIONED_EQUITY_NOT_CONSOLIDATED_DENOMINATOR",
+              "ordinal": 326
+            },
+            {
+              "context": {
+                "context_ref": "i125c8a5897634f3dad02b0526667a046_I20211231",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:AccumulatedOtherComprehensiveIncomeMember"
+                },
+                "entity_identifier": "0001463101",
+                "period_end": "2021-12-31",
+                "period_start": "2021-12-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "DIMENSIONED_EQUITY_NOT_CONSOLIDATED_DENOMINATOR",
+              "ordinal": 327
+            },
+            {
+              "context": {
+                "context_ref": "id4610d8faee148ef8aae55c39ce34246_I20211231",
+                "dimensions": {},
+                "entity_identifier": "0001463101",
+                "period_end": "2021-12-31",
+                "period_start": "2021-12-31",
+                "typed_dimension_count": 0
+              },
+              "decimals": "-3",
+              "disposition": "CONSOLIDATED_CURRENT_EQUITY",
+              "native_unit_definition": {
+                "divided": false,
+                "measures": [
+                  [
+                    "http://www.xbrl.org/2003/iso4217",
+                    "USD"
+                  ]
+                ]
+              },
+              "ordinal": 328,
+              "value": "430168000"
+            }
+          ],
+          "kind": "accession_xml",
+          "reports": [
+            {
+              "context_ref": "id4610d8faee148ef8aae55c39ce34246_I20211231",
+              "decimals": "-3",
+              "ordinal": 137,
+              "value": "430168000"
+            },
+            {
+              "context_ref": "id4610d8faee148ef8aae55c39ce34246_I20211231",
+              "decimals": "-3",
+              "ordinal": 328,
+              "value": "430168000"
+            }
+          ],
+          "source_sha256": "bd6a196da407db3bc23e174d9964c060bcd14f6216aaa914f1e703ddca69b4d5"
+        }
+      },
+      "reader_options": {
+        "dei_release": "YEAR_QUARTER_OR_DATE",
+        "namespace_policy": "YEAR_OR_DATE_RELEASE"
+      },
+      "seconds": 9.072528917000454,
+      "full_debt_scope_proven": false,
+      "financial_result_created": false,
+      "new_calls": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "company": "salesforce",
+      "year": 2022,
+      "filing": {
+        "form": "10-K",
+        "reportDate": "2022-01-31",
+        "filingDate": "2022-03-11",
+        "accessionNumber": "0001108524-22-000013",
+        "primaryDocument": "crm-20220131.htm"
+      },
+      "actual_period": {
+        "fiscal_year": 2022,
+        "period_start": "2021-02-01",
+        "period_end": "2022-01-31"
+      },
+      "primary": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:2cbe15185e572cb179d0d2bbbb9f0527bf71d5e854b1779d25768e814e7d06c0",
+        "raw_asset_id": "sha256:ad88a84618e7d35b3aaf5990579dba2e42583ece4d3aaeaadc9383f9557c6b91",
+        "company_id": "salesforce",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852422000013/crm-20220131.htm",
+        "accession": "0001108524-22-000013",
+        "document_name": "crm-20220131.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:701b596f9974587b5796c3d821a58be453b068db9fc4425370b3020a27a8615a"
+      },
+      "xml": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:2a1d37eb3c8b090f9212ac1abe59bd08cfce6aba903b4f1f8be624f1551cc667",
+        "raw_asset_id": "sha256:eadac8585e9e43dbe18657f25a85ec7530574437a998ec5a0fda1ae2f2b9409a",
+        "company_id": "salesforce",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852422000013/crm-20220131_htm.xml",
+        "accession": "0001108524-22-000013",
+        "document_name": "crm-20220131_htm.xml",
+        "source_role": "auditor_facts",
+        "request_attempt_id": "request:attempt:1a33bf533002efa0e8371e17d2a5e6fe93151afbcde7898e8739dc79f59a519f"
+      },
+      "before": {
+        "type": "NormalAnnualInputError",
+        "reason": "DEI_MISSING_OR_AMBIGUOUS:DocumentType"
+      },
+      "guard_status": "CONTINUE_DEBT_PATH",
+      "equity_proof": {
+        "debt_completeness": "NOT_EVALUATED",
+        "filing_period": {
+          "fiscal_year": 2022,
+          "period_end": "2022-01-31",
+          "period_start": "2021-02-01"
+        },
+        "observation_report": {
+          "context_ref": "ib3aa3e8b070e47c9b6503939c6421bf7_I20220131",
+          "decimals": "-6",
+          "ordinal": 120,
+          "value": "58131000000"
+        },
+        "observation_source_kind": "xml",
+        "primary": {
+          "chosen": {
+            "context_ref": "ib3aa3e8b070e47c9b6503939c6421bf7_I20220131",
+            "decimals": "-6",
+            "ordinal": 120,
+            "raw_start_byte": 1126483,
+            "value": "58131000000",
+            "visible_cell": {
+              "colspan": 2,
+              "column_index": 3,
+              "grid_sha256": "sha256:4db013be359b2b5ca98f1bf6e8fdd0ec58f2ceed3242bb8b45f954b68f77faf4",
+              "origin_column_index": 3,
+              "origin_row_index": 40,
+              "raw_text": "58,131&#160;",
+              "row_index": 40,
+              "rowspan": 1,
+              "table_id": "table_000030",
+              "text": "58,131"
+            }
+          },
+          "equity_census": [
+            {
+              "context": {
+                "context_ref": "ib3aa3e8b070e47c9b6503939c6421bf7_I20220131",
+                "dimensions": {},
+                "entity_identifier": "0001108524",
+                "period_end": "2022-01-31",
+                "period_start": "2022-01-31",
+                "typed_dimension_count": 0
+              },
+              "decimals": "-6",
+              "disposition": "CONSOLIDATED_CURRENT_EQUITY",
+              "native_unit_definition": {
+                "divided": false,
+                "measures": [
+                  [
+                    "http://www.xbrl.org/2003/iso4217",
+                    "USD"
+                  ]
+                ]
+              },
+              "ordinal": 120,
+              "value": "58131000000"
+            },
+            {
+              "context": {
+                "context_ref": "i887ed09eb0e949f58ed1c656f01dda03_I20210131",
+                "dimensions": {},
+                "entity_identifier": "0001108524",
+                "period_end": "2021-01-31",
+                "period_start": "2021-01-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 121
+            },
+            {
+              "context": {
+                "context_ref": "i2d2c13368eed48918748cf148e569c30_I20190131",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:CommonStockMember"
+                },
+                "entity_identifier": "0001108524",
+                "period_end": "2019-01-31",
+                "period_start": "2019-01-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 231
+            },
+            {
+              "context": {
+                "context_ref": "i3c988cbbde6a4542a49bd6b71fa35143_I20190131",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:AdditionalPaidInCapitalMember"
+                },
+                "entity_identifier": "0001108524",
+                "period_end": "2019-01-31",
+                "period_start": "2019-01-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 232
+            },
+            {
+              "context": {
+                "context_ref": "i9f5fd794994549cf8e3dd3242e653d69_I20190131",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:AccumulatedOtherComprehensiveIncomeMember"
+                },
+                "entity_identifier": "0001108524",
+                "period_end": "2019-01-31",
+                "period_start": "2019-01-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 233
+            },
+            {
+              "context": {
+                "context_ref": "i11b176042afb4d9ab7794b7aebf851f7_I20190131",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:RetainedEarningsMember"
+                },
+                "entity_identifier": "0001108524",
+                "period_end": "2019-01-31",
+                "period_start": "2019-01-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 234
+            },
+            {
+              "context": {
+                "context_ref": "i1832793f2ac14fc98dc0b35a45a28217_I20190131",
+                "dimensions": {},
+                "entity_identifier": "0001108524",
+                "period_end": "2019-01-31",
+                "period_start": "2019-01-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 235
+            },
+            {
+              "context": {
+                "context_ref": "ida9b6cfb060b40c4963d59a54cf17d08_I20200131",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:CommonStockMember"
+                },
+                "entity_identifier": "0001108524",
+                "period_end": "2020-01-31",
+                "period_start": "2020-01-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 249
+            },
+            {
+              "context": {
+                "context_ref": "i8614bfeb800443f5b304e418a92d3dfb_I20200131",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:AdditionalPaidInCapitalMember"
+                },
+                "entity_identifier": "0001108524",
+                "period_end": "2020-01-31",
+                "period_start": "2020-01-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 250
+            },
+            {
+              "context": {
+                "context_ref": "if2cde2670e5b48dab65a61dcbc05412b_I20200131",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:AccumulatedOtherComprehensiveIncomeMember"
+                },
+                "entity_identifier": "0001108524",
+                "period_end": "2020-01-31",
+                "period_start": "2020-01-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 251
+            },
+            {
+              "context": {
+                "context_ref": "if0f308e7b3ac486bb89f9ae9d2321660_I20200131",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:RetainedEarningsMember"
+                },
+                "entity_identifier": "0001108524",
+                "period_end": "2020-01-31",
+                "period_start": "2020-01-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 252
+            },
+            {
+              "context": {
+                "context_ref": "iee0bb959207e4fc5b4d4bfb3a7c2240b_I20200131",
+                "dimensions": {},
+                "entity_identifier": "0001108524",
+                "period_end": "2020-01-31",
+                "period_start": "2020-01-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 253
+            },
+            {
+              "context": {
+                "context_ref": "ic017d5b13a35438a891dbb00564532f7_I20210131",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:CommonStockMember"
+                },
+                "entity_identifier": "0001108524",
+                "period_end": "2021-01-31",
+                "period_start": "2021-01-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 264
+            },
+            {
+              "context": {
+                "context_ref": "ic7cb67686a3a4425a38c29f1090a9ed6_I20210131",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:AdditionalPaidInCapitalMember"
+                },
+                "entity_identifier": "0001108524",
+                "period_end": "2021-01-31",
+                "period_start": "2021-01-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 265
+            },
+            {
+              "context": {
+                "context_ref": "i70895d4b973141719e142a39f8991521_I20210131",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:AccumulatedOtherComprehensiveIncomeMember"
+                },
+                "entity_identifier": "0001108524",
+                "period_end": "2021-01-31",
+                "period_start": "2021-01-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 266
+            },
+            {
+              "context": {
+                "context_ref": "i66965663b6a74b1ab1bcb6c69282c810_I20210131",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:RetainedEarningsMember"
+                },
+                "entity_identifier": "0001108524",
+                "period_end": "2021-01-31",
+                "period_start": "2021-01-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 267
+            },
+            {
+              "context": {
+                "context_ref": "i887ed09eb0e949f58ed1c656f01dda03_I20210131",
+                "dimensions": {},
+                "entity_identifier": "0001108524",
+                "period_end": "2021-01-31",
+                "period_start": "2021-01-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 268
+            },
+            {
+              "context": {
+                "context_ref": "i822a39509d4748959464932960e5ad35_I20220131",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:CommonStockMember"
+                },
+                "entity_identifier": "0001108524",
+                "period_end": "2022-01-31",
+                "period_start": "2022-01-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "DIMENSIONED_EQUITY_NOT_CONSOLIDATED_DENOMINATOR",
+              "ordinal": 282
+            },
+            {
+              "context": {
+                "context_ref": "i3d31de0bff1a4ae9b5bb4e4380db1d2a_I20220131",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:AdditionalPaidInCapitalMember"
+                },
+                "entity_identifier": "0001108524",
+                "period_end": "2022-01-31",
+                "period_start": "2022-01-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "DIMENSIONED_EQUITY_NOT_CONSOLIDATED_DENOMINATOR",
+              "ordinal": 283
+            },
+            {
+              "context": {
+                "context_ref": "ib63d5d9d02d540dfa334b3b039bc75ce_I20220131",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:AccumulatedOtherComprehensiveIncomeMember"
+                },
+                "entity_identifier": "0001108524",
+                "period_end": "2022-01-31",
+                "period_start": "2022-01-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "DIMENSIONED_EQUITY_NOT_CONSOLIDATED_DENOMINATOR",
+              "ordinal": 284
+            },
+            {
+              "context": {
+                "context_ref": "icc808eec0d084f31818d07637170d83d_I20220131",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:RetainedEarningsMember"
+                },
+                "entity_identifier": "0001108524",
+                "period_end": "2022-01-31",
+                "period_start": "2022-01-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "DIMENSIONED_EQUITY_NOT_CONSOLIDATED_DENOMINATOR",
+              "ordinal": 285
+            },
+            {
+              "context": {
+                "context_ref": "ib3aa3e8b070e47c9b6503939c6421bf7_I20220131",
+                "dimensions": {},
+                "entity_identifier": "0001108524",
+                "period_end": "2022-01-31",
+                "period_start": "2022-01-31",
+                "typed_dimension_count": 0
+              },
+              "decimals": "-6",
+              "disposition": "CONSOLIDATED_CURRENT_EQUITY",
+              "native_unit_definition": {
+                "divided": false,
+                "measures": [
+                  [
+                    "http://www.xbrl.org/2003/iso4217",
+                    "USD"
+                  ]
+                ]
+              },
+              "ordinal": 286,
+              "value": "58131000000"
+            }
+          ],
+          "kind": "primary_inline",
+          "reports": [
+            {
+              "context_ref": "ib3aa3e8b070e47c9b6503939c6421bf7_I20220131",
+              "decimals": "-6",
+              "ordinal": 120,
+              "raw_start_byte": 1126483,
+              "value": "58131000000",
+              "visible_cell": {
+                "colspan": 2,
+                "column_index": 3,
+                "grid_sha256": "sha256:4db013be359b2b5ca98f1bf6e8fdd0ec58f2ceed3242bb8b45f954b68f77faf4",
+                "origin_column_index": 3,
+                "origin_row_index": 40,
+                "raw_text": "58,131&#160;",
+                "row_index": 40,
+                "rowspan": 1,
+                "table_id": "table_000030",
+                "text": "58,131"
+              }
+            },
+            {
+              "context_ref": "ib3aa3e8b070e47c9b6503939c6421bf7_I20220131",
+              "decimals": "-6",
+              "ordinal": 286,
+              "raw_start_byte": 1366207,
+              "value": "58131000000",
+              "visible_cell": {
+                "colspan": 1,
+                "column_index": 34,
+                "grid_sha256": "sha256:db3a1093b73b926356548cc9b5bfc0bebf081cbade71ac6fdb94cc1a943446f0",
+                "origin_column_index": 34,
+                "origin_row_index": 20,
+                "raw_text": "58,131&#160;",
+                "row_index": 20,
+                "rowspan": 1,
+                "table_id": "table_000035",
+                "text": "58,131"
+              }
+            }
+          ],
+          "source_sha256": "ad88a84618e7d35b3aaf5990579dba2e42583ece4d3aaeaadc9383f9557c6b91"
+        },
+        "record_type": "B06_DENOMINATOR_SOURCE_PROOF",
+        "same_filing_companyfacts": [
+          {
+            "accession": "0001108524-22-000013",
+            "concept": "us-gaap:StockholdersEquity",
+            "duration_days": 0,
+            "entity": "1108524",
+            "fact_id": "fact:sha256:4546d31e20c647188cf284aa42af60f89d0e0dd9a35bd5712547c78dd05024cd",
+            "filed": "2022-03-11",
+            "fiscal_period": "FY",
+            "form": "10-K",
+            "period_end": "2022-01-31",
+            "period_start": "2022-01-31",
+            "source_binding": {
+              "accession": "0001108524-22-000013",
+              "document_name": "CIK0001108524.json",
+              "entity": "1108524",
+              "frame": "",
+              "raw_asset_id": "sha256:07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+              "source_reference_id": "sha256:8ab6e2732f3e6173fcabcbcb282e89affac6cf8b1acec8e4104cfaa6fd84e60c",
+              "source_role": "companyfacts"
+            },
+            "unit": "USD",
+            "value": "58131000000"
+          }
+        ],
+        "target": {
+          "accession": "0001108524-22-000013",
+          "company_id": "salesforce",
+          "entity": "1108524",
+          "period_end": "2022-01-31",
+          "period_start": "2022-01-31",
+          "scope": {
+            "entity_scope": "consolidated"
+          },
+          "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b"
+        },
+        "unit": "USD",
+        "value": "58131000000",
+        "xml": {
+          "chosen": {
+            "context_ref": "ib3aa3e8b070e47c9b6503939c6421bf7_I20220131",
+            "decimals": "-6",
+            "ordinal": 120,
+            "value": "58131000000"
+          },
+          "equity_census": [
+            {
+              "context": {
+                "context_ref": "ib3aa3e8b070e47c9b6503939c6421bf7_I20220131",
+                "dimensions": {},
+                "entity_identifier": "0001108524",
+                "period_end": "2022-01-31",
+                "period_start": "2022-01-31",
+                "typed_dimension_count": 0
+              },
+              "decimals": "-6",
+              "disposition": "CONSOLIDATED_CURRENT_EQUITY",
+              "native_unit_definition": {
+                "divided": false,
+                "measures": [
+                  [
+                    "http://www.xbrl.org/2003/iso4217",
+                    "USD"
+                  ]
+                ]
+              },
+              "ordinal": 120,
+              "value": "58131000000"
+            },
+            {
+              "context": {
+                "context_ref": "i887ed09eb0e949f58ed1c656f01dda03_I20210131",
+                "dimensions": {},
+                "entity_identifier": "0001108524",
+                "period_end": "2021-01-31",
+                "period_start": "2021-01-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 121
+            },
+            {
+              "context": {
+                "context_ref": "i2d2c13368eed48918748cf148e569c30_I20190131",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:CommonStockMember"
+                },
+                "entity_identifier": "0001108524",
+                "period_end": "2019-01-31",
+                "period_start": "2019-01-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 231
+            },
+            {
+              "context": {
+                "context_ref": "i3c988cbbde6a4542a49bd6b71fa35143_I20190131",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:AdditionalPaidInCapitalMember"
+                },
+                "entity_identifier": "0001108524",
+                "period_end": "2019-01-31",
+                "period_start": "2019-01-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 232
+            },
+            {
+              "context": {
+                "context_ref": "i9f5fd794994549cf8e3dd3242e653d69_I20190131",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:AccumulatedOtherComprehensiveIncomeMember"
+                },
+                "entity_identifier": "0001108524",
+                "period_end": "2019-01-31",
+                "period_start": "2019-01-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 233
+            },
+            {
+              "context": {
+                "context_ref": "i11b176042afb4d9ab7794b7aebf851f7_I20190131",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:RetainedEarningsMember"
+                },
+                "entity_identifier": "0001108524",
+                "period_end": "2019-01-31",
+                "period_start": "2019-01-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 234
+            },
+            {
+              "context": {
+                "context_ref": "i1832793f2ac14fc98dc0b35a45a28217_I20190131",
+                "dimensions": {},
+                "entity_identifier": "0001108524",
+                "period_end": "2019-01-31",
+                "period_start": "2019-01-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 235
+            },
+            {
+              "context": {
+                "context_ref": "ida9b6cfb060b40c4963d59a54cf17d08_I20200131",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:CommonStockMember"
+                },
+                "entity_identifier": "0001108524",
+                "period_end": "2020-01-31",
+                "period_start": "2020-01-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 249
+            },
+            {
+              "context": {
+                "context_ref": "i8614bfeb800443f5b304e418a92d3dfb_I20200131",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:AdditionalPaidInCapitalMember"
+                },
+                "entity_identifier": "0001108524",
+                "period_end": "2020-01-31",
+                "period_start": "2020-01-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 250
+            },
+            {
+              "context": {
+                "context_ref": "if2cde2670e5b48dab65a61dcbc05412b_I20200131",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:AccumulatedOtherComprehensiveIncomeMember"
+                },
+                "entity_identifier": "0001108524",
+                "period_end": "2020-01-31",
+                "period_start": "2020-01-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 251
+            },
+            {
+              "context": {
+                "context_ref": "if0f308e7b3ac486bb89f9ae9d2321660_I20200131",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:RetainedEarningsMember"
+                },
+                "entity_identifier": "0001108524",
+                "period_end": "2020-01-31",
+                "period_start": "2020-01-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 252
+            },
+            {
+              "context": {
+                "context_ref": "iee0bb959207e4fc5b4d4bfb3a7c2240b_I20200131",
+                "dimensions": {},
+                "entity_identifier": "0001108524",
+                "period_end": "2020-01-31",
+                "period_start": "2020-01-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 253
+            },
+            {
+              "context": {
+                "context_ref": "ic017d5b13a35438a891dbb00564532f7_I20210131",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:CommonStockMember"
+                },
+                "entity_identifier": "0001108524",
+                "period_end": "2021-01-31",
+                "period_start": "2021-01-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 264
+            },
+            {
+              "context": {
+                "context_ref": "ic7cb67686a3a4425a38c29f1090a9ed6_I20210131",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:AdditionalPaidInCapitalMember"
+                },
+                "entity_identifier": "0001108524",
+                "period_end": "2021-01-31",
+                "period_start": "2021-01-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 265
+            },
+            {
+              "context": {
+                "context_ref": "i70895d4b973141719e142a39f8991521_I20210131",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:AccumulatedOtherComprehensiveIncomeMember"
+                },
+                "entity_identifier": "0001108524",
+                "period_end": "2021-01-31",
+                "period_start": "2021-01-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 266
+            },
+            {
+              "context": {
+                "context_ref": "i66965663b6a74b1ab1bcb6c69282c810_I20210131",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:RetainedEarningsMember"
+                },
+                "entity_identifier": "0001108524",
+                "period_end": "2021-01-31",
+                "period_start": "2021-01-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 267
+            },
+            {
+              "context": {
+                "context_ref": "i887ed09eb0e949f58ed1c656f01dda03_I20210131",
+                "dimensions": {},
+                "entity_identifier": "0001108524",
+                "period_end": "2021-01-31",
+                "period_start": "2021-01-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "OTHER_SOURCE_PERIOD",
+              "ordinal": 268
+            },
+            {
+              "context": {
+                "context_ref": "i822a39509d4748959464932960e5ad35_I20220131",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:CommonStockMember"
+                },
+                "entity_identifier": "0001108524",
+                "period_end": "2022-01-31",
+                "period_start": "2022-01-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "DIMENSIONED_EQUITY_NOT_CONSOLIDATED_DENOMINATOR",
+              "ordinal": 282
+            },
+            {
+              "context": {
+                "context_ref": "i3d31de0bff1a4ae9b5bb4e4380db1d2a_I20220131",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:AdditionalPaidInCapitalMember"
+                },
+                "entity_identifier": "0001108524",
+                "period_end": "2022-01-31",
+                "period_start": "2022-01-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "DIMENSIONED_EQUITY_NOT_CONSOLIDATED_DENOMINATOR",
+              "ordinal": 283
+            },
+            {
+              "context": {
+                "context_ref": "ib63d5d9d02d540dfa334b3b039bc75ce_I20220131",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:AccumulatedOtherComprehensiveIncomeMember"
+                },
+                "entity_identifier": "0001108524",
+                "period_end": "2022-01-31",
+                "period_start": "2022-01-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "DIMENSIONED_EQUITY_NOT_CONSOLIDATED_DENOMINATOR",
+              "ordinal": 284
+            },
+            {
+              "context": {
+                "context_ref": "icc808eec0d084f31818d07637170d83d_I20220131",
+                "dimensions": {
+                  "us-gaap:StatementEquityComponentsAxis": "us-gaap:RetainedEarningsMember"
+                },
+                "entity_identifier": "0001108524",
+                "period_end": "2022-01-31",
+                "period_start": "2022-01-31",
+                "typed_dimension_count": 0
+              },
+              "disposition": "DIMENSIONED_EQUITY_NOT_CONSOLIDATED_DENOMINATOR",
+              "ordinal": 285
+            },
+            {
+              "context": {
+                "context_ref": "ib3aa3e8b070e47c9b6503939c6421bf7_I20220131",
+                "dimensions": {},
+                "entity_identifier": "0001108524",
+                "period_end": "2022-01-31",
+                "period_start": "2022-01-31",
+                "typed_dimension_count": 0
+              },
+              "decimals": "-6",
+              "disposition": "CONSOLIDATED_CURRENT_EQUITY",
+              "native_unit_definition": {
+                "divided": false,
+                "measures": [
+                  [
+                    "http://www.xbrl.org/2003/iso4217",
+                    "USD"
+                  ]
+                ]
+              },
+              "ordinal": 286,
+              "value": "58131000000"
+            }
+          ],
+          "kind": "accession_xml",
+          "reports": [
+            {
+              "context_ref": "ib3aa3e8b070e47c9b6503939c6421bf7_I20220131",
+              "decimals": "-6",
+              "ordinal": 120,
+              "value": "58131000000"
+            },
+            {
+              "context_ref": "ib3aa3e8b070e47c9b6503939c6421bf7_I20220131",
+              "decimals": "-6",
+              "ordinal": 286,
+              "value": "58131000000"
+            }
+          ],
+          "source_sha256": "eadac8585e9e43dbe18657f25a85ec7530574437a998ec5a0fda1ae2f2b9409a"
+        }
+      },
+      "reader_options": {
+        "dei_release": "YEAR_QUARTER_OR_DATE",
+        "namespace_policy": "YEAR_OR_DATE_RELEASE"
+      },
+      "seconds": 8.864991083006316,
+      "full_debt_scope_proven": false,
+      "financial_result_created": false,
+      "new_calls": [
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-selected-b06-release/SEC_metrics",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "scope": "Public denominator original-source proof only; not full B06/company acceptance"
+}

@@ -8,6 +8,7 @@ cannot supply a number, relation, selected fact or source-coverage approval.
 from pathlib import Path
 import re
 
+from .xbrl_namespace_policy import is_fasb_namespace, source_reader_options
 from .canonical import content_hash,sha256_bytes,sha256_file,strict_json_file
 from .deterministic_router import parse_accession_xbrl_source
 from .financial_structured import _InlineTableIndex,_fact_cells
@@ -36,14 +37,15 @@ def _need(condition,reason):
         raise FinancingInventoryError(reason)
 
 
-def _native(source,prepared,kind):
+def _native(source,prepared,kind, *, dei_release='YEAR_ONLY', namespace_policy='YEAR_ONLY'):
+    reader_options = source_reader_options(dei_release=dei_release, namespace_policy=namespace_policy)
     raw = source['raw_bytes']
     period = prepared['table_input']['target_period']
     _need(source['source_reference']['raw_asset_id'] == 'sha256:'+sha256_bytes(content=raw)
           and source['source_reference']['accession'] == prepared['filing']['accessionNumber']
           and source['source_reference']['company_id'] == prepared['company_id'],
           'FINANCING_INVENTORY_SOURCE_BINDING_CHANGED')
-    _need(annual_period(raw=raw,cik=prepared['entity'],filing=prepared['filing']) == period,
+    _need(annual_period(raw=raw,cik=prepared['entity'],filing=prepared['filing'], **({'dei_release': dei_release} if dei_release != 'YEAR_ONLY' else {})) == period,
           'FINANCING_INVENTORY_ANNUAL_IDENTITY_CHANGED')
     parsed = parse_accession_xbrl_source(raw_bytes=raw)
     metadata = _ReportedFactMetadata()
@@ -63,7 +65,7 @@ def _native(source,prepared,kind):
         _need(str(int(context['entity_identifier'])) == prepared['entity'],'FINANCING_INVENTORY_SUBJECT_CONFLICT')
         native = {**context,'dimensions':dict(context['dimensions'])}
         proof = _verified_context(native=native,metadata=metadata)
-        standard = re.fullmatch(r'https?://fasb\.org/us-gaap/[0-9]{4}',uri) is not None
+        standard = is_fasb_namespace(uri, namespace_policy=namespace_policy)
         row = {'group':group,'ordinal':fact['ordinal'],'qualified_name':fact['qualified_name'],
                'concept_qname':[uri,name],'official_us_gaap_concept':standard,'context':native,
                'context_proof':proof,'reported_text':fact['text'],'kind':kind}
@@ -93,9 +95,10 @@ def _native(source,prepared,kind):
     return rows
 
 
-def inspect_financing_inventory(*,primary,xml,prepared):
+def inspect_financing_inventory(*,primary,xml,prepared, dei_release='YEAR_ONLY', namespace_policy='YEAR_ONLY'):
     """Pure inspection used for source tests; it supplies no source credit."""
-    by_kind = {kind:_native(source,prepared,kind) for kind,source in [('primary',primary),('xml',xml)]}
+    reader_options = source_reader_options(dei_release=dei_release, namespace_policy=namespace_policy)
+    by_kind = {kind:_native(source,prepared,kind, **reader_options) for kind,source in [('primary',primary),('xml',xml)]}
     text = primary['raw_bytes'].decode('utf-8-sig')
     blocks = _DefinitionBlocks(text);blocks.feed(text);blocks.close();blocks._flush()
     _need(not blocks.structural_errors and (blocks.html_count,blocks.body_count,blocks.html_closed,blocks.body_closed)==(1,1,1,1),
