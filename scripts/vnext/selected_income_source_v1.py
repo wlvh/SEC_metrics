@@ -11,7 +11,7 @@ from decimal import Decimal
 from .canonical import sha256_bytes
 from .deterministic_router import parse_accession_xbrl_source
 from .text_results_v2 import _ReportedFactMetadata, _verified_context
-from .governance_signals import _source_value
+from .governance_signals import _source_value, GovernanceSignalError
 from .xbrl_namespace_policy import YEAR_ONLY, is_fasb_namespace
 
 
@@ -104,7 +104,15 @@ def _single_segment_scope(parsed,meta,annual,namespace_policy):
         unit_uri,unit_name=unit['measures'][0]
         if not ((unit_uri,unit_name)==('http://www.xbrl.org/2003/instance','pure')
                 or unit_name=='segment' and bool(unit_uri)):return None
-        value=_source_value(fact,info)
+        try:
+            value=_source_value(fact,info)
+        except GovernanceSignalError as error:
+            if str(error) not in {'C03_UNSUPPORTED_TRANSFORM_NAMESPACE',
+                    'C03_UNSUPPORTED_NUMERIC_TRANSFORM'}:
+                raise
+            # Optional segment qualification cannot assign an unsupported
+            # scalar count a value. It grants no dimensional scope credit.
+            return None
         if Decimal(value)!=1:return None
         proof=_verified_context(native={**context,'dimensions':dict(context['dimensions'])},metadata=meta)
         counts[count_name].append({'fact':dict(fact),'namespace':uri,'value':value,
@@ -148,7 +156,7 @@ def _native_income_reports(source,annual,concepts,*,check_visible_short_period=F
     need(meta.ordinal==len(parsed.facts),'NATIVE_STREAM_CHANGED')
     names={c.split(':')[-1].casefold() for c in concepts}
     period=annual['table_input']['target_period'];rows=[]
-    segment_scope=_single_segment_scope(parsed,meta,annual,namespace_policy) if single_segment_concepts else None
+    segment_scope=None;segment_scope_checked=False
     for fact in parsed.facts:
         info=meta.facts[fact['ordinal']];uri,name=info['concept']
         if name.casefold() not in names:continue
@@ -158,14 +166,18 @@ def _native_income_reports(source,annual,concepts,*,check_visible_short_period=F
                 or context['typed_dimension_count']):continue
         qualified_segment=None
         if context['dimensions']:
-            if (segment_scope is None or name.casefold() not in single_segment_concepts
+            if (name.casefold() not in single_segment_concepts
                     or context['period_start']!=period['period_start']
                     or len(context['dimensions'])!=1):continue
             proof=_verified_context(native={**context,'dimensions':dict(context['dimensions'])},metadata=meta)
             dimension=proof['dimensions'][0];axis_uri,axis_name=dimension['dimension_qname']
             if (axis_name!='StatementBusinessSegmentsAxis'
                     or not is_fasb_namespace(axis_uri,namespace_policy=namespace_policy)
-                    or dimension['member_qname']!=segment_scope['segment_member_qname']):continue
+                    or dimension['member_qname'][1]!='ReportableSegmentMember'):continue
+            if not segment_scope_checked:
+                segment_scope=_single_segment_scope(parsed,meta,annual,namespace_policy)
+                segment_scope_checked=True
+            if segment_scope is None or dimension['member_qname']!=segment_scope['segment_member_qname']:continue
             qualified_segment=segment_scope
         need(str(int(context['entity_identifier']))==annual['entity'],'NATIVE_ENTITY_CHANGED')
         need(is_fasb_namespace(uri,namespace_policy=namespace_policy),'OFFICIAL_CONCEPT_REQUIRED')

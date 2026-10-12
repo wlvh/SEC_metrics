@@ -1,0 +1,64 @@
+test_optional_undecodable_counts_never_break_the_old_nondimensional_route (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_optional_undecodable_counts_never_break_the_old_nondimensional_route) ... FAIL
+test_unsupported_count_transform_is_unproved_but_numeric_integrity_errors_propagate (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_unsupported_count_transform_is_unproved_but_numeric_integrity_errors_propagate) ... ERROR
+
+======================================================================
+ERROR: test_unsupported_count_transform_is_unproved_but_numeric_integrity_errors_propagate (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_unsupported_count_transform_is_unproved_but_numeric_integrity_errors_propagate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/tests/vnext/test_single_segment_revenue.py", line 205, in test_unsupported_count_transform_is_unproved_but_numeric_integrity_errors_propagate
+    result=self.scope(changed(source,raw),annual)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/tests/vnext/test_single_segment_revenue.py", line 29, in scope
+    return reported_revenue_scope(primary=source,xml=source,annual=annual,
+        approved_concepts=APPROVED,allow_single_segment_revenue=True,**kwargs)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 51, in reported_revenue_scope
+    rows+=single_segment_revenue_reports(primary,annual,approved_concepts,**options)
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/scripts/vnext/selected_income_source_v1.py", line 80, in single_segment_revenue_reports
+    rows=_native_income_reports(source,annual,concepts,namespace_policy=namespace_policy,
+        annual_period_reader=annual_period_reader,single_segment_concepts=names)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/scripts/vnext/selected_income_source_v1.py", line 151, in _native_income_reports
+    segment_scope=_single_segment_scope(parsed,meta,annual,namespace_policy) if single_segment_concepts else None
+                  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/scripts/vnext/selected_income_source_v1.py", line 107, in _single_segment_scope
+    value=_source_value(fact,info)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/scripts/vnext/governance_signals.py", line 118, in _source_value
+    _need(re.fullmatch(r"https?://www\.xbrl\.org/inlineXBRL/transformation/\d{4}-\d{2}-\d{2}", uri) is not None,
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          "C03_UNSUPPORTED_TRANSFORM_NAMESPACE")
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/scripts/vnext/governance_signals.py", line 43, in _need
+    raise GovernanceSignalError(reason)
+vnext.governance_signals.GovernanceSignalError: C03_UNSUPPORTED_TRANSFORM_NAMESPACE
+
+======================================================================
+FAIL: test_optional_undecodable_counts_never_break_the_old_nondimensional_route (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_optional_undecodable_counts_never_break_the_old_nondimensional_route)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/tests/vnext/test_single_segment_revenue.py", line 195, in test_optional_undecodable_counts_never_break_the_old_nondimensional_route
+    result=self.scope(changed(source,raw),annual,allow_single_revenue_line=True)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/tests/vnext/test_single_segment_revenue.py", line 29, in scope
+    return reported_revenue_scope(primary=source,xml=source,annual=annual,
+        approved_concepts=APPROVED,allow_single_segment_revenue=True,**kwargs)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 51, in reported_revenue_scope
+    rows+=single_segment_revenue_reports(primary,annual,approved_concepts,**options)
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/scripts/vnext/selected_income_source_v1.py", line 80, in single_segment_revenue_reports
+    rows=_native_income_reports(source,annual,concepts,namespace_policy=namespace_policy,
+        annual_period_reader=annual_period_reader,single_segment_concepts=names)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/scripts/vnext/selected_income_source_v1.py", line 151, in _native_income_reports
+    segment_scope=_single_segment_scope(parsed,meta,annual,namespace_policy) if single_segment_concepts else None
+                  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+AssertionError: No dimensional candidate needs count qualification
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.030s
+
+FAILED (failures=1, errors=1)

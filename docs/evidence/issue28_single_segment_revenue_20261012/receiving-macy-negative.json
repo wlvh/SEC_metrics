@@ -1,0 +1,860 @@
+{
+  "seconds": "11.075320",
+  "company_id": "macys",
+  "fiscal_year": 2022,
+  "filing": {
+    "form": "10-K",
+    "reportDate": "2023-01-28",
+    "filingDate": "2023-03-24",
+    "accessionNumber": "0001628280-23-009154",
+    "primaryDocument": "m-20230128.htm"
+  },
+  "period": {
+    "fiscal_year": 2022,
+    "period_start": "2022-01-30",
+    "period_end": "2023-01-28"
+  },
+  "reason": "HISTORICAL_PAIRED_REVENUE_COMPLETE_SCOPE_UNPROVEN",
+  "category": "IMPLEMENTATION_GAP",
+  "scope": {
+    "method": "SELECTED_REVENUE_COMPONENT_ADMISSION_V1",
+    "annual_input": {
+      "company_id": "macys",
+      "entity": "794367",
+      "filing": {
+        "form": "10-K",
+        "reportDate": "2023-01-28",
+        "filingDate": "2023-03-24",
+        "accessionNumber": "0001628280-23-009154",
+        "primaryDocument": "m-20230128.htm"
+      },
+      "table_input": {
+        "target_period": {
+          "fiscal_year": 2022,
+          "period_start": "2022-01-30",
+          "period_end": "2023-01-28"
+        }
+      }
+    },
+    "approved_concepts": [
+      "us-gaap:Revenues",
+      "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax"
+    ],
+    "splits": [],
+    "status": "NO_DEMONSTRATED_SPLIT",
+    "complete_scope_proven": false,
+    "original_reports": {
+      "primary": [
+        {
+          "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+          "value": "24442000000",
+          "unit": "USD",
+          "period_start": "2022-01-30",
+          "period_end": "2023-01-28",
+          "decimals": "-6",
+          "ordinal": 57,
+          "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+          "context": {
+            "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+            "dimensions": {},
+            "entity_identifier": "0000794367",
+            "period_end": "2023-01-28",
+            "period_start": "2022-01-30",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+            "identifiers": [
+              {
+                "value": "0000794367",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2022-01-30"
+              },
+              {
+                "kind": "enddate",
+                "value": "2023-01-28"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:c07930c47134001e778c8ef315aae3408624a3158da0db24ba40ca79390af057",
+            "raw_asset_id": "sha256:876fb0e901d0c518bce2581d9994fb739305ebfde4427a4f6dc950f3108ca8cf",
+            "company_id": "macys",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/m-20230128.htm",
+            "accession": "0001628280-23-009154",
+            "document_name": "m-20230128.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:537d5aff2c78f5843daaab268235df07bfd38a44feacbd58ac4af4e31af13691"
+          }
+        },
+        {
+          "concept": "us-gaap:CostOfGoodsAndServicesSold",
+          "value": "15306000000",
+          "unit": "USD",
+          "period_start": "2022-01-30",
+          "period_end": "2023-01-28",
+          "decimals": "-6",
+          "ordinal": 63,
+          "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+          "context": {
+            "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+            "dimensions": {},
+            "entity_identifier": "0000794367",
+            "period_end": "2023-01-28",
+            "period_start": "2022-01-30",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+            "identifiers": [
+              {
+                "value": "0000794367",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2022-01-30"
+              },
+              {
+                "kind": "enddate",
+                "value": "2023-01-28"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:c07930c47134001e778c8ef315aae3408624a3158da0db24ba40ca79390af057",
+            "raw_asset_id": "sha256:876fb0e901d0c518bce2581d9994fb739305ebfde4427a4f6dc950f3108ca8cf",
+            "company_id": "macys",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/m-20230128.htm",
+            "accession": "0001628280-23-009154",
+            "document_name": "m-20230128.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:537d5aff2c78f5843daaab268235df07bfd38a44feacbd58ac4af4e31af13691"
+          }
+        },
+        {
+          "concept": "us-gaap:ProfitLoss",
+          "value": "1177000000",
+          "unit": "USD",
+          "period_start": "2022-01-30",
+          "period_end": "2023-01-28",
+          "decimals": "-6",
+          "ordinal": 102,
+          "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+          "context": {
+            "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+            "dimensions": {},
+            "entity_identifier": "0000794367",
+            "period_end": "2023-01-28",
+            "period_start": "2022-01-30",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+            "identifiers": [
+              {
+                "value": "0000794367",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2022-01-30"
+              },
+              {
+                "kind": "enddate",
+                "value": "2023-01-28"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:c07930c47134001e778c8ef315aae3408624a3158da0db24ba40ca79390af057",
+            "raw_asset_id": "sha256:876fb0e901d0c518bce2581d9994fb739305ebfde4427a4f6dc950f3108ca8cf",
+            "company_id": "macys",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/m-20230128.htm",
+            "accession": "0001628280-23-009154",
+            "document_name": "m-20230128.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:537d5aff2c78f5843daaab268235df07bfd38a44feacbd58ac4af4e31af13691"
+          }
+        },
+        {
+          "concept": "us-gaap:ProfitLoss",
+          "value": "1177000000",
+          "unit": "USD",
+          "period_start": "2022-01-30",
+          "period_end": "2023-01-28",
+          "decimals": "-6",
+          "ordinal": 111,
+          "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+          "context": {
+            "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+            "dimensions": {},
+            "entity_identifier": "0000794367",
+            "period_end": "2023-01-28",
+            "period_start": "2022-01-30",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+            "identifiers": [
+              {
+                "value": "0000794367",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2022-01-30"
+              },
+              {
+                "kind": "enddate",
+                "value": "2023-01-28"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:c07930c47134001e778c8ef315aae3408624a3158da0db24ba40ca79390af057",
+            "raw_asset_id": "sha256:876fb0e901d0c518bce2581d9994fb739305ebfde4427a4f6dc950f3108ca8cf",
+            "company_id": "macys",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/m-20230128.htm",
+            "accession": "0001628280-23-009154",
+            "document_name": "m-20230128.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:537d5aff2c78f5843daaab268235df07bfd38a44feacbd58ac4af4e31af13691"
+          }
+        },
+        {
+          "concept": "us-gaap:ProfitLoss",
+          "value": "1177000000",
+          "unit": "USD",
+          "period_start": "2022-01-30",
+          "period_end": "2023-01-28",
+          "decimals": "-6",
+          "ordinal": 259,
+          "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+          "context": {
+            "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+            "dimensions": {},
+            "entity_identifier": "0000794367",
+            "period_end": "2023-01-28",
+            "period_start": "2022-01-30",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+            "identifiers": [
+              {
+                "value": "0000794367",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2022-01-30"
+              },
+              {
+                "kind": "enddate",
+                "value": "2023-01-28"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:c07930c47134001e778c8ef315aae3408624a3158da0db24ba40ca79390af057",
+            "raw_asset_id": "sha256:876fb0e901d0c518bce2581d9994fb739305ebfde4427a4f6dc950f3108ca8cf",
+            "company_id": "macys",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/m-20230128.htm",
+            "accession": "0001628280-23-009154",
+            "document_name": "m-20230128.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:537d5aff2c78f5843daaab268235df07bfd38a44feacbd58ac4af4e31af13691"
+          }
+        },
+        {
+          "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+          "value": "24442000000",
+          "unit": "USD",
+          "period_start": "2022-01-30",
+          "period_end": "2023-01-28",
+          "decimals": "-6",
+          "ordinal": 404,
+          "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+          "context": {
+            "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+            "dimensions": {},
+            "entity_identifier": "0000794367",
+            "period_end": "2023-01-28",
+            "period_start": "2022-01-30",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+            "identifiers": [
+              {
+                "value": "0000794367",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2022-01-30"
+              },
+              {
+                "kind": "enddate",
+                "value": "2023-01-28"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:c07930c47134001e778c8ef315aae3408624a3158da0db24ba40ca79390af057",
+            "raw_asset_id": "sha256:876fb0e901d0c518bce2581d9994fb739305ebfde4427a4f6dc950f3108ca8cf",
+            "company_id": "macys",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/m-20230128.htm",
+            "accession": "0001628280-23-009154",
+            "document_name": "m-20230128.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:537d5aff2c78f5843daaab268235df07bfd38a44feacbd58ac4af4e31af13691"
+          }
+        },
+        {
+          "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+          "value": "24442000000",
+          "unit": "USD",
+          "period_start": "2022-01-30",
+          "period_end": "2023-01-28",
+          "decimals": "-6",
+          "ordinal": 444,
+          "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+          "context": {
+            "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+            "dimensions": {},
+            "entity_identifier": "0000794367",
+            "period_end": "2023-01-28",
+            "period_start": "2022-01-30",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+            "identifiers": [
+              {
+                "value": "0000794367",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2022-01-30"
+              },
+              {
+                "kind": "enddate",
+                "value": "2023-01-28"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:c07930c47134001e778c8ef315aae3408624a3158da0db24ba40ca79390af057",
+            "raw_asset_id": "sha256:876fb0e901d0c518bce2581d9994fb739305ebfde4427a4f6dc950f3108ca8cf",
+            "company_id": "macys",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/m-20230128.htm",
+            "accession": "0001628280-23-009154",
+            "document_name": "m-20230128.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:537d5aff2c78f5843daaab268235df07bfd38a44feacbd58ac4af4e31af13691"
+          }
+        },
+        {
+          "concept": "us-gaap:NetIncomeLoss",
+          "value": "1177000000",
+          "unit": "USD",
+          "period_start": "2022-01-30",
+          "period_end": "2023-01-28",
+          "decimals": "-6",
+          "ordinal": 1586,
+          "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+          "context": {
+            "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+            "dimensions": {},
+            "entity_identifier": "0000794367",
+            "period_end": "2023-01-28",
+            "period_start": "2022-01-30",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+            "identifiers": [
+              {
+                "value": "0000794367",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2022-01-30"
+              },
+              {
+                "kind": "enddate",
+                "value": "2023-01-28"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:c07930c47134001e778c8ef315aae3408624a3158da0db24ba40ca79390af057",
+            "raw_asset_id": "sha256:876fb0e901d0c518bce2581d9994fb739305ebfde4427a4f6dc950f3108ca8cf",
+            "company_id": "macys",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/m-20230128.htm",
+            "accession": "0001628280-23-009154",
+            "document_name": "m-20230128.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:537d5aff2c78f5843daaab268235df07bfd38a44feacbd58ac4af4e31af13691"
+          }
+        }
+      ],
+      "xml": [
+        {
+          "concept": "us-gaap:revenuefromcontractwithcustomerexcludingassessedtax",
+          "value": "24442000000",
+          "unit": "USD",
+          "period_start": "2022-01-30",
+          "period_end": "2023-01-28",
+          "decimals": "-6",
+          "ordinal": 57,
+          "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+          "context": {
+            "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+            "dimensions": {},
+            "entity_identifier": "0000794367",
+            "period_end": "2023-01-28",
+            "period_start": "2022-01-30",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+            "identifiers": [
+              {
+                "value": "0000794367",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2022-01-30"
+              },
+              {
+                "kind": "enddate",
+                "value": "2023-01-28"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:f489be1212e54ba01adb8ec8da71cc01e9c1baceed60fe1c459ed5ab9cec6125",
+            "raw_asset_id": "sha256:2c66961475be31235f4b3804ce946b97819905008476330d30d0e6b44f73c345",
+            "company_id": "macys",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/m-20230128_htm.xml",
+            "accession": "0001628280-23-009154",
+            "document_name": "m-20230128_htm.xml",
+            "source_role": "auditor_facts",
+            "request_attempt_id": "request:attempt:7951ac5dfd6fbcd83b91e6ec3f57aef1c46d694e85ca1de15c617ff05023f15f"
+          }
+        },
+        {
+          "concept": "us-gaap:costofgoodsandservicessold",
+          "value": "15306000000",
+          "unit": "USD",
+          "period_start": "2022-01-30",
+          "period_end": "2023-01-28",
+          "decimals": "-6",
+          "ordinal": 63,
+          "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+          "context": {
+            "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+            "dimensions": {},
+            "entity_identifier": "0000794367",
+            "period_end": "2023-01-28",
+            "period_start": "2022-01-30",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+            "identifiers": [
+              {
+                "value": "0000794367",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2022-01-30"
+              },
+              {
+                "kind": "enddate",
+                "value": "2023-01-28"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:f489be1212e54ba01adb8ec8da71cc01e9c1baceed60fe1c459ed5ab9cec6125",
+            "raw_asset_id": "sha256:2c66961475be31235f4b3804ce946b97819905008476330d30d0e6b44f73c345",
+            "company_id": "macys",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/m-20230128_htm.xml",
+            "accession": "0001628280-23-009154",
+            "document_name": "m-20230128_htm.xml",
+            "source_role": "auditor_facts",
+            "request_attempt_id": "request:attempt:7951ac5dfd6fbcd83b91e6ec3f57aef1c46d694e85ca1de15c617ff05023f15f"
+          }
+        },
+        {
+          "concept": "us-gaap:profitloss",
+          "value": "1177000000",
+          "unit": "USD",
+          "period_start": "2022-01-30",
+          "period_end": "2023-01-28",
+          "decimals": "-6",
+          "ordinal": 102,
+          "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+          "context": {
+            "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+            "dimensions": {},
+            "entity_identifier": "0000794367",
+            "period_end": "2023-01-28",
+            "period_start": "2022-01-30",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+            "identifiers": [
+              {
+                "value": "0000794367",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2022-01-30"
+              },
+              {
+                "kind": "enddate",
+                "value": "2023-01-28"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:f489be1212e54ba01adb8ec8da71cc01e9c1baceed60fe1c459ed5ab9cec6125",
+            "raw_asset_id": "sha256:2c66961475be31235f4b3804ce946b97819905008476330d30d0e6b44f73c345",
+            "company_id": "macys",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/m-20230128_htm.xml",
+            "accession": "0001628280-23-009154",
+            "document_name": "m-20230128_htm.xml",
+            "source_role": "auditor_facts",
+            "request_attempt_id": "request:attempt:7951ac5dfd6fbcd83b91e6ec3f57aef1c46d694e85ca1de15c617ff05023f15f"
+          }
+        },
+        {
+          "concept": "us-gaap:profitloss",
+          "value": "1177000000",
+          "unit": "USD",
+          "period_start": "2022-01-30",
+          "period_end": "2023-01-28",
+          "decimals": "-6",
+          "ordinal": 111,
+          "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+          "context": {
+            "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+            "dimensions": {},
+            "entity_identifier": "0000794367",
+            "period_end": "2023-01-28",
+            "period_start": "2022-01-30",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+            "identifiers": [
+              {
+                "value": "0000794367",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2022-01-30"
+              },
+              {
+                "kind": "enddate",
+                "value": "2023-01-28"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:f489be1212e54ba01adb8ec8da71cc01e9c1baceed60fe1c459ed5ab9cec6125",
+            "raw_asset_id": "sha256:2c66961475be31235f4b3804ce946b97819905008476330d30d0e6b44f73c345",
+            "company_id": "macys",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/m-20230128_htm.xml",
+            "accession": "0001628280-23-009154",
+            "document_name": "m-20230128_htm.xml",
+            "source_role": "auditor_facts",
+            "request_attempt_id": "request:attempt:7951ac5dfd6fbcd83b91e6ec3f57aef1c46d694e85ca1de15c617ff05023f15f"
+          }
+        },
+        {
+          "concept": "us-gaap:profitloss",
+          "value": "1177000000",
+          "unit": "USD",
+          "period_start": "2022-01-30",
+          "period_end": "2023-01-28",
+          "decimals": "-6",
+          "ordinal": 259,
+          "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+          "context": {
+            "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+            "dimensions": {},
+            "entity_identifier": "0000794367",
+            "period_end": "2023-01-28",
+            "period_start": "2022-01-30",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+            "identifiers": [
+              {
+                "value": "0000794367",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2022-01-30"
+              },
+              {
+                "kind": "enddate",
+                "value": "2023-01-28"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:f489be1212e54ba01adb8ec8da71cc01e9c1baceed60fe1c459ed5ab9cec6125",
+            "raw_asset_id": "sha256:2c66961475be31235f4b3804ce946b97819905008476330d30d0e6b44f73c345",
+            "company_id": "macys",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/m-20230128_htm.xml",
+            "accession": "0001628280-23-009154",
+            "document_name": "m-20230128_htm.xml",
+            "source_role": "auditor_facts",
+            "request_attempt_id": "request:attempt:7951ac5dfd6fbcd83b91e6ec3f57aef1c46d694e85ca1de15c617ff05023f15f"
+          }
+        },
+        {
+          "concept": "us-gaap:revenuefromcontractwithcustomerexcludingassessedtax",
+          "value": "24442000000",
+          "unit": "USD",
+          "period_start": "2022-01-30",
+          "period_end": "2023-01-28",
+          "decimals": "-6",
+          "ordinal": 404,
+          "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+          "context": {
+            "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+            "dimensions": {},
+            "entity_identifier": "0000794367",
+            "period_end": "2023-01-28",
+            "period_start": "2022-01-30",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+            "identifiers": [
+              {
+                "value": "0000794367",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2022-01-30"
+              },
+              {
+                "kind": "enddate",
+                "value": "2023-01-28"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:f489be1212e54ba01adb8ec8da71cc01e9c1baceed60fe1c459ed5ab9cec6125",
+            "raw_asset_id": "sha256:2c66961475be31235f4b3804ce946b97819905008476330d30d0e6b44f73c345",
+            "company_id": "macys",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/m-20230128_htm.xml",
+            "accession": "0001628280-23-009154",
+            "document_name": "m-20230128_htm.xml",
+            "source_role": "auditor_facts",
+            "request_attempt_id": "request:attempt:7951ac5dfd6fbcd83b91e6ec3f57aef1c46d694e85ca1de15c617ff05023f15f"
+          }
+        },
+        {
+          "concept": "us-gaap:revenuefromcontractwithcustomerexcludingassessedtax",
+          "value": "24442000000",
+          "unit": "USD",
+          "period_start": "2022-01-30",
+          "period_end": "2023-01-28",
+          "decimals": "-6",
+          "ordinal": 444,
+          "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+          "context": {
+            "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+            "dimensions": {},
+            "entity_identifier": "0000794367",
+            "period_end": "2023-01-28",
+            "period_start": "2022-01-30",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+            "identifiers": [
+              {
+                "value": "0000794367",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2022-01-30"
+              },
+              {
+                "kind": "enddate",
+                "value": "2023-01-28"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:f489be1212e54ba01adb8ec8da71cc01e9c1baceed60fe1c459ed5ab9cec6125",
+            "raw_asset_id": "sha256:2c66961475be31235f4b3804ce946b97819905008476330d30d0e6b44f73c345",
+            "company_id": "macys",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/m-20230128_htm.xml",
+            "accession": "0001628280-23-009154",
+            "document_name": "m-20230128_htm.xml",
+            "source_role": "auditor_facts",
+            "request_attempt_id": "request:attempt:7951ac5dfd6fbcd83b91e6ec3f57aef1c46d694e85ca1de15c617ff05023f15f"
+          }
+        },
+        {
+          "concept": "us-gaap:netincomeloss",
+          "value": "1177000000",
+          "unit": "USD",
+          "period_start": "2022-01-30",
+          "period_end": "2023-01-28",
+          "decimals": "-6",
+          "ordinal": 1586,
+          "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+          "context": {
+            "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+            "dimensions": {},
+            "entity_identifier": "0000794367",
+            "period_end": "2023-01-28",
+            "period_start": "2022-01-30",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "i3a134a668cc847e598e2a7f04997fe52_D20220130-20230128",
+            "identifiers": [
+              {
+                "value": "0000794367",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2022-01-30"
+              },
+              {
+                "kind": "enddate",
+                "value": "2023-01-28"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:f489be1212e54ba01adb8ec8da71cc01e9c1baceed60fe1c459ed5ab9cec6125",
+            "raw_asset_id": "sha256:2c66961475be31235f4b3804ce946b97819905008476330d30d0e6b44f73c345",
+            "company_id": "macys",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/m-20230128_htm.xml",
+            "accession": "0001628280-23-009154",
+            "document_name": "m-20230128_htm.xml",
+            "source_role": "auditor_facts",
+            "request_attempt_id": "request:attempt:7951ac5dfd6fbcd83b91e6ec3f57aef1c46d694e85ca1de15c617ff05023f15f"
+          }
+        }
+      ]
+    },
+    "scope_id": "sha256:1f0f5f88e7b3440fefebabe3cd48f6fad88d06fe039d1c619c7df0e345d1dfce"
+  },
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "option_selection": "explicit partial wrapper; all production source functions and returns real"
+}

@@ -180,3 +180,38 @@ class SingleSegmentRevenueTest(unittest.TestCase):
         self.assertTrue(result['complete_scope_proven'])
         self.assertTrue(result['single_segment_revenue_allowed'])
         self.assertEqual(result['dei_release'],YEAR_QUARTER_OR_DATE)
+
+    def test_optional_undecodable_counts_never_break_the_old_nondimensional_route(self):
+        source,annual=original()
+        raw=source['raw_bytes'].replace(b'<xbrli:xbrl ',
+            b'<xbrli:xbrl xmlns:unknown="https://unsupported.test/numeric" ',1)
+        raw=raw.replace(b'NumberOfOperatingSegments contextRef="annual"',
+            b'NumberOfOperatingSegments format="unknown:word" contextRef="annual"')
+        raw=raw.replace(b'name="us-gaap:Revenues" contextRef="segment"',
+            b'name="us-gaap:Revenues" contextRef="annual"')
+        from unittest.mock import patch
+        with patch('vnext.selected_income_source_v1._single_segment_scope',
+                side_effect=AssertionError('No dimensional candidate needs count qualification')):
+            result=self.scope(changed(source,raw),annual,allow_single_revenue_line=True)
+        self.assertTrue(result['complete_scope_proven'])
+        self.assertNotIn('single_segment_scope',result['reported_totals'][0]['total'])
+
+    def test_unsupported_count_transform_is_unproved_but_numeric_integrity_errors_propagate(self):
+        source,annual=original()
+        raw=source['raw_bytes'].replace(b'<xbrli:xbrl ',
+            b'<xbrli:xbrl xmlns:unknown="https://unsupported.test/numeric" ',1)
+        raw=raw.replace(b'NumberOfOperatingSegments contextRef="annual"',
+            b'NumberOfOperatingSegments format="unknown:word" contextRef="annual"')
+        result=self.scope(changed(source,raw),annual)
+        self.assertFalse(result['complete_scope_proven'])
+        from unittest.mock import patch
+        from vnext.governance_signals import GovernanceSignalError
+        import vnext.selected_income_source_v1 as native
+        original_value=native._source_value
+        def bad_value(fact,metadata):
+            if 'numberofoperatingsegments' in metadata['concept'][1].casefold():
+                raise GovernanceSignalError('TEST_ONLY_SOURCE_INTEGRITY_ERROR')
+            return original_value(fact,metadata)
+        with patch.object(native,'_source_value',side_effect=bad_value),self.assertRaisesRegex(
+                ValueError,'TEST_ONLY_SOURCE_INTEGRITY_ERROR'):
+            self.scope(source,annual)

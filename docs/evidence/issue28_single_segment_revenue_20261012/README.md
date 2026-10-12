@@ -195,3 +195,39 @@ No source-helper production bytes changed in that main merge, so the proven
 two-original source checks are reused. The following documentation/log commit
 does not represent a new execution. The published candidate's tree is checked
 against the local delivery tree; remote CI is followed at its actual head.
+
+## Receiving regression repair (2026-10-13)
+
+#47's actual [feedback 6128192716](https://github.com/wlvh/SEC_metrics/pull/205#issuecomment-6128192716)
+found that the optional route decoded segment counts before knowing whether
+there was eligible dimensional revenue. Real Macy FY2022 then raised
+`C03_UNSUPPORTED_TRANSFORM_NAMESPACE` instead of its existing accurate scope
+withholding. This is a new regression, not a successful negative test.
+
+`receiving-before.log` reproduces the eager call and undecodable count. The
+helper now checks the actual current revenue's single business axis/member
+before obtaining the count proof, once per source operation. No eligible
+dimensional revenue means no count decoding. Only the two existing
+unsupported-format reasons return no optional qualification; other integrity
+errors still propagate. The old governance normalizer is unchanged. The new
+tests verify both the no-call branch and integrity propagation.
+
+`receiving-macy-negative.json` / `.log`: actual saved FY2022 original, real
+source/period/fiscal-label readers and public scope return
+`HISTORICAL_PAIRED_REVENUE_COMPLETE_SCOPE_UNPROVEN` in 11.075320s. This uses
+PR203's already-public diagnostic route; the wrapper only selects the segment
+flag. No source function, result, calculation or write is mocked as success,
+and no company Run is created. The scope remains unproved.
+
+`receiving-enphase.log` rechecks the actual current/prior source proofs,
+1,330,383,000 / 2,290,786,000 USD, in 6.216330 / 4.318867s. The first command
+mistyped the comparison SHA and stopped at `git show`; its log remains
+`receiving-enphase-baseline-typo.log`, then the correct baseline was used.
+Existing company outputs are not recalculated by this source probe.
+`receiving-small.log`: 104 required controls, 1.041s, zero skip/error/failure.
+`receiving-combination.log`: 338 required controls, 10.131s, zero skips/errors,
+including the actual current company/update/recovery interfaces. Tests ran
+on local `22a0c1d3` plus the stated repair; the following commit preserves those
+production bytes and adds the logs/description. The receiver and #47 must
+recheck their returned case at the new public head; this is not independent
+acceptance or reuse of the preceding head's green CI. New calls remain 0/0/0.
