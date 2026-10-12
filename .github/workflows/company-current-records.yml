@@ -33,6 +33,10 @@ name: Company saved-source records
     - tests/vnext/test_single_segment_revenue.py
     - docs/evidence/issue28_single_segment_revenue_20261012/**
     - tests/vnext/test_cover_dei_release.py
+    - tests/vnext/test_processing_dependency_checks.py
+    - tests/vnext/processing_dependency_checks.py
+    - tests/vnext/test_processing_dependency_material.py
+    - docs/evidence/issue28_processing_dependency_checks_20261013/**
     - tests/vnext/test_single_revenue_line.py
     - tests/vnext/test_selected_income_calculation.py
     - tests/vnext/test_historical_b03_case.py
@@ -208,6 +212,10 @@ jobs:
       env:
         PYTHONDONTWRITEBYTECODE: '1'
       run: python3 tests/required_unittests.py tests.vnext.test_registry_processing_scope
+    - name: Executed business modules are declared before saved-result reuse
+      env:
+        PYTHONDONTWRITEBYTECODE: '1'
+      run: python3 tests/required_unittests.py tests.vnext.test_processing_dependency_checks
     - name: Complete D04 company model input gates
       run: python3 tests/required_unittests.py tests.vnext.test_current_d04_company
     - name: Selected event sources and explicit history validation
