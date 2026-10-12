@@ -134,6 +134,47 @@ class SelectedSourceRequirementsTest(unittest.TestCase):
         self.assertNotIn(self.urls[2024],[r['source_url'] for r in value['requirements']])
         self.assertEqual(value['unique_known_get_count'],5)
 
+    def test_b03_names_target_originals_without_requiring_b02_prior(self):
+        self.record(self.urls[2024],b'failed',503,'unused prior unavailable')
+        before=self.digest_tree();value=self.plan(('B03',))
+        self.assertEqual(value['status'],'SAVED_SOURCE_BYTES_AVAILABLE')
+        self.assertEqual(value['unique_known_get_count'],5)
+        self.assertNotIn(self.urls[2024],[r['source_url'] for r in value['requirements']])
+        self.assertFalse(value['metric_executed']);self.assertFalse(value['metric_acceptance_proven'])
+        self.assertFalse(value['fetch_authorized']);self.assertEqual(before,self.digest_tree())
+
+    def test_b03_missing_target_instance_and_target_amendment_remain_dependencies(self):
+        instance=accession_document_url(cik=CIK,accession=self.filings[0]['accessionNumber'],document_name='annual-2025_htm.xml')
+        self.remove_get(instance);value=self.plan(('B03',))
+        self.assertIn(instance,value['unresolved_dependency_urls'])
+        amendment={**self.filings[0],'form':'10-K/A','accessionNumber':'0001048286-26-000008',
+            'primaryDocument':'amendment.htm','filingDate':'2026-03-01'}
+        self.metadata['filings']['recent']={k:[amendment[k],*[f[k] for f in self.filings]] for k in self.filings[0]}
+        self.record(submissions_url(cik=CIK),json.dumps(self.metadata).encode())
+        value=self.plan(('B03',));url=accession_document_url(cik=CIK,accession=amendment['accessionNumber'],document_name='amendment.htm')
+        self.assertIn(url,value['unresolved_dependency_urls'])
+        self.assertFalse(value['amendment_effect_on_metric_verified'])
+        raw=annual('http://xbrl.sec.gov/dei/2021q4').replace(b'19617',str(CIK).encode()).replace(b'2021',b'2025')
+        self.record(instance,raw)
+        self.record(url,raw.replace(b'>10-K<',b'>10-K/A<').replace(b'>false<',b'>true<'))
+        ready=self.plan(('B03',))
+        self.assertEqual(ready['status'],'SAVED_SOURCE_BYTES_AVAILABLE')
+        amendment_requests=[r for r in ready['requirements'] if r['accession']==amendment['accessionNumber']]
+        self.assertEqual([r['source_url'] for r in amendment_requests],[url])
+        self.assertFalse(ready['amendment_effect_on_metric_verified'])
+
+    def test_formal_sources_entry_accepts_b03_and_keeps_acquire_scope_closed(self):
+        from tools.vnext_company import main
+        args=['sources','--company',COMPANY,'--source-root',str(self.root),
+              '--report-end','2025-12-31','--metric','B03']
+        with patch('sys.stdout',new_callable=io.StringIO) as output:
+            code=main(args)
+        self.assertEqual(code,0)
+        value=json.loads(output.getvalue());self.assertEqual(value['metric_ids'],['B03'])
+        self.assertFalse(value['metric_executed']);self.assertFalse(value['fetch_authorized'])
+        from vnext.company_online import ONLINE_METRICS
+        self.assertEqual(ONLINE_METRICS,frozenset({'B01','B02'}))
+
     def test_missing_target_is_named_without_running_full_preparation(self):
         self.remove_get(self.urls[2025]);value=self.plan()
         self.assertEqual(value['status'],'SELECTED_SOURCE_DEPENDENCIES_UNRESOLVED')
