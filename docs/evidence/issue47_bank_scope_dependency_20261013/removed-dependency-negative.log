@@ -1,0 +1,46 @@
+test_scope_change_processes_each_consumer_once_then_reuses (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeProcessingTest.test_scope_change_processes_each_consumer_once_then_reuses) ... 
+  test_scope_change_processes_each_consumer_once_then_reuses (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeProcessingTest.test_scope_change_processes_each_consumer_once_then_reuses) (metric='A04') ... FAIL
+  test_scope_change_processes_each_consumer_once_then_reuses (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeProcessingTest.test_scope_change_processes_each_consumer_once_then_reuses) (metric='A09') ... FAIL
+  test_scope_change_processes_each_consumer_once_then_reuses (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeProcessingTest.test_scope_change_processes_each_consumer_once_then_reuses) (metric='A11') ... FAIL
+
+======================================================================
+FAIL: test_scope_change_processes_each_consumer_once_then_reuses (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeProcessingTest.test_scope_change_processes_each_consumer_once_then_reuses) (metric='A04')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_historical_bank_scope_cases.py", line 253, in test_scope_change_processes_each_consumer_once_then_reuses
+    self.assertEqual('CANDIDATE_READY',changed['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'CANDIDATE_READY' != 'NO_SOURCE_CONTENT_CHANGE'
+- CANDIDATE_READY
++ NO_SOURCE_CONTENT_CHANGE
+
+
+======================================================================
+FAIL: test_scope_change_processes_each_consumer_once_then_reuses (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeProcessingTest.test_scope_change_processes_each_consumer_once_then_reuses) (metric='A09')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_historical_bank_scope_cases.py", line 253, in test_scope_change_processes_each_consumer_once_then_reuses
+    self.assertEqual('CANDIDATE_READY',changed['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'CANDIDATE_READY' != 'NO_SOURCE_CONTENT_CHANGE'
+- CANDIDATE_READY
++ NO_SOURCE_CONTENT_CHANGE
+
+
+======================================================================
+FAIL: test_scope_change_processes_each_consumer_once_then_reuses (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeProcessingTest.test_scope_change_processes_each_consumer_once_then_reuses) (metric='A11')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_historical_bank_scope_cases.py", line 253, in test_scope_change_processes_each_consumer_once_then_reuses
+    self.assertEqual('CANDIDATE_READY',changed['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'CANDIDATE_READY' != 'NO_SOURCE_CONTENT_CHANGE'
+- CANDIDATE_READY
++ NO_SOURCE_CONTENT_CHANGE
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.045s
+
+FAILED (failures=3)
+Expected old erroneous reuse reproduced for all three consumers; no file mutation.

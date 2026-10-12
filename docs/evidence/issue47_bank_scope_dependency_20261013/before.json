@@ -1,0 +1,282 @@
+{
+  "rows": [
+    {
+      "metric": "A04",
+      "constructed_control": true,
+      "value": "0.0164",
+      "period": [
+        "2021-01-01",
+        "2021-12-31"
+      ],
+      "observed": {
+        "scripts/vnext/historical_bank_scope_cases.py": [
+          "measurement",
+          "prepare_historical_bank_scope_year_case"
+        ],
+        "scripts/vnext/financial_results.py": [
+          "_actual_period",
+          "_installed_rule",
+          "_need"
+        ],
+        "scripts/vnext/sources.py": [
+          "resolve_repository_file"
+        ],
+        "scripts/vnext/canonical.py": [
+          "<lambda>",
+          "_canonicalize",
+          "_pairs_to_object",
+          "_parse_json_integer",
+          "_validate_tree_unicode",
+          "_validate_unicode",
+          "canonical_json_bytes",
+          "content_hash",
+          "decimal_text",
+          "execution_semantics_hash",
+          "parse_decimal",
+          "sha256_bytes",
+          "sha256_file",
+          "strict_json_loads"
+        ],
+        "scripts/vnext/specs.py": [
+          "<genexpr>",
+          "_count_ast",
+          "_expand_selection_policy",
+          "_require_string",
+          "_validate_dependencies",
+          "_validate_executable_semantics",
+          "_validate_inputs",
+          "_validate_top_level_guards",
+          "_validate_traits",
+          "compile_spec",
+          "compile_spec_file",
+          "parse_spec_document"
+        ],
+        "scripts/vnext/scope_contract.py": [
+          "<genexpr>",
+          "_ordered_text_list",
+          "scope_satisfies_contract",
+          "validate_scope_contract"
+        ],
+        "scripts/vnext/calculator.py": [
+          "_decimal_value",
+          "_result_and_trace",
+          "calculate_observation_metric",
+          "metric_is_applicable"
+        ],
+        "scripts/vnext/observations.py": [
+          "<genexpr>",
+          "_build_observation",
+          "scope_key",
+          "structured_observation"
+        ],
+        "scripts/vnext/records.py": [
+          "<genexpr>",
+          "_expected_identifier",
+          "_validate_enums",
+          "_validate_field_types",
+          "_validate_record_semantics",
+          "_validate_record_status",
+          "metric_result_contract_hash",
+          "require_exact_fields",
+          "validate_identifier",
+          "validate_record"
+        ]
+      },
+      "missing": {
+        "scripts/vnext/scope_contract.py": [
+          "<genexpr>",
+          "_ordered_text_list",
+          "scope_satisfies_contract",
+          "validate_scope_contract"
+        ]
+      }
+    },
+    {
+      "metric": "A09",
+      "constructed_control": true,
+      "value": "0.0072",
+      "period": [
+        "2021-12-31",
+        "2021-12-31"
+      ],
+      "observed": {
+        "scripts/vnext/historical_bank_scope_cases.py": [
+          "measurement",
+          "prepare_historical_bank_scope_year_case"
+        ],
+        "scripts/vnext/financial_results.py": [
+          "_actual_period",
+          "_installed_rule",
+          "_need"
+        ],
+        "scripts/vnext/sources.py": [
+          "resolve_repository_file"
+        ],
+        "scripts/vnext/canonical.py": [
+          "<lambda>",
+          "_canonicalize",
+          "_pairs_to_object",
+          "_parse_json_integer",
+          "_validate_tree_unicode",
+          "_validate_unicode",
+          "canonical_json_bytes",
+          "content_hash",
+          "decimal_text",
+          "execution_semantics_hash",
+          "parse_decimal",
+          "sha256_bytes",
+          "sha256_file",
+          "strict_json_loads"
+        ],
+        "scripts/vnext/specs.py": [
+          "<genexpr>",
+          "_count_ast",
+          "_expand_selection_policy",
+          "_require_string",
+          "_validate_dependencies",
+          "_validate_executable_semantics",
+          "_validate_inputs",
+          "_validate_top_level_guards",
+          "_validate_traits",
+          "compile_spec",
+          "compile_spec_file",
+          "parse_spec_document"
+        ],
+        "scripts/vnext/scope_contract.py": [
+          "<genexpr>",
+          "_ordered_text_list",
+          "scope_satisfies_contract",
+          "validate_scope_contract"
+        ],
+        "scripts/vnext/calculator.py": [
+          "_decimal_value",
+          "_result_and_trace",
+          "calculate_observation_metric",
+          "metric_is_applicable"
+        ],
+        "scripts/vnext/observations.py": [
+          "<genexpr>",
+          "_build_observation",
+          "scope_key",
+          "structured_observation"
+        ],
+        "scripts/vnext/records.py": [
+          "<genexpr>",
+          "_expected_identifier",
+          "_validate_enums",
+          "_validate_field_types",
+          "_validate_record_semantics",
+          "_validate_record_status",
+          "metric_result_contract_hash",
+          "require_exact_fields",
+          "validate_identifier",
+          "validate_record"
+        ]
+      },
+      "missing": {
+        "scripts/vnext/scope_contract.py": [
+          "<genexpr>",
+          "_ordered_text_list",
+          "scope_satisfies_contract",
+          "validate_scope_contract"
+        ]
+      }
+    },
+    {
+      "metric": "A11",
+      "constructed_control": true,
+      "value": "3113000000000",
+      "period": [
+        "2021-12-31",
+        "2021-12-31"
+      ],
+      "observed": {
+        "scripts/vnext/historical_bank_scope_cases.py": [
+          "measurement",
+          "prepare_historical_bank_scope_year_case"
+        ],
+        "scripts/vnext/financial_results.py": [
+          "_actual_period",
+          "_installed_rule",
+          "_need"
+        ],
+        "scripts/vnext/sources.py": [
+          "resolve_repository_file"
+        ],
+        "scripts/vnext/canonical.py": [
+          "<lambda>",
+          "_canonicalize",
+          "_pairs_to_object",
+          "_parse_json_integer",
+          "_validate_tree_unicode",
+          "_validate_unicode",
+          "canonical_json_bytes",
+          "content_hash",
+          "decimal_text",
+          "execution_semantics_hash",
+          "parse_decimal",
+          "sha256_bytes",
+          "sha256_file",
+          "strict_json_loads"
+        ],
+        "scripts/vnext/specs.py": [
+          "<genexpr>",
+          "_count_ast",
+          "_expand_selection_policy",
+          "_require_string",
+          "_validate_dependencies",
+          "_validate_executable_semantics",
+          "_validate_inputs",
+          "_validate_top_level_guards",
+          "_validate_traits",
+          "compile_spec",
+          "compile_spec_file",
+          "parse_spec_document"
+        ],
+        "scripts/vnext/scope_contract.py": [
+          "<genexpr>",
+          "_ordered_text_list",
+          "scope_satisfies_contract",
+          "validate_scope_contract"
+        ],
+        "scripts/vnext/calculator.py": [
+          "_decimal_value",
+          "_result_and_trace",
+          "calculate_observation_metric",
+          "metric_is_applicable"
+        ],
+        "scripts/vnext/observations.py": [
+          "<genexpr>",
+          "_build_observation",
+          "scope_key",
+          "structured_observation"
+        ],
+        "scripts/vnext/records.py": [
+          "<genexpr>",
+          "_expected_identifier",
+          "_validate_enums",
+          "_validate_field_types",
+          "_validate_record_semantics",
+          "_validate_record_status",
+          "metric_result_contract_hash",
+          "require_exact_fields",
+          "validate_identifier",
+          "validate_record"
+        ]
+      },
+      "missing": {
+        "scripts/vnext/scope_contract.py": [
+          "<genexpr>",
+          "_ordered_text_list",
+          "scope_satisfies_contract",
+          "validate_scope_contract"
+        ]
+      }
+    }
+  ],
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
