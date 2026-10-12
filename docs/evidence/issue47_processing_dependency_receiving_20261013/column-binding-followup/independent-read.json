@@ -1,0 +1,15 @@
+{
+  "seconds": 0.3004616249963874,
+  "exit_code": 0,
+  "arguments": [
+    "results",
+    "--company",
+    "enphase_energy",
+    "--state-root",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/enphase-b02-column-receiving-20261013/state",
+    "--output-root",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/enphase-b02-column-receiving-20261013/validation/read"
+  ],
+  "stdout": "{\n  \"elapsed_seconds\": 0.0707345420087222,\n  \"record_type\": \"ORDINARY_COMPANY_RESULT_VIEW_V1\",\n  \"company_id\": \"enphase_energy\",\n  \"source_root\": \"/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs\",\n  \"metrics\": [\n    {\n      \"metric_id\": \"B02\",\n      \"result_id\": \"sha256:4d27f2474e8ea0cc099533b4e75c07dd26d61fed7d1d1705fadd53c449e05f18\",\n      \"period_start\": \"2024-01-01\",\n      \"period_end\": \"2024-12-31\",\n      \"fiscal_year\": 2024,\n      \"value\": \"-0.4192460579032698820404874135\",\n      \"unit\": \"ratio\",\n      \"publication\": \"PUBLISHED\",\n      \"quality\": \"EXACT\",\n      \"reason_code\": \"PASS\",\n      \"result_validity\": \"SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED\",\n      \"defect_holds\": [],\n      \"latest_observation\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"requested_in_latest_execution\": true,\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/enphase-b02-column-receiving-20261013/state/updates/B02/periods/FY2024/results/4f840d09c7bd4308b55e969b8fff4771\"\n    }\n  ],\n  \"source_freshness\": \"NOT_CHECKED_BY_SAVED_READER\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false,\n  \"output_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/enphase-b02-column-receiving-20261013/validation/read\"\n}\n",
+  "stderr": ""
+}

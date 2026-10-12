@@ -1,0 +1,25 @@
+{
+  "seconds": 11.474079374995199,
+  "exit_code": 0,
+  "arguments": [
+    "run",
+    "--company",
+    "enphase_energy",
+    "--period",
+    "fiscal-years",
+    "--fiscal-year-start",
+    "2024",
+    "--fiscal-year-end",
+    "2024",
+    "--metric",
+    "B02",
+    "--source-root",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "--work-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/enphase-b02-column-receiving-20261013/state",
+    "--output-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/enphase-b02-column-receiving-20261013/validation/runs"
+  ],
+  "stdout": "{\n  \"elapsed_seconds\": 11.254882417008048,\n  \"record_type\": \"ORDINARY_COMPANY_EXECUTION_V1\",\n  \"company_id\": \"enphase_energy\",\n  \"run_id\": \"20261012T191018Z-0417ace4\",\n  \"status\": \"FLOW_COMPLETED\",\n  \"selected_metrics\": [\n    \"B02\"\n  ],\n  \"metrics\": [\n    {\n      \"metric_id\": \"B02\",\n      \"status\": \"CANDIDATE_READY\",\n      \"attempt_id\": \"a1e44289b08e48ae8bd188953443cfb3\",\n      \"version\": \"4f840d09c7bd4308b55e969b8fff4771\",\n      \"result_id\": \"sha256:4d27f2474e8ea0cc099533b4e75c07dd26d61fed7d1d1705fadd53c449e05f18\",\n      \"result_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/enphase-b02-column-receiving-20261013/state/updates/B02/periods/FY2024/results/4f840d09c7bd4308b55e969b8fff4771\",\n      \"calculation_performed\": true,\n      \"new_candidate_created\": true,\n      \"result_reason_code\": \"PASS\",\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"requested_fiscal_year\": 2024,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:4d27f2474e8ea0cc099533b4e75c07dd26d61fed7d1d1705fadd53c449e05f18\",\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/enphase-b02-column-receiving-20261013/state/updates/B02/periods/FY2024/results/4f840d09c7bd4308b55e969b8fff4771\",\n      \"program_version\": {\n        \"commit\": \"42dae286607e7e5bbd062a29b1f423a56eef8c17\",\n        \"has_uncommitted_changes\": true\n      }\n    }\n  ],\n  \"source_root\": \"/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs\",\n  \"program_root\": \"/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics\",\n  \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/enphase-b02-column-receiving-20261013/state\",\n  \"output_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/enphase-b02-column-receiving-20261013/validation/runs/20261012T191018Z-0417ace4\",\n  \"source_mode\": \"SAVED_ONLY_NO_ONLINE_DISCOVERY\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false,\n  \"selected_fiscal_years\": [\n    2024\n  ]\n}\n",
+  "stderr": ""
+}
