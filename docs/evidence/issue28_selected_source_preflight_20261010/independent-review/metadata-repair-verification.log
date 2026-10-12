@@ -1,0 +1,56 @@
+{
+  "base": "0215ec9d0d8dd7f0bc4f964bc6639aabd4cc29a2",
+  "head": "407b23d3ff45e29883130879ca6f47d47770fc1d",
+  "head_is_checked_out": true,
+  "changed_product_files": {
+    "scripts/vnext/selected_source_requirements.py": {
+      "sha256": "ee7e05e20bbbcda7aea65107c4203558e1b5b2c092901989697d5fc5d2e75bd7",
+      "matches_tested_tree": true,
+      "matches_commit": true
+    },
+    "tests/vnext/test_selected_source_requirements.py": {
+      "sha256": "a5b52b801437f23a756962580d933f7d500e9e115932d16d95a1ce34b33a2097",
+      "matches_tested_tree": true,
+      "matches_commit": true
+    }
+  },
+  "unchanged_scoped_files": {
+    "tools/vnext_company.py": true,
+    ".github/workflows/company-current-records.yml": true,
+    "docs/company_local_run.md": true
+  },
+  "read_parent_macy_log_only": {
+    "guarded": true,
+    "unchanged": true,
+    "runs": [
+      {
+        "status": "SAVED_SOURCE_BYTES_AVAILABLE",
+        "program_sha256": "ee7e05e20bbbcda7aea65107c4203558e1b5b2c092901989697d5fc5d2e75bd7",
+        "matches_final_source_hash": true
+      },
+      {
+        "status": "SAVED_SOURCE_BYTES_AVAILABLE",
+        "program_sha256": "ee7e05e20bbbcda7aea65107c4203558e1b5b2c092901989697d5fc5d2e75bd7",
+        "matches_final_source_hash": true
+      }
+    ]
+  },
+  "extra_typeerror_public_cli_case": {
+    "payload": {
+      "cik": 1048286,
+      "filings": null
+    },
+    "exit_code": 2,
+    "status": "SELECTED_SOURCE_DEPENDENCIES_UNRESOLVED",
+    "limitations": [
+      {
+        "phase": "PERIOD_METADATA",
+        "reason": "'NoneType' object is not subscriptable",
+        "error_type": "TypeError",
+        "category": "SOURCE_SCHEMA_OR_READER_ERROR"
+      }
+    ],
+    "complete_known_source_graph": false,
+    "unchanged_sources": true
+  }
+}

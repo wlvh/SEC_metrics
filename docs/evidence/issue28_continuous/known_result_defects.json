@@ -1283,6 +1283,167 @@
         "docs/evidence/issue28_fiscal_range_entry_20261010/source-income-table-read.json"
       ],
       "released": []
+    },
+    {
+      "defect_id": "B01_LUMEN_FY2022_CONTRACT_REVENUE_COMPONENT_AS_TOTAL",
+      "metric_id": "B01",
+      "company_id": "lumen_technologies",
+      "period_end": "2022-12-31",
+      "result_id": "sha256:dac0051db5ac4ee69f6d8e0398ce5f89472e4f4e181b7d08a3fe3909e037be9d",
+      "reported_quality": "EXACT",
+      "repair_state": "SHARED_SINGLE_OPERATING_PROOF_IMPLEMENTED_HISTORICAL_B01_CONSUMER_PENDING",
+      "current_credit": "WITHDRAWN_CONFIRMED_COMPONENT_AS_TOTAL",
+      "summary": "The exact saved B01 Result selects 16108m customer-contract revenue from original FY2022; complete consolidated operating revenue is17478m, including1370m lease revenue. B02 new proof admits full original17478/19687 but B01 still falls back to the partial concept. A successful old execution is not current total-revenue credit.",
+      "source": {
+        "accession": "0000018926-23-000013",
+        "primary_document": "lumn-20221231.htm",
+        "primary_sha256": "d7361b93bb6e1e2af07df2313f5b71f5b71b8a7074854c961772345ffb1f0dd7",
+        "statement_table": "table_000031",
+        "statement_row": 4,
+        "reported_total_usd": "17478000000",
+        "selected_component_usd": "16108000000",
+        "lease_revenue_usd": "1370000000"
+      },
+      "evidence": [
+        "docs/evidence/issue28_single_operating_revenue_20261011/README.md",
+        "docs/evidence/issue28_single_operating_revenue_20261011/final-company-driver.log",
+        "docs/evidence/issue28_single_operating_revenue_20261011/company-unit-fix.json"
+      ],
+      "released": [],
+      "original_record_retained": true
+    },
+    {
+      "defect_id": "CURRENT_OR_HISTORICAL_LUMEN_TECHNOLOGIES_B01_FY2021_REVENUE_SUBTOTAL",
+      "company_id": "lumen_technologies",
+      "metric_id": "B01",
+      "period_start": "2021-01-01",
+      "period_end": "2021-12-31",
+      "fiscal_year": 2021,
+      "result_id": "sha256:9418da9de9389c1d894b4ba647c5dba74d3fa49a662bbcd1182a674cf8e76dca",
+      "reported_value": "17795000000",
+      "current_credit": "WITHDRAWN_CONFIRMED_REVENUE_SUBTOTAL_OR_DERIVED_RATIO",
+      "repair_state": "CURRENT_ROUTE_FIX_IN_PROGRESS_NEW_RESULTS_REQUIRE_SEPARATE_VALIDATION",
+      "summary": "This exact result uses contract revenue/net sales subtotal as consolidated revenue, or derives growth/margin from that subtotal. Original record and period retained; other identities are not withdrawn.",
+      "evidence": [
+        "https://github.com/wlvh/SEC_metrics/pull/164#issuecomment-6106797722",
+        "https://github.com/wlvh/SEC_metrics/blob/c9c14b92def4a854daedeab1196ae3fe4e414ca7/docs/evidence/issue47_b01_scope_consumer_20261011/old-historical-lumen-defect-ids.json"
+      ],
+      "released": [],
+      "original_record_retained": true
+    },
+    {
+      "defect_id": "CURRENT_OR_HISTORICAL_LUMEN_TECHNOLOGIES_B01_FY2023_REVENUE_SUBTOTAL",
+      "company_id": "lumen_technologies",
+      "metric_id": "B01",
+      "period_start": "2023-01-01",
+      "period_end": "2023-12-31",
+      "fiscal_year": 2023,
+      "result_id": "sha256:f34c5d685f363fdbe012174e95a17b311f96ebedb412b87d802e5a0ca9cf7317",
+      "reported_value": "13521000000",
+      "current_credit": "WITHDRAWN_CONFIRMED_REVENUE_SUBTOTAL_OR_DERIVED_RATIO",
+      "repair_state": "CURRENT_ROUTE_FIX_IN_PROGRESS_NEW_RESULTS_REQUIRE_SEPARATE_VALIDATION",
+      "summary": "This exact result uses contract revenue/net sales subtotal as consolidated revenue, or derives growth/margin from that subtotal. Original record and period retained; other identities are not withdrawn.",
+      "evidence": [
+        "https://github.com/wlvh/SEC_metrics/pull/164#issuecomment-6106797722",
+        "https://github.com/wlvh/SEC_metrics/blob/c9c14b92def4a854daedeab1196ae3fe4e414ca7/docs/evidence/issue47_b01_scope_consumer_20261011/old-historical-lumen-defect-ids.json"
+      ],
+      "released": [],
+      "original_record_retained": true
+    },
+    {
+      "defect_id": "CURRENT_OR_HISTORICAL_LUMEN_TECHNOLOGIES_B01_FY2024_REVENUE_SUBTOTAL",
+      "company_id": "lumen_technologies",
+      "metric_id": "B01",
+      "period_start": "2024-01-01",
+      "period_end": "2024-12-31",
+      "fiscal_year": 2024,
+      "result_id": "sha256:5b09ca7748425a5d2698a316035b5d0c2f6f81a79fd71d1a7fcb1c4f7119f4bc",
+      "reported_value": "12129000000",
+      "current_credit": "WITHDRAWN_CONFIRMED_REVENUE_SUBTOTAL_OR_DERIVED_RATIO",
+      "repair_state": "CURRENT_ROUTE_FIX_IN_PROGRESS_NEW_RESULTS_REQUIRE_SEPARATE_VALIDATION",
+      "summary": "This exact result uses contract revenue/net sales subtotal as consolidated revenue, or derives growth/margin from that subtotal. Original record and period retained; other identities are not withdrawn.",
+      "evidence": [
+        "https://github.com/wlvh/SEC_metrics/pull/164#issuecomment-6106797722",
+        "https://github.com/wlvh/SEC_metrics/blob/c9c14b92def4a854daedeab1196ae3fe4e414ca7/docs/evidence/issue47_b01_scope_consumer_20261011/old-historical-lumen-defect-ids.json"
+      ],
+      "released": [],
+      "original_record_retained": true
+    },
+    {
+      "defect_id": "CURRENT_OR_HISTORICAL_LUMEN_TECHNOLOGIES_B01_FY2025_REVENUE_SUBTOTAL",
+      "company_id": "lumen_technologies",
+      "metric_id": "B01",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "fiscal_year": 2025,
+      "result_id": "sha256:7fcf383616ec80d771c6918957b3bf1abda4722691abe0fd2cd0b57484069d9b",
+      "reported_value": "11331000000",
+      "current_credit": "WITHDRAWN_CONFIRMED_REVENUE_SUBTOTAL_OR_DERIVED_RATIO",
+      "repair_state": "CURRENT_ROUTE_FIX_IN_PROGRESS_NEW_RESULTS_REQUIRE_SEPARATE_VALIDATION",
+      "summary": "This exact result uses contract revenue/net sales subtotal as consolidated revenue, or derives growth/margin from that subtotal. Original record and period retained; other identities are not withdrawn.",
+      "evidence": [
+        "https://github.com/wlvh/SEC_metrics/pull/164#issuecomment-6106797722",
+        "docs/evidence/issue28_current_complete_revenue_20261011/main-baseline.json"
+      ],
+      "released": [],
+      "original_record_retained": true
+    },
+    {
+      "defect_id": "CURRENT_OR_HISTORICAL_LUMEN_TECHNOLOGIES_B02_FY2025_REVENUE_SUBTOTAL",
+      "company_id": "lumen_technologies",
+      "metric_id": "B02",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "fiscal_year": 2025,
+      "result_id": "sha256:f0c9bed5e63186bdbda1d035d5125dfd514a43c3adbb56e58fb95050c43aac3a",
+      "reported_value": "-0.06579272817214939401434578283",
+      "current_credit": "WITHDRAWN_CONFIRMED_REVENUE_SUBTOTAL_OR_DERIVED_RATIO",
+      "repair_state": "CURRENT_ROUTE_FIX_IN_PROGRESS_NEW_RESULTS_REQUIRE_SEPARATE_VALIDATION",
+      "summary": "This exact result uses contract revenue/net sales subtotal as consolidated revenue, or derives growth/margin from that subtotal. Original record and period retained; other identities are not withdrawn.",
+      "evidence": [
+        "https://github.com/wlvh/SEC_metrics/pull/164#issuecomment-6106797722",
+        "docs/evidence/issue28_current_complete_revenue_20261011/main-baseline.json"
+      ],
+      "released": [],
+      "original_record_retained": true
+    },
+    {
+      "defect_id": "CURRENT_OR_HISTORICAL_LUMEN_TECHNOLOGIES_B03_FY2025_REVENUE_SUBTOTAL",
+      "company_id": "lumen_technologies",
+      "metric_id": "B03",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "fiscal_year": 2025,
+      "result_id": "sha256:1afee89f9ee092a0d0f273792907462b349a4f793aa82bd1a5119e775aae167e",
+      "reported_value": "0.1709469596681669755537904863",
+      "current_credit": "WITHDRAWN_CONFIRMED_REVENUE_SUBTOTAL_OR_DERIVED_RATIO",
+      "repair_state": "CURRENT_ROUTE_FIX_IN_PROGRESS_NEW_RESULTS_REQUIRE_SEPARATE_VALIDATION",
+      "summary": "This exact result uses contract revenue/net sales subtotal as consolidated revenue, or derives growth/margin from that subtotal. Original record and period retained; other identities are not withdrawn.",
+      "evidence": [
+        "https://github.com/wlvh/SEC_metrics/pull/164#issuecomment-6106797722",
+        "docs/evidence/issue28_current_complete_revenue_20261011/main-baseline.json"
+      ],
+      "released": [],
+      "original_record_retained": true
+    },
+    {
+      "defect_id": "CURRENT_OR_HISTORICAL_MACYS_B02_FY2025_REVENUE_SUBTOTAL",
+      "company_id": "macys",
+      "metric_id": "B02",
+      "period_start": "2025-02-02",
+      "period_end": "2026-01-31",
+      "fiscal_year": 2025,
+      "result_id": "sha256:66d0234b888976f0da475d1fbabe7e90408ca3c0ad74fd47340f9646e81765e3",
+      "reported_value": "-0.02372942179159377383035033419",
+      "current_credit": "WITHDRAWN_CONFIRMED_REVENUE_SUBTOTAL_OR_DERIVED_RATIO",
+      "repair_state": "CURRENT_ROUTE_FIX_IN_PROGRESS_NEW_RESULTS_REQUIRE_SEPARATE_VALIDATION",
+      "summary": "This exact result uses contract revenue/net sales subtotal as consolidated revenue, or derives growth/margin from that subtotal. Original record and period retained; other identities are not withdrawn.",
+      "evidence": [
+        "https://github.com/wlvh/SEC_metrics/pull/164#issuecomment-6106797722",
+        "docs/evidence/issue28_current_complete_revenue_20261011/main-baseline.json"
+      ],
+      "released": [],
+      "original_record_retained": true
     }
   ],
   "purpose": "Current company read: precise known defects from this Issue; no copied result count or content acceptance summary.",

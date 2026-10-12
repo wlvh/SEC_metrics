@@ -1,0 +1,13 @@
+# PR114 receives actual main ea7818
+
+Normal merge of current114/a0af80a6 withmainea7818, retainingbothparents andthe publicPR113/aa61081b prerequisite. No newE01method/request/modelanswer. Originalfiveproducer/source/attachment/MAcontractfiles arebyte-identical to the currentcandidate; producer-unchanged.json verifieseach.
+
+Conflicts are the sharedregistration/dispatch lists, historicalfactory tests andworkflow/runner lists. MainB03/B06/C04 andallreceivedfamilies arepreserved besideexplicitE01. Ordinarysavedresult adds E01 scope marker while keepingmainC04 defaults; controllerandreader remainonemainimplementation. Workflow usesmain's exacttext andadds onlythreeE01testpaths plusfourmodules to the existingSelectedevent requiredstep. Allmainjobs/steps/timeouts andtriggerpaths survive. No secondrunner orcontroller.
+
+88 explicitE01/completeinput/MA/historydispatch/state/B06/C04 controls .263s, noerrors/failures/skips. The actualCIstep command (selectedsources/projection/explicitE01/historyconsumer/incorporated/MA) runs53 tests .120s, requiredskips0. A first workflow textmatcher assumed wrapping andfailed; a latercommandstillcommitted alreadyvalidunion beforestructuralcheck, so thatintermediatecommit isretained. Finalcorrectedworkflowdiffisfiveaddedlines andcompletejob/stepcomparisonpasses. Thereisnoassertionremoval oroldgreenreuse.
+
+ExistingParamountFY2024 E01 ordinarytask isread independently withnetwork/factory/Calculator forbidden: .709s, same3331877123ff9ef80e76165c7ab4b471840361617535342b21d6f953e3507f12, null/WITHHELD/CIK813828/full2024; all39statefilesunchanged. The complete8itemV2request2aa878ef andsavedEX99inputremainunchanged. NomatchingV2targetanswerexists; oldV1/partialcountdoesnotfilltheannualcount.
+
+Originalsourceprocessing/forbiddenrepeat belongtotheparent'srecordedversion. Newconfiguration hasactualchanges fromreceivedmain: debt-specificdependenciesleavecomparison, registry andsharedcodechange, declaredannual/textscope dependencieschange. configuration-delta.json recordsdifferences; notallarebugs,andno automaticcross-versionzerocalculationclaimismade. We donotmodifyoldconfiguration/re-runsourceprocessingtorepaintcompatibility. Oncearesultactuallyprocessesunderanewrelevantconfiguration, unchangedrepeatmustagainreuse. Modelcontractorbusinessevidenceisunchanged.
+
+Thiscandidateisstillnotmain/fullE01businessacceptance. Source/restoration andofficialcompanycommandsremainintheparentprimaryrecord; useexistingrestoredrootandnewexternaloutputs. NoSource/model/Run/acceptancecredit,newrealcall, Ready/author merge/adoption/deployment/active. NewheadCIandreceivercheckseparatefromlocalresults.

@@ -1,0 +1,79 @@
+{
+  "elapsed_seconds": 16.262447540999347,
+  "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+  "company_id": "lumen_technologies",
+  "run_id": "20261011T064750Z-0b0195b7",
+  "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+  "selected_metrics": [
+    "B01",
+    "B02"
+  ],
+  "metrics": [
+    {
+      "metric_id": "B01",
+      "status": "CANDIDATE_READY",
+      "attempt_id": "48541794ace94e1494aa411ef797dff0",
+      "version": "6f2afa479fac41298ba811e2c8c175b1",
+      "result_id": "sha256:dac0051db5ac4ee69f6d8e0398ce5f89472e4f4e181b7d08a3fe3909e037be9d",
+      "result_root": "/private/tmp/issue28-lumen-single-source-20261011/updates/B01/periods/FY2022/results/6f2afa479fac41298ba811e2c8c175b1",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "result_reason_code": "PASS",
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2022,
+      "defect_holds": [],
+      "read_result_id": "sha256:dac0051db5ac4ee69f6d8e0398ce5f89472e4f4e181b7d08a3fe3909e037be9d",
+      "record_root": "/private/tmp/issue28-lumen-single-source-20261011/updates/B01/periods/FY2022/results/6f2afa479fac41298ba811e2c8c175b1",
+      "program_version": {
+        "commit": "63a340ca38db6054c44bef53e63bb5827b0f07ce",
+        "has_uncommitted_changes": true
+      }
+    },
+    {
+      "metric_id": "B02",
+      "status": "CANDIDATE_WITHHELD",
+      "attempt_id": "3da390be946d4ea98b527084bc022b18",
+      "version": "317f2eb049a14d00ac7aaad4a3f54be5",
+      "result_id": "sha256:84d0961a68f39fe55b140449c09d94440ff09844f95f934a04cbf99b40b824a1",
+      "result_root": "/private/tmp/issue28-lumen-single-source-20261011/updates/B02/periods/FY2022/results/317f2eb049a14d00ac7aaad4a3f54be5",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "result_reason_code": "HISTORICAL_PAIRED_REVENUE_SCOPE_UNRESOLVED",
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2022,
+      "defect_holds": [],
+      "read_result_id": "sha256:84d0961a68f39fe55b140449c09d94440ff09844f95f934a04cbf99b40b824a1",
+      "record_root": "/private/tmp/issue28-lumen-single-source-20261011/updates/B02/periods/FY2022/results/317f2eb049a14d00ac7aaad4a3f54be5",
+      "program_version": {
+        "commit": "63a340ca38db6054c44bef53e63bb5827b0f07ce",
+        "has_uncommitted_changes": true
+      }
+    }
+  ],
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-single-operating-revenue/SEC_metrics",
+  "record_root": "/private/tmp/issue28-lumen-single-source-20261011",
+  "output_root": "/private/tmp/issue28-lumen-single-output-20261011/20261011T064750Z-0b0195b7",
+  "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false,
+  "selected_fiscal_years": [
+    2022
+  ]
+}

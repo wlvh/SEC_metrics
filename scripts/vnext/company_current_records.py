@@ -217,17 +217,35 @@ def _read_current_company(root, company_id, defects_file, output_root):
     registry = _registry(defects_file)
     report = strict_json_file(path=root/'latest-execution.json')
     _need(report['company_id'] == company_id, 'COMPANY_CURRENT_WRONG_EXECUTION')
+    recorded_root=Path(report.get('record_root',root)).resolve()
     def normalize(observation):
         value = dict(observation)
         value.setdefault('record_root',value.get('result_root'))
         value.setdefault('read_result_id',value.get('result_id'))
+        path=value.get('record_root')
+        if path and recorded_root!=root:
+            old=Path(path).resolve()
+            if recorded_root in old.parents:
+                relative=old.relative_to(recorded_root)
+                parts=relative.parts
+                _need(len(parts)>=4 and parts[0]=='updates'
+                      and parts[1]==value['metric_id'] and parts[-2]=='results',
+                      'COMPANY_CURRENT_RESTORED_RECORD_LAYOUT_CHANGED')
+                _need(value.get('version',parts[-1])==parts[-1],
+                      'COMPANY_CURRENT_RESTORED_RECORD_VERSION_CHANGED')
+                # Resolve only the saved task's own result hierarchy. The
+                # ordinary reader still checks containment, manifest and
+                # company/metric/result identity below, without rewriting it.
+                value['record_root']=str(root/relative)
         return value
 
     def coordinate(observation):
         year = observation.get('requested_fiscal_year')
         path = observation.get('record_root')
         if path and (Path(path)/'manifest.json').is_file():
-            year = strict_json_file(path=Path(path)/'manifest.json')['target_period']['fiscal_year']
+            saved_year = strict_json_file(path=Path(path)/'manifest.json')['target_period']['fiscal_year']
+            _need(year is None or year==saved_year, 'COMPANY_CURRENT_READ_REQUESTED_PERIOD_CHANGED')
+            year = saved_year
         return observation['metric_id'],year
 
     observations = {coordinate(normalize(m)): {**normalize(m), 'requested_in_latest_execution': True}
@@ -284,6 +302,12 @@ def _read_current_company(root, company_id, defects_file, output_root):
             result = saved['result']
             _need(result['company_id'] == company_id and result['metric_id'] == observation['metric_id']
                   and result['result_id'] == observation['read_result_id'], 'COMPANY_CURRENT_READ_COORDINATE_CHANGED')
+            saved_year=saved['manifest']['target_period']['fiscal_year']
+            requested=observation.get('requested_fiscal_year')
+            _need(requested is None or requested==saved_year, 'COMPANY_CURRENT_READ_REQUESTED_PERIOD_CHANGED')
+            hierarchy=record.relative_to(root).parts
+            if len(hierarchy)>=6 and hierarchy[2]=='periods':
+                _need(hierarchy[3]=='FY'+str(saved_year), 'COMPANY_CURRENT_READ_RESULT_PERIOD_PATH_CHANGED')
             conclusion=observation.get('completed_conclusion')
             if conclusion is not None:
                 _need(result.get('publication')==('PUBLISHED' if conclusion=='CANDIDATE_READY' else 'WITHHELD'),

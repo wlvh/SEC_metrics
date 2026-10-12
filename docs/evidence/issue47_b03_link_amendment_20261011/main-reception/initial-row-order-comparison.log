@@ -1,0 +1,13 @@
+B03-read-before 0.331 0
+B03-one-upgrade 7.331 0
+B03-forbidden-repeat 0.991 0
+B03-read 0.332 0
+B07-read-before 0.243 0
+B07-one-upgrade 4.985 0
+B07-forbidden-repeat 0.696 0
+B07-read 0.245 0
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/docs/evidence/issue47_b03_link_amendment_20261011/main-reception/verify_existing.py", line 36, in <module>
+    before_read=hashes(state);read,_=invoke(metric+'-read',['results','--company','southwest_airlines','--state-root',str(state),'--output-root',str(base/(metric+'-read'))],True);assert before_read==hashes(state);after_rows=rows(base/(metric+'-read'));keys=('metric_id','fiscal_year','period_start','period_end','value','unit','status','result_id');assert [{k:r[k] for k in keys} for r in before_rows]==[{k:r[k] for k in keys} for r in after_rows]
+                                                                                                                                                                                                                                                                                                                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

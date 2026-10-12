@@ -61,8 +61,11 @@ def _case_sources(case, source_root):
     return sources
 
 
-def prepare_reported_lease_case(*, repo_root: Path, company_id: str):
-    case = inherited.prepare_special_debt_case(repo_root=repo_root, company_id=company_id)
+def prepare_reported_lease_case(*, repo_root: Path, company_id: str, rules_root=None, preparation=None):
+    options={}
+    if rules_root is not None:options['rules_root']=rules_root
+    if preparation is not None:options['preparation']=preparation
+    case = inherited.prepare_special_debt_case(repo_root=repo_root, company_id=company_id,**options)
     if case is None:
         return None
     original = case['input_binding']['original_source_input']

@@ -148,6 +148,52 @@ python /path/to/SEC_metrics/tools/vnext_company.py run \
 
 来源保存在任务 `sources`，普通计算状态在 `company-state`，输出在指定输出目录；用户不手工准备 FULL_SOURCE 或选择内部程序树。独立采集用同版 `acquire --company ... --work-dir ... --call-context ... --metric B01 --metric B02 --max-sec-requests 20`；单独计算可用同版保存来源 `run --source-root <任务/sources>` 指向另一个普通状态目录。日常读取用 `results --state-root <任务/company-state> --company ...`，不重放计算。已有原生任务继续原固定入口，不覆盖旧原生状态。
 
+在线注册表兼容后继 `task/issue28-online-registry-scope` 允许来源根保留其他公司的合法旧注册行，只要求本次公司的完整注册行与程序一致；目标主体/期间规则变化及无效CSV仍在客户端和申领前拒绝。该候选不改元数据刷新计数、不重取不可变年报，不增加在线指标或调用许可，尚待接收。
+
 同一原账本已保存的不可变原件，不能因为换任务目录就再取一次。调用上下文可固定既有完整 SEC `source_root`，直接复用其原请求行/原件/身份，不能裁账本或拼不同历史；未给原来源位置但账本已有同URL成功记录时，新入口在申领前返回 `ALREADY_CAPTURED_SOURCE_REUSE_REQUIRED`。元数据刷新单独明确计数。该配置是持久运行配置，不是每年手填来源答案；既有来源根必须在代码和状态/输出根之外。
 
 录制上下文必须指定 `recorded_http_root`；该入口只从保存的HTTP原件读取回复，走原客户端的落盘/日志路径，不打开网络。LIVE上下文拒绝这个录制输入字段，使用正常HTTPS及原真实计数。录制模式不是一个可以免费访问SEC的通道；缺少回复不降级到真实网络。
+
+### 候选：当期审计师变更的保存来源路径
+
+`task/issue28-current-c04` 接main已有C04四形式来源核心到最新完整财年：
+
+```sh
+python3 tools/vnext_company.py run --company marriott_international --source-root SAVED_SOURCE --metric C04 --work-dir NEW_STATE --output-dir OUTPUT
+python3 tools/vnext_company.py results --company marriott_international --state-root NEW_STATE --output-root SEPARATE_READ
+```
+
+原件及完整事件清单充分时给0/1；缺同一注册人可比前期保留`WITHHELD/null`，缺必需文件报具体缺件，不借其他主体或旧结果。已验证MarriottFY2025和Salesforce发行人FY2026为0，Paramount保持不可比较。结果、完整输入证据、复跑和独立读取共用普通记录。此候选尚待main接收，在线捕获C04仍未接入；不因存在命令就声称新来源已在线获取或业务结果正式接受。
+
+### 候选：只检查指定报告期的来源
+
+`task/issue28-selected-source-preflight` 的 `sources` 是只读入口，尚未作为 main 能力交付：
+
+```sh
+python3 tools/vnext_company.py sources --company marriott_international \
+  --source-root /path/to/saved-source --report-end 2022-12-31 \
+  --metric B01 --metric B02
+```
+
+该入口按现有保存目录列出这一任务的目标、修订及必要前期年报、目录/XML、Company Facts和选源元数据。`--report-end`是SEC报告期结束日期；原件齐备时显示原件DEI的原始财年标签，不把日期年份当标签；与其他财年文字或机器标签的最终对照仍由既有计算侧选期实现处理，本预检不替代它。文件齐备返回`SAVED_SOURCE_BYTES_AVAILABLE`/exit0；缺件、末次失败或来源身份问题返回具体原因/exit2。只选择B01时不要求未被使用的前期原件；B02需要前期，只有既有完整、来源已核对且日期相邻的原生XML可以满足未保存的前期正文，失败GET不能被替代。
+
+注册表范围后继 `task/issue28-source-registry-scope` 只对本任务公司的完整注册行比较来源包与程序规则；另一家公司合法行变化不阻断它，整表重复身份、缺字段和非法CIK仍拒绝。它基于当前main的B01/B02入口，与PR168的B03扩展独立，尚待接收。
+
+这不是获取或计算，不能证明新鲜度、修订效果、收入范围或结果已被接受。索引未保存时仍有未知XML前沿，计数只是已知URL数，不是获取许可或最终调用预算。当前仅列B01/B02来源依赖，其他指标、历史在线捕获和模型请求仍走各自已交付/待接入路径；不使用一个“来源齐备”状态替代39项业务验收。
+
+### 候选：直接给出发行人财年范围
+
+`task/issue28-fiscal-range-entry` 依赖来源预检PR126及纯标签接口PR127，尚未进入main。对保存来源的B01/B02，用户无需逐年提供report-end：
+
+```sh
+python3 tools/vnext_company.py sources --company macys --source-root SOURCE \
+  --fiscal-year-start 2022 --fiscal-year-end 2023 --metric B01 --metric B02
+python3 tools/vnext_company.py run --company macys --source-root SOURCE \
+  --period fiscal-years --fiscal-year-start 2022 --fiscal-year-end 2023 \
+  --metric B01 --metric B02 --work-dir NEW_STATE --output-dir OUTPUT
+python3 tools/vnext_company.py results --company macys --state-root NEW_STATE --output-root READER
+```
+
+范围发现使用已有保存元数据的“目标边界＋最近前期”窗口，逐一解析窗口内原件标签，保留raw DEI/发行人定义及未读候选，不用结束日期年份代替财年。窗口外旧记录和未加载历史边界明确保留；这不证明任意旧财年不存在。最多沿现有入口处理五个连续发行人财年，其他指标混合调用保留其原工厂。B01/B02单独调用时，范围发现只在更新器确需处理时执行；相同输入读取旧结果，不先完整准备年报。
+
+Macy's两年公司处理链已验证，但FY2023旧B01/B02确切结果发现把Net sales小计当总收入，默认读取及CSV精确扣留。FY2022来源呈列另有信用卡净收入，范围仍待核，不能仅因流程成功授业务信用。新增正确数值仍需共享收入范围修复。本入口不自动获取缺件、不授费用/旧失败机会，也不代替完整39项交付。

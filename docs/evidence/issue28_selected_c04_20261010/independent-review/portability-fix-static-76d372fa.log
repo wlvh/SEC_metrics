@@ -1,0 +1,83 @@
+UTC: 2026-10-10T08:12:38.638476+00:00
+Static comparison only; no post-fix test rerun by reviewer.
+diff --git a/tests/vnext/fixtures/c04_year_only_base84.json b/tests/vnext/fixtures/c04_year_only_base84.json
+new file mode 100644
+index 00000000..0ccd0796
+--- /dev/null
++++ b/tests/vnext/fixtures/c04_year_only_base84.json
+@@ -0,0 +1,45 @@
++{
++  "purpose": "Small checked-filing default compatibility, not an annual company answer",
++  "baseline_commit": "84d15f35eb3f0a7b6dc9e0b06100ceba738c7adf",
++  "baseline_reader_sha256": "e4c5d2491e8d5c4f8bbbc222d9e5855d42bd5dbc436a661438abbdee3d53d59d",
++  "fixture_source_sha256": "8aca0aa7e28112bd20b76e9bd2ff6f85207e3b97ce911738074821b0ec5c5b61",
++  "checked_filing": {
++    "accession": "0000012345-26-000001",
++    "form": "10-K",
++    "source_references": [
++      {
++        "record_type": "SOURCE_REFERENCE",
++        "source_reference_id": "sha256:d34e5223df0ba3d6bfe50bcf06bf3af3fdd38dc3e0db0ed7a50dd48d7f7b8395",
++        "raw_asset_id": "sha256:8aca0aa7e28112bd20b76e9bd2ff6f85207e3b97ce911738074821b0ec5c5b61",
++        "company_id": "sample_entity",
++        "source_url": "https://www.sec.gov/Archives/edgar/data/12345/000001234526000001/source.htm",
++        "accession": "0000012345-26-000001",
++        "document_name": "source.htm",
++        "source_role": "auditor_report",
++        "request_attempt_id": "test-only-source-attempt"
++      }
++    ],
++    "facts": [
++      {
++        "source_reference_id": "sha256:d34e5223df0ba3d6bfe50bcf06bf3af3fdd38dc3e0db0ed7a50dd48d7f7b8395",
++        "raw_asset_id": "sha256:8aca0aa7e28112bd20b76e9bd2ff6f85207e3b97ce911738074821b0ec5c5b61",
++        "accession": "0000012345-26-000001",
++        "name": "Example Audit LLP",
++        "canonical_name": "exampleauditllp",
++        "period_start": "2024-01-01",
++        "period_end": "2024-12-31",
++        "entity_identifier": "12345",
++        "locator": {
++          "qualified_name": "dei:AuditorName",
++          "context_ref": "annual",
++          "ordinal": 4
++        }
++      }
++    ],
++    "problems": [],
++    "canonical_names": [
++      "exampleauditllp"
++    ],
++    "status": "FOUND"
++  }
++}
+diff --git a/tests/vnext/test_c04_selected_input.py b/tests/vnext/test_c04_selected_input.py
+index 18e8a670..58842dcd 100644
+--- a/tests/vnext/test_c04_selected_input.py
++++ b/tests/vnext/test_c04_selected_input.py
+@@ -96,17 +96,17 @@ class SelectedC04InputTest(unittest.TestCase):
+                 with self.assertRaisesRegex(ValueError,reason):
+                     prepare_c04_registration_case(repo_root=ROOT,company_id='sample_entity',
+                         event_forms=EVENT_FORMS,selected_base=selected,labelled_annual=labels)
+ 
+     def test_year_only_checked_filing_default_dictionary_matches_main(self):
+-        import subprocess,types
+-        raw=subprocess.check_output(['git','show','84d15f35eb3f0a7b6dc9e0b06100ceba738c7adf:scripts/vnext/c04_verified_document_alias.py'],cwd=ROOT)
+-        old=types.ModuleType('vnext._old_c04_alias_control');old.__package__='vnext'
+-        exec(compile(raw,'main84:c04_verified_document_alias.py','exec'),old.__dict__)
++        import json,hashlib
++        baseline=json.loads((ROOT/'tests/vnext/fixtures/c04_year_only_base84.json').read_text())
+         source=c04_filing('Example Audit LLP',year='2024')
+-        kwargs=dict(sources=[source],company_id='sample_entity',cik='12345',period_end='2024-12-31',source_proofs=[],aliases=[])
+-        self.assertEqual(old._checked_filing(**kwargs),_checked_filing(**kwargs))
++        self.assertEqual(baseline['fixture_source_sha256'],hashlib.sha256(source['raw_bytes']).hexdigest())
++        checked=_checked_filing(sources=[source],company_id='sample_entity',cik='12345',
++            period_end='2024-12-31',source_proofs=[],aliases=[])
++        self.assertEqual(baseline['checked_filing'],checked)
+ 
+     def test_selected_gate_does_not_open_default_current_producer(self):
+         from vnext.ordinary_saved_result import EXPLICIT_CASE_METRICS, SAVED_METRIC_IDS
+         from vnext.ordinary_current_update import run_once
+         self.assertIn('C04',EXPLICIT_CASE_METRICS)
+
+Three public source files identical between4e8 and76.
