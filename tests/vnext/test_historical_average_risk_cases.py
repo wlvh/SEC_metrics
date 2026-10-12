@@ -5,6 +5,7 @@ separately checks the real inspector, writer and company output.
 """
 from contextlib import ExitStack
 from copy import deepcopy
+from pathlib import Path
 from types import SimpleNamespace
 from unittest import TestCase
 from unittest.mock import patch
@@ -20,6 +21,24 @@ VAR = {'semantic_status': 'SINGLE_SOURCE_SEMANTIC_FACT',
 
 
 class HistoricalAverageRiskCaseTest(TestCase):
+    def test_actual_scope_checks_are_declared_for_both_average_consumers(self):
+        from tests.vnext.processing_dependency_checks import (
+            processing_calls, assert_processing_calls)
+        from vnext.ordinary_current_update import _configuration
+        root=Path(__file__).resolve().parents[2]
+        path='scripts/vnext/scope_contract.py'
+        for metric,component in (('A03',LCR),('A12',VAR)):
+            configuration=_configuration(root,'jpmorgan_chase',metric)
+            with self.subTest(metric=metric), processing_calls(root) as observed:
+                case,_=self.prepare(metric_id=metric,component=deepcopy(component))
+            self.assertIn('validate_scope_contract',observed[path])
+            self.assertEqual(case['target_period']['period_start'],
+                '2021-10-01' if metric=='A03' else '2021-01-01')
+            assert_processing_calls(observed,configuration,cases.PROCESSING_FILES)
+            reduced=tuple(p for p in cases.PROCESSING_FILES if p!=path)
+            with self.assertRaisesRegex(AssertionError,'scope_contract.py'):
+                assert_processing_calls(observed,configuration,reduced)
+
     def prepare(self, *, metric_id, component=None, applicable=True, amendments=None,
                 mode='CONTINUOUS_PRIMARY'):
         prepared = {'company_id': 'jpmorgan_chase', 'entity': '19617',

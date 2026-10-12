@@ -1,0 +1,25 @@
+{
+  "seconds": 0.7435139590088511,
+  "exit_code": 0,
+  "arguments": [
+    "run",
+    "--company",
+    "jpmorgan_chase",
+    "--metric",
+    "A03",
+    "--period",
+    "fiscal-years",
+    "--fiscal-year-start",
+    "2021",
+    "--fiscal-year-end",
+    "2021",
+    "--source-root",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "--work-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/average-scope-dependency-receiving-20261013/state",
+    "--output-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/average-scope-dependency-receiving-20261013/repeat"
+  ],
+  "stdout": "{\n  \"elapsed_seconds\": 0.5021965000050841,\n  \"record_type\": \"ORDINARY_COMPANY_EXECUTION_V1\",\n  \"company_id\": \"jpmorgan_chase\",\n  \"run_id\": \"20261012T192543Z-fd47fb5c\",\n  \"status\": \"FLOW_COMPLETED\",\n  \"selected_metrics\": [\n    \"A03\"\n  ],\n  \"metrics\": [\n    {\n      \"metric_id\": \"A03\",\n      \"status\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"attempt_id\": \"7dff27cd06b946838f99f69f583871be\",\n      \"version\": \"025f53c231e6411aaa770e1c2ac1c239\",\n      \"result_id\": \"sha256:bd89a186f692b5704837942015f259fa2671ada46be47a7a948f6cb3ff123c11\",\n      \"result_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/average-scope-dependency-receiving-20261013/state/updates/A03/periods/FY2021/results/025f53c231e6411aaa770e1c2ac1c239\",\n      \"result_reason_code\": \"PASS\",\n      \"raw_input_unchanged\": true,\n      \"calculation_performed\": false,\n      \"new_candidate_created\": false,\n      \"source_check_versions\": {\n        \"scripts/vnext/ordinary_current_update.py\": \"44981df2450f8d594f99caeb590347f0af48f433418de58b3deb01ef576f34a2\",\n        \"scripts/vnext/request_bindings.py\": \"d0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee\"\n      },\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"requested_fiscal_year\": 2021,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:bd89a186f692b5704837942015f259fa2671ada46be47a7a948f6cb3ff123c11\",\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/average-scope-dependency-receiving-20261013/state/updates/A03/periods/FY2021/results/025f53c231e6411aaa770e1c2ac1c239\",\n      \"program_version\": {\n        \"commit\": \"84a3e5a8221d71ef27d44621c7421730f1a412a1\",\n        \"has_uncommitted_changes\": true\n      }\n    }\n  ],\n  \"source_root\": \"/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs\",\n  \"program_root\": \"/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics\",\n  \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/average-scope-dependency-receiving-20261013/state\",\n  \"output_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/average-scope-dependency-receiving-20261013/repeat/20261012T192543Z-fd47fb5c\",\n  \"source_mode\": \"SAVED_ONLY_NO_ONLINE_DISCOVERY\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false,\n  \"selected_fiscal_years\": [\n    2021\n  ]\n}\n",
+  "stderr": ""
+}
