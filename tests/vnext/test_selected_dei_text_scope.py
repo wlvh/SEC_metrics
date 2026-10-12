@@ -1,5 +1,5 @@
 """Explicit SEC release spelling across source/layout; old defaults remain exact."""
-import ast,json,subprocess,tempfile,unittest
+import json,tempfile,unittest
 from pathlib import Path
 from tests.vnext.test_text_coverage import annual,BODY,binding
 from tests.vnext.test_instant_amendment_paragraph_api import filing_html
@@ -55,12 +55,12 @@ class SelectedDeiTextScopeTest(unittest.TestCase):
                 build_text_document(**binding(raw),namespace_policy=YEAR_QUARTER_OR_DATE)
 
     def test_modern_default_complete_return_matches_fixed_main_function(self):
-        from vnext import text_coverage as current
-        raw=subprocess.check_output(['git','show','3c2d8f88acf31c87d770ce033dd0c8aedc790b9b:scripts/vnext/text_coverage.py'],text=True)
-        node=next(n for n in ast.parse(raw).body if isinstance(n,ast.FunctionDef) and n.name=='build_text_document')
-        environment=current.__dict__.copy()
-        exec(compile(ast.Module(body=[node],type_ignores=[]),'<fixed-main builder>','exec'),environment)
-        args=binding(annual(BODY));self.assertEqual(environment['build_text_document'](**args),build_text_document(**args))
+        # The complete baseline output is checked in. CI's shallow checkout
+        # need not contain the historical commit to verify compatibility.
+        fixture=Path(__file__).parent/'fixtures/text_document_year_only_3c2.json'
+        expected=json.loads(fixture.read_text())
+        self.assertEqual(expected['source_commit'],'3c2d8f88acf31c87d770ce033dd0c8aedc790b9b')
+        self.assertEqual(expected['expected'],build_text_document(**binding(annual(BODY))))
 
     def test_modern_amendment_default_still_delegates_complete_legacy_object(self):
         from unittest.mock import patch
