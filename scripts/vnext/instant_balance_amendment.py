@@ -16,6 +16,7 @@ from .normal_annual_input_v2 import exact_json_value
 from .normal_source_authority import ROOT
 from .sources import resolve_repository_file
 from .text_results_v2 import _ReportedFactMetadata,_verified_context
+from .xbrl_namespace_policy import YEAR_ONLY, is_sec_namespace
 
 POLICY_PATH='config/instant_balance_amendment_v1.json'
 POLICY=strict_json_file(path=ROOT/POLICY_PATH)
@@ -29,7 +30,8 @@ def _need(condition,reason):
     if not condition:raise InstantAmendmentError(reason)
 
 
-def _correction_flag(raw,scope):
+def _correction_flag(raw,scope,*,namespace_policy=YEAR_ONLY):
+    is_sec_namespace('',taxonomy='dei',namespace_policy=namespace_policy)
     parsed=parse_accession_xbrl_source(raw_bytes=raw)
     metadata=_ReportedFactMetadata();metadata.feed(raw.decode('utf-8-sig'));metadata.close()
     _need(metadata.ordinal==len(parsed.facts),'INSTANT_AMENDMENT_NATIVE_STREAM_CHANGED')
@@ -37,7 +39,7 @@ def _correction_flag(raw,scope):
     for fact in parsed.facts:
         meta=metadata.facts[fact['ordinal']];uri,name=meta['concept']
         if name!=POLICY['error_correction_concept']:continue
-        _need(re.fullmatch(r'https?://xbrl\.sec\.gov/dei/[0-9]{4}',uri) is not None,
+        _need(is_sec_namespace(uri,taxonomy='dei',namespace_policy=namespace_policy),
               'INSTANT_AMENDMENT_CORRECTION_FLAG_NAMESPACE')
         ctx=parsed.contexts[fact['context_ref']];native={**ctx,'dimensions':dict(ctx['dimensions'])}
         context_proof=_verified_context(native=native,metadata=metadata)

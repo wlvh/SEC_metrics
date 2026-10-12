@@ -95,7 +95,7 @@ def filing_inventory(*, reader, inventory, period_selection, cik, accession):
 
 
 
-def prior_filing(reader, inventory, prepared):
+def prior_filing(reader, inventory, prepared, *, period_selection=None):
     """``normal_companyfacts_results._prior_filing`` with the catalog's block check.
 
     The frozen walk holds each history block it reads to the frozen date check,
@@ -140,6 +140,19 @@ def prior_filing(reader, inventory, prepared):
     matches = [(row, source) for row, source in rows
                if row["form"] == "10-K" and row["reportDate"] == prior_end]
     need(len(matches) == 1, "NORMAL_COMPANYFACTS_PRIOR_ORDINARY_MISSING_OR_AMBIGUOUS")
-    need(not any(row["form"] == "10-K/A" and row["reportDate"] == prior_end for row, _ in rows),
-         "NORMAL_COMPANYFACTS_PRIOR_AMENDMENT_REPLAY_NOT_IMPLEMENTED")
+    amendments = sorted((row for row, _ in rows
+                         if row["form"] == "10-K/A" and row["reportDate"] == prior_end),
+                        key=lambda row: (row["filingDate"], row["accessionNumber"]))
+    if period_selection is None:
+        need(not amendments, "NORMAL_COMPANYFACTS_PRIOR_AMENDMENT_REPLAY_NOT_IMPLEMENTED")
+    else:
+        # Selecting the original does not admit its financial values. The
+        # B02 consumer must inspect every selected amendment before using it.
+        fields = ("form", "reportDate", "filingDate", "accessionNumber", "primaryDocument")
+        identity = lambda row: {key: row[key] for key in fields}
+        need(type(period_selection) is dict
+             and period_selection.get("prior_filing") == identity(matches[0][0])
+             and period_selection.get("prior_report_end") == prior_end
+             and period_selection.get("prior_amendments") == [identity(row) for row in amendments],
+             "HISTORICAL_PRIOR_SELECTION_CHAIN_CHANGED")
     return matches[0]
