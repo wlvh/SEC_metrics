@@ -1,0 +1,80 @@
+{
+  "company_id": "enphase_energy",
+  "requested_fiscal_year": 2021,
+  "selected_role": "prior",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "new_business_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "filing": {
+    "form": "10-K",
+    "reportDate": "2020-12-31",
+    "filingDate": "2021-02-16",
+    "accessionNumber": "0001463101-21-000016",
+    "primaryDocument": "enph-20201231.htm"
+  },
+  "actual_period": {
+    "fiscal_year": 2020,
+    "period_start": "2020-01-01",
+    "period_end": "2020-12-31"
+  },
+  "primary_sha256": "be239781566632700756f33458425fe341c5bb991438c0d956abe95468814030",
+  "xml_sha256": "c208b72c6c460db7cb2c4ab1d55d2f717f789796ec000bb2310a21653ccd0061",
+  "source_reference": {
+    "record_type": "SOURCE_REFERENCE",
+    "source_reference_id": "sha256:213ac795437b2b1e4902efbd701954b8a58f318a2549024012c2f216eae80d7e",
+    "raw_asset_id": "sha256:be239781566632700756f33458425fe341c5bb991438c0d956abe95468814030",
+    "company_id": "enphase_energy",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310121000016/enph-20201231.htm",
+    "accession": "0001463101-21-000016",
+    "document_name": "enph-20201231.htm",
+    "source_role": "target_primary",
+    "request_attempt_id": "request:attempt:09fea381075d82f69ccff441dd9bdfb5c3ca378353d14b2c5e5b61f49a35721d"
+  },
+  "rejected_table": "table_000108",
+  "unresolved_cells": [
+    {
+      "table_id": "table_000108",
+      "row_index": 13,
+      "column_index": 0,
+      "text": "Other expense, net"
+    },
+    {
+      "table_id": "table_000108",
+      "row_index": 22,
+      "column_index": 0,
+      "text": "Net income (loss) per share:"
+    }
+  ],
+  "heading_blocks": [
+    {
+      "visible_text": "Table of Contents",
+      "start_byte": 1228139,
+      "end_byte": 1228743,
+      "span_sha256": "87be5f488cba6ec44a306e7c9575b1453b8d64bf2079e1e04e206e86009f4d70"
+    },
+    {
+      "visible_text": "ENPHASE ENERGY, INC.",
+      "start_byte": 1228749,
+      "end_byte": 1228920,
+      "span_sha256": "83e7d47acb9494f1258f5b2a731334e73be1bf335bc5ff9821a2feab645bef48"
+    },
+    {
+      "visible_text": " CONSOLIDATED STATEMENTS OF OPERATIONS",
+      "start_byte": 1228920,
+      "end_byte": 1229124,
+      "span_sha256": "668c64e8d5ef8b8bc30e644dc76aed1c8b7ead3c205d0d9a88237a7bf7a9ee33"
+    },
+    {
+      "visible_text": "(In thousands, except per share data)",
+      "start_byte": 1229124,
+      "end_byte": 1229306,
+      "span_sha256": "6ce4073705bb14f6de656f5b945387f4dd58216ccf698b78f9f2b551b2ac2dd2"
+    }
+  ],
+  "status": "SOURCE_SCOPE_REJECTED",
+  "reason": "SELECTED_REVENUE_STATEMENT_LOCAL_SCOPE_UNRESOLVED",
+  "exception_type": "IncomeSourceError"
+}

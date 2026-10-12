@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/docs/evidence/issue28_income_section_captions_20261013/verify_company.py", line 71, in <module>
+    print(json.dumps(verify(a.source_root.resolve(),a.work_root.resolve(),a.resume),ensure_ascii=False,indent=2))
+                     ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/docs/evidence/issue28_income_section_captions_20261013/verify_company.py", line 45, in verify
+    child=subprocess.run([sys.executable,str(ROOT/'tools/vnext_company.py'),'results',
+        '--company','enphase_energy','--state-root',str(work/'task'),'--output-root',str(work/'read')],
+        capture_output=True,text=True,check=True)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/opt/homebrew/opt/python@3.14/bin/python3.14', '/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tools/vnext_company.py', 'results', '--company', 'enphase_energy', '--state-root', '/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/enphase-b02-fy21-captions-20261013/task', '--output-root', '/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/enphase-b02-fy21-captions-20261013/read']' returned non-zero exit status 1.

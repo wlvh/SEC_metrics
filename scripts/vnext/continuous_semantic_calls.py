@@ -291,7 +291,7 @@ class SemanticRequest:
                     if original['request_id'] == contract['original_request_id']
                     and original.get('source_statement_facts')]
                 need(source['metric_id'] == 'D03' and len(originals) == 1
-                     and candidate_request(originals[0], source=source) == request,
+                     and candidate_request(originals[0], source=source,repo_root=self.data_root) == request,
                      'D03_SOURCE_ANCHOR_REQUEST_NOT_IN_CURRENT_SOURCE')
             elif request.get('record_type') == 'B13_REFERENCE_SCAN_REQUEST':
                 from .capacity_reference_contract import upgrade_request as reference_request
@@ -439,7 +439,7 @@ def prepare_d03_replay_only_requests(*, company_id, source_root=None, source_led
     selected = []
     for prepared in originals:
         original = strict_json_loads(text=prepared.request_bytes.decode('utf-8'))
-        request = (candidate_request(original, source=source)
+        request = (candidate_request(original, source=source,repo_root=prepared.data_root)
                    if original.get('source_statement_facts') else original)
         need(request['source_id'] == source['semantic_source_id']
              and request['units'] == original['units']

@@ -1,0 +1,39 @@
+test_a_nonboolean_source_mode_is_not_reinterpreted (tests.vnext.test_d03_source_root_seam.D03SourceRootSeamTest.test_a_nonboolean_source_mode_is_not_reinterpreted) ... FAIL
+test_changed_source_or_original_request_still_fails (tests.vnext.test_d03_source_root_seam.D03SourceRootSeamTest.test_changed_source_or_original_request_still_fails) ... ok
+test_legacy_unmarked_rebuild_keeps_the_original_default_call (tests.vnext.test_d03_source_root_seam.D03SourceRootSeamTest.test_legacy_unmarked_rebuild_keeps_the_original_default_call) ... ok
+test_registered_source_rebuild_retains_actual_root_and_mode (tests.vnext.test_d03_source_root_seam.D03SourceRootSeamTest.test_registered_source_rebuild_retains_actual_root_and_mode) ... ERROR
+
+======================================================================
+ERROR: test_registered_source_rebuild_retains_actual_root_and_mode (tests.vnext.test_d03_source_root_seam.D03SourceRootSeamTest.test_registered_source_rebuild_retains_actual_root_and_mode)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d03-source-root-seam/SEC_metrics/tests/vnext/test_d03_source_root_seam.py", line 17, in test_registered_source_rebuild_retains_actual_root_and_mode
+    review._authenticated_original(original=original,source=source,repo_root=data)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d03-source-root-seam/SEC_metrics/scripts/vnext/regulatory_fact_review.py", line 44, in _authenticated_original
+    _need(source == rebuilt and original in source_requests(rebuilt),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'D03_ANCHOR_AUTHENTIC_ORIGINAL_REQUIRED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d03-source-root-seam/SEC_metrics/scripts/vnext/regulatory_fact_review.py", line 33, in _need
+    raise ValueError(reason)
+ValueError: D03_ANCHOR_AUTHENTIC_ORIGINAL_REQUIRED
+
+======================================================================
+FAIL: test_a_nonboolean_source_mode_is_not_reinterpreted (tests.vnext.test_d03_source_root_seam.D03SourceRootSeamTest.test_a_nonboolean_source_mode_is_not_reinterpreted)
+----------------------------------------------------------------------
+vnext.normal_annual_input.NormalAnnualInputError: COMPANY_NOT_UNIQUE
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d03-source-root-seam/SEC_metrics/tests/vnext/test_d03_source_root_seam.py", line 36, in test_a_nonboolean_source_mode_is_not_reinterpreted
+    with self.assertRaisesRegex(ValueError,'SOURCE_MODE_INVALID'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "SOURCE_MODE_INVALID" does not match "COMPANY_NOT_UNIQUE"
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.037s
+
+FAILED (failures=1, errors=1)
+{"allowed_skips": 0, "errors": 1, "failures": 1, "run": 4, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_d03_source_root_seam"]}

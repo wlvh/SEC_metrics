@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/docs/evidence/issue28_history_export_entry_20261013/verify_company.py", line 100, in <module>
+    print(json.dumps(verify(args.source_root.resolve(), args.work_root.resolve()), ensure_ascii=False, indent=2))
+                     ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/docs/evidence/issue28_history_export_entry_20261013/verify_company.py", line 63, in verify
+    assert files(work/'task') == before
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

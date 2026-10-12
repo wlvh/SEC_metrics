@@ -21,6 +21,42 @@ def document(body):
 
 
 class AmendmentNoteLayoutTest(unittest.TestCase):
+    def test_republished_report_contents_does_not_become_part_of_the_note(self):
+        raw, doc = document('<p>EXPLANATORY NOTE</p><p>One stated correction.</p>'
+            '<p>No other changes.</p><p><a href="#toc">Table of Contents</a></p>'
+            '<p>EXAMPLE ISSUER INC.</p><p>FORM 10-K TABLE OF CONTENTS</p>'
+            '<p>FISCAL YEAR ENDED DECEMBER 31, 2020</p>'
+            + ''.join('<p>Contents '+str(i)+'</p>' for i in range(20)) + '<p>PART II</p>')
+        doc['registrant_names'] = ['Example Issuer Inc.']
+        note = scope._note(doc, raw=raw)
+        self.assertEqual(note['end'], 3)
+        self.assertEqual(note['text'], 'One stated correction. No other changes.')
+        self.assertEqual(note['blocks'], doc['blocks'][:3])
+        doc['registrant_names'] = ['EXAMPLE ISSUER INC /MD/']
+        self.assertEqual(scope._note(doc, raw=raw), note)
+        self.assertEqual(doc['registrant_names'], ['EXAMPLE ISSUER INC /MD/'])
+        doc['registrant_names'] = ['EXAMPLE ISSUER INC /OTHER/']
+        with self.assertRaisesRegex(scope.AmendmentScopeError, 'SCOPE_UNSUPPORTED'):
+            scope._note(doc, raw=raw)
+
+    def test_contents_link_without_the_actual_report_banner_does_not_shorten_scope(self):
+        for banner in ('<p>Different Issuer Inc.</p><p>FORM 10-K TABLE OF CONTENTS</p>',
+                       '<p>EXAMPLE ISSUER INC.</p><p>Our financial results were revised.</p>'):
+            raw, doc = document('<p>EXPLANATORY NOTE</p><p>One purpose.</p>'
+                '<p><a href="#toc">Table of Contents</a></p>'+banner
+                + ''.join('<p>Other disclosure '+str(i)+'</p>' for i in range(9)) + '<p>PART II</p>')
+            doc['registrant_names'] = ['Example Issuer Inc.']
+            with self.assertRaisesRegex(scope.AmendmentScopeError, 'SCOPE_UNSUPPORTED'):
+                scope._note(doc, raw=raw)
+
+    def test_note_purpose_before_valid_contents_banner_cannot_disappear(self):
+        raw, doc = document('<p>EXPLANATORY NOTE</p><p>One stated correction.</p>'
+            '<p>We also revise revenues.</p><p><a href="#toc">Table of Contents</a></p>'
+            '<p>EXAMPLE ISSUER INC.</p><p>FORM 10-K TABLE OF CONTENTS</p><p>PART II</p>')
+        doc['registrant_names'] = ['Example Issuer Inc.']
+        note = scope._note(doc, raw=raw)
+        self.assertIn('We also revise revenues.', note['text'])
+
     def test_inline_fragments_are_three_paragraphs_not_thirteen_blocks(self):
         parts=['Paramount Global is filing on Form ', '10-K/A', ' its original Form ', '10-K',
                ' for the year ended December 31, 2024, as an amendment to ', '10-K',

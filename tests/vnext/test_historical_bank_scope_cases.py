@@ -1,6 +1,7 @@
 """Constructed source controls use the real existing Spec and Calculator."""
 from contextlib import ExitStack
 from copy import deepcopy
+from pathlib import Path
 from types import SimpleNamespace
 from unittest import TestCase
 from unittest.mock import patch
@@ -9,6 +10,29 @@ from vnext import historical_bank_scope_cases as bank
 
 
 class HistoricalBankScopeCaseTest(TestCase):
+    def test_scope_dependency_covers_annual_and_instant_consumers(self):
+        from tests.vnext.processing_dependency_checks import (
+            processing_calls, assert_processing_calls)
+        from vnext.ordinary_current_update import _configuration
+        root=Path(__file__).resolve().parents[2]
+        examples=(
+            ('A04',{'semantic_status':'SINGLE_SOURCE_SEMANTIC_FACT',
+                'relations':[{'rate_check':{'disclosed_ratio':'0.0164'}}]}),
+            ('A09',{'outcome':'STRUCTURED_PRIMARY_RESOLVED','value':'0.0072'}),
+            ('A11',{'semantic_status':'SINGLE_SOURCE_SEMANTIC_FACT','value':'3113000000000'}))
+        for metric,fact in examples:
+            configuration=_configuration(root,'jpmorgan_chase',metric)
+            with self.subTest(metric=metric), processing_calls(root) as observed:
+                case,_,_=self.prepare(metric_id=metric,inspector=fact)
+            path='scripts/vnext/scope_contract.py'
+            self.assertIn('validate_scope_contract',observed[path])
+            self.assertEqual(case['target_period']['period_start'],
+                '2021-01-01' if metric=='A04' else '2021-12-31')
+            assert_processing_calls(observed,configuration,bank.PROCESSING_FILES)
+            reduced=tuple(p for p in bank.PROCESSING_FILES if p!=path)
+            with self.assertRaisesRegex(AssertionError,'scope_contract.py'):
+                assert_processing_calls(observed,configuration,reduced)
+
     def prepare(self, *, metric_id='A09', applicable=True, amendments=None, mode='CONTINUOUS_PRIMARY',
                 inspector=None):
         period = {'fiscal_year': 2021, 'period_start': '2021-01-01', 'period_end': '2021-12-31'}
@@ -198,3 +222,39 @@ class HistoricalBankScopeClassificationTest(TestCase):
                 case,_,_=self.prepare(metric_id='A09',inspector=fact)
                 self.assertIsNone(case['results']['A09']['value'])
                 self.assertEqual(category,case['input_assessments']['financial_source']['classification'])
+
+
+class HistoricalBankScopeProcessingTest(TestCase):
+    """Shared updater state controls; these values are not bank conclusions."""
+    from tests.vnext.test_selected_history_result_state import SelectedHistoryResultStateTest as _state
+    setUp=_state.setUp
+    factory=_state.factory
+    save_control=_state.save_control
+    run_control=_state.run_control
+
+    def test_scope_change_processes_each_consumer_once_then_reuses(self):
+        from tests.vnext.test_selected_history_result_state import update, ROOT
+        original_hash=update.sha256_file
+        target=ROOT/'scripts/vnext/scope_contract.py'
+        for metric in ('A04','A09','A11'):
+            with self.subTest(metric=metric):
+                self.forbid_factory=False
+                first=self.run_control(2021,metric,bank.PROCESSING_FILES)
+                count=len(self.factory_calls)
+                self.forbid_factory=True
+                self.assertEqual('NO_SOURCE_CONTENT_CHANGE',
+                    self.run_control(2021,metric,bank.PROCESSING_FILES)['status'])
+                self.assertEqual(count,len(self.factory_calls))
+                def changed_hash(*,path):
+                    return 'CONSTRUCTED_BANK_SCOPE_CHANGE' if path==target else original_hash(path=path)
+                self.forbid_factory=False
+                with patch.object(update,'sha256_file',side_effect=changed_hash):
+                    changed=self.run_control(2021,metric,bank.PROCESSING_FILES)
+                    self.assertEqual('CANDIDATE_READY',changed['status'])
+                    self.assertEqual(count+1,len(self.factory_calls))
+                    self.assertNotEqual(first['version'],changed['version'])
+                    self.forbid_factory=True
+                    repeat=self.run_control(2021,metric,bank.PROCESSING_FILES)
+                    self.assertEqual('NO_SOURCE_CONTENT_CHANGE',repeat['status'])
+                    self.assertEqual(changed['version'],repeat['version'])
+                self.assertEqual(count+1,len(self.factory_calls))

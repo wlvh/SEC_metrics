@@ -1,0 +1,62 @@
+{
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "work_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/enphase-b02-fy21-captions-20261013",
+  "first": {
+    "elapsed_seconds": 12.799087916995632,
+    "status": "FLOW_COMPLETED"
+  },
+  "repeat": {
+    "elapsed_seconds": 0.20159104200138245,
+    "status": "FLOW_COMPLETED",
+    "calculation_forbidden": true,
+    "result_bytes_and_dirs_unchanged": true
+  },
+  "independent_read": {
+    "elapsed_seconds": 0.11728329199831933,
+    "row": {
+      "company": "Enphase Energy",
+      "cik": "1463101",
+      "metric_id": "B02",
+      "metric_name": "Revenue YoY growth",
+      "value": "0.7846131000419666203957775123",
+      "unit": "ratio",
+      "status": "OK",
+      "source_class": "DERIVED",
+      "formula": "",
+      "period_start": "2021-01-01",
+      "period_end": "2021-12-31",
+      "fiscal_year": "2021",
+      "fiscal_period": "ANNUAL",
+      "accession": "0001463101-22-000016;0001463101-21-000016",
+      "form": "10-K",
+      "filed_date": "2022-02-11;2021-02-16",
+      "concept_or_section": "Revenue YoY growth",
+      "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2021, \"period_end\": \"2021-12-31\", \"period_start\": \"2021-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"coverage\": \"deterministic_source_set\", \"fiscal_year\": 2021}, \"selection\": {\"paired_revenue_scopes\": {\"current\": {\"complete_scope_proven\": true, \"scope_id\": \"sha256:0d15374a101e2c467baed2b9930c8081bad05edd699f23b4d3593e3d501bfa28\", \"status\": \"REPORTED_CONSOLIDATED_TOTAL\"}, \"prior\": {\"complete_scope_proven\": true, \"scope_id\": \"sha256:310c9b8052823c1ccae54003e2787f0cf866591d75f2fe1f15d03a21738bfeb5\", \"status\": \"REPORTED_CONSOLIDATED_TOTAL\"}}}, \"source_reference_ids\": [\"sha256:1113478f788bf7d2483f879c0da31c0b2eead47941e47df5937a62c29c7ab14b\", \"sha256:39808ae04e68862f11cf338bcf02a07e44498b167574f3360a8c11594c97297f\", \"sha256:ebdf30891011c7d7205644166621f859cc28a92fca6cb243002a004b31fb5bd4\", \"sha256:213ac795437b2b1e4902efbd701954b8a58f318a2549024012c2f216eae80d7e\", \"sha256:c219cb315f6a2a978f12dced1875c3963d80f97fce1651abce92c2ab21146801\", \"sha256:bb3aa02d4ac089813b2d0faa49de79ef7e0d8e13db0611ab9db6cd6c1bc914dd\", \"sha256:b9969744eaa260edc3974b0d5c408aad451990e39c28f7e9cbc320914303c093\", \"sha256:71ae6460eab30446e6bbfa45d2d7e1c8ccb5602ef97d078d0d997dd9bc2df08f\", \"sha256:8c5ee41fa020662cf9d40e2d5b61f4893263b89e971311498f8d723caf43a11e\"]}",
+      "confidence": "",
+      "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+      "company_id": "enphase_energy",
+      "result_id": "sha256:bfd848c7987b907dbfe0d736587b7350049804594fcbf965d0f21ebf3282ab86",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/enphase-b02-fy21-captions-20261013/task/updates/B02/periods/FY2021/results/a314dab54c78424f9e8f8fe49c00dfbf",
+      "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+      "period_role": "REQUESTED_RESULT",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+      "defect_holds": "[]",
+      "requested_in_latest_execution": "True"
+    }
+  },
+  "records_count": 22,
+  "own_current_revenue": "1382049000",
+  "own_prior_revenue": "774425000",
+  "new_business_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "limits": [
+    "Only FY2021 B02 newly processed; other completed years reused without replay.",
+    "Ordinary candidate, not production adoption or five-year independent business acceptance."
+  ]
+}

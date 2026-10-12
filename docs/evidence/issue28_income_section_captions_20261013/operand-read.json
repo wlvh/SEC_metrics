@@ -1,0 +1,108 @@
+{
+  "claims": [
+    {
+      "attributes": {
+        "accession": "0001463101-22-000016",
+        "deterministic_router_semantic_version": "2",
+        "entity": "1463101",
+        "filed": "2022-02-11",
+        "fiscal_period": "FY",
+        "form": "10-K",
+        "frame": ""
+      },
+      "claim_kind": "COMPANYFACTS_NUMERIC_FACT",
+      "company_id": "enphase_energy",
+      "locator": {
+        "concept": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "fact_id": "fact:sha256:3edc67f0701e2a7e1d3cbe58ed4b96248828bda5df9e640392aa6daaca91713a",
+        "period_end": "2021-12-31",
+        "period_start": "2021-01-01"
+      },
+      "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+      "source_reference_id": "sha256:ebdf30891011c7d7205644166621f859cc28a92fca6cb243002a004b31fb5bd4",
+      "source_role": "companyfacts",
+      "source_set_manifest_id": "sha256:f8f085ce42536bf2abd64373831f129338b00159291e3e4a9370f3c7cea5af03",
+      "unit": "USD",
+      "value": "1382049000",
+      "verified_claim_id": "sha256:8f65a232099ed12a17742d54709759b63397d88d1197b263c963d6349220d971",
+      "source_reference": {
+        "accession": "0001463101-22-000016",
+        "company_id": "enphase_energy",
+        "document_name": "CIK0001463101.json",
+        "raw_asset_id": "sha256:ff43e841870f44069d6d009e39a56297c24e8ee277cd9c8a3789fcf9632fc6c3",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:3926d2911ed3b04f6558948f7a3e3708f0a5374845657b96ba4997e76e9409cd",
+        "source_reference_id": "sha256:ebdf30891011c7d7205644166621f859cc28a92fca6cb243002a004b31fb5bd4",
+        "source_role": "companyfacts",
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001463101.json"
+      }
+    },
+    {
+      "attributes": {
+        "accession": "0001463101-21-000016",
+        "deterministic_router_semantic_version": "2",
+        "entity": "1463101",
+        "filed": "2021-02-16",
+        "fiscal_period": "FY",
+        "form": "10-K",
+        "frame": ""
+      },
+      "claim_kind": "COMPANYFACTS_NUMERIC_FACT",
+      "company_id": "enphase_energy",
+      "locator": {
+        "concept": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "fact_id": "fact:sha256:b27e79844f06abce1aac0d255c28720698bafa40392edfa3e74a2cdb44ad7c3c",
+        "period_end": "2020-12-31",
+        "period_start": "2020-01-01"
+      },
+      "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+      "source_reference_id": "sha256:c219cb315f6a2a978f12dced1875c3963d80f97fce1651abce92c2ab21146801",
+      "source_role": "companyfacts",
+      "source_set_manifest_id": "sha256:45ae91241511f37f25698d685a5d35d9f013762f67dea7b5f47d5e9afd648262",
+      "unit": "USD",
+      "value": "774425000",
+      "verified_claim_id": "sha256:851255da72261fcb72d3e5a5a56fe4d2cdf6d9b59a94989acc85cafd5491144c",
+      "source_reference": {
+        "accession": "0001463101-21-000016",
+        "company_id": "enphase_energy",
+        "document_name": "CIK0001463101.json",
+        "raw_asset_id": "sha256:ff43e841870f44069d6d009e39a56297c24e8ee277cd9c8a3789fcf9632fc6c3",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:3926d2911ed3b04f6558948f7a3e3708f0a5374845657b96ba4997e76e9409cd",
+        "source_reference_id": "sha256:c219cb315f6a2a978f12dced1875c3963d80f97fce1651abce92c2ab21146801",
+        "source_role": "companyfacts",
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001463101.json"
+      }
+    }
+  ],
+  "steps": [
+    {
+      "event": "REUSED_OBSERVATION",
+      "observation_id": "sha256:568356132ff848dea6ab40cf325cfdc40dfec8b2948ed74504d7e4d8b1dbb4c3",
+      "role": "deterministic_value",
+      "value": "0.7846131000419666203957775123"
+    },
+    {
+      "event": "FORMULA_RESULT",
+      "formula": "deterministic_value",
+      "quality": "EXACT",
+      "resolved_values": {
+        "deterministic_value": "0.7846131000419666203957775123"
+      },
+      "value": "0.7846131000419666203957775123"
+    }
+  ],
+  "calculation_target": {
+    "accession": null,
+    "company_id": "enphase_energy",
+    "entity": null,
+    "period_end": "2021-12-31",
+    "period_start": "2021-01-01",
+    "scope": {
+      "coverage": "deterministic_source_set",
+      "fiscal_year": 2021
+    },
+    "scope_key": "sha256:0384f27d1ebcbba9d12396a47fb665f746bb66b569bb89588c42fee4cff6cc92"
+  },
+  "result": "0.7846131000419666203957775123"
+}

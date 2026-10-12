@@ -93,6 +93,34 @@ class SelectedHistoryResultStateTest(TestCase):
     def period_root(self, year, metric="B10"):
         return self.root.resolve() / metric / "periods" / ("FY" + str(year))
 
+    def test_average_scope_dependency_change_processes_once_then_reuses(self):
+        from vnext.historical_average_risk_cases import PROCESSING_FILES
+        original_hash=update.sha256_file
+        target=ROOT/'scripts/vnext/scope_contract.py'
+        # The saver and values remain explicit state controls, not bank facts.
+        for metric in ('A03','A12'):
+            with self.subTest(metric=metric):
+                self.forbid_factory=False
+                first=self.run_control(2021,metric,PROCESSING_FILES)
+                count=len(self.factory_calls)
+                self.forbid_factory=True
+                self.assertEqual('NO_SOURCE_CONTENT_CHANGE',
+                    self.run_control(2021,metric,PROCESSING_FILES)['status'])
+                self.assertEqual(count,len(self.factory_calls))
+                def changed_hash(*,path):
+                    return 'CONSTRUCTED_AVERAGE_SCOPE_CHANGE' if path==target else original_hash(path=path)
+                self.forbid_factory=False
+                with patch.object(update,'sha256_file',side_effect=changed_hash):
+                    changed=self.run_control(2021,metric,PROCESSING_FILES)
+                    self.assertEqual('CANDIDATE_READY',changed['status'])
+                    self.assertEqual(count+1,len(self.factory_calls))
+                    self.assertNotEqual(first['version'],changed['version'])
+                    self.forbid_factory=True
+                    repeat=self.run_control(2021,metric,PROCESSING_FILES)
+                    self.assertEqual('NO_SOURCE_CONTENT_CHANGE',repeat['status'])
+                    self.assertEqual(changed['version'],repeat['version'])
+                self.assertEqual(count+1,len(self.factory_calls))
+
     def test_success_and_stable_withheld_reuse_in_distinct_historical_coordinates(self):
         self.outcomes[2025, "B11"] = "WITHHELD"
         first = self.run_control(2024)

@@ -29,6 +29,37 @@ class SingleSegmentRevenueTest(unittest.TestCase):
         return reported_revenue_scope(primary=source,xml=source,annual=annual,
             approved_concepts=APPROVED,allow_single_segment_revenue=True,**kwargs)
 
+    def test_shared_year_header_does_not_bind_another_amount_column(self):
+        source, annual = original()
+        raw = source['raw_bytes'].replace(b'<td>2025</td>', b'<td colspan="2">2025</td>')
+        raw = raw.replace(b'Year Ended December 31,</td><td></td>',
+                          b'Year Ended December 31,</td><td colspan="2"></td>')
+        raw = raw.replace(b'>58496</ix:nonFraction></td>', b'>58496</ix:nonFraction></td><td></td>')
+        for shifted in [('Cost of sales',), ('Net income',), ('Cost of sales', 'Net income')]:
+            changed_raw = raw
+            for label in shifted:
+                changed_raw = changed_raw.replace(('<td>'+label+'</td><td>').encode(),
+                    ('<td>'+label+'</td><td></td><td>').encode())
+            with self.subTest(shifted=shifted), self.assertRaisesRegex(ValueError,
+                    'SINGLE_SEGMENT_STATEMENT_COLUMN_CONFLICT'):
+                self.scope(changed(source, changed_raw), annual)
+
+    def test_supporting_amount_colspan_covering_the_revenue_column_is_valid(self):
+        source, annual = original()
+        raw = source['raw_bytes'].replace(b'<td>2025</td>', b'<td colspan="2">2025</td>')
+        raw = raw.replace(b'Year Ended December 31,</td><td></td>',
+                          b'Year Ended December 31,</td><td colspan="2"></td>')
+        raw = raw.replace(b'>58496</ix:nonFraction></td>', b'>58496</ix:nonFraction></td><td></td>')
+        for label in ('Cost of sales', 'Net income'):
+            raw = raw.replace(('<td>'+label+'</td><td>').encode(),
+                              ('<td>'+label+'</td><td colspan="2">').encode())
+        result = self.scope(changed(source, raw), annual)
+        self.assertTrue(result['complete_scope_proven'])
+        chosen = result['reported_totals'][0]
+        self.assertEqual(chosen['total']['value'], '58496000000')
+        self.assertEqual(chosen['xml_check'], 'MATCH')
+        self.assertTrue(all(row['cell']['colspan'] == 2 for row in chosen['consolidated_statement_rows']))
+
     def test_explicit_single_segment_revenue_keeps_original_dimension_and_default(self):
         source,annual=original()
         default=reported_revenue_scope(primary=source,xml=source,annual=annual,approved_concepts=APPROVED)
