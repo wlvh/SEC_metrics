@@ -86,6 +86,20 @@ class QuoteProblemsTest(unittest.TestCase):
 
 
 class AnswerContractTest(unittest.TestCase):
+    def test_block_identity_type_is_a_contract_failure_in_each_answer_list(self):
+        req = request(LITIGATION, LEASES)
+        for identity in (None, True, 12, [], {}, ['b000000'], {'block_id': 'b000000'}):
+            with self.subTest(identity=identity, section='decisions'):
+                with self.assertRaisesRegex(review.LegalReviewContractError,
+                                            '^D02_REVIEW_DECISION_BLOCK_ID_WRONG_TYPE$'):
+                    review.validate_answer(request=req, raw_output=answer(
+                        [(identity, 'IN_SCOPE', LITIGATION)]))
+            with self.subTest(identity=identity, section='also_in_scope'):
+                with self.assertRaisesRegex(review.LegalReviewContractError,
+                                            '^D02_REVIEW_ADDITION_BLOCK_ID_WRONG_TYPE$'):
+                    review.validate_answer(request=req, raw_output=answer(
+                        [(req['must_decide'][0], 'IN_SCOPE', LITIGATION)], [(identity, LEASES)]))
+
     def test_decisions_and_additions_report_their_own_block(self):
         req = request(LITIGATION, FEES, LEASES)
         for quote, cause in ((None, "MISSING"), (False, "WRONG_TYPE"),

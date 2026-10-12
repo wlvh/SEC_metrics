@@ -1,0 +1,22 @@
+test_block_identity_type_is_a_contract_failure_in_each_answer_list (tests.vnext.test_legal_review_contract.AnswerContractTest.test_block_identity_type_is_a_contract_failure_in_each_answer_list) ... ok
+test_decisions_and_additions_report_their_own_block (tests.vnext.test_legal_review_contract.AnswerContractTest.test_decisions_and_additions_report_their_own_block) ... ok
+test_missing_duplicate_and_out_of_scope_decisions_still_fail (tests.vnext.test_legal_review_contract.AnswerContractTest.test_missing_duplicate_and_out_of_scope_decisions_still_fail) ... ok
+test_overlong_addition_is_still_rejected (tests.vnext.test_legal_review_contract.AnswerContractTest.test_overlong_addition_is_still_rejected) ... ok
+test_unsettled_is_withheld_and_not_a_partial_count (tests.vnext.test_legal_review_contract.AnswerContractTest.test_unsettled_is_withheld_and_not_a_partial_count) ... ok
+test_well_formed_decisions_keep_source_order_and_do_not_change_inputs (tests.vnext.test_legal_review_contract.AnswerContractTest.test_well_formed_decisions_keep_source_order_and_do_not_change_inputs) ... ok
+test_characters_are_not_utf8_bytes (tests.vnext.test_legal_review_contract.QuoteProblemsTest.test_characters_are_not_utf8_bytes) ... ok
+test_existing_character_bounds_are_inclusive (tests.vnext.test_legal_review_contract.QuoteProblemsTest.test_existing_character_bounds_are_inclusive) ... ok
+test_matching_does_not_normalize_the_raw_text (tests.vnext.test_legal_review_contract.QuoteProblemsTest.test_matching_does_not_normalize_the_raw_text) ... ok
+test_missing_and_non_string_are_different (tests.vnext.test_legal_review_contract.QuoteProblemsTest.test_missing_and_non_string_are_different) ... ok
+test_short_blocks_keep_the_existing_whole_text_rule (tests.vnext.test_legal_review_contract.QuoteProblemsTest.test_short_blocks_keep_the_existing_whole_text_rule) ... ok
+test_source_matching_precedes_length (tests.vnext.test_legal_review_contract.QuoteProblemsTest.test_source_matching_precedes_length) ... ok
+test_wrong_block_and_absent_words_are_different (tests.vnext.test_legal_review_contract.QuoteProblemsTest.test_wrong_block_and_absent_words_are_different) ... ok
+test_all_fourteen_overlong_quotes_have_exact_source_support (tests.vnext.test_legal_review_contract.SavedFailedResponsesTest.test_all_fourteen_overlong_quotes_have_exact_source_support) ... ok
+test_eight_original_answers_fail_for_length_and_remain_unchanged (tests.vnext.test_legal_review_contract.SavedFailedResponsesTest.test_eight_original_answers_fail_for_length_and_remain_unchanged) ... ok
+test_four_original_contract_passes_keep_their_complete_answers (tests.vnext.test_legal_review_contract.SavedFailedResponsesTest.test_four_original_contract_passes_keep_their_complete_answers) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.005s
+
+OK
+{"allowed_skips": 0, "errors": 0, "failures": 0, "run": 16, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_legal_review_contract"]}
