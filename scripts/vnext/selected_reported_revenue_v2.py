@@ -11,7 +11,7 @@ from datetime import date
 from .canonical import content_hash
 from .selected_income_source_v1 import native_income_reports, IncomeSourceError
 from .selected_revenue_scope_v1 import UNIT_HEADER, STATEMENT_CONCEPTS, _label, _label_key, _statement_scope, _key
-from .xbrl_namespace_policy import YEAR_ONLY
+from .xbrl_namespace_policy import YEAR_ONLY, is_sec_namespace
 
 
 # Explicit consumers of the section-closing contract add these dependencies
@@ -35,12 +35,13 @@ def _need(condition,reason):
 def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
                            namespace_policy=YEAR_ONLY,annual_period_reader=None,
                            fiscal_label_resolution=None,allow_single_revenue_line=False,
-                           allow_statement_group_totals=False):
+                           allow_statement_group_totals=False,dei_release=YEAR_ONLY):
     from .financial_structured import _InlineTableIndex,_fact_cells
     from .financial_duration import _column_period,_cell_proof,_MONTH,_DATE,_date
     from .deterministic_router import parse_accession_xbrl_source
     _need(type(allow_single_revenue_line) is bool,'SINGLE_REVENUE_OPTION_INVALID')
     _need(type(allow_statement_group_totals) is bool,'STATEMENT_GROUP_OPTION_INVALID')
+    is_sec_namespace('',taxonomy='dei',namespace_policy=dei_release)
     concepts=sorted(set(approved_concepts)|set(STATEMENT_CONCEPTS))
     options={'namespace_policy':namespace_policy,'annual_period_reader':annual_period_reader}
     rows=native_income_reports(primary,annual,concepts,**options)
@@ -168,6 +169,7 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
         issuer_headers=None
         if complete_expenses:
             issuer_headers=_defined_income_headers(primary,parsed,annual,
+                dei_release=dei_release,
                 **({'include_cover':True} if group_total else {}))
             sections=(*sections,*issuer_headers['patterns'])
         if group_total:
@@ -209,18 +211,21 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
         body['complete_expense_rejections']=complete_expense_rejections
     if allow_statement_group_totals:
         body['statement_group_totals_allowed']=True
+    if dei_release!=YEAR_ONLY:
+        body['dei_release']=dei_release
     if allow_single_revenue_line:
         body.update(method='SELECTED_REPORTED_SINGLE_REVENUE_LINE_V1',
                     single_revenue_line_allowed=True)
     return {**body,'scope_id':content_hash(value=body)}
 
 
-def _defined_income_headers(primary,parsed,annual,*,include_cover=False):
+def _defined_income_headers(primary,parsed,annual,*,include_cover=False,dei_release=YEAR_ONLY):
     """Exact issuer headings from its explicit consolidated alias definition."""
     from .fiscal_year_labels import _DefinitionBlocks
     from .text_results_v2 import _ReportedFactMetadata
     from .xbrl_namespace_policy import is_sec_namespace,YEAR_QUARTER_OR_DATE
     from .canonical import sha256_bytes
+    is_sec_namespace('',taxonomy='dei',namespace_policy=dei_release)
     raw=primary['raw_bytes'];text=raw.decode('utf-8-sig');meta=_ReportedFactMetadata()
     meta.feed(text);meta.close()
     names={f['text'].strip() for f in parsed.facts
@@ -238,8 +243,9 @@ def _defined_income_headers(primary,parsed,annual,*,include_cover=False):
         from .going_concern_source import _registrant_name_binding
         document=build_text_document(raw_bytes=raw,raw_blob=primary['raw_blob'],
             source_reference=primary['source_reference'],expected_company_id=annual['company_id'],
-            expected_cik=annual['entity'],expected_period_end=annual['filing']['reportDate'])
-        binding=_registrant_name_binding(document,parsed,meta)
+            expected_cik=annual['entity'],expected_period_end=annual['filing']['reportDate'],
+            namespace_policy=dei_release)
+        binding=_registrant_name_binding(document,parsed,meta,namespace_policy=dei_release)
         from .normal_annual_input_v2 import exact_json_value
         binding=exact_json_value(binding)
         _need(binding['status']=='SAME_SOURCE_COVER_AND_CURRENT_DEI_NAME_BOUND',
@@ -269,6 +275,7 @@ def _defined_income_headers(primary,parsed,annual,*,include_cover=False):
         patterns.extend([r'amounts attributable to '+escaped+r':',
             r'(?:basic|diluted) net earnings \(loss\) per common share attributable to '+escaped+r':'])
     return {'patterns':patterns,'definitions':definitions,
+            **({'dei_release':dei_release} if dei_release!=YEAR_ONLY else {}),
             **({'heading_patterns':tuple(re.escape(name.casefold()) for name in sorted(aliases))}
                if include_cover else {})}
 
