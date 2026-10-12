@@ -1,0 +1,2630 @@
+{
+  "record_type": "B06_REPORTED_CURRENT_INTEREST_SOURCE_RELATION_INVESTIGATION",
+  "source_records": {
+    "primary": {
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:f4ab1a06f4defda3612d67c8ce20995cd849527646f612d53144363543ae4daf",
+        "raw_asset_id": "sha256:29bc388bcff3c0bac7894743ffe22fc1fe486b05ceb83f6bfe172b5f46e19549",
+        "company_id": "macys",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828025014315/m-20250201.htm",
+        "accession": "0001628280-25-014315",
+        "document_name": "m-20250201.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:bf643f1928306b75aa3feb59d16108ca1e06f2428d4f7bf337e3b9da60ec08e4"
+      },
+      "facts": [
+        {
+          "fact": {
+            "tag": "ix:nonfraction",
+            "qualified_name": "us-gaap:InterestPayableCurrent",
+            "context_ref": "c-6",
+            "unit_ref": "usd",
+            "scale": "6",
+            "sign": "",
+            "ordinal": 938,
+            "text": "48"
+          },
+          "context": {
+            "context_ref": "c-6",
+            "dimensions": {},
+            "entity_identifier": "0000794367",
+            "period_end": "2025-02-01",
+            "period_start": "2025-02-01",
+            "typed_dimension_count": 0
+          },
+          "metadata": {
+            "attrs": {
+              "unitref": "usd",
+              "contextref": "c-6",
+              "decimals": "-6",
+              "name": "us-gaap:InterestPayableCurrent",
+              "scale": "6",
+              "id": "f-933"
+            },
+            "namespaces": {
+              "xsi": "http://www.w3.org/2001/XMLSchema-instance",
+              "utr": "http://www.xbrl.org/2009/utr",
+              "xbrli": "http://www.xbrl.org/2003/instance",
+              "ix": "http://www.xbrl.org/2013/inlineXBRL",
+              "ecd": "http://xbrl.sec.gov/ecd/2024",
+              "us-gaap": "http://fasb.org/us-gaap/2024",
+              "srt": "http://fasb.org/srt/2024",
+              "dei": "http://xbrl.sec.gov/dei/2024",
+              "cyd": "http://xbrl.sec.gov/cyd/2024",
+              "link": "http://www.xbrl.org/2003/linkbase",
+              "xlink": "http://www.w3.org/1999/xlink",
+              "iso4217": "http://www.xbrl.org/2003/iso4217",
+              "xbrldi": "http://xbrl.org/2006/xbrldi",
+              "m": "http://www.macys.com/20250201",
+              "ixt-sec": "http://www.sec.gov/inlineXBRL/transformation/2015-08-31",
+              "ixt": "http://www.xbrl.org/inlineXBRL/transformation/2020-02-12",
+              "": "http://www.w3.org/1999/xhtml"
+            },
+            "concept": [
+              "http://fasb.org/us-gaap/2024",
+              "InterestPayableCurrent"
+            ],
+            "tag": "ix:nonfraction"
+          },
+          "table": {
+            "table_id": "table_000071",
+            "order": 70,
+            "caption_raw_text": "",
+            "caption": "",
+            "row_count": 15,
+            "column_count": 12,
+            "rows": [
+              {
+                "row_index": 0,
+                "cells": [
+                  {
+                    "origin_row_index": 0,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 0,
+                    "column_index": 0,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 0,
+                    "origin_column_index": 1,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 0,
+                    "column_index": 1,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 0,
+                    "origin_column_index": 2,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 0,
+                    "column_index": 2,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 0,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 0,
+                    "column_index": 3,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 0,
+                    "origin_column_index": 4,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 0,
+                    "column_index": 4,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 0,
+                    "origin_column_index": 5,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 0,
+                    "column_index": 5,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 0,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 0,
+                    "column_index": 6,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 0,
+                    "origin_column_index": 7,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 0,
+                    "column_index": 7,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 0,
+                    "origin_column_index": 8,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 0,
+                    "column_index": 8,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 0,
+                    "origin_column_index": 9,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 0,
+                    "column_index": 9,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 0,
+                    "origin_column_index": 10,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 0,
+                    "column_index": 10,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 0,
+                    "origin_column_index": 11,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 0,
+                    "column_index": 11,
+                    "is_origin": true
+                  }
+                ]
+              },
+              {
+                "row_index": 1,
+                "cells": [
+                  {
+                    "origin_row_index": 1,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 1,
+                    "column_index": 0,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 1,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 1,
+                    "column_index": 1,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 1,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 1,
+                    "column_index": 2,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 1,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "February 1,\n2025",
+                    "text": "February 1, 2025",
+                    "row_index": 1,
+                    "column_index": 3,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 1,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "February 1,\n2025",
+                    "text": "February 1, 2025",
+                    "row_index": 1,
+                    "column_index": 4,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 1,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "February 1,\n2025",
+                    "text": "February 1, 2025",
+                    "row_index": 1,
+                    "column_index": 5,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 1,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 1,
+                    "column_index": 6,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 1,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 1,
+                    "column_index": 7,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 1,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 1,
+                    "column_index": 8,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 1,
+                    "origin_column_index": 9,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "February 3,\n2024",
+                    "text": "February 3, 2024",
+                    "row_index": 1,
+                    "column_index": 9,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 1,
+                    "origin_column_index": 9,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "February 3,\n2024",
+                    "text": "February 3, 2024",
+                    "row_index": 1,
+                    "column_index": 10,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 1,
+                    "origin_column_index": 9,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "February 3,\n2024",
+                    "text": "February 3, 2024",
+                    "row_index": 1,
+                    "column_index": 11,
+                    "is_origin": false
+                  }
+                ]
+              },
+              {
+                "row_index": 2,
+                "cells": [
+                  {
+                    "origin_row_index": 2,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 2,
+                    "column_index": 0,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 2,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 2,
+                    "column_index": 1,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 2,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 2,
+                    "column_index": 2,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 2,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 9,
+                    "header": false,
+                    "raw_text": "(millions)",
+                    "text": "(millions)",
+                    "row_index": 2,
+                    "column_index": 3,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 2,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 9,
+                    "header": false,
+                    "raw_text": "(millions)",
+                    "text": "(millions)",
+                    "row_index": 2,
+                    "column_index": 4,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 2,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 9,
+                    "header": false,
+                    "raw_text": "(millions)",
+                    "text": "(millions)",
+                    "row_index": 2,
+                    "column_index": 5,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 2,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 9,
+                    "header": false,
+                    "raw_text": "(millions)",
+                    "text": "(millions)",
+                    "row_index": 2,
+                    "column_index": 6,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 2,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 9,
+                    "header": false,
+                    "raw_text": "(millions)",
+                    "text": "(millions)",
+                    "row_index": 2,
+                    "column_index": 7,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 2,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 9,
+                    "header": false,
+                    "raw_text": "(millions)",
+                    "text": "(millions)",
+                    "row_index": 2,
+                    "column_index": 8,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 2,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 9,
+                    "header": false,
+                    "raw_text": "(millions)",
+                    "text": "(millions)",
+                    "row_index": 2,
+                    "column_index": 9,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 2,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 9,
+                    "header": false,
+                    "raw_text": "(millions)",
+                    "text": "(millions)",
+                    "row_index": 2,
+                    "column_index": 10,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 2,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 9,
+                    "header": false,
+                    "raw_text": "(millions)",
+                    "text": "(millions)",
+                    "row_index": 2,
+                    "column_index": 11,
+                    "is_origin": false
+                  }
+                ]
+              },
+              {
+                "row_index": 3,
+                "cells": [
+                  {
+                    "origin_row_index": 3,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "Accounts payable",
+                    "text": "Accounts payable",
+                    "row_index": 3,
+                    "column_index": 0,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 3,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "Accounts payable",
+                    "text": "Accounts payable",
+                    "row_index": 3,
+                    "column_index": 1,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 3,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "Accounts payable",
+                    "text": "Accounts payable",
+                    "row_index": 3,
+                    "column_index": 2,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 3,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "$",
+                    "text": "$",
+                    "row_index": 3,
+                    "column_index": 3,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 3,
+                    "origin_column_index": 4,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "853&#160;",
+                    "text": "853",
+                    "row_index": 3,
+                    "column_index": 4,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 3,
+                    "origin_column_index": 5,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 3,
+                    "column_index": 5,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 3,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 3,
+                    "column_index": 6,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 3,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 3,
+                    "column_index": 7,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 3,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 3,
+                    "column_index": 8,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 3,
+                    "origin_column_index": 9,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "$",
+                    "text": "$",
+                    "row_index": 3,
+                    "column_index": 9,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 3,
+                    "origin_column_index": 10,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "747&#160;",
+                    "text": "747",
+                    "row_index": 3,
+                    "column_index": 10,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 3,
+                    "origin_column_index": 11,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 3,
+                    "column_index": 11,
+                    "is_origin": true
+                  }
+                ]
+              },
+              {
+                "row_index": 4,
+                "cells": [
+                  {
+                    "origin_row_index": 4,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "Property related liabilities",
+                    "text": "Property related liabilities",
+                    "row_index": 4,
+                    "column_index": 0,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 4,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "Property related liabilities",
+                    "text": "Property related liabilities",
+                    "row_index": 4,
+                    "column_index": 1,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 4,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "Property related liabilities",
+                    "text": "Property related liabilities",
+                    "row_index": 4,
+                    "column_index": 2,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 4,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 2,
+                    "header": false,
+                    "raw_text": "446&#160;",
+                    "text": "446",
+                    "row_index": 4,
+                    "column_index": 3,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 4,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 2,
+                    "header": false,
+                    "raw_text": "446&#160;",
+                    "text": "446",
+                    "row_index": 4,
+                    "column_index": 4,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 4,
+                    "origin_column_index": 5,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 4,
+                    "column_index": 5,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 4,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 4,
+                    "column_index": 6,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 4,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 4,
+                    "column_index": 7,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 4,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 4,
+                    "column_index": 8,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 4,
+                    "origin_column_index": 9,
+                    "rowspan": 1,
+                    "colspan": 2,
+                    "header": false,
+                    "raw_text": "424&#160;",
+                    "text": "424",
+                    "row_index": 4,
+                    "column_index": 9,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 4,
+                    "origin_column_index": 9,
+                    "rowspan": 1,
+                    "colspan": 2,
+                    "header": false,
+                    "raw_text": "424&#160;",
+                    "text": "424",
+                    "row_index": 4,
+                    "column_index": 10,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 4,
+                    "origin_column_index": 11,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 4,
+                    "column_index": 11,
+                    "is_origin": true
+                  }
+                ]
+              },
+              {
+                "row_index": 5,
+                "cells": [
+                  {
+                    "origin_row_index": 5,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "Gift cards and customer rewards",
+                    "text": "Gift cards and customer rewards",
+                    "row_index": 5,
+                    "column_index": 0,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 5,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "Gift cards and customer rewards",
+                    "text": "Gift cards and customer rewards",
+                    "row_index": 5,
+                    "column_index": 1,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 5,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "Gift cards and customer rewards",
+                    "text": "Gift cards and customer rewards",
+                    "row_index": 5,
+                    "column_index": 2,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 5,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 2,
+                    "header": false,
+                    "raw_text": "353&#160;",
+                    "text": "353",
+                    "row_index": 5,
+                    "column_index": 3,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 5,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 2,
+                    "header": false,
+                    "raw_text": "353&#160;",
+                    "text": "353",
+                    "row_index": 5,
+                    "column_index": 4,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 5,
+                    "origin_column_index": 5,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 5,
+                    "column_index": 5,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 5,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 5,
+                    "column_index": 6,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 5,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 5,
+                    "column_index": 7,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 5,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 5,
+                    "column_index": 8,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 5,
+                    "origin_column_index": 9,
+                    "rowspan": 1,
+                    "colspan": 2,
+                    "header": false,
+                    "raw_text": "384&#160;",
+                    "text": "384",
+                    "row_index": 5,
+                    "column_index": 9,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 5,
+                    "origin_column_index": 9,
+                    "rowspan": 1,
+                    "colspan": 2,
+                    "header": false,
+                    "raw_text": "384&#160;",
+                    "text": "384",
+                    "row_index": 5,
+                    "column_index": 10,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 5,
+                    "origin_column_index": 11,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 5,
+                    "column_index": 11,
+                    "is_origin": true
+                  }
+                ]
+              },
+              {
+                "row_index": 6,
+                "cells": [
+                  {
+                    "origin_row_index": 6,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "Accrued wages and vacation",
+                    "text": "Accrued wages and vacation",
+                    "row_index": 6,
+                    "column_index": 0,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 6,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "Accrued wages and vacation",
+                    "text": "Accrued wages and vacation",
+                    "row_index": 6,
+                    "column_index": 1,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 6,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "Accrued wages and vacation",
+                    "text": "Accrued wages and vacation",
+                    "row_index": 6,
+                    "column_index": 2,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 6,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 2,
+                    "header": false,
+                    "raw_text": "233&#160;",
+                    "text": "233",
+                    "row_index": 6,
+                    "column_index": 3,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 6,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 2,
+                    "header": false,
+                    "raw_text": "233&#160;",
+                    "text": "233",
+                    "row_index": 6,
+                    "column_index": 4,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 6,
+                    "origin_column_index": 5,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 6,
+                    "column_index": 5,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 6,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 6,
+                    "column_index": 6,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 6,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 6,
+                    "column_index": 7,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 6,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 6,
+                    "column_index": 8,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 6,
+                    "origin_column_index": 9,
+                    "rowspan": 1,
+                    "colspan": 2,
+                    "header": false,
+                    "raw_text": "177&#160;",
+                    "text": "177",
+                    "row_index": 6,
+                    "column_index": 9,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 6,
+                    "origin_column_index": 9,
+                    "rowspan": 1,
+                    "colspan": 2,
+                    "header": false,
+                    "raw_text": "177&#160;",
+                    "text": "177",
+                    "row_index": 6,
+                    "column_index": 10,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 6,
+                    "origin_column_index": 11,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 6,
+                    "column_index": 11,
+                    "is_origin": true
+                  }
+                ]
+              },
+              {
+                "row_index": 7,
+                "cells": [
+                  {
+                    "origin_row_index": 7,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "Current portion of post employment and postretirement benefits",
+                    "text": "Current portion of post employment and postretirement benefits",
+                    "row_index": 7,
+                    "column_index": 0,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 7,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "Current portion of post employment and postretirement benefits",
+                    "text": "Current portion of post employment and postretirement benefits",
+                    "row_index": 7,
+                    "column_index": 1,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 7,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "Current portion of post employment and postretirement benefits",
+                    "text": "Current portion of post employment and postretirement benefits",
+                    "row_index": 7,
+                    "column_index": 2,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 7,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 2,
+                    "header": false,
+                    "raw_text": "156&#160;",
+                    "text": "156",
+                    "row_index": 7,
+                    "column_index": 3,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 7,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 2,
+                    "header": false,
+                    "raw_text": "156&#160;",
+                    "text": "156",
+                    "row_index": 7,
+                    "column_index": 4,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 7,
+                    "origin_column_index": 5,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 7,
+                    "column_index": 5,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 7,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 7,
+                    "column_index": 6,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 7,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 7,
+                    "column_index": 7,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 7,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 7,
+                    "column_index": 8,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 7,
+                    "origin_column_index": 9,
+                    "rowspan": 1,
+                    "colspan": 2,
+                    "header": false,
+                    "raw_text": "163&#160;",
+                    "text": "163",
+                    "row_index": 7,
+                    "column_index": 9,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 7,
+                    "origin_column_index": 9,
+                    "rowspan": 1,
+                    "colspan": 2,
+                    "header": false,
+                    "raw_text": "163&#160;",
+                    "text": "163",
+                    "row_index": 7,
+                    "column_index": 10,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 7,
+                    "origin_column_index": 11,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 7,
+                    "column_index": 11,
+                    "is_origin": true
+                  }
+                ]
+              },
+              {
+                "row_index": 8,
+                "cells": [
+                  {
+                    "origin_row_index": 8,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "Allowance for future sales returns",
+                    "text": "Allowance for future sales returns",
+                    "row_index": 8,
+                    "column_index": 0,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 8,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "Allowance for future sales returns",
+                    "text": "Allowance for future sales returns",
+                    "row_index": 8,
+                    "column_index": 1,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 8,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "Allowance for future sales returns",
+                    "text": "Allowance for future sales returns",
+                    "row_index": 8,
+                    "column_index": 2,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 8,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 2,
+                    "header": false,
+                    "raw_text": "114&#160;",
+                    "text": "114",
+                    "row_index": 8,
+                    "column_index": 3,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 8,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 2,
+                    "header": false,
+                    "raw_text": "114&#160;",
+                    "text": "114",
+                    "row_index": 8,
+                    "column_index": 4,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 8,
+                    "origin_column_index": 5,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 8,
+                    "column_index": 5,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 8,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 8,
+                    "column_index": 6,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 8,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 8,
+                    "column_index": 7,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 8,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 8,
+                    "column_index": 8,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 8,
+                    "origin_column_index": 9,
+                    "rowspan": 1,
+                    "colspan": 2,
+                    "header": false,
+                    "raw_text": "136&#160;",
+                    "text": "136",
+                    "row_index": 8,
+                    "column_index": 9,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 8,
+                    "origin_column_index": 9,
+                    "rowspan": 1,
+                    "colspan": 2,
+                    "header": false,
+                    "raw_text": "136&#160;",
+                    "text": "136",
+                    "row_index": 8,
+                    "column_index": 10,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 8,
+                    "origin_column_index": 11,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 8,
+                    "column_index": 11,
+                    "is_origin": true
+                  }
+                ]
+              },
+              {
+                "row_index": 9,
+                "cells": [
+                  {
+                    "origin_row_index": 9,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "Taxes other than income taxes",
+                    "text": "Taxes other than income taxes",
+                    "row_index": 9,
+                    "column_index": 0,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 9,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "Taxes other than income taxes",
+                    "text": "Taxes other than income taxes",
+                    "row_index": 9,
+                    "column_index": 1,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 9,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "Taxes other than income taxes",
+                    "text": "Taxes other than income taxes",
+                    "row_index": 9,
+                    "column_index": 2,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 9,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 2,
+                    "header": false,
+                    "raw_text": "110&#160;",
+                    "text": "110",
+                    "row_index": 9,
+                    "column_index": 3,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 9,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 2,
+                    "header": false,
+                    "raw_text": "110&#160;",
+                    "text": "110",
+                    "row_index": 9,
+                    "column_index": 4,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 9,
+                    "origin_column_index": 5,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 9,
+                    "column_index": 5,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 9,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 9,
+                    "column_index": 6,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 9,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 9,
+                    "column_index": 7,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 9,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 9,
+                    "column_index": 8,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 9,
+                    "origin_column_index": 9,
+                    "rowspan": 1,
+                    "colspan": 2,
+                    "header": false,
+                    "raw_text": "136&#160;",
+                    "text": "136",
+                    "row_index": 9,
+                    "column_index": 9,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 9,
+                    "origin_column_index": 9,
+                    "rowspan": 1,
+                    "colspan": 2,
+                    "header": false,
+                    "raw_text": "136&#160;",
+                    "text": "136",
+                    "row_index": 9,
+                    "column_index": 10,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 9,
+                    "origin_column_index": 11,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 9,
+                    "column_index": 11,
+                    "is_origin": true
+                  }
+                ]
+              },
+              {
+                "row_index": 10,
+                "cells": [
+                  {
+                    "origin_row_index": 10,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "Current portion of workers' compensation and general liability reserves",
+                    "text": "Current portion of workers' compensation and general liability reserves",
+                    "row_index": 10,
+                    "column_index": 0,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 10,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "Current portion of workers' compensation and general liability reserves",
+                    "text": "Current portion of workers' compensation and general liability reserves",
+                    "row_index": 10,
+                    "column_index": 1,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 10,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "Current portion of workers' compensation and general liability reserves",
+                    "text": "Current portion of workers' compensation and general liability reserves",
+                    "row_index": 10,
+                    "column_index": 2,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 10,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 2,
+                    "header": false,
+                    "raw_text": "87&#160;",
+                    "text": "87",
+                    "row_index": 10,
+                    "column_index": 3,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 10,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 2,
+                    "header": false,
+                    "raw_text": "87&#160;",
+                    "text": "87",
+                    "row_index": 10,
+                    "column_index": 4,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 10,
+                    "origin_column_index": 5,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 10,
+                    "column_index": 5,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 10,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 10,
+                    "column_index": 6,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 10,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 10,
+                    "column_index": 7,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 10,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 10,
+                    "column_index": 8,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 10,
+                    "origin_column_index": 9,
+                    "rowspan": 1,
+                    "colspan": 2,
+                    "header": false,
+                    "raw_text": "85&#160;",
+                    "text": "85",
+                    "row_index": 10,
+                    "column_index": 9,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 10,
+                    "origin_column_index": 9,
+                    "rowspan": 1,
+                    "colspan": 2,
+                    "header": false,
+                    "raw_text": "85&#160;",
+                    "text": "85",
+                    "row_index": 10,
+                    "column_index": 10,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 10,
+                    "origin_column_index": 11,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 10,
+                    "column_index": 11,
+                    "is_origin": true
+                  }
+                ]
+              },
+              {
+                "row_index": 11,
+                "cells": [
+                  {
+                    "origin_row_index": 11,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "Accrued interest",
+                    "text": "Accrued interest",
+                    "row_index": 11,
+                    "column_index": 0,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 11,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "Accrued interest",
+                    "text": "Accrued interest",
+                    "row_index": 11,
+                    "column_index": 1,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 11,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "Accrued interest",
+                    "text": "Accrued interest",
+                    "row_index": 11,
+                    "column_index": 2,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 11,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 2,
+                    "header": false,
+                    "raw_text": "48&#160;",
+                    "text": "48",
+                    "row_index": 11,
+                    "column_index": 3,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 11,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 2,
+                    "header": false,
+                    "raw_text": "48&#160;",
+                    "text": "48",
+                    "row_index": 11,
+                    "column_index": 4,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 11,
+                    "origin_column_index": 5,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 11,
+                    "column_index": 5,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 11,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 11,
+                    "column_index": 6,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 11,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 11,
+                    "column_index": 7,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 11,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 11,
+                    "column_index": 8,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 11,
+                    "origin_column_index": 9,
+                    "rowspan": 1,
+                    "colspan": 2,
+                    "header": false,
+                    "raw_text": "53&#160;",
+                    "text": "53",
+                    "row_index": 11,
+                    "column_index": 9,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 11,
+                    "origin_column_index": 9,
+                    "rowspan": 1,
+                    "colspan": 2,
+                    "header": false,
+                    "raw_text": "53&#160;",
+                    "text": "53",
+                    "row_index": 11,
+                    "column_index": 10,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 11,
+                    "origin_column_index": 11,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 11,
+                    "column_index": 11,
+                    "is_origin": true
+                  }
+                ]
+              },
+              {
+                "row_index": 12,
+                "cells": [
+                  {
+                    "origin_row_index": 12,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "Restructuring accruals, including severance",
+                    "text": "Restructuring accruals, including severance",
+                    "row_index": 12,
+                    "column_index": 0,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 12,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "Restructuring accruals, including severance",
+                    "text": "Restructuring accruals, including severance",
+                    "row_index": 12,
+                    "column_index": 1,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 12,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "Restructuring accruals, including severance",
+                    "text": "Restructuring accruals, including severance",
+                    "row_index": 12,
+                    "column_index": 2,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 12,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 2,
+                    "header": false,
+                    "raw_text": "31&#160;",
+                    "text": "31",
+                    "row_index": 12,
+                    "column_index": 3,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 12,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 2,
+                    "header": false,
+                    "raw_text": "31&#160;",
+                    "text": "31",
+                    "row_index": 12,
+                    "column_index": 4,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 12,
+                    "origin_column_index": 5,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 12,
+                    "column_index": 5,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 12,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 12,
+                    "column_index": 6,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 12,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 12,
+                    "column_index": 7,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 12,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 12,
+                    "column_index": 8,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 12,
+                    "origin_column_index": 9,
+                    "rowspan": 1,
+                    "colspan": 2,
+                    "header": false,
+                    "raw_text": "47&#160;",
+                    "text": "47",
+                    "row_index": 12,
+                    "column_index": 9,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 12,
+                    "origin_column_index": 9,
+                    "rowspan": 1,
+                    "colspan": 2,
+                    "header": false,
+                    "raw_text": "47&#160;",
+                    "text": "47",
+                    "row_index": 12,
+                    "column_index": 10,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 12,
+                    "origin_column_index": 11,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 12,
+                    "column_index": 11,
+                    "is_origin": true
+                  }
+                ]
+              },
+              {
+                "row_index": 13,
+                "cells": [
+                  {
+                    "origin_row_index": 13,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "Other",
+                    "text": "Other",
+                    "row_index": 13,
+                    "column_index": 0,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 13,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "Other",
+                    "text": "Other",
+                    "row_index": 13,
+                    "column_index": 1,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 13,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "Other",
+                    "text": "Other",
+                    "row_index": 13,
+                    "column_index": 2,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 13,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 2,
+                    "header": false,
+                    "raw_text": "194&#160;",
+                    "text": "194",
+                    "row_index": 13,
+                    "column_index": 3,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 13,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 2,
+                    "header": false,
+                    "raw_text": "194&#160;",
+                    "text": "194",
+                    "row_index": 13,
+                    "column_index": 4,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 13,
+                    "origin_column_index": 5,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 13,
+                    "column_index": 5,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 13,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 13,
+                    "column_index": 6,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 13,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 13,
+                    "column_index": 7,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 13,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 13,
+                    "column_index": 8,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 13,
+                    "origin_column_index": 9,
+                    "rowspan": 1,
+                    "colspan": 2,
+                    "header": false,
+                    "raw_text": "219&#160;",
+                    "text": "219",
+                    "row_index": 13,
+                    "column_index": 9,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 13,
+                    "origin_column_index": 9,
+                    "rowspan": 1,
+                    "colspan": 2,
+                    "header": false,
+                    "raw_text": "219&#160;",
+                    "text": "219",
+                    "row_index": 13,
+                    "column_index": 10,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 13,
+                    "origin_column_index": 11,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 13,
+                    "column_index": 11,
+                    "is_origin": true
+                  }
+                ]
+              },
+              {
+                "row_index": 14,
+                "cells": [
+                  {
+                    "origin_row_index": 14,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 14,
+                    "column_index": 0,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 14,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 14,
+                    "column_index": 1,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 14,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 14,
+                    "column_index": 2,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 14,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "$",
+                    "text": "$",
+                    "row_index": 14,
+                    "column_index": 3,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 14,
+                    "origin_column_index": 4,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "2,625&#160;",
+                    "text": "2,625",
+                    "row_index": 14,
+                    "column_index": 4,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 14,
+                    "origin_column_index": 5,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 14,
+                    "column_index": 5,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 14,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 14,
+                    "column_index": 6,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 14,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 14,
+                    "column_index": 7,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 14,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 14,
+                    "column_index": 8,
+                    "is_origin": false
+                  },
+                  {
+                    "origin_row_index": 14,
+                    "origin_column_index": 9,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "$",
+                    "text": "$",
+                    "row_index": 14,
+                    "column_index": 9,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 14,
+                    "origin_column_index": 10,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "2,571&#160;",
+                    "text": "2,571",
+                    "row_index": 14,
+                    "column_index": 10,
+                    "is_origin": true
+                  },
+                  {
+                    "origin_row_index": 14,
+                    "origin_column_index": 11,
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "header": false,
+                    "raw_text": "",
+                    "text": "",
+                    "row_index": 14,
+                    "column_index": 11,
+                    "is_origin": true
+                  }
+                ]
+              }
+            ],
+            "grid_sha256": "sha256:347f1021b6edcce819ea9d711679c27a076379cb463991a67c3e4d51dbe7be96"
+          },
+          "cell": {
+            "origin_row_index": 11,
+            "origin_column_index": 3,
+            "rowspan": 1,
+            "colspan": 2,
+            "header": false,
+            "raw_text": "48&#160;",
+            "text": "48",
+            "row_index": 11,
+            "column_index": 3,
+            "is_origin": true
+          }
+        }
+      ]
+    },
+    "xml": {
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:427bae5775128eb31e6beeb04c894439f76248d9d11596faf0da96d25b2b2c00",
+        "raw_asset_id": "sha256:5f4fd4779a9840f3d614289bb43894d916c26dc3953712aa2da4b8d9bc8f4f5e",
+        "company_id": "macys",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828025014315/m-20250201_htm.xml",
+        "accession": "0001628280-25-014315",
+        "document_name": "m-20250201_htm.xml",
+        "source_role": "auditor_facts",
+        "request_attempt_id": "request:attempt:5239c978e928ce4e3c96b0c74865248cd2ed1e9a20f8532e1085c209be6741f9"
+      },
+      "facts": []
+    }
+  },
+  "nearby_blocks": [
+    {
+      "index": 855,
+      "block": {
+        "text": "Accounts payable and accrued liabilities2,625 2,571",
+        "start": 839725,
+        "end": 840744,
+        "linked": false,
+        "emphasized": false,
+        "leading_emphasis": null,
+        "quoted_context": false
+      },
+      "neighbors": [
+        {
+          "text": "Short-term debt$6 $\u2014",
+          "start": 836726,
+          "end": 838048,
+          "linked": false,
+          "emphasized": false,
+          "leading_emphasis": null,
+          "quoted_context": false
+        },
+        {
+          "text": "Merchandise accounts payable1,893 1,913",
+          "start": 838386,
+          "end": 839387,
+          "linked": false,
+          "emphasized": false,
+          "leading_emphasis": null,
+          "quoted_context": false
+        },
+        {
+          "text": "Accounts payable and accrued liabilities2,625 2,571",
+          "start": 839725,
+          "end": 840744,
+          "linked": false,
+          "emphasized": false,
+          "leading_emphasis": null,
+          "quoted_context": false
+        },
+        {
+          "text": "Income taxes payable\u2014 48",
+          "start": 841082,
+          "end": 842046,
+          "linked": false,
+          "emphasized": false,
+          "leading_emphasis": null,
+          "quoted_context": false
+        },
+        {
+          "text": "Total Current Liabilities4,524 4,532",
+          "start": 842384,
+          "end": 843452,
+          "linked": false,
+          "emphasized": false,
+          "leading_emphasis": null,
+          "quoted_context": false
+        }
+      ]
+    },
+    {
+      "index": 1156,
+      "block": {
+        "text": "Finance (a)Accounts payable and accrued liabilities$2 $2",
+        "start": 1178113,
+        "end": 1179908,
+        "linked": false,
+        "emphasized": false,
+        "leading_emphasis": null,
+        "quoted_context": false
+      },
+      "neighbors": [
+        {
+          "text": "Liabilities",
+          "start": 1176804,
+          "end": 1176815,
+          "linked": false,
+          "emphasized": true,
+          "leading_emphasis": {
+            "text": "Liabilities",
+            "start": 1176804,
+            "end": 1176815
+          },
+          "quoted_context": false
+        },
+        {
+          "text": "Current",
+          "start": 1177483,
+          "end": 1177490,
+          "linked": false,
+          "emphasized": false,
+          "leading_emphasis": null,
+          "quoted_context": false
+        },
+        {
+          "text": "Finance (a)Accounts payable and accrued liabilities$2 $2",
+          "start": 1178113,
+          "end": 1179908,
+          "linked": false,
+          "emphasized": false,
+          "leading_emphasis": null,
+          "quoted_context": false
+        },
+        {
+          "text": "Operating (b)Accounts payable and accrued liabilities365 356",
+          "start": 1180246,
+          "end": 1181659,
+          "linked": false,
+          "emphasized": false,
+          "leading_emphasis": null,
+          "quoted_context": false
+        },
+        {
+          "text": "Noncurrent",
+          "start": 1181988,
+          "end": 1181998,
+          "linked": false,
+          "emphasized": false,
+          "leading_emphasis": null,
+          "quoted_context": false
+        }
+      ]
+    },
+    {
+      "index": 1399,
+      "block": {
+        "text": "7. Accounts Payable and Accrued Liabilities",
+        "start": 1412703,
+        "end": 1412919,
+        "linked": false,
+        "emphasized": true,
+        "leading_emphasis": {
+          "text": "7. Accounts Payable and Accrued Liabilities",
+          "start": 1412703,
+          "end": 1412919
+        },
+        "quoted_context": false
+      },
+      "neighbors": [
+        {
+          "text": "Table of Contents",
+          "start": 1412265,
+          "end": 1412282,
+          "linked": true,
+          "emphasized": false,
+          "leading_emphasis": null,
+          "quoted_context": false
+        },
+        {
+          "text": "NOTES TO CONSOLIDATED FINANCIAL STATEMENTS \u2014 (Continued)",
+          "start": 1412451,
+          "end": 1412513,
+          "linked": false,
+          "emphasized": true,
+          "leading_emphasis": {
+            "text": "NOTES TO CONSOLIDATED FINANCIAL STATEMENTS \u2014 (Continued)",
+            "start": 1412451,
+            "end": 1412513
+          },
+          "quoted_context": false
+        },
+        {
+          "text": "7. Accounts Payable and Accrued Liabilities",
+          "start": 1412703,
+          "end": 1412919,
+          "linked": false,
+          "emphasized": true,
+          "leading_emphasis": {
+            "text": "7. Accounts Payable and Accrued Liabilities",
+            "start": 1412703,
+            "end": 1412919
+          },
+          "quoted_context": false
+        },
+        {
+          "text": "February 1,",
+          "start": 1413798,
+          "end": 1413809,
+          "linked": false,
+          "emphasized": true,
+          "leading_emphasis": {
+            "text": "February 1,",
+            "start": 1413798,
+            "end": 1413809
+          },
+          "quoted_context": false
+        },
+        {
+          "text": "2025February 3,",
+          "start": 1413814,
+          "end": 1414095,
+          "linked": false,
+          "emphasized": true,
+          "leading_emphasis": {
+            "text": "2025February 3,",
+            "start": 1413814,
+            "end": 1414095
+          },
+          "quoted_context": false
+        }
+      ]
+    },
+    {
+      "index": 1412,
+      "block": {
+        "text": "Accrued interest48 53",
+        "start": 1425364,
+        "end": 1426289,
+        "linked": false,
+        "emphasized": false,
+        "leading_emphasis": null,
+        "quoted_context": false
+      },
+      "neighbors": [
+        {
+          "text": "Taxes other than income taxes110 136",
+          "start": 1422726,
+          "end": 1423706,
+          "linked": false,
+          "emphasized": false,
+          "leading_emphasis": null,
+          "quoted_context": false
+        },
+        {
+          "text": "Current portion of workers' compensation and general liability reserves87 85",
+          "start": 1424032,
+          "end": 1425038,
+          "linked": false,
+          "emphasized": false,
+          "leading_emphasis": null,
+          "quoted_context": false
+        },
+        {
+          "text": "Accrued interest48 53",
+          "start": 1425364,
+          "end": 1426289,
+          "linked": false,
+          "emphasized": false,
+          "leading_emphasis": null,
+          "quoted_context": false
+        },
+        {
+          "text": "Restructuring accruals, including severance31 47",
+          "start": 1426615,
+          "end": 1427577,
+          "linked": false,
+          "emphasized": false,
+          "leading_emphasis": null,
+          "quoted_context": false
+        },
+        {
+          "text": "Other194 219",
+          "start": 1427903,
+          "end": 1428835,
+          "linked": false,
+          "emphasized": false,
+          "leading_emphasis": null,
+          "quoted_context": false
+        }
+      ]
+    }
+  ],
+  "definition": {
+    "included": [
+      "recognized_borrowings",
+      "notes_and_bonds",
+      "finance_lease_liabilities_including_combined_nonlease_components"
+    ],
+    "excluded": [
+      "operating_lease_liabilities",
+      "ordinary_trade_tax_provisions",
+      "customer_deposits",
+      "nonfinancing_trading_derivatives"
+    ],
+    "basis": "recognized_statement_carrying_amount_including_discount_premium_cost_hedge_and_fair_value_measurement",
+    "nonoverlap": "Each demonstrated liability set once; disjoint reported categories may be added",
+    "equity": "same_scope_StockholdersEquity_not_noncontrolling_inclusive",
+    "bank_scope": "Separate bank funding scope and comparability limitation; no netting assets"
+  },
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
