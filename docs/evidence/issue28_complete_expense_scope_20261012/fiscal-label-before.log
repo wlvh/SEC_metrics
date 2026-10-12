@@ -1,0 +1,27 @@
+test_complete_expense_statement_uses_the_resolved_issuer_column_year (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_complete_expense_statement_uses_the_resolved_issuer_column_year) ... ERROR
+
+======================================================================
+ERROR: test_complete_expense_statement_uses_the_resolved_issuer_column_year (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_complete_expense_statement_uses_the_resolved_issuer_column_year)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-complete-expense-combination/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 60, in test_complete_expense_statement_uses_the_resolved_issuer_column_year
+    scope=reported_revenue_scope(primary=source,xml=source,annual=annual,
+        approved_concepts=APPROVED,fiscal_label_resolution=label,allow_single_revenue_line=True)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-complete-expense-combination/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 81, in reported_revenue_scope
+    complete_expenses=_complete_expense_statement(primary,xml,annual,options,
+        index,parsed,table,cell,row,same)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-complete-expense-combination/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 252, in _complete_expense_statement
+    _need(not reason and column['year']==annual['table_input']['target_period']['fiscal_year'],
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'COMPLETE_EXPENSE_COLUMN_PERIOD_UNPROVEN')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-complete-expense-combination/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 18, in _need
+    if not condition:raise IncomeSourceError('SELECTED_REPORTED_REVENUE_'+reason)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REPORTED_REVENUE_COMPLETE_EXPENSE_COLUMN_PERIOD_UNPROVEN
+
+----------------------------------------------------------------------
+Ran 1 test in 0.185s
+
+FAILED (errors=1)
+{"allowed_skips": 0, "errors": 1, "failures": 0, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_complete_expense_statement_uses_the_resolved_issuer_column_year"]}

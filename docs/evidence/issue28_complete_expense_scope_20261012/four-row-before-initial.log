@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-complete-expense-combination/SEC_metrics/docs/evidence/issue28_complete_expense_scope_20261012/verify_four_rows.py", line 23, in <module>
+    rows=list(csv.DictReader((a.output_root/'first/metrics_matrix.csv').open()))
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/cost-return-fourrows-20261012/before-output/first/metrics_matrix.csv'
