@@ -16,6 +16,50 @@ from tools.vnext_company import main
 
 
 class CompanyFiscalRangeTest(TestCase):
+    def test_failed_or_missing_label_sources_keep_exact_pending_observations(self):
+        for kind in ('latest503','missing-primary','missing-companyfacts'):
+            with self.subTest(kind=kind):
+                # Fresh source/ledger for each finite failure, not mutated
+                # production state or permission to make a request.
+                fixture=CompanyFiscalRangeTest();fixture.setUp()
+                try:
+                    url=companyfacts_url(cik=CIK) if kind=='missing-companyfacts' else fixture.fixture.urls[2024]
+                    if kind=='latest503':
+                        fixture.fixture.record(url,b'Unavailable',status=503,error='constructed HTTP503')
+                    else:
+                        fixture.fixture.remove_get(url)
+                    before=fixture.fixture.digest_tree()
+                    with patch('sys.stdout',new_callable=io.StringIO) as stream:
+                        code=main(['sources','--company',COMPANY,'--source-root',str(fixture.source),
+                            '--fiscal-year-start','2024','--fiscal-year-end','2025','--metric','B01'])
+                    result=json.loads(stream.getvalue())
+                    self.assertEqual(code,2);self.assertEqual(result['status'],'FISCAL_RANGE_UNRESOLVED')
+                    self.assertIn(url,stream.getvalue())
+                    pending=next(r for r in result['pending_source_requirements'] if r['source_url']==url)
+                    self.assertEqual(pending['saved_status'],
+                        'SAVED_SOURCE_BLOCKED' if kind=='latest503' else 'MISSING_SAVED_SOURCE')
+                    problems=[x for task in result['tasks'] for x in task['limitations'] if x.get('source_url')==url]
+                    self.assertTrue(problems)
+                    self.assertEqual({x['category'] for x in problems},
+                        {'SOURCE_ACCESS_FAILED'} if kind=='latest503' else {'SOURCE_UNAVAILABLE'})
+                    if kind=='latest503':
+                        self.assertTrue(all(x['failed_request']['status_code']=='503' for x in problems))
+                        self.assertTrue(all(x['failed_request']['error']=='constructed HTTP503' for x in problems))
+                    self.assertFalse(result['complete_known_source_graph'])
+                    self.assertFalse(result['metric_executed']);self.assertFalse(result['fetch_authorized'])
+                    self.assertEqual(before,fixture.fixture.digest_tree())
+                finally:
+                    fixture.doCleanups()
+
+    def test_incoherent_saved_label_content_is_not_a_missing_get(self):
+        self.fixture.record(companyfacts_url(cik=CIK),json.dumps({'cik':999999,'facts':{}}).encode())
+        result=self.discover()
+        self.assertEqual(result['status'],'FISCAL_RANGE_UNRESOLVED')
+        self.assertFalse(result['complete_known_source_graph'])
+        self.assertEqual(result['pending_source_requirements'],[])
+        self.assertTrue(result['tasks'][0]['limitations'])
+        self.assertNotIn('SOURCE_ACCESS_FAILED',{x['category'] for x in result['tasks'][0]['limitations']})
+
     def setUp(self):
         self.fixture=source_fixtures.SelectedSourceRequirementsTest();self.fixture.setUp();self.addCleanup(self.fixture.doCleanups)
         self.source=self.fixture.root
@@ -72,6 +116,8 @@ class CompanyFiscalRangeTest(TestCase):
         self.assertEqual([t['report_end'] for t in r['tasks']],['2024-12-31','2025-12-31'])
         self.assertEqual([t['period_selection']['requested_fiscal_year'] for t in r['tasks']],[2024,2025])
         self.assertFalse(r['metric_executed']);self.assertFalse(r['fetch_authorized'])
+        self.assertTrue(r['complete_known_source_graph'])
+        self.assertEqual(r['pending_source_requirements'],[])
         self.assertEqual(before,self.fixture.digest_tree())
 
     def test_b03_readonly_range_resolves_sources_without_wrapping_unsupported_business_signature(self):

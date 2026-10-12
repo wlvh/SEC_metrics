@@ -14,8 +14,9 @@ from .ordinary_registry_scope import registered_company_row
 from .normal_history_catalog import load_history_for_period, annual_periods
 from .normal_period_selection import PeriodSelectionError, restore_period_selection
 from .normal_source_authority import ROOT
-from .normal_source_requirements import _Requirements
-from .selected_source_requirements import discover_selected_annual_requirements, discover_selected_source_requirements
+from .normal_source_requirements import _Requirements,source_dependency_satisfied
+from .selected_source_requirements import (discover_selected_annual_requirements,
+    discover_selected_source_requirements,_component_source_observation_matches)
 
 METRIC_IDS = frozenset({'B01', 'B02', 'B03'})
 SOURCE_METRIC_IDS = METRIC_IDS | frozenset({'E01'})
@@ -104,7 +105,26 @@ def discover_fiscal_range(*,repo_root,company_id,fiscal_year_start,fiscal_year_e
             primary=reader.require(accession_document_url(cik=int(cik),accession=filing['accessionNumber'],
                 document_name=filing['primaryDocument']),'fiscal_label_primary','text/html',filing['accessionNumber'])
             facts=reader.require(companyfacts_url(cik=int(cik)), 'fiscal_label_companyfacts','application/json')
-            _need(primary is not None and facts is not None,'LABEL_SOURCE_MISSING')
+            urls=(accession_document_url(cik=int(cik),accession=filing['accessionNumber'],
+                       document_name=filing['primaryDocument']),companyfacts_url(cik=int(cik)))
+            row['source_requirements']=[reader.requests[url] for url in urls]
+            blocked=[]
+            for request in row['source_requirements']:
+                if request['saved_status']=='VERIFIED_SAVED_SOURCE':continue
+                failed=[r for r in reader.reader.failed_attempts.values()
+                        if r['source_url']==request['source_url']]
+                issue={'phase':'FISCAL_LABEL','report_end':row['report_end'],
+                    'source_url':request['source_url'],'saved_status':request['saved_status'],
+                    'reason':request.get('reason',request['saved_status']),
+                    'category':'SOURCE_ACCESS_FAILED' if failed else
+                        ('SOURCE_UNAVAILABLE' if request['saved_status']=='MISSING_SAVED_SOURCE' else 'SOURCE_INTEGRITY_ERROR')}
+                if request.get('error_type'):issue['error_type']=request['error_type']
+                if failed:issue['failed_request']=failed[-1]
+                blocked.append(issue)
+            if blocked:
+                row.update(source_limitations=blocked,limitation=blocked[0])
+                entries.append(row)
+                continue
             primary_proof=reader.requests[primary['source_reference']['source_url']]['proof']
             facts_proof=reader.requests[facts['source_reference']['source_url']]['proof']
             label=resolve_selected_fiscal_year_label(primary_bytes=primary['raw_bytes'],companyfacts_bytes=facts['raw_bytes'],
@@ -125,7 +145,8 @@ def discover_fiscal_range(*,repo_root,company_id,fiscal_year_start,fiscal_year_e
         # Issuer definitions, not date arithmetic, determine membership.
         # An unread original in this metadata window cannot be dismissed merely
         # because a known source already supplies the requested label.
-        unread=[e['limitation'] for e in entries if not e['source_fiscal_year_resolved']]
+        unread=[issue for e in entries if not e['source_fiscal_year_resolved']
+                for issue in e.get('source_limitations',[e['limitation']])]
         matches=[e for e in entries if e.get('fiscal_year')==year]
         task['limitations'].extend(unread)
         if not task['limitations'] and len(matches)==1:
@@ -146,11 +167,32 @@ def discover_fiscal_range(*,repo_root,company_id,fiscal_year_start,fiscal_year_e
             task['limitations'].append({'phase':'FISCAL_LABEL_UNIQUENESS',
                 'reason':'FISCAL_YEAR_MISSING_OR_AMBIGUOUS','matching_report_ends':[m['report_end'] for m in matches]})
         tasks.append(task)
+    requirements={url:{**r,'roles':list(r['roles'])} for reader in readers.values()
+                  for url,r in reader.requests.items()}
+    for task in tasks:
+        for request in task.get('source_preflight',{}).get('requirements',[]):
+            old=requirements.get(request['source_url'])
+            if old is None:
+                requirements[request['source_url']]={**request,'roles':list(request['roles'])}
+            else:
+                _need(old['saved_status']==request['saved_status']
+                    and _component_source_observation_matches(old.get('proof',{}),request.get('proof',{}),
+                        facts_url=request['source_url'] if request['source_url'] in
+                            {companyfacts_url(cik=int(cik)) for cik in readers} else None),
+                    'SOURCE_OBSERVATION_CHANGED_DURING_DISCOVERY')
+                old['roles']=list(dict.fromkeys((*old['roles'],*request['roles'])))
+                if request.get('alternative_dependency'):
+                    old['alternative_dependency']=request['alternative_dependency']
+    pending=[r for r in requirements.values() if not source_dependency_satisfied(r)]
+    graph=all(t['status']=='FISCAL_YEAR_RESOLVED'
+              and t.get('source_preflight',{}).get('complete_known_source_graph',False) for t in tasks)
     body={'record_type':'COMPANY_FISCAL_RANGE_SOURCE_V1','company_id':company_id,
         'fiscal_years':years,'metric_ids':list(metric_ids),'candidates':entries,'tasks':tasks,
         'status':'FISCAL_RANGE_RESOLVED' if all(t['status']=='FISCAL_YEAR_RESOLVED' for t in tasks)
                  else 'FISCAL_RANGE_UNRESOLVED',
         'all_source_bytes_available':all(t.get('source_bytes_available',False) for t in tasks),
+        'known_source_requirements':list(requirements.values()),
+        'pending_source_requirements':pending,'complete_known_source_graph':graph,
         'discovery_scope':'EXISTING_TARGET_AND_NEAREST_PRIOR_METADATA_WINDOW',
         'all_older_history_excluded_by_fiscal_label':False,
         'current_sec_freshness_proven':False,
