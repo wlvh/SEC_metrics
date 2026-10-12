@@ -1,0 +1,20 @@
+{
+  "original_scope": "issue_47_v1,35/35/0",
+  "original_intent_type": "ISSUE_47_HISTORICAL_MODEL_CALL_INTENT",
+  "original_terminal_type": "ISSUE_47_HISTORICAL_MODEL_CALL_TERMINAL",
+  "intent_has_channel": false,
+  "intent_has_requirement_closure_hash": false,
+  "original_intent_has_allowance_binding_and_grants": true,
+  "plan_has_original_requirement_closure_hash": true,
+  "terminal_counts": [
+    1,
+    1,
+    0
+  ],
+  "needed_shared_handling": "Read actual historical format as such; do not insert channel/closure fields, rewrite intent hashes or create current live allowance",
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

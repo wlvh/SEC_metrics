@@ -1,0 +1,463 @@
+{
+  "record_type": "D04_NATIVE_SOURCE_ASSESSMENT_SET",
+  "source_id": "sha256:c65c0acca441ffe0e892cfca2dc6c120163a545292ba514a0215ab973b872db8",
+  "company_id": "marriott_international",
+  "required_request_ids": [
+    "sha256:9c0f2ec9dcba50f867c063a8fc66dcc64b6d6e1e7dfc6590d1eaea5faa9d8117",
+    "sha256:3c8ea42c706cb7d460f87115f81eda2bfde5e2e6e37cefeffdeab4ce478e9210",
+    "sha256:49db945797813e0267affe6a9e8b1374559249457542f571c26eef2f9097b329",
+    "sha256:94d8435c5a92bea93e8e76cd863e8ea763cdf93fb4052d1686649fd4dc252bb3"
+  ],
+  "completed": [
+    {
+      "request_id": "sha256:9c0f2ec9dcba50f867c063a8fc66dcc64b6d6e1e7dfc6590d1eaea5faa9d8117",
+      "ordinal": 20,
+      "terminal_id": "sha256:5eb87a51847180e8106a0d1fb71f965eb1cb5df36cdf951ceb8b58262676bccf",
+      "acceptance_receipt_id": "sha256:e1ccdecdb96a690d5c4ebc08e74e4fdac721859c800503e697679096ee2770a8",
+      "candidate": {
+        "assistant_output_sha256": "549c6dfbf5ecf273e34787e29283bf49377872e1b2ecaa3d84f7b83368f8c3c0",
+        "attempt_id": "going-concern:4be174a898e275f639b2f08de6ce16abdb1c370866ebefeae7a8e9aff673604e",
+        "candidate_hash": "sha256:df813b9d5acb9e423d3229b4d7564add7a5b3aa1ea2fddfbf3664503bd590941",
+        "competing_candidates": [],
+        "derived_asset_ids": [
+          "sha256:9c0f2ec9dcba50f867c063a8fc66dcc64b6d6e1e7dfc6590d1eaea5faa9d8117"
+        ],
+        "disclosure_group": "d04_going_concern_source_assessment_v1",
+        "record_type": "OBSERVATION_CANDIDATE",
+        "selected": {
+          "source_assessment": {
+            "calculation_limits": [],
+            "findings": [],
+            "request_id": "sha256:9c0f2ec9dcba50f867c063a8fc66dcc64b6d6e1e7dfc6590d1eaea5faa9d8117",
+            "unit_ids": [
+              "sha256:4a04bc2e07867ac0b21433e5146d0e5bce8893781aa28980a53df40be120388c",
+              "sha256:295c1c875c20b19978e14b5fbd2a9e6d50f36bff057fe02acc7797b1b1563c9e",
+              "sha256:8883f3b6ec2cfcf6bd86ac3eed6c3db1c5c26d8ed8fd83949822ff62907d7f1b",
+              "sha256:19e139ed0c5050c81e6c249ad52199aeef43bf5e25d309621d42b26470a0a18a",
+              "sha256:c5a107d679d32510d2b74d95e2e19c6ba9610c75458412f6588fb99f337b9044"
+            ]
+          }
+        },
+        "source_reference_ids": [
+          "sha256:7cf0e5ed84b13e459c4d010ac18c1bae2229587a8ce78a4fff367018cf7743d4"
+        ],
+        "status": "CANDIDATE",
+        "unresolved_competing_claims": []
+      },
+      "evidence": {
+        "candidate_hash": "sha256:df813b9d5acb9e423d3229b4d7564add7a5b3aa1ea2fddfbf3664503bd590941",
+        "checks": [
+          {
+            "check": "D04_COMPLETE_REQUEST_UNIT_RESPONSE",
+            "request_id": "sha256:9c0f2ec9dcba50f867c063a8fc66dcc64b6d6e1e7dfc6590d1eaea5faa9d8117",
+            "status": "PASS",
+            "unit_ids": [
+              "sha256:4a04bc2e07867ac0b21433e5146d0e5bce8893781aa28980a53df40be120388c",
+              "sha256:295c1c875c20b19978e14b5fbd2a9e6d50f36bff057fe02acc7797b1b1563c9e",
+              "sha256:8883f3b6ec2cfcf6bd86ac3eed6c3db1c5c26d8ed8fd83949822ff62907d7f1b",
+              "sha256:19e139ed0c5050c81e6c249ad52199aeef43bf5e25d309621d42b26470a0a18a",
+              "sha256:c5a107d679d32510d2b74d95e2e19c6ba9610c75458412f6588fb99f337b9044"
+            ]
+          },
+          {
+            "check": "D04_ORIGINAL_SOURCE_REFERENCES_AND_ROLES",
+            "findings": [],
+            "status": "PASS"
+          }
+        ],
+        "evidence_check_id": "sha256:e4eec6375d72f4edc73fb21132e80ac5d6ad53d955914b8f0e0bff19ae11bdd1",
+        "identity_constraints": [],
+        "normalized_values": {
+          "source_assessment": {
+            "calculation_limits": [],
+            "findings": [],
+            "request_id": "sha256:9c0f2ec9dcba50f867c063a8fc66dcc64b6d6e1e7dfc6590d1eaea5faa9d8117",
+            "unit_ids": [
+              "sha256:4a04bc2e07867ac0b21433e5146d0e5bce8893781aa28980a53df40be120388c",
+              "sha256:295c1c875c20b19978e14b5fbd2a9e6d50f36bff057fe02acc7797b1b1563c9e",
+              "sha256:8883f3b6ec2cfcf6bd86ac3eed6c3db1c5c26d8ed8fd83949822ff62907d7f1b",
+              "sha256:19e139ed0c5050c81e6c249ad52199aeef43bf5e25d309621d42b26470a0a18a",
+              "sha256:c5a107d679d32510d2b74d95e2e19c6ba9610c75458412f6588fb99f337b9044"
+            ]
+          }
+        },
+        "reason_codes": [],
+        "record_type": "EVIDENCE_CHECK",
+        "status": "PASS"
+      },
+      "original_counts": [
+        1,
+        1,
+        0
+      ],
+      "original_usage": {
+        "actual_cost": null,
+        "cache_hit_input_tokens": 1152,
+        "cache_miss_input_tokens": 162715,
+        "input_tokens": 163867,
+        "output_tokens": 110
+      },
+      "original_requirement_id": "issue_47_v1",
+      "original_requirement_closure_hash": "sha256:ebefaffb8af9181bd52ce1d602572de3aebc7927bd0e794dcf01639db7976388",
+      "current_validator_semantic_hash": "sha256:466fd63aab8d47113789d0eb2fa08584408108880e3d3a0dd3906c6d115a6444"
+    },
+    {
+      "request_id": "sha256:3c8ea42c706cb7d460f87115f81eda2bfde5e2e6e37cefeffdeab4ce478e9210",
+      "ordinal": 21,
+      "terminal_id": "sha256:65ed8896e23d1a21166369a3cf43f459ac9d6f0ba78c6c3e038bd748cb097450",
+      "acceptance_receipt_id": "sha256:07dc456611056c8a1540085a0ff54d9f77c35e82be13fc2544a50f10ea736347",
+      "candidate": {
+        "assistant_output_sha256": "b24b1d2dc48d2b2775879f20db32926f8752931c1a36a1937099602538e77e20",
+        "attempt_id": "going-concern:9cf15dcb24f02465bb036f7c15caac303daf302cfa1335a52c393610cb02b026",
+        "candidate_hash": "sha256:3f22622583bc1ca11db4f559822ea7f0fbc11bac481e34d5550fd6edfb70d43e",
+        "competing_candidates": [],
+        "derived_asset_ids": [
+          "sha256:3c8ea42c706cb7d460f87115f81eda2bfde5e2e6e37cefeffdeab4ce478e9210"
+        ],
+        "disclosure_group": "d04_going_concern_source_assessment_v1",
+        "record_type": "OBSERVATION_CANDIDATE",
+        "selected": {
+          "source_assessment": {
+            "calculation_limits": [],
+            "findings": [],
+            "request_id": "sha256:3c8ea42c706cb7d460f87115f81eda2bfde5e2e6e37cefeffdeab4ce478e9210",
+            "unit_ids": [
+              "sha256:e1240c76bf6a57fb598281f2007cf8ea42ee4ea77532855b04f38e0d2976917f",
+              "sha256:a25dd337c31f13bf34e631dbbccaf865240dd87dd594219879dfdeca7d1c0b5c",
+              "sha256:0f12438492c956b9f25af8ce828c0eba156df2ce88a869c3b49974a88f449334",
+              "sha256:dea23913ee6bbb97e5ae1b2c5c413906a16d0b2aae9103fc3140925924a79187"
+            ]
+          }
+        },
+        "source_reference_ids": [
+          "sha256:7cf0e5ed84b13e459c4d010ac18c1bae2229587a8ce78a4fff367018cf7743d4"
+        ],
+        "status": "CANDIDATE",
+        "unresolved_competing_claims": []
+      },
+      "evidence": {
+        "candidate_hash": "sha256:3f22622583bc1ca11db4f559822ea7f0fbc11bac481e34d5550fd6edfb70d43e",
+        "checks": [
+          {
+            "check": "D04_COMPLETE_REQUEST_UNIT_RESPONSE",
+            "request_id": "sha256:3c8ea42c706cb7d460f87115f81eda2bfde5e2e6e37cefeffdeab4ce478e9210",
+            "status": "PASS",
+            "unit_ids": [
+              "sha256:e1240c76bf6a57fb598281f2007cf8ea42ee4ea77532855b04f38e0d2976917f",
+              "sha256:a25dd337c31f13bf34e631dbbccaf865240dd87dd594219879dfdeca7d1c0b5c",
+              "sha256:0f12438492c956b9f25af8ce828c0eba156df2ce88a869c3b49974a88f449334",
+              "sha256:dea23913ee6bbb97e5ae1b2c5c413906a16d0b2aae9103fc3140925924a79187"
+            ]
+          },
+          {
+            "check": "D04_ORIGINAL_SOURCE_REFERENCES_AND_ROLES",
+            "findings": [],
+            "status": "PASS"
+          }
+        ],
+        "evidence_check_id": "sha256:39e03e3bfa62ac4999667094f69c7a618c7a06bf511ab08210fd0b3a13c1360e",
+        "identity_constraints": [],
+        "normalized_values": {
+          "source_assessment": {
+            "calculation_limits": [],
+            "findings": [],
+            "request_id": "sha256:3c8ea42c706cb7d460f87115f81eda2bfde5e2e6e37cefeffdeab4ce478e9210",
+            "unit_ids": [
+              "sha256:e1240c76bf6a57fb598281f2007cf8ea42ee4ea77532855b04f38e0d2976917f",
+              "sha256:a25dd337c31f13bf34e631dbbccaf865240dd87dd594219879dfdeca7d1c0b5c",
+              "sha256:0f12438492c956b9f25af8ce828c0eba156df2ce88a869c3b49974a88f449334",
+              "sha256:dea23913ee6bbb97e5ae1b2c5c413906a16d0b2aae9103fc3140925924a79187"
+            ]
+          }
+        },
+        "reason_codes": [],
+        "record_type": "EVIDENCE_CHECK",
+        "status": "PASS"
+      },
+      "original_counts": [
+        1,
+        1,
+        0
+      ],
+      "original_usage": {
+        "actual_cost": null,
+        "cache_hit_input_tokens": 2048,
+        "cache_miss_input_tokens": 176193,
+        "input_tokens": 178241,
+        "output_tokens": 89
+      },
+      "original_requirement_id": "issue_47_v1",
+      "original_requirement_closure_hash": "sha256:ebefaffb8af9181bd52ce1d602572de3aebc7927bd0e794dcf01639db7976388",
+      "current_validator_semantic_hash": "sha256:466fd63aab8d47113789d0eb2fa08584408108880e3d3a0dd3906c6d115a6444"
+    },
+    {
+      "request_id": "sha256:49db945797813e0267affe6a9e8b1374559249457542f571c26eef2f9097b329",
+      "ordinal": 22,
+      "terminal_id": "sha256:7e4eb7709e41b7a90b4dc691e18e085b52e2221f7242fe1b8adc2b90c67cb5d6",
+      "acceptance_receipt_id": "sha256:3a6deda6080e768ca1a849d326d1717b1c8ceb0d279591a55418bdd71190c0aa",
+      "candidate": {
+        "assistant_output_sha256": "9cc968748e7930a67c9973bbed6be8f770384d9bb116d2421c77339c1dd5c5d6",
+        "attempt_id": "going-concern:fe12cef67b967e04afb6f303491bbc740bab171a1cb809e3389956cf0e15b6dc",
+        "candidate_hash": "sha256:fff302fae5ecf79503c465506b1f4253f7e07cb5c192c13739443631287e92c6",
+        "competing_candidates": [],
+        "derived_asset_ids": [
+          "sha256:49db945797813e0267affe6a9e8b1374559249457542f571c26eef2f9097b329"
+        ],
+        "disclosure_group": "d04_going_concern_source_assessment_v1",
+        "record_type": "OBSERVATION_CANDIDATE",
+        "selected": {
+          "source_assessment": {
+            "calculation_limits": [],
+            "findings": [],
+            "request_id": "sha256:49db945797813e0267affe6a9e8b1374559249457542f571c26eef2f9097b329",
+            "unit_ids": [
+              "sha256:1a03def333daccaadd5387afcf5536dbe9254b394860d050cd887718497f66c9",
+              "sha256:fcb6457ea9403e4013312101b212d1213fbdba7b63fdae5170fd571a70071560",
+              "sha256:0ecc2f488ddae1b734b246d4711816fec255e1cb981d01c3e2ac5695fd4de3db",
+              "sha256:bcb192c7bdd872196b1752eda1830c445d06dd289a9a450d5956d9fa1b70313e",
+              "sha256:94676db39ca67b1471f080a7872c6c4fa2cb26ba4ef8fb1d95d3e0f9158ece05",
+              "sha256:2c87ee0700b24ec189e68bb8dcf63143d8d2fe6043ca09c4a5949f65fec17da0"
+            ]
+          }
+        },
+        "source_reference_ids": [
+          "sha256:7cf0e5ed84b13e459c4d010ac18c1bae2229587a8ce78a4fff367018cf7743d4"
+        ],
+        "status": "CANDIDATE",
+        "unresolved_competing_claims": []
+      },
+      "evidence": {
+        "candidate_hash": "sha256:fff302fae5ecf79503c465506b1f4253f7e07cb5c192c13739443631287e92c6",
+        "checks": [
+          {
+            "check": "D04_COMPLETE_REQUEST_UNIT_RESPONSE",
+            "request_id": "sha256:49db945797813e0267affe6a9e8b1374559249457542f571c26eef2f9097b329",
+            "status": "PASS",
+            "unit_ids": [
+              "sha256:1a03def333daccaadd5387afcf5536dbe9254b394860d050cd887718497f66c9",
+              "sha256:fcb6457ea9403e4013312101b212d1213fbdba7b63fdae5170fd571a70071560",
+              "sha256:0ecc2f488ddae1b734b246d4711816fec255e1cb981d01c3e2ac5695fd4de3db",
+              "sha256:bcb192c7bdd872196b1752eda1830c445d06dd289a9a450d5956d9fa1b70313e",
+              "sha256:94676db39ca67b1471f080a7872c6c4fa2cb26ba4ef8fb1d95d3e0f9158ece05",
+              "sha256:2c87ee0700b24ec189e68bb8dcf63143d8d2fe6043ca09c4a5949f65fec17da0"
+            ]
+          },
+          {
+            "check": "D04_ORIGINAL_SOURCE_REFERENCES_AND_ROLES",
+            "findings": [],
+            "status": "PASS"
+          }
+        ],
+        "evidence_check_id": "sha256:06b618245a0af678f407a11dfef90f64ca772c5d77305bd48ac6677efdfc8948",
+        "identity_constraints": [],
+        "normalized_values": {
+          "source_assessment": {
+            "calculation_limits": [],
+            "findings": [],
+            "request_id": "sha256:49db945797813e0267affe6a9e8b1374559249457542f571c26eef2f9097b329",
+            "unit_ids": [
+              "sha256:1a03def333daccaadd5387afcf5536dbe9254b394860d050cd887718497f66c9",
+              "sha256:fcb6457ea9403e4013312101b212d1213fbdba7b63fdae5170fd571a70071560",
+              "sha256:0ecc2f488ddae1b734b246d4711816fec255e1cb981d01c3e2ac5695fd4de3db",
+              "sha256:bcb192c7bdd872196b1752eda1830c445d06dd289a9a450d5956d9fa1b70313e",
+              "sha256:94676db39ca67b1471f080a7872c6c4fa2cb26ba4ef8fb1d95d3e0f9158ece05",
+              "sha256:2c87ee0700b24ec189e68bb8dcf63143d8d2fe6043ca09c4a5949f65fec17da0"
+            ]
+          }
+        },
+        "reason_codes": [],
+        "record_type": "EVIDENCE_CHECK",
+        "status": "PASS"
+      },
+      "original_counts": [
+        1,
+        1,
+        0
+      ],
+      "original_usage": {
+        "actual_cost": null,
+        "cache_hit_input_tokens": 2048,
+        "cache_miss_input_tokens": 192026,
+        "input_tokens": 194074,
+        "output_tokens": 131
+      },
+      "original_requirement_id": "issue_47_v1",
+      "original_requirement_closure_hash": "sha256:ebefaffb8af9181bd52ce1d602572de3aebc7927bd0e794dcf01639db7976388",
+      "current_validator_semantic_hash": "sha256:466fd63aab8d47113789d0eb2fa08584408108880e3d3a0dd3906c6d115a6444"
+    },
+    {
+      "request_id": "sha256:94d8435c5a92bea93e8e76cd863e8ea763cdf93fb4052d1686649fd4dc252bb3",
+      "ordinal": 23,
+      "terminal_id": "sha256:8818acfbb8d8a5212516d5a4a3c22ad9b1d341aed4da36dfcc3e9d195648453f",
+      "acceptance_receipt_id": "sha256:838de57d3ac2c4b41f260f2f80aa822e3067e6fa1f09a42f3453e4375da71137",
+      "candidate": {
+        "assistant_output_sha256": "e6890fd822b352f0d643e2cdae5a02de6c37fc33fee77aa69a10de64eab0dd56",
+        "attempt_id": "going-concern:ca2197f41e781469482fda3888c35155f8462ebf6bbf874c2c0ee98605a0d70a",
+        "candidate_hash": "sha256:8e5721329575f6bbbdf15541c5be85c873ce123a39b5f1cbd4e36a279b9c0153",
+        "competing_candidates": [],
+        "derived_asset_ids": [
+          "sha256:94d8435c5a92bea93e8e76cd863e8ea763cdf93fb4052d1686649fd4dc252bb3"
+        ],
+        "disclosure_group": "d04_going_concern_source_assessment_v1",
+        "record_type": "OBSERVATION_CANDIDATE",
+        "selected": {
+          "source_assessment": {
+            "calculation_limits": [],
+            "findings": [],
+            "request_id": "sha256:94d8435c5a92bea93e8e76cd863e8ea763cdf93fb4052d1686649fd4dc252bb3",
+            "unit_ids": [
+              "sha256:67751b6b29d49ec7e998e6afd242ae4d933bcf547429564610cc103771203418"
+            ]
+          }
+        },
+        "source_reference_ids": [
+          "sha256:7cf0e5ed84b13e459c4d010ac18c1bae2229587a8ce78a4fff367018cf7743d4"
+        ],
+        "status": "CANDIDATE",
+        "unresolved_competing_claims": []
+      },
+      "evidence": {
+        "candidate_hash": "sha256:8e5721329575f6bbbdf15541c5be85c873ce123a39b5f1cbd4e36a279b9c0153",
+        "checks": [
+          {
+            "check": "D04_COMPLETE_REQUEST_UNIT_RESPONSE",
+            "request_id": "sha256:94d8435c5a92bea93e8e76cd863e8ea763cdf93fb4052d1686649fd4dc252bb3",
+            "status": "PASS",
+            "unit_ids": [
+              "sha256:67751b6b29d49ec7e998e6afd242ae4d933bcf547429564610cc103771203418"
+            ]
+          },
+          {
+            "check": "D04_ORIGINAL_SOURCE_REFERENCES_AND_ROLES",
+            "findings": [],
+            "status": "PASS"
+          }
+        ],
+        "evidence_check_id": "sha256:a171167ad5b641c9fa2cde383df257756395928508df24a9b6616f11620a79eb",
+        "identity_constraints": [],
+        "normalized_values": {
+          "source_assessment": {
+            "calculation_limits": [],
+            "findings": [],
+            "request_id": "sha256:94d8435c5a92bea93e8e76cd863e8ea763cdf93fb4052d1686649fd4dc252bb3",
+            "unit_ids": [
+              "sha256:67751b6b29d49ec7e998e6afd242ae4d933bcf547429564610cc103771203418"
+            ]
+          }
+        },
+        "reason_codes": [],
+        "record_type": "EVIDENCE_CHECK",
+        "status": "PASS"
+      },
+      "original_counts": [
+        1,
+        1,
+        0
+      ],
+      "original_usage": {
+        "actual_cost": null,
+        "cache_hit_input_tokens": 2048,
+        "cache_miss_input_tokens": 23047,
+        "input_tokens": 25095,
+        "output_tokens": 26
+      },
+      "original_requirement_id": "issue_47_v1",
+      "original_requirement_closure_hash": "sha256:ebefaffb8af9181bd52ce1d602572de3aebc7927bd0e794dcf01639db7976388",
+      "current_validator_semantic_hash": "sha256:466fd63aab8d47113789d0eb2fa08584408108880e3d3a0dd3906c6d115a6444"
+    }
+  ],
+  "missing_request_ids": [],
+  "failed_requests": [],
+  "all_source_requests_accepted": true,
+  "proposed_branch": "DEFINED_SCOPE_ABSENCE_PROPOSAL_REQUIRES_NATIVE_REVIEW",
+  "source_findings": [],
+  "mode": "LIVE",
+  "native_request_variants": [
+    "INDEXED_UNITS_V1",
+    "INDEXED_UNITS_V1",
+    "INDEXED_UNITS_V1",
+    "INDEXED_UNITS_V1"
+  ],
+  "original_allowance_binding": {
+    "binding_id": "sha256:3842e87b7ac56ca3b85619733f3c97507183846d8c965c191de65810815f9c67",
+    "delegation_body_sha256": "9a368413797ddef13ecaf98dfa9f4f3b55a6a8db6f035605f761828e38883e6c",
+    "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5970103848",
+    "execution_mode": "LIVE",
+    "limits": [
+      35,
+      35,
+      0
+    ],
+    "purposes": [
+      "ISSUE47_HISTORICAL_SEMANTIC_ASSESSMENT"
+    ],
+    "record_type": "ISSUE_47_HISTORICAL_MODEL_ALLOWANCE",
+    "request_digests_by_grant": {
+      "D02_FISCAL_JANUARY_2026": [
+        "sha256:95432daf4c59c0f39246dd5996b728acfd31acc10c582a943c5507bf862bfd70",
+        "sha256:a5ab17965b54a2f753eba496e9c80926f97d48c23f9d72143e8265fe0e282b25"
+      ],
+      "D02_FY2025_CALENDAR": [
+        "sha256:17aefe2ce1f1e736ccfde8c88699a1dbe03469c7d3f2bed87e702224778fffab",
+        "sha256:39524c19ec29e4162984e633751742386d211bff3b6afe2ebea02cff500529a1",
+        "sha256:40e79bb821b033427325228a742ce920ad6b858653b4ac2cf6f78fc84b0f78ad",
+        "sha256:5e6ba3ba06bed5315e9ec73f51fd35e588e2ea07d2c094d88f30318eaad95be4",
+        "sha256:75002feb7f3f2dc04c419e1bcce60866fa115dbef4d12522f1de83e72a2d8233",
+        "sha256:e2a8c212763757425560bcc4ea40bba5d4cf1b81b5619a4cc2a05bc4430b1a66",
+        "sha256:f81847d3472ce45e7d7b8624bd05c82046e6211537adb9e1d5618030280b4e6b"
+      ],
+      "D02_MARRIOTT_FY2023_FY2024": [
+        "sha256:33ea0f80b92f00a1e8a62d91347105e24cdc59e413da7602bdc12689c109f356",
+        "sha256:df0e5864cc60147194a6deef9439599164ec4faf37b2dfbfa2f9c7c0fa6b8931"
+      ],
+      "D02_PARAMOUNT_PREDECESSOR_FY2024": [
+        "sha256:6781306ba0ec67cf2bc307500fc8cb9d60c3287042dcb2a00ba30c93c831bfb6"
+      ],
+      "D04_MARRIOTT_FY2023_FY2024": [
+        "sha256:035b339ef0b73eadebc60eca7d9f96325163ad05cd4961192dfdf0c7e0d97c64",
+        "sha256:049d0a5c43268e2a45bbb70d0a3a95b0d3123ab72a0739bb70b64ffed46fd329",
+        "sha256:0f2cadb8118c068808eeb4a0f5e13e7586f1c7a2f863b24d34e15cab8cb65ec9",
+        "sha256:55a916ad4477b19ca732202dd1582a6ad7bbba3d7c16dce1db84c7a66a367594",
+        "sha256:adc49b8026b936a2ecd920cac84dbce86186f142236bd9de206a52542ad4c918",
+        "sha256:d91c36576d9c38a5c89369a5e2e1c130747fd00ce18ff3328015082f3f489249",
+        "sha256:e863215103cc78a95cd5746cd25721b2d9995ec9952e623bc44372f9f1fd8345",
+        "sha256:f762a3f5dc100706d6e04b5193f988eeb04884da9cc2e80ffecb2d2d663551a9"
+      ],
+      "D04_PARAMOUNT_PREDECESSOR_FY2024": [
+        "sha256:2f553f5aa318cf0327158b681f0908ef203c50381083b6ce9c7461c581d396f1",
+        "sha256:352746682d884c5d94cb468f463b5d4f0e2358573eacaa40c896d0522c33a349",
+        "sha256:4c6375760e553f73d5468bc4d6e0ce32237b503c6b655ee160436864ff5db36b",
+        "sha256:5eed18a990ab06fb4aad25490c36773af56b8912c2851d279882e0e0c600202d",
+        "sha256:6c7f77dfb0d3861df13c26b4b6a98df4fec9e9ab2cc573b52b2cd13ae92b8f6f",
+        "sha256:a2ade001c7940bd186a0bf56f6a3a4afadce1ccc6c81395931c11047f93b8794",
+        "sha256:a4b09fc4e72c1dadb2f17232080d6a71a53c31e442915463548d4be9bd9b7a0b",
+        "sha256:aafe3604c3f15935d635a9632317972fc8737560d451108260fb8fc730ccfb0a"
+      ],
+      "E01_FY2025_CALENDAR_WINDOWS": [
+        "sha256:01e2446cb97c68f34962b6b24b39136fd2f45ed1cd45d5a0df12a76bf6afbb4b",
+        "sha256:5111af6c7cdf60e9bc6fc94f3370041f78104a2964de83edb624b9ea5be5dfb8",
+        "sha256:7e521f10bf6f474f63fa9937e8fc9e678011dac0ed44988564751cdf5e9a084f",
+        "sha256:87c5f4dc3d20ee8e8d78d9c26943e1ca52048e91188832734626c15add7938eb",
+        "sha256:ba93585478a7d23961b87210ad7864d0b681ac5d55abd875e6f2d69e6db34c49"
+      ],
+      "E01_MACYS_FY2025": [
+        "sha256:15a30b067e8bb799e513deb78552c6011483dae4602b63d9ab99076106c49962"
+      ],
+      "E01_PARAMOUNT_PREDECESSOR_FY2024": [
+        "sha256:11f9f8deeecc0691ed326daa2f2d65817d65bf24c90a32e16b5df07d5cf65554"
+      ]
+    },
+    "requirement_id": "issue_47_v1",
+    "root": "/root/.local/state/sec_metrics/issue47-historical-model-cloud-v1"
+  },
+  "metric_result_created": false,
+  "review_complete": false,
+  "production_authorized": false,
+  "filing_media_coverage_verified": false,
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "assessment_set_id": "sha256:76d9768f1b313a6f04b16dacedf1f4ff3bacf3da35e825c957e9fc7fcb64ff64"
+}

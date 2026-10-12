@@ -284,6 +284,26 @@ python3 tools/vnext_company.py results --company macys \
 
 同输入禁工厂复跑均不计算，独立结果读取保留实际期间和出处。原Marriott任务只处理原失败FY2021，其他四个ECD年度的值／ID不改不重算；同一读口已可查看这五年结果和原缺源失败。该事实是已接收的有限消费者范围，不代表完整十公司C03、修订、所有年度或自动取源已完成。实际公司首跑78–139秒，不能用来源函数检查的短耗时代替；后续性能优化仍按共享实现处理。[原公司链、原格定位、复跑与旧任务接续记录](evidence/issue47_c03_sct_consumer_20261010/README.md)。技术接收没有新增SEC／模型调用或正式采纳权限。
 
+## 保存 D04 回答的历史候选（PR147，尚未入 main）
+
+本节适用于 [PR147](https://github.com/wlvh/SEC_metrics/pull/147) 的当前消费者 head（已接实际main `e24a5271`），实际依赖公共 [PR146](https://github.com/wlvh/SEC_metrics/pull/146)（`1055c80e`，包含原 `4e773d44` 源码）。它已从同一公司入口保存和读取 Marriott FY2023、FY2024 的明确媒体扣留，不能把这项候选能力写成 main 已支持的完整 D04。
+
+取得该候选后，使用已有完整 SEC 来源根和原始回答包。原包在保留分支 `task/sec-history-five-year@bcc0c0bc` 的 `evidence/issue47_model_calls/9a368413797ddef1/model-ledger.tar.gz`；新消费者检出根不包含这个包。来源首次恢复仍按上节已有步骤，已有恢复根直接复用，不重新 GET 或调模型。将以下路径变量设为实际输入及自己的外部状态/输出目录：
+
+```bash
+python3 tools/vnext_company.py run --company marriott_international \
+  --period fiscal-years --fiscal-year-start 2023 --fiscal-year-end 2024 \
+  --metric D04 --source-root "$ISSUE47_SAVED_SOURCE_ROOT" \
+  --saved-call-package "$ISSUE47_ORIGINAL_MODEL_PACKAGE" \
+  --work-dir "$ISSUE47_D04_STATE" --output-dir "$ISSUE47_D04_RUNS"
+python3 tools/vnext_company.py results --company marriott_international \
+  --state-root "$ISSUE47_D04_STATE" --output-root "$ISSUE47_D04_NEW_READ"
+```
+
+`run` 返回2，对应已完成检查后的 `D04_SAVED_FILING_MEDIA_COVERAGE_NOT_VERIFIED`、`WITHHELD` 和空值；`results` 返回0并导出具名限制和出处。两年各自保存实际全年日期及报送主体，不能使用最新年份或另一年的回答填缺。相同输入复跑直接读扣留结果；原回答包作为明确的处理输入参与变化检查，修改或缺失不能隐蔽复用。
+
+`--saved-call-package` 必须同时使用 `--source-root`、`--period fiscal-years` 和明确的 `--metric D04`；当期、在线、未选择指标或其他指标模式在写入前拒绝。原包和 SEC 来源只读，状态/输出分开，读取输出目录必须新。完整输入评估留在每项 `record_root/input-assessments.json`，CSV 只作结果/限制及出处展示。14张原图片仍未取得或解释，文本回答通过不能证明完整申报没有持续经营疑虑。这个入口不新增调用额度或正式业务信用，也不取消完整历史来源发现与补齐责任。[实际公司命令、复跑、缺年与原包保护记录](evidence/issue47_d04_history_consumer_20261010/README.md)。
+
 ## 状态、复跑和局部失败
 
 同一指标按财年各自保存。成功同输入复跑为 `NO_SOURCE_CONTENT_CHANGE`；已经完整检查但因业务原因扣留的同输入复跑为 `PREVIOUS_INPUT_WITHHELD`。两者均不再调用计算工厂，不新增相同结果目录。改变实际相关来源、补齐依赖或处理配置后重新处理；普通异常和未完成记录不被缓存为已完成业务结论。

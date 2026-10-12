@@ -82,6 +82,9 @@ name: Company saved-source records
     - .github/workflows/company-current-records.yml
     - tests/vnext/test_historical_auditor_selection.py
     - tests/vnext/test_historical_auditor_case.py
+    - tests/vnext/test_historical_d04_selection.py
+    - tests/vnext/test_historical_d04_case.py
+    - tests/vnext/test_saved_d04_replay.py
     - tests/vnext/test_b06_fallback_source_forms.py
 permissions:
   contents: read
@@ -224,6 +227,15 @@ jobs:
       env:
         PYTHONDONTWRITEBYTECODE: '1'
       run: python3 tests/required_unittests.py tests.vnext.test_historical_auditor_selection tests.vnext.test_historical_auditor_case
+    - name: Original saved D04 replay and selected update retention
+      env:
+        PYTHONDONTWRITEBYTECODE: '1'
+      run: python3 tests/required_unittests.py tests.vnext.test_saved_d04_replay tests.vnext.test_current_d04_company
+        tests.vnext.test_ordinary_current_update.SelectedPeriodUpdateTest tests.vnext.test_company_current_records
+    - name: Historical D04 selected source and saved response consumer
+      env:
+        PYTHONDONTWRITEBYTECODE: '1'
+      run: python3 tests/required_unittests.py tests.vnext.test_historical_d04_selection tests.vnext.test_historical_d04_case
   source-contracts:
     runs-on: ubuntu-latest
     timeout-minutes: 5

@@ -1,0 +1,9 @@
+read-before 0.532 0
+one-upgrade 11.365 2
+forbidden-repeat 0.928 2
+independent-read 0.509 0
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-d04-main-receiving-20261011-2/SEC_metrics/docs/evidence/issue47_d04_history_consumer_20261010/main-951-receiving/verify_existing_year.py", line 95, in <module>
+    assert [{k: r[k] for k in columns} for r in rows] == [{k: r[k] for k in columns} for r in before_rows]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

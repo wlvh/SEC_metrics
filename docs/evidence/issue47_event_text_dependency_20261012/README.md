@@ -22,3 +22,7 @@ PYTHONPATH=scripts:tools:. python3 tests/required_unittests.py \
 ```
 
 Business assertions retained: exact annual and amendment sources, complete original request, noanswer withholding, source/reporting identity, unchanged-input reuse, previous result retention and readonly export. Current mode/corefunctions remain byte-identical. Remaining E01content, sourcesplanner/online, legacywrongCIKpresentationmigration and fullfiveyear business gaps remain.0newSEC/provider/paid/modelcalls, oldRun/source/answer/failure untouched, noauthorReady/merge/adoption/deploy/active. This independent finite repair does not expand reviewing147/189/190 or the Marriottincome candidate.
+
+## Received main3e900c03
+
+PR147/146 were received while this repair was publishing. Their actual merge3e900c03/tree7dadcabd is normally merged without conflicts.76 affected event/E01/history/state/D04case/savedreplay required controls pass0.321s, zero errors/failures/skips. The E01business producer/amendment reader/request algorithms and this one new dependency are unchanged from the actual20.714s migration; no financial/source preparation is repeated solely for this optional-public-input/default compatibility reception. Those actual first/repeat/read phases retain their original premerge version. Main D04's media limitations are unchanged, and reception does not create source/model or business acceptance credit.
