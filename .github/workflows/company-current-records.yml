@@ -84,6 +84,7 @@ name: Company saved-source records
     - .github/workflows/company-current-records.yml
     - tests/vnext/test_historical_auditor_selection.py
     - tests/vnext/test_historical_auditor_case.py
+    - tests/vnext/test_b06_fallback_source_forms.py
 permissions:
   contents: read
 jobs:
@@ -139,6 +140,11 @@ jobs:
         PYTHONDONTWRITEBYTECODE: '1'
         PYTHONPATH: scripts:.
       run: python3 tests/required_unittests.py tests.vnext.test_b06_note_source_forms tests.vnext.test_b06_note_source_material
+    - name: Debt certificates and standard pension source boundaries
+      env:
+        PYTHONDONTWRITEBYTECODE: '1'
+        PYTHONPATH: scripts:.
+      run: python3 tests/required_unittests.py tests.vnext.test_b06_fallback_source_forms
   company-financial:
     runs-on: ubuntu-latest
     timeout-minutes: 5

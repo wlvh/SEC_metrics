@@ -28,3 +28,9 @@ python3 tools/vnext_company.py results --company salesforce \
 This is branch-only source/consumer/state delivery. The remaining9 namespace-error positions require affected consumer checks; the two unresolved financial/lease relationships and Macy accrued interest remain unfinished. Old successful years and failed records are retained, not rewritten. No new SEC/provider/paid/model call, no new Run/acceptance, no author Ready/merge/adoption/deploy/active.
 
 Final unchanged-code precommit required controls:42/0.201s, zero errors/failures/skips (final-controls.log); only evidence files were added after the original company phases. Existing actual phases are reused, not rerun.
+
+## Actual main combination
+
+The normal combination includes main e3c17f81. Received163 changes b06_disclosure (debt certificates and standard pension classification), a real B06 processing dependency, so the two affected fresh tasks are legitimately rerun in new directories; other companies/years are not. Both full public resultIDs, rows, periods/units/CIKs and precise selection reasons equal the189-only consumer results. Each stable repeat again forbids source/case/Calculator and adds no result directory; independent CSV reading keeps17statefiles. See main-e3-actual-summary.json for measured times and exact before-commit execution version. No business value or acceptance is added.
+
+The first short command guessed a non-existent test_selected_b06_release module and produced an import error; its43-test log is retained. The actual API controls are in test_b06_guarded_result_v3.B06GuardSourceTest. Corrected50 required controls pass0.232s, zero failures/errors/skips. This fixes the command, not the business assertion. No extra runner or blanket CI skip.
