@@ -1,0 +1,71 @@
+{
+  "filing": {
+    "form": "10-K",
+    "reportDate": "2021-12-31",
+    "filingDate": "2022-02-07",
+    "accessionNumber": "0000092380-22-000007",
+    "primaryDocument": "luv-20211231.htm"
+  },
+  "source_reference": {
+    "record_type": "SOURCE_REFERENCE",
+    "source_reference_id": "sha256:5c608fcb41dda93347a20e3d8efb5f050a86f8dd66b09e875fa9c1b00b58ee10",
+    "raw_asset_id": "sha256:1208df543f956d502fbfdceb5fc97179822f023669d20300be200b9831bd7d7f",
+    "company_id": "southwest_airlines",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238022000007/luv-20211231_htm.xml",
+    "accession": "0000092380-22-000007",
+    "document_name": "luv-20211231_htm.xml",
+    "source_role": "auditor_facts",
+    "request_attempt_id": "request:attempt:5b1edec4b00486c136320e2e8d898f5b89e49485784a31716f844cbab357b32d"
+  },
+  "conversion_price_reports": [
+    {
+      "fact": {
+        "tag": "us-gaap:debtinstrumentconvertibleconversionprice1",
+        "qualified_name": "us-gaap:debtinstrumentconvertibleconversionprice1",
+        "context_ref": "i0636ccce5ee74aa6839c140bd4a90593_I20211231",
+        "unit_ref": "usdPerShare",
+        "scale": "0",
+        "sign": "",
+        "ordinal": 635,
+        "text": "38.48"
+      },
+      "context": {
+        "context_ref": "i0636ccce5ee74aa6839c140bd4a90593_I20211231",
+        "dimensions": {},
+        "entity_identifier": "0000092380",
+        "period_end": "2021-12-31",
+        "period_start": "2021-12-31",
+        "typed_dimension_count": 0
+      },
+      "unit_xml": "<ns0:unit xmlns:ns0=\"http://www.xbrl.org/2003/instance\" id=\"usdPerShare\">\n        <ns0:divide>\n            <ns0:unitNumerator>\n                <ns0:measure>iso4217:USD</ns0:measure>\n            </ns0:unitNumerator>\n            <ns0:unitDenominator>\n                <ns0:measure>shares</ns0:measure>\n            </ns0:unitDenominator>\n        </ns0:divide>\n    </ns0:unit>\n    "
+    },
+    {
+      "fact": {
+        "tag": "us-gaap:debtinstrumentconvertibleconversionprice1",
+        "qualified_name": "us-gaap:debtinstrumentconvertibleconversionprice1",
+        "context_ref": "i775775d61ba74af3a241a78db0222d9b_I20200501",
+        "unit_ref": "usdPerShare",
+        "scale": "0",
+        "sign": "",
+        "ordinal": 815,
+        "text": "38.48"
+      },
+      "context": {
+        "context_ref": "i775775d61ba74af3a241a78db0222d9b_I20200501",
+        "dimensions": {
+          "us-gaap:DebtInstrumentAxis": "luv:A1250ConvertibleSeniorNotesDue2025Member"
+        },
+        "entity_identifier": "0000092380",
+        "period_end": "2020-05-01",
+        "period_start": "2020-05-01",
+        "typed_dimension_count": 0
+      },
+      "unit_xml": "<ns0:unit xmlns:ns0=\"http://www.xbrl.org/2003/instance\" id=\"usdPerShare\">\n        <ns0:divide>\n            <ns0:unitNumerator>\n                <ns0:measure>iso4217:USD</ns0:measure>\n            </ns0:unitNumerator>\n            <ns0:unitDenominator>\n                <ns0:measure>shares</ns0:measure>\n            </ns0:unitDenominator>\n        </ns0:divide>\n    </ns0:unit>\n    "
+    }
+  ],
+  "calls": [
+    0,
+    0,
+    0
+  ]
+}
