@@ -1,0 +1,29 @@
+2 0.35328404100073385 {
+  "elapsed_seconds": 0.35214845800146577,
+  "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+  "company_id": "jpmorgan_chase",
+  "run_id": "20261011T120224Z-a405df53",
+  "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+  "selected_metrics": [
+    "A13"
+  ],
+  "metrics": [
+    {
+      "metric_id": "A13",
+      "status": "PROCESSING_INPUT_OR_IMPLEMENTATION_REQUIRED",
+      "reason": "This saved-source branch has no complete current processing interface for A13"
+    }
+  ],
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-current-geography/SEC_metrics",
+  "record_root": "/private/tmp/issue28-a13-before-z6hp5gfo/state",
+  "output_root": "/private/tmp/issue28-a13-before-z6hp5gfo/out/20261011T120224Z-a405df53",
+  "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}
+
