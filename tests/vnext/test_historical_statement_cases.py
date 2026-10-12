@@ -191,6 +191,8 @@ class HistoricalRevenueScopeConsumerTest(unittest.TestCase):
         with patch.object(reported, 'reported_revenue_scope', wraps=reported.reported_revenue_scope) as shared:
             value, source_facts, calculator = self.prepare()
         self.assertIs(True, shared.call_args.kwargs.get('allow_single_revenue_line'))
+        self.assertEqual('YEAR_QUARTER_OR_DATE',shared.call_args.kwargs.get('dei_release'))
+        self.assertEqual('YEAR_OR_DATE_RELEASE',shared.call_args.kwargs['namespace_policy'])
         self.assertTrue(value['input_assessments']['historical_statement'][
             'selected_revenue_scope']['complete_scope_proven'])
         self.assertEqual([source_facts[1]], calculator.call_args.kwargs['structured_facts'])

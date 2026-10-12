@@ -405,7 +405,7 @@ def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fisc
         from .selected_income_source_v1 import visible_income_periods
         from .selected_income_source_v1 import native_income_reports
         from .deterministic_router import parse_accession_xbrl_source
-        from .xbrl_namespace_policy import YEAR_OR_DATE_RELEASE
+        from .xbrl_namespace_policy import YEAR_OR_DATE_RELEASE, YEAR_QUARTER_OR_DATE
         from .ordinary_income_input import verify_income_observations
         originals = reader.auditor_filing(prepared['filing'])
         by_kind = {kind: [original for original in originals
@@ -422,6 +422,7 @@ def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fisc
         reported_scope = reported_revenue_scope(primary=by_kind['primary'][0],
             xml=by_kind['xml'][0], annual=source_annual, approved_concepts=concepts,
             namespace_policy=YEAR_OR_DATE_RELEASE, annual_period_reader=annual_period,
+            dei_release=YEAR_QUARTER_OR_DATE,
             fiscal_label_resolution=prepared.get('fiscal_year_label_resolution'),
             allow_single_revenue_line=True)
         if reported_scope['complete_scope_proven']:
