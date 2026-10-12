@@ -267,6 +267,24 @@ class HistoricalRevenueScopeConsumerTest(unittest.TestCase):
 class HistoricalPairedRevenueAdmissionTest(unittest.TestCase):
     """Small real-format originals; no constructed company result is accepted."""
 
+    def test_group_total_opt_in_reaches_shared_original_reader(self):
+        reader, annual, claims, concepts = self.prepared_claims()
+        with patch('vnext.selected_reported_revenue_v2.reported_revenue_scope',
+                   return_value={'complete_scope_proven': False}) as shared:
+            admitted, scope = self.admit(reader, annual, claims, concepts)
+        self.assertIs(True, shared.call_args.kwargs['allow_statement_group_totals'])
+        self.assertIs(True, shared.call_args.kwargs['allow_single_revenue_line'])
+        self.assertEqual(annual['filing'], shared.call_args.kwargs['annual']['filing'])
+        self.assertEqual(annual['table_input']['target_period'],
+                         shared.call_args.kwargs['annual']['table_input']['target_period'])
+        self.assertTrue(scope['complete_scope_proven'])
+        self.assertTrue(admitted)
+        from vnext.selected_reported_revenue_v2 import STATEMENT_GROUP_PROCESSING_FILES
+        self.assertTrue(set(STATEMENT_GROUP_PROCESSING_FILES).issubset(
+            cases.PAIRED_REVENUE_PROCESSING_FILES))
+        self.assertEqual(len(cases.PAIRED_REVENUE_PROCESSING_FILES),
+                         len(set(cases.PAIRED_REVENUE_PROCESSING_FILES)))
+
     def prepared_claims(self):
         from tests.vnext.test_selected_revenue_scope_v1 import originals, facts, APPROVED
         from types import SimpleNamespace
