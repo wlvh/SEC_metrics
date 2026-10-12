@@ -37,3 +37,13 @@ Root单写publiccore及本批适配；#47拥有历史consumer，提供原件/执
 Root用Macy原SHA876f真实FY22源再验证仍NO_REPORTED_TOTAL_PROVEN，源/原期间保持，不放错误数值。现行PfizerFY25的实际原件consumer得到与已核179相同b1d89/value/unit/actualperiod。外层驱动猜错完整小数，原失败log保；只读完整已返回Result与原source-checked记录核相等后保存recovered.json，不重跑为修补预期。
 
 不把peer大生成JSON/全部来源assessment重新作为本候选大diff搬入。它们在固定250be原记录保留，本方磁盘副本保留；本PR只链接出处和本次小验证记录。original-probe-plan.json仅保本方已读两原件的原生序号/金额/context/定义跨度，用于独立核对原始字节；不是生产来源包、模型输入或隐藏必带答案。公司入口仍只读取真正Source和规则。
+
+## 接收退回6119475258：新增证明与旧处理隔离
+
+接收者的完整原件对照发现：FY2021/22完整费用后有非零Gains on dispositions，新证明不成立却直接抛错，阻断了原B01/B03处理。本方原green不解除退回。本修补仅将SELECTED_REPORTED_REVENUE_COMPLETE_EXPENSE_*这条新增证明的不成立记为complete_expense_rejections，不准入行，让旧V1/caller继续自己的规则；不吞其他IncomeSourceError/来源身份错误，不改变费用数学关系或给失败证明信用。默认没有新增证明失败时不增加字段。
+
+先补失败回归复现异常；修后完整新增proof控43/.608和联合179/1.284零skip。包含非零/未标金额不授完整scope、actual B01 adapter/Calculator回到V1 NO_DEMONSTRATED_SPLIT原值、真正来源身份错误仍拒。原expect-raise测试改为精确不准入/原因检查，没有改成接受错误表。
+
+独立actualmain302与候选两个新任务/同保存来源，精确只跑受影响FY21/22 B01/B03四行。主干首跑完成后，外驱动误把输出前缀当实际输出目录，报FileNotFound；原错误保，按官方run_summary只读续接原已保存结果，未重基线、elapsed/exit未保存诚实null。候选首42.723807s恢复四正确结果；before/after每行value、unit、actualperiod、fiscalyear、status和完整ResultID全部相同，four-row-comparison.json记录。B01为28,586m/30,154m；B03为0.2339256978940740222486531869/0.09109902500497446441599787756。
+
+before/after禁case/range/两Calculator复1.063964/1.051056s，全部NO_SOURCE_CONTENT_CHANGE/calculationfalse/结果字节保持；独立results .133978/.135073s不写状态。此为实际生产接缝，未把processor mock成功。已有FY24成功代码路径未变，原两原件/scope/17.781公司成功证据复用，合法小正例仍通过；接收者将按其范围亲复十家公司当期与历史，未由本方声称该广泛复核通过。newcalls0/0/0，旧回答/状态不改。

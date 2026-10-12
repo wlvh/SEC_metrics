@@ -129,6 +129,30 @@ class HistoricalRevenueScopeConsumerTest(unittest.TestCase):
         self.assertEqual({row['value'] for rows in check['original_reports'].values() for row in rows},
                          {'58496000000'})
 
+    def test_unproven_new_expense_proof_does_not_block_existing_b01_fallback(self):
+        import re
+        from vnext.canonical import sha256_bytes
+        def complete_costs_with_gain(primary,xml,annual,source_facts):
+            source_facts[:]=[source_facts[1]]
+            for source in (primary,xml):
+                raw=source['raw_bytes']
+                for label in (b'Product revenues',b'Alliance revenues'):
+                    raw=re.sub(rb'<tr><td>'+label+rb'.*?</tr>',b'',raw)
+                raw=raw.replace(b'Total revenues',b'Revenues').replace(b'Cost of sales',b'Total costs and expenses').replace(b'CostOfGoodsAndServicesSold',b'CostsAndExpenses')
+                raw=raw.replace(b'<tr><td>Total costs and expenses',b'<tr><td>Costs and expenses:</td><td></td></tr><tr><td>Total costs and expenses')
+                extra=(b'<tr><td>Gains on dispositions</td><td><ix:nonFraction name="issuer:Gain" '
+                    b'contextRef="annual" unitRef="usd" scale="6" decimals="-6">56</ix:nonFraction></td></tr>'
+                    b'<tr><td>Operating income</td><td><ix:nonFraction name="us-gaap:OperatingIncomeLoss" '
+                    b'contextRef="annual" unitRef="usd" scale="6" decimals="-6">48552</ix:nonFraction></td></tr>')
+                raw=raw.replace(b'<tr><td>Net income',extra+b'<tr><td>Net income')
+                source['raw_bytes']=raw;source['source_reference']['raw_asset_id']='sha256:'+sha256_bytes(content=raw)
+        value,_,_=self.prepare(change=complete_costs_with_gain)
+        self.assertEqual('58496000000',value['results']['B01']['value'])
+        scope=value['input_assessments']['historical_statement']['selected_revenue_scope']
+        self.assertEqual('SELECTED_REVENUE_COMPONENT_ADMISSION_V1',scope['method'])
+        self.assertEqual('NO_DEMONSTRATED_SPLIT',scope['status'])
+        self.assertFalse(scope['complete_scope_proven'])
+
     def test_display_is_bounded_while_complete_scope_evidence_is_retained(self):
         value, _, _ = self.prepare()
         full = value['input_assessments']['historical_statement']['selected_revenue_scope']

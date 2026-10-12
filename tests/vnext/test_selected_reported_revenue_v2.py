@@ -74,9 +74,11 @@ class SelectedReportedRevenueTest(unittest.TestCase):
                  (b'>48496</ix:nonFraction>',b'>48495</ix:nonFraction>'),
                  (b'Costs and expenses:</td>',b'Costs and expenses; only Segment Alpha:</td>')]
         for before,after in changes:
-            with self.subTest(after=after),self.assertRaises(ValueError):
-                reported_revenue_scope(primary=changed(source,source['raw_bytes'].replace(before,after)),
+            with self.subTest(after=after):
+                result=reported_revenue_scope(primary=changed(source,source['raw_bytes'].replace(before,after)),
                     xml=source,annual=annual,approved_concepts=APPROVED,allow_single_revenue_line=True)
+                self.assertFalse(result['complete_scope_proven'])
+                self.assertTrue(result['complete_expense_rejections'])
         extra=b'<tr><td>Other revenues</td><td>100</td></tr>'
         with self.assertRaisesRegex(ValueError,'SINGLE_REVENUE_'):
             reported_revenue_scope(primary=changed(source,source['raw_bytes'].replace(
@@ -98,8 +100,37 @@ class SelectedReportedRevenueTest(unittest.TestCase):
                 except ValueError:continue
                 self.assertFalse(result['complete_scope_proven'])
         xml=changed(source,source['raw_bytes'].replace(b'>10000</ix:nonFraction>',b'>9999</ix:nonFraction>'))
-        with self.assertRaisesRegex(ValueError,'COMPLETE_EXPENSE_PRIMARY_XML_DIFFERS'):
-            reported_revenue_scope(primary=source,xml=xml,annual=annual,
+        result=reported_revenue_scope(primary=source,xml=xml,annual=annual,
+                approved_concepts=APPROVED,allow_single_revenue_line=True)
+        self.assertFalse(result['complete_scope_proven'])
+        self.assertIn('PRIMARY_XML_DIFFERS',result['complete_expense_rejections'][0]['reason'])
+
+    def test_unproven_complete_expense_route_leaves_existing_fallback_available(self):
+        source,annual=self.complete_expense_statement()
+        extra=(b'<tr><td>Gains on dispositions</td><td><ix:nonFraction name="issuer:Gain" '
+            b'contextRef="annual" unitRef="usd" scale="6" decimals="-6">56</ix:nonFraction></td></tr>')
+        raw=source['raw_bytes'].replace(b'<tr><td>Operating income',extra+b'<tr><td>Operating income')
+        primary=changed(source,raw)
+        scope=reported_revenue_scope(primary=primary,xml=primary,annual=annual,
+            approved_concepts=APPROVED,allow_single_revenue_line=True)
+        self.assertFalse(scope['complete_scope_proven'])
+        self.assertEqual('NO_REPORTED_TOTAL_PROVEN',scope['status'])
+        self.assertIn('INTERVENING_AMOUNT_UNPROVEN',scope['complete_expense_rejections'][0]['reason'])
+        from vnext.selected_revenue_scope_v1 import selected_revenue_scope
+        fallback=selected_revenue_scope(primary=primary,xml=primary,annual=annual,approved_concepts=APPROVED)
+        self.assertEqual('NO_DEMONSTRATED_SPLIT',fallback['status'])
+        # Its complete-scope rules remain owned by V1/the actual caller; a
+        # rejected new proof grants no substitute total or upgraded credit.
+        self.assertFalse(fallback['complete_scope_proven'])
+
+    def test_source_identity_failure_is_not_a_rejected_expense_proof(self):
+        from unittest.mock import patch
+        from vnext.selected_income_source_v1 import IncomeSourceError
+        source,annual=self.complete_expense_statement()
+        with patch('vnext.selected_reported_revenue_v2._complete_expense_statement',
+                   side_effect=IncomeSourceError('SELECTED_INCOME_PRIMARY_IDENTITY_CHANGED')), \
+             self.assertRaisesRegex(IncomeSourceError,'PRIMARY_IDENTITY_CHANGED'):
+            reported_revenue_scope(primary=source,xml=source,annual=annual,
                 approved_concepts=APPROVED,allow_single_revenue_line=True)
 
     def test_nonzero_or_untagged_intervening_gain_cannot_be_ignored(self):
@@ -108,10 +139,12 @@ class SelectedReportedRevenueTest(unittest.TestCase):
             b'<tr><td>Gains on dispositions</td><td><ix:nonFraction name="issuer:Gain" '
             b'contextRef="annual" unitRef="usd" scale="6" decimals="-6">7</ix:nonFraction></td></tr>']
         for inserted in insertions:
-            with self.subTest(inserted=inserted),self.assertRaisesRegex(ValueError,'COMPLETE_EXPENSE_.*AMOUNT'):
-                reported_revenue_scope(primary=changed(source,source['raw_bytes'].replace(
+            with self.subTest(inserted=inserted):
+                result=reported_revenue_scope(primary=changed(source,source['raw_bytes'].replace(
                     b'<tr><td>Operating income',inserted+b'<tr><td>Operating income')),
                     xml=source,annual=annual,approved_concepts=APPROVED,allow_single_revenue_line=True)
+                self.assertFalse(result['complete_scope_proven'])
+                self.assertIn('AMOUNT',result['complete_expense_rejections'][0]['reason'])
 
     def test_exact_zero_intermediate_retains_its_own_native_context(self):
         source,annual=self.complete_expense_statement()
@@ -125,10 +158,12 @@ class SelectedReportedRevenueTest(unittest.TestCase):
         self.assertEqual(1,len(neutral));self.assertEqual('0',neutral[0]['value'])
         for changed_zero in (zero.replace(b'contextRef="annual"',b'contextRef="short"'),
                              zero.replace(b'>0</ix:',b'>0</ix:').replace(b'</td></tr>',b'<span>9</span></td></tr>')):
-            with self.subTest(changed_zero=changed_zero),self.assertRaisesRegex(ValueError,'COMPLETE_EXPENSE_.*AMOUNT'):
-                reported_revenue_scope(primary=changed(source,source['raw_bytes'].replace(
+            with self.subTest(changed_zero=changed_zero):
+                result=reported_revenue_scope(primary=changed(source,source['raw_bytes'].replace(
                     b'<tr><td>Operating income',changed_zero+b'<tr><td>Operating income')),
                     xml=source,annual=annual,approved_concepts=APPROVED,allow_single_revenue_line=True)
+                self.assertFalse(result['complete_scope_proven'])
+                self.assertIn('AMOUNT',result['complete_expense_rejections'][0]['reason'])
 
     def test_complete_expense_headers_require_an_unquoted_same_issuer_definition(self):
         source,annual=self.complete_expense_statement()

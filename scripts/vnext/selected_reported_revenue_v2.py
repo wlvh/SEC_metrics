@@ -51,6 +51,7 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
         _need(column_year==label.get('selected_fiscal_year'),'FISCAL_LABEL_SELECTION_CHANGED')
     xml_rows=native_income_reports(xml,annual,concepts,**options) if xml is not None else None
     selected=[]
+    complete_expense_rejections=[]
     for row in rows:
         if row['concept'].casefold() not in approved or row['ordinal'] not in bound:continue
         table,cell=bound[row['ordinal']]
@@ -78,8 +79,18 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
         names={r['concept'].casefold() for r in same}
         complete_expenses=None
         if single and not (names & {'us-gaap:costofrevenue','us-gaap:costofgoodsandservicessold'}):
-            complete_expenses=_complete_expense_statement(primary,xml,annual,options,
-                index,parsed,table,cell,row,same,column_year=column_year)
+            try:
+                complete_expenses=_complete_expense_statement(primary,xml,annual,options,
+                    index,parsed,table,cell,row,same,column_year=column_year)
+            except IncomeSourceError as error:
+                # Failure of this added proof is not failure of the source or
+                # permission to replace the caller's existing fallback. Only
+                # this route's bounded proof reasons are withheld here.
+                if not str(error).startswith('SELECTED_REPORTED_REVENUE_COMPLETE_EXPENSE_'):
+                    raise
+                complete_expense_rejections.append({'ordinal':row['ordinal'],
+                    'source_reference':row['source_reference'], 'reason':str(error)})
+                complete_expenses=None
         if not(names & {'us-gaap:netincomeloss','us-gaap:profitloss'}
                and (names & {'us-gaap:costofrevenue','us-gaap:costofgoodsandservicessold'}
                     or operating_costs or complete_expenses)):continue
@@ -165,6 +176,8 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
           'selected_fiscal_column_year':column_year,'fiscal_label_resolution':fiscal_label_resolution,
           'status':'REPORTED_CONSOLIDATED_TOTAL' if selected else 'NO_REPORTED_TOTAL_PROVEN',
           'complete_scope_proven':bool(selected),'original_reports':rows}
+    if complete_expense_rejections:
+        body['complete_expense_rejections']=complete_expense_rejections
     if allow_single_revenue_line:
         body.update(method='SELECTED_REPORTED_SINGLE_REVENUE_LINE_V1',
                     single_revenue_line_allowed=True)
