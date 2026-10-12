@@ -5,6 +5,7 @@ models, read old registered answers, or turn a development answer into accepted
 content. A request without its own validated semantic response remains null.
 """
 from pathlib import Path
+from sec_urls import submissions_url, submissions_file_url
 from .calculator import calculate_observation_metric, withheld_metric_result
 from .canonical import content_hash, strict_json_file
 from .deterministic_router import load_event_route_catalog, project_event_result
@@ -52,16 +53,21 @@ def _display_assessment(assessment):
         for check in assessment['annual_amendment_checks']]}
 
 
-def prepare_historical_e01_year_case(*, repo_root, company_id, metric_id, fiscal_year):
-    if metric_id != 'E01':
-        raise ValueError('HISTORICAL_E01_FAMILY_NOT_RECEIVED')
+def prepare_historical_e01_source_context(*, repo_root, company_id, fiscal_year,
+                                          period_selection=None):
+    """Prepare selected-year originals and a request without a metric result.
+
+    The company source entry can consume these same dependencies. Completeness
+    covers source preparation only, never an accepted semantic response/count.
+    """
     source = Path(repo_root)
-    selection = resolve_period_selection(repo_root=source,company_id=company_id,
-        fiscal_year=fiscal_year,rules_root=ROOT)
+    selection = (resolve_period_selection(repo_root=source,company_id=company_id,
+        fiscal_year=fiscal_year,rules_root=ROOT) if period_selection is None else period_selection)
     annual = prepare_historical_annual_input(repo_root=source,company_id=company_id,
         period_selection=selection,rules_root=ROOT)
     period = annual['table_input']['target_period']
-    spec = compile_spec_file(path=ROOT/SPEC_PATH,dependency_specs={})
+    if type(fiscal_year) is not int or period['fiscal_year'] != fiscal_year:
+        raise ValueError('HISTORICAL_E01_REQUESTED_FISCAL_YEAR_CHANGED')
     frozen = load_event_route_catalog(repo_root=ROOT)['routes']['E01']
     route = successor_event_route(repo_root=ROOT,metric_id='E01',frozen_route=frozen)
     scope = {'coverage':'fiscal_year_source_set','fiscal_year':fiscal_year,
@@ -73,7 +79,6 @@ def prepare_historical_e01_year_case(*, repo_root, company_id, metric_id, fiscal
     packet, request, incorporated, dependencies, candidates = None,None,None,[],[]
     amendment_checks = []
     reason = 'E01_CONTENT_RESPONSE_NOT_AVAILABLE_FOR_REQUEST'
-    observations = []
     if annual['subject_policy']['mode'] != 'CONTINUOUS_PRIMARY':
         reason = 'E01_SUCCESSOR_EVENT_WINDOW_NOT_RECEIVED'
     else:
@@ -113,6 +118,57 @@ def prepare_historical_e01_year_case(*, repo_root, company_id, metric_id, fiscal
             # Zero is justified only after the complete source/item walk has
             # found no candidate, using the existing event Calculator route.
             reason = 'PASS'
+    source_records = list(reader.records.values()) + ([] if packet is None else packet['source_records'])
+    source_records += [] if incorporated is None else incorporated['added_source_records']
+    indexed = {}
+    for record in source_records:
+        key = record.get('raw_asset_id') if record['record_type']=='RAW_BLOB' else record['source_reference_id']
+        previous=indexed.get(key)
+        if previous is not None and previous!=record:
+            if record['record_type']!='RAW_BLOB' or {k:v for k,v in previous.items() if k!='storage_uri'}!={k:v for k,v in record.items() if k!='storage_uri'}:
+                raise ValueError('E01_SOURCE_RECORD_IDENTITY_CONFLICT')
+            continue
+        indexed[key]=record
+    proofs = list(annual['source_proofs'])+[x['proof'] for x in reader.proofs.values()]
+    proofs += [] if packet is None else packet['source_proofs']
+    proofs += [] if incorporated is None else incorporated['source_proofs']
+    proofs = list({content_hash(value=p):p for p in proofs}.values())
+    admission = verify_ordinary_source_proofs(data_root=source,proofs=proofs)
+    current_request = incorporated if incorporated is not None else request
+    assessment = {'status':'NO_CANDIDATE_ITEM' if reason=='PASS' else 'WITHHELD',
+        'reason_code':reason,'complete_annual_count':None,
+        'candidate_item_ids':[] if request is None else [x['item_id'] for x in request['items']],
+        'request_id':None if current_request is None else current_request['request_id'],
+        'request_contract':None if current_request is None else current_request['contract'],
+        'annual_amendment_checks':amendment_checks,
+        'attachment_dependencies':dependencies,'matching_response_available':False,
+        'old_answer_reused':False,'partial_count_exported':False,
+        'target_model_execution_authorized':False,'new_calls':[0,0,0]}
+    complete = packet is not None and reason != 'E01_REQUIRED_INCORPORATED_SOURCE_UNAVAILABLE'
+    return {'record_type':'HISTORICAL_E01_SOURCE_CONTEXT_V1',
+        'company_id':company_id,'fiscal_year':fiscal_year,'target_period':period,
+        'prepared_annual_input':annual,'period_selection':selection,
+        'event_packet':packet,'source_records':list(indexed.values()),
+        'source_proofs':proofs,'admission':admission,
+        'request':current_request,
+        'predecessor_request_id':None if request is None else request['request_id'],
+        'assessment':assessment,'event_route':route,'target':target,
+        'source_graph_known':complete,'source_status':'READY' if complete else 'BLOCKED',
+        'metric_executed':False,'metric_result_created':False,'new_calls':[0,0,0]}
+
+
+def prepare_historical_e01_year_case(*, repo_root, company_id, metric_id, fiscal_year):
+    if metric_id != 'E01':
+        raise ValueError('HISTORICAL_E01_FAMILY_NOT_RECEIVED')
+    context = prepare_historical_e01_source_context(repo_root=repo_root,
+        company_id=company_id,fiscal_year=fiscal_year)
+    period = context['target_period']
+    annual = context['prepared_annual_input']
+    selection = context['period_selection']
+    packet, route, target = context['event_packet'], context['event_route'], context['target']
+    reason = context['assessment']['reason_code']
+    spec = compile_spec_file(path=ROOT/SPEC_PATH,dependency_specs={})
+    observations = []
     if reason == 'PASS':
         sets = packet['source_set_manifests']
         catalog = {'routes': {'E01': route}}
@@ -132,43 +188,98 @@ def prepare_historical_e01_year_case(*, repo_root, company_id, metric_id, fiscal
         observations = [observation]
     else:
         result,trace = withheld_metric_result(compiled_spec=spec,target=target,reason_code=reason)
-    source_records = list(reader.records.values()) + ([] if packet is None else packet['source_records'])
-    source_records += [] if incorporated is None else incorporated['added_source_records']
-    indexed = {}
-    for record in source_records:
-        key = record.get('raw_asset_id') if record['record_type']=='RAW_BLOB' else record['source_reference_id']
-        previous=indexed.get(key)
-        if previous is not None and previous!=record:
-            if record['record_type']!='RAW_BLOB' or {k:v for k,v in previous.items() if k!='storage_uri'}!={k:v for k,v in record.items() if k!='storage_uri'}:
-                raise ValueError('E01_SOURCE_RECORD_IDENTITY_CONFLICT')
-            continue
-        indexed[key]=record
-    proofs = list(annual['source_proofs'])+[x['proof'] for x in reader.proofs.values()]
-    proofs += [] if packet is None else packet['source_proofs']
-    proofs += [] if incorporated is None else incorporated['source_proofs']
-    proofs = list({content_hash(value=p):p for p in proofs}.values())
-    admission = verify_ordinary_source_proofs(data_root=source,proofs=proofs)
-    current_request = incorporated if incorporated is not None else request
-    assessment = {'status':'NO_CANDIDATE_ITEM' if reason=='PASS' else 'WITHHELD',
-        'reason_code':reason,'complete_annual_count':'0' if reason=='PASS' else None,
-        'candidate_item_ids':[] if request is None else [x['item_id'] for x in request['items']],
-        'request_id':None if current_request is None else current_request['request_id'],
-        'request_contract':None if current_request is None else current_request['contract'],
-        'annual_amendment_checks':amendment_checks,
-        'attachment_dependencies':dependencies,'matching_response_available':False,
-        'old_answer_reused':False,'partial_count_exported':False,
-        'target_model_execution_authorized':False,'new_calls':[0,0,0]}
+    source_records = context['source_records']
+    proofs, admission = context['source_proofs'], context['admission']
+    current_request = context['request']
+    assessment = {**context['assessment'], 'complete_annual_count':'0' if reason=='PASS' else None}
     display_assessment = _display_assessment(assessment)
     binding={'record_type':'HISTORICAL_E01_COMPANY_SOURCE_INPUT','prepared_input':annual,
         'period_selection':selection,'source_proofs':proofs,'request':current_request,
-        'predecessor_request_id':None if request is None else request['request_id'],
+        'predecessor_request_id':context['predecessor_request_id'],
         'filings':[] if packet is None else packet['filings'],'assessment':assessment}
     return {'kind':'STRUCTURED','primary_metric_id':'E01','compiled_specs':{'E01':spec},
         'spec_paths':{'E01':SPEC_PATH},'target_period':period,'prepared_annual_input':annual,
-        'input_binding':binding,'expected_records':[*indexed.values(),
+        'input_binding':binding,'expected_records':[*source_records,
             *([] if packet is None else packet['claims']), *observations,trace,result],
         'results':{'E01':result},'traces':{'E01':trace},
-        'references':[r for r in indexed.values() if r['record_type']=='SOURCE_REFERENCE'],
+        'references':[r for r in source_records if r['record_type']=='SOURCE_REFERENCE'],
         'source_proofs':proofs,'admission':admission,'rules_root':str(ROOT),
         'input_assessments':{'e01_content':assessment,'e01_request':current_request},
         'selection':{'e01_content':display_assessment}}
+
+
+def collect_historical_e01_requirements(plan, *, prepared, period_selection=None):
+    """Attach the existing selected E01 sources to the shared read-only plan.
+
+    ``prepared`` is the body returned by ``prepare_historical_annual_input``:
+    company_id/entity/filing/subject_policy/table_input, not a latest-current
+    wrapper. Its identity is checked against the source-derived context.
+    Missing original-source exceptions retain their original URL and category
+    for the public planner; they never become an empty event collection.
+    """
+    period = prepared['table_input']['target_period']
+    company_id = plan.company['company_id']
+    if prepared['company_id'] != company_id:
+        raise ValueError('HISTORICAL_E01_SOURCE_PLAN_COMPANY_CHANGED')
+    context = prepare_historical_e01_source_context(repo_root=plan.root,
+        company_id=company_id, fiscal_year=period['fiscal_year'],
+        period_selection=period_selection)
+    actual = context['prepared_annual_input']
+    if (actual['entity'] != prepared['entity'] or actual['filing'] != prepared['filing']
+            or context['target_period'] != period
+            or actual['subject_policy'] != prepared['subject_policy']):
+        raise ValueError('HISTORICAL_E01_SOURCE_PLAN_SELECTION_CHANGED')
+
+    records = context['source_records']
+    blobs = {r['raw_asset_id']:r for r in records if r['record_type']=='RAW_BLOB'}
+    references = {r['source_url']:r for r in records if r['record_type']=='SOURCE_REFERENCE'}
+    annual_json = {}
+    facts_url = actual.get('companyfacts_input',{}).get('source_url')
+    if facts_url:
+        annual_json[facts_url] = 'application/json'
+    selected = context['period_selection']
+    catalogs = [(actual['entity'],selected.get('loaded_inventories',[]))]
+    registrant = selected.get('period_registrant')
+    if registrant:
+        catalogs.append((plan.company['primary_cik'],
+                         registrant['primary_catalog']['loaded_inventories']))
+    for cik,names in catalogs:
+        if names:
+            annual_json[submissions_url(cik=int(cik))] = 'application/json'
+            annual_json.update((submissions_file_url(file_name=name),'application/json')
+                               for name in names[1:])
+    urls = []
+    for item in context['source_proofs']:
+        proof = item.get('proof', item)
+        url = proof['source_url']
+        reference = references.get(url)
+        # Annual preparation also binds companyfacts/submissions JSON. Other
+        # proofs are the selected original or recorded event sources above.
+        media = blobs[reference['raw_asset_id']]['media_type'] if reference else annual_json.get(url)
+        if media is None:
+            raise ValueError('HISTORICAL_E01_SOURCE_MEDIA_TYPE_UNDECLARED:'+url)
+        role = reference['source_role'] if reference else 'historical_e01_annual_dependency'
+        plan.require(url, role=role, media_type=media, accession=proof['accession'])
+        if url not in urls:
+            urls.append(url)
+    for dependency in context['assessment']['attachment_dependencies']:
+        url = dependency['source_url']
+        plan.require(url, role='incorporated_EX99', media_type=dependency['media_type'],
+                     accession=dependency['accession'])
+        if url not in urls:
+            urls.append(url)
+    errors = [{'phase':'E01_SAVED_SOURCE_RECHECK',
+        'source_url':url,'reason':plan.requests[url].get('reason',plan.requests[url]['saved_status']),
+        'category':'SOURCE_UNAVAILABLE'} for url in urls
+        if plan.requests[url]['saved_status']!='VERIFIED_SAVED_SOURCE']
+    if not context['source_graph_known']:
+        errors.append({'phase':'E01_SELECTED_SOURCE_SCOPE',
+            'reason':context['assessment']['reason_code'],
+            'category':'SOURCE_SCOPE_NOT_COMPLETE'})
+    complete = context['source_graph_known'] and not errors
+    return {'metric_id':'E01','requirements':[plan.requests[url] for url in urls],
+        'errors':errors,'source_graph_known':complete,'event_window':period,
+        'request_id':context['assessment']['request_id'],
+        'request_contract':context['assessment']['request_contract'],
+        'matching_response_available':False,'complete_annual_count':None,
+        'metric_executed':False,'new_calls':[0,0,0]}

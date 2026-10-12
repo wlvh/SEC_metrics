@@ -1,0 +1,7 @@
+usage: vnext_company.py sources [-h] --company COMPANY
+                                --source-root SOURCE_ROOT
+                                (--report-end REPORT_END |
+                                --fiscal-year-start FISCAL_YEAR_START)
+                                [--fiscal-year-end FISCAL_YEAR_END]
+                                --metric {B01,B02,B03}
+vnext_company.py sources: error: argument --metric: invalid choice: 'E01' (choose from 'B01', 'B02', 'B03')

@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/work/e01-source-entry/verify_sources.py", line 41, in <module>
+    (out/(company+'.json')).write_text(json.dumps(exact_json_value(value=record),indent=2)+'\n')
+                                                  ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/normal_annual_input_v2.py", line 23, in exact_json_value
+    canonical_json_bytes(value=value)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/canonical.py", line 415, in canonical_json_bytes
+    normalized = _canonicalize(value=value, path=(), set_paths=set_paths)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/canonical.py", line 365, in _canonicalize
+    output[key] = _canonicalize(
+                  ~~~~~~~~~~~~~^
+        value=item, path=path + (key,), set_paths=set_paths,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/canonical.py", line 350, in _canonicalize
+    raise CanonicalError("Binary float is forbidden; use Decimal")
+vnext.canonical.CanonicalError: Binary float is forbidden; use Decimal

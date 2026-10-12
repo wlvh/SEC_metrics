@@ -137,7 +137,8 @@ class HistoricalE01CompanyCaseTest(TestCase):
         self.assertIn('calculate_observation_metric',observed['scripts/vnext/calculator.py'])
         assert_processing_calls(observed,configuration,cases.PROCESSING_FILES)
 
-    def prepare(self, *, dependency=None, successor=False, packet_error=None, amendment_checks=None):
+    def prepare(self, *, dependency=None, successor=False, packet_error=None, amendment_checks=None,
+                source_only=False, no_candidates=False):
         annual={'company_id':'paramount_skydance_paramount_global','entity':'813828',
             'filing':{'accessionNumber':'constructed'},'amendments':[],
             'subject_policy':{'mode':'SUCCESSOR_REGISTRANT_ONLY' if successor else 'CONTINUOUS_PRIMARY'},
@@ -152,7 +153,7 @@ class HistoricalE01CompanyCaseTest(TestCase):
         with ExitStack() as stack:
             for name,value in [('resolve_period_selection',{}),('prepare_historical_annual_input',annual),
                 ('_Sources',reader),('_event_amendment_checks',amendment_checks or []),('verify_ordinary_source_proofs',{}),
-                ('content_confirmation_candidates',{'candidates':[item]}),
+                ('content_confirmation_candidates',{'candidates':[] if no_candidates else [item]}),
                 ('strict_json_file',{'items':[] if dependency is None else [declaration]})]:
                 stack.enter_context(patch.object(cases,name,return_value=value))
             walk=stack.enter_context(patch.object(cases,'read_selected_event_sources',return_value=packet,
@@ -161,9 +162,93 @@ class HistoricalE01CompanyCaseTest(TestCase):
             incorporated=stack.enter_context(patch.object(cases,'prepare_incorporated_e01_input',return_value={
                 'request_id':'constructed-new-request','contract':'NEW_SUPPLIED_SOURCE_CONTRACT',
                 'source_proofs':[],'added_source_records':[]}))
-            case=cases.prepare_historical_e01_year_case(repo_root='/constructed',company_id=annual['company_id'],
-                metric_id='E01',fiscal_year=2024)
+            if source_only:
+                case=cases.prepare_historical_e01_source_context(repo_root='/constructed',
+                    company_id=annual['company_id'],fiscal_year=2024)
+            else:
+                case=cases.prepare_historical_e01_year_case(repo_root='/constructed',company_id=annual['company_id'],
+                    metric_id='E01',fiscal_year=2024)
         return case,walk,incorporated
+
+    def test_source_context_never_creates_result_or_calculates(self):
+        with patch.object(cases,'calculate_observation_metric',side_effect=AssertionError('NO_CALC')), \
+                patch.object(cases,'withheld_metric_result',side_effect=AssertionError('NO_RESULT')):
+            context,_,_=self.prepare(source_only=True)
+        self.assertTrue(context['source_graph_known'])
+        self.assertFalse(context['metric_executed'])
+        self.assertFalse(context['metric_result_created'])
+        self.assertIsNone(context['assessment']['complete_annual_count'])
+        self.assertNotIn('results',context)
+        case,_,_=self.prepare()
+        self.assertEqual(case['input_assessments']['e01_request'],context['request'])
+        self.assertEqual(case['results']['E01']['reason_code'],context['assessment']['reason_code'])
+
+    def test_source_context_missing_attachment_or_successor_stays_incomplete(self):
+        for options in ({'successor':True}, {'dependency':{
+                'saved_status':'MISSING_SAVED_SOURCE','source_url':'constructed'}}):
+            with self.subTest(options=options):
+                context,_,_=self.prepare(source_only=True,**options)
+                self.assertFalse(context['source_graph_known'])
+                self.assertIsNone(context['assessment']['complete_annual_count'])
+
+    def test_source_context_retains_original_missing_source_error(self):
+        error=ValueError('SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1/1/missing.htm')
+        with self.assertRaisesRegex(ValueError,'SAVED_SOURCE_MISSING:.*missing.htm'):
+            self.prepare(source_only=True,packet_error=error)
+
+    def test_empty_source_candidate_walk_is_not_a_calculated_zero(self):
+        with patch.object(cases,'project_event_result',side_effect=AssertionError('NO_RESULT')), \
+                patch.object(cases,'calculate_observation_metric',side_effect=AssertionError('NO_CALC')):
+            context,_,_=self.prepare(source_only=True,no_candidates=True)
+        self.assertTrue(context['source_graph_known'])
+        self.assertIsNone(context['assessment']['complete_annual_count'])
+        self.assertFalse(context['metric_executed'])
+
+    def test_collector_registers_the_same_sources_without_a_second_selector(self):
+        context,_,_=self.prepare(source_only=True)
+        url='https://www.sec.gov/Archives/edgar/data/813828/1/original.htm'
+        context['source_records']=[{'record_type':'RAW_BLOB','raw_asset_id':'constructed',
+            'media_type':'text/html'}, {'record_type':'SOURCE_REFERENCE','raw_asset_id':'constructed',
+            'source_url':url,'source_role':'fy_8k_primary'}]
+        context['source_proofs']=[{'source_url':url,'document_name':'original.htm','accession':'constructed'}]
+        plan=SimpleNamespace(root=Path('/constructed'),company={'company_id':context['company_id']},requests={})
+        def require(source_url,role,media_type,accession=''):
+            plan.requests[source_url]={'source_url':source_url,'saved_status':'VERIFIED_SAVED_SOURCE',
+                'roles':[role],'media_type':media_type,'accession':accession}
+        plan.require=Mock(side_effect=require)
+        with patch.object(cases,'prepare_historical_e01_source_context',return_value=context) as source:
+            result=cases.collect_historical_e01_requirements(plan,
+                prepared=context['prepared_annual_input'],period_selection={})
+        self.assertTrue(result['source_graph_known'])
+        self.assertIsNone(result['complete_annual_count'])
+        self.assertFalse(result['metric_executed'])
+        source.assert_called_once_with(repo_root=plan.root,company_id=context['company_id'],
+            fiscal_year=2024,period_selection={})
+        plan.require.assert_called_once_with(url,role='fy_8k_primary',media_type='text/html',accession='constructed')
+
+    def test_collector_rejects_mismatched_selection(self):
+        context,_,_=self.prepare(source_only=True)
+        plan=SimpleNamespace(root=Path('/constructed'),company={'company_id':context['company_id']},requests={})
+        wrong={**context['prepared_annual_input'],'entity':'999'}
+        with patch.object(cases,'prepare_historical_e01_source_context',return_value=context), \
+                self.assertRaisesRegex(ValueError,'SOURCE_PLAN_SELECTION_CHANGED'):
+            cases.collect_historical_e01_requirements(plan,prepared=wrong)
+
+    def test_collector_recheck_failure_keeps_the_source_url_and_is_not_ready(self):
+        context,_,_=self.prepare(source_only=True)
+        url='https://data.sec.gov/api/xbrl/companyfacts/CIK0000813828.json'
+        context['prepared_annual_input']['companyfacts_input']={'source_url':url}
+        context['source_proofs']=[{'source_url':url,'document_name':'CIK0000813828.json','accession':''}]
+        plan=SimpleNamespace(root=Path('/constructed'),company={'company_id':context['company_id']},requests={})
+        def fail(source_url,**kwargs):
+            plan.requests[source_url]={'source_url':source_url,'saved_status':'SAVED_SOURCE_BLOCKED',
+                'reason':'LATEST_SOURCE_REQUEST_FAILED'}
+        plan.require=Mock(side_effect=fail)
+        with patch.object(cases,'prepare_historical_e01_source_context',return_value=context):
+            result=cases.collect_historical_e01_requirements(plan,prepared=context['prepared_annual_input'])
+        self.assertFalse(result['source_graph_known'])
+        self.assertEqual(url,result['errors'][0]['source_url'])
+        self.assertEqual('LATEST_SOURCE_REQUEST_FAILED',result['errors'][0]['reason'])
 
     def test_no_matching_response_is_whole_window_withheld_not_old_item_count(self):
         case,_,_=self.prepare()
