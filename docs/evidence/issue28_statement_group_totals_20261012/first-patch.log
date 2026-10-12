@@ -1,0 +1,14 @@
+.F................................
+======================================================================
+FAIL: test_explicit_closed_sections_prove_reported_totals (tests.vnext.test_statement_group_totals.StatementGroupTotalsTest.test_explicit_closed_sections_prove_reported_totals)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/tests/vnext/test_statement_group_totals.py", line 31, in test_explicit_closed_sections_prove_reported_totals
+    self.assertTrue(scope['complete_scope_proven'])
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 34 tests in 0.534s
+
+FAILED (failures=1)

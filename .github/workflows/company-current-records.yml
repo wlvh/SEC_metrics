@@ -29,6 +29,7 @@ name: Company saved-source records
     - tests/vnext/test_current_auditor_case.py
     - tests/vnext/test_c04_selected_input.py
     - docs/evidence/issue28_c04_label_identity_20261012/**
+    - tests/vnext/test_statement_group_totals.py
     - tests/vnext/test_single_revenue_line.py
     - tests/vnext/test_selected_income_calculation.py
     - tests/vnext/test_historical_b03_case.py
@@ -251,7 +252,7 @@ jobs:
     - name: Explicit single revenue source and unchanged period defaults
       env:
         PYTHONDONTWRITEBYTECODE: '1'
-      run: python3 tests/required_unittests.py tests.vnext.test_single_revenue_line tests.vnext.test_selected_reported_revenue_v2
+      run: python3 tests/required_unittests.py tests.vnext.test_statement_group_totals tests.vnext.test_single_revenue_line tests.vnext.test_selected_reported_revenue_v2
         tests.vnext.test_financial_duration tests.vnext.test_selected_income_source_v1
     - name: Selected shared income, coordinates and historical consumer
       env:
