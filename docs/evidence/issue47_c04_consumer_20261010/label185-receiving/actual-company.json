@@ -1,0 +1,106 @@
+{
+  "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c04-label185-salesforce26-20261012-47/state",
+  "records": [
+    {
+      "name": "fresh-actual-source",
+      "seconds": 8.398595334001584,
+      "exit": 0,
+      "arguments": [
+        "run",
+        "--company",
+        "salesforce",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2026",
+        "--fiscal-year-end",
+        "2026",
+        "--metric",
+        "C04",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c04-label185-salesforce26-20261012-47/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c04-label185-salesforce26-20261012-47/runs"
+      ]
+    },
+    {
+      "name": "forbidden-repeat",
+      "seconds": 2.475141833994712,
+      "exit": 0,
+      "arguments": [
+        "run",
+        "--company",
+        "salesforce",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2026",
+        "--fiscal-year-end",
+        "2026",
+        "--metric",
+        "C04",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c04-label185-salesforce26-20261012-47/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c04-label185-salesforce26-20261012-47/runs"
+      ]
+    },
+    {
+      "name": "independent-read",
+      "seconds": 0.23528916700161062,
+      "exit": 0,
+      "arguments": [
+        "results",
+        "--company",
+        "salesforce",
+        "--state-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c04-label185-salesforce26-20261012-47/state",
+        "--output-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c04-label185-salesforce26-20261012-47/read"
+      ]
+    }
+  ],
+  "row": {
+    "company": "Salesforce",
+    "cik": "1108524",
+    "metric_id": "C04",
+    "metric_name": "Auditor changes",
+    "value": "0",
+    "unit": "flag",
+    "status": "OK",
+    "source_class": "DERIVED",
+    "formula": "source-verified auditor change signal",
+    "period_start": "2025-02-01",
+    "period_end": "2026-01-31",
+    "fiscal_year": "2026",
+    "fiscal_period": "ANNUAL",
+    "accession": "0001108524-26-000060",
+    "form": "10-K",
+    "filed_date": "2026-03-02",
+    "concept_or_section": "Auditor changes",
+    "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2026, \"period_end\": \"2026-01-31\", \"period_start\": \"2025-02-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"entity_scope\": \"registrant\"}, \"selection\": {\"event_forms\": [\"8-K\", \"8-K/A\", \"8-K12B\", \"8-K12B/A\"], \"event_source_set_ids\": [\"sha256:657f4cfa875cee64c23eeaedc9cdba0e05d5cfaa382ea37f613128688c33f15d\"], \"matched_item_4_01_claim_ids\": [], \"names_differ\": false, \"reason_code\": \"PASS\", \"resolver\": \"auditor_change_registration_filings_v3\", \"same_cik_prior_status\": \"SAME_CIK_PRIOR_DISCOVERED\", \"selected_current_accession\": \"0001108524-26-000060\", \"selection_id\": \"sha256:3668ff4946dc63b8976c9c8b789eea1cdb6ab3765d95faf8aa9790adadd46a78\"}, \"source_reference_ids\": [\"sha256:fe3bf7cdab815fd58dc64b19aec533b5aa58e43211b3afe820441d2c9a6706f1\", \"sha256:7e357b7e0f442af5ba845d6a7e47b6fe332ba51b2afb1b2e036f3daeb8fc9a1f\", \"sha256:77ca4d087014e5be9daf65b86a9ab73e2ddd5b3a9bea5b1e0855117434ef7536\", \"sha256:92c50df49d0a3e20b61a31bddbf5d82ce8d61ed2e2f2752cb78fc6afffb4506c\", \"sha256:49f22a0447f7bbc7e9d2fa79e64642550f424d82bd3442741fd292341a84e4d3\", \"sha256:18ec325ce5cdff2f9d5215c0227dab898511cea0090d718c4a2ba78dc99e796e\", \"sha256:86c6b22567366a4c40af9d553df666f87d3666be08012b93371043a830c0e74d\", \"sha256:be5a29164ab796f07bd137087c4b86d54ea48a6bd594776c28a5c23c1c6cd4e0\", \"sha256:0292f134854a7b681790e8d9c05fb4a253cecafde4288a044dce494a16ca8906\", \"sha256:7c893f437f89463b610aeeb6b53dfe7cfdd86a95ae89a5c0419d1eed8f76a874\", \"sha256:4db158df863fb3b832cf99161a5784d162613297e881bf1f86bda680b2140987\", \"sha256:224f518090d60d334c5e2dc60284f9b83c2eb05e250f45e3b630fda8e43da34f\", \"sha256:7a176c33ef03d5d82ca999b344e4e5a1454c0e553fc73b53635cf541ae2ee059\", \"sha256:8a740ecf9d9a793a5640a25c454265c6e8daee2ab5270617d85f25d0f8a2106a\", \"sha256:318fa14dd835363ea2e8d11dd134c26179127eff41409a38f34799839f0fdc32\", \"sha256:d73154b0f4c0b603ec23946bc9a6133b52888a27e273191408222854ae56cc29\", \"sha256:cc84f67cb0b10f501f83a6ecf5604990eaaac367a998e3eb4e6249b2e9ee6874\", \"sha256:a1feda4b1dd0ff1805981ba26cc42d952a4df1fb16b05c77f3ec4b83f763c7ca\", \"sha256:99e15eed8662ca286a1cb4c07aabe18866bb5dd8354b421a440d7cd522773e6b\", \"sha256:9168ef770880d50d68c12f18083dbbe02f5c0aac14db31723a8f44b4fa247d58\", \"sha256:4b3fb0eec083261a8e74a8b003bb83eacc92709141cd191ae9d4962342b6fbd2\", \"sha256:556d7f9c006dc0922670c68baba74f79d100c69dff6b518df41b681d273ef5d1\", \"sha256:4d14fd3f5f60e6947894d2b068744b943d7428c3e6f89afc4aeaefde720f89e1\", \"sha256:a0ea40ba9c6b2ed96fecd9cdd0e6c36fdbd43f159335b5ca01581145830a4751\", \"sha256:183fd6e4cf06f5e25b59bfb3db3d587ca3c58088b8c7e3ff6eb655fd43bdf83d\", \"sha256:e39f20dcfd1e8f833949cf796892e2526b309bd17a7e9267ae1f615f645242d1\", \"sha256:4cdea6602d044b118267df1ff2546654326476321f45da3e94cd6dea086973ec\", \"sha256:cbe9e69b52e9ed40aced9cc0dbe42388c0e171766350523ff9542f9f0ce2f249\", \"sha256:c77c7f9e67e650dc1400daf25cda5dcf7af7db0affacdce19ac1e5d7e41f6cc4\", \"sha256:4e9f15f9260dce5725b29263a42d58a1ab01d49be408e748b1ec935be3d96f74\"]}",
+    "confidence": "",
+    "notes": "1 means an auditor-change signal was verified; 0 requires completed auditor-name and event-coverage checks. Neither is a probability. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS. Fiscal label follows the explicit issuer definition; original DEI/Company Facts labels remain in the source binding.",
+    "company_id": "salesforce",
+    "result_id": "sha256:9002a865401a6e0456e0d01e10b52d201b684a5d0e98fce56e0cf9649fcc01f3",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c04-label185-salesforce26-20261012-47/state/updates/C04/periods/FY2026/results/4f3ece7c551f43499b65c610b4b545c4",
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+    "period_role": "REQUESTED_RESULT",
+    "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+    "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+    "defect_holds": "[]",
+    "requested_in_latest_execution": "True"
+  },
+  "protected_result_files": 7,
+  "read_state_files_unchanged": 18,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
