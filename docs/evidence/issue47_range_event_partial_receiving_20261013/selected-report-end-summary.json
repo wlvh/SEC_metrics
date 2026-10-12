@@ -1,0 +1,39 @@
+{
+  "code_head": "a2fadc9c972f20f5e9e306f4246e6aab18099164",
+  "seconds": 15.797665083009633,
+  "exit_code": 2,
+  "status": "SELECTED_SOURCE_DEPENDENCIES_UNRESOLVED",
+  "source_hashes": {
+    "config/company_registry.csv": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+    "evidence/requests_log.csv": "9cb8adec2194dd5bb84892c858c0fbc60d838702ef376f343476e455deec59dc",
+    "evidence/requests_log_manifest.json": "67d0da38e09ac6c28ec3f5f9690bb94f4519b427ca691d2240f8ea76d62763a2"
+  },
+  "no_calculator_or_metric_result": true,
+  "real_calls": [
+    0,
+    0,
+    0
+  ],
+  "graph_complete": false,
+  "components": [
+    {
+      "metric_ids": [
+        "B01"
+      ],
+      "status": "SAVED_SOURCE_BYTES_AVAILABLE",
+      "graph_complete": true
+    }
+  ],
+  "limitations": [
+    {
+      "phase": "E01_SELECTED_SOURCE",
+      "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1108524/000110852420000008/crm-20200225.htm",
+      "error_type": "NormalGovernanceInputError",
+      "category": "SOURCE_UNAVAILABLE",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852420000008/crm-20200225.htm"
+    }
+  ],
+  "unresolved_dependency_urls": [
+    "https://www.sec.gov/Archives/edgar/data/1108524/000110852420000008/crm-20200225.htm"
+  ]
+}

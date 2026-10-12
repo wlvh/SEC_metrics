@@ -1,0 +1,32 @@
+{
+  "code_head": "a2fadc9c972f20f5e9e306f4246e6aab18099164",
+  "seconds": 21.297480749999522,
+  "exit_code": 2,
+  "status": "FISCAL_RANGE_UNRESOLVED",
+  "source_hashes": {
+    "config/company_registry.csv": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+    "evidence/requests_log.csv": "9cb8adec2194dd5bb84892c858c0fbc60d838702ef376f343476e455deec59dc",
+    "evidence/requests_log_manifest.json": "67d0da38e09ac6c28ec3f5f9690bb94f4519b427ca691d2240f8ea76d62763a2"
+  },
+  "no_calculator_or_metric_result": true,
+  "real_calls": [
+    0,
+    0,
+    0
+  ],
+  "graph_complete": false,
+  "pending": [
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852420000014/crm-20200131.htm",
+      "method": "GET",
+      "roles": [
+        "fiscal_label_primary"
+      ],
+      "accession": "0001108524-20-000014",
+      "media_type": "text/html",
+      "refresh_for_new_discovery": false,
+      "saved_status": "MISSING_SAVED_SOURCE",
+      "source_acquisition_credit": false
+    }
+  ]
+}
