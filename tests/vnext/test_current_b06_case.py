@@ -305,3 +305,23 @@ class SelectedDebtAmendmentReaderTest(unittest.TestCase):
 
 
 if __name__=='__main__':unittest.main()
+
+
+class B06TextProcessingDependencyTest(unittest.TestCase):
+    def test_source_text_reader_is_a_dependency_of_every_b06_option(self):
+        from vnext import current_b06_case as current
+        path='scripts/vnext/text_coverage.py'
+        for paths in (current.PROCESSING_FILES,current.INLINE_NOTE_PROCESSING_FILES,
+                      current.SELECTED_RELEASE_PROCESSING_FILES):
+            with self.subTest(paths=paths):
+                self.assertIn(path,paths)
+
+    def test_actual_current_configuration_changes_with_consumed_text_parser(self):
+        from vnext import ordinary_current_update as update
+        root=Path(__file__).resolve().parents[2]
+        before=update._configuration(root,'enphase_energy','B06')
+        original=update.sha256_file
+        with patch.object(update,'sha256_file',side_effect=lambda **kw:
+                'new-text-parser' if kw['path']==root/'scripts/vnext/text_coverage.py' else original(**kw)):
+            after=update._configuration(root,'enphase_energy','B06')
+        self.assertNotEqual(before,after)
