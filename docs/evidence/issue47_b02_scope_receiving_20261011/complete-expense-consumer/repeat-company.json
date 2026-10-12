@@ -1,0 +1,91 @@
+{
+  "phase": "repeat",
+  "seconds": 1.0350842499974533,
+  "exit_code": 0,
+  "arguments": [
+    "run",
+    "--company",
+    "paramount_skydance_paramount_global",
+    "--period",
+    "fiscal-years",
+    "--fiscal-year-start",
+    "2024",
+    "--fiscal-year-end",
+    "2024",
+    "--metric",
+    "B02",
+    "--source-root",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "--work-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/partiii-paramount-income-20261011-47/state",
+    "--output-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/partiii-paramount-income-20261011-47/complete-expense-repeat-1791766516845474000"
+  ],
+  "metrics": [
+    {
+      "metric_id": "B02",
+      "status": "NO_SOURCE_CONTENT_CHANGE",
+      "attempt_id": "c1ea154c1d9c4f74a1f146962847c4ad",
+      "version": "d4847bd1aa83474eacba29889b3cbc80",
+      "result_id": "sha256:3a8ca984f4be8f2aa8ac4e47bf0e4c789bffa9b66c18cca541dde9d7610adfba",
+      "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/partiii-paramount-income-20261011-47/state/updates/B02/periods/FY2024/results/d4847bd1aa83474eacba29889b3cbc80",
+      "result_reason_code": "PASS",
+      "raw_input_unchanged": true,
+      "calculation_performed": false,
+      "new_candidate_created": false,
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2024,
+      "defect_holds": [],
+      "read_result_id": "sha256:3a8ca984f4be8f2aa8ac4e47bf0e4c789bffa9b66c18cca541dde9d7610adfba",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/partiii-paramount-income-20261011-47/state/updates/B02/periods/FY2024/results/d4847bd1aa83474eacba29889b3cbc80",
+      "program_version": {
+        "commit": "000903bdc2f79e26d7d131cd676e3391c9d54ee3",
+        "has_uncommitted_changes": true
+      }
+    }
+  ],
+  "rows": [
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "cik": "813828",
+      "metric_id": "B02",
+      "metric_name": "Revenue YoY growth",
+      "value": "-0.01480507217051126399568325914",
+      "unit": "ratio",
+      "status": "OK",
+      "source_class": "DERIVED",
+      "formula": "",
+      "period_start": "2024-01-01",
+      "period_end": "2024-12-31",
+      "fiscal_year": "2024",
+      "fiscal_period": "ANNUAL",
+      "accession": "0000813828-25-000005;0000813828-24-000007",
+      "form": "10-K",
+      "filed_date": "2025-02-26;2024-02-28",
+      "concept_or_section": "Revenue YoY growth",
+      "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2024, \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"coverage\": \"deterministic_source_set\", \"fiscal_year\": 2024}, \"selection\": {\"paired_revenue_scopes\": {\"current\": {\"complete_scope_proven\": true, \"scope_id\": \"sha256:d5cf54d9f907657460088ae4e85469cc345740d6836f37ca3cfd3c3c83ce3b55\", \"status\": \"REPORTED_CONSOLIDATED_TOTAL\"}, \"prior\": {\"complete_scope_proven\": true, \"scope_id\": \"sha256:60fe016dc4a6a3cc3c599a2563bf0f764c30cfdf99b837462c90c8e46b70464a\", \"status\": \"REPORTED_CONSOLIDATED_TOTAL\"}}, \"period_continuity\": {\"company_registry_status\": \"successor_predecessor\", \"cross_entity_combination_authorized\": false, \"period_registrant_cik\": \"813828\", \"period_subject_policy\": \"CONTINUOUS_PRIMARY\"}, \"statement_amendment_checks\": [{\"classification\": \"PART_III_ADDITION_WITH_EXPLICIT_NO_NEW_FINANCIAL_STATEMENTS\", \"fiscal_window_unchanged\": true, \"issues\": [], \"policy_hash\": \"sha256:0aff3223e553748783b58ecde0366f0f51cfb5b8e9d95a6a065aad6ade219d49\", \"scope_id\": \"sha256:2aad479ae1eeaf9b0802a8b41a7fd508ead73758cacecd87be604a2dededb8fb\", \"unchanged_input_classes\": [\"FISCAL_EVENT_WINDOW\"]}], \"statement_income_amendment_properties\": [{\"input_class\": \"CURRENT_ORIGINAL_INCOME_STATEMENT_VALUES\", \"metric_id\": \"B02\", \"source_scope_id\": \"sha256:2aad479ae1eeaf9b0802a8b41a7fd508ead73758cacecd87be604a2dededb8fb\"}]}, \"source_reference_ids\": [\"sha256:0f1a9b2a108d1f35340ea3a4a473d82a3a3b8710de577bd4402e408dbe712af5\", \"sha256:abfc5dda276a9f731c9c7551acd16e4a4bb40f846784178b8c06f999cf6c74e7\", \"sha256:61199b5b50703b802a686ef3abe519dc58675db5fc17338abd4b76b8ba5aaf6a\", \"sha256:bd844e503713bd57c9fa596fdd49f9d874d6a245ce9474e3db0e0b56c866afcb\", \"sha256:874084195b28aaf8d1f6ea4ab4c4e5870a4a7e8849e8b3fb6693a793573282ed\", \"sha256:c5aa94c76f62d2a5f6c057a6c69143c1857e599a65038f8c50e96a0eee2f1841\", \"sha256:2cdec17d6c66b54ae68f52e5c3a561db901e27d8b3673265149ae289abc4307e\", \"sha256:f5fbc8c1603235d141b2bd20721c58c8d9e6786a617f980f02523e4b58e71ee5\", \"sha256:0e276008443cbf445f3d930d3e9b7938ff67d70aef772c88dfdee685c73fe804\", \"sha256:992d964a4a38800752369aca8733eef3905221f7af86d84b1da7cd163ba21192\"]}",
+      "confidence": "",
+      "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+      "company_id": "paramount_skydance_paramount_global",
+      "result_id": "sha256:3a8ca984f4be8f2aa8ac4e47bf0e4c789bffa9b66c18cca541dde9d7610adfba",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/partiii-paramount-income-20261011-47/state/updates/B02/periods/FY2024/results/d4847bd1aa83474eacba29889b3cbc80",
+      "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+      "period_role": "REQUESTED_RESULT",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "source_observation_status": "SAVED_SOURCE_CHECKED_NOT_ONLINE_REFRESHED",
+      "defect_holds": "[]",
+      "requested_in_latest_execution": "True"
+    }
+  ],
+  "old_result_files_protected": 28,
+  "state_files": 61,
+  "read_state_unchanged": false,
+  "new_calls": 0
+}

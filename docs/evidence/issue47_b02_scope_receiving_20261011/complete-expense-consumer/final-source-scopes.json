@@ -1,0 +1,3948 @@
+{
+  "actual_scopes": [
+    {
+      "method": "SELECTED_REPORTED_SINGLE_REVENUE_LINE_V1",
+      "annual_input": {
+        "company_id": "paramount_skydance_paramount_global",
+        "entity": "813828",
+        "filing": {
+          "form": "10-K",
+          "reportDate": "2024-12-31",
+          "filingDate": "2025-02-26",
+          "accessionNumber": "0000813828-25-000005",
+          "primaryDocument": "para-20241231.htm"
+        },
+        "table_input": {
+          "target_period": {
+            "fiscal_year": 2024,
+            "period_start": "2024-01-01",
+            "period_end": "2024-12-31"
+          }
+        }
+      },
+      "approved_concepts": [
+        "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "us-gaap:Revenues",
+        "us-gaap:SalesRevenueNet",
+        "us-gaap:RevenueFromContractWithCustomerIncludingAssessedTax"
+      ],
+      "reported_totals": [
+        {
+          "total": {
+            "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+            "value": "29213000000",
+            "unit": "USD",
+            "period_start": "2024-01-01",
+            "period_end": "2024-12-31",
+            "decimals": "-6",
+            "ordinal": 86,
+            "context_ref": "c-1",
+            "context": {
+              "context_ref": "c-1",
+              "dimensions": {},
+              "entity_identifier": "0000813828",
+              "period_end": "2024-12-31",
+              "period_start": "2024-01-01",
+              "typed_dimension_count": 0
+            },
+            "context_proof": {
+              "context_ref": "c-1",
+              "identifiers": [
+                {
+                  "value": "0000813828",
+                  "scheme": "http://www.sec.gov/CIK"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "startdate",
+                  "value": "2024-01-01"
+                },
+                {
+                  "kind": "enddate",
+                  "value": "2024-12-31"
+                }
+              ],
+              "dimensions": [],
+              "typed_dimension_count": 0
+            },
+            "source_reference": {
+              "record_type": "SOURCE_REFERENCE",
+              "source_reference_id": "sha256:0f1a9b2a108d1f35340ea3a4a473d82a3a3b8710de577bd4402e408dbe712af5",
+              "raw_asset_id": "sha256:5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+              "company_id": "paramount_skydance_paramount_global",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231.htm",
+              "accession": "0000813828-25-000005",
+              "document_name": "para-20241231.htm",
+              "source_role": "target_primary",
+              "request_attempt_id": "request:attempt:255bb923386890b3db4f807546f3fac75d33f941ccdc035730d90d98d37c4b6e"
+            }
+          },
+          "total_cell": {
+            "table_id": "table_000053",
+            "grid_sha256": "sha256:fc0fc611142d74fb9fe2d5c28b0c308a5e4aef3e4cc3089117e667465e642959",
+            "row_index": 3,
+            "column_index": 4,
+            "origin_row_index": 3,
+            "origin_column_index": 4,
+            "rowspan": 1,
+            "colspan": 1,
+            "raw_text": "29,213&#160;",
+            "text": "29,213"
+          },
+          "complete_expense_statement": {
+            "expense": {
+              "concept": "us-gaap:CostsAndExpenses",
+              "value": "34482000000",
+              "unit": "USD",
+              "period_start": "2024-01-01",
+              "period_end": "2024-12-31",
+              "decimals": "-6",
+              "ordinal": 107,
+              "context_ref": "c-1",
+              "context": {
+                "context_ref": "c-1",
+                "dimensions": {},
+                "entity_identifier": "0000813828",
+                "period_end": "2024-12-31",
+                "period_start": "2024-01-01",
+                "typed_dimension_count": 0
+              },
+              "context_proof": {
+                "context_ref": "c-1",
+                "identifiers": [
+                  {
+                    "value": "0000813828",
+                    "scheme": "http://www.sec.gov/CIK"
+                  }
+                ],
+                "period_fields": [
+                  {
+                    "kind": "startdate",
+                    "value": "2024-01-01"
+                  },
+                  {
+                    "kind": "enddate",
+                    "value": "2024-12-31"
+                  }
+                ],
+                "dimensions": [],
+                "typed_dimension_count": 0
+              },
+              "source_reference": {
+                "record_type": "SOURCE_REFERENCE",
+                "source_reference_id": "sha256:0f1a9b2a108d1f35340ea3a4a473d82a3a3b8710de577bd4402e408dbe712af5",
+                "raw_asset_id": "sha256:5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+                "company_id": "paramount_skydance_paramount_global",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231.htm",
+                "accession": "0000813828-25-000005",
+                "document_name": "para-20241231.htm",
+                "source_role": "target_primary",
+                "request_attempt_id": "request:attempt:255bb923386890b3db4f807546f3fac75d33f941ccdc035730d90d98d37c4b6e"
+              }
+            },
+            "expense_cell": {
+              "table_id": "table_000053",
+              "grid_sha256": "sha256:fc0fc611142d74fb9fe2d5c28b0c308a5e4aef3e4cc3089117e667465e642959",
+              "row_index": 11,
+              "column_index": 3,
+              "origin_row_index": 11,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "34,482&#160;",
+              "text": "34,482"
+            },
+            "expense_group": {
+              "table_id": "table_000053",
+              "grid_sha256": "sha256:fc0fc611142d74fb9fe2d5c28b0c308a5e4aef3e4cc3089117e667465e642959",
+              "row_index": 4,
+              "column_index": 0,
+              "origin_row_index": 4,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Costs and expenses:",
+              "text": "Costs and expenses:"
+            },
+            "expense_group_row": 4,
+            "operating_income": {
+              "concept": "us-gaap:OperatingIncomeLoss",
+              "value": "-5269000000",
+              "unit": "USD",
+              "period_start": "2024-01-01",
+              "period_end": "2024-12-31",
+              "decimals": "-6",
+              "ordinal": 113,
+              "context_ref": "c-1",
+              "context": {
+                "context_ref": "c-1",
+                "dimensions": {},
+                "entity_identifier": "0000813828",
+                "period_end": "2024-12-31",
+                "period_start": "2024-01-01",
+                "typed_dimension_count": 0
+              },
+              "context_proof": {
+                "context_ref": "c-1",
+                "identifiers": [
+                  {
+                    "value": "0000813828",
+                    "scheme": "http://www.sec.gov/CIK"
+                  }
+                ],
+                "period_fields": [
+                  {
+                    "kind": "startdate",
+                    "value": "2024-01-01"
+                  },
+                  {
+                    "kind": "enddate",
+                    "value": "2024-12-31"
+                  }
+                ],
+                "dimensions": [],
+                "typed_dimension_count": 0
+              },
+              "source_reference": {
+                "record_type": "SOURCE_REFERENCE",
+                "source_reference_id": "sha256:0f1a9b2a108d1f35340ea3a4a473d82a3a3b8710de577bd4402e408dbe712af5",
+                "raw_asset_id": "sha256:5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+                "company_id": "paramount_skydance_paramount_global",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231.htm",
+                "accession": "0000813828-25-000005",
+                "document_name": "para-20241231.htm",
+                "source_role": "target_primary",
+                "request_attempt_id": "request:attempt:255bb923386890b3db4f807546f3fac75d33f941ccdc035730d90d98d37c4b6e"
+              }
+            },
+            "operating_cell": {
+              "table_id": "table_000053",
+              "grid_sha256": "sha256:fc0fc611142d74fb9fe2d5c28b0c308a5e4aef3e4cc3089117e667465e642959",
+              "row_index": 13,
+              "column_index": 3,
+              "origin_row_index": 13,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "(5,269)",
+              "text": "(5,269)"
+            },
+            "neutral_intermediate_reports": [
+              {
+                "ordinal": 110,
+                "concept": [
+                  "http://www.paramount.com/20241231",
+                  "GainLossOnDispositionOfAssetsAndSaleOfBusiness"
+                ],
+                "value": "0",
+                "context_ref": "c-1",
+                "unit_ref": "usd",
+                "cell": {
+                  "table_id": "table_000053",
+                  "grid_sha256": "sha256:fc0fc611142d74fb9fe2d5c28b0c308a5e4aef3e4cc3089117e667465e642959",
+                  "row_index": 12,
+                  "column_index": 3,
+                  "origin_row_index": 12,
+                  "origin_column_index": 3,
+                  "rowspan": 1,
+                  "colspan": 2,
+                  "raw_text": "&#8212;&#160;",
+                  "text": "—"
+                }
+              }
+            ],
+            "annual_period": {
+              "fiscal_year": 2024,
+              "period_start": "2024-01-01",
+              "period_end": "2024-12-31"
+            },
+            "xml_matches": [
+              {
+                "concept": "us-gaap:costsandexpenses",
+                "value": "34482000000",
+                "unit": "USD",
+                "period_start": "2024-01-01",
+                "period_end": "2024-12-31",
+                "decimals": "-6",
+                "ordinal": 107,
+                "context_ref": "c-1",
+                "context": {
+                  "context_ref": "c-1",
+                  "dimensions": {},
+                  "entity_identifier": "0000813828",
+                  "period_end": "2024-12-31",
+                  "period_start": "2024-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "c-1",
+                  "identifiers": [
+                    {
+                      "value": "0000813828",
+                      "scheme": "http://www.sec.gov/CIK"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2024-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2024-12-31"
+                    }
+                  ],
+                  "dimensions": [],
+                  "typed_dimension_count": 0
+                },
+                "source_reference": {
+                  "record_type": "SOURCE_REFERENCE",
+                  "source_reference_id": "sha256:f5fbc8c1603235d141b2bd20721c58c8d9e6786a617f980f02523e4b58e71ee5",
+                  "raw_asset_id": "sha256:e19bf7b9db2b6076c791220adbb3f2d66615dc8a26110a2a29a4d0c676a9fd8e",
+                  "company_id": "paramount_skydance_paramount_global",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231_htm.xml",
+                  "accession": "0000813828-25-000005",
+                  "document_name": "para-20241231_htm.xml",
+                  "source_role": "auditor_facts",
+                  "request_attempt_id": "request:attempt:1b55e8c2e5cc6e379def0e809d4f9d158aabe1b2a8d88ffaced1e6dbabd06909"
+                }
+              },
+              {
+                "concept": "us-gaap:operatingincomeloss",
+                "value": "-5269000000",
+                "unit": "USD",
+                "period_start": "2024-01-01",
+                "period_end": "2024-12-31",
+                "decimals": "-6",
+                "ordinal": 113,
+                "context_ref": "c-1",
+                "context": {
+                  "context_ref": "c-1",
+                  "dimensions": {},
+                  "entity_identifier": "0000813828",
+                  "period_end": "2024-12-31",
+                  "period_start": "2024-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "c-1",
+                  "identifiers": [
+                    {
+                      "value": "0000813828",
+                      "scheme": "http://www.sec.gov/CIK"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2024-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2024-12-31"
+                    }
+                  ],
+                  "dimensions": [],
+                  "typed_dimension_count": 0
+                },
+                "source_reference": {
+                  "record_type": "SOURCE_REFERENCE",
+                  "source_reference_id": "sha256:f5fbc8c1603235d141b2bd20721c58c8d9e6786a617f980f02523e4b58e71ee5",
+                  "raw_asset_id": "sha256:e19bf7b9db2b6076c791220adbb3f2d66615dc8a26110a2a29a4d0c676a9fd8e",
+                  "company_id": "paramount_skydance_paramount_global",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231_htm.xml",
+                  "accession": "0000813828-25-000005",
+                  "document_name": "para-20241231_htm.xml",
+                  "source_role": "auditor_facts",
+                  "request_attempt_id": "request:attempt:1b55e8c2e5cc6e379def0e809d4f9d158aabe1b2a8d88ffaced1e6dbabd06909"
+                }
+              },
+              {
+                "concept": "us-gaap:operatingincomeloss",
+                "value": "-5269000000",
+                "unit": "USD",
+                "period_start": "2024-01-01",
+                "period_end": "2024-12-31",
+                "decimals": "-6",
+                "ordinal": 2118,
+                "context_ref": "c-1",
+                "context": {
+                  "context_ref": "c-1",
+                  "dimensions": {},
+                  "entity_identifier": "0000813828",
+                  "period_end": "2024-12-31",
+                  "period_start": "2024-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "c-1",
+                  "identifiers": [
+                    {
+                      "value": "0000813828",
+                      "scheme": "http://www.sec.gov/CIK"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2024-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2024-12-31"
+                    }
+                  ],
+                  "dimensions": [],
+                  "typed_dimension_count": 0
+                },
+                "source_reference": {
+                  "record_type": "SOURCE_REFERENCE",
+                  "source_reference_id": "sha256:f5fbc8c1603235d141b2bd20721c58c8d9e6786a617f980f02523e4b58e71ee5",
+                  "raw_asset_id": "sha256:e19bf7b9db2b6076c791220adbb3f2d66615dc8a26110a2a29a4d0c676a9fd8e",
+                  "company_id": "paramount_skydance_paramount_global",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231_htm.xml",
+                  "accession": "0000813828-25-000005",
+                  "document_name": "para-20241231_htm.xml",
+                  "source_role": "auditor_facts",
+                  "request_attempt_id": "request:attempt:1b55e8c2e5cc6e379def0e809d4f9d158aabe1b2a8d88ffaced1e6dbabd06909"
+                }
+              }
+            ],
+            "xml_check": "MATCH"
+          },
+          "issuer_header_definition": [
+            {
+              "raw_start_byte": 417957,
+              "raw_end_byte": 418630,
+              "raw_span_sha256": "e2fa1eee8f90b3960e5649db493ebf0f125c881d0ca58dcdd3cf7235bccacfbc",
+              "text": "In December 2019, we changed our name from CBS Corporation (“CBS”) to ViacomCBS Inc. (“ViacomCBS”) in connection with the merger of Viacom Inc. (“Viacom”) and CBS. In February 2022, we changed our name to Paramount Global. Unless the context requires otherwise, references in this document to “Paramount,” “the Company,” “we,” “us” and “our” mean Paramount Global and its consolidated subsidiaries, to “CBS” mean CBS and its consolidated subsidiaries prior to the merger and to “Viacom” mean Viacom and its consolidated subsidiaries prior to the merger.",
+              "registrant_name": "Paramount Global",
+              "aliases": [
+                "Paramount"
+              ]
+            }
+          ],
+          "statement_scope": {
+            "title_sources": [
+              {
+                "start_byte": 1431343,
+                "end_byte": 1431541,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "text-align:center"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:1194"
+                ],
+                "visible_text": "CONSOLIDATED STATEMENTS OF OPERATIONS",
+                "span_sha256": "6ba75d7690d0c81ba3159be9e2e8a29e1a1f06d9e1ed882386df37d1db525b72"
+              }
+            ],
+            "caption": "",
+            "table_span": {
+              "table_order": 52,
+              "start_byte": 1431805,
+              "end_byte": 1504514,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1196",
+                "table:1"
+              ],
+              "span_sha256": "137e102df4d8c2696bdcb443294ca3aeaee2181e596995c22b971a98942dde7d"
+            },
+            "intervening_sources": [
+              {
+                "start_byte": 1431131,
+                "end_byte": 1431343,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "margin-bottom:9pt;text-align:center"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:1193"
+                ],
+                "visible_text": "PARAMOUNT GLOBAL AND SUBSIDIARIES",
+                "span_sha256": "54929cde5d2e2d35881ffc2ad5d7a1cc3939d772ca44ce23e1b5538c2555f95f"
+              },
+              {
+                "start_byte": 1431343,
+                "end_byte": 1431541,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "text-align:center"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:1194"
+                ],
+                "visible_text": "CONSOLIDATED STATEMENTS OF OPERATIONS",
+                "span_sha256": "6ba75d7690d0c81ba3159be9e2e8a29e1a1f06d9e1ed882386df37d1db525b72"
+              },
+              {
+                "start_byte": 1431541,
+                "end_byte": 1431759,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "margin-bottom:9pt;text-align:center"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:1195"
+                ],
+                "visible_text": "(In millions, except per share amounts)",
+                "span_sha256": "ff87c6fc9d12139704f444fe134af5c0522f6c8c89989c3b9ebee1a2a42789f8"
+              }
+            ],
+            "unresolved_annotations": [],
+            "adjacent_heading_table": null,
+            "statement_page_boundary": {
+              "start_byte": 1430936,
+              "end_byte": 1430973,
+              "span_sha256": "dcab779a8f959ed9a60e2fd1e515a24af9a737c34ebf2a3a3ff2887763b7cb61"
+            },
+            "preceding_page_context": [
+              {
+                "start_byte": 1411479,
+                "end_byte": 1411660,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "margin-top:8pt;text-align:center"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:1140",
+                  "div:1",
+                  "div:1"
+                ],
+                "visible_text": "II-39",
+                "span_sha256": "b3a040261bd93990423742fa356c96b3f7ba1ff8847d8717bdef0d8a2b9c0114"
+              },
+              {
+                "start_byte": 1411838,
+                "end_byte": 1412055,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "text-align:center"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:1143"
+                ],
+                "visible_text": "Report of Independent Registered Public Accounting Firm ",
+                "span_sha256": "05de3bf956eea15a6f7abd326618e8ea200f1ecfddf3f5cd69d7da37c8f41157"
+              },
+              {
+                "start_byte": 1412222,
+                "end_byte": 1412465,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "margin-bottom:10pt;text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:1145"
+                ],
+                "visible_text": "To the Board of Directors and Stockholders of Paramount Global",
+                "span_sha256": "4317f60e1ac3e102eb3a46247489424f83ccf773b272307604852babe367e101"
+              },
+              {
+                "start_byte": 1412465,
+                "end_byte": 1412761,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "margin-bottom:8pt;margin-top:10pt;text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:1146"
+                ],
+                "visible_text": "Opinions on the Financial Statements and Internal Control over Financial Reporting",
+                "span_sha256": "1b12e94a6fc9631c9ac72fb3cd71ab0a62465355518267795988a0455e757fb6"
+              },
+              {
+                "start_byte": 1412761,
+                "end_byte": 1414502,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:1147"
+                ],
+                "visible_text": "We have audited the accompanying consolidated balance sheets of Paramount Global and its subsidiaries (the “Company”) as of December 31, 2024 and 2023, and the related consolidated statements of operations, of comprehensive income, of stockholders’ equity, and of cash flows for each of the three years in the period ended December 31, 2024, including the related notes and financial statement schedule listed in the accompanying index (collectively referred to as the “consolidated financial statements”). We also have audited the Company's internal control over financial reporting as of December 31, 2024, based on criteria established in Internal Control - Integrated Framework (2013) issued by the Committee of Sponsoring Organizations of the Treadway Commission (COSO).  ",
+                "span_sha256": "4b71637c8e1d9cb207fbde3414731e989f639b164b75ffaddd3dd73d0b96d054"
+              },
+              {
+                "start_byte": 1414558,
+                "end_byte": 1415891,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:1149"
+                ],
+                "visible_text": "In our opinion, the consolidated financial statements referred to above present fairly, in all material respects, the financial position of the Company as of  December 31, 2024 and 2023, and the results of its operations and its cash flows for each of the three years in the period ended  December 31, 2024 in conformity with accounting principles generally accepted in the United States of America. Also in our opinion, the Company maintained, in all material respects, effective internal control over financial reporting as of December 31, 2024, based on criteria established in Internal Control - Integrated Framework (2013) issued by the COSO.",
+                "span_sha256": "6dfd1c8572eeaa4b76cb3885724c981ca9a9f7190f75658a42a19b9e6f4e770f"
+              },
+              {
+                "start_byte": 1415947,
+                "end_byte": 1416145,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:1151"
+                ],
+                "visible_text": "Basis for Opinions",
+                "span_sha256": "966a20f1508051edcf3ecbeafd94063049d817bced70211b47325fc3ddc79f5f"
+              },
+              {
+                "start_byte": 1416201,
+                "end_byte": 1417965,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:1153"
+                ],
+                "visible_text": "The Company's management is responsible for these consolidated financial statements, for maintaining effective internal control over financial reporting, and for its assessment of the effectiveness of internal control over financial reporting, included in the accompanying Management’s Report on Internal Control over Financial Reporting. Our responsibility is to express opinions on the Company’s consolidated financial statements and on the Company's internal control over financial reporting based on our audits. We are a public accounting firm registered with the Public Company Accounting Oversight Board (United States) (PCAOB) and are required to be independent with respect to the Company in accordance with the U.S. federal securities laws and the applicable rules and regulations of the Securities and Exchange Commission and the PCAOB.",
+                "span_sha256": "83ad8a67b5cd15f2b280e179675bdd554a101bf6d166ae9ed7358a5790033768"
+              },
+              {
+                "start_byte": 1418021,
+                "end_byte": 1418569,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:1155"
+                ],
+                "visible_text": "We conducted our audits in accordance with the standards of the PCAOB. Those standards require that we plan and perform the audits to obtain reasonable assurance about whether the consolidated financial statements are free of material misstatement, whether due to error or fraud, and whether effective internal control over financial reporting was maintained in all material respects.  ",
+                "span_sha256": "1d21d4fc90f7f44e978cd665548eceaf77599b8f118dbef83ca71a1bb766eca7"
+              },
+              {
+                "start_byte": 1418625,
+                "end_byte": 1420860,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:1157"
+                ],
+                "visible_text": "Our audits of the consolidated financial statements included performing procedures to assess the risks of material misstatement of the consolidated financial statements, whether due to error or fraud, and performing procedures that respond to those risks. Such procedures included examining, on a test basis, evidence regarding the amounts and disclosures in the consolidated financial statements. Our audits also included evaluating the accounting principles used and significant estimates made by management, as well as evaluating the overall presentation of the consolidated financial statements. Our audit of internal control over financial reporting included obtaining an understanding of internal control over financial reporting, assessing the risk that a material weakness exists, and testing and evaluating the design and operating effectiveness of internal control based on the assessed risk. Our audits also included performing such other procedures as we considered necessary in the circumstances. We believe that our audits provide a reasonable basis for our opinions.",
+                "span_sha256": "d2f213cd42ae4ef0adc8e28b5d58225100d197325d057b07117a8e272e822e14"
+              },
+              {
+                "start_byte": 1421021,
+                "end_byte": 1421202,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "margin-top:8pt;text-align:center"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:1159",
+                  "div:1",
+                  "div:1"
+                ],
+                "visible_text": "II-40",
+                "span_sha256": "fab5798be71f5780363671ef37a6d965003ae19db188c48b33cbe04b83dfa074"
+              },
+              {
+                "start_byte": 1421326,
+                "end_byte": 1421577,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:1161"
+                ],
+                "visible_text": "Definition and Limitations of Internal Control over Financial Reporting",
+                "span_sha256": "38ec2710ea7d1246c72e006864b4fa85bafe1f9fec818b86f035b2d2f5f2bb95"
+              },
+              {
+                "start_byte": 1421633,
+                "end_byte": 1422907,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:1163"
+                ],
+                "visible_text": "A company’s internal control over financial reporting is a process designed to provide reasonable assurance regarding the reliability of financial reporting and the preparation of financial statements for external purposes in accordance with generally accepted accounting principles. A company’s internal control over financial reporting includes those policies and procedures that (i) pertain to the maintenance of records that, in reasonable detail, accurately and fairly reflect the transactions and dispositions of the assets of the company; (ii) provide reasonable assurance that transactions are recorded as necessary to permit preparation of financial statements in accordance with generally accepted accounting principles, and that receipts and expenditures of the company are being made only in accordance with authorizations of management and directors of the company; and (iii) provide reasonable assurance regarding prevention or timely detection of unauthorized acquisition, use, or disposition of the company’s assets that could have a material effect on the financial statements.",
+                "span_sha256": "6c3ece4cae2c78c19c9ecef80fdc0f95cfe4811842c31a66307fac09689d3a1d"
+              },
+              {
+                "start_byte": 1422963,
+                "end_byte": 1423491,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:1165"
+                ],
+                "visible_text": "Because of its inherent limitations, internal control over financial reporting may not prevent or detect misstatements. Also, projections of any evaluation of effectiveness to future periods are subject to the risk that controls may become inadequate because of changes in conditions, or that the degree of compliance with the policies or procedures may deteriorate.",
+                "span_sha256": "662716544aa8840e3571e4f0cdd55a098a1e7c0dd00ec8eb12c8babe3172514b"
+              },
+              {
+                "start_byte": 1423547,
+                "end_byte": 1423749,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:1167"
+                ],
+                "visible_text": "Critical Audit Matters",
+                "span_sha256": "c4801f266deab79b17f1d0f129c1576d3a02b49a3bc609f3f459a7be8b192010"
+              },
+              {
+                "start_byte": 1423805,
+                "end_byte": 1424934,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:1169"
+                ],
+                "visible_text": "The critical audit matter communicated below is a matter arising from the current period audit of the consolidated financial statements that was communicated or required to be communicated to the audit committee and that (i) relates to accounts or disclosures that are material to the consolidated financial statements and (ii) involved our especially challenging, subjective, or complex judgments. The communication of critical audit matters does not alter in any way our opinion on the consolidated financial statements, taken as a whole, and we are not, by communicating the critical audit matter below, providing a separate opinion on the critical audit matter or on the accounts or disclosures to which it relates.",
+                "span_sha256": "68120498702596caecba1322b1bfa985e04e2678653b745849a7447d78cc8141"
+              },
+              {
+                "start_byte": 1424990,
+                "end_byte": 1425242,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:1171"
+                ],
+                "visible_text": "Amortization of Certain Internally-Produced Television Programming Costs",
+                "span_sha256": "10e466443547893b491192af59e33e768a8ee8251b7e42a19ea2846b45c8337e"
+              },
+              {
+                "start_byte": 1425298,
+                "end_byte": 1426869,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:1173"
+                ],
+                "visible_text": "As described in Notes 1 and 3 to the consolidated financial statements, programming that is expected to be predominantly monetized through licensing and distribution on third-party platforms is considered individually monetized and programming that is expected to be predominantly monetized on the Company's networks and streaming services together with other programming, is considered to be monetized as part of a film group. The Company's amortization of internally-produced television and film programming costs with individual monetization and film group monetization was $6.51 billion for the year ended December 31, 2024, a majority of which is attributable to the amortization of certain internally-produced television programming costs. For internally-produced television programs that are predominantly monetized on an individual basis, management uses an individual-film-forecast computation method to amortize capitalized production costs over the applicable title’s life cycle based upon the ratio of current period revenues to estimated remaining total gross revenues to be earned (“Ultimate Revenues”) for each title. For internally-produced television programming that is predominantly monetized as part of a film group, capitalized costs are amortized based on management’s estimate of the timing of the Company’s usage of and benefit from such programming.",
+                "span_sha256": "f4b150d25ccc7927f8d1061ec3fc1e115aeb9b2dbbb0ad2b684e621a361cf1de"
+              },
+              {
+                "start_byte": 1426925,
+                "end_byte": 1427475,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:1175"
+                ],
+                "visible_text": "The principal consideration for our determination that performing procedures relating to amortization of certain internally-produced television programming costs is a critical audit matter is a high degree of auditor effort in performing procedures related to the amortization of certain internally-produced television programming costs monetized individually and as part of a film group.",
+                "span_sha256": "a3b1c3c84701a7ee36c445a7d7d7b3618581a143c145b1564f322e4bd0b26a88"
+              },
+              {
+                "start_byte": 1427531,
+                "end_byte": 1428025,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:1177"
+                ],
+                "visible_text": "Addressing the matter involved performing procedures and evaluating audit evidence in connection with forming our overall opinion on the consolidated financial statements. These procedures included testing the effectiveness of controls relating to the amortization of certain internally-produced television programming costs. These ",
+                "span_sha256": "a95df4bcadd29463f8eddd0228456b267e4073994fa13df92a6ea509dc24a82a"
+              },
+              {
+                "start_byte": 1428130,
+                "end_byte": 1428311,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "margin-top:8pt;text-align:center"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:1178",
+                  "div:1",
+                  "div:1"
+                ],
+                "visible_text": "II-41",
+                "span_sha256": "5a1e84e6fae69ee0aa978b7711aefd94a13cae1a82bf1c11fea29243056c4718"
+              },
+              {
+                "start_byte": 1428435,
+                "end_byte": 1429448,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:1180"
+                ],
+                "visible_text": "procedures also included, among others (i) recalculating the amortization of certain internally-produced television programming costs on a sample basis and (ii) evaluating, on a test basis, whether the method used to amortize certain internally-produced television programming costs is reasonable by considering either a) information related to past performance of similar television programs in a market, the performance in the initial markets, and future firm commitments to license programs for programming monetized on an individual basis, or b) information related to estimated timing of the usage of content for television programming monetized as part of a film group. Procedures were also performed to test the completeness and accuracy of management's data used in the amortization of certain internally-produced television programming costs.",
+                "span_sha256": "7d11d18ba4863531ea70395ddbe842550cc04dbbf53c0680de254f1afcabc51c"
+              },
+              {
+                "start_byte": 1429560,
+                "end_byte": 1429833,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:1183"
+                ],
+                "visible_text": "/s/ PricewaterhouseCoopers LLP",
+                "span_sha256": "52518a5ce16152166d2aba2ed6fe3d8cddb26b3503b845a348abeb0089cd6a1d"
+              },
+              {
+                "start_byte": 1429833,
+                "end_byte": 1430098,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:1184"
+                ],
+                "visible_text": "New York, New York",
+                "span_sha256": "91341cbab4fe8cfced15c9cd627812cefbc56a510808864daa8c34da3213ab0d"
+              },
+              {
+                "start_byte": 1430098,
+                "end_byte": 1430282,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:1185"
+                ],
+                "visible_text": "February 26, 2025",
+                "span_sha256": "30546a8a72602d61d2db7df1c5f914c1fb47c67e84d20ffbd53028897270a6e7"
+              },
+              {
+                "start_byte": 1430338,
+                "end_byte": 1430584,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:1187"
+                ],
+                "visible_text": "We have served as the Company’s or its predecessor’s auditor since 1970.",
+                "span_sha256": "459f18c3ca0e95fa438f96d7894ad8cd48201796682553a32640e8fed7348c02"
+              },
+              {
+                "start_byte": 1430689,
+                "end_byte": 1430870,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "margin-top:8pt;text-align:center"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:1188",
+                  "div:1",
+                  "div:1"
+                ],
+                "visible_text": "II-42",
+                "span_sha256": "c688a9303620c823e23ab14d16253090ee8c6c8679741cb9caadee243d3c024b"
+              }
+            ]
+          },
+          "unit_sources": [
+            {
+              "kind": "heading_block",
+              "proof": {
+                "start_byte": 1431541,
+                "end_byte": 1431759,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "margin-bottom:9pt;text-align:center"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:1195"
+                ],
+                "visible_text": "(In millions, except per share amounts)",
+                "span_sha256": "ff87c6fc9d12139704f444fe134af5c0522f6c8c89989c3b9ebee1a2a42789f8"
+              },
+              "text": "(In millions, except per share amounts)"
+            }
+          ],
+          "year_headers": [
+            {
+              "table_id": "table_000053",
+              "grid_sha256": "sha256:fc0fc611142d74fb9fe2d5c28b0c308a5e4aef3e4cc3089117e667465e642959",
+              "row_index": 2,
+              "column_index": 3,
+              "origin_row_index": 2,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "2024",
+              "text": "2024"
+            }
+          ],
+          "end_headers": [
+            {
+              "table_id": "table_000053",
+              "grid_sha256": "sha256:fc0fc611142d74fb9fe2d5c28b0c308a5e4aef3e4cc3089117e667465e642959",
+              "row_index": 1,
+              "column_index": 3,
+              "origin_row_index": 1,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 15,
+              "raw_text": "Year Ended December 31,",
+              "text": "Year Ended December 31,"
+            }
+          ],
+          "annual_period": {
+            "fiscal_year": 2024,
+            "period_start": "2024-01-01",
+            "period_end": "2024-12-31"
+          },
+          "xml_matches": [
+            {
+              "concept": "us-gaap:revenuefromcontractwithcustomerexcludingassessedtax",
+              "value": "29213000000",
+              "unit": "USD",
+              "period_start": "2024-01-01",
+              "period_end": "2024-12-31",
+              "decimals": "-6",
+              "ordinal": 86,
+              "context_ref": "c-1",
+              "context": {
+                "context_ref": "c-1",
+                "dimensions": {},
+                "entity_identifier": "0000813828",
+                "period_end": "2024-12-31",
+                "period_start": "2024-01-01",
+                "typed_dimension_count": 0
+              },
+              "context_proof": {
+                "context_ref": "c-1",
+                "identifiers": [
+                  {
+                    "value": "0000813828",
+                    "scheme": "http://www.sec.gov/CIK"
+                  }
+                ],
+                "period_fields": [
+                  {
+                    "kind": "startdate",
+                    "value": "2024-01-01"
+                  },
+                  {
+                    "kind": "enddate",
+                    "value": "2024-12-31"
+                  }
+                ],
+                "dimensions": [],
+                "typed_dimension_count": 0
+              },
+              "source_reference": {
+                "record_type": "SOURCE_REFERENCE",
+                "source_reference_id": "sha256:f5fbc8c1603235d141b2bd20721c58c8d9e6786a617f980f02523e4b58e71ee5",
+                "raw_asset_id": "sha256:e19bf7b9db2b6076c791220adbb3f2d66615dc8a26110a2a29a4d0c676a9fd8e",
+                "company_id": "paramount_skydance_paramount_global",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231_htm.xml",
+                "accession": "0000813828-25-000005",
+                "document_name": "para-20241231_htm.xml",
+                "source_role": "auditor_facts",
+                "request_attempt_id": "request:attempt:1b55e8c2e5cc6e379def0e809d4f9d158aabe1b2a8d88ffaced1e6dbabd06909"
+              }
+            },
+            {
+              "concept": "us-gaap:revenuefromcontractwithcustomerexcludingassessedtax",
+              "value": "29213000000",
+              "unit": "USD",
+              "period_start": "2024-01-01",
+              "period_end": "2024-12-31",
+              "decimals": "-6",
+              "ordinal": 1002,
+              "context_ref": "c-1",
+              "context": {
+                "context_ref": "c-1",
+                "dimensions": {},
+                "entity_identifier": "0000813828",
+                "period_end": "2024-12-31",
+                "period_start": "2024-01-01",
+                "typed_dimension_count": 0
+              },
+              "context_proof": {
+                "context_ref": "c-1",
+                "identifiers": [
+                  {
+                    "value": "0000813828",
+                    "scheme": "http://www.sec.gov/CIK"
+                  }
+                ],
+                "period_fields": [
+                  {
+                    "kind": "startdate",
+                    "value": "2024-01-01"
+                  },
+                  {
+                    "kind": "enddate",
+                    "value": "2024-12-31"
+                  }
+                ],
+                "dimensions": [],
+                "typed_dimension_count": 0
+              },
+              "source_reference": {
+                "record_type": "SOURCE_REFERENCE",
+                "source_reference_id": "sha256:f5fbc8c1603235d141b2bd20721c58c8d9e6786a617f980f02523e4b58e71ee5",
+                "raw_asset_id": "sha256:e19bf7b9db2b6076c791220adbb3f2d66615dc8a26110a2a29a4d0c676a9fd8e",
+                "company_id": "paramount_skydance_paramount_global",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231_htm.xml",
+                "accession": "0000813828-25-000005",
+                "document_name": "para-20241231_htm.xml",
+                "source_role": "auditor_facts",
+                "request_attempt_id": "request:attempt:1b55e8c2e5cc6e379def0e809d4f9d158aabe1b2a8d88ffaced1e6dbabd06909"
+              }
+            },
+            {
+              "concept": "us-gaap:revenuefromcontractwithcustomerexcludingassessedtax",
+              "value": "29213000000",
+              "unit": "USD",
+              "period_start": "2024-01-01",
+              "period_end": "2024-12-31",
+              "decimals": "-6",
+              "ordinal": 2026,
+              "context_ref": "c-1",
+              "context": {
+                "context_ref": "c-1",
+                "dimensions": {},
+                "entity_identifier": "0000813828",
+                "period_end": "2024-12-31",
+                "period_start": "2024-01-01",
+                "typed_dimension_count": 0
+              },
+              "context_proof": {
+                "context_ref": "c-1",
+                "identifiers": [
+                  {
+                    "value": "0000813828",
+                    "scheme": "http://www.sec.gov/CIK"
+                  }
+                ],
+                "period_fields": [
+                  {
+                    "kind": "startdate",
+                    "value": "2024-01-01"
+                  },
+                  {
+                    "kind": "enddate",
+                    "value": "2024-12-31"
+                  }
+                ],
+                "dimensions": [],
+                "typed_dimension_count": 0
+              },
+              "source_reference": {
+                "record_type": "SOURCE_REFERENCE",
+                "source_reference_id": "sha256:f5fbc8c1603235d141b2bd20721c58c8d9e6786a617f980f02523e4b58e71ee5",
+                "raw_asset_id": "sha256:e19bf7b9db2b6076c791220adbb3f2d66615dc8a26110a2a29a4d0c676a9fd8e",
+                "company_id": "paramount_skydance_paramount_global",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231_htm.xml",
+                "accession": "0000813828-25-000005",
+                "document_name": "para-20241231_htm.xml",
+                "source_role": "auditor_facts",
+                "request_attempt_id": "request:attempt:1b55e8c2e5cc6e379def0e809d4f9d158aabe1b2a8d88ffaced1e6dbabd06909"
+              }
+            },
+            {
+              "concept": "us-gaap:revenuefromcontractwithcustomerexcludingassessedtax",
+              "value": "29213000000",
+              "unit": "USD",
+              "period_start": "2024-01-01",
+              "period_end": "2024-12-31",
+              "decimals": "-6",
+              "ordinal": 2170,
+              "context_ref": "c-1",
+              "context": {
+                "context_ref": "c-1",
+                "dimensions": {},
+                "entity_identifier": "0000813828",
+                "period_end": "2024-12-31",
+                "period_start": "2024-01-01",
+                "typed_dimension_count": 0
+              },
+              "context_proof": {
+                "context_ref": "c-1",
+                "identifiers": [
+                  {
+                    "value": "0000813828",
+                    "scheme": "http://www.sec.gov/CIK"
+                  }
+                ],
+                "period_fields": [
+                  {
+                    "kind": "startdate",
+                    "value": "2024-01-01"
+                  },
+                  {
+                    "kind": "enddate",
+                    "value": "2024-12-31"
+                  }
+                ],
+                "dimensions": [],
+                "typed_dimension_count": 0
+              },
+              "source_reference": {
+                "record_type": "SOURCE_REFERENCE",
+                "source_reference_id": "sha256:f5fbc8c1603235d141b2bd20721c58c8d9e6786a617f980f02523e4b58e71ee5",
+                "raw_asset_id": "sha256:e19bf7b9db2b6076c791220adbb3f2d66615dc8a26110a2a29a4d0c676a9fd8e",
+                "company_id": "paramount_skydance_paramount_global",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231_htm.xml",
+                "accession": "0000813828-25-000005",
+                "document_name": "para-20241231_htm.xml",
+                "source_role": "auditor_facts",
+                "request_attempt_id": "request:attempt:1b55e8c2e5cc6e379def0e809d4f9d158aabe1b2a8d88ffaced1e6dbabd06909"
+              }
+            }
+          ],
+          "xml_check": "MATCH"
+        }
+      ],
+      "selected_fiscal_column_year": 2024,
+      "fiscal_label_resolution": null,
+      "status": "REPORTED_CONSOLIDATED_TOTAL",
+      "complete_scope_proven": true,
+      "original_reports": [
+        {
+          "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+          "value": "29213000000",
+          "unit": "USD",
+          "period_start": "2024-01-01",
+          "period_end": "2024-12-31",
+          "decimals": "-6",
+          "ordinal": 86,
+          "context_ref": "c-1",
+          "context": {
+            "context_ref": "c-1",
+            "dimensions": {},
+            "entity_identifier": "0000813828",
+            "period_end": "2024-12-31",
+            "period_start": "2024-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:0f1a9b2a108d1f35340ea3a4a473d82a3a3b8710de577bd4402e408dbe712af5",
+            "raw_asset_id": "sha256:5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+            "company_id": "paramount_skydance_paramount_global",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231.htm",
+            "accession": "0000813828-25-000005",
+            "document_name": "para-20241231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:255bb923386890b3db4f807546f3fac75d33f941ccdc035730d90d98d37c4b6e"
+          }
+        },
+        {
+          "concept": "us-gaap:ProfitLoss",
+          "value": "-6149000000",
+          "unit": "USD",
+          "period_start": "2024-01-01",
+          "period_end": "2024-12-31",
+          "decimals": "-6",
+          "ordinal": 146,
+          "context_ref": "c-1",
+          "context": {
+            "context_ref": "c-1",
+            "dimensions": {},
+            "entity_identifier": "0000813828",
+            "period_end": "2024-12-31",
+            "period_start": "2024-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:0f1a9b2a108d1f35340ea3a4a473d82a3a3b8710de577bd4402e408dbe712af5",
+            "raw_asset_id": "sha256:5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+            "company_id": "paramount_skydance_paramount_global",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231.htm",
+            "accession": "0000813828-25-000005",
+            "document_name": "para-20241231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:255bb923386890b3db4f807546f3fac75d33f941ccdc035730d90d98d37c4b6e"
+          }
+        },
+        {
+          "concept": "us-gaap:NetIncomeLoss",
+          "value": "-6190000000",
+          "unit": "USD",
+          "period_start": "2024-01-01",
+          "period_end": "2024-12-31",
+          "decimals": "-6",
+          "ordinal": 152,
+          "context_ref": "c-1",
+          "context": {
+            "context_ref": "c-1",
+            "dimensions": {},
+            "entity_identifier": "0000813828",
+            "period_end": "2024-12-31",
+            "period_start": "2024-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:0f1a9b2a108d1f35340ea3a4a473d82a3a3b8710de577bd4402e408dbe712af5",
+            "raw_asset_id": "sha256:5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+            "company_id": "paramount_skydance_paramount_global",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231.htm",
+            "accession": "0000813828-25-000005",
+            "document_name": "para-20241231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:255bb923386890b3db4f807546f3fac75d33f941ccdc035730d90d98d37c4b6e"
+          }
+        },
+        {
+          "concept": "us-gaap:NetIncomeLoss",
+          "value": "-6190000000",
+          "unit": "USD",
+          "period_start": "2024-01-01",
+          "period_end": "2024-12-31",
+          "decimals": "-6",
+          "ordinal": 161,
+          "context_ref": "c-1",
+          "context": {
+            "context_ref": "c-1",
+            "dimensions": {},
+            "entity_identifier": "0000813828",
+            "period_end": "2024-12-31",
+            "period_start": "2024-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:0f1a9b2a108d1f35340ea3a4a473d82a3a3b8710de577bd4402e408dbe712af5",
+            "raw_asset_id": "sha256:5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+            "company_id": "paramount_skydance_paramount_global",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231.htm",
+            "accession": "0000813828-25-000005",
+            "document_name": "para-20241231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:255bb923386890b3db4f807546f3fac75d33f941ccdc035730d90d98d37c4b6e"
+          }
+        },
+        {
+          "concept": "us-gaap:ProfitLoss",
+          "value": "-6149000000",
+          "unit": "USD",
+          "period_start": "2024-01-01",
+          "period_end": "2024-12-31",
+          "decimals": "-6",
+          "ordinal": 188,
+          "context_ref": "c-1",
+          "context": {
+            "context_ref": "c-1",
+            "dimensions": {},
+            "entity_identifier": "0000813828",
+            "period_end": "2024-12-31",
+            "period_start": "2024-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:0f1a9b2a108d1f35340ea3a4a473d82a3a3b8710de577bd4402e408dbe712af5",
+            "raw_asset_id": "sha256:5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+            "company_id": "paramount_skydance_paramount_global",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231.htm",
+            "accession": "0000813828-25-000005",
+            "document_name": "para-20241231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:255bb923386890b3db4f807546f3fac75d33f941ccdc035730d90d98d37c4b6e"
+          }
+        },
+        {
+          "concept": "us-gaap:ProfitLoss",
+          "value": "-6149000000",
+          "unit": "USD",
+          "period_start": "2024-01-01",
+          "period_end": "2024-12-31",
+          "decimals": "-6",
+          "ordinal": 316,
+          "context_ref": "c-1",
+          "context": {
+            "context_ref": "c-1",
+            "dimensions": {},
+            "entity_identifier": "0000813828",
+            "period_end": "2024-12-31",
+            "period_start": "2024-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:0f1a9b2a108d1f35340ea3a4a473d82a3a3b8710de577bd4402e408dbe712af5",
+            "raw_asset_id": "sha256:5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+            "company_id": "paramount_skydance_paramount_global",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231.htm",
+            "accession": "0000813828-25-000005",
+            "document_name": "para-20241231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:255bb923386890b3db4f807546f3fac75d33f941ccdc035730d90d98d37c4b6e"
+          }
+        },
+        {
+          "concept": "us-gaap:ProfitLoss",
+          "value": "-6149000000",
+          "unit": "USD",
+          "period_start": "2024-01-01",
+          "period_end": "2024-12-31",
+          "decimals": "-6",
+          "ordinal": 532,
+          "context_ref": "c-1",
+          "context": {
+            "context_ref": "c-1",
+            "dimensions": {},
+            "entity_identifier": "0000813828",
+            "period_end": "2024-12-31",
+            "period_start": "2024-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:0f1a9b2a108d1f35340ea3a4a473d82a3a3b8710de577bd4402e408dbe712af5",
+            "raw_asset_id": "sha256:5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+            "company_id": "paramount_skydance_paramount_global",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231.htm",
+            "accession": "0000813828-25-000005",
+            "document_name": "para-20241231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:255bb923386890b3db4f807546f3fac75d33f941ccdc035730d90d98d37c4b6e"
+          }
+        },
+        {
+          "concept": "us-gaap:NetIncomeLoss",
+          "value": "-6190000000",
+          "unit": "USD",
+          "period_start": "2024-01-01",
+          "period_end": "2024-12-31",
+          "decimals": "-6",
+          "ordinal": 646,
+          "context_ref": "c-1",
+          "context": {
+            "context_ref": "c-1",
+            "dimensions": {},
+            "entity_identifier": "0000813828",
+            "period_end": "2024-12-31",
+            "period_start": "2024-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:0f1a9b2a108d1f35340ea3a4a473d82a3a3b8710de577bd4402e408dbe712af5",
+            "raw_asset_id": "sha256:5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+            "company_id": "paramount_skydance_paramount_global",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231.htm",
+            "accession": "0000813828-25-000005",
+            "document_name": "para-20241231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:255bb923386890b3db4f807546f3fac75d33f941ccdc035730d90d98d37c4b6e"
+          }
+        },
+        {
+          "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+          "value": "29213000000",
+          "unit": "USD",
+          "period_start": "2024-01-01",
+          "period_end": "2024-12-31",
+          "decimals": "-6",
+          "ordinal": 1002,
+          "context_ref": "c-1",
+          "context": {
+            "context_ref": "c-1",
+            "dimensions": {},
+            "entity_identifier": "0000813828",
+            "period_end": "2024-12-31",
+            "period_start": "2024-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:0f1a9b2a108d1f35340ea3a4a473d82a3a3b8710de577bd4402e408dbe712af5",
+            "raw_asset_id": "sha256:5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+            "company_id": "paramount_skydance_paramount_global",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231.htm",
+            "accession": "0000813828-25-000005",
+            "document_name": "para-20241231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:255bb923386890b3db4f807546f3fac75d33f941ccdc035730d90d98d37c4b6e"
+          }
+        },
+        {
+          "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+          "value": "29213000000",
+          "unit": "USD",
+          "period_start": "2024-01-01",
+          "period_end": "2024-12-31",
+          "decimals": "-6",
+          "ordinal": 2026,
+          "context_ref": "c-1",
+          "context": {
+            "context_ref": "c-1",
+            "dimensions": {},
+            "entity_identifier": "0000813828",
+            "period_end": "2024-12-31",
+            "period_start": "2024-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:0f1a9b2a108d1f35340ea3a4a473d82a3a3b8710de577bd4402e408dbe712af5",
+            "raw_asset_id": "sha256:5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+            "company_id": "paramount_skydance_paramount_global",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231.htm",
+            "accession": "0000813828-25-000005",
+            "document_name": "para-20241231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:255bb923386890b3db4f807546f3fac75d33f941ccdc035730d90d98d37c4b6e"
+          }
+        },
+        {
+          "concept": "us-gaap:ProfitLoss",
+          "value": "-6149000000",
+          "unit": "USD",
+          "period_start": "2024-01-01",
+          "period_end": "2024-12-31",
+          "decimals": "-6",
+          "ordinal": 2151,
+          "context_ref": "c-1",
+          "context": {
+            "context_ref": "c-1",
+            "dimensions": {},
+            "entity_identifier": "0000813828",
+            "period_end": "2024-12-31",
+            "period_start": "2024-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:0f1a9b2a108d1f35340ea3a4a473d82a3a3b8710de577bd4402e408dbe712af5",
+            "raw_asset_id": "sha256:5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+            "company_id": "paramount_skydance_paramount_global",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231.htm",
+            "accession": "0000813828-25-000005",
+            "document_name": "para-20241231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:255bb923386890b3db4f807546f3fac75d33f941ccdc035730d90d98d37c4b6e"
+          }
+        },
+        {
+          "concept": "us-gaap:NetIncomeLoss",
+          "value": "-6190000000",
+          "unit": "USD",
+          "period_start": "2024-01-01",
+          "period_end": "2024-12-31",
+          "decimals": "-6",
+          "ordinal": 2157,
+          "context_ref": "c-1",
+          "context": {
+            "context_ref": "c-1",
+            "dimensions": {},
+            "entity_identifier": "0000813828",
+            "period_end": "2024-12-31",
+            "period_start": "2024-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:0f1a9b2a108d1f35340ea3a4a473d82a3a3b8710de577bd4402e408dbe712af5",
+            "raw_asset_id": "sha256:5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+            "company_id": "paramount_skydance_paramount_global",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231.htm",
+            "accession": "0000813828-25-000005",
+            "document_name": "para-20241231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:255bb923386890b3db4f807546f3fac75d33f941ccdc035730d90d98d37c4b6e"
+          }
+        },
+        {
+          "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+          "value": "29213000000",
+          "unit": "USD",
+          "period_start": "2024-01-01",
+          "period_end": "2024-12-31",
+          "decimals": "-6",
+          "ordinal": 2170,
+          "context_ref": "c-1",
+          "context": {
+            "context_ref": "c-1",
+            "dimensions": {},
+            "entity_identifier": "0000813828",
+            "period_end": "2024-12-31",
+            "period_start": "2024-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:0f1a9b2a108d1f35340ea3a4a473d82a3a3b8710de577bd4402e408dbe712af5",
+            "raw_asset_id": "sha256:5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+            "company_id": "paramount_skydance_paramount_global",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231.htm",
+            "accession": "0000813828-25-000005",
+            "document_name": "para-20241231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:255bb923386890b3db4f807546f3fac75d33f941ccdc035730d90d98d37c4b6e"
+          }
+        }
+      ],
+      "single_revenue_line_allowed": true,
+      "scope_id": "sha256:c8c70ea80c77c795dcf14e1fc1b3c6967531bf112b6c30c7c6c75d57f997fd8b"
+    },
+    {
+      "method": "SELECTED_REPORTED_SINGLE_REVENUE_LINE_V1",
+      "annual_input": {
+        "company_id": "paramount_skydance_paramount_global",
+        "entity": "813828",
+        "filing": {
+          "form": "10-K",
+          "reportDate": "2023-12-31",
+          "filingDate": "2024-02-28",
+          "accessionNumber": "0000813828-24-000007",
+          "primaryDocument": "para-20231231.htm"
+        },
+        "table_input": {
+          "target_period": {
+            "fiscal_year": 2023,
+            "period_start": "2023-01-01",
+            "period_end": "2023-12-31"
+          }
+        }
+      },
+      "approved_concepts": [
+        "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "us-gaap:Revenues",
+        "us-gaap:SalesRevenueNet",
+        "us-gaap:RevenueFromContractWithCustomerIncludingAssessedTax"
+      ],
+      "reported_totals": [
+        {
+          "total": {
+            "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+            "value": "29652000000",
+            "unit": "USD",
+            "period_start": "2023-01-01",
+            "period_end": "2023-12-31",
+            "decimals": "-6",
+            "ordinal": 74,
+            "context_ref": "c-1",
+            "context": {
+              "context_ref": "c-1",
+              "dimensions": {},
+              "entity_identifier": "0000813828",
+              "period_end": "2023-12-31",
+              "period_start": "2023-01-01",
+              "typed_dimension_count": 0
+            },
+            "context_proof": {
+              "context_ref": "c-1",
+              "identifiers": [
+                {
+                  "value": "0000813828",
+                  "scheme": "http://www.sec.gov/CIK"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "startdate",
+                  "value": "2023-01-01"
+                },
+                {
+                  "kind": "enddate",
+                  "value": "2023-12-31"
+                }
+              ],
+              "dimensions": [],
+              "typed_dimension_count": 0
+            },
+            "source_reference": {
+              "record_type": "SOURCE_REFERENCE",
+              "source_reference_id": "sha256:874084195b28aaf8d1f6ea4ab4c4e5870a4a7e8849e8b3fb6693a793573282ed",
+              "raw_asset_id": "sha256:6b30f698a84b85b57f750cc46b28d21d39caa9a2560a33143cfad784ebe6ad7b",
+              "company_id": "paramount_skydance_paramount_global",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000007/para-20231231.htm",
+              "accession": "0000813828-24-000007",
+              "document_name": "para-20231231.htm",
+              "source_role": "target_primary",
+              "request_attempt_id": "request:attempt:8885450d69e1202b029d05d13a9cb2f5505e766c9ae6bbe14917fe5e80f5da58"
+            }
+          },
+          "total_cell": {
+            "table_id": "table_000054",
+            "grid_sha256": "sha256:bfeb16526a7839276b604eec942fca544cf26d9db005584fd8b341554669c2d9",
+            "row_index": 3,
+            "column_index": 4,
+            "origin_row_index": 3,
+            "origin_column_index": 4,
+            "rowspan": 1,
+            "colspan": 1,
+            "raw_text": "29,652&#160;",
+            "text": "29,652"
+          },
+          "complete_expense_statement": {
+            "expense": {
+              "concept": "us-gaap:CostsAndExpenses",
+              "value": "30103000000",
+              "unit": "USD",
+              "period_start": "2023-01-01",
+              "period_end": "2023-12-31",
+              "decimals": "-6",
+              "ordinal": 95,
+              "context_ref": "c-1",
+              "context": {
+                "context_ref": "c-1",
+                "dimensions": {},
+                "entity_identifier": "0000813828",
+                "period_end": "2023-12-31",
+                "period_start": "2023-01-01",
+                "typed_dimension_count": 0
+              },
+              "context_proof": {
+                "context_ref": "c-1",
+                "identifiers": [
+                  {
+                    "value": "0000813828",
+                    "scheme": "http://www.sec.gov/CIK"
+                  }
+                ],
+                "period_fields": [
+                  {
+                    "kind": "startdate",
+                    "value": "2023-01-01"
+                  },
+                  {
+                    "kind": "enddate",
+                    "value": "2023-12-31"
+                  }
+                ],
+                "dimensions": [],
+                "typed_dimension_count": 0
+              },
+              "source_reference": {
+                "record_type": "SOURCE_REFERENCE",
+                "source_reference_id": "sha256:874084195b28aaf8d1f6ea4ab4c4e5870a4a7e8849e8b3fb6693a793573282ed",
+                "raw_asset_id": "sha256:6b30f698a84b85b57f750cc46b28d21d39caa9a2560a33143cfad784ebe6ad7b",
+                "company_id": "paramount_skydance_paramount_global",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000007/para-20231231.htm",
+                "accession": "0000813828-24-000007",
+                "document_name": "para-20231231.htm",
+                "source_role": "target_primary",
+                "request_attempt_id": "request:attempt:8885450d69e1202b029d05d13a9cb2f5505e766c9ae6bbe14917fe5e80f5da58"
+              }
+            },
+            "expense_cell": {
+              "table_id": "table_000054",
+              "grid_sha256": "sha256:bfeb16526a7839276b604eec942fca544cf26d9db005584fd8b341554669c2d9",
+              "row_index": 11,
+              "column_index": 3,
+              "origin_row_index": 11,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "30,103&#160;",
+              "text": "30,103"
+            },
+            "expense_group": {
+              "table_id": "table_000054",
+              "grid_sha256": "sha256:bfeb16526a7839276b604eec942fca544cf26d9db005584fd8b341554669c2d9",
+              "row_index": 4,
+              "column_index": 0,
+              "origin_row_index": 4,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Costs and expenses:",
+              "text": "Costs and expenses:"
+            },
+            "expense_group_row": 4,
+            "operating_income": {
+              "concept": "us-gaap:OperatingIncomeLoss",
+              "value": "-451000000",
+              "unit": "USD",
+              "period_start": "2023-01-01",
+              "period_end": "2023-12-31",
+              "decimals": "-6",
+              "ordinal": 101,
+              "context_ref": "c-1",
+              "context": {
+                "context_ref": "c-1",
+                "dimensions": {},
+                "entity_identifier": "0000813828",
+                "period_end": "2023-12-31",
+                "period_start": "2023-01-01",
+                "typed_dimension_count": 0
+              },
+              "context_proof": {
+                "context_ref": "c-1",
+                "identifiers": [
+                  {
+                    "value": "0000813828",
+                    "scheme": "http://www.sec.gov/CIK"
+                  }
+                ],
+                "period_fields": [
+                  {
+                    "kind": "startdate",
+                    "value": "2023-01-01"
+                  },
+                  {
+                    "kind": "enddate",
+                    "value": "2023-12-31"
+                  }
+                ],
+                "dimensions": [],
+                "typed_dimension_count": 0
+              },
+              "source_reference": {
+                "record_type": "SOURCE_REFERENCE",
+                "source_reference_id": "sha256:874084195b28aaf8d1f6ea4ab4c4e5870a4a7e8849e8b3fb6693a793573282ed",
+                "raw_asset_id": "sha256:6b30f698a84b85b57f750cc46b28d21d39caa9a2560a33143cfad784ebe6ad7b",
+                "company_id": "paramount_skydance_paramount_global",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000007/para-20231231.htm",
+                "accession": "0000813828-24-000007",
+                "document_name": "para-20231231.htm",
+                "source_role": "target_primary",
+                "request_attempt_id": "request:attempt:8885450d69e1202b029d05d13a9cb2f5505e766c9ae6bbe14917fe5e80f5da58"
+              }
+            },
+            "operating_cell": {
+              "table_id": "table_000054",
+              "grid_sha256": "sha256:bfeb16526a7839276b604eec942fca544cf26d9db005584fd8b341554669c2d9",
+              "row_index": 13,
+              "column_index": 3,
+              "origin_row_index": 13,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "(451)",
+              "text": "(451)"
+            },
+            "neutral_intermediate_reports": [
+              {
+                "ordinal": 98,
+                "concept": [
+                  "http://www.paramount.com/20231231",
+                  "GainLossOnDispositionOfAssetsAndSaleOfBusiness"
+                ],
+                "value": "0",
+                "context_ref": "c-1",
+                "unit_ref": "usd",
+                "cell": {
+                  "table_id": "table_000054",
+                  "grid_sha256": "sha256:bfeb16526a7839276b604eec942fca544cf26d9db005584fd8b341554669c2d9",
+                  "row_index": 12,
+                  "column_index": 3,
+                  "origin_row_index": 12,
+                  "origin_column_index": 3,
+                  "rowspan": 1,
+                  "colspan": 2,
+                  "raw_text": "&#8212;&#160;",
+                  "text": "—"
+                }
+              }
+            ],
+            "annual_period": {
+              "fiscal_year": 2023,
+              "period_start": "2023-01-01",
+              "period_end": "2023-12-31"
+            },
+            "xml_matches": [
+              {
+                "concept": "us-gaap:costsandexpenses",
+                "value": "30103000000",
+                "unit": "USD",
+                "period_start": "2023-01-01",
+                "period_end": "2023-12-31",
+                "decimals": "-6",
+                "ordinal": 95,
+                "context_ref": "c-1",
+                "context": {
+                  "context_ref": "c-1",
+                  "dimensions": {},
+                  "entity_identifier": "0000813828",
+                  "period_end": "2023-12-31",
+                  "period_start": "2023-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "c-1",
+                  "identifiers": [
+                    {
+                      "value": "0000813828",
+                      "scheme": "http://www.sec.gov/CIK"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2023-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2023-12-31"
+                    }
+                  ],
+                  "dimensions": [],
+                  "typed_dimension_count": 0
+                },
+                "source_reference": {
+                  "record_type": "SOURCE_REFERENCE",
+                  "source_reference_id": "sha256:992d964a4a38800752369aca8733eef3905221f7af86d84b1da7cd163ba21192",
+                  "raw_asset_id": "sha256:6ea4d69cff5d6e428b9172be9679187c24967dc0243a7a9c178a00725a7df1fe",
+                  "company_id": "paramount_skydance_paramount_global",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000007/para-20231231_htm.xml",
+                  "accession": "0000813828-24-000007",
+                  "document_name": "para-20231231_htm.xml",
+                  "source_role": "auditor_facts",
+                  "request_attempt_id": "request:attempt:8f9772b6b4d6a114889ec18a8b198ee3e5197db793e89ec51d5258e85758baa9"
+                }
+              },
+              {
+                "concept": "us-gaap:operatingincomeloss",
+                "value": "-451000000",
+                "unit": "USD",
+                "period_start": "2023-01-01",
+                "period_end": "2023-12-31",
+                "decimals": "-6",
+                "ordinal": 101,
+                "context_ref": "c-1",
+                "context": {
+                  "context_ref": "c-1",
+                  "dimensions": {},
+                  "entity_identifier": "0000813828",
+                  "period_end": "2023-12-31",
+                  "period_start": "2023-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "c-1",
+                  "identifiers": [
+                    {
+                      "value": "0000813828",
+                      "scheme": "http://www.sec.gov/CIK"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2023-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2023-12-31"
+                    }
+                  ],
+                  "dimensions": [],
+                  "typed_dimension_count": 0
+                },
+                "source_reference": {
+                  "record_type": "SOURCE_REFERENCE",
+                  "source_reference_id": "sha256:992d964a4a38800752369aca8733eef3905221f7af86d84b1da7cd163ba21192",
+                  "raw_asset_id": "sha256:6ea4d69cff5d6e428b9172be9679187c24967dc0243a7a9c178a00725a7df1fe",
+                  "company_id": "paramount_skydance_paramount_global",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000007/para-20231231_htm.xml",
+                  "accession": "0000813828-24-000007",
+                  "document_name": "para-20231231_htm.xml",
+                  "source_role": "auditor_facts",
+                  "request_attempt_id": "request:attempt:8f9772b6b4d6a114889ec18a8b198ee3e5197db793e89ec51d5258e85758baa9"
+                }
+              },
+              {
+                "concept": "us-gaap:operatingincomeloss",
+                "value": "-451000000",
+                "unit": "USD",
+                "period_start": "2023-01-01",
+                "period_end": "2023-12-31",
+                "decimals": "-6",
+                "ordinal": 2241,
+                "context_ref": "c-1",
+                "context": {
+                  "context_ref": "c-1",
+                  "dimensions": {},
+                  "entity_identifier": "0000813828",
+                  "period_end": "2023-12-31",
+                  "period_start": "2023-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "c-1",
+                  "identifiers": [
+                    {
+                      "value": "0000813828",
+                      "scheme": "http://www.sec.gov/CIK"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2023-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2023-12-31"
+                    }
+                  ],
+                  "dimensions": [],
+                  "typed_dimension_count": 0
+                },
+                "source_reference": {
+                  "record_type": "SOURCE_REFERENCE",
+                  "source_reference_id": "sha256:992d964a4a38800752369aca8733eef3905221f7af86d84b1da7cd163ba21192",
+                  "raw_asset_id": "sha256:6ea4d69cff5d6e428b9172be9679187c24967dc0243a7a9c178a00725a7df1fe",
+                  "company_id": "paramount_skydance_paramount_global",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000007/para-20231231_htm.xml",
+                  "accession": "0000813828-24-000007",
+                  "document_name": "para-20231231_htm.xml",
+                  "source_role": "auditor_facts",
+                  "request_attempt_id": "request:attempt:8f9772b6b4d6a114889ec18a8b198ee3e5197db793e89ec51d5258e85758baa9"
+                }
+              }
+            ],
+            "xml_check": "MATCH"
+          },
+          "issuer_header_definition": [
+            {
+              "raw_start_byte": 403838,
+              "raw_end_byte": 404512,
+              "raw_span_sha256": "b240dfc3b5e69087a4fb447ef3c12949c314eab96d6b19913cc54f5a65e62f88",
+              "text": "In December 2019, we changed our name from CBS Corporation (“CBS”) to ViacomCBS Inc. in connection with the merger of Viacom Inc. (“Viacom”) and CBS (the “Merger”). In February 2022, we changed our name to Paramount Global. Unless the context requires otherwise, references in this document to “Paramount,” “the Company,” “we,” “us” and “our” mean Paramount Global and its consolidated subsidiaries, to “CBS” mean CBS and its consolidated subsidiaries prior to the Merger and to “Viacom” mean Viacom and its consolidated subsidiaries prior to the Merger.",
+              "registrant_name": "Paramount Global",
+              "aliases": [
+                "Paramount"
+              ]
+            }
+          ],
+          "statement_scope": {
+            "title_sources": [
+              {
+                "start_byte": 1254791,
+                "end_byte": 1254989,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "text-align:center"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:929"
+                ],
+                "visible_text": "CONSOLIDATED STATEMENTS OF OPERATIONS",
+                "span_sha256": "6ba75d7690d0c81ba3159be9e2e8a29e1a1f06d9e1ed882386df37d1db525b72"
+              }
+            ],
+            "caption": "",
+            "table_span": {
+              "table_order": 53,
+              "start_byte": 1255253,
+              "end_byte": 1327751,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:931",
+                "table:1"
+              ],
+              "span_sha256": "3d3c2d48bd9f4713dd5962db336845b4c1792c40708cfa95fefb3c1496740fc8"
+            },
+            "intervening_sources": [
+              {
+                "start_byte": 1254579,
+                "end_byte": 1254791,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "margin-bottom:9pt;text-align:center"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:928"
+                ],
+                "visible_text": "PARAMOUNT GLOBAL AND SUBSIDIARIES",
+                "span_sha256": "54929cde5d2e2d35881ffc2ad5d7a1cc3939d772ca44ce23e1b5538c2555f95f"
+              },
+              {
+                "start_byte": 1254791,
+                "end_byte": 1254989,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "text-align:center"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:929"
+                ],
+                "visible_text": "CONSOLIDATED STATEMENTS OF OPERATIONS",
+                "span_sha256": "6ba75d7690d0c81ba3159be9e2e8a29e1a1f06d9e1ed882386df37d1db525b72"
+              },
+              {
+                "start_byte": 1254989,
+                "end_byte": 1255207,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "margin-bottom:9pt;text-align:center"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:930"
+                ],
+                "visible_text": "(In millions, except per share amounts)",
+                "span_sha256": "ff87c6fc9d12139704f444fe134af5c0522f6c8c89989c3b9ebee1a2a42789f8"
+              }
+            ],
+            "unresolved_annotations": [],
+            "adjacent_heading_table": null,
+            "statement_page_boundary": {
+              "start_byte": 1254384,
+              "end_byte": 1254421,
+              "span_sha256": "dcab779a8f959ed9a60e2fd1e515a24af9a737c34ebf2a3a3ff2887763b7cb61"
+            },
+            "preceding_page_context": [
+              {
+                "start_byte": 1237936,
+                "end_byte": 1238117,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "margin-top:8pt;text-align:center"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:886",
+                  "div:1",
+                  "div:1"
+                ],
+                "visible_text": "II-37",
+                "span_sha256": "45da3e715b3cd87fbed1a2f7430b2fd8c6d3abbde0e1cc6e983dd14540d1ba91"
+              },
+              {
+                "start_byte": 1238295,
+                "end_byte": 1238512,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "text-align:center"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:889"
+                ],
+                "visible_text": "Report of Independent Registered Public Accounting Firm ",
+                "span_sha256": "05de3bf956eea15a6f7abd326618e8ea200f1ecfddf3f5cd69d7da37c8f41157"
+              },
+              {
+                "start_byte": 1238679,
+                "end_byte": 1238922,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "margin-bottom:10pt;text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:891"
+                ],
+                "visible_text": "To the Board of Directors and Stockholders of Paramount Global",
+                "span_sha256": "4317f60e1ac3e102eb3a46247489424f83ccf773b272307604852babe367e101"
+              },
+              {
+                "start_byte": 1238922,
+                "end_byte": 1239200,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "margin-top:10pt;text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:892"
+                ],
+                "visible_text": "Opinions on the Financial Statements and Internal Control over Financial Reporting",
+                "span_sha256": "b3ce0cc2c302fc780dbeb3ba1fb44e51f73875641b75cda342775d87d2ab2596"
+              },
+              {
+                "start_byte": 1239200,
+                "end_byte": 1240459,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "margin-top:10pt;text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:893"
+                ],
+                "visible_text": "We have audited the accompanying consolidated balance sheets of Paramount Global and its subsidiaries (the “Company”) as of December 31, 2023 and 2022, and the related consolidated statements of operations, of comprehensive income, of stockholders’ equity, and of cash flows for each of the three years in the period ended December 31, 2023, including the related notes and financial statement schedule listed in the accompanying index (collectively referred to as the “consolidated financial statements”). We also have audited the Company's internal control over financial reporting as of December 31, 2023, based on criteria established in Internal Control - Integrated Framework (2013) issued by the Committee of Sponsoring Organizations of the Treadway Commission (COSO).",
+                "span_sha256": "5636e595d917830d7f2a8b7db5c6421c6f7a9f871fd623df2112fce02fe1d8a8"
+              },
+              {
+                "start_byte": 1240459,
+                "end_byte": 1241558,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "margin-top:10pt;text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:894"
+                ],
+                "visible_text": "In our opinion, the consolidated financial statements referred to above present fairly, in all material respects, the financial position of the Company as of December 31, 2023 and 2022, and the results of its operations and its cash flows for each of the three years in the period ended December 31, 2023 in conformity with accounting principles generally accepted in the United States of America. Also in our opinion, the Company maintained, in all material respects, effective internal control over financial reporting as of December 31, 2023, based on criteria established in Internal Control - Integrated Framework (2013) issued by the COSO.",
+                "span_sha256": "7801efa20b61cc26475db44173df49c1d6143cbc9a465c9bf31cbea03c325d40"
+              },
+              {
+                "start_byte": 1241558,
+                "end_byte": 1241772,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "margin-top:10pt;text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:895"
+                ],
+                "visible_text": "Basis for Opinions",
+                "span_sha256": "7d1a8a5759308a15c5ff21a8f3068c35ee169e4654732d14f22f600d9cd536e8"
+              },
+              {
+                "start_byte": 1241772,
+                "end_byte": 1242808,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "margin-top:10pt;text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:896"
+                ],
+                "visible_text": "The Company's management is responsible for these consolidated financial statements, for maintaining effective internal control over financial reporting, and for its assessment of the effectiveness of internal control over financial reporting, included in the accompanying Management’s Report on Internal Control Over Financial Reporting. Our responsibility is to express opinions on the Company’s consolidated financial statements and on the Company's internal control over financial reporting based on our audits. We are a public accounting firm registered with the Public Company Accounting Oversight Board (United States) (PCAOB) and are required to be independent with respect to the Company in accordance with the U.S. federal securities laws and the applicable rules and regulations of the Securities and Exchange Commission and the PCAOB.",
+                "span_sha256": "57bac99198b83c05e669a4dd07d665f098785eb8439e37939fb2f653b435f11a"
+              },
+              {
+                "start_byte": 1242808,
+                "end_byte": 1243370,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "margin-top:10pt;text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:897"
+                ],
+                "visible_text": "We conducted our audits in accordance with the standards of the PCAOB. Those standards require that we plan and perform the audits to obtain reasonable assurance about whether the consolidated financial statements are free of material misstatement, whether due to error or fraud, and whether effective internal control over financial reporting was maintained in all material respects.",
+                "span_sha256": "6a0ba38913d76434744f408b2164f392da88ab667c7d55742bc6145ac51269ec"
+              },
+              {
+                "start_byte": 1243370,
+                "end_byte": 1244629,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "margin-top:10pt;text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:898"
+                ],
+                "visible_text": "Our audits of the consolidated financial statements included performing procedures to assess the risks of material misstatement of the consolidated financial statements, whether due to error or fraud, and performing procedures that respond to those risks. Such procedures included examining, on a test basis, evidence regarding the amounts and disclosures in the consolidated financial statements. Our audits also included evaluating the accounting principles used and significant estimates made by management, as well as evaluating the overall presentation of the consolidated financial statements. Our audit of internal control over financial reporting included obtaining an understanding of internal control over financial reporting, assessing the risk that a material weakness exists, and testing and evaluating the design and operating effectiveness of internal control based on the assessed risk. Our audits also included performing such other procedures as we considered necessary in the circumstances. We believe that our audits provide a reasonable basis for our opinions.",
+                "span_sha256": "55e9a989020d7afa52e1b4552c907048640596d810028e087cbcd4a079f0029a"
+              },
+              {
+                "start_byte": 1244806,
+                "end_byte": 1244987,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "margin-top:8pt;text-align:center"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:900",
+                  "div:1",
+                  "div:1"
+                ],
+                "visible_text": "II-38",
+                "span_sha256": "96bb210ca1d61b66a29b9e96b29aa5b496a963a0c2fc8267e350ade9929c49d9"
+              },
+              {
+                "start_byte": 1245111,
+                "end_byte": 1245378,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "margin-top:10pt;text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:902"
+                ],
+                "visible_text": "Definition and Limitations of Internal Control over Financial Reporting",
+                "span_sha256": "9cb67542fe44eef0a55117d4036865ef7100d6522f4213e723c929d4f6caa1ca"
+              },
+              {
+                "start_byte": 1245378,
+                "end_byte": 1246683,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "margin-top:10pt;text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:903"
+                ],
+                "visible_text": "A company’s internal control over financial reporting is a process designed to provide reasonable assurance regarding the reliability of financial reporting and the preparation of financial statements for external purposes in accordance with generally accepted accounting principles. A company’s internal control over financial reporting includes those policies and procedures that (i) pertain to the maintenance of records that, in reasonable detail, accurately and fairly reflect the transactions and dispositions of the assets of the company; (ii) provide reasonable assurance that transactions are recorded as necessary to permit preparation of financial statements in accordance with generally accepted accounting principles, and that receipts and expenditures of the company are being made only in accordance with authorizations of management and directors of the company; and (iii) provide reasonable assurance regarding prevention or timely detection of unauthorized acquisition, use, or disposition of the company’s assets that could have a material effect on the financial statements.",
+                "span_sha256": "b3c45627d7351a2ec44b1cd9dce47f2bdf191a227c464c6815fa803e59221127"
+              },
+              {
+                "start_byte": 1246683,
+                "end_byte": 1247227,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "margin-top:10pt;text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:904"
+                ],
+                "visible_text": "Because of its inherent limitations, internal control over financial reporting may not prevent or detect misstatements. Also, projections of any evaluation of effectiveness to future periods are subject to the risk that controls may become inadequate because of changes in conditions, or that the degree of compliance with the policies or procedures may deteriorate.",
+                "span_sha256": "f85ce8b975c5031b0109f15f46d9163fb94cc5e560cdf79cb9e490e4dd6eec28"
+              },
+              {
+                "start_byte": 1247227,
+                "end_byte": 1247445,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "margin-top:10pt;text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:905"
+                ],
+                "visible_text": "Critical Audit Matters",
+                "span_sha256": "d0d1b083afbb99ca8acdb59247b98f2af5782a8012542bbe0afe29af2ce6d9d6"
+              },
+              {
+                "start_byte": 1247445,
+                "end_byte": 1248343,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "margin-top:10pt;text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:906"
+                ],
+                "visible_text": "The critical audit matter communicated below is a matter arising from the current period audit of the consolidated financial statements that was communicated or required to be communicated to the audit committee and that (i) relates to accounts or disclosures that are material to the consolidated financial statements and (ii) involved our especially challenging, subjective, or complex judgments. The communication of critical audit matters does not alter in any way our opinion on the consolidated financial statements, taken as a whole, and we are not, by communicating the critical audit matter below, providing a separate opinion on the critical audit matter or on the accounts or disclosures to which it relates. ",
+                "span_sha256": "56aa026264fbd42924a5eff11dee874f76926f05d42eed7ce06371ad8d579499"
+              },
+              {
+                "start_byte": 1248399,
+                "end_byte": 1248651,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:908"
+                ],
+                "visible_text": "Amortization of Certain Internally-Produced Television Programming Costs",
+                "span_sha256": "10e466443547893b491192af59e33e768a8ee8251b7e42a19ea2846b45c8337e"
+              },
+              {
+                "start_byte": 1248651,
+                "end_byte": 1250250,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "margin-top:10pt;text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:909"
+                ],
+                "visible_text": "As described in Notes 1 and 4 to the consolidated financial statements, programming that is expected to be predominantly monetized through licensing and distribution on third-party platforms is considered individually monetized and programming that is expected to be predominantly monetized on the Company’s networks and streaming services together with other programming, is considered to be monetized as part of a film group. The Company’s amortization of internally-produced television and film programming costs with individual monetization and film group monetization was $7.16 billion for the year ended December 31, 2023, a majority of which is attributable to the amortization of certain internally-produced television programming costs. For internally-produced television programs that are predominantly monetized on an individual basis, management uses an individual-film-forecast computation method to amortize capitalized production costs over the applicable title’s life cycle based upon the ratio of current period revenues to estimated remaining total gross revenues to be earned (“Ultimate Revenues”) for each title. For internally-produced television programming that is predominantly monetized as part of a film group, capitalized costs are amortized based on management’s estimate of the timing of the Company’s usage of and benefit from such programming.",
+                "span_sha256": "fe8d6fa9d0ca527d63adc32499350fab80a03f0b3f080b7010047f27b4e7bd65"
+              },
+              {
+                "start_byte": 1250250,
+                "end_byte": 1250928,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "margin-top:10pt;text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:910"
+                ],
+                "visible_text": "The principal consideration for our determination that performing procedures relating to amortization of certain internally-produced television programming costs is a critical audit matter is a high degree of auditor effort in performing procedures related to the amortization of certain internally-produced television programming costs monetized individually and as part of a film group. ",
+                "span_sha256": "3a1d4aab6f131b77fee02094d561f8389c7c3cca42242d990bd4b86171467988"
+              },
+              {
+                "start_byte": 1250984,
+                "end_byte": 1251594,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:912"
+                ],
+                "visible_text": "Addressing the matter involved performing procedures and evaluating audit evidence in connection with forming our overall opinion on the consolidated financial statements. These procedures included testing the effectiveness of controls relating to the amortization of certain internally-produced television programming costs. These procedures also included, among others (i) recalculating the amortization of certain internally-produced television ",
+                "span_sha256": "58272b0e01a18cfc5bb1ce6d8f2f785e0e8628bafeee60ed3adc1965ca7a04aa"
+              },
+              {
+                "start_byte": 1251699,
+                "end_byte": 1251880,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "margin-top:8pt;text-align:center"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:913",
+                  "div:1",
+                  "div:1"
+                ],
+                "visible_text": "II-39",
+                "span_sha256": "66f724b6b273892779769a706e820775cd1d4a38fc42b94a54d9594f4c3a3f36"
+              },
+              {
+                "start_byte": 1252004,
+                "end_byte": 1252901,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:915"
+                ],
+                "visible_text": "programming costs on a sample basis and (ii) evaluating, on a test basis, whether the method used to amortize certain internally-produced television programming costs is reasonable by considering either a) information related to past performance of similar television programs in a market, the performance in the initial markets, and future firm commitments to license programs for programming monetized on an individual basis, or b) information related to estimated timing of the usage of content for television programming monetized as part of a film group. Procedures were also performed to test the completeness and accuracy of management's data used in the amortization of certain internally-produced television programming costs.",
+                "span_sha256": "ecd5879ecef77fc432edb28e5c4a30a2dd487e144e896e57ae3dc0f93516adbc"
+              },
+              {
+                "start_byte": 1253013,
+                "end_byte": 1253286,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:918"
+                ],
+                "visible_text": "/s/ PricewaterhouseCoopers LLP",
+                "span_sha256": "0dc7b1894124db6ab6eb06dcbb7478704dbf36dc5550d75f45d3225359ad6aa7"
+              },
+              {
+                "start_byte": 1253286,
+                "end_byte": 1253551,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:919"
+                ],
+                "visible_text": "New York, New York",
+                "span_sha256": "ab5b6220b5cdccfcebca87f51ec79adbc85185fb6b24f7a11f47cadb928fc64d"
+              },
+              {
+                "start_byte": 1253551,
+                "end_byte": 1253730,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:920"
+                ],
+                "visible_text": "February 28, 2024",
+                "span_sha256": "4ee1df8f51d683f5d3a61ad892267f06bfc315fa6b0d863a440bb0929837ff6c"
+              },
+              {
+                "start_byte": 1253786,
+                "end_byte": 1254032,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "text-align:justify"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:922"
+                ],
+                "visible_text": "We have served as the Company’s or its predecessor’s auditor since 1970.",
+                "span_sha256": "459f18c3ca0e95fa438f96d7894ad8cd48201796682553a32640e8fed7348c02"
+              },
+              {
+                "start_byte": 1254137,
+                "end_byte": 1254318,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "margin-top:8pt;text-align:center"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:923",
+                  "div:1",
+                  "div:1"
+                ],
+                "visible_text": "II-40",
+                "span_sha256": "6b4e8bc24ca9160753254f94f454a1f8d777653cce04ebcd279f0a024697b8b3"
+              }
+            ]
+          },
+          "unit_sources": [
+            {
+              "kind": "heading_block",
+              "proof": {
+                "start_byte": 1254989,
+                "end_byte": 1255207,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "margin-bottom:9pt;text-align:center"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:930"
+                ],
+                "visible_text": "(In millions, except per share amounts)",
+                "span_sha256": "ff87c6fc9d12139704f444fe134af5c0522f6c8c89989c3b9ebee1a2a42789f8"
+              },
+              "text": "(In millions, except per share amounts)"
+            }
+          ],
+          "year_headers": [
+            {
+              "table_id": "table_000054",
+              "grid_sha256": "sha256:bfeb16526a7839276b604eec942fca544cf26d9db005584fd8b341554669c2d9",
+              "row_index": 2,
+              "column_index": 3,
+              "origin_row_index": 2,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "2023",
+              "text": "2023"
+            }
+          ],
+          "end_headers": [
+            {
+              "table_id": "table_000054",
+              "grid_sha256": "sha256:bfeb16526a7839276b604eec942fca544cf26d9db005584fd8b341554669c2d9",
+              "row_index": 1,
+              "column_index": 3,
+              "origin_row_index": 1,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 15,
+              "raw_text": "Year Ended December 31,",
+              "text": "Year Ended December 31,"
+            }
+          ],
+          "annual_period": {
+            "fiscal_year": 2023,
+            "period_start": "2023-01-01",
+            "period_end": "2023-12-31"
+          },
+          "xml_matches": [
+            {
+              "concept": "us-gaap:revenuefromcontractwithcustomerexcludingassessedtax",
+              "value": "29652000000",
+              "unit": "USD",
+              "period_start": "2023-01-01",
+              "period_end": "2023-12-31",
+              "decimals": "-6",
+              "ordinal": 74,
+              "context_ref": "c-1",
+              "context": {
+                "context_ref": "c-1",
+                "dimensions": {},
+                "entity_identifier": "0000813828",
+                "period_end": "2023-12-31",
+                "period_start": "2023-01-01",
+                "typed_dimension_count": 0
+              },
+              "context_proof": {
+                "context_ref": "c-1",
+                "identifiers": [
+                  {
+                    "value": "0000813828",
+                    "scheme": "http://www.sec.gov/CIK"
+                  }
+                ],
+                "period_fields": [
+                  {
+                    "kind": "startdate",
+                    "value": "2023-01-01"
+                  },
+                  {
+                    "kind": "enddate",
+                    "value": "2023-12-31"
+                  }
+                ],
+                "dimensions": [],
+                "typed_dimension_count": 0
+              },
+              "source_reference": {
+                "record_type": "SOURCE_REFERENCE",
+                "source_reference_id": "sha256:992d964a4a38800752369aca8733eef3905221f7af86d84b1da7cd163ba21192",
+                "raw_asset_id": "sha256:6ea4d69cff5d6e428b9172be9679187c24967dc0243a7a9c178a00725a7df1fe",
+                "company_id": "paramount_skydance_paramount_global",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000007/para-20231231_htm.xml",
+                "accession": "0000813828-24-000007",
+                "document_name": "para-20231231_htm.xml",
+                "source_role": "auditor_facts",
+                "request_attempt_id": "request:attempt:8f9772b6b4d6a114889ec18a8b198ee3e5197db793e89ec51d5258e85758baa9"
+              }
+            },
+            {
+              "concept": "us-gaap:revenuefromcontractwithcustomerexcludingassessedtax",
+              "value": "29652000000",
+              "unit": "USD",
+              "period_start": "2023-01-01",
+              "period_end": "2023-12-31",
+              "decimals": "-6",
+              "ordinal": 1143,
+              "context_ref": "c-1",
+              "context": {
+                "context_ref": "c-1",
+                "dimensions": {},
+                "entity_identifier": "0000813828",
+                "period_end": "2023-12-31",
+                "period_start": "2023-01-01",
+                "typed_dimension_count": 0
+              },
+              "context_proof": {
+                "context_ref": "c-1",
+                "identifiers": [
+                  {
+                    "value": "0000813828",
+                    "scheme": "http://www.sec.gov/CIK"
+                  }
+                ],
+                "period_fields": [
+                  {
+                    "kind": "startdate",
+                    "value": "2023-01-01"
+                  },
+                  {
+                    "kind": "enddate",
+                    "value": "2023-12-31"
+                  }
+                ],
+                "dimensions": [],
+                "typed_dimension_count": 0
+              },
+              "source_reference": {
+                "record_type": "SOURCE_REFERENCE",
+                "source_reference_id": "sha256:992d964a4a38800752369aca8733eef3905221f7af86d84b1da7cd163ba21192",
+                "raw_asset_id": "sha256:6ea4d69cff5d6e428b9172be9679187c24967dc0243a7a9c178a00725a7df1fe",
+                "company_id": "paramount_skydance_paramount_global",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000007/para-20231231_htm.xml",
+                "accession": "0000813828-24-000007",
+                "document_name": "para-20231231_htm.xml",
+                "source_role": "auditor_facts",
+                "request_attempt_id": "request:attempt:8f9772b6b4d6a114889ec18a8b198ee3e5197db793e89ec51d5258e85758baa9"
+              }
+            },
+            {
+              "concept": "us-gaap:revenuefromcontractwithcustomerexcludingassessedtax",
+              "value": "29652000000",
+              "unit": "USD",
+              "period_start": "2023-01-01",
+              "period_end": "2023-12-31",
+              "decimals": "-6",
+              "ordinal": 2194,
+              "context_ref": "c-1",
+              "context": {
+                "context_ref": "c-1",
+                "dimensions": {},
+                "entity_identifier": "0000813828",
+                "period_end": "2023-12-31",
+                "period_start": "2023-01-01",
+                "typed_dimension_count": 0
+              },
+              "context_proof": {
+                "context_ref": "c-1",
+                "identifiers": [
+                  {
+                    "value": "0000813828",
+                    "scheme": "http://www.sec.gov/CIK"
+                  }
+                ],
+                "period_fields": [
+                  {
+                    "kind": "startdate",
+                    "value": "2023-01-01"
+                  },
+                  {
+                    "kind": "enddate",
+                    "value": "2023-12-31"
+                  }
+                ],
+                "dimensions": [],
+                "typed_dimension_count": 0
+              },
+              "source_reference": {
+                "record_type": "SOURCE_REFERENCE",
+                "source_reference_id": "sha256:992d964a4a38800752369aca8733eef3905221f7af86d84b1da7cd163ba21192",
+                "raw_asset_id": "sha256:6ea4d69cff5d6e428b9172be9679187c24967dc0243a7a9c178a00725a7df1fe",
+                "company_id": "paramount_skydance_paramount_global",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000007/para-20231231_htm.xml",
+                "accession": "0000813828-24-000007",
+                "document_name": "para-20231231_htm.xml",
+                "source_role": "auditor_facts",
+                "request_attempt_id": "request:attempt:8f9772b6b4d6a114889ec18a8b198ee3e5197db793e89ec51d5258e85758baa9"
+              }
+            },
+            {
+              "concept": "us-gaap:revenuefromcontractwithcustomerexcludingassessedtax",
+              "value": "29652000000",
+              "unit": "USD",
+              "period_start": "2023-01-01",
+              "period_end": "2023-12-31",
+              "decimals": "-6",
+              "ordinal": 2293,
+              "context_ref": "c-1",
+              "context": {
+                "context_ref": "c-1",
+                "dimensions": {},
+                "entity_identifier": "0000813828",
+                "period_end": "2023-12-31",
+                "period_start": "2023-01-01",
+                "typed_dimension_count": 0
+              },
+              "context_proof": {
+                "context_ref": "c-1",
+                "identifiers": [
+                  {
+                    "value": "0000813828",
+                    "scheme": "http://www.sec.gov/CIK"
+                  }
+                ],
+                "period_fields": [
+                  {
+                    "kind": "startdate",
+                    "value": "2023-01-01"
+                  },
+                  {
+                    "kind": "enddate",
+                    "value": "2023-12-31"
+                  }
+                ],
+                "dimensions": [],
+                "typed_dimension_count": 0
+              },
+              "source_reference": {
+                "record_type": "SOURCE_REFERENCE",
+                "source_reference_id": "sha256:992d964a4a38800752369aca8733eef3905221f7af86d84b1da7cd163ba21192",
+                "raw_asset_id": "sha256:6ea4d69cff5d6e428b9172be9679187c24967dc0243a7a9c178a00725a7df1fe",
+                "company_id": "paramount_skydance_paramount_global",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000007/para-20231231_htm.xml",
+                "accession": "0000813828-24-000007",
+                "document_name": "para-20231231_htm.xml",
+                "source_role": "auditor_facts",
+                "request_attempt_id": "request:attempt:8f9772b6b4d6a114889ec18a8b198ee3e5197db793e89ec51d5258e85758baa9"
+              }
+            }
+          ],
+          "xml_check": "MATCH"
+        }
+      ],
+      "selected_fiscal_column_year": 2023,
+      "fiscal_label_resolution": null,
+      "status": "REPORTED_CONSOLIDATED_TOTAL",
+      "complete_scope_proven": true,
+      "original_reports": [
+        {
+          "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+          "value": "29652000000",
+          "unit": "USD",
+          "period_start": "2023-01-01",
+          "period_end": "2023-12-31",
+          "decimals": "-6",
+          "ordinal": 74,
+          "context_ref": "c-1",
+          "context": {
+            "context_ref": "c-1",
+            "dimensions": {},
+            "entity_identifier": "0000813828",
+            "period_end": "2023-12-31",
+            "period_start": "2023-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2023-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2023-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:874084195b28aaf8d1f6ea4ab4c4e5870a4a7e8849e8b3fb6693a793573282ed",
+            "raw_asset_id": "sha256:6b30f698a84b85b57f750cc46b28d21d39caa9a2560a33143cfad784ebe6ad7b",
+            "company_id": "paramount_skydance_paramount_global",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000007/para-20231231.htm",
+            "accession": "0000813828-24-000007",
+            "document_name": "para-20231231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:8885450d69e1202b029d05d13a9cb2f5505e766c9ae6bbe14917fe5e80f5da58"
+          }
+        },
+        {
+          "concept": "us-gaap:ProfitLoss",
+          "value": "-576000000",
+          "unit": "USD",
+          "period_start": "2023-01-01",
+          "period_end": "2023-12-31",
+          "decimals": "-6",
+          "ordinal": 134,
+          "context_ref": "c-1",
+          "context": {
+            "context_ref": "c-1",
+            "dimensions": {},
+            "entity_identifier": "0000813828",
+            "period_end": "2023-12-31",
+            "period_start": "2023-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2023-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2023-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:874084195b28aaf8d1f6ea4ab4c4e5870a4a7e8849e8b3fb6693a793573282ed",
+            "raw_asset_id": "sha256:6b30f698a84b85b57f750cc46b28d21d39caa9a2560a33143cfad784ebe6ad7b",
+            "company_id": "paramount_skydance_paramount_global",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000007/para-20231231.htm",
+            "accession": "0000813828-24-000007",
+            "document_name": "para-20231231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:8885450d69e1202b029d05d13a9cb2f5505e766c9ae6bbe14917fe5e80f5da58"
+          }
+        },
+        {
+          "concept": "us-gaap:NetIncomeLoss",
+          "value": "-608000000",
+          "unit": "USD",
+          "period_start": "2023-01-01",
+          "period_end": "2023-12-31",
+          "decimals": "-6",
+          "ordinal": 140,
+          "context_ref": "c-1",
+          "context": {
+            "context_ref": "c-1",
+            "dimensions": {},
+            "entity_identifier": "0000813828",
+            "period_end": "2023-12-31",
+            "period_start": "2023-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2023-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2023-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:874084195b28aaf8d1f6ea4ab4c4e5870a4a7e8849e8b3fb6693a793573282ed",
+            "raw_asset_id": "sha256:6b30f698a84b85b57f750cc46b28d21d39caa9a2560a33143cfad784ebe6ad7b",
+            "company_id": "paramount_skydance_paramount_global",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000007/para-20231231.htm",
+            "accession": "0000813828-24-000007",
+            "document_name": "para-20231231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:8885450d69e1202b029d05d13a9cb2f5505e766c9ae6bbe14917fe5e80f5da58"
+          }
+        },
+        {
+          "concept": "us-gaap:NetIncomeLoss",
+          "value": "-608000000",
+          "unit": "USD",
+          "period_start": "2023-01-01",
+          "period_end": "2023-12-31",
+          "decimals": "-6",
+          "ordinal": 149,
+          "context_ref": "c-1",
+          "context": {
+            "context_ref": "c-1",
+            "dimensions": {},
+            "entity_identifier": "0000813828",
+            "period_end": "2023-12-31",
+            "period_start": "2023-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2023-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2023-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:874084195b28aaf8d1f6ea4ab4c4e5870a4a7e8849e8b3fb6693a793573282ed",
+            "raw_asset_id": "sha256:6b30f698a84b85b57f750cc46b28d21d39caa9a2560a33143cfad784ebe6ad7b",
+            "company_id": "paramount_skydance_paramount_global",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000007/para-20231231.htm",
+            "accession": "0000813828-24-000007",
+            "document_name": "para-20231231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:8885450d69e1202b029d05d13a9cb2f5505e766c9ae6bbe14917fe5e80f5da58"
+          }
+        },
+        {
+          "concept": "us-gaap:ProfitLoss",
+          "value": "-576000000",
+          "unit": "USD",
+          "period_start": "2023-01-01",
+          "period_end": "2023-12-31",
+          "decimals": "-6",
+          "ordinal": 176,
+          "context_ref": "c-1",
+          "context": {
+            "context_ref": "c-1",
+            "dimensions": {},
+            "entity_identifier": "0000813828",
+            "period_end": "2023-12-31",
+            "period_start": "2023-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2023-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2023-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:874084195b28aaf8d1f6ea4ab4c4e5870a4a7e8849e8b3fb6693a793573282ed",
+            "raw_asset_id": "sha256:6b30f698a84b85b57f750cc46b28d21d39caa9a2560a33143cfad784ebe6ad7b",
+            "company_id": "paramount_skydance_paramount_global",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000007/para-20231231.htm",
+            "accession": "0000813828-24-000007",
+            "document_name": "para-20231231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:8885450d69e1202b029d05d13a9cb2f5505e766c9ae6bbe14917fe5e80f5da58"
+          }
+        },
+        {
+          "concept": "us-gaap:ProfitLoss",
+          "value": "-576000000",
+          "unit": "USD",
+          "period_start": "2023-01-01",
+          "period_end": "2023-12-31",
+          "decimals": "-6",
+          "ordinal": 310,
+          "context_ref": "c-1",
+          "context": {
+            "context_ref": "c-1",
+            "dimensions": {},
+            "entity_identifier": "0000813828",
+            "period_end": "2023-12-31",
+            "period_start": "2023-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2023-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2023-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:874084195b28aaf8d1f6ea4ab4c4e5870a4a7e8849e8b3fb6693a793573282ed",
+            "raw_asset_id": "sha256:6b30f698a84b85b57f750cc46b28d21d39caa9a2560a33143cfad784ebe6ad7b",
+            "company_id": "paramount_skydance_paramount_global",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000007/para-20231231.htm",
+            "accession": "0000813828-24-000007",
+            "document_name": "para-20231231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:8885450d69e1202b029d05d13a9cb2f5505e766c9ae6bbe14917fe5e80f5da58"
+          }
+        },
+        {
+          "concept": "us-gaap:ProfitLoss",
+          "value": "-576000000",
+          "unit": "USD",
+          "period_start": "2023-01-01",
+          "period_end": "2023-12-31",
+          "decimals": "-6",
+          "ordinal": 545,
+          "context_ref": "c-1",
+          "context": {
+            "context_ref": "c-1",
+            "dimensions": {},
+            "entity_identifier": "0000813828",
+            "period_end": "2023-12-31",
+            "period_start": "2023-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2023-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2023-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:874084195b28aaf8d1f6ea4ab4c4e5870a4a7e8849e8b3fb6693a793573282ed",
+            "raw_asset_id": "sha256:6b30f698a84b85b57f750cc46b28d21d39caa9a2560a33143cfad784ebe6ad7b",
+            "company_id": "paramount_skydance_paramount_global",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000007/para-20231231.htm",
+            "accession": "0000813828-24-000007",
+            "document_name": "para-20231231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:8885450d69e1202b029d05d13a9cb2f5505e766c9ae6bbe14917fe5e80f5da58"
+          }
+        },
+        {
+          "concept": "us-gaap:NetIncomeLoss",
+          "value": "-608000000",
+          "unit": "USD",
+          "period_start": "2023-01-01",
+          "period_end": "2023-12-31",
+          "decimals": "-6",
+          "ordinal": 647,
+          "context_ref": "c-1",
+          "context": {
+            "context_ref": "c-1",
+            "dimensions": {},
+            "entity_identifier": "0000813828",
+            "period_end": "2023-12-31",
+            "period_start": "2023-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2023-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2023-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:874084195b28aaf8d1f6ea4ab4c4e5870a4a7e8849e8b3fb6693a793573282ed",
+            "raw_asset_id": "sha256:6b30f698a84b85b57f750cc46b28d21d39caa9a2560a33143cfad784ebe6ad7b",
+            "company_id": "paramount_skydance_paramount_global",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000007/para-20231231.htm",
+            "accession": "0000813828-24-000007",
+            "document_name": "para-20231231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:8885450d69e1202b029d05d13a9cb2f5505e766c9ae6bbe14917fe5e80f5da58"
+          }
+        },
+        {
+          "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+          "value": "29652000000",
+          "unit": "USD",
+          "period_start": "2023-01-01",
+          "period_end": "2023-12-31",
+          "decimals": "-6",
+          "ordinal": 1143,
+          "context_ref": "c-1",
+          "context": {
+            "context_ref": "c-1",
+            "dimensions": {},
+            "entity_identifier": "0000813828",
+            "period_end": "2023-12-31",
+            "period_start": "2023-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2023-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2023-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:874084195b28aaf8d1f6ea4ab4c4e5870a4a7e8849e8b3fb6693a793573282ed",
+            "raw_asset_id": "sha256:6b30f698a84b85b57f750cc46b28d21d39caa9a2560a33143cfad784ebe6ad7b",
+            "company_id": "paramount_skydance_paramount_global",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000007/para-20231231.htm",
+            "accession": "0000813828-24-000007",
+            "document_name": "para-20231231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:8885450d69e1202b029d05d13a9cb2f5505e766c9ae6bbe14917fe5e80f5da58"
+          }
+        },
+        {
+          "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+          "value": "29652000000",
+          "unit": "USD",
+          "period_start": "2023-01-01",
+          "period_end": "2023-12-31",
+          "decimals": "-6",
+          "ordinal": 2194,
+          "context_ref": "c-1",
+          "context": {
+            "context_ref": "c-1",
+            "dimensions": {},
+            "entity_identifier": "0000813828",
+            "period_end": "2023-12-31",
+            "period_start": "2023-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2023-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2023-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:874084195b28aaf8d1f6ea4ab4c4e5870a4a7e8849e8b3fb6693a793573282ed",
+            "raw_asset_id": "sha256:6b30f698a84b85b57f750cc46b28d21d39caa9a2560a33143cfad784ebe6ad7b",
+            "company_id": "paramount_skydance_paramount_global",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000007/para-20231231.htm",
+            "accession": "0000813828-24-000007",
+            "document_name": "para-20231231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:8885450d69e1202b029d05d13a9cb2f5505e766c9ae6bbe14917fe5e80f5da58"
+          }
+        },
+        {
+          "concept": "us-gaap:ProfitLoss",
+          "value": "-576000000",
+          "unit": "USD",
+          "period_start": "2023-01-01",
+          "period_end": "2023-12-31",
+          "decimals": "-6",
+          "ordinal": 2274,
+          "context_ref": "c-1",
+          "context": {
+            "context_ref": "c-1",
+            "dimensions": {},
+            "entity_identifier": "0000813828",
+            "period_end": "2023-12-31",
+            "period_start": "2023-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2023-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2023-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:874084195b28aaf8d1f6ea4ab4c4e5870a4a7e8849e8b3fb6693a793573282ed",
+            "raw_asset_id": "sha256:6b30f698a84b85b57f750cc46b28d21d39caa9a2560a33143cfad784ebe6ad7b",
+            "company_id": "paramount_skydance_paramount_global",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000007/para-20231231.htm",
+            "accession": "0000813828-24-000007",
+            "document_name": "para-20231231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:8885450d69e1202b029d05d13a9cb2f5505e766c9ae6bbe14917fe5e80f5da58"
+          }
+        },
+        {
+          "concept": "us-gaap:NetIncomeLoss",
+          "value": "-608000000",
+          "unit": "USD",
+          "period_start": "2023-01-01",
+          "period_end": "2023-12-31",
+          "decimals": "-6",
+          "ordinal": 2280,
+          "context_ref": "c-1",
+          "context": {
+            "context_ref": "c-1",
+            "dimensions": {},
+            "entity_identifier": "0000813828",
+            "period_end": "2023-12-31",
+            "period_start": "2023-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2023-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2023-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:874084195b28aaf8d1f6ea4ab4c4e5870a4a7e8849e8b3fb6693a793573282ed",
+            "raw_asset_id": "sha256:6b30f698a84b85b57f750cc46b28d21d39caa9a2560a33143cfad784ebe6ad7b",
+            "company_id": "paramount_skydance_paramount_global",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000007/para-20231231.htm",
+            "accession": "0000813828-24-000007",
+            "document_name": "para-20231231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:8885450d69e1202b029d05d13a9cb2f5505e766c9ae6bbe14917fe5e80f5da58"
+          }
+        },
+        {
+          "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+          "value": "29652000000",
+          "unit": "USD",
+          "period_start": "2023-01-01",
+          "period_end": "2023-12-31",
+          "decimals": "-6",
+          "ordinal": 2293,
+          "context_ref": "c-1",
+          "context": {
+            "context_ref": "c-1",
+            "dimensions": {},
+            "entity_identifier": "0000813828",
+            "period_end": "2023-12-31",
+            "period_start": "2023-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2023-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2023-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:874084195b28aaf8d1f6ea4ab4c4e5870a4a7e8849e8b3fb6693a793573282ed",
+            "raw_asset_id": "sha256:6b30f698a84b85b57f750cc46b28d21d39caa9a2560a33143cfad784ebe6ad7b",
+            "company_id": "paramount_skydance_paramount_global",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000007/para-20231231.htm",
+            "accession": "0000813828-24-000007",
+            "document_name": "para-20231231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:8885450d69e1202b029d05d13a9cb2f5505e766c9ae6bbe14917fe5e80f5da58"
+          }
+        }
+      ],
+      "single_revenue_line_allowed": true,
+      "scope_id": "sha256:93d88ada068488b9f139ddf4bbe9d41e347ee4bb2402e067d073267fb9d5dc58"
+    }
+  ],
+  "elapsed_seconds": 10.261458125001809,
+  "new_calls": 0,
+  "not_company_computation": true,
+  "execution_note": "Final source scopes at local6730983b; financial execution remains the earlier000903bd tree and is not reassigned"
+}

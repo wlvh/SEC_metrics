@@ -76,8 +76,13 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
                 and ' '.join(_label(*cost_bound[r['ordinal']]).casefold().split())
                     in {'total operating expenses', 'total operating expenses, net'}]
         names={r['concept'].casefold() for r in same}
+        complete_expenses=None
+        if single and not (names & {'us-gaap:costofrevenue','us-gaap:costofgoodsandservicessold'}):
+            complete_expenses=_complete_expense_statement(primary,xml,annual,options,
+                index,parsed,table,cell,row,same)
         if not(names & {'us-gaap:netincomeloss','us-gaap:profitloss'}
-               and (names & {'us-gaap:costofrevenue','us-gaap:costofgoodsandservicessold'} or operating_costs)):continue
+               and (names & {'us-gaap:costofrevenue','us-gaap:costofgoodsandservicessold'}
+                    or operating_costs or complete_expenses)):continue
         extra_units=(r'\(?(?:in |dollars in )?(?:millions|thousands), except per share amounts\)?',) if operating else ()
         if single_operating:
             extra_units = (r'\(?dollars in (?:millions|thousands), except per share amounts, and shares in thousands\)?',)
@@ -86,7 +91,9 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
         _need(not reason and column['year']==column_year,'FISCAL_COLUMN_UNRESOLVED')
         if single:
             _single_revenue_line(index,parsed,table,cell,row,column,same,
-                                 extra_unit_headers=extra_units)
+                                 extra_unit_headers=extra_units,
+                                 **({'first_cost_row':complete_expenses['expense_group_row']}
+                                    if complete_expenses else {}))
         column_end=column.get('date')
         _need(column_end is None or column_end.isoformat()==period['period_end'],'VISIBLE_DATE_CONFLICT')
         actual_end=date.fromisoformat(period['period_end']);end_headers=[]
@@ -125,6 +132,10 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
                         r'basic and diluted loss per share of common stock',
                         r'weighted average common shares outstanding',
                         r'weighted average common stock outstanding')
+        issuer_headers=None
+        if complete_expenses:
+            issuer_headers=_defined_income_headers(primary,parsed,annual)
+            sections=(*sections,*issuer_headers['patterns'])
         statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
             extra_unit_headers=extra_units,
             extra_section_headers=sections, bind_statement_page=True)
@@ -141,6 +152,8 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
         matches=[r for r in xml_rows if _key(r)==_key(row)] if xml_rows is not None else []
         _need(xml_rows is None or matches,'PRIMARY_XML_TOTAL_DIFFERS')
         selected.append({**({'operating_expense_reports':operating_costs} if operating else {}),'total':row,'total_cell':_cell_proof(table=table,cell=cell),
+                         **({'complete_expense_statement':complete_expenses} if complete_expenses else {}),
+                         **({'issuer_header_definition':issuer_headers['definitions']} if issuer_headers else {}),
                          'statement_scope':statement,'unit_sources':units,
                          'year_headers':[_cell_proof(table=table,cell=h) for h,_,_ in headers],
                          'end_headers':end_headers,
@@ -158,7 +171,137 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
     return {**body,'scope_id':content_hash(value=body)}
 
 
-def _single_revenue_line(index,parsed,table,cell,row,column,following,*,extra_unit_headers=()):
+def _defined_income_headers(primary,parsed,annual):
+    """Exact issuer headings from its explicit consolidated alias definition."""
+    from .fiscal_year_labels import _DefinitionBlocks
+    from .text_results_v2 import _ReportedFactMetadata
+    from .xbrl_namespace_policy import is_sec_namespace,YEAR_QUARTER_OR_DATE
+    from .canonical import sha256_bytes
+    raw=primary['raw_bytes'];text=raw.decode('utf-8-sig');meta=_ReportedFactMetadata()
+    meta.feed(text);meta.close()
+    names={f['text'].strip() for f in parsed.facts
+        if meta.facts[f['ordinal']]['concept'][1].casefold()=='entityregistrantname'
+        and is_sec_namespace(meta.facts[f['ordinal']]['concept'][0],taxonomy='dei',
+                             namespace_policy=YEAR_QUARTER_OR_DATE)
+        and str(int(parsed.contexts[f['context_ref']]['entity_identifier']))==annual['entity']
+        and not parsed.contexts[f['context_ref']]['dimensions']
+        and not parsed.contexts[f['context_ref']]['typed_dimension_count']
+        and parsed.contexts[f['context_ref']]['period_start']==annual['table_input']['target_period']['period_start']
+        and parsed.contexts[f['context_ref']]['period_end']==annual['table_input']['target_period']['period_end']}
+    aliases=set(names);definitions=[]
+    blocks=_DefinitionBlocks(text);blocks.feed(text);blocks.close();blocks._flush()
+    for block in blocks.blocks:
+        if block['quoted_context'] or block['linked']:continue
+        match=re.search(r'Unless the context requires otherwise, references in this document to '
+            r'(?P<aliases>[^.;]{1,200}) mean (?P<name>[^,;]{1,100}) and its consolidated subsidiaries(?=,|\.)',block['text'])
+        if not match or match['name'] not in names:continue
+        prefix=block['text'][:match.start()]
+        if prefix and re.search(r'\b(?:not|except|excluded|only|subsidiary)\b',prefix,re.I):continue
+        tokens=re.findall(r'“([^”]+)”',match['aliases'])
+        residual=re.sub(r'“[^”]+”','',match['aliases'])
+        if not tokens or re.fullmatch(r'[\s,]*(?:and[\s,]*)?',residual) is None:continue
+        defined={a.rstrip(',') for a in tokens if a.rstrip(',') not in {'the Company','we','us','our'}}
+        aliases.update(defined)
+        start=len(text[:block['start']].encode('utf-8'))+(3 if raw.startswith(b'\xef\xbb\xbf') else 0)
+        end=len(text[:block['end']].encode('utf-8'))+(3 if raw.startswith(b'\xef\xbb\xbf') else 0)
+        definitions.append({'raw_start_byte':start,'raw_end_byte':end,'raw_span_sha256':sha256_bytes(content=raw[start:end]),
+            'text':block['text'],'registrant_name':match['name'],'aliases':sorted(defined)})
+    patterns=[r'weighted average number of common shares outstanding:']
+    for name in sorted(aliases):
+        escaped=re.escape(name.casefold())
+        patterns.extend([r'amounts attributable to '+escaped+r':',
+            r'(?:basic|diluted) net earnings \(loss\) per common share attributable to '+escaped+r':'])
+    return {'patterns':patterns,'definitions':definitions}
+
+
+def _complete_expense_statement(primary,xml,annual,options,index,parsed,table,cell,revenue,following):
+    """The full expense group and its reported operating result in one column."""
+    from decimal import Decimal
+    from .financial_structured import _fact_cells
+    from .financial_duration import _cell_proof,_column_period
+    costs=native_income_reports(primary,annual,['us-gaap:CostsAndExpenses'],**options)
+    bound=_fact_cells(index,parsed,{r['ordinal'] for r in costs})
+    candidates=[r for r in costs if r['context_ref']==revenue['context_ref']
+        and r['ordinal'] in bound and bound[r['ordinal']][0]['table_id']==table['table_id']
+        and bound[r['ordinal']][1]['row_index']>cell['row_index']]
+    if not candidates:return None
+    _need(len(candidates)==1,'COMPLETE_EXPENSE_TOTAL_AMBIGUOUS')
+    expense=candidates[0];expense_cell=bound[expense['ordinal']][1]
+    _need(' '.join(_label(table,expense_cell).casefold().split())=='total costs and expenses',
+          'COMPLETE_EXPENSE_TOTAL_LABEL_UNPROVEN')
+    group=[]
+    for gridrow in table['rows'][cell['row_index']+1:expense_cell['row_index']]:
+        origins=[c for c in gridrow['cells'] if c['is_origin'] and c['text'].strip()]
+        if len(origins)==1 and origins[0]['text'].strip().casefold()=='costs and expenses:':
+            group.append(origins[0])
+    _need(len(group)==1,'COMPLETE_EXPENSE_GROUP_UNPROVEN')
+    operating=native_income_reports(primary,annual,['us-gaap:OperatingIncomeLoss'],**options)
+    obound=_fact_cells(index,parsed,{r['ordinal'] for r in operating})
+    operating=[r for r in operating if r['context_ref']==revenue['context_ref']
+        and r['ordinal'] in obound and obound[r['ordinal']][0]['table_id']==table['table_id']
+        and obound[r['ordinal']][1]['row_index']>expense_cell['row_index']]
+    _need(len(operating)==1,'COMPLETE_EXPENSE_OPERATING_RESULT_UNPROVEN')
+    income=operating[0];income_cell=obound[income['ordinal']][1]
+    _need(' '.join(_label(table,income_cell).casefold().split()) in
+          {'operating income','operating loss','operating income (loss)'},
+          'COMPLETE_EXPENSE_OPERATING_LABEL_UNPROVEN')
+    for report,amount_cell in ((expense,expense_cell),(income,income_cell)):
+        covers=amount_cell['column_index']<=cell['column_index']<amount_cell['column_index']+amount_cell['colspan']
+        _need(covers,'COMPLETE_EXPENSE_COLUMN_CONFLICT')
+        column,_,reason=_column_period(table=table,selected=amount_cell,extra_header_descriptors=UNIT_HEADER)
+        _need(not reason and column['year']==annual['table_input']['target_period']['fiscal_year'],
+              'COMPLETE_EXPENSE_COLUMN_PERIOD_UNPROVEN')
+        native=next(f for f in parsed.facts if f['ordinal']==report['ordinal'])
+        visible=''.join(amount_cell['text'].split()).lstrip('$').strip('()')
+        _need(visible==''.join(native['text'].split()).strip('()'),
+              'COMPLETE_EXPENSE_CELL_TEXT_CONFLICT')
+        _need(native.get('scale')==next(f for f in parsed.facts if f['ordinal']==revenue['ordinal']).get('scale'),
+              'COMPLETE_EXPENSE_SCALE_CONFLICT')
+    # Do not silently omit disposition gains or another intervening amount.
+    numeric=_fact_cells(index,parsed,{f['ordinal'] for f in parsed.facts if f.get('unit_ref')})
+    intermediate=[ordinal for ordinal,(t,c) in numeric.items() if t['table_id']==table['table_id']
+        and expense_cell['row_index']<c['row_index']<income_cell['row_index']
+        and c['column_index']<=cell['column_index']<c['column_index']+c['colspan']]
+    from .text_results_v2 import _ReportedFactMetadata
+    from .governance_signals import _source_value
+    metadata=_ReportedFactMetadata();metadata.feed(primary['raw_bytes'].decode('utf-8-sig'));metadata.close()
+    neutral=[]
+    for ordinal in intermediate:
+        fact=next(f for f in parsed.facts if f['ordinal']==ordinal);_,intermediate_cell=numeric[ordinal]
+        _need(fact['context_ref']==revenue['context_ref']
+              and fact['unit_ref']==next(f for f in parsed.facts if f['ordinal']==revenue['ordinal'])['unit_ref']
+              and _source_value(fact,metadata.facts[ordinal])=='0'
+              and intermediate_cell['text'].strip() in {'0','—','–','-'}
+              and ' '.join(_label(table,intermediate_cell).casefold().split())in {'gains on dispositions','net gains on dispositions'},
+              'COMPLETE_EXPENSE_INTERVENING_AMOUNT_UNPROVEN')
+        neutral.append({'ordinal':ordinal,'concept':list(metadata.facts[ordinal]['concept']),
+            'value':'0','context_ref':fact['context_ref'],'unit_ref':fact['unit_ref'],
+            'cell':_cell_proof(table=table,cell=intermediate_cell)})
+    neutral_rows={numeric[ordinal][1]['row_index'] for ordinal in intermediate}
+    for gridrow in table['rows'][expense_cell['row_index']+1:income_cell['row_index']]:
+        amounts=[c for c in gridrow['cells'] if c['is_origin']
+            and c['column_index']<=cell['column_index']<c['column_index']+c['colspan']
+            and c['text'].strip()]
+        _need(not amounts or gridrow['row_index'] in neutral_rows,
+              'COMPLETE_EXPENSE_UNTAGGED_INTERVENING_AMOUNT')
+    _need(Decimal(revenue['value'])-Decimal(expense['value'])==Decimal(income['value']),
+          'COMPLETE_EXPENSE_OPERATING_RELATION_CONFLICT')
+    matches=[]
+    if xml is not None:
+        xmlreports=native_income_reports(xml,annual,['us-gaap:CostsAndExpenses','us-gaap:OperatingIncomeLoss'],**options)
+        for chosen in (expense,income):
+            found=[r for r in xmlreports if _key(r)==_key(chosen)]
+            _need(bool(found),'COMPLETE_EXPENSE_PRIMARY_XML_DIFFERS')
+            matches.extend(found)
+    return {'expense':expense,'expense_cell':_cell_proof(table=table,cell=expense_cell),
+            'expense_group':_cell_proof(table=table,cell=group[0]),'expense_group_row':group[0]['row_index'],
+            'operating_income':income,'operating_cell':_cell_proof(table=table,cell=income_cell),
+            'neutral_intermediate_reports':neutral,
+            'annual_period':annual['table_input']['target_period'],'xml_matches':matches,
+            'xml_check':'MATCH' if xml is not None else 'NOT_SUPPLIED'}
+
+
+def _single_revenue_line(index,parsed,table,cell,row,column,following,*,extra_unit_headers=(),first_cost_row=None):
     """A sole top-line amount in this column, not a component or note subtotal.
 
     The caller still proves the complete consolidated income statement,
@@ -172,7 +315,8 @@ def _single_revenue_line(index,parsed,table,cell,row,column,following,*,extra_un
     costs=[r for r in following if r['concept'].casefold() in
            {'us-gaap:costofrevenue','us-gaap:costofgoodsandservicessold'}]
     numeric=_fact_cells(index,parsed,{f['ordinal'] for f in parsed.facts if f.get('unit_ref')})
-    first_cost=min(numeric[c['ordinal']][1]['row_index'] for c in costs)
+    first_cost=(first_cost_row if first_cost_row is not None
+                else min(numeric[c['ordinal']][1]['row_index'] for c in costs))
     selected_column=cell['column_index']
     _need(column['row_index']<cell['row_index']<first_cost,'SINGLE_REVENUE_POSITION_UNPROVEN')
     visible=''.join(cell['text'].split())
