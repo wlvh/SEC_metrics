@@ -6,6 +6,7 @@ on:
       - "tools/vnext_continuous_semantic.py"
       - "tests/vnext/test_request_limits.py"
       - "tests/vnext/test_current_request_runtime.py"
+      - "tests/vnext/test_d03_source_root_seam.py"
       - "tests/vnext/test_continuous_call_ledger.py"
       - "config/**"
       - "catalog/**"
@@ -32,3 +33,8 @@ jobs:
           PYTHONDONTWRITEBYTECODE: '1'
           PYTHONPATH: scripts
         run: python3 tests/required_unittests.py tests.vnext.test_request_limits tests.vnext.test_current_request_runtime tests.vnext.test_continuous_call_ledger
+      - name: D03 saved-source successor routing and closed execution
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+          PYTHONPATH: scripts
+        run: python3 tests/required_unittests.py tests.vnext.test_d03_source_root_seam
