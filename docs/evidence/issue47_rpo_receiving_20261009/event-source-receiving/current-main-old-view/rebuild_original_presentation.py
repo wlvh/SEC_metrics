@@ -1,0 +1,24 @@
+"""One legacy event case: original source scope + saved result, no calculation."""
+import argparse,csv,json,hashlib,time,subprocess,gzip
+from pathlib import Path
+from unittest.mock import patch
+from vnext.historical_annual_input import prepare_historical_annual_input
+from vnext.normal_period_selection import resolve_period_selection
+from vnext.selected_event_source_v1 import read_selected_event_sources
+from vnext.historical_event_cases import selected_event_window,check_historical_event_block
+from vnext.normal_history_catalog import block_last_days
+from vnext.normal_source_authority import ROOT
+from vnext.normal_run_specs import installed_ordinary_spec_documents
+from vnext.ordinary_saved_result import read_saved_result,save_calculated_case
+from vnext.ordinary_source_authority import verify_ordinary_source_proofs
+parser=argparse.ArgumentParser();parser.add_argument('--old-result-root',type=Path,required=True);parser.add_argument('--output-root',type=Path,required=True);parser.add_argument('--receipt',type=Path,required=True);parser.add_argument('--case-output',type=Path,required=True);a=parser.parse_args();old=a.old_result_root.resolve();out=a.output_root.resolve();assert not out.exists();company='paramount_skydance_paramount_global';metric='C01';before={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in old.iterdir() if p.is_file()};saved=read_saved_result(output_root=old);m=saved['manifest'];source=Path(m['source_root']);start=time.perf_counter()
+with patch('socket.socket.connect',side_effect=AssertionError('No network')),patch('vnext.historical_event_cases.project_event_result',side_effect=AssertionError('No event count')),patch('vnext.calculator.calculate_observation_metric',side_effect=AssertionError('No Calculator')):
+ selected=resolve_period_selection(repo_root=source,company_id=company,fiscal_year=2022,rules_root=ROOT);annual=prepare_historical_annual_input(repo_root=source,company_id=company,period_selection=selected,rules_root=ROOT);assert not annual['amendments'];period,union=selected_event_window(annual);packet=read_selected_event_sources(data_root=source,rules_root=ROOT,prepared=annual,period=period,registered_union=union,history_validator=check_historical_event_block,history_last_days=block_last_days)
+ records=[json.loads(l) for l in (old/'records.jsonl').read_text().splitlines()];claims=[r for r in records if r['record_type']=='DETERMINISTIC_VERIFIED_CLAIM'];assert {r['verified_claim_id'] for r in claims}=={r['verified_claim_id'] for r in packet['claims']}
+ refs=[r for r in records if r['record_type']=='SOURCE_REFERENCE'];assert {r['source_reference_id'] for r in packet['source_references']}=={r['source_reference_id'] for r in refs}
+ binding={'record_type':'HISTORICAL_EVENT_SOURCE_INPUT','input_id':m['input_id'],'prepared_input':annual,'period_selection':selected,'metric_id':metric,'event_window':period,'source_set_manifests':packet['source_set_manifests'],'claims':claims,'filings':packet['filings'],'source_proofs':m['source_proofs'],'source_admission':verify_ordinary_source_proofs(data_root=source,proofs=m['source_proofs']),'financial_cross_entity_combination_authorized':False,'registered_event_scope':packet['registered_event_scope'],'amendment_checks':[]}
+ case={'kind':'STRUCTURED','primary_metric_id':metric,'input_binding':binding,'compiled_specs':m['compiled_specs'],'spec_paths':{metric:installed_ordinary_spec_documents()[metric]['path']},'target_period':m['target_period'],'prepared_annual_input':annual,'expected_records':records,'results':{metric:saved['result']},'references':refs,'source_proofs':m['source_proofs'],'admission':binding['source_admission'],'rules_root':str(ROOT)}
+ save_calculated_case(source_root=source,output_root=out,company_id=company,metric_id=metric,case=case);new=read_saved_result(output_root=out);assert new['result']==saved['result'];assert not new['manifest']['calculation_performed_by_writer'];row=next(csv.DictReader((out/'metrics_matrix.csv').open()));oldrow=next(csv.DictReader((old/'metrics_matrix.csv').open()));assert row['cik']=='813828' and {k:v for k,v in row.items() if k not in {'cik','context_or_dimension'}}=={k:v for k,v in oldrow.items() if k not in {'cik','context_or_dimension'}}
+assert before=={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in old.iterdir() if p.is_file()}
+with gzip.open(a.case_output,'wt') as f:json.dump(case,f)
+a.receipt.write_text(json.dumps({'source_rebuild_and_writer_seconds':time.perf_counter()-start,'old_result_id':saved['result']['result_id'],'new_result_id':new['result']['result_id'],'old_cik':oldrow['cik'],'new_cik':row['cik'],'result_trace_records_unchanged':True,'original_source_claim_reference_sets_match':True,'old_files_unchanged':len(before),'no_company_pointer_update':True,'output_root':str(out),'calls':[0,0,0]},indent=2)+'\n');print('Real source scope and saved result reprojected; original state pointer unchanged')
