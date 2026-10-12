@@ -1,0 +1,148 @@
+{
+  "kind": "latest503",
+  "fixture": "explicit constructed saved HTTP/ledger in isolated temporary test root",
+  "expected_pending_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828625000007/annual-2024.htm",
+  "output_exposes_pending_url": false,
+  "exit_code": 2,
+  "result": {
+    "elapsed_seconds": 0.010540333008975722,
+    "record_type": "COMPANY_FISCAL_RANGE_SOURCE_V1",
+    "company_id": "marriott_international",
+    "fiscal_years": [
+      2024,
+      2025
+    ],
+    "metric_ids": [
+      "B01"
+    ],
+    "candidates": [
+      {
+        "report_end": "2025-12-31",
+        "reporting_cik": "1048286",
+        "source_fiscal_year_resolved": true,
+        "metadata_scope": {
+          "target_report_end": "2024-01-01",
+          "window_oldest_report_end": "2024-01-01",
+          "loaded_inventories": [
+            "CIK0001048286.json"
+          ],
+          "outside_window_report_ends": [],
+          "unloaded_older_history_files": []
+        },
+        "filing": {
+          "form": "10-K",
+          "reportDate": "2025-12-31",
+          "filingDate": "2026-02-10",
+          "accessionNumber": "0001048286-26-000007",
+          "primaryDocument": "annual-2025.htm"
+        },
+        "fiscal_year": 2025,
+        "original_dei_fiscal_year": 2025,
+        "basis": "CONSISTENT_SOURCE_METADATA",
+        "actual_period": {
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31"
+        },
+        "inspection_id": "sha256:c31483d34c27b464c96d28207a58ceaadd601c39044187a7564b86ab7fa32211",
+        "label_status": "METADATA_LABEL_ONLY",
+        "primary_proof": {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/annual-2025.htm",
+          "accession": "0001048286-26-000007",
+          "document_name": "annual-2025.htm",
+          "content_sha256": "f09cc13bb61320a61be44c4e415fcd13243ec076bf135a4f593d8d0e67014d73",
+          "request_body_sha256": "f09cc13bb61320a61be44c4e415fcd13243ec076bf135a4f593d8d0e67014d73",
+          "request_body_size": 952,
+          "request_headers_repo_relative_path": "evidence/request_attempts/f0/f09cc13bb61320a61be44c4e415fcd13243ec076bf135a4f593d8d0e67014d73/annual-2025.htm.c1e84835a7133e324fd5de75caf5c0c69064744bdf320c4e5f0648af65b9ee2a.headers.json",
+          "request_headers_sha256": "c1e84835a7133e324fd5de75caf5c0c69064744bdf320c4e5f0648af65b9ee2a",
+          "request_headers_size": 295,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/f0/f09cc13bb61320a61be44c4e415fcd13243ec076bf135a4f593d8d0e67014d73/annual-2025.htm",
+          "request_attempt_id": "request:attempt:2d16764795e07ad6c5b2574c81ef3eed9af35ff85f23132ae3f1d54cb9a9ccab"
+        },
+        "companyfacts_proof": {
+          "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+          "accession": "",
+          "document_name": "CIK0001048286.json",
+          "content_sha256": "1293e0704d924e65f1cfb8c53752ffc1ee989c257b42c29e6c8cdec14ce624f4",
+          "request_body_sha256": "1293e0704d924e65f1cfb8c53752ffc1ee989c257b42c29e6c8cdec14ce624f4",
+          "request_body_size": 380,
+          "request_headers_repo_relative_path": "evidence/request_attempts/12/1293e0704d924e65f1cfb8c53752ffc1ee989c257b42c29e6c8cdec14ce624f4/CIK0001048286.json.843222788d0bd2d810c4c71bb0d6c34f7f5914a3bfeede846c9e4f3a615b23ec.headers.json",
+          "request_headers_sha256": "843222788d0bd2d810c4c71bb0d6c34f7f5914a3bfeede846c9e4f3a615b23ec",
+          "request_headers_size": 274,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/12/1293e0704d924e65f1cfb8c53752ffc1ee989c257b42c29e6c8cdec14ce624f4/CIK0001048286.json",
+          "request_attempt_id": "request:attempt:c445c884dd9087b3a47ce37f5691c1050fc9c7e3564a5d702ab2e6af6f0e7f7a"
+        }
+      },
+      {
+        "report_end": "2024-12-31",
+        "reporting_cik": "1048286",
+        "source_fiscal_year_resolved": false,
+        "metadata_scope": {
+          "target_report_end": "2024-01-01",
+          "window_oldest_report_end": "2024-01-01",
+          "loaded_inventories": [
+            "CIK0001048286.json"
+          ],
+          "outside_window_report_ends": [],
+          "unloaded_older_history_files": []
+        },
+        "limitation": {
+          "phase": "FISCAL_LABEL",
+          "reason": "COMPANY_FISCAL_RANGE_LABEL_SOURCE_MISSING",
+          "error_type": "ValueError",
+          "category": "SOURCE_OR_READER_ERROR",
+          "report_end": "2024-12-31"
+        }
+      }
+    ],
+    "tasks": [
+      {
+        "fiscal_year": 2024,
+        "status": "FISCAL_YEAR_SOURCE_UNRESOLVED",
+        "limitations": [
+          {
+            "phase": "FISCAL_LABEL",
+            "reason": "COMPANY_FISCAL_RANGE_LABEL_SOURCE_MISSING",
+            "error_type": "ValueError",
+            "category": "SOURCE_OR_READER_ERROR",
+            "report_end": "2024-12-31"
+          }
+        ]
+      },
+      {
+        "fiscal_year": 2025,
+        "status": "FISCAL_YEAR_SOURCE_UNRESOLVED",
+        "limitations": [
+          {
+            "phase": "FISCAL_LABEL",
+            "reason": "COMPANY_FISCAL_RANGE_LABEL_SOURCE_MISSING",
+            "error_type": "ValueError",
+            "category": "SOURCE_OR_READER_ERROR",
+            "report_end": "2024-12-31"
+          }
+        ]
+      }
+    ],
+    "status": "FISCAL_RANGE_UNRESOLVED",
+    "all_source_bytes_available": false,
+    "discovery_scope": "EXISTING_TARGET_AND_NEAREST_PRIOR_METADATA_WINDOW",
+    "all_older_history_excluded_by_fiscal_label": false,
+    "current_sec_freshness_proven": false,
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "fetch_authorized": false,
+    "metric_executed": false,
+    "metric_acceptance_proven": false,
+    "production_authorized": false,
+    "range_id": "sha256:79bf6944cf78ee557bed222e9b0bf3850194ac5693c6a97cce3aea36dc1b9514"
+  },
+  "real_calls": [
+    0,
+    0,
+    0
+  ]
+}

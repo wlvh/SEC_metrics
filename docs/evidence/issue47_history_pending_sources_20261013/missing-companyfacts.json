@@ -1,0 +1,125 @@
+{
+  "kind": "missing-companyfacts",
+  "fixture": "explicit constructed saved HTTP/ledger in isolated temporary test root",
+  "expected_pending_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+  "output_exposes_pending_url": false,
+  "exit_code": 2,
+  "result": {
+    "elapsed_seconds": 0.0056889170082286,
+    "record_type": "COMPANY_FISCAL_RANGE_SOURCE_V1",
+    "company_id": "marriott_international",
+    "fiscal_years": [
+      2024,
+      2025
+    ],
+    "metric_ids": [
+      "B01"
+    ],
+    "candidates": [
+      {
+        "report_end": "2025-12-31",
+        "reporting_cik": "1048286",
+        "source_fiscal_year_resolved": false,
+        "metadata_scope": {
+          "target_report_end": "2024-01-01",
+          "window_oldest_report_end": "2024-01-01",
+          "loaded_inventories": [
+            "CIK0001048286.json"
+          ],
+          "outside_window_report_ends": [],
+          "unloaded_older_history_files": []
+        },
+        "limitation": {
+          "phase": "FISCAL_LABEL",
+          "reason": "COMPANY_FISCAL_RANGE_LABEL_SOURCE_MISSING",
+          "error_type": "ValueError",
+          "category": "SOURCE_OR_READER_ERROR",
+          "report_end": "2025-12-31"
+        }
+      },
+      {
+        "report_end": "2024-12-31",
+        "reporting_cik": "1048286",
+        "source_fiscal_year_resolved": false,
+        "metadata_scope": {
+          "target_report_end": "2024-01-01",
+          "window_oldest_report_end": "2024-01-01",
+          "loaded_inventories": [
+            "CIK0001048286.json"
+          ],
+          "outside_window_report_ends": [],
+          "unloaded_older_history_files": []
+        },
+        "limitation": {
+          "phase": "FISCAL_LABEL",
+          "reason": "COMPANY_FISCAL_RANGE_LABEL_SOURCE_MISSING",
+          "error_type": "ValueError",
+          "category": "SOURCE_OR_READER_ERROR",
+          "report_end": "2024-12-31"
+        }
+      }
+    ],
+    "tasks": [
+      {
+        "fiscal_year": 2024,
+        "status": "FISCAL_YEAR_SOURCE_UNRESOLVED",
+        "limitations": [
+          {
+            "phase": "FISCAL_LABEL",
+            "reason": "COMPANY_FISCAL_RANGE_LABEL_SOURCE_MISSING",
+            "error_type": "ValueError",
+            "category": "SOURCE_OR_READER_ERROR",
+            "report_end": "2025-12-31"
+          },
+          {
+            "phase": "FISCAL_LABEL",
+            "reason": "COMPANY_FISCAL_RANGE_LABEL_SOURCE_MISSING",
+            "error_type": "ValueError",
+            "category": "SOURCE_OR_READER_ERROR",
+            "report_end": "2024-12-31"
+          }
+        ]
+      },
+      {
+        "fiscal_year": 2025,
+        "status": "FISCAL_YEAR_SOURCE_UNRESOLVED",
+        "limitations": [
+          {
+            "phase": "FISCAL_LABEL",
+            "reason": "COMPANY_FISCAL_RANGE_LABEL_SOURCE_MISSING",
+            "error_type": "ValueError",
+            "category": "SOURCE_OR_READER_ERROR",
+            "report_end": "2025-12-31"
+          },
+          {
+            "phase": "FISCAL_LABEL",
+            "reason": "COMPANY_FISCAL_RANGE_LABEL_SOURCE_MISSING",
+            "error_type": "ValueError",
+            "category": "SOURCE_OR_READER_ERROR",
+            "report_end": "2024-12-31"
+          }
+        ]
+      }
+    ],
+    "status": "FISCAL_RANGE_UNRESOLVED",
+    "all_source_bytes_available": false,
+    "discovery_scope": "EXISTING_TARGET_AND_NEAREST_PRIOR_METADATA_WINDOW",
+    "all_older_history_excluded_by_fiscal_label": false,
+    "current_sec_freshness_proven": false,
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "fetch_authorized": false,
+    "metric_executed": false,
+    "metric_acceptance_proven": false,
+    "production_authorized": false,
+    "range_id": "sha256:c61bee189c13224279737932d598f5846a2e643c5be0a196b9539f0098d7649f"
+  },
+  "real_calls": [
+    0,
+    0,
+    0
+  ]
+}
