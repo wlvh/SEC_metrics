@@ -1,0 +1,6 @@
+same-task-new-original-bytes 0.08049816700076917 INPUT_OR_EXECUTION_FAILED
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics/docs/evidence/issue28_d04_parsed_update_20261011/verify_actual_company.py", line 66, in <module>
+    second=comparison('same-task-new-original-bytes');assert second['status']=='PREVIOUS_INPUT_WITHHELD',second;assert second['source_comparison']=='PARSED_D04_TASK_INPUT_UNCHANGED';assert second['result_id']==r['result_id'];assert tree(result_root)==before_result
+                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'status': 'INPUT_OR_EXECUTION_FAILED', 'attempt_id': 'da42fcaab65440618af8a597ed99668e', 'error_type': 'AssertionError', 'reason': 'No full D04 assessment replay', 'previous_result': None, 'new_calls': {'provider': 0, 'paid': 0, 'sec': 0}, 'production_authorized': False}

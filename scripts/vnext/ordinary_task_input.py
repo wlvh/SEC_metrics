@@ -96,13 +96,20 @@ def parsed_d04_document(*,raw_bytes,raw_blob,source_reference,
     if relations.svg_depth: raise ValueError('PARSED_D04_UNCLOSED_SVG')
     grid=build_table_grid(html_bytes=raw_bytes,parent_raw_asset_ids=[raw_blob['raw_asset_id']],
                          storage_uri='derived/parsed-task-grid.json')
-    dependencies=('ordinary_task_input.py','text_coverage.py','table_grid.py',
+    dependencies=('ordinary_task_input.py','text_coverage.py','table_grid.py','regulatory_investigation_candidates.py',
                   'deterministic_router.py','governance_signals.py','resource_limits.py')
+    # D04's actual model input identifies HTML quotation containers per block.
+    # Equal text with changed quotation ownership is not equal task input.
+    from .regulatory_investigation_candidates import _quotation_ranges
+    quoted=_quotation_ranges(raw_bytes)
+    quotation_context=[{'block_index':b['block_index'],
+        'html_quotation_context':any(a<b['raw_end_byte'] and b['raw_start_byte']<z for a,z in quoted)}
+        for b in doc['blocks']]
     body={'task_metric':'D04','parser_version':1,
         'parser_files':{p:sha256_file(path=Path(__file__).with_name(p)) for p in dependencies},
         'source':{k:source_reference[k] for k in ('company_id','source_url','accession','document_name','source_role')},
         'identity':{k:doc[k] for k in ('company_id','cik','period_end','form','registrant_names','source_state','source_reasons')},
-        'blocks':_plain(doc['blocks'],omit_offsets=True),'sections':_plain(doc['sections'],omit_offsets=True),
+        'blocks':_plain(doc['blocks'],omit_offsets=True),'quotation_context':quotation_context,'sections':_plain(doc['sections'],omit_offsets=True),
         'native_contexts':_plain(parsed.contexts),'native_facts':_plain(parsed.facts),
         'native_fact_attributes':_plain(attrs.facts),'native_units':_plain(attrs.units),
         'tables':_plain(grid['tables']),'relationships':relations.rows,
