@@ -1,0 +1,24 @@
+{
+  "seconds": 0.26809837500331923,
+  "exit_code": 0,
+  "arguments": [
+    "run",
+    "--company",
+    "salesforce",
+    "--metric",
+    "B01",
+    "--period",
+    "fiscal-years",
+    "--fiscal-year-start",
+    "2026",
+    "--fiscal-year-end",
+    "2026",
+    "--source-root",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/salesforce-history-export-consumer-20261013/package",
+    "--work-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/salesforce-history-export-consumer-20261013/state",
+    "--output-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/salesforce-history-export-consumer-20261013/repeat"
+  ],
+  "stdout": "{\n  \"elapsed_seconds\": 0.2655525409936672,\n  \"record_type\": \"ORDINARY_COMPANY_EXECUTION_V1\",\n  \"company_id\": \"salesforce\",\n  \"run_id\": \"20261012T214219Z-a639c1c2\",\n  \"status\": \"FLOW_COMPLETED\",\n  \"selected_metrics\": [\n    \"B01\"\n  ],\n  \"metrics\": [\n    {\n      \"metric_id\": \"B01\",\n      \"status\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"attempt_id\": \"32b392517c36442e9ec9dbcf85b3c1be\",\n      \"version\": \"e059ad9b16cc4983a209ad750cd6734a\",\n      \"result_id\": \"sha256:8cecba16403adcd8197747cecd1bbb27cb8cb851b4eb236eed2ad74f895ff60d\",\n      \"result_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/salesforce-history-export-consumer-20261013/state/updates/B01/periods/FY2026/results/e059ad9b16cc4983a209ad750cd6734a\",\n      \"result_reason_code\": \"PASS\",\n      \"raw_input_unchanged\": true,\n      \"calculation_performed\": false,\n      \"new_candidate_created\": false,\n      \"source_check_versions\": {\n        \"scripts/vnext/ordinary_current_update.py\": \"44981df2450f8d594f99caeb590347f0af48f433418de58b3deb01ef576f34a2\",\n        \"scripts/vnext/request_bindings.py\": \"d0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee\"\n      },\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"requested_fiscal_year\": 2026,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:8cecba16403adcd8197747cecd1bbb27cb8cb851b4eb236eed2ad74f895ff60d\",\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/salesforce-history-export-consumer-20261013/state/updates/B01/periods/FY2026/results/e059ad9b16cc4983a209ad750cd6734a\",\n      \"program_version\": {\n        \"commit\": \"5ea1735ff86ef453f8c74b6b258d1c1a89457610\",\n        \"has_uncommitted_changes\": true\n      }\n    }\n  ],\n  \"source_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/salesforce-history-export-consumer-20261013/package\",\n  \"program_root\": \"/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics\",\n  \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/salesforce-history-export-consumer-20261013/state\",\n  \"output_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/salesforce-history-export-consumer-20261013/repeat/20261012T214219Z-a639c1c2\",\n  \"source_mode\": \"SAVED_ONLY_NO_ONLINE_DISCOVERY\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false,\n  \"selected_fiscal_years\": [\n    2026\n  ]\n}\n"
+}
