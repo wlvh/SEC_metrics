@@ -27,7 +27,13 @@ heads and actual main through normal merges. The evidence commit adds no
 production change. The thin consumer PR is based on PR202 and excludes PR199's
 code/evidence changes from its own diff; reviewers must combine PR199 for the
 complete FY2022 company run. The published combination branch is
-`task/issue47-b02-cover-consumer-20261012`.
+`task/issue47-b02-cover-consumer-20261012` at
+`c85d18a43ee17f2a633a01db25fbbeb078c179ca` (tree
+`516e9daad158293621cf948f19f675806eddaac2`). The thin candidate first published
+`e6d31c113bb47371ebfae85de638c8673890d20d` (tree
+`f1092137ea1afc9a8f7728b1045d47ef3d25428a`). Its own production adapter is
+identical to the executed combination; its required public caption dependency
+is deliberately separate.
 
 Saved sources are read only. This execution used
 `/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs`.
@@ -35,7 +41,7 @@ Existing restoration is reused. For a first restoration, use the retained
 `task/sec-history-five-year` checkout:
 `python tools/vnext_historical_sec.py restore --export evidence/issue47_acquired --out <new-directory>`.
 Use its returned `data_root`, not the export directory or its parent. This
-restoration performs no SEC request. See [historical usage](../../../historical_company_usage.md)
+restoration performs no SEC request. See [historical usage](../../historical_company_usage.md)
 for saved-source versus online acquisition boundaries.
 
 ## Actual processing, repeat and read
@@ -87,6 +93,10 @@ controls passed in 0.353s; **159 required, zero skips/failures/errors**.
 The first new-control run had a missing option assertion and a constructed
 quarter fixture missing its XML neighbor. The fixture was corrected before
 the final run; neither first failure is hidden.
+On the thin PR202-based tree (without PR199), 154 corresponding controls
+passed in 1.243s, zero skips/failures/errors; `thin-controls.log` is separate
+from the full combination result. Post-commit capability structure check
+passed; both checker side products were restored byte-for-byte.
 The existing company workflow both watches this test file and executes its
 whole module; no new runner is added.
 
