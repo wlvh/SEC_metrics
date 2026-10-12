@@ -1,0 +1,25 @@
+{
+  "seconds": 8.587317375000566,
+  "exit_code": 2,
+  "arguments": [
+    "run",
+    "--company",
+    "macys",
+    "--metric",
+    "B06",
+    "--period",
+    "fiscal-years",
+    "--fiscal-year-start",
+    "2024",
+    "--fiscal-year-end",
+    "2024",
+    "--source-root",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "--work-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/macys-b06-selected-current-gap-20261013-47/state",
+    "--output-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/macys-b06-full-capacity-migration-20261013-47/first"
+  ],
+  "stdout": "{\n  \"elapsed_seconds\": 8.363554375013337,\n  \"record_type\": \"ORDINARY_COMPANY_EXECUTION_V1\",\n  \"company_id\": \"macys\",\n  \"run_id\": \"20261012T212556Z-9d5368fb\",\n  \"status\": \"FLOW_COMPLETED_WITH_LIMITATIONS\",\n  \"selected_metrics\": [\n    \"B06\"\n  ],\n  \"metrics\": [\n    {\n      \"metric_id\": \"B06\",\n      \"status\": \"CANDIDATE_WITHHELD\",\n      \"attempt_id\": \"f821f6e3ad064b6cbcd4a1f7d9b210d1\",\n      \"version\": \"99f5e03a9e504b71a0367266ba181119\",\n      \"result_id\": \"sha256:4bdb9b24989e48efd58b5a51da4359c6ed7a3e4334c712d7f6646641755ae9cb\",\n      \"result_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/macys-b06-selected-current-gap-20261013-47/state/updates/B06/periods/FY2024/results/99f5e03a9e504b71a0367266ba181119\",\n      \"calculation_performed\": true,\n      \"new_candidate_created\": true,\n      \"result_reason_code\": \"B06_SOURCE_RELATIONSHIP_UNRESOLVED\",\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"requested_fiscal_year\": 2024,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:4bdb9b24989e48efd58b5a51da4359c6ed7a3e4334c712d7f6646641755ae9cb\",\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/macys-b06-selected-current-gap-20261013-47/state/updates/B06/periods/FY2024/results/99f5e03a9e504b71a0367266ba181119\",\n      \"program_version\": {\n        \"commit\": \"d32303ee64cc9356ab048c0896aeca84af5bbe75\",\n        \"has_uncommitted_changes\": true\n      }\n    }\n  ],\n  \"source_root\": \"/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs\",\n  \"program_root\": \"/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics\",\n  \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/macys-b06-selected-current-gap-20261013-47/state\",\n  \"output_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/macys-b06-full-capacity-migration-20261013-47/first/20261012T212556Z-9d5368fb\",\n  \"source_mode\": \"SAVED_ONLY_NO_ONLINE_DISCOVERY\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false,\n  \"selected_fiscal_years\": [\n    2024\n  ]\n}\n",
+  "stderr": ""
+}

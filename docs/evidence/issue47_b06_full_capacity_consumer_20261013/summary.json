@@ -1,0 +1,182 @@
+{
+  "code_head": "d32303ee64cc9356ab048c0896aeca84af5bbe75",
+  "phases": {
+    "migration": {
+      "seconds": 8.587317375000566,
+      "exit_code": 2,
+      "arguments": [
+        "run",
+        "--company",
+        "macys",
+        "--metric",
+        "B06",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2024",
+        "--fiscal-year-end",
+        "2024",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/macys-b06-selected-current-gap-20261013-47/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/macys-b06-full-capacity-migration-20261013-47/first"
+      ]
+    },
+    "repeat": {
+      "seconds": 0.6863306669984013,
+      "exit_code": 2,
+      "arguments": [
+        "run",
+        "--company",
+        "macys",
+        "--metric",
+        "B06",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2024",
+        "--fiscal-year-end",
+        "2024",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/macys-b06-selected-current-gap-20261013-47/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/macys-b06-full-capacity-migration-20261013-47/repeat"
+      ]
+    },
+    "read": {
+      "seconds": 0.3371099580108421,
+      "exit_code": 0,
+      "arguments": [
+        "results",
+        "--company",
+        "macys",
+        "--state-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/macys-b06-selected-current-gap-20261013-47/state",
+        "--output-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/macys-b06-full-capacity-migration-20261013-47/read"
+      ]
+    }
+  },
+  "row": {
+    "company": "Macy's",
+    "cik": "794367",
+    "metric_id": "B06",
+    "metric_name": "Debt-to-equity",
+    "value": "",
+    "unit": "ratio",
+    "status": "WITHHELD",
+    "source_class": "DERIVED",
+    "formula": "defined carrying debt / shareholders equity",
+    "period_start": "2025-02-01",
+    "period_end": "2025-02-01",
+    "fiscal_year": "2024",
+    "fiscal_period": "TARGET_PERIOD",
+    "accession": "",
+    "form": "10-K",
+    "filed_date": "2025-03-21",
+    "concept_or_section": "",
+    "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2024, \"period_end\": \"2025-02-01\", \"period_start\": \"2024-02-04\"}, \"measurement_kind\": \"TARGET_PERIOD\", \"scope\": {\"entity_scope\": \"consolidated\"}, \"selection\": {\"calculation\": {}, \"classification\": \"SOURCE_OR_RELATIONSHIP_UNRESOLVED\", \"reason\": \"B06_REPORTED_INTEREST_DEBT_SCOPE_UNRESOLVED\", \"selection_detail_id\": \"sha256:dbc79cca5c33adb9f2ee8912a2a8ca54da9a09107b9fe28cda76d14f10eca183\"}, \"source_reference_ids\": [\"sha256:f93f1ab12a0532e4741456f163fcc24f5d7aa5ee32a59fbfa661844fba9b4704\", \"sha256:ac6c418f3c4e691eab08058ef17c544704dc1788feef6d97d2d055455703a92e\", \"sha256:6393bfb0a284316edbd33165f544ad3d29be52575fb826801733bc442dbd8b9e\", \"sha256:f4ab1a06f4defda3612d67c8ce20995cd849527646f612d53144363543ae4daf\", \"sha256:427bae5775128eb31e6beeb04c894439f76248d9d11596faf0da96d25b2b2c00\"]}",
+    "confidence": "",
+    "notes": "Recognized borrowing, bond and finance lease carrying amounts divided by source-verified shareholders equity. No accepted value is asserted for this target period. Native state: WITHHELD; reason: B06_SOURCE_RELATIONSHIP_UNRESOLVED.",
+    "company_id": "macys",
+    "result_id": "sha256:4bdb9b24989e48efd58b5a51da4359c6ed7a3e4334c712d7f6646641755ae9cb",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/macys-b06-selected-current-gap-20261013-47/state/updates/B06/periods/FY2024/results/99f5e03a9e504b71a0367266ba181119",
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "local_metric_status": "PREVIOUS_INPUT_WITHHELD",
+    "period_role": "REQUESTED_RESULT",
+    "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+    "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+    "defect_holds": "[]",
+    "requested_in_latest_execution": "True"
+  },
+  "old_result_and_check_files_preserved": 22,
+  "read_state_files_preserved": 39,
+  "new_result_files_preserved": 21,
+  "source_hashes": {
+    "config/company_registry.csv": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+    "evidence/requests_log.csv": "61252ac5844ad1c5917040f753c04a7ed4f6e1d75e2fb0803804773fd6c0eef9",
+    "evidence/requests_log_manifest.json": "e91193401733b86ddc28c69cbae0debd74eeb899a328e60fcfb32532ed6a85ab"
+  },
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "source_relationship": {
+    "classification": "SOURCE_OR_RELATIONSHIP_UNRESOLVED",
+    "reason": "B06_REPORTED_INTEREST_DEBT_SCOPE_UNRESOLVED",
+    "reported_interest": [
+      {
+        "concept": "InterestPayableCurrent",
+        "context_ref": "c-6",
+        "ordinal": 938,
+        "period_end": "2025-02-01",
+        "source_kind": "primary",
+        "source_reference": {
+          "accession": "0001628280-25-014315",
+          "company_id": "macys",
+          "document_name": "m-20250201.htm",
+          "raw_asset_id": "sha256:29bc388bcff3c0bac7894743ffe22fc1fe486b05ceb83f6bfe172b5f46e19549",
+          "record_type": "SOURCE_REFERENCE",
+          "request_attempt_id": "request:attempt:bf643f1928306b75aa3feb59d16108ca1e06f2428d4f7bf337e3b9da60ec08e4",
+          "source_reference_id": "sha256:f4ab1a06f4defda3612d67c8ce20995cd849527646f612d53144363543ae4daf",
+          "source_role": "target_primary",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828025014315/m-20250201.htm"
+        },
+        "unit": "USD",
+        "value": "48000000"
+      },
+      {
+        "concept": "interestpayablecurrent",
+        "context_ref": "c-6",
+        "ordinal": 938,
+        "period_end": "2025-02-01",
+        "source_kind": "xml",
+        "source_reference": {
+          "accession": "0001628280-25-014315",
+          "company_id": "macys",
+          "document_name": "m-20250201_htm.xml",
+          "raw_asset_id": "sha256:5f4fd4779a9840f3d614289bb43894d916c26dc3953712aa2da4b8d9bc8f4f5e",
+          "record_type": "SOURCE_REFERENCE",
+          "request_attempt_id": "request:attempt:5239c978e928ce4e3c96b0c74865248cd2ed1e9a20f8532e1085c209be6741f9",
+          "source_reference_id": "sha256:427bae5775128eb31e6beeb04c894439f76248d9d11596faf0da96d25b2b2c00",
+          "source_role": "auditor_facts",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828025014315/m-20250201_htm.xml"
+        },
+        "unit": "USD",
+        "value": "48000000"
+      }
+    ],
+    "note_capacity_field_scope": "NOT_REPORTED_IN_SELECTED_DEBT_NOTE",
+    "note_unused_capacity": null,
+    "supplementary_capacity_context": {
+      "borrowing_availability": "2459000000",
+      "borrowing_capacity": "2856000000",
+      "facility_limit": "3000000000",
+      "inventory_reduction": "397000000",
+      "period_end": "2025-02-01",
+      "raw_asset_id": "sha256:29bc388bcff3c0bac7894743ffe22fc1fe486b05ceb83f6bfe172b5f46e19549",
+      "raw_end_byte": 595650,
+      "raw_span_sha256": "04529fdbbea3237805cfdeeb5ec6568c389ead39c9e3a4d3b1e47ce949f08a14",
+      "raw_start_byte": 595035,
+      "source_reference": {
+        "accession": "0001628280-25-014315",
+        "company_id": "macys",
+        "document_name": "m-20250201.htm",
+        "raw_asset_id": "sha256:29bc388bcff3c0bac7894743ffe22fc1fe486b05ceb83f6bfe172b5f46e19549",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:bf643f1928306b75aa3feb59d16108ca1e06f2428d4f7bf337e3b9da60ec08e4",
+        "source_reference_id": "sha256:f4ab1a06f4defda3612d67c8ce20995cd849527646f612d53144363543ae4daf",
+        "source_role": "target_primary",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828025014315/m-20250201.htm"
+      },
+      "source_region": "LIQUIDITY_AND_CAPITAL_RESOURCES",
+      "standby_reduction": "144000000",
+      "statement": "the Company is party to the ABL Credit Facility with certain financial institutions providing for a $3,000 million Revolving ABL Facility. As of February 1, 2025, borrowing capacity of the ABL Credit Facility was $2,856 million, which reflects a $144 million reduction due to standby letters of credit outstanding and borrowing availability was $2,459 million, which considers a further $397 million reduction due to inventory levels and its impact on the ABL borrowing base."
+    }
+  }
+}
