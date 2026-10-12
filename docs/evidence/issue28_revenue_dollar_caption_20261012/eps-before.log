@@ -1,0 +1,27 @@
+test_loss_qualified_earnings_per_share_heading_keeps_scope_proof (tests.vnext.test_statement_group_totals.StatementGroupTotalsTest.test_loss_qualified_earnings_per_share_heading_keeps_scope_proof) ... ERROR
+
+======================================================================
+ERROR: test_loss_qualified_earnings_per_share_heading_keeps_scope_proof (tests.vnext.test_statement_group_totals.StatementGroupTotalsTest.test_loss_qualified_earnings_per_share_heading_keeps_scope_proof)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-dollar-caption/SEC_metrics/tests/vnext/test_statement_group_totals.py", line 158, in test_loss_qualified_earnings_per_share_heading_keeps_scope_proof
+    scope=reported_revenue_scope(primary=revised,xml=revised,annual=annual,
+        approved_concepts=APPROVED,allow_statement_group_totals=True)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-dollar-caption/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 175, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+    ...<2 lines>...
+            r'fiscal years '+str(column_year)+r', '+str(column_year-1)+
+            r', and '+str(column_year-2))} if group_total else {}))
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-dollar-caption/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 217, in _statement_scope
+    _need(not unknown, 'STATEMENT_LOCAL_SCOPE_UNRESOLVED')
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-dollar-caption/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_LOCAL_SCOPE_UNRESOLVED
+
+----------------------------------------------------------------------
+Ran 1 test in 0.036s
+
+FAILED (errors=1)
+{"allowed_skips": 0, "errors": 1, "failures": 0, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_statement_group_totals.StatementGroupTotalsTest.test_loss_qualified_earnings_per_share_heading_keeps_scope_proof"]}
