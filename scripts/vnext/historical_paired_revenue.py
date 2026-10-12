@@ -38,7 +38,8 @@ def revenue_claims_admitted_by_original(*, reader, prepared, filing, period, cla
         dei_release=YEAR_QUARTER_OR_DATE,
         annual_period_reader=annual_period, fiscal_label_resolution=label,
         allow_single_revenue_line=allow_single_revenue_line,
-        allow_statement_group_totals=True)
+        allow_statement_group_totals=True,
+        allow_single_segment_revenue=True)
     admit = admit_reported_revenue_facts
     if not scope['complete_scope_proven']:
         scope = selected_revenue_scope(primary=primary, xml=xml, annual=annual,

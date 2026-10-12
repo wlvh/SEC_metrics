@@ -182,7 +182,7 @@ class CurrentD01ProcessingInputUnionTest(unittest.TestCase):
 
 
 class DefaultCurrentConfigurationPreservationTest(unittest.TestCase):
-    def test_default_configuration_matches_main_with_identical_program_inputs(self):
+    def test_default_producer_context_keeps_main_and_dependency_changes_are_explicit(self):
         # Same actual program inputs: file version hashes remain real. This
         # does not assert unchanged hashes across two different code trees.
         baseline=(REPO_ROOT/'tests/fixtures/current_configuration_main_2f.py.txt').read_text()
@@ -192,7 +192,16 @@ class DefaultCurrentConfigurationPreservationTest(unittest.TestCase):
             with self.subTest(metric=metric):
                 expected=namespace['_configuration'](REPO_ROOT,'marriott_international',metric)
                 actual=update._configuration(REPO_ROOT,'marriott_international',metric)
-                self.assertEqual(expected,actual)
+                self.assertEqual({k:v for k,v in expected.items() if k!='processing_files'},
+                    {k:v for k,v in actual.items() if k!='processing_files'})
+                added=set(actual['processing_files'])-set(expected['processing_files'])
+                self.assertTrue(added <= {'scripts/vnext/text_coverage.py',
+                    'scripts/vnext/normal_governance_input.py','scripts/vnext/text_results_v2.py',
+                    'scripts/vnext/historical_dei.py','scripts/vnext/batch_workflow.py',
+                    'scripts/vnext/constraints.py','scripts/vnext/paired_measure_v1.py'})
+                self.assertTrue(set(expected['processing_files']) <= set(actual['processing_files']))
+                self.assertTrue(all(actual['processing_files'][path]==digest
+                    for path,digest in expected['processing_files'].items()))
                 self.assertNotIn('current_case_producer',actual)
                 self.assertNotIn('saved_processing_inputs',actual)
 

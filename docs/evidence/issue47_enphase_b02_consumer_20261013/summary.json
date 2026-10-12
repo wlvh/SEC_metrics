@@ -1,0 +1,108 @@
+{
+  "code_head": "9df8e08e86efdd705dbb3e379f3e076c79c4f5ad",
+  "phases": {
+    "recovery": {
+      "seconds": 11.644549333010218,
+      "exit_code": 0,
+      "arguments": [
+        "run",
+        "--company",
+        "enphase_energy",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2024",
+        "--fiscal-year-end",
+        "2024",
+        "--metric",
+        "B02",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/enphase-b02-single-segment-consumer-20261012-47/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/enphase-b02-selected-recovery-20261013-47/runs"
+      ]
+    },
+    "repeat": {
+      "seconds": 0.7108623329986585,
+      "exit_code": 0,
+      "arguments": [
+        "run",
+        "--company",
+        "enphase_energy",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2024",
+        "--fiscal-year-end",
+        "2024",
+        "--metric",
+        "B02",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/enphase-b02-single-segment-consumer-20261012-47/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/enphase-b02-selected-recovery-20261013-47/runs"
+      ]
+    },
+    "read": {
+      "seconds": 0.30895387500640936,
+      "exit_code": 0,
+      "arguments": [
+        "results",
+        "--company",
+        "enphase_energy",
+        "--state-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/enphase-b02-single-segment-consumer-20261012-47/state",
+        "--output-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/enphase-b02-selected-recovery-20261013-47/read"
+      ]
+    }
+  },
+  "row": {
+    "company": "Enphase Energy",
+    "cik": "1463101",
+    "metric_id": "B02",
+    "metric_name": "Revenue YoY growth",
+    "value": "-0.4192460579032698820404874135",
+    "unit": "ratio",
+    "status": "OK",
+    "source_class": "DERIVED",
+    "formula": "",
+    "period_start": "2024-01-01",
+    "period_end": "2024-12-31",
+    "fiscal_year": "2024",
+    "fiscal_period": "ANNUAL",
+    "accession": "0001463101-25-000024;0001463101-24-000024",
+    "form": "10-K",
+    "filed_date": "2025-02-10;2024-02-09",
+    "concept_or_section": "Revenue YoY growth",
+    "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2024, \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"coverage\": \"deterministic_source_set\", \"fiscal_year\": 2024}, \"selection\": {\"paired_revenue_scopes\": {\"current\": {\"complete_scope_proven\": true, \"scope_id\": \"sha256:7862e0a079c28a96533ba4295e49e6531e53ca546387b9de991190ad341fd8ee\", \"status\": \"REPORTED_CONSOLIDATED_TOTAL\"}, \"prior\": {\"complete_scope_proven\": true, \"scope_id\": \"sha256:ac6aef10619ba9dfb78cd48b5427fd8cbf6f1d45d07c8a3368b686273c5e9a7c\", \"status\": \"REPORTED_CONSOLIDATED_TOTAL\"}}}, \"source_reference_ids\": [\"sha256:1113478f788bf7d2483f879c0da31c0b2eead47941e47df5937a62c29c7ab14b\", \"sha256:a1606a8a8171ba34d8979b41e1f129d0684cd87f2d9eacb9c1e0c0b379c83b7a\", \"sha256:970bf7b3a93a1b983fc96a706fcdc6c3b62389f0715b7dc297d3e165b9f50ca5\", \"sha256:2ae76095a2bcdbbf3e47552e7de438e13ecdeb0e779f5363db5f3a3b0e790e06\", \"sha256:c74e1ba3dcdcd35dd08cd52d93c72daff1c72932e00c0dc64a980951cee624e8\", \"sha256:6acc94ab8ef9ac2500724c34232c37a1b412b0e3490a91709c49ebface27f86b\", \"sha256:e0a5f2f5392d027cc7a82e8dfc7075cf4f09f3efe94b8f8ed432694bba59d82e\", \"sha256:f79ef5970bca23e3c38718aca072c8d9b4e23c7ab33d953521c7df33961ec115\", \"sha256:aee17ce14b0eae35cdcbb0b5b2207c2ef2e4829a7f8fe2ad0b9bf3f9a1d46de1\"]}",
+    "confidence": "",
+    "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+    "company_id": "enphase_energy",
+    "result_id": "sha256:4d27f2474e8ea0cc099533b4e75c07dd26d61fed7d1d1705fadd53c449e05f18",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/enphase-b02-single-segment-consumer-20261012-47/state/updates/B02/periods/FY2024/results/2517ef2a13fe48b3991a871d15a7cac7",
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+    "period_role": "REQUESTED_RESULT",
+    "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+    "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+    "defect_holds": "[]",
+    "requested_in_latest_execution": "True"
+  },
+  "source_hashes": {
+    "config/company_registry.csv": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+    "evidence/requests_log.csv": "61252ac5844ad1c5917040f753c04a7ed4f6e1d75e2fb0803804773fd6c0eef9",
+    "evidence/requests_log_manifest.json": "e91193401733b86ddc28c69cbae0debd74eeb899a328e60fcfb32532ed6a85ab"
+  },
+  "old_files_unchanged": 9,
+  "read_state_files_unchanged": 27,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

@@ -69,12 +69,20 @@ def _configuration(source, company, metric):
         'governance_signals','annual_input','annual_sources','deterministic_catalog',
         'saved_source_checks','request_bindings','company_registry',
         'normal_annual_input'))
+    # Source blocks, registered original reads and context interpretation are
+    # business inputs of these actual annual factories, not check-only code.
+    if metric in METRIC_IDS or metric in {'B06','C04','A13','D01'}:
+        paths.update('scripts/vnext/'+name+'.py' for name in (
+            'text_coverage','normal_governance_input','text_results_v2'))
     # Current producers import only ROOT from normal_source_authority; its
     # historical admission gates do not process this ordinary input. Actual
     # request/body checks are covered by saved_source_checks above.
     paths.update({'catalog/company_traits.yaml','config/metric_applicability.yaml',
                   'config/company_registry.csv'})
-    if metric == 'B02':
+    from .normal_zero_ai_results import SUPPORTED_METRICS
+    if metric in METRIC_IDS-set(SUPPORTED_METRICS)-{'A01','A02','B12'}:
+        # The CompanyFacts factory runs this comparison guard while preparing
+        # its components, including B04; it is not specific to revenue.
         paths.add('scripts/vnext/paired_measure_v1.py')
     if metric == 'B06':
         from .current_b06_case import PROCESSING_FILES
@@ -95,6 +103,9 @@ def _configuration(source, company, metric):
             'selected_revenue_scope_v1','selected_reported_revenue_v2','selected_fiscal_definition_scope_v1','selected_income_source_v1',
             'historical_fiscal_labels','financial_structured',
             'financial_duration','text_results_v2','xbrl_namespace_policy','composite_scope'))
+    if metric in {'B01','B03'}:
+        paths.update('scripts/vnext/'+name+'.py' for name in (
+            'historical_dei','batch_workflow','constraints'))
     if metric == 'B03':
         paths.add('catalog/r6/text_results_v2_policy.json')
         paths.update('scripts/vnext/'+name+'.py' for name in (

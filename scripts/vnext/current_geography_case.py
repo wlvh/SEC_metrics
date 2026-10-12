@@ -7,7 +7,7 @@ PROCESSING_FILES=tuple('scripts/vnext/'+name+'.py' for name in (
     'current_geography_case','ordinary_financial_results','financial_results','financial_structured',
     'financial_duration','financial_relationships','financial_candidates','financial_balance_scope',
     'normal_annual_input_v2','normal_annual_input','fiscal_year_labels','normal_governance_input',
-    'composite_scope','constraints','specs','traits','r4_task_contracts','table_task_contracts','table_grid')) + (
+    'composite_scope','scope_contract','constraints','specs','traits','r4_task_contracts','table_task_contracts','table_grid')) + (
     'catalog/r4_normal/A13_geographic_exposure.md','catalog/r4_v2/A13_geographic_exposure.md',
     'catalog/table_task_contracts.json','config/r4_task_contracts_v2.json',
     'docs/evidence/issue_28_prb_policy_revision.json','config/normal_fiscal_year_labels_v1.json')

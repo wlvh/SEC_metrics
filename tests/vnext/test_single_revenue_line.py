@@ -22,6 +22,19 @@ class SingleRevenueLineTest(unittest.TestCase):
         return reported_revenue_scope(primary=source,annual=annual,approved_concepts=APPROVED,
                                       allow_single_revenue_line=True,**kwargs)
 
+    def test_explicit_net_revenue_top_line_has_the_same_complete_statement_checks(self):
+        source,annual=single_statement()
+        for label in (b'Net revenue',b'Net revenues'):
+            altered=changed(source,source['raw_bytes'].replace(b'<td>Revenues</td>',b'<td>'+label+b'</td>'))
+            with self.subTest(label=label):
+                result=self.scope(altered,annual,xml=altered)
+                self.assertTrue(result['complete_scope_proven'])
+                self.assertEqual(result['reported_totals'][0]['total']['value'],'58496000000')
+                self.assertFalse(reported_revenue_scope(primary=altered,xml=altered,annual=annual,
+                    approved_concepts=APPROVED)['complete_scope_proven'])
+        altered=changed(source,source['raw_bytes'].replace(b'<td>Revenues</td>',b'<td>Net revenues (Europe)</td>'))
+        self.assertFalse(self.scope(altered,annual,xml=altered)['complete_scope_proven'])
+
     def test_explicit_single_line_keeps_original_fact_and_default_contract(self):
         source,annual=single_statement()
         old=reported_revenue_scope(primary=source,annual=annual,approved_concepts=APPROVED)

@@ -1,0 +1,16 @@
+F
+======================================================================
+FAIL: test_saved_jpm_a13_scope_functions_are_in_the_actual_configuration (tests.vnext.test_processing_dependency_material.ProcessingDependencyMaterialTest.test_saved_jpm_a13_scope_functions_are_in_the_actual_configuration)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-b06-text-dependency/SEC_metrics/tests/vnext/test_processing_dependency_material.py", line 36, in test_saved_jpm_a13_scope_functions_are_in_the_actual_configuration
+    assert_processing_calls(observed, configuration)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-b06-text-dependency/SEC_metrics/tests/vnext/processing_dependency_checks.py", line 46, in assert_processing_calls
+    raise AssertionError('PROCESSING_DEPENDENCY_UNDECLARED: '+detail)
+AssertionError: PROCESSING_DEPENDENCY_UNDECLARED: scripts/vnext/scope_contract.py:<genexpr>,_ordered_text_list,scope_contract_hash,scope_satisfies_contract,validate_scope_contract
+
+----------------------------------------------------------------------
+Ran 1 test in 28.511s
+
+FAILED (failures=1)
