@@ -14,6 +14,21 @@ def _note(doc, raw=None):
     start=indices[0]
     end=next((i for i in range(start+1,len(blocks)) if re.fullmatch(POLICY['part_heading_pattern'],blocks[i]['text'],re.I)
         or blocks[i]['text'].upper().startswith('CAUTIONARY NOTE')),len(blocks))
+    if raw is not None:
+        # SEC registrant names can carry a slash-delimited state suffix that
+        # is absent from the report title. This comparison only locates the
+        # contents boundary; the original native entity identity is retained.
+        names={_words(re.sub(r'\s*/[A-Z]{2}/\s*$', '', name))
+               for name in doc.get('registrant_names', ())}
+        # A reprinted report can place its own contents before the first Part.
+        # Bind all three banner blocks; an isolated link cannot truncate a note.
+        for i in range(start+1, end-2):
+            if (blocks[i]['linked'] and blocks[i]['text'].casefold() == 'table of contents'
+                    and not blocks[i+1]['linked'] and _words(blocks[i+1]['text']) in names
+                    and not blocks[i+2]['linked']
+                    and re.fullmatch(r'FORM 10-K(?:/A)? TABLE OF CONTENTS', blocks[i+2]['text'], re.I)):
+                end=i
+                break
     count = end-start
     if raw is not None:
         from .amendment_note_layout import paragraph_blocks

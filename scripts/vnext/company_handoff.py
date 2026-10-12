@@ -105,7 +105,7 @@ def event_saved_paths(requirements, rows, company_id, ciks, source_root=None):
 
 
 def export_company(*, source_root, output_root, trust_root, company_id,
-                   metric_ids=None, declared_frame=None):
+                   metric_ids=None, declared_frame=None, saved_source_only=False):
     """Verify the full original history, export sources and install trust.
 
     Call this on the controlled preparation side. It never calculates metrics,
@@ -117,17 +117,22 @@ def export_company(*, source_root, output_root, trust_root, company_id,
     need(source.is_absolute() and first_symlink_in_path(path=source) is None,
          'COMPANY_HANDOFF_SOURCE_ALIAS')
     source = source.resolve()
-    output, trust = external(output_root), external(trust_root)
+    output = external(output_root)
     need(not output.exists(), 'COMPANY_HANDOFF_OUTPUT_EXISTS')
     need(source != output and source not in output.parents and output not in source.parents,
          'COMPANY_HANDOFF_SOURCE_OUTPUT_OVERLAP')
-    need(trust != output and trust not in output.parents and output not in trust.parents,
-         'COMPANY_HANDOFF_TRUST_PACKAGE_OVERLAP')
     from .normal_source_requirements import discover_saved_source_requirements
     from .normal_run_v3 import update_metric_ids
     metrics = sorted(update_metric_ids() if metric_ids is None else metric_ids)
     need(metrics and len(metrics) == len(set(metrics))
          and set(metrics) <= set(update_metric_ids()), 'COMPANY_HANDOFF_METRIC_SCOPE_INVALID')
+    if saved_source_only:
+        need(declared_frame is not None, 'COMPANY_HANDOFF_SOURCE_FRAME_REQUIRED')
+        return _export_saved_frame(source=source, output=output, company_id=company_id,
+                                   metrics=metrics, declared_frame=declared_frame)
+    trust = external(trust_root)
+    need(trust != output and trust not in output.parents and output not in trust.parents,
+         'COMPANY_HANDOFF_TRUST_PACKAGE_OVERLAP')
     # Existing installed journal, not a checkpoint nominated by the source,
     # authorizes every appended row before any company bytes are omitted.
     original, _ = checkpoint_installation(source_root=source)
@@ -247,6 +252,66 @@ def export_company(*, source_root, output_root, trust_root, company_id,
                               content=canonical_json_bytes(value=checkpoint))
         os.rename(staged, output)
     except (OSError, ValueError):
+        shutil.rmtree(staged)
+        raise
+    return metadata
+
+
+def _export_saved_frame(*, source, output, company_id, metrics, declared_frame):
+    """Copy the received ordinary input closure, without an old trust journal.
+
+    This is consumed by run --source-root, not retained native install/compute.
+    Keep the original mixed ledger unchanged; it grants no new call allowance.
+    """
+    from .saved_source_checks import verify_saved_inputs
+    discovery = declared_frame(source, company_id)
+    need(discovery['company_id'] == company_id and sorted(discovery['metric_ids']) == metrics,
+         'COMPANY_HANDOFF_SOURCE_FRAME_SCOPE_CHANGED')
+    if discovery['status'] == 'SOURCE_EXPORT_INCOMPLETE':
+        return {'record_type': 'COMPANY_SOURCE_EXPORT_ATTEMPT_V1',
+            'company_id': company_id, 'status': 'SOURCE_EXPORT_INCOMPLETE',
+            'source_discovery': discovery,
+            'new_business_calls': {'provider': 0, 'paid': 0, 'sec': 0},
+            'metric_execution': 'NOT_EXECUTED'}
+    need(discovery['status'] == 'SAVED_SOURCE_BYTES_AVAILABLE',
+         'COMPANY_HANDOFF_SOURCE_FRAME_NOT_READY')
+    proofs = [row['proof'] for row in discovery['requirements'] if 'proof' in row]
+    need(proofs and all(row.get('saved_status') == 'VERIFIED_SAVED_SOURCE'
+                       for row in discovery['requirements']),
+         'COMPANY_HANDOFF_SOURCE_FRAME_PROOF_MISSING')
+    verify_saved_inputs(data_root=source, proofs=proofs)
+    urls = {row['source_url'] for row in discovery['requirements']}
+    rows = parse_request_log_rows(text=(source/'evidence/requests_log.csv').read_text())
+    paths = {'config/company_registry.csv', 'evidence/requests_log.csv',
+             'evidence/requests_log_manifest.json'}
+    for row in rows:
+        if row['source_url'] in urls:
+            paths.update(row[field] for field in ('repo_relative_path', 'headers_repo_relative_path')
+                         if row[field] and (source/row[field]).is_file())
+    files = {relative: binding(resolve_repository_file(repo_root=source,
+                repo_relative_path=relative)) for relative in sorted(paths)}
+    metadata = {'record_type': 'COMPANY_SAVED_SOURCE_PACKAGE_V1', 'company_id': company_id,
+        'metric_ids': metrics, 'status': 'EXPORTED', 'files': files,
+        'source_discovery': discovery, 'ai_processing_state': 'NOT_INCLUDED',
+        'metric_execution': 'NOT_EXECUTED', 'new_business_calls': {'provider': 0, 'paid': 0, 'sec': 0},
+        'usage': 'ORDINARY_RUN_SOURCE_ROOT', 'retained_native_install_supported': False,
+        'new_call_allowance': False, 'production_authorized': False}
+    metadata['package_id'] = content_hash(value=metadata)
+    staged = output.parent/('.'+output.name+'.preparing-'+uuid4().hex)
+    staged.mkdir(parents=True)
+    try:
+        for relative, expected in files.items():
+            origin = resolve_repository_file(repo_root=source, repo_relative_path=relative)
+            target = staged/relative
+            target.parent.mkdir(parents=True, exist_ok=True)
+            write_immutable_bytes(path=target, content=origin.read_bytes())
+            need(binding(target) == expected, 'COMPANY_HANDOFF_SOURCE_CHANGED_DURING_EXPORT:'+relative)
+        verify_saved_inputs(data_root=staged, proofs=proofs)
+        need(declared_frame(staged, company_id) == discovery,
+             'COMPANY_HANDOFF_EXPORTED_SOURCE_FRAME_CHANGED')
+        write_immutable_bytes(path=staged/PACKAGE_FILE, content=canonical_json_bytes(value=metadata))
+        os.rename(staged, output)
+    except (OSError, ValueError, KeyError, TypeError):
         shutil.rmtree(staged)
         raise
     return metadata

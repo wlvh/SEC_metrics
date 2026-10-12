@@ -65,3 +65,11 @@ source meaning, amendment/successor refusals and true failures remain. This is
 reprocessing correctness, not new five-year financial/business acceptance.
 New SEC/provider/paid calls **0/0/0**; old answers, Runs and failed states remain.
 No author Ready/merge/adoption/active. Receiver and new-head CI still separate.
+
+## Actual received-main composition
+
+After public207/208/209/212 and historical211 were received, this existing candidate normally merged actual main628cb17b, execution merge8e0a62b3. There was no conflict and no public-code edit. Compared with main, production/test differences remain only the historical bank-scope declaration and its own tests; the state controls introduced by211 are preserved. **99 required controls /2.630s /zero skips** cover both bank families, shared state, company dispatch, source export and E01.
+
+All42 declared processing-file hashes for the existing actual JPMorgan FY2021 A09 task equal this combination. The actual factory/inspector/two-Calculator-forbidden run therefore reuses it, **0.761995s**, with zero calculation/new candidate and seven Result files preserved. Independent read **0.300389s** preserves twenty state files and the original0.0072 ratio/2021-12-31 instant/f9426c8f identity. No fresh financial processing, other year or company is repeated. The original56.389s empty-state proof retains its own earlier version; this new check proves combination reuse/read, not a second fresh execution.
+
+`main-628-summary.json`, `main-628-controls.log` and lossless gzip actual repeat/read receipts preserve the executed arguments and outputs. State remains at the original `bank-scope-dependency-receiving-20261013/state`; new outputs use `bank-scope-main-628-20261013`. The same commands above remain the user entry. CI on the updated head and receiver verification remain distinct; no author Ready/merge or new SEC/provider/paid call.

@@ -1,0 +1,33 @@
+test_average_scope_dependency_change_processes_once_then_reuses (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_average_scope_dependency_change_processes_once_then_reuses) ... 
+  test_average_scope_dependency_change_processes_once_then_reuses (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_average_scope_dependency_change_processes_once_then_reuses) (metric='A03') ... FAIL
+  test_average_scope_dependency_change_processes_once_then_reuses (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_average_scope_dependency_change_processes_once_then_reuses) (metric='A12') ... FAIL
+
+======================================================================
+FAIL: test_average_scope_dependency_change_processes_once_then_reuses (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_average_scope_dependency_change_processes_once_then_reuses) (metric='A03')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_selected_history_result_state.py", line 115, in test_average_scope_dependency_change_processes_once_then_reuses
+    self.assertEqual('CANDIDATE_READY',changed['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'CANDIDATE_READY' != 'NO_SOURCE_CONTENT_CHANGE'
+- CANDIDATE_READY
++ NO_SOURCE_CONTENT_CHANGE
+
+
+======================================================================
+FAIL: test_average_scope_dependency_change_processes_once_then_reuses (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_average_scope_dependency_change_processes_once_then_reuses) (metric='A12')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_selected_history_result_state.py", line 115, in test_average_scope_dependency_change_processes_once_then_reuses
+    self.assertEqual('CANDIDATE_READY',changed['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'CANDIDATE_READY' != 'NO_SOURCE_CONTENT_CHANGE'
+- CANDIDATE_READY
++ NO_SOURCE_CONTENT_CHANGE
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.030s
+
+FAILED (failures=2)
+Expected old behavior reproduced for both A03 and A12; no source files edited.
