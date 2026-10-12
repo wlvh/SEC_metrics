@@ -1,0 +1,46 @@
+Actual remote job https://github.com/wlvh/SEC_metrics/actions/runs/38320671389/job/115047747722
+Head 2dff1dceb8e332bd9ec1d929b8a4606175fb6e77; selected diagnostic excerpts, not a full log.
+2026-10-12T23:10:19.4864307Z ======================================================================
+2026-10-12T23:10:19.4865091Z FAIL: test_actual_scope_checks_are_declared_for_both_average_consumers (tests.vnext.test_historical_average_risk_cases.HistoricalAverageRiskCaseTest.test_actual_scope_checks_are_declared_for_both_average_consumers)
+2026-10-12T23:10:19.4865919Z ----------------------------------------------------------------------
+2026-10-12T23:10:19.4866245Z Traceback (most recent call last):
+2026-10-12T23:10:19.4871607Z   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_historical_average_risk_cases.py", line 39, in test_actual_scope_checks_are_declared_for_both_average_consumers
+2026-10-12T23:10:19.4872341Z     with self.assertRaisesRegex(AssertionError,'scope_contract.py'):
+2026-10-12T23:10:19.4872695Z          ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-12T23:10:19.4872991Z AssertionError: AssertionError not raised
+2026-10-12T23:10:19.4873164Z 
+2026-10-12T23:10:19.4873273Z ======================================================================
+2026-10-12T23:10:19.4874235Z FAIL: test_scope_dependency_covers_annual_and_instant_consumers (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeCaseTest.test_scope_dependency_covers_annual_and_instant_consumers)
+2026-10-12T23:10:19.4873273Z ======================================================================
+2026-10-12T23:10:19.4874235Z FAIL: test_scope_dependency_covers_annual_and_instant_consumers (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeCaseTest.test_scope_dependency_covers_annual_and_instant_consumers)
+2026-10-12T23:10:19.4874975Z ----------------------------------------------------------------------
+2026-10-12T23:10:19.4875265Z Traceback (most recent call last):
+2026-10-12T23:10:19.4875921Z   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_historical_bank_scope_cases.py", line 33, in test_scope_dependency_covers_annual_and_instant_consumers
+2026-10-12T23:10:19.4876567Z     with self.assertRaisesRegex(AssertionError,'scope_contract.py'):
+2026-10-12T23:10:19.4876903Z          ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-12T23:10:19.4877180Z AssertionError: AssertionError not raised
+2026-10-12T23:10:19.4877599Z 
+2026-10-12T23:10:19.4877729Z ----------------------------------------------------------------------
+2026-10-12T23:10:19.4878138Z Ran 152 tests in 1.462s
+2026-10-12T23:10:19.4877729Z ----------------------------------------------------------------------
+2026-10-12T23:10:19.4878138Z Ran 152 tests in 1.462s
+2026-10-12T23:10:19.4878257Z 
+2026-10-12T23:10:19.4878336Z FAILED (failures=2)
+2026-10-12T23:10:19.5513306Z ##[error]Process completed with exit code 1.
+2026-10-12T23:10:19.5663748Z Post job cleanup.
+2026-10-12T23:10:19.6261703Z [command]/usr/bin/git version
+2026-10-12T23:10:19.6294349Z git version 2.55.0
+2026-10-12T23:10:19.6319229Z Temporarily overriding HOME='/home/runner/work/_temp/79b751ca-053c-44bc-9e2e-215d80829434' before making global git config changes
+2026-10-12T23:10:19.6319878Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-12T23:10:19.6322088Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/SEC_metrics/SEC_metrics
+2026-10-12T23:10:19.4878257Z 
+2026-10-12T23:10:19.4878336Z FAILED (failures=2)
+2026-10-12T23:10:19.5513306Z ##[error]Process completed with exit code 1.
+2026-10-12T23:10:19.5663748Z Post job cleanup.
+2026-10-12T23:10:19.6261703Z [command]/usr/bin/git version
+2026-10-12T23:10:19.6294349Z git version 2.55.0
+2026-10-12T23:10:19.6319229Z Temporarily overriding HOME='/home/runner/work/_temp/79b751ca-053c-44bc-9e2e-215d80829434' before making global git config changes
+2026-10-12T23:10:19.6319878Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-12T23:10:19.6322088Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/SEC_metrics/SEC_metrics
+2026-10-12T23:10:19.6352103Z Removing SSH command configuration
+2026-10-12T23:10:19.6357158Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand

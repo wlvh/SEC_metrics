@@ -30,8 +30,10 @@ class HistoricalBankScopeCaseTest(TestCase):
                 '2021-01-01' if metric=='A04' else '2021-12-31')
             assert_processing_calls(observed,configuration,bank.PROCESSING_FILES)
             reduced=tuple(p for p in bank.PROCESSING_FILES if p!=path)
+            changed={**configuration,'processing_files':{
+                k:v for k,v in configuration['processing_files'].items() if k!=path}}
             with self.assertRaisesRegex(AssertionError,'scope_contract.py'):
-                assert_processing_calls(observed,configuration,reduced)
+                assert_processing_calls(observed,changed,reduced)
 
     def prepare(self, *, metric_id='A09', applicable=True, amendments=None, mode='CONTINUOUS_PRIMARY',
                 inspector=None):
