@@ -1,6 +1,6 @@
 # 历史公司使用指南
 
-截至2026-10-13，本指南使用可取得的main版本 `6efe086455693abbc0fc9d54cbe54b5286a84877`。它包含原 `c6f5c90f` 的公司入口及后续接收增量。同一 `tools/vnext_company.py`、公共更新器、保存器和结果读口支持保存来源的历史 B10/B11，以及连续主体的 B01/B02/B03/B04/B05和所选CIK余额的B08/B09；修订和来源范围仍受各族的明确检查约束。酒店共用计算与四指标历史适配已 main；C03首次代理选择及ECD／适用普通表格读取已随PR148–151入main；PR58 合入的是机械 D02 引文检查，D02 公司模型链和完整五年业务验收仍未完成。
+截至2026-10-13，本指南使用可取得的main版本 `0e251d5699fb7d49574fe330f313e2851d84d432`。它包含原 `c6f5c90f` 的公司入口及后续接收增量。同一 `tools/vnext_company.py`、公共更新器、保存器和结果读口支持保存来源的历史 B10/B11，以及连续主体的 B01/B02/B03/B04/B05和所选CIK余额的B08/B09；修订和来源范围仍受各族的明确检查约束。酒店共用计算与四指标历史适配已 main；C03首次代理选择及ECD／适用普通表格读取已随PR148–151入main；PR58 合入的是机械 D02 引文检查；PR247／254 已接通一个财年的保存原始回答经公司入口计算、保存与读取。当前支持范围和命令见下文 D02；完整模型链与五年业务验收仍未完成。
 
 A01/A02资本、A05/A06/A07/A08/A10银行指标和B07年度计算也已main。C01/E02–E05普通历史适配及公共事件源/宽窗接口已在main；[PR90](https://github.com/wlvh/SEC_metrics/pull/90)和[PR89](https://github.com/wlvh/SEC_metrics/pull/89)已由接收方合入；后续消费者记录继续按本记录的执行版本解释，不改旧运行记录。PR83 的普通在线接续不等于历史模式已能在线发现与补齐来源；本指南的 `fiscal-years` 仍需已保存来源根。代码合入不表示正式采纳、发布或 active 切换。
 
@@ -21,7 +21,7 @@ PR155按目标公司的登记行判断输入变化，并仍验证整个登记表
 ```bash
 git fetch origin main
 git worktree add -b review/issue47-hotel-history ../SEC_metrics-history-review \
-  6efe086455693abbc0fc9d54cbe54b5286a84877
+  0e251d5699fb7d49574fe330f313e2851d84d432
 cd ../SEC_metrics-history-review
 python3 tools/vnext_company.py run --help
 ```
@@ -265,9 +265,57 @@ Enphase FY2022输出62条标题，实际2022-01-01至2022-12-31；FY2023／FY202
 
 CSV状态为TEXT_QUAL、单位text，不是数值指标的OK或标题计数。完整标题和来源位置随保存记录读取；旧财务结果、旧失败不覆盖。相同输入完成检查后可复用，未完成的解析失败仍需修补。Salesforce FY2021、Southwest FY2022／FY2023的多段标题，部分修订件和继任范围、在线历史发现／补齐继续未完成。当期D01已随[PR135](https://github.com/wlvh/SEC_metrics/pull/135#issuecomment-6127698995)进入本指南main：使用同一run入口的最新完整财年模式，保存来源验证中8家公司有原文标题，Paramount／Southwest的修订或继任路径仍是明确实现缺口；已有当期／历史同份年报的标题及期间交叉核对直接复用。技术合入不代表正式采纳，也不改变调用许可。
 
+## D02：一个历史财年的原始保存回答接线已入 main
+
+PR247 及后继 PR254 使用同一公司入口处理显式 D02、一个连续主体且无修订的完整财年。SEC 来源根与回答根须分开；只有来源重建出的完整请求与已保存原始 LIVE 回答、终态和用量对应时才能处理。缺回答、损坏包、错公司、多个财年、未知用量、未决引文各保留具体失败；混选中的其他指标继续处理。当前入口不自动获取来源或调用模型，也不是默认当期 D02 入口。
+
+Ford FY2025 的已核输入来自 PR52 保留提交 `bcc0c0bc0293ba6b6ffc58b1f4e9034dbb52a786` 的 `evidence/issue47_model_calls/9a368413797ddef1/model-ledger.tar.gz`，只需要原 `root/calls/0009/` 的七个文件。已有完整独立回答目录直接复用；首次恢复可在自己的新目录执行下列步骤，不能把整个调用账本当作新运行输入：
+
+```bash
+git fetch origin bcc0c0bc0293ba6b6ffc58b1f4e9034dbb52a786
+ISSUE47_D02_INPUT="$HOME/sec-metrics-d02-saved-inputs-20261013"
+mkdir "$ISSUE47_D02_INPUT"  # 若已存在，另选新目录，保留原文件
+git show bcc0c0bc0293ba6b6ffc58b1f4e9034dbb52a786:evidence/issue47_model_calls/9a368413797ddef1/model-ledger.tar.gz > "$ISSUE47_D02_INPUT/model-ledger.tar.gz"
+python3 - "$ISSUE47_D02_INPUT" <<'PY_RESTORE'
+import hashlib, json, sys, tarfile
+from pathlib import Path
+base = Path(sys.argv[1])
+archive = base / 'model-ledger.tar.gz'
+assert hashlib.sha256(archive.read_bytes()).hexdigest() == '970c98e67b7c7b8c1b55eae6b9dd602917cec45af8c193ec1ac9a5d941acf9a0'
+with tarfile.open(archive, 'r:gz') as package:
+    prefix = 'root/calls/0009/'
+    terminal = json.load(package.extractfile(prefix + 'terminal.json'))
+    providers = [name for name in terminal['evidence']
+                 if name.startswith('invocation_control/requests/') and name.endswith('.bin')]
+    assert len(providers) == 1
+    names = ['semantic-request.json', 'source.json', 'terminal.json',
+             'wire/journal.json', 'wire/raw-response.bin', 'wire/assistant-output.bin', providers[0]]
+    for name in names:
+        target = base / 'answers' / 'call0009' / name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        with target.open('xb') as output:
+            output.write(package.extractfile(prefix + name).read())
+PY_RESTORE
+```
+
+SEC 原件仍按前述已有来源根或 PR52 首次恢复步骤取得，读取恢复结果的实际 `data_root`。来源准备、原模型包和回答不能相互替代；以上步骤只恢复保存文件，不发出 SEC/provider 请求。之后从本指南 main 检出运行：
+
+```bash
+python3 tools/vnext_company.py run --company ford_motor_company \
+  --period fiscal-years --fiscal-year-start 2025 --fiscal-year-end 2025 --metric D02 \
+  --source-root /saved/sec/source-inputs --saved-legal-reviews "$ISSUE47_D02_INPUT/answers/call0009" \
+  --work-dir "$HOME/sec-metrics-d02-main/state" --output-dir "$HOME/sec-metrics-d02-main/runs"
+python3 tools/vnext_company.py results --company ford_motor_company \
+  --state-root "$HOME/sec-metrics-d02-main/state" --output-root "$HOME/sec-metrics-d02-main/read-01"
+```
+
+原已执行公司链得到20个 Item3 块与25个被引用 Note24 上下文块、17,765字符，实际2025-01-01至2025-12-31，单位text。整附注上下文中的担保／一般保修不各自算作法律发现，不能把45段解释为45件诉讼或总负债；空 Item8 子答也不表示公司没有诉讼。首算、禁计算复跑、独立读取、缺回答后旧成功保留与恢复原回答复用，均按[已提交的实际公司记录及复现命令](evidence/issue28_d02_company_saved_20261013/README.md)的执行版本复用；PR254 的包损坏隔离见[接收记录](https://github.com/wlvh/SEC_metrics/pull/254#issuecomment-6146087579)。不因本次说明更新重跑财报。
+
+无前缀附注混入同号内部小节的导航仍有已知缺陷，PR249 的歧义拒绝修补尚待接收，未包含在本指南固定 main。该版式不能借 Ford 的正例宣布通过。全部公司／年份的完整 D02 内容、原八份引文长度失败、其它已知语义缺漏、目标模型后继处理仍未完成；保存结果可读不授正式业务采纳。
+
 ## E01：已入 main 的完整保存输入与未决结果
 
-本指南版本已接收[PR244](https://github.com/wlvh/SEC_metrics/pull/244)：Pfizer FY2023 的申报 header 列2.02，而可见正文标题为2.01；两份原件和冲突保留，不选择一方。现在同一公司入口保存 `E01_ITEM_METADATA_BODY_CONFLICT`／WITHHELD／null，已完成检查可按未变输入复用并独立导出；这不是零事件，也没有解决年度 M&A 计数。原件缺失（如Salesforce FY2021）仍与该内容冲突分开解释。[实际公司保存、复跑、读取及两原件](https://github.com/wlvh/SEC_metrics/blob/db403009be17f71fb5ca08c965e07d21e7363fe2/docs/evidence/issue47_e01_item_conflict_state_20261013/README.md)和[接收同main组合](https://github.com/wlvh/SEC_metrics/pull/244#issuecomment-6140456590)按各自范围复用；接收评论中反向的header/body描述已由原件更正。无关公共代码变动导致的额外处理仍有[已定位复用缺口](https://github.com/wlvh/SEC_metrics/blob/0d4713de6127785ea5f04130e65978b3726ff786/docs/evidence/issue47_e01_main6efe_receiving_20261013/README.md)，不把旧分支零计算记录当作所有后继组合已通过。
+本指南版本已接收[PR244](https://github.com/wlvh/SEC_metrics/pull/244)：Pfizer FY2023 的申报 header 列2.02，而可见正文标题为2.01；两份原件和冲突保留，不选择一方。现在同一公司入口保存 `E01_ITEM_METADATA_BODY_CONFLICT`／WITHHELD／null，已完成检查可按未变输入复用并独立导出；这不是零事件，也没有解决年度 M&A 计数。原件缺失（如Salesforce FY2021）仍与该内容冲突分开解释。[实际公司保存、复跑、读取及两原件](https://github.com/wlvh/SEC_metrics/blob/db403009be17f71fb5ca08c965e07d21e7363fe2/docs/evidence/issue47_e01_item_conflict_state_20261013/README.md)和[接收同main组合](https://github.com/wlvh/SEC_metrics/pull/244#issuecomment-6140456590)按各自范围复用；接收评论中反向的header/body描述已由原件更正。PR250 已在 main 修复该场景中无关 D02 和已核公共分派变化导致的误重处理；[原 Pfizer 任务真实禁计算复跑与独立 CSV](https://github.com/wlvh/SEC_metrics/blob/4031b8b5f80d82005c7118d9957efbf2ad984058/docs/evidence/issue47_e01_fixed_reuse_consumer_20261013/README.md)保留原结果身份。相关来源或实际处理依赖变化仍应重新检查，不把这一有限兼容推为任意版本均可复用。
 
 历史 [PR114](https://github.com/wlvh/SEC_metrics/pull/114)与公共[PR113](https://github.com/wlvh/SEC_metrics/pull/113)已由接收者以main302074f4接收，收入／D04／事件报送主体接口并存；本指南main包含它们。后继[PR188](https://github.com/wlvh/SEC_metrics/pull/188)已接收，修复基础结束标题紧接不同字母分节时的唯一结束点读取；Southwest FY2024因此形成完整输入，但仍缺对应内容回答，不能输出年度计数。Paramount FY2024 的完整8项来源与已消费一次GET取得的EX-99可恢复，V2请求 `2aa878ef…` 已由同公司入口准备、保存、复跑和独立导出；缺少与该请求对应的目标模型回答，结果保持 `WITHHELD/null/E01_CONTENT_RESPONSE_NOT_AVAILABLE_FOR_REQUEST`。不能把旧V1回答或部分候选数补成年度计数。
 
@@ -354,7 +402,7 @@ python3 tools/vnext_company.py results --company marriott_international \
 
 当前扣留不得被同年旧成功替代。公共 `completed-check.json` 表示最近完成检查，`current-result.json` 保留最近成功；日常 CSV 读取最近完成结论。后续只请求另一指标或另一年，仍能读出原坐标当前扣留，旧成功只留作历史。`requested_in_latest_execution` 区分本次请求，不能把未请求项算成本次新成功。
 
-缺源年份、实现失败和业务扣留应分别解释。`run` 的 JSON、当次 `run_summary.json` 和状态目录 `latest-execution.json` 保留失败项的具体 `error_category` / `reason`，其他年份及指标的成功记录保留。main `6c57ddc2` 已接收 PR131：独立 `results` 为无结果失败项保留 `reason`、`error_type`、`error_category`，CSV 的 `notes` 同步显示原因；后一次只请求其他坐标时，旧失败仍标明 `requested_in_latest_execution=False`，CSV `period_role=SAVED_CHECK_NOT_REQUESTED_WITHOUT_RESULT`。真实 D01 失败、Salesforce 相邻年份及旧 Pfizer 精确扣留的只读核对见[main 接收记录](https://github.com/wlvh/SEC_metrics/blob/f134c7c1/docs/evidence/issue47_result_failure_receiving_20261010/main-g1/README.md)。这次变化只修日常读取，不重算财报，也不解除业务缺口。`FLOW_COMPLETED_WITH_LIMITATIONS` 表示有明确限制，不能当成所有指标交付。`SOURCE_UNAVAILABLE` 不是正确零值；`IMPLEMENTATION_GAP` 表示已有材料或路径尚未实现。main `293e495f` 已接收 PR241：同一历史命令可以混合已接入指标与已定义但尚未接入的指标。已接入项正常处理或复用；尚未接入项显示 `PROCESSING_INPUT_OR_IMPLEMENTATION_REQUIRED`、`NO_CURRENT_RESULT`，不创建结果，也不阻断邻居。整条命令有这些限制时返回2；拼错、重复或空指标仍在写入前拒绝。默认39项表示请求范围，不能当成39项均已实现。 已有Marriott五年酒店任务请求FY2024的B10+D02时，B10两次均零计算复用，D02为无结果待实现；独立CSV保十个原酒店值与一条具名D02限制。[原任务实际接收记录](evidence/issue47_mixed_history_receiving_20261013/README.md)。
+缺源年份、实现失败和业务扣留应分别解释。`run` 的 JSON、当次 `run_summary.json` 和状态目录 `latest-execution.json` 保留失败项的具体 `error_category` / `reason`，其他年份及指标的成功记录保留。main `6c57ddc2` 已接收 PR131：独立 `results` 为无结果失败项保留 `reason`、`error_type`、`error_category`，CSV 的 `notes` 同步显示原因；后一次只请求其他坐标时，旧失败仍标明 `requested_in_latest_execution=False`，CSV `period_role=SAVED_CHECK_NOT_REQUESTED_WITHOUT_RESULT`。真实 D01 失败、Salesforce 相邻年份及旧 Pfizer 精确扣留的只读核对见[main 接收记录](https://github.com/wlvh/SEC_metrics/blob/f134c7c1/docs/evidence/issue47_result_failure_receiving_20261010/main-g1/README.md)。这次变化只修日常读取，不重算财报，也不解除业务缺口。`FLOW_COMPLETED_WITH_LIMITATIONS` 表示有明确限制，不能当成所有指标交付。`SOURCE_UNAVAILABLE` 不是正确零值；`IMPLEMENTATION_GAP` 表示已有材料或路径尚未实现。main `293e495f` 已接收 PR241：同一历史命令可以混合已接入指标与已定义但尚未接入的指标。已接入项正常处理或复用；尚未接入项显示 `PROCESSING_INPUT_OR_IMPLEMENTATION_REQUIRED`、`NO_CURRENT_RESULT`，不创建结果，也不阻断邻居。整条命令有这些限制时返回2；拼错、重复或空指标仍在写入前拒绝。默认39项表示请求范围，不能当成39项均已实现。 此前 main293 的Marriott五年酒店任务请求FY2024的B10+D02时，B10两次均零计算复用，D02为无结果待实现；当前显式保存回答路径见上文D02，旧观察保留其执行版本；独立CSV保十个原酒店值与一条具名D02限制。[原任务实际接收记录](evidence/issue47_mixed_history_receiving_20261013/README.md)。
 
 当前 main 历史选择器明确保留修订情况，但尚未完成修订历史酒店处理；主体变换也未取得完整适配接受。Paramount 可见 August7 与原生 context August8 的真实期间冲突仍保留两种证据，不任选日期、年化或拼接前身。它不是本酒店接收的输入；这条范围限制不授其他指标接受。
 
