@@ -10,6 +10,7 @@ from tests.vnext.test_text_coverage import annual, binding
 from tests.vnext.test_text_business_candidates import BODY
 from vnext.canonical import content_hash, sha256_bytes
 from vnext.sources import source_reference_record
+from vnext.text_business_candidates import legal_risk_candidates
 from vnext.text_results_v2 import prepare_business_text_sources, SCOPES
 
 
@@ -62,6 +63,92 @@ def replace_accrual_raw(args, raw):
 
 
 class TextResultV2SourceTest(unittest.TestCase):
+    def test_d02_year_columns_next_to_repeated_disclosures_are_not_page_headers(self):
+        from tests.vnext.test_text_business_candidates import document
+        from vnext.text_business_candidates import legal_risk_candidates
+        from vnext.d02_text_results_v3 import select_d02_page_furniture
+        years=''.join('<p>'+str(year)+'</p>'
+            '<p>We remain subject to litigation concerning this agreement.</p>'
+            '<h3>Note 2. Contingencies (Continued)</h3>' for year in (2022,2023,2024))
+        doc=document(BODY.replace('<h3>1. Procedural matters</h3>',years))
+        proposal=legal_risk_candidates(document=doc)
+        selected=select_d02_page_furniture(proposal=proposal,document=doc)
+        self.assertEqual(proposal,selected)
+        self.assertEqual(3,[c['text'] for c in selected['D02']['candidates']].count(
+            'We remain subject to litigation concerning this agreement.'))
+    def test_d02_page_selection_requires_page_structure_and_keeps_repeated_matters(self):
+        from vnext.d02_text_results_v3 import select_d02_page_furniture
+        pages=''.join('<p>'+str(n)+'</p><p>Notes to the financial statements</p>'
+            '<p>Company and subsidiaries</p><h3>Note 2. Contingencies (Continued)</h3>'
+            '<h4>Repeated product name</h4><p>Unique case '+str(n)+' remains unresolved.</p>'
+            for n in (10,11,12))
+        from tests.vnext.test_text_business_candidates import document
+        doc=document(BODY.replace('<h3>1. Procedural matters</h3>',pages+'<h3>1. Procedural matters</h3>'))
+        proposal=legal_risk_candidates(document=doc);before=copy.deepcopy(proposal)
+        selected=select_d02_page_furniture(proposal=proposal,document=doc)
+        self.assertEqual(before,proposal)
+        self.assertEqual(proposal['D03'],selected['D03'])
+        kept=[c['text'] for c in selected['D02']['candidates']]
+        self.assertEqual(3,kept.count('Repeated product name'))
+        self.assertTrue(any('Unique case 10' in s for s in kept))
+        self.assertNotIn('Notes to the financial statements',kept)
+        self.assertNotIn('Company and subsidiaries',kept)
+        self.assertNotIn('Note 2. Contingencies (Continued)',kept)
+        self.assertIn('Note 2. Contingencies',kept)
+
+    def test_d02_repeated_titles_and_body_without_pages_are_not_furniture(self):
+        from vnext.d02_text_results_v3 import select_d02_page_furniture
+        repeated='<h4>Repeated product name</h4><p>The legal matter remains unresolved.</p>'*3
+        from tests.vnext.test_text_business_candidates import document
+        doc=document(BODY.replace('<h3>1. Procedural matters</h3>',repeated))
+        proposal=legal_risk_candidates(document=doc)
+        self.assertIs(proposal,select_d02_page_furniture(proposal=proposal,document=doc))
+
+    def test_d02_page_selection_rejects_foreign_proposal_and_changed_block(self):
+        from vnext.d02_text_results_v3 import select_d02_page_furniture
+        from vnext.canonical import content_hash
+        from tests.vnext.test_text_business_candidates import document
+        doc=document();proposal=legal_risk_candidates(document=doc)
+        changed=copy.deepcopy(proposal);changed['source_reference_id']='sha256:'+'0'*64
+        changed['proposal_id']=content_hash(value={k:v for k,v in changed.items() if k!='proposal_id'})
+        with self.assertRaisesRegex(ValueError,'D02_PAGE_FURNITURE_PROPOSAL_CHANGED'):
+            select_d02_page_furniture(proposal=changed,document=doc)
+        changed=copy.deepcopy(proposal);changed['D02']['candidates'][0]['text']='invented'
+        changed['proposal_id']=content_hash(value={k:v for k,v in changed.items() if k!='proposal_id'})
+        with self.assertRaisesRegex(ValueError,'D02_PAGE_FURNITURE_BLOCK_CHANGED'):
+            select_d02_page_furniture(proposal=changed,document=doc)
+
+    def test_v3_explicit_page_selection_keeps_default_and_d03_source_text(self):
+        from vnext import d02_text_results_v3 as v3
+        pages=''.join('<p>'+str(n)+'</p><p>Notes to the financial statements</p>'
+            '<p>Company and subsidiaries</p><h3>Note 2. Contingencies (Continued)</h3>'
+            '<p>Unique proceeding '+str(n)+' remains unresolved.</p>' for n in (10,11,12))
+        args=inputs('D02',annual_body=BODY.replace('<h3>1. Procedural matters</h3>',pages))
+        default=prepare_business_text_sources(metric_id='D02',**args)
+        ordinary=v3.prepare_business_text_sources(metric_id='D02',**args)
+        self.assertEqual(default,ordinary)
+        selected=v3.prepare_business_text_sources(metric_id='D02',d02_page_furniture=True,**args)
+        key=next(iter(default['proposals']))
+        self.assertEqual(default['proposals'][key]['D03'],selected['proposals'][key]['D03'])
+        self.assertLess(len(selected['proposals'][key]['D02']['candidates']),
+                        len(default['proposals'][key]['D02']['candidates']))
+        self.assertEqual(default['documents'],selected['documents'])
+        self.assertEqual(default['source_references'],selected['source_references'])
+        from vnext.specs import compile_spec_file
+        compiled=compile_spec_file(path=REPO_ROOT/'catalog/r6/D02_legal_disclosures_v1.md',
+                                   dependency_specs={})
+        candidate=v3.create_deterministic_text_candidate(compiled_spec=compiled,
+            d02_page_furniture=True,**args)
+        evidence=v3.build_text_evidence(compiled_spec=compiled,candidate=candidate,
+            d02_page_furniture=True,**args)
+        self.assertEqual('PASS',evidence['status'])
+        self.assertTrue(evidence['checks'][0]['coverage'][0]['d02_page_furniture']['removed_blocks'])
+        with self.assertRaisesRegex(ValueError,'CANDIDATE_REPLAY_CHANGED'):
+            v3.build_text_evidence(compiled_spec=compiled,candidate=candidate,**args)
+        with self.assertRaisesRegex(ValueError,'PAGE_FURNITURE_SCOPE_INVALID'):
+            v3.prepare_business_text_sources(metric_id='C02',d02_page_furniture=True,**inputs('C02'))
+        with self.assertRaisesRegex(ValueError,'PAGE_FURNITURE_SCOPE_INVALID'):
+            v3.prepare_business_text_sources(metric_id='D02',d02_page_furniture='yes',**args)
     def test_c02_annual_anchor_filing_date_meeting_date_and_unknown_asof_are_distinct(self):
         args = inputs(); prepared = prepare_business_text_sources(metric_id="C02", **args)
         gov_id = args["source_references"][1]["source_reference_id"]
