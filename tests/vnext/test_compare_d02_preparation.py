@@ -189,8 +189,14 @@ class SourceDigestTest(unittest.TestCase):
             second = tool.tree_digest(tmp)
             Path(tmp, 'new.txt').write_text('added')
             third = tool.tree_digest(tmp)
+            Path(tmp, 'empty').mkdir()
+            fourth = tool.tree_digest(tmp)
         self.assertEqual(len({first['digest'], second['digest'], third['digest']}), 3)
         self.assertEqual((first['files'], third['files']), (1, 2))
+        # An empty directory changes the result but not the file digest other runs cite.
+        self.assertNotEqual(third, fourth)
+        self.assertEqual(third['digest'], fourth['digest'])
+        self.assertEqual((third['directories'], fourth['directories']), (0, 1))
 
 
 class PinnedCommitRunTest(unittest.TestCase):

@@ -65,9 +65,13 @@ def _file_sha256(path):
 
 
 def tree_digest(root):
-    """Digest every file under ``root`` by relative path, size and SHA-256."""
+    """Digest every file under ``root`` by relative path, size and SHA-256.
+
+    Directories are digested separately, so an added or removed empty
+    directory changes the result while ``digest`` keeps its earlier meaning.
+    """
     root = Path(root)
-    entries, total = [], 0
+    entries, directories, total = [], [], 0
     for directory, dirs, files in os.walk(root, followlinks=False):
         dirs.sort()
         for name in dirs + sorted(files):
@@ -79,9 +83,12 @@ def tree_digest(root):
                 size = path.stat().st_size
                 total += size
                 entries.append([relative, size, _file_sha256(path)])
+            else:
+                directories.append(relative)
     entries.sort()
     return {'digest': _digest(entries), 'files': sum(1 for e in entries if e[1] != 'SYMLINK'),
-            'symlinks': sum(1 for e in entries if e[1] == 'SYMLINK'), 'bytes': total}
+            'symlinks': sum(1 for e in entries if e[1] == 'SYMLINK'), 'bytes': total,
+            'directories': len(directories), 'directory_digest': _digest(sorted(directories))}
 
 
 def fingerprint(result):
