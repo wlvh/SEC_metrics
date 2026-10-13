@@ -1,0 +1,39 @@
+{
+  "seconds": 0.6616809589904733,
+  "exit": 2,
+  "metric": {
+    "metric_id": "E01",
+    "status": "PREVIOUS_INPUT_WITHHELD",
+    "attempt_id": "0ab097d8e86c47f492e680f2841c8fed",
+    "version": "473596ed52d44412ad5b6b1502d354e2",
+    "result_id": "sha256:cd0f882fecd887de87c48ebe35c6020bbdf8a6ace404aba18c4334bff9207553",
+    "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/e01-item-conflict-state-20261013/state/updates/E01/periods/FY2023/results/473596ed52d44412ad5b6b1502d354e2",
+    "result_reason_code": "E01_ITEM_METADATA_BODY_CONFLICT",
+    "raw_input_unchanged": true,
+    "calculation_performed": false,
+    "new_candidate_created": false,
+    "source_check_versions": {
+      "scripts/vnext/ordinary_current_update.py": "c964e04f8f2b8f66bd7417df8b0e833e3f954d0c5347e98af84cd33b631e7142",
+      "scripts/vnext/request_bindings.py": "d0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee",
+      "scripts/vnext/ordinary_update_compatibility.py": "dcd5f7fad86dd36fec7ffc1ce15cb274cd3670dba213777b6cdaa4a4090d80b9",
+      "scripts/vnext/ordinary_result_registration.py": "d40366a4460f7048a7a339ee288e8489a6ed9f2d856b47d916410344c6765b91"
+    },
+    "source_observation_errors": [],
+    "new_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false,
+    "requested_fiscal_year": 2023,
+    "defect_holds": [],
+    "read_result_id": "sha256:cd0f882fecd887de87c48ebe35c6020bbdf8a6ace404aba18c4334bff9207553",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/e01-item-conflict-state-20261013/state/updates/E01/periods/FY2023/results/473596ed52d44412ad5b6b1502d354e2",
+    "program_version": {
+      "commit": "293e495f74ed111b9c0e3365b9f4d35f977949ce",
+      "has_uncommitted_changes": true
+    }
+  },
+  "seven_results_unchanged": 7,
+  "no_source_factory_request_calculator_egress_or_claim": true
+}
