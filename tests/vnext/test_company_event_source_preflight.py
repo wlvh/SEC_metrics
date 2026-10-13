@@ -3,6 +3,7 @@ from contextlib import redirect_stdout
 import io,json
 from pathlib import Path
 import unittest
+import socket,hashlib
 from unittest.mock import patch
 from tools.vnext_company import main
 from vnext import selected_source_requirements as preflight
@@ -104,8 +105,74 @@ class MixedEventSourceStateTest(unittest.TestCase):
         self.assertEqual([],result['component_source_plans'])
         self.assertFalse(result['complete_known_source_graph'])
 
+    def test_unregistered_failed_event_keeps_its_actual_attempt_without_fake_proof(self):
+        from sec_urls import accession_document_url
+        accession='0001048286-26-000011'
+        url=accession_document_url(cik=source_fixture.CIK,accession=accession,document_name='event.htm')
+        self.record(url,b'<html><body>Earlier recorded event</body></html>')
+        self.record(url,b'recorded event failure',503,'recorded event failure')
+        def direct_read(plan):
+            plan.reader.read(url,accession=accession,role='event_original',media_type='text/html')
+        result=self.event_plan(metrics=['E01'],graph=True,source_hook=direct_read)
+        self.assertIn(url,result['unresolved_dependency_urls'])
+        problem=next(p for p in result['limitations'] if p.get('source_url')==url)
+        self.assertEqual(problem['failed_request']['status_code'],'503')
+        self.assertEqual(problem['failed_request']['error'],'recorded event failure')
+        self.assertFalse(result['complete_known_source_graph'])
+        self.assertFalse(any(r['source_url']==url for r in result['requirements']))
+
     def test_a_source_graph_does_not_claim_model_or_metric_acceptance(self):
         result=self.event_plan(metrics=['E01'],graph=True)
         self.assertEqual('SAVED_SOURCE_BYTES_AVAILABLE',result['status'])
         self.assertFalse(result['metric_acceptance_proven']);self.assertFalse(result['metric_executed'])
         self.assertIsNone(result['event_source_context']['complete_annual_count'])
+
+
+class FailedEventSourceObservationTest(unittest.TestCase):
+    setUp=source_fixture.SelectedSourceRequirementsTest.setUp
+    record=source_fixture.SelectedSourceRequirementsTest.record
+
+    def formal(self):
+        before={str(p):hashlib.sha256(p.read_bytes()).hexdigest()
+                for p in self.root.rglob('*') if p.is_file()}
+        stream=io.StringIO()
+        with patch.object(socket.socket,'connect',side_effect=AssertionError('No network')), \
+             patch('vnext.calculator.calculate_metric',side_effect=AssertionError('No calculation')), \
+             redirect_stdout(stream):
+            rc=main(['sources','--company',source_fixture.COMPANY,'--source-root',str(self.root),
+                '--report-end','2025-12-31','--metric','E01'])
+        self.assertEqual(rc,2)
+        self.assertEqual(before,{str(p):hashlib.sha256(p.read_bytes()).hexdigest()
+            for p in self.root.rglob('*') if p.is_file()})
+        return json.loads(stream.getvalue())
+
+    def test_latest_failed_companyfacts_before_plan_registration_keeps_exact_url(self):
+        url=companyfacts_url(cik=source_fixture.CIK)
+        self.record(url,b'recorded failure',503,'recorded CF failure')
+        result=self.formal()
+        self.assertIn(url,result['unresolved_dependency_urls'])
+        problem=next(p for p in result['limitations'] if p.get('source_url')==url)
+        self.assertEqual(problem['category'],'SOURCE_ACCESS_FAILED')
+        self.assertEqual(problem['failed_request']['status_code'],'503')
+        self.assertEqual(problem['failed_request']['error'],'recorded CF failure')
+        self.assertTrue(problem['failed_request']['request_attempt_id'])
+        self.assertFalse(result['complete_known_source_graph'])
+        self.assertFalse(result['metric_executed']);self.assertFalse(result['fetch_authorized'])
+        self.assertNotIn('results',result)
+
+    def test_failed_observation_uses_the_actual_latest_get(self):
+        url=companyfacts_url(cik=source_fixture.CIK)
+        self.record(url,b'older failure',503,'older CF failure')
+        self.record(url,b'latest failure',404,'latest CF failure')
+        result=self.formal()
+        problem=next(p for p in result['limitations'] if p.get('source_url')==url)
+        self.assertEqual(problem['failed_request']['status_code'],'404')
+        self.assertEqual(problem['failed_request']['error'],'latest CF failure')
+
+    def test_unrelated_reader_error_does_not_invent_a_source_url(self):
+        with patch('vnext.historical_annual_input.prepare_historical_annual_input',
+                   side_effect=ValueError('CONSTRUCTED_READER_CONFLICT:no source url')):
+            result=self.formal()
+        problem=next(p for p in result['limitations'] if p['phase']=='E01_SELECTED_SOURCE')
+        self.assertNotIn('source_url',problem)
+        self.assertNotIn('failed_request',problem)

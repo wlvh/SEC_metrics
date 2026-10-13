@@ -7,6 +7,7 @@ labels, if established, come from the original annual DEI contexts.
 from datetime import date, timedelta
 from pathlib import Path
 
+from sec_http import request_log_attempt_id
 from sec_urls import (accession_directory_url, accession_document_url,
                       companyfacts_url, submissions_file_url, submissions_url)
 from .canonical import content_hash, sha256_file, strict_json_loads
@@ -268,10 +269,23 @@ def _discover_selected_event_requirements(*, repo_root, company_id, report_end, 
         errors.append({'phase':'E01_SOURCE_CONSUMER','category':'IMPLEMENTATION_GAP','reason':str(error)})
     except (ValueError,KeyError,TypeError) as error:
         _limitation(errors,'E01_SELECTED_SOURCE',error)
-        if str(error).startswith('SAVED_SOURCE_MISSING:'):
-            # Keep the existing reader's exact missing URL. Its exception
+        if str(error).startswith(('SAVED_SOURCE_MISSING:','LATEST_SOURCE_REQUEST_FAILED:')):
+            # Keep the existing reader's exact missing/failed URL. Its exception
             # supplies no media/proof, so do not fabricate a checked row.
-            errors[-1]['source_url']=str(error).removeprefix('SAVED_SOURCE_MISSING:')
+            url=str(error).partition(':')[2].strip()
+            errors[-1]['source_url']=url
+            if str(error).startswith('LATEST_SOURCE_REQUEST_FAILED:'):
+                from .annual_sources import _rows
+                matches=[(i,r) for i,r in enumerate(_rows(source))
+                         if r['source_url']==url and r['method']=='GET']
+                errors[-1]['category']='SOURCE_ACCESS_FAILED'
+                if matches:
+                    index,row=matches[-1]
+                    if row['status_code']!='200' or row['error']:
+                        errors[-1]['failed_request']={'request_attempt_id':
+                            request_log_attempt_id(row_index=index,row=row),
+                            **{k:row[k] for k in ('timestamp_utc','source_url',
+                                'status_code','error','retry_attempt')}}
         if selection is not None:
             filing=selection['current_filing']
             plan.require(accession_document_url(cik=int(selection['reporting_cik']),

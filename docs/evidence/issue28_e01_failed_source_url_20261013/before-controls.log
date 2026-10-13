@@ -1,0 +1,26 @@
+test_failed_observation_uses_the_actual_latest_get (tests.vnext.test_company_event_source_preflight.FailedEventSourceObservationTest.test_failed_observation_uses_the_actual_latest_get) ... ERROR
+test_latest_failed_companyfacts_before_plan_registration_keeps_exact_url (tests.vnext.test_company_event_source_preflight.FailedEventSourceObservationTest.test_latest_failed_companyfacts_before_plan_registration_keeps_exact_url) ... FAIL
+test_unrelated_reader_error_does_not_invent_a_source_url (tests.vnext.test_company_event_source_preflight.FailedEventSourceObservationTest.test_unrelated_reader_error_does_not_invent_a_source_url) ... ok
+
+======================================================================
+ERROR: test_failed_observation_uses_the_actual_latest_get (tests.vnext.test_company_event_source_preflight.FailedEventSourceObservationTest.test_failed_observation_uses_the_actual_latest_get)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-e01-failed-source-url/SEC_metrics/tests/vnext/test_company_event_source_preflight.py", line 151, in test_failed_observation_uses_the_actual_latest_get
+    problem=next(p for p in result['limitations'] if p.get('source_url')==url)
+StopIteration
+
+======================================================================
+FAIL: test_latest_failed_companyfacts_before_plan_registration_keeps_exact_url (tests.vnext.test_company_event_source_preflight.FailedEventSourceObservationTest.test_latest_failed_companyfacts_before_plan_registration_keeps_exact_url)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-e01-failed-source-url/SEC_metrics/tests/vnext/test_company_event_source_preflight.py", line 137, in test_latest_failed_companyfacts_before_plan_registration_keeps_exact_url
+    self.assertIn(url,result['unresolved_dependency_urls'])
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json' not found in []
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.202s
+
+FAILED (failures=1, errors=1)
+{"allowed_skips": 0, "errors": 1, "failures": 1, "run": 3, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_company_event_source_preflight.FailedEventSourceObservationTest"]}

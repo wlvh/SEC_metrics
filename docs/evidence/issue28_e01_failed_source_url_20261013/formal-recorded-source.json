@@ -1,0 +1,174 @@
+{
+  "elapsed_seconds": 0.05416245800734032,
+  "record_type": "SELECTED_COMPANY_TASK_SOURCE_REQUIREMENTS_V1",
+  "company_id": "marriott_international",
+  "metric_ids": [
+    "E01"
+  ],
+  "requested_report_end": "2025-12-31",
+  "filing_selection": {
+    "record_type": "ORDINARY_HISTORICAL_PERIOD_SELECTION",
+    "schema_version": 1,
+    "policy_id": "ordinary_period_selection_v1",
+    "policy_sha256": "6fd86440f7b62680e7ce2fa66de9f79b900f6a2b53fc8300aee590834967ab72",
+    "company_id": "marriott_international",
+    "reporting_cik": "1048286",
+    "subject_policy": {
+      "mode": "CONTINUOUS_PRIMARY",
+      "selected_cik": "1048286",
+      "cross_entity_combination_authorized": false
+    },
+    "target_report_end": "2025-12-31",
+    "requested_fiscal_year": null,
+    "current_filing": {
+      "form": "10-K",
+      "reportDate": "2025-12-31",
+      "filingDate": "2026-02-10",
+      "accessionNumber": "0001048286-26-000007",
+      "primaryDocument": "annual-2025.htm"
+    },
+    "current_amendments": [],
+    "prior_report_end": "2024-12-31",
+    "prior_filing": {
+      "form": "10-K",
+      "reportDate": "2024-12-31",
+      "filingDate": "2025-02-10",
+      "accessionNumber": "0001048286-25-000007",
+      "primaryDocument": "annual-2024.htm"
+    },
+    "prior_amendments": [],
+    "prior_status": "SAME_CIK_PRIOR_DISCOVERED",
+    "dependency_filing_roles": {
+      "target_primary": "0001048286-26-000007",
+      "target_amendment_primary": [],
+      "prior_annual_primary": "0001048286-25-000007",
+      "prior_amendment_primary": []
+    },
+    "filing_selection_policy_id": "PINNED_ANNUAL_REPORT_END_IN_COMPLETE_SAVED_SUBMISSIONS",
+    "value_selection_policy_id": "CURRENT_AND_PRIOR_EACH_FROM_ITS_OWN_SELECTED_FILING_FIRST_REPORT",
+    "amendment_policy_id": "AMENDMENTS_RETAINED_AS_SEPARATE_INPUTS_NOT_SUBSTITUTED",
+    "source_set_identity": "sha256:fbebfd8dc02ba54e65d18dc6207e52fcb46f57e90a46eec417c55d2bb27384f9",
+    "loaded_inventories": [
+      "CIK0001048286.json"
+    ],
+    "latest_restated_values_used": false,
+    "caller_supplied_selection_trusted": false,
+    "production_authorized": false,
+    "selection_id": "sha256:28299e68b66e69cf424c4cc470432e9fdec647d5e0853498a52be6ba983c176b"
+  },
+  "original_annual_period": null,
+  "event_source_context": null,
+  "component_source_plans": [],
+  "requirements": [
+    {
+      "source_url": "https://data.sec.gov/submissions/CIK0001048286.json",
+      "method": "GET",
+      "roles": [
+        "selected_submissions_inventory"
+      ],
+      "accession": "SUBMISSIONS-1048286",
+      "media_type": "application/json",
+      "refresh_for_new_discovery": false,
+      "saved_status": "VERIFIED_SAVED_SOURCE",
+      "source_acquisition_credit": false,
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:37d02dedc24ea7a8cebf7d8079c12faf5b4f5c78715eb5e4558881145e619214",
+        "raw_asset_id": "sha256:892894995d13c93f3751592c018d4c318364057b3ef4f3a8f051c6b71ddfd55e",
+        "company_id": "marriott_international",
+        "source_url": "https://data.sec.gov/submissions/CIK0001048286.json",
+        "accession": "SUBMISSIONS-1048286",
+        "document_name": "CIK0001048286.json",
+        "source_role": "selected_submissions_inventory",
+        "request_attempt_id": "request:attempt:526cbb20a0ba780dec0d1dfec4fcf07cd314ab4ddae900d08a4550325bf5ff2d"
+      },
+      "proof": {
+        "source_url": "https://data.sec.gov/submissions/CIK0001048286.json",
+        "accession": "SUBMISSIONS-1048286",
+        "document_name": "CIK0001048286.json",
+        "content_sha256": "892894995d13c93f3751592c018d4c318364057b3ef4f3a8f051c6b71ddfd55e",
+        "request_body_sha256": "892894995d13c93f3751592c018d4c318364057b3ef4f3a8f051c6b71ddfd55e",
+        "request_body_size": 296,
+        "request_headers_repo_relative_path": "evidence/request_attempts/89/892894995d13c93f3751592c018d4c318364057b3ef4f3a8f051c6b71ddfd55e/CIK0001048286.json.3b85cf67be779a0faaef9c2d1fb89be8be85b743b7c7d62cd038c6ceaa9cc1c9.headers.json",
+        "request_headers_sha256": "3b85cf67be779a0faaef9c2d1fb89be8be85b743b7c7d62cd038c6ceaa9cc1c9",
+        "request_headers_size": 264,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/89/892894995d13c93f3751592c018d4c318364057b3ef4f3a8f051c6b71ddfd55e/CIK0001048286.json",
+        "request_attempt_id": "request:attempt:526cbb20a0ba780dec0d1dfec4fcf07cd314ab4ddae900d08a4550325bf5ff2d"
+      }
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/annual-2025.htm",
+      "method": "GET",
+      "roles": [
+        "selected_event_annual_primary"
+      ],
+      "accession": "0001048286-26-000007",
+      "media_type": "text/html",
+      "refresh_for_new_discovery": false,
+      "saved_status": "VERIFIED_SAVED_SOURCE",
+      "source_acquisition_credit": false,
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:c789d2678fa8775061b0df789af23c2b223040e4b7a51c25df352a1d4f7bcf7a",
+        "raw_asset_id": "sha256:d92577f0553fd0ad9aca5a77f55fe26d770363fd1efe7014bd8530339fb6d0fd",
+        "company_id": "marriott_international",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/annual-2025.htm",
+        "accession": "0001048286-26-000007",
+        "document_name": "annual-2025.htm",
+        "source_role": "selected_event_annual_primary",
+        "request_attempt_id": "request:attempt:af3d53daa5cbef1fd76d42ccde54eba590f67a22446e124bcc963376c7e3dc0c"
+      },
+      "proof": {
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/annual-2025.htm",
+        "accession": "0001048286-26-000007",
+        "document_name": "annual-2025.htm",
+        "content_sha256": "d92577f0553fd0ad9aca5a77f55fe26d770363fd1efe7014bd8530339fb6d0fd",
+        "request_body_sha256": "d92577f0553fd0ad9aca5a77f55fe26d770363fd1efe7014bd8530339fb6d0fd",
+        "request_body_size": 812,
+        "request_headers_repo_relative_path": "evidence/request_attempts/d9/d92577f0553fd0ad9aca5a77f55fe26d770363fd1efe7014bd8530339fb6d0fd/annual-2025.htm.5e053755e92612c115d45ef36df087a4cdd45d6c96ded53ea3bac98b91c7f529.headers.json",
+        "request_headers_sha256": "5e053755e92612c115d45ef36df087a4cdd45d6c96ded53ea3bac98b91c7f529",
+        "request_headers_size": 295,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/d9/d92577f0553fd0ad9aca5a77f55fe26d770363fd1efe7014bd8530339fb6d0fd/annual-2025.htm",
+        "request_attempt_id": "request:attempt:af3d53daa5cbef1fd76d42ccde54eba590f67a22446e124bcc963376c7e3dc0c"
+      }
+    }
+  ],
+  "limitations": [
+    {
+      "phase": "E01_SELECTED_SOURCE",
+      "reason": "LATEST_SOURCE_REQUEST_FAILED: https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+      "error_type": "AnnualUpdateError",
+      "category": "SOURCE_ACCESS_FAILED",
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+      "failed_request": {
+        "request_attempt_id": "request:attempt:461c250117942e9c81f36bb02b6455ee57a52fb1318d8af260a2c42c5219b163",
+        "timestamp_utc": "2026-10-13T01:09:37.958384+00:00",
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+        "status_code": "503",
+        "error": "recorded CF failure",
+        "retry_attempt": "0"
+      }
+    }
+  ],
+  "unresolved_dependency_urls": [
+    "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json"
+  ],
+  "complete_known_source_graph": false,
+  "unique_known_get_count": 3,
+  "status": "SELECTED_SOURCE_DEPENDENCIES_UNRESOLVED",
+  "current_sec_freshness_proven": false,
+  "metric_acceptance_proven": false,
+  "all_39_source_acceptance_proven": false,
+  "metric_executed": false,
+  "fetch_authorized": false,
+  "production_authorized": false,
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "program_sha256": "46bf25935efc857874bdd0847c45cb2c429103bf478d72f699f908b1c2d0f4fc",
+  "requirements_id": "sha256:3eab9490524a8256b052a285ffa9a541d41d9e6e22a58b24fa95d5c9c163b997"
+}
