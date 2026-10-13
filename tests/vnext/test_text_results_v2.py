@@ -63,6 +63,53 @@ def replace_accrual_raw(args, raw):
 
 
 class TextResultV2SourceTest(unittest.TestCase):
+    def test_prefixless_note_leading_whitespace_does_not_hide_subsection_style(self):
+        from tests.vnext.test_text_business_candidates import document
+        from vnext import d02_text_results_v3 as current_core
+        for whitespace in ('', '\n', '\n  ', '&#160;'):
+            with self.subTest(whitespace=whitespace):
+                raw = BODY.replace('<h2>Note 2. Contingencies</h2>',
+                    '<p>' + whitespace + '<span style="font-weight:bold;font-size:12pt">'
+                    '2. Contingencies</span></p>')
+                raw = raw.replace('<h2>Note 3. Income Taxes</h2><p>Taxes are reported in this section.</p>', '')
+                raw = raw.replace('<h3>1. Procedural matters</h3>',
+                    '<p>' + whitespace + '<span style="font-weight:bold;font-size:10pt">'
+                    '3. Procedural matters</span></p>')
+                doc = document(raw); original = copy.deepcopy(doc)
+                proposal = legal_risk_candidates(document=doc, raw_bytes=annual(raw))
+                self.assertEqual('REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE',
+                                 proposal['note_references'][0]['status'])
+                self.assertFalse(proposal['note_references'][0]['range_candidates'])
+                self.assertEqual(original, doc)
+                with self.assertRaisesRegex(ValueError, 'TEXT_V2_LEGAL_SOURCE_NAVIGATION_INCOMPLETE'):
+                    current_core.prepare_business_text_sources(metric_id='D02',
+                        d02_page_furniture=True, **inputs('D02', annual_body=raw))
+
+    def test_prefixless_real_note_boundaries_allow_independent_leading_whitespace(self):
+        from tests.vnext.test_text_business_candidates import document
+        from vnext import d02_text_results_v3 as current_core
+        for first, next_note in (('\n', ''), ('', '\n'), ('&#160;', ''), ('', '&#160;')):
+            with self.subTest(first=first, next_note=next_note):
+                raw = BODY.replace('<h2>Note 2. Contingencies</h2>',
+                    '<p>' + first + '<span style="font-weight:bold;font-size:12pt">'
+                    '2. Contingencies</span></p>')
+                raw = raw.replace('<h2>Note 3. Income Taxes</h2>',
+                    '<p>' + next_note + '<span style="font-weight:bold;font-size:12pt">'
+                    '3. Income Taxes</span></p>')
+                doc = document(raw); original = copy.deepcopy(doc)
+                proposal = legal_risk_candidates(document=doc, raw_bytes=annual(raw))
+                self.assertEqual('LOCATED_NOTE_RANGE', proposal['note_references'][0]['status'])
+                self.assertEqual(original, doc)
+                prepared = current_core.prepare_business_text_sources(metric_id='D02',
+                    d02_page_furniture=True, **inputs('D02', annual_body=raw))
+                selected = next(iter(prepared['proposals'].values()))
+                self.assertEqual(proposal['note_references'][0]['status'],
+                                 selected['note_references'][0]['status'])
+                self.assertEqual(proposal['note_references'][0]['range_candidates'],
+                                 selected['note_references'][0]['range_candidates'])
+                self.assertIn('The court has not resolved the matter described in the preceding paragraph.',
+                              [c['text'] for c in selected['D02']['candidates']])
+
     def test_prefixless_note_titles_ignore_outer_spacing_and_alignment(self):
         from tests.vnext.test_text_business_candidates import document
         from vnext.text_business_candidates import legal_risk_candidates
