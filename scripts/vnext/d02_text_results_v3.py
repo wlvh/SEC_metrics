@@ -279,6 +279,7 @@ def select_d02_page_furniture(*, proposal, document):
     page_layout = _page_structure_furniture(blocks)
     note_titles = {" ".join(h['text'].split()).casefold()
                    for ref in proposal['note_references']
+                   if ref['status']=='LOCATED_NOTE_RANGE'
                    for h in ref['heading_candidates']}
     note_ends = {r['end_block_exclusive'] for ref in proposal['note_references']
                  if ref['status']=='LOCATED_NOTE_RANGE'
@@ -289,9 +290,10 @@ def select_d02_page_furniture(*, proposal, document):
         continued = re.fullmatch(r'(.+?)\s*\(continued\)',text)
         # A following note can close an already located reference range.
         # The generic numbered-heading pattern also accepts ordinary legal
-        # subsections; they are not evidence of a financial-note boundary.
+        # subsections. Only the already located range's actual end is an
+        # anchor; its accepted title format need not spell out "Note".
         ordinary_note = (i in note_ends and block.get('emphasized')
-                         and re.match(r'^note\s+',text) and _NOTE_HEADING.match(text))
+                         and _NOTE_HEADING.match(text))
         if (text not in note_titles and not ordinary_note
                 and not (continued and continued[1].rstrip() in note_titles)):
             continue
@@ -454,7 +456,7 @@ def prepare_business_text_sources(*, metric_id, target, source_references, raw_b
                     "scope": "COMPLETE_LOCAL_GOVERNANCE_DOCUMENT_SUPPORTED_STATEMENTS"}
         coverage["coverage_hash"] = content_hash(value=coverage); coverages[governance_id] = coverage
     else:
-        proposal = legal_risk_candidates(document=annual)
+        proposal = legal_risk_candidates(document=annual, raw_bytes=raw)
         if d02_page_furniture:
             proposal = select_d02_page_furniture(proposal=proposal, document=annual)
         if d02_select is not None:

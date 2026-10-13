@@ -183,7 +183,7 @@ def prepare_regulatory_investigation_candidates(*, raw_bytes, raw_blob, source_r
                   company_id=company_id,cik=cik,filing=filing)
     document=build_text_document(raw_bytes=raw_bytes,raw_blob=raw_blob,source_reference=source_reference,
         expected_company_id=company_id,expected_cik=cik,expected_period_end=filing["reportDate"])
-    navigation=legal_risk_candidates(document=document);aliases=_self_aliases(document)
+    navigation=legal_risk_candidates(document=document,raw_bytes=raw_bytes);aliases=_self_aliases(document)
     complete=navigation["coverage_status"] == "LOCAL_REQUESTED_RANGES_SCANNED"
     ranges=navigation["checked_ranges"];by_block={}
     for scope in ranges:
