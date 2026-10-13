@@ -174,7 +174,7 @@ python3 tools/vnext_company.py results --company marriott_international --state-
 
 ### 候选：只检查指定报告期的来源
 
-main 已接入 PR126/128 的 `sources` 只读入口，支持 B01/B02。下方 B03 是本候选新增的来源规划范围，尚未进入 main；不启用在线捕获或计算：
+main 已接入 `sources` 只读入口，支持 B01/B02/B03；不启用在线捕获或计算：
 
 ```sh
 python3 tools/vnext_company.py sources --company marriott_international \
@@ -188,11 +188,20 @@ main已收到PR169的注册表范围检查 只对本任务公司的完整注册�
 
 这不是获取或计算，不能证明新鲜度、修订效果、收入范围或结果已被接受。索引未保存时仍有未知XML前沿，计数只是已知URL数，不是获取许可或最终调用预算。其他指标、历史在线捕获和模型请求仍走各自已交付/待接入路径；不使用一个“来源齐备”状态替代39项业务验收。
 
-在本候选 `task/issue28-b03-source-preflight` 中，可以把上面命令的指标改为 `--metric B03`。B03 单独规划目标年报 primary、目录与完整原生实例、Company Facts 和选源元数据；不增加 B02 专属的前期年报依赖。同年度修订列完整 primary，既有 B03 修订关系读者不消费的修订目录/XML 不被列为必需。混合 B01/B02 时仍保留原依赖并集。来源齐备不证明修订被准入或折旧摊销完整，缺件和最后一次获取失败继续显示。`acquire`、在线 `--call-context` 仍仅支持原 B01/B02，不因本只读入口扩大获取用途。
+可以把上面命令的指标改为 `--metric B03`。B03 单独规划目标年报 primary、目录与完整原生实例、Company Facts 和选源元数据；不增加 B02 专属的前期年报依赖。同年度修订列完整 primary，既有 B03 修订关系读者不消费的修订目录/XML 不被列为必需。混合 B01/B02 时仍保留原依赖并集。来源齐备不证明修订被准入或折旧摊销完整，缺件和最后一次获取失败继续显示。`acquire`、在线 `--call-context` 仍仅支持原 B01/B02，不因本只读入口扩大获取用途。
+
+本候选 `task/issue28-company-event-source-preflight` 增加同一 `sources` 入口的 E01 来源检查，可单选或与 B01/B02/B03 混选，也可用下方的发行人财年范围参数。它复用既有选期及事件消费者，列出实际年报、Company Facts、目录清单、事件正文/头文件和获准纳入的 EX-99；注册主体与所选前身的来源关系分别保留。例如：
+
+```sh
+python3 tools/vnext_company.py sources --company southwest_airlines \
+  --source-root /path/to/saved-source --report-end 2024-12-31 --metric E01
+```
+
+该候选尚未进入 main。`SAVED_SOURCE_BYTES_AVAILABLE` 仅表示规定来源图已知且保存原件核对通过；`complete_annual_count` 仍为 null，未读取旧模型回答、未生成指标结果。缺件保留确切 URL，不能把不完整事件范围当空集。来源列表不是获取许可、DeepSeek调用许可或公司并购结论；已有计算入口和真实调用边界不因这条来源接线扩大。
 
 ### 候选：直接给出发行人财年范围
 
-main 已接入来源预检和发行人标签的财年范围入口。对保存来源的 B01/B02，用户无需逐年提供 report-end；本候选还允许只读 B03 来源范围，B03 计算消费者另见 PR167 的实际接收状态：
+main 已接入来源预检和发行人标签的 B01/B02/B03 财年范围入口，用户无需逐年提供 report-end。上面的 E01 候选沿用相同选期入口；B03 计算消费者的业务范围仍按 PR167 的实际接收记录解释：
 
 ```sh
 python3 tools/vnext_company.py sources --company macys --source-root SOURCE \
