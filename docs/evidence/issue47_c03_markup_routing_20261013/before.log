@@ -1,0 +1,68 @@
+test_plain_proxy_with_duplicate_units_still_reaches_shared_sct (tests.vnext.test_historical_compensation_case.HistoricalCompensationAdapterTest.test_plain_proxy_with_duplicate_units_still_reaches_shared_sct) ... ERROR
+
+======================================================================
+ERROR: test_plain_proxy_with_duplicate_units_still_reaches_shared_sct (tests.vnext.test_historical_compensation_case.HistoricalCompensationAdapterTest.test_plain_proxy_with_duplicate_units_still_reaches_shared_sct)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/historical_compensation_case.py", line 147, in prepare_historical_compensation_year_case
+    resolution = resolve_c03(**args, target=target, expected_cik=annual['entity'],
+        compiled_spec=spec, sec_namespace_release='YEAR_QUARTER_OR_DATE')
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1247, in _execute_mock_call
+    result = effect(*args, **kwargs)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_historical_compensation_case.py", line 79, in <lambda>
+    parse_accession_xbrl_source(raw_bytes=kw['raw_bytes'])), \
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/deterministic_router.py", line 1154, in parse_accession_xbrl_source
+    contexts, facts = _parse_xbrl_parts(raw_bytes=raw_bytes)
+                      ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/deterministic_router.py", line 1085, in _parse_xbrl_parts
+    contexts = context_parser.contexts()
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/deterministic_router.py", line 963, in contexts
+    raise DeterministicRouterError("XBRL source contains no contexts")
+vnext.deterministic_router.DeterministicRouterError: XBRL source contains no contexts
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_historical_compensation_case.py", line 82, in test_plain_proxy_with_duplicate_units_still_reaches_shared_sct
+    case=cases.prepare_historical_compensation_year_case(repo_root=Path('/constructed'),
+        company_id='example',metric_id='C03',fiscal_year=2021)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/historical_compensation_case.py", line 153, in prepare_historical_compensation_year_case
+    if str(error) != 'XBRL source contains no contexts' or _proxy_has_structured_markup(args['raw_bytes']):
+                                                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/historical_compensation_case.py", line 66, in _proxy_has_structured_markup
+    parser.feed(raw.decode('utf-8-sig'))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/html/parser.py", line 187, in feed
+    self.goahead(0)
+    ~~~~~~~~~~~~^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/html/parser.py", line 279, in goahead
+    k = self.parse_starttag(i)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/html/parser.py", line 493, in parse_starttag
+    self.handle_startendtag(tag, attrs)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/governance_signals.py", line 89, in handle_startendtag
+    self.handle_starttag(tag, attrs)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/historical_compensation_case.py", line 55, in handle_starttag
+    super().handle_starttag(tag, attrs)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/governance_signals.py", line 78, in handle_starttag
+    _need(self.unit is None and attrs.get("id") and attrs["id"] not in self.units,
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          "GOVERNANCE_DUPLICATE_OR_NESTED_UNIT")
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/governance_signals.py", line 43, in _need
+    raise GovernanceSignalError(reason)
+vnext.governance_signals.GovernanceSignalError: GOVERNANCE_DUPLICATE_OR_NESTED_UNIT
+
+----------------------------------------------------------------------
+Ran 1 test in 0.003s
+
+FAILED (errors=1)
