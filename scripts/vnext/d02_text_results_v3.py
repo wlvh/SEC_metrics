@@ -218,7 +218,8 @@ def _page_structure_furniture(blocks):
     texts = [" ".join(b['text'].split()).casefold() for b in blocks]
     repeated = Counter(texts)
     bare = {i:int(b['text'].strip()) for i,b in enumerate(blocks)
-            if re.fullmatch(r'\d{1,4}', b['text'].strip())}
+            if re.fullmatch(r'\d{1,4}', b['text'].strip())
+            and not 1900 <= int(b['text'].strip()) <= 2100}
     beside = {}
     for i,number in bare.items():
         for side in (-1,1):

@@ -63,6 +63,19 @@ def replace_accrual_raw(args, raw):
 
 
 class TextResultV2SourceTest(unittest.TestCase):
+    def test_d02_year_columns_next_to_repeated_disclosures_are_not_page_headers(self):
+        from tests.vnext.test_text_business_candidates import document
+        from vnext.text_business_candidates import legal_risk_candidates
+        from vnext.d02_text_results_v3 import select_d02_page_furniture
+        years=''.join('<p>'+str(year)+'</p>'
+            '<p>We remain subject to litigation concerning this agreement.</p>'
+            '<h3>Note 2. Contingencies (Continued)</h3>' for year in (2022,2023,2024))
+        doc=document(BODY.replace('<h3>1. Procedural matters</h3>',years))
+        proposal=legal_risk_candidates(document=doc)
+        selected=select_d02_page_furniture(proposal=proposal,document=doc)
+        self.assertEqual(proposal,selected)
+        self.assertEqual(3,[c['text'] for c in selected['D02']['candidates']].count(
+            'We remain subject to litigation concerning this agreement.'))
     def test_d02_page_selection_requires_page_structure_and_keeps_repeated_matters(self):
         from vnext.d02_text_results_v3 import select_d02_page_furniture
         pages=''.join('<p>'+str(n)+'</p><p>Notes to the financial statements</p>'

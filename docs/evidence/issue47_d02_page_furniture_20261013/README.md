@@ -39,3 +39,11 @@ PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts:tools:. python3 \
 正常合main18fa后，重跑同一53项受影响组合，结果见 `main-combination.log`；原件准备/模型材料未重跑，不把main升级重新记成模型执行。实际原件代码与合入前相同，原时间按其执行版本保留。
 
 提交后的依赖精化：相同两个helper移到已有D02后继模块，共用 `text_business_candidates.py` 恢复为main精确字节，避免C02/D03因未使用的新函数遭文件版本误重算。函数AST除保留原异常类型的别名外完全相同，显式API/规则/选文/覆盖形状不变；53项受影响控制见 `isolated-dependency-controls.log`。不重Ford源材料、不把原耗时改签新head。公共消费者仍选择d02_page_furniture=True，新增实现依赖仅已有D02后继模块，共用源模块仍按原实际调用保留原依赖。
+
+## 接收P1：年份不能作为页码
+
+已实际读取PR240的4254885159及接收者4254899999。新增完整原表结构反例先红：2022/2023/2024相邻年份旁的重复诉讼正文，紧邻continued附注标题，被误判页眉而删去，见`year-columns-before.log`。这不是“默认关闭所以无影响”即可搁置的问题。
+
+修补只在页码集合排除1900–2100这些合理年份；年份文字仍在原文中，没有删源或修改回答。真实分页、重复案件标题、continued边界及默认旧路径断言保持。54定向0.336秒、零失败/错误/skip，见`year-columns-after.log`。复用先前完整Ford准备对象做改变的helper检查，仍恰好去8页眉、保45块/D03原样；未重全文解析/模型/case，见`year-guard-ford-reuse.json`。原两年材料和耗时保原身份，不能当新head完整源首算。
+
+新head交原接收者亲复，旧5a绿灯不替P1修后CI。源模块/公司入口/IO分工保持，没有把有限修补变成第三轮模型试验。
