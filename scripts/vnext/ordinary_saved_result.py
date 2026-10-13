@@ -20,7 +20,7 @@ METRIC_IDS = frozenset(installed_ordinary_spec_documents())
 LODGING_METRIC_IDS = frozenset({'B10','B11'})
 SAVED_MODEL_METRIC_IDS = frozenset({'D04'})
 SAVED_METRIC_IDS = METRIC_IDS | LODGING_METRIC_IDS | SAVED_MODEL_METRIC_IDS | {'B06','C04','A13'}
-EXPLICIT_CASE_METRICS = frozenset({'A03','A04','A09','A11','A12','A13','C03','C04','D01','E01'})
+EXPLICIT_CASE_METRICS = frozenset({'A03','A04','A09','A11','A12','A13','C03','C04','D01','D02','E01'})
 CURRENT_E01_SPEC_PATH = 'catalog/r6/E01_content_confirmed_ma_v1.md'
 
 

@@ -1,0 +1,1178 @@
+{
+  "prepare": {
+    "elapsed_seconds": 8.023334541998338,
+    "exit_code": 0,
+    "tested_commit": "f40b04a15e684b73ded57c67d7cd5cbc31f2aa34",
+    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-d02-company-saved/SEC_metrics",
+    "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+    "answer_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-company-ford-20261013/answers",
+    "uncommitted_paths": [
+      "?? docs/evidence/issue28_d02_company_saved_20261013/fixed-anchor-controls.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/main-combined-controls.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/profiled-preflight-stopped.txt",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/source-preflight.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/unprofiled-source-preflight.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/verify_company.py"
+    ],
+    "producer_calls": null,
+    "report": {
+      "request_ids": [
+        "sha256:7f0d2be204ae60689397a55ac102ec07f3ad0923c57ab00db59060abd9fe8908"
+      ],
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "source_proofs": [
+        {
+          "source_url": "https://data.sec.gov/submissions/CIK0000037996.json",
+          "accession": "",
+          "document_name": "CIK0000037996.json",
+          "content_sha256": "2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53",
+          "request_body_sha256": "2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53",
+          "request_body_size": 160015,
+          "request_headers_repo_relative_path": "evidence/request_attempts/2e/2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53/CIK0000037996.json.8ae085d80b07462565087561336d087caa41c1e35ac725ffbdb341bb931b2530.headers.json",
+          "request_headers_sha256": "8ae085d80b07462565087561336d087caa41c1e35ac725ffbdb341bb931b2530",
+          "request_headers_size": 736,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/2e/2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53/CIK0000037996.json",
+          "request_attempt_id": "request:attempt:aba148c9f3725e411dc9b3a3d98e62c8ab6ab758fecd5616c4106e35cc91bef8"
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799626000015/f-20251231.htm",
+          "accession": "0000037996-26-000015",
+          "document_name": "f-20251231.htm",
+          "content_sha256": "3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9",
+          "request_body_sha256": "3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9",
+          "request_body_size": 5281502,
+          "request_headers_repo_relative_path": "evidence/request_attempts/3b/3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9/f-20251231.htm.938a270bf2677fc73b26034eae7699cbdd55257202de14c7bf9c5e0728532e69.headers.json",
+          "request_headers_sha256": "938a270bf2677fc73b26034eae7699cbdd55257202de14c7bf9c5e0728532e69",
+          "request_headers_size": 1083,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/3b/3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9/f-20251231.htm",
+          "request_attempt_id": "request:attempt:f48f8c4bd2da27d84a15410bacc45567b52c7d580d8658b036550fa4a6c414af"
+        },
+        {
+          "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000037996.json",
+          "accession": "0000037996-26-000015",
+          "document_name": "CIK0000037996.json",
+          "content_sha256": "db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e",
+          "request_body_sha256": "db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e",
+          "request_body_size": 3672318,
+          "request_headers_repo_relative_path": "evidence/request_attempts/db/db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e/CIK0000037996.json.47538fb5f208ed1d28a2c6fc76e8621e7ebe347e6f97e1e8db2221c23ca62960.headers.json",
+          "request_headers_sha256": "47538fb5f208ed1d28a2c6fc76e8621e7ebe347e6f97e1e8db2221c23ca62960",
+          "request_headers_size": 707,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/db/db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e/CIK0000037996.json",
+          "request_attempt_id": "request:attempt:c160b39060f39a60f351ad4460665e4036d557e7748c0db18914f5f04fc2568d"
+        }
+      ],
+      "original_execution_ids": [
+        "sha256:d420dd6323238bde7fc9819b50959aaa6b0c50840549037a56a39925dba77d13"
+      ],
+      "original_usage": [
+        {
+          "input_tokens": 963,
+          "output_tokens": 13,
+          "total_tokens": 976,
+          "actual_cost": null
+        }
+      ],
+      "original_counts": [
+        [
+          1,
+          1,
+          0
+        ]
+      ],
+      "complete_company_result": false,
+      "new_business_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      }
+    },
+    "answer_hashes": {
+      "call0009/source.json": "2bc617fe57a190dbdc71920bd0e0f06e03be5128041955fdb6a28c33b9b685df",
+      "call0009/semantic-request.json": "c89df66d587068a531dad00f124ac8dbbf2378fba99d0a6440a37948e4dc406e",
+      "call0009/terminal.json": "94ef29820a6a718485b0b1c600773b8d3f2650a696ba9558a132b688618ccb10",
+      "call0009/wire/raw-response.bin": "ffbd0a51a6797fadb8292ff29bbe2d6f073ac45c559ad6a51d8e7a51d5c67d18",
+      "call0009/wire/assistant-output.bin": "e3023cee53826a2cc51b1c7a163205a322c72758d642fef95da326afba9fff27",
+      "call0009/wire/journal.json": "4265d853f5aedebe5982be103ff9e52d892ac1b9e9f5270026b66d668be682a9",
+      "call0009/invocation_control/requests/07aff1fb87b2834ecae8603033856901c338c69002e797973b37ee4ba9e7b047.bin": "40e79bb821b033427325228a742ce920ad6b858653b4ac2cf6f78fc84b0f78ad"
+    }
+  },
+  "first": {
+    "elapsed_seconds": 8.211173749994487,
+    "exit_code": 0,
+    "tested_commit": "f40b04a15e684b73ded57c67d7cd5cbc31f2aa34",
+    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-d02-company-saved/SEC_metrics",
+    "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+    "answer_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-company-ford-20261013/answers",
+    "uncommitted_paths": [
+      "?? docs/evidence/issue28_d02_company_saved_20261013/company-first.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/fixed-anchor-controls.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/main-combined-controls.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/profiled-preflight-stopped.txt",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/source-preflight.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/unprofiled-source-preflight.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/verify_company.py"
+    ],
+    "producer_calls": null,
+    "report": {
+      "elapsed_seconds": 8.210305375017924,
+      "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+      "company_id": "ford_motor_company",
+      "run_id": "20261013T101809Z-a506eac8",
+      "status": "FLOW_COMPLETED",
+      "selected_metrics": [
+        "D02"
+      ],
+      "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+      "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-d02-company-saved/SEC_metrics",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-company-ford-20261013/state",
+      "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-company-ford-20261013/run-output/20261013T101809Z-a506eac8",
+      "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+      "calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "selected_fiscal_years": [
+        2025
+      ]
+    },
+    "result_id": "sha256:fd73a6b3af93494b482bbf81609766fe1b4f56951c11f79e9f92bbf92f7a1257",
+    "value_length": 17765,
+    "value_sha256": "ecf514f0deb6acefc935a41ecee27842190cee64b3da306e303e96a4a9adafe9",
+    "result_files": 7,
+    "result_bytes": 409480,
+    "metrics": [
+      {
+        "metric_id": "D02",
+        "status": "CANDIDATE_READY",
+        "attempt_id": "5896f8cd8d734267844c7a64c6b0d159",
+        "version": "37f2dc59340c45f189bde5a58767c893",
+        "result_id": "sha256:fd73a6b3af93494b482bbf81609766fe1b4f56951c11f79e9f92bbf92f7a1257",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-company-ford-20261013/state/updates/D02/periods/FY2025/results/37f2dc59340c45f189bde5a58767c893",
+        "calculation_performed": true,
+        "new_candidate_created": true,
+        "result_reason_code": "PASS",
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2025,
+        "defect_holds": [],
+        "read_result_id": "sha256:fd73a6b3af93494b482bbf81609766fe1b4f56951c11f79e9f92bbf92f7a1257",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-company-ford-20261013/state/updates/D02/periods/FY2025/results/37f2dc59340c45f189bde5a58767c893",
+        "program_version": {
+          "commit": "f40b04a15e684b73ded57c67d7cd5cbc31f2aa34",
+          "has_uncommitted_changes": true
+        }
+      }
+    ],
+    "answer_hashes": {
+      "call0009/source.json": "2bc617fe57a190dbdc71920bd0e0f06e03be5128041955fdb6a28c33b9b685df",
+      "call0009/semantic-request.json": "c89df66d587068a531dad00f124ac8dbbf2378fba99d0a6440a37948e4dc406e",
+      "call0009/terminal.json": "94ef29820a6a718485b0b1c600773b8d3f2650a696ba9558a132b688618ccb10",
+      "call0009/wire/raw-response.bin": "ffbd0a51a6797fadb8292ff29bbe2d6f073ac45c559ad6a51d8e7a51d5c67d18",
+      "call0009/wire/assistant-output.bin": "e3023cee53826a2cc51b1c7a163205a322c72758d642fef95da326afba9fff27",
+      "call0009/wire/journal.json": "4265d853f5aedebe5982be103ff9e52d892ac1b9e9f5270026b66d668be682a9",
+      "call0009/invocation_control/requests/07aff1fb87b2834ecae8603033856901c338c69002e797973b37ee4ba9e7b047.bin": "40e79bb821b033427325228a742ce920ad6b858653b4ac2cf6f78fc84b0f78ad"
+    }
+  },
+  "repeat": {
+    "elapsed_seconds": 0.5543384999909904,
+    "exit_code": 0,
+    "tested_commit": "f40b04a15e684b73ded57c67d7cd5cbc31f2aa34",
+    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-d02-company-saved/SEC_metrics",
+    "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+    "answer_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-company-ford-20261013/answers",
+    "uncommitted_paths": [
+      "?? docs/evidence/issue28_d02_company_saved_20261013/company-first.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/company-repeat.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/fixed-anchor-controls.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/main-combined-controls.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/profiled-preflight-stopped.txt",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/source-preflight.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/unprofiled-source-preflight.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/verify_company.py"
+    ],
+    "producer_calls": {
+      "prepare_historical_legal_sources": 0,
+      "finish_historical_legal_case": 0,
+      "calculate_text_metric": 0,
+      "historical_d02_factory.<locals>.prepare": 0
+    },
+    "report": {
+      "elapsed_seconds": 0.550026084005367,
+      "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+      "company_id": "ford_motor_company",
+      "run_id": "20261013T101953Z-c1256ff3",
+      "status": "FLOW_COMPLETED",
+      "selected_metrics": [
+        "D02"
+      ],
+      "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+      "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-d02-company-saved/SEC_metrics",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-company-ford-20261013/state",
+      "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-company-ford-20261013/run-output/20261013T101953Z-c1256ff3",
+      "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+      "calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "selected_fiscal_years": [
+        2025
+      ]
+    },
+    "result_id": "sha256:fd73a6b3af93494b482bbf81609766fe1b4f56951c11f79e9f92bbf92f7a1257",
+    "value_length": 17765,
+    "value_sha256": "ecf514f0deb6acefc935a41ecee27842190cee64b3da306e303e96a4a9adafe9",
+    "result_files": 7,
+    "result_bytes": 409480,
+    "metrics": [
+      {
+        "metric_id": "D02",
+        "status": "NO_SOURCE_CONTENT_CHANGE",
+        "attempt_id": "9df5432cb7e14588bcdc946dda542d11",
+        "version": "37f2dc59340c45f189bde5a58767c893",
+        "result_id": "sha256:fd73a6b3af93494b482bbf81609766fe1b4f56951c11f79e9f92bbf92f7a1257",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-company-ford-20261013/state/updates/D02/periods/FY2025/results/37f2dc59340c45f189bde5a58767c893",
+        "result_reason_code": "PASS",
+        "raw_input_unchanged": true,
+        "calculation_performed": false,
+        "new_candidate_created": false,
+        "source_check_versions": {
+          "scripts/vnext/ordinary_current_update.py": "a4b696fad5860ce0e818a891941dde246662edfccd50bf6ca4da6137c2d5d696",
+          "scripts/vnext/request_bindings.py": "d0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee"
+        },
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2025,
+        "defect_holds": [],
+        "read_result_id": "sha256:fd73a6b3af93494b482bbf81609766fe1b4f56951c11f79e9f92bbf92f7a1257",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-company-ford-20261013/state/updates/D02/periods/FY2025/results/37f2dc59340c45f189bde5a58767c893",
+        "program_version": {
+          "commit": "f40b04a15e684b73ded57c67d7cd5cbc31f2aa34",
+          "has_uncommitted_changes": true
+        }
+      }
+    ],
+    "answer_hashes": {
+      "call0009/source.json": "2bc617fe57a190dbdc71920bd0e0f06e03be5128041955fdb6a28c33b9b685df",
+      "call0009/semantic-request.json": "c89df66d587068a531dad00f124ac8dbbf2378fba99d0a6440a37948e4dc406e",
+      "call0009/terminal.json": "94ef29820a6a718485b0b1c600773b8d3f2650a696ba9558a132b688618ccb10",
+      "call0009/wire/raw-response.bin": "ffbd0a51a6797fadb8292ff29bbe2d6f073ac45c559ad6a51d8e7a51d5c67d18",
+      "call0009/wire/assistant-output.bin": "e3023cee53826a2cc51b1c7a163205a322c72758d642fef95da326afba9fff27",
+      "call0009/wire/journal.json": "4265d853f5aedebe5982be103ff9e52d892ac1b9e9f5270026b66d668be682a9",
+      "call0009/invocation_control/requests/07aff1fb87b2834ecae8603033856901c338c69002e797973b37ee4ba9e7b047.bin": "40e79bb821b033427325228a742ce920ad6b858653b4ac2cf6f78fc84b0f78ad"
+    }
+  },
+  "read": {
+    "elapsed_seconds": 0.09635599999455735,
+    "exit_code": 0,
+    "tested_commit": "f40b04a15e684b73ded57c67d7cd5cbc31f2aa34",
+    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-d02-company-saved/SEC_metrics",
+    "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+    "answer_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-company-ford-20261013/answers",
+    "uncommitted_paths": [
+      "?? docs/evidence/issue28_d02_company_saved_20261013/company-first.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/company-read.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/company-repeat.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/fixed-anchor-controls.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/main-combined-controls.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/profiled-preflight-stopped.txt",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/source-preflight.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/unprofiled-source-preflight.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/verify_company.py"
+    ],
+    "producer_calls": {
+      "prepare_historical_legal_sources": 0,
+      "finish_historical_legal_case": 0,
+      "calculate_text_metric": 0,
+      "historical_d02_factory.<locals>.prepare": 0
+    },
+    "report": {
+      "elapsed_seconds": 0.09263308299705386,
+      "record_type": "ORDINARY_COMPANY_RESULT_VIEW_V1",
+      "company_id": "ford_motor_company",
+      "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+      "source_freshness": "NOT_CHECKED_BY_SAVED_READER",
+      "calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-company-ford-20261013/independent-read"
+    },
+    "result_id": "sha256:fd73a6b3af93494b482bbf81609766fe1b4f56951c11f79e9f92bbf92f7a1257",
+    "value_length": 17765,
+    "value_sha256": "ecf514f0deb6acefc935a41ecee27842190cee64b3da306e303e96a4a9adafe9",
+    "result_files": 7,
+    "result_bytes": 409480,
+    "metrics": [
+      {
+        "metric_id": "D02",
+        "result_id": "sha256:fd73a6b3af93494b482bbf81609766fe1b4f56951c11f79e9f92bbf92f7a1257",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "fiscal_year": 2025,
+        "unit": "text",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+        "requested_in_latest_execution": true,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-company-ford-20261013/state/updates/D02/periods/FY2025/results/37f2dc59340c45f189bde5a58767c893"
+      }
+    ],
+    "answer_hashes": {
+      "call0009/source.json": "2bc617fe57a190dbdc71920bd0e0f06e03be5128041955fdb6a28c33b9b685df",
+      "call0009/semantic-request.json": "c89df66d587068a531dad00f124ac8dbbf2378fba99d0a6440a37948e4dc406e",
+      "call0009/terminal.json": "94ef29820a6a718485b0b1c600773b8d3f2650a696ba9558a132b688618ccb10",
+      "call0009/wire/raw-response.bin": "ffbd0a51a6797fadb8292ff29bbe2d6f073ac45c559ad6a51d8e7a51d5c67d18",
+      "call0009/wire/assistant-output.bin": "e3023cee53826a2cc51b1c7a163205a322c72758d642fef95da326afba9fff27",
+      "call0009/wire/journal.json": "4265d853f5aedebe5982be103ff9e52d892ac1b9e9f5270026b66d668be682a9",
+      "call0009/invocation_control/requests/07aff1fb87b2834ecae8603033856901c338c69002e797973b37ee4ba9e7b047.bin": "40e79bb821b033427325228a742ce920ad6b858653b4ac2cf6f78fc84b0f78ad"
+    }
+  },
+  "missing": {
+    "elapsed_seconds": 23.682276750012534,
+    "exit_code": 2,
+    "tested_commit": "f40b04a15e684b73ded57c67d7cd5cbc31f2aa34",
+    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-d02-company-saved/SEC_metrics",
+    "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+    "answer_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-company-ford-20261013/answers",
+    "uncommitted_paths": [
+      " M tests/vnext/test_d02_company_saved.py",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/company-first.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/company-missing-answer.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/company-read.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/company-repeat.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/fixed-anchor-controls.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/main-combined-controls.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/profiled-preflight-stopped.txt",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/source-preflight.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/unprofiled-source-preflight.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/unsettled-public-controls.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/verify_company.py"
+    ],
+    "producer_calls": {
+      "prepare_historical_legal_sources": 1,
+      "finish_historical_legal_case": 0,
+      "calculate_text_metric": 0,
+      "historical_d02_factory.<locals>.prepare": 1
+    },
+    "report": {
+      "elapsed_seconds": 23.656949083000654,
+      "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+      "company_id": "ford_motor_company",
+      "run_id": "20261013T102113Z-b4cf220c",
+      "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+      "selected_metrics": [
+        "D02"
+      ],
+      "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+      "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-d02-company-saved/SEC_metrics",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-company-ford-20261013/state",
+      "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-company-ford-20261013/run-output/20261013T102113Z-b4cf220c",
+      "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+      "calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "selected_fiscal_years": [
+        2025
+      ]
+    },
+    "result_id": "sha256:fd73a6b3af93494b482bbf81609766fe1b4f56951c11f79e9f92bbf92f7a1257",
+    "value_length": 17765,
+    "value_sha256": "ecf514f0deb6acefc935a41ecee27842190cee64b3da306e303e96a4a9adafe9",
+    "result_files": 7,
+    "result_bytes": 409480,
+    "metrics": [
+      {
+        "metric_id": "D02",
+        "status": "INPUT_OR_EXECUTION_FAILED",
+        "attempt_id": "4016dc57ad914b6d8f228a8321e43530",
+        "error_type": "ReviewedLegalSourceError",
+        "reason": "D02_COMPLETE_SAVED_REVIEW_SET_MISSING:sha256:7f0d2be204ae60689397a55ac102ec07f3ad0923c57ab00db59060abd9fe8908",
+        "previous_result": {
+          "company_id": "ford_motor_company",
+          "configuration": {
+            "case_producer": {
+              "module": "vnext.historical_d02_case",
+              "name": "historical_d02_factory.<locals>.prepare",
+              "sha256": "66201c8166777406ee62bfd74be31baae0729c95c5046ec29b5ccef1c983e041"
+            },
+            "company_id": "ford_motor_company",
+            "company_registry_rows": {
+              "program": {
+                "company_id": "ford_motor_company",
+                "display_name": "Ford Motor Company",
+                "entity_continuity_status": "continuous",
+                "fiscal_year_end": "1231",
+                "industry_profile": "manufacturing",
+                "primary_cik": "37996",
+                "related_ciks": "",
+                "roles": "primary:37996",
+                "sic": "3711",
+                "sic_description": "Motor Vehicles & Passenger Car Bodies",
+                "target_period_policy": "latest_10k",
+                "ticker": "F"
+              },
+              "source": {
+                "company_id": "ford_motor_company",
+                "display_name": "Ford Motor Company",
+                "entity_continuity_status": "continuous",
+                "fiscal_year_end": "1231",
+                "industry_profile": "manufacturing",
+                "primary_cik": "37996",
+                "related_ciks": "",
+                "roles": "primary:37996",
+                "sic": "3711",
+                "sic_description": "Motor Vehicles & Passenger Car Bodies",
+                "target_period_policy": "latest_10k",
+                "ticker": "F"
+              }
+            },
+            "declared_processing_files": {
+              "catalog/r6/D02_legal_disclosures_v1.md": "66e25bccd5235d13d5c5edc03a8eb52f20fd65875a2eadaef961915a192b188f",
+              "catalog/r6/text_business_candidates_v1.json": "c8a03d36639554133cfd10ea1cf0ba274a01ee636cfc8cf2e12d1a448f79db35",
+              "catalog/r6/text_results_v2_policy.json": "16d9b7e46aa73d61f678ff06b0b9b24c1bedb9849840e2d84e90fd3919ce7d3c",
+              "config/normal_fiscal_year_labels_v1.json": "fde417632520d90046818fd31046615b6ea3b3df9cfdf5a1a527e38deea7bd87",
+              "config/normal_period_selection_v1.json": "6fd86440f7b62680e7ce2fa66de9f79b900f6a2b53fc8300aee590834967ab72",
+              "scripts/securegpt_sdk.py": "f8bbee906fa731a431a4dae8f127197e3bef4feaeea9f68d3be5fee99fbcbaad",
+              "scripts/vnext/canonical.py": "7eec279a9bf09150ba2ee5886b7ec6a43192c5299d91cceb1f04d510044462aa",
+              "scripts/vnext/d02_reviewed_source.py": "c87c7c92852918e7c4897689f8ad3378ecd768066e8b73d856a1e41ba72c8508",
+              "scripts/vnext/d02_text_results_v3.py": "948b22088396407226417ac431586b334dbb2e10fe654d3c23eb604eecc81217",
+              "scripts/vnext/fiscal_year_labels.py": "b4c2c6d696604f6e313da83c7845bfa6dfe2ffae250de137dcaecf9633b93251",
+              "scripts/vnext/historical_annual_input.py": "d1ae23acc349f3866298686ca2030186d43d0ed2982fb0fba77bb603d1877ad2",
+              "scripts/vnext/historical_d02_case.py": "66201c8166777406ee62bfd74be31baae0729c95c5046ec29b5ccef1c983e041",
+              "scripts/vnext/historical_dei.py": "2d31e802c78a4bce0b1e26ca4d55cd100aa240031e77309793a91702986472de",
+              "scripts/vnext/historical_filing_inventory.py": "9366e8468cf720bdff738dc9c4db071753396e09158d02a45f3ef527e1a8a700",
+              "scripts/vnext/historical_fiscal_labels.py": "280c8dffebfdbd4a302e18270415fc2b6afb00d75a432dcce804b608dadedf4b",
+              "scripts/vnext/legal_review_contract.py": "4dda6fbe1787ad21aeb1ca82e2517893a54a57dd4f9c7605d5bfb9a7bcc379c0",
+              "scripts/vnext/normal_annual_input.py": "8f7bf4f93c6fc73665304970ee3aaa2536240ce17aacd89879153d5dc7a335cf",
+              "scripts/vnext/normal_annual_input_v2.py": "8c54ef1eaf2a7774fdf4533e07fde6fa4a0391c3cec51bdaf76a317d9ebd5e19",
+              "scripts/vnext/normal_governance_input.py": "cffa0adcf6b776aa8aeaf959c8eac0eb2a663e0e54c8e2dc4c73612953c0b1b7",
+              "scripts/vnext/normal_history_catalog.py": "d17455098c0c91ceabeb20d5e3c4e944dc5a983b5e5d98d37e69b9be9f2a5487",
+              "scripts/vnext/normal_period_selection.py": "5e1599e7aab56738c86ef713c74a95e3b71308737012860f97c0c8ca8de67dd5",
+              "scripts/vnext/render.py": "a8b6f065d5e8772829d177f8bb3ee2ec2dd894d5d76c0219e6f7823f8e4793ca",
+              "scripts/vnext/review.py": "c15b0a253c919b59682afbbd8ee41a2973cd0992f1b67d9def26197a5259349d",
+              "scripts/vnext/saved_legal_review.py": "6ec718ffc79c2b757f4e2012c4a9f9cd4f060e52f9d975caba0a2bc97cfd3dfc",
+              "scripts/vnext/scope_contract.py": "d10be102520b03654d97f9b40d6b3553e28cdec0ba9b903ef6b648b09a0849d1",
+              "scripts/vnext/states.py": "53d1b7e0f3bda67e04197a20ad7524aeb99553cbf430a82a30dcbaa563ca1f30",
+              "scripts/vnext/text_business_candidates.py": "08d6fe148f3d198bc60fd18a031e76f07aa8f5f9b394508822dbcf448ea85b43",
+              "scripts/vnext/text_coverage.py": "d1c10c8f0dee51ad4d8347c6e5fa1230b7ea364b36b5207a4c4bbb15453af59d",
+              "scripts/vnext/text_rendering_limits.py": "c2435e54278447b8c81631ed4cd3b9fbd75320e00ff9fb16305bebed6a4b79c1",
+              "scripts/vnext/text_results.py": "0bab016ec5669f467abf975c510264b9ee2544600e732bb01ea18a473ab6d369",
+              "scripts/vnext/text_results_v2.py": "26a0fe518cdbb76377d6afcfde82e0a886eb7e9fc730254abd875012ecf1cc93",
+              "scripts/vnext/text_review.py": "648779bf10d79e45c41ee803da6d8090d4ff70a76a93411d8af9cc12df5b4a0e",
+              "scripts/vnext/xbrl_namespace_policy.py": "9ce8623b716340efdc5e838a35f8cdecf885d8d5d5f6cd6aea3a426f8d49c7fb"
+            },
+            "metric_id": "D02",
+            "processing_files": {
+              "catalog/company_traits.yaml": "1d91efe5b5b1d5886953b095f82f641f7cfe8fccc60af5d9b16c8541b22db31b",
+              "catalog/metrics/B01_revenue.md": "5942066d0fd57870d437a6619de72393532b10d48d4098f10cd39307622e3520",
+              "catalog/metrics/B03_ebitda_margin.md": "2705cc20f3e7dbd6a5cbb46bb051b2a16e3037d391856878c3ea74b4441a3608",
+              "catalog/ordinary_lodging/B10.md": "9b361b3b776d973aa6122cf3d2614cf7a856b8fb3f803e913aa04374b33952bb",
+              "catalog/ordinary_lodging/B11.md": "e8d87b27e2c21bff943a78b613693e72f0c8027515bd6406dc369043305cbc1a",
+              "catalog/ordinary_zero_ai/A01.md": "28a9500d338076c8db139e48ee543f24729e023d51f047fc37411dbcd252bac9",
+              "catalog/ordinary_zero_ai/A02.md": "ddd3c0acb7873e492adfef41be88dc18925d1312237f2f8e0dc72a52cfdd2484",
+              "catalog/ordinary_zero_ai/A05.md": "b95ab808850de9674e5d3928e65ebc3865eb7ff5c11c9286be5e7a43eeb577ff",
+              "catalog/ordinary_zero_ai/A06.md": "379326865c37fbcf2380f0e9d043dedd703ce1e215f946e4e56f8eea2b891431",
+              "catalog/ordinary_zero_ai/A07.md": "cbbfdfce42575b6cec07c085f01244f0d426b3830c1a713f8f628e2a38ab48a2",
+              "catalog/ordinary_zero_ai/A08.md": "c3f3ea804f3edcd74f0a0a8276fb14542231dce8ef010e0efb15a183adfb15a3",
+              "catalog/ordinary_zero_ai/A10.md": "3cbe850063eb01df136b77e21bd66bbec46a597bcbb87dafb80890a7bedb2ed6",
+              "catalog/ordinary_zero_ai/B02.md": "1969a00be4f76a8c2cfe511eb1be0dbfcd15ad974817e6ef0547f7bd5695052f",
+              "catalog/ordinary_zero_ai/B04.md": "70cfd4a7d0df728efaa7d5c9491c1e47b8b7e6ac37e1b1836f41c5dcdefd02aa",
+              "catalog/ordinary_zero_ai/B05.md": "8d0ddc9053814c208c8a626c269b4f6c321bcc51439c7a47582c8725d2130c73",
+              "catalog/ordinary_zero_ai/B07.md": "de149472d37f3d1002cf72200ac24122a644cb09dfccdf681451909915a9396d",
+              "catalog/ordinary_zero_ai/B08.md": "d88d7cf734138ca7503c3750c8433e5b2238283691e3b5a66db535f7534d1054",
+              "catalog/ordinary_zero_ai/B09.md": "d9d4c54432b75f68cfeaad386778e8e851bff01cce78ef64fd505233c302b094",
+              "catalog/ordinary_zero_ai/B12.md": "a38d16230e104ddffb7c4ba30bc4f9c35b178ae7159eaef7e17bd65f9bcacb41",
+              "catalog/ordinary_zero_ai/C01.md": "c0a86fd5f8fa239a3eefcf6cc611633444d3da3c246f72ef21115ea3d8e1468e",
+              "catalog/ordinary_zero_ai/E01.md": "2a2664da6b34735685526e494c06f529001a9861785805d159737b332ff0f312",
+              "catalog/ordinary_zero_ai/E02.md": "b55656fba811a1d9eac57534d5b98be37a2e9b36767c070c6fb679acb3c2c747",
+              "catalog/ordinary_zero_ai/E03.md": "2835c8f9ef3cab42616383ba679c82ee48f83bdd466fe32989fb1e9dd78658bc",
+              "catalog/ordinary_zero_ai/E04.md": "04fa5d35c5cf4d11794f7472775eacdab7d9cee35e05231864076bceac4bf0c1",
+              "catalog/ordinary_zero_ai/E05.md": "614b078680ef007ab5e5095c999249f8cdca9820cb19f3545a36f9965d83fbb1",
+              "catalog/r5/B06_bond_leases_v5.md": "bdca47ee444dd39ff874ef4094c1d5fa7d20d875d0a03ac2e227e58de3c2a305",
+              "catalog/r5/B06_inclusive_table_v6.md": "37252e0b414667b2f8b3026951203f9a14ab3b959767fc05c3cfa4f1f9c58220",
+              "catalog/r5/B06_note_carrying_v4.md": "7958a21a738c3c46ba0532f0bc301ca8ddba782c3f88743fb706c7e4938f890e",
+              "catalog/r6/B03_impairment_excluded_v1.md": "c7cd1b462271b3aa1c5766a997fbb968d8e168650e412f6973c6e1dffa2116c6",
+              "catalog/r6/C02_board_composition_terms_v1.json": "979007765e3daa42b8923481293c0814d9c5566e45cd4eb39f7e458d7c93a905",
+              "catalog/r6/C02_board_disclosures_v2.md": "ab5f4f9cf9bf1a238c0bd87abd4decf229a29708df946a8880339c46626d8302",
+              "catalog/r6/C02_board_disclosures_v3.md": "2e8c97265bd378d7c26e451952d3ab7727a1aae4f29438f4ff66d3618c78b072",
+              "catalog/r6/D02_item8_category_28_v1.json": "b861ac83823cd7b61e86ad12f3bbcdbd09cec18186d784f46fbfe4798068b0c8",
+              "catalog/r6/D02_item8_category_28_v2.json": "b7f5783a58086eb1e9e9c8ade562294a00357af0fc718fed4dbe58cf4591152d",
+              "config/annual_amendment_scope_v1.json": "ed7c8d776c47b08a5238d41d250fa7d4712994f2df34148383040e2435a93202",
+              "config/b06_bond_debt_set_v1.json": "d488ea9f62247459cff27c9248cd1ebb6e31b870030a7e161e8547136676e024",
+              "config/b06_bond_leases_v1.json": "eb8536c412bbcf4086a1994513f1766c2bee268f08d9835b6393b1c66f2b5f2c",
+              "config/b06_current_input_v1.json": "c63d1cfd1bbd7499b0854e62b65005e6f1063715312ea39daeed74fc30f4c3fb",
+              "config/b06_financing_inventory_v1.json": "27108acf1737de4b395b9df4f8080f94da02e7daec3a03740d20e13a19d4f7a0",
+              "config/b06_inclusive_table_v1.json": "b16f9eb19a64847b70af94834f73d436f890f4f094a9fdb5aba1e1fec899a6f5",
+              "config/b06_note_carrying_v1.json": "4b9d012fe19ae99e341f894cf7273596d762e01bbdf1673941db467fe152c5a1",
+              "config/b06_special_scope_v1.json": "ffa15f36da77df45802d863d59b64673f04bc5febdbc101c237595be60d0080b",
+              "config/instant_balance_amendment_v1.json": "50790b4f32651a2d93044d32b58aeace432d6dcde7fa9b42f599dbb05acb0892",
+              "config/issue28_normal_results_v2.json": "d41b3fe405410aaf52b6748a6afb39787aaf9e7105793052131c0c5cfb86c6da",
+              "config/main_scalability_exemptions_v1.json": "fdb7fc7ee492907ffd2899a68a8ddf3fbc733f72c6f2477ddb2a7b99100eb3b0",
+              "config/metric_applicability.yaml": "09457bfa3170149f2e86af52d5013605f04c7b13ec4724792993660cc5dbcf94",
+              "config/normal_accession_metrics_v1.json": "f0ebf62e04675b33cc9dba0a9d58e35e46fca1581ad50cbecce672e8b7e1deaa",
+              "config/normal_fiscal_year_labels_v1.json": "fde417632520d90046818fd31046615b6ea3b3df9cfdf5a1a527e38deea7bd87",
+              "config/normal_numeric_projection_v1.json": "51d04a634f9973eda2f6362587f0dc117cb4f441c29db4b71e3724fa19d1dafb",
+              "config/ordinary_income_input_v1.json": "200dcc2b9c5eac2a00106f159403b4e61d8a260a69e0ebf2ffcf7cd776bbc5ad",
+              "config/ordinary_lodging_table_v1.json": "2cf70a7655585d2ecc26af831f790fe44c3a7cbdbb323182998be566fed1399c",
+              "config/ordinary_public_projection_v1.json": "b4eaca33cbf799e00ecf97f3bcbb2ac601c973b4d8c73e23248dc5cd0b8db403",
+              "config/ordinary_scalability_exemptions_v1.json": "cfe1b388c629aa36d1f8ef6e120b464b3445a76813cc086bbb5838122f4610b5",
+              "scripts/sec_http.py": "4a18bea988045280b9cf4745e65edb3b738d97c779cf750ac9f495ead2e0bb01",
+              "scripts/sec_urls.py": "e7fbccb60adf0133962bd10d332241a9a8f44a7951911b2e3f0d837316ba16cc",
+              "scripts/vnext/annual_amendment_scope.py": "6809c995b836963d6179cae9f8c2644db43dd3d22618ba2a3f27319b69787aa7",
+              "scripts/vnext/annual_input.py": "0fbeeefe91e11768c3b1838ef50698c865673b8a399c5679de5431446a53a1d7",
+              "scripts/vnext/annual_sources.py": "df6c4156d25ea084fb808bfa308d4dd2ef25cc8f050e85bf152a30475a260643",
+              "scripts/vnext/b03_depreciation_scope.py": "e213c201c3cf925a03dc0d2c8ae293dacd2c918459f4fbaba41136aea7738e28",
+              "scripts/vnext/b03_exact_impairment_relation.py": "1f9e0ea642ccbd27f175400e7a0557d87915dfe28b55575ddfa4f38b94e4689b",
+              "scripts/vnext/b03_impairment_adjusted_run.py": "db3114f9865db36cf0cf776d05738b38d6c45e42118f60e1175364ed7f100fb1",
+              "scripts/vnext/b06_bond_leases.py": "f401c6bb2543ac1c806fe56f190631453915e21e6011c014a28e7fca4b2a5139",
+              "scripts/vnext/b06_current_input.py": "0ee6247d560301be6669783108bf1724efac76acd99c19a10de62438fcd9fac2",
+              "scripts/vnext/b06_financing_inventory.py": "331abdf70895f6941476557ea05af944b3435033d047d1ad8b4d7f95d4a9bf76",
+              "scripts/vnext/b06_inclusive_table.py": "8f1696fef637fe15170ebf2a039b373cb09f8a262b6771a8e084f048efc6158c",
+              "scripts/vnext/b06_note_carrying.py": "8799ab660920c86ec1a2c5e7c025404b795d95101119b994c78f820e5677539b",
+              "scripts/vnext/c02_composition_text_results.py": "8ab64935ff69f3d1c71cf31c4a35f5aecfaac636f7adf71aedf214577b90b4e4",
+              "scripts/vnext/c02_grouped_source.py": "b49dff1eb083bca2f6902f8adf26c180b4996691f8aa0c04c34092322a221062",
+              "scripts/vnext/calculator.py": "797424587429470d28e2f22b041f3df3ae959d4259507e9f93a9f692b4f13b9c",
+              "scripts/vnext/canonical.py": "7eec279a9bf09150ba2ee5886b7ec6a43192c5299d91cceb1f04d510044462aa",
+              "scripts/vnext/company_registry.py": "3ef279f75a6c84a7b323c704f90e788f3b01a78492ba67c237486f846bf38894",
+              "scripts/vnext/csv_output.py": "bded6023ee8177e61acf72892e0beed5839f128c1c5d33b4712b5431f263a7b3",
+              "scripts/vnext/d01_emphasis_results.py": "d0abbb6d8106caa45181f8183168ad4db9bff49795779c1cfef9adceeb4852ca",
+              "scripts/vnext/d01_emphasis_source.py": "06e470f650ea6731f1647f82c39894355cb278f49a3b96e7f64be7b24d6b7fa0",
+              "scripts/vnext/d02_item8_category_28_v1.py": "8f1867a24cd5efe3ac72b3016cf128f383799f21919fc5804c7c26d206f574a3",
+              "scripts/vnext/d02_item8_category_28_v2.py": "59b55bf1115cf3d4e4459f8c394e8eaaec854d051aa7cc2b9b1208cd0112e129",
+              "scripts/vnext/d02_text_results_v3.py": "948b22088396407226417ac431586b334dbb2e10fe654d3c23eb604eecc81217",
+              "scripts/vnext/deterministic_catalog.py": "6d9d9fde428289c1308e182f6eb62f1dad81e2aacde199a3b7b312f75e1bd2d9",
+              "scripts/vnext/deterministic_router.py": "1e5d71233fbfda516bdbefbc2c50ce36dd4f780ab515b26fbfbb69ece825f1c5",
+              "scripts/vnext/e01_item_text_28_v1.py": "6d55c88f53278ce2d6a5027965e7e787a306292d7978880cd1b66ff41d9001c7",
+              "scripts/vnext/fiscal_year_labels.py": "b4c2c6d696604f6e313da83c7845bfa6dfe2ffae250de137dcaecf9633b93251",
+              "scripts/vnext/governance_signals.py": "af071cf433cd8073bc09833a34440f2f07daf47663142f611ba5a165553dab1c",
+              "scripts/vnext/historical_board_composition.py": "a514ceffd0855733222526e38c170840d789b07bcef5e82cda096b4942cf4158",
+              "scripts/vnext/historical_board_composition_v2.py": "5333bec1b053bdf9a3d20f754e319cd8f3476041fb956db223880ba9e7a5a873",
+              "scripts/vnext/instant_balance_amendment.py": "ed19c399a6de54c4236a5c309b1f29c549f3659e4d43dd7110eadba614d9dc44",
+              "scripts/vnext/lodging_table_source.py": "0f7825a1677dff7d800d6a0d86c8ff3d891ea53db2a5265013c21e88d9d53d4a",
+              "scripts/vnext/normal_accession_results.py": "8aee2c02e1f96226bba3442f2869ed7e2c9d58f847ae88ea1404af9bec550880",
+              "scripts/vnext/normal_annual_input.py": "8f7bf4f93c6fc73665304970ee3aaa2536240ce17aacd89879153d5dc7a335cf",
+              "scripts/vnext/normal_annual_input_v2.py": "8c54ef1eaf2a7774fdf4533e07fde6fa4a0391c3cec51bdaf76a317d9ebd5e19",
+              "scripts/vnext/normal_bond_debt_results.py": "c683696dc492c0419a3a07ab51b58a2e90d4280508227ca006ab2709e7856ef7",
+              "scripts/vnext/normal_companyfacts_results.py": "6cb7191fc7a77fd68058c34bf6bfd310bdae1557dae95e910eaa5d2a7ad44e80",
+              "scripts/vnext/normal_inclusive_debt_results.py": "b54da6309cf79ad3b33ecdbb1d993586f184c5c1622eb38db9b57a061a095f02",
+              "scripts/vnext/normal_lodging_results.py": "46b5e37bd03b74d2d70ff37a0423ac29d81b2c517db7128e82cfa4e9f2831346",
+              "scripts/vnext/normal_note_debt_results.py": "1a00f57c03ea723e0c82cb67cb09036de43b98e170f4cbbd4ba0ba7e48b53e01",
+              "scripts/vnext/normal_numeric_projection.py": "dd421f32689db918b84f186c25f4f6bd9ec4f8bdee36c51bceeb732dab722ad9",
+              "scripts/vnext/normal_run_inputs.py": "8569faed05ccd1d9a1c94e3915f8bdc978afb5446be65e2b09193d7f24d7e1ce",
+              "scripts/vnext/normal_run_specs.py": "f1b03641f83dc59a251e0d59976c71e94ed73c482f3fe989a1a48b5fa5a99717",
+              "scripts/vnext/normal_run_v3.py": "a256a29e266108fd6135e765613417559c26acc6ada7d1ec48cf344b296e0495",
+              "scripts/vnext/normal_zero_ai_results.py": "2ee28eb517a5575fa4547ec519afe8490523ae937e03d4e48d7628c540460433",
+              "scripts/vnext/observations.py": "a41e7a507e69a28806fc43226b96f3d5a0dd1c7185bc5bd195b4de78a769211e",
+              "scripts/vnext/ordinary_current_update.py": "a4b696fad5860ce0e818a891941dde246662edfccd50bf6ca4da6137c2d5d696",
+              "scripts/vnext/ordinary_d02_category_update_v2.py": "c76530141c6b52bd2c6235cf745bc04e5bee12085e3f05d22fbbcf114c786b22",
+              "scripts/vnext/ordinary_d02_item8_v1.py": "ca4b4e1adb99f152c9f30f083f6af91177a4a687ea322b0028f33e376b0ffeb7",
+              "scripts/vnext/ordinary_d02_item8_v2.py": "446b6d89cbcebaef26fc135d46f7824f67aa614e026edebda4ea4697b410dc24",
+              "scripts/vnext/ordinary_debt_guard.py": "fd37579ad8a6aa5d40af9eadbe9caef6eab712fcb7ac3e3bd2eeac1656e520a0",
+              "scripts/vnext/ordinary_e01_item_text_input.py": "a97750590a1a528fe297802e64d4e86c4da6ccb386a628df4b3a569fd1ded873",
+              "scripts/vnext/ordinary_financial_results.py": "927a991712ca444d14edf4e7e7a38d099cfc4ffa90836018243e6e3360fd3b38",
+              "scripts/vnext/ordinary_income_input.py": "bf5cdb95c617a4cd92834fa922304cf2a3ff59b1fab2f4c7509e48c163bc683d",
+              "scripts/vnext/ordinary_projection.py": "927124bb6c9b5ac9488291701dff60cf06ce6e451ec744fce3e0497e92ffca38",
+              "scripts/vnext/ordinary_registry_scope.py": "4657e2bcd3739a30516f9ae9e23831c7ee0217286e463c987c14c7713b8a7841",
+              "scripts/vnext/ordinary_remaining_cases.py": "7e248ec09c37d6836ab6dde8a4ab7143c10810a1d49679f83dee2bf4c2f40f7a",
+              "scripts/vnext/ordinary_saved_result.py": "9f7de93d41929669c7f08f394425c1e3ad181896bdde3fa6d079ca3924272d21",
+              "scripts/vnext/ordinary_scalability_audit.py": "451d5a68a9ac0b08a614d35b8838aa01112e3cbad91fd71e98b31e5fed35e83d",
+              "scripts/vnext/ordinary_source_authority.py": "6a5349a5aaa0ad41898477c037620c23c92f027534d65dc1d2fedf37e79f31a2",
+              "scripts/vnext/ordinary_special_debt_scope.py": "74d8b2563cd826a51720b7e4ce3af28b99e7d69dd0f241562e4033b37ff56813",
+              "scripts/vnext/ordinary_text_input.py": "4f15c69e99d9bc08962827a345810a443082c626d0dae06bfc141ad3b33880d4",
+              "scripts/vnext/ordinary_update_compatibility.py": "14aba908024c3331d5f1e40301c5145ad294560d2dc267cf3bdce4e38f599950",
+              "scripts/vnext/ordinary_update_cycle.py": "b65a99e8263d6b631b70ee183cb02d0b58ff1a924a8c3eb69859b1103dacc2ee",
+              "scripts/vnext/projector.py": "21dc6372abe69477def0f1a72b0ea8108c2aa2a9751ae08e8440acb06dbc4c21",
+              "scripts/vnext/records.py": "e3ca654eaf837ccdc1ef0d2d542daff4f3a005dbfa4e693122b41bae6ee5a187",
+              "scripts/vnext/request_bindings.py": "d0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee",
+              "scripts/vnext/resource_limits.py": "2be2aab001242107db8ffe877d9a7e16ea0bd8dc04e0fa40481b28a65732187b",
+              "scripts/vnext/saved_source_checks.py": "5521a785e23c5e2b2c4c8974dd9aab0f9073208f92408fe2e258c9660f8f98f9",
+              "scripts/vnext/scope_contract.py": "d10be102520b03654d97f9b40d6b3553e28cdec0ba9b903ef6b648b09a0849d1",
+              "scripts/vnext/sources.py": "53eeef067c450bd5bb7a92daab88bc437546b2d95355186a6464d2222bf23c31",
+              "scripts/vnext/specs.py": "7910045ff626718fcdceb8aa796e2b2c4927d8ca214936aded394e8fc01c1f53",
+              "scripts/vnext/table_grid.py": "8ab43146f0c8d711067c609f38a4ae9368266f6192f7be21e8aa743bb0f1d617",
+              "scripts/vnext/text_coverage.py": "d1c10c8f0dee51ad4d8347c6e5fa1230b7ea364b36b5207a4c4bbb15453af59d",
+              "scripts/vnext/text_results_v2.py": "26a0fe518cdbb76377d6afcfde82e0a886eb7e9fc730254abd875012ecf1cc93",
+              "scripts/vnext/traits.py": "44f6c1f6b032e956c85d54423e88a552ec742e2d6b13435cd91fd53512418303",
+              "tools/check_main_scalability.py": "f3a8dc414a1e3f653de9b073ccd485d884ab3db633b29e2754052ca2daa5b1a0"
+            },
+            "provider_enabled": false,
+            "requested_fiscal_year": 2025,
+            "saved_processing_inputs": {
+              "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-company-ford-20261013/answers/call0009/invocation_control/requests/07aff1fb87b2834ecae8603033856901c338c69002e797973b37ee4ba9e7b047.bin": "40e79bb821b033427325228a742ce920ad6b858653b4ac2cf6f78fc84b0f78ad",
+              "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-company-ford-20261013/answers/call0009/semantic-request.json": "c89df66d587068a531dad00f124ac8dbbf2378fba99d0a6440a37948e4dc406e",
+              "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-company-ford-20261013/answers/call0009/source.json": "2bc617fe57a190dbdc71920bd0e0f06e03be5128041955fdb6a28c33b9b685df",
+              "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-company-ford-20261013/answers/call0009/terminal.json": "94ef29820a6a718485b0b1c600773b8d3f2650a696ba9558a132b688618ccb10",
+              "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-company-ford-20261013/answers/call0009/wire/assistant-output.bin": "e3023cee53826a2cc51b1c7a163205a322c72758d642fef95da326afba9fff27",
+              "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-company-ford-20261013/answers/call0009/wire/journal.json": "4265d853f5aedebe5982be103ff9e52d892ac1b9e9f5270026b66d668be682a9",
+              "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-company-ford-20261013/answers/call0009/wire/raw-response.bin": "ffbd0a51a6797fadb8292ff29bbe2d6f073ac45c559ad6a51d8e7a51d5c67d18"
+            },
+            "sec_fetch_enabled": false,
+            "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs"
+          },
+          "metric_id": "D02",
+          "period_end": "2025-12-31",
+          "requested_fiscal_year": 2025,
+          "result_id": "sha256:fd73a6b3af93494b482bbf81609766fe1b4f56951c11f79e9f92bbf92f7a1257",
+          "source_census": [
+            {
+              "content_sha256": "db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e",
+              "document_name": "CIK0000037996.json",
+              "error": "",
+              "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000037996.json",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "75dfd26b5b70cfcd2d078984de27d2173c420c058ebb04476b508f1b794afaf0",
+              "document_name": "CIK0000037996-submissions-001.json",
+              "error": "",
+              "source_url": "https://data.sec.gov/submissions/CIK0000037996-submissions-001.json",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "5c96834814ddd7d94fa7f8740615ad5f2cf7d2c0c110dae1c600bf4b999fcf44",
+              "document_name": "CIK0000037996-submissions-002.json",
+              "error": "",
+              "source_url": "https://data.sec.gov/submissions/CIK0000037996-submissions-002.json",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53",
+              "document_name": "CIK0000037996.json",
+              "error": "",
+              "source_url": "https://data.sec.gov/submissions/CIK0000037996.json",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "7716d0bc811d3f2cff773a183fef10cee0b9b74fd0907d5a6b4aaf92410a0f03",
+              "document_name": "0000037996-25-000002.hdr.sgml",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000002/0000037996-25-000002.hdr.sgml",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "b23daac608266f4e427b037682636d1c5b54e8e832a4f6a9f8ce544c0b99ef1a",
+              "document_name": "f-20250103.htm",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000002/f-20250103.htm",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "f4df74496a291c846b3589665db198f2bf08b9d4e92fa7e52e6ccf223b95daf9",
+              "document_name": "0000037996-25-000006.hdr.sgml",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000006/0000037996-25-000006.hdr.sgml",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "204865487a49ef28225567fb01103bb06fe81d32b21c6e5feccaf1100b6548b6",
+              "document_name": "f-20250123.htm",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000006/f-20250123.htm",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "7af872ad5f6d6d715e255233bb4ad3d6f7ba289e34648362b2745dcdf5a5fcf2",
+              "document_name": "0000037996-25-000009.hdr.sgml",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000009/0000037996-25-000009.hdr.sgml",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "4ee8c5f9688f1426042378d168e85a3f93aa21eaeb4180b1751bb537c6875b0b",
+              "document_name": "f-20250205.htm",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000009/f-20250205.htm",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "76ae660b54d06ced7437da84713142dfacb9745aa7c45300ef0784904cfd2fa7",
+              "document_name": "0000037996-25-000011.hdr.sgml",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000011/0000037996-25-000011.hdr.sgml",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "fb002051cb6a1d1e9920533a36a62c68201fd0f0f4acb17b5e6dd3e2461540a7",
+              "document_name": "f-20250205.htm",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000011/f-20250205.htm",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "cadb83d6a44e3ad04dc3eb7b5f379957fb1ffefa54ea842a86500de7539c01a6",
+              "document_name": "f-20241231_htm.xml",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000013/f-20241231_htm.xml",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "8ef6698613925a46bd4130a4771801adc3bda92073d3c8b1a45c80214876d2fd",
+              "document_name": "index.json",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000013/index.json",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "351183d25ca91a4de301e7ba4913535fac836b49a312f1a786fcfe84321fc3a9",
+              "document_name": "0000037996-25-000065.hdr.sgml",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000065/0000037996-25-000065.hdr.sgml",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "b2c6396764dbfaa7fc7328d751238c4f843628f1fc9a93e0435196110b70a931",
+              "document_name": "f-20250401.htm",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000065/f-20250401.htm",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "79f659e205d6ae5ce305a3fd34031c6ac1deac8ed716918df5b6706f03c2b636",
+              "document_name": "0000037996-25-000067.hdr.sgml",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000067/0000037996-25-000067.hdr.sgml",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "1dcd486c08b5c9b89709db6817b2875f7a6e3616f7fada4d4ed1257706ce71bf",
+              "document_name": "f-20250417.htm",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000067/f-20250417.htm",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "3963eee290709e474be714be4d0aa83d27586cce70545131442392a1187b5409",
+              "document_name": "0000037996-25-000071.hdr.sgml",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000071/0000037996-25-000071.hdr.sgml",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "69cfbee99827223b8453043648e0cfdb5af277cf13ae2f7762fe43dd168cfd4f",
+              "document_name": "f-20250505.htm",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000071/f-20250505.htm",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "81d85beef39cd689cb9ad3c101f70d80a0b131974191508fc2b0b75fd6dad43f",
+              "document_name": "0000037996-25-000074.hdr.sgml",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000074/0000037996-25-000074.hdr.sgml",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "1cb04b310f3b646086f9d0b54ee675d0f6cfd6f42347124db39bc6032e5b1ffa",
+              "document_name": "f-20250507.htm",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000074/f-20250507.htm",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "8c5dc414f40bba61993f02f1bdf41c5964e3706e55b4044de54bd6754c27a24e",
+              "document_name": "0000037996-25-000139.hdr.sgml",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000139/0000037996-25-000139.hdr.sgml",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "48fc3f9b067b5c8367777bcaba73600a7ae7bd0277ce16b0ebf436224818a18a",
+              "document_name": "f-20250701.htm",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000139/f-20250701.htm",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "2c6c1653765f2fafc7fae58b585d6a910ecbc6cfcb15cd0f28d20bb635ce10d2",
+              "document_name": "0000037996-25-000141.hdr.sgml",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000141/0000037996-25-000141.hdr.sgml",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "d26f94a5b149f1dbbca3538fced7c9ea6fa2ff199349705c1fbe2ea164c2ac98",
+              "document_name": "f-20250716.htm",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000141/f-20250716.htm",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "865fccf651a0b42946d16ed9cd2742d9467390ef54f8a8980962ff3f5c87943e",
+              "document_name": "0000037996-25-000143.hdr.sgml",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000143/0000037996-25-000143.hdr.sgml",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "21237fdaa17d5b771e06b96e0dd280025465d85eab787b4e7fc668d60c52fedf",
+              "document_name": "f-20250728.htm",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000143/f-20250728.htm",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "8748e18867a6477a9036b9315c4a2ead55cf4fda5c9dd6b9b2d7785626388058",
+              "document_name": "0000037996-25-000146.hdr.sgml",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000146/0000037996-25-000146.hdr.sgml",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "f88d34b7cf154f0beed5580e8e1f82daa683259a93400e582cbfcc0f9bfcfb98",
+              "document_name": "f-20250730.htm",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000146/f-20250730.htm",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "7352ac4dd4a8d6f23efe58f6927089ca87f4f62613212c0e65e8dfdc5123cc35",
+              "document_name": "0000037996-25-000175.hdr.sgml",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000175/0000037996-25-000175.hdr.sgml",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "79b566ef9fe1b8163fe14c4e088d2422fe11b603b44a1407d36123a82e0b9ac1",
+              "document_name": "f-20251001.htm",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000175/f-20251001.htm",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "74fe0cd457500f98cf27700dad97963bc8adc605889eba084938c3feb4fdf510",
+              "document_name": "0000037996-25-000185.hdr.sgml",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000185/0000037996-25-000185.hdr.sgml",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "6cb4f8b4a35a0cd8562268c3b8664012d1abd29d1695fd4242e67fd090c8520b",
+              "document_name": "f-20251023.htm",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000185/f-20251023.htm",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "bf5e1f9fc1e9ab12a5f80ab3a9e36bd1c277b86b13c3908acaa9560bcb0f40e2",
+              "document_name": "0000037996-25-000210.hdr.sgml",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000210/0000037996-25-000210.hdr.sgml",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "b6f93732ebd5922e05673ee22ed113ecc5ebd1781b898a46dd2e2c8e4875f7d6",
+              "document_name": "f-20251121.htm",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000210/f-20251121.htm",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "1a855dff6780aace87f3f0fec24ad99b1c337b10721365f349255887fa4b9d21",
+              "document_name": "0000037996-25-000236.hdr.sgml",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000236/0000037996-25-000236.hdr.sgml",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "9c499e954e173fa7c17be9ba8e40388d60eee781b79394469d96f83f80a2a31a",
+              "document_name": "f-20251211.htm",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000236/f-20251211.htm",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "2d4be2ee35606fac4f972894f567491cb5b452047940a55e29cbf237909d0db0",
+              "document_name": "0000037996-25-000238.hdr.sgml",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000238/0000037996-25-000238.hdr.sgml",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "6650bd76f82a8ef808e25f207c6622ff8244f9c63d770d0a2083115f018fca13",
+              "document_name": "f-20251209.htm",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000238/f-20251209.htm",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "ec4c6362377e09b528665dfe22809beb04c9be11db3a46372345c62daccf848a",
+              "document_name": "0000037996-26-000015-index.html",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799626000015/0000037996-26-000015-index.html",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "394b852fe089d139f83ea92b06dffb7644abd34fef887f46a9fa25df726404a4",
+              "document_name": "FilingSummary.xml",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799626000015/FilingSummary.xml",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9",
+              "document_name": "f-20251231.htm",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799626000015/f-20251231.htm",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "35cb6e0ef1f84d5790c0fdf38abb363b92b65cd7f14ab8e0342968780e9efcfe",
+              "document_name": "f-20251231_htm.xml",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799626000015/f-20251231_htm.xml",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "1958d73e1cae2d9c1b2158437da7aa571342849d6aa30485468e40f8a57bac86",
+              "document_name": "index.json",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799626000015/index.json",
+              "status_code": "200"
+            },
+            {
+              "content_sha256": "6c098b3a19c316b1b3ca0da53bce7109c34b226d7093060c366eab519b8b443d",
+              "document_name": "e26003_f-def14a.htm",
+              "error": "",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000155278126000164/e26003_f-def14a.htm",
+              "status_code": "200"
+            }
+          ],
+          "version": "37f2dc59340c45f189bde5a58767c893"
+        },
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2025,
+        "error_category": "MODEL_RESPONSE_REQUIRED",
+        "defect_holds": [],
+        "read_result_id": "sha256:fd73a6b3af93494b482bbf81609766fe1b4f56951c11f79e9f92bbf92f7a1257",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-company-ford-20261013/state/updates/D02/periods/FY2025/results/37f2dc59340c45f189bde5a58767c893",
+        "program_version": {
+          "commit": "f40b04a15e684b73ded57c67d7cd5cbc31f2aa34",
+          "has_uncommitted_changes": true
+        }
+      }
+    ],
+    "answer_hashes": {
+      "call0009/source.json": "2bc617fe57a190dbdc71920bd0e0f06e03be5128041955fdb6a28c33b9b685df",
+      "call0009/semantic-request.json": "c89df66d587068a531dad00f124ac8dbbf2378fba99d0a6440a37948e4dc406e",
+      "call0009/terminal.json": "94ef29820a6a718485b0b1c600773b8d3f2650a696ba9558a132b688618ccb10",
+      "call0009/wire/raw-response.bin": "ffbd0a51a6797fadb8292ff29bbe2d6f073ac45c559ad6a51d8e7a51d5c67d18",
+      "call0009/wire/assistant-output.bin": "e3023cee53826a2cc51b1c7a163205a322c72758d642fef95da326afba9fff27",
+      "call0009/wire/journal.json": "4265d853f5aedebe5982be103ff9e52d892ac1b9e9f5270026b66d668be682a9",
+      "call0009/invocation_control/requests/07aff1fb87b2834ecae8603033856901c338c69002e797973b37ee4ba9e7b047.bin": "40e79bb821b033427325228a742ce920ad6b858653b4ac2cf6f78fc84b0f78ad"
+    }
+  },
+  "read-failed": {
+    "elapsed_seconds": 0.09707975000492297,
+    "exit_code": 0,
+    "tested_commit": "f40b04a15e684b73ded57c67d7cd5cbc31f2aa34",
+    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-d02-company-saved/SEC_metrics",
+    "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+    "answer_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-company-ford-20261013/answers",
+    "uncommitted_paths": [
+      " M tests/vnext/test_d02_company_saved.py",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/company-first.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/company-missing-answer.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/company-read-failed.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/company-read.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/company-repeat.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/fixed-anchor-controls.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/main-combined-controls.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/profiled-preflight-stopped.txt",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/source-preflight.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/unprofiled-source-preflight.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/unsettled-public-controls.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/verify_company.py"
+    ],
+    "producer_calls": {
+      "prepare_historical_legal_sources": 0,
+      "finish_historical_legal_case": 0,
+      "calculate_text_metric": 0,
+      "historical_d02_factory.<locals>.prepare": 0
+    },
+    "report": {
+      "elapsed_seconds": 0.09324262500740588,
+      "record_type": "ORDINARY_COMPANY_RESULT_VIEW_V1",
+      "company_id": "ford_motor_company",
+      "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+      "source_freshness": "NOT_CHECKED_BY_SAVED_READER",
+      "calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-company-ford-20261013/independent-read-failed"
+    },
+    "result_id": "sha256:fd73a6b3af93494b482bbf81609766fe1b4f56951c11f79e9f92bbf92f7a1257",
+    "value_length": 17765,
+    "value_sha256": "ecf514f0deb6acefc935a41ecee27842190cee64b3da306e303e96a4a9adafe9",
+    "result_files": 7,
+    "result_bytes": 409480,
+    "metrics": [
+      {
+        "metric_id": "D02",
+        "result_id": "sha256:fd73a6b3af93494b482bbf81609766fe1b4f56951c11f79e9f92bbf92f7a1257",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "fiscal_year": 2025,
+        "unit": null,
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "result_validity": "PREVIOUS_RESULT_CURRENT_CHECK_FAILED",
+        "defect_holds": [],
+        "latest_observation": "INPUT_OR_EXECUTION_FAILED",
+        "requested_in_latest_execution": true,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-company-ford-20261013/state/updates/D02/periods/FY2025/results/37f2dc59340c45f189bde5a58767c893",
+        "reason": "D02_COMPLETE_SAVED_REVIEW_SET_MISSING:sha256:7f0d2be204ae60689397a55ac102ec07f3ad0923c57ab00db59060abd9fe8908",
+        "error_type": "ReviewedLegalSourceError",
+        "error_category": "MODEL_RESPONSE_REQUIRED",
+        "previous_result_unit": "text"
+      }
+    ],
+    "answer_hashes": {
+      "call0009/source.json": "2bc617fe57a190dbdc71920bd0e0f06e03be5128041955fdb6a28c33b9b685df",
+      "call0009/semantic-request.json": "c89df66d587068a531dad00f124ac8dbbf2378fba99d0a6440a37948e4dc406e",
+      "call0009/terminal.json": "94ef29820a6a718485b0b1c600773b8d3f2650a696ba9558a132b688618ccb10",
+      "call0009/wire/raw-response.bin": "ffbd0a51a6797fadb8292ff29bbe2d6f073ac45c559ad6a51d8e7a51d5c67d18",
+      "call0009/wire/assistant-output.bin": "e3023cee53826a2cc51b1c7a163205a322c72758d642fef95da326afba9fff27",
+      "call0009/wire/journal.json": "4265d853f5aedebe5982be103ff9e52d892ac1b9e9f5270026b66d668be682a9",
+      "call0009/invocation_control/requests/07aff1fb87b2834ecae8603033856901c338c69002e797973b37ee4ba9e7b047.bin": "40e79bb821b033427325228a742ce920ad6b858653b4ac2cf6f78fc84b0f78ad"
+    }
+  },
+  "restore": {
+    "elapsed_seconds": 0.562346416991204,
+    "exit_code": 0,
+    "tested_commit": "f40b04a15e684b73ded57c67d7cd5cbc31f2aa34",
+    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-d02-company-saved/SEC_metrics",
+    "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+    "answer_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-company-ford-20261013/answers",
+    "uncommitted_paths": [
+      " M tests/vnext/test_d02_company_saved.py",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/company-first.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/company-missing-answer.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/company-read-failed.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/company-read.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/company-repeat.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/company-restored-answer.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/fixed-anchor-controls.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/main-combined-controls.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/profiled-preflight-stopped.txt",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/source-preflight.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/unprofiled-source-preflight.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/unsettled-public-controls.log",
+      "?? docs/evidence/issue28_d02_company_saved_20261013/verify_company.py"
+    ],
+    "producer_calls": {
+      "prepare_historical_legal_sources": 0,
+      "finish_historical_legal_case": 0,
+      "calculate_text_metric": 0,
+      "historical_d02_factory.<locals>.prepare": 0
+    },
+    "report": {
+      "elapsed_seconds": 0.5580097080091946,
+      "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+      "company_id": "ford_motor_company",
+      "run_id": "20261013T102222Z-e95313b3",
+      "status": "FLOW_COMPLETED",
+      "selected_metrics": [
+        "D02"
+      ],
+      "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+      "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-d02-company-saved/SEC_metrics",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-company-ford-20261013/state",
+      "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-company-ford-20261013/run-output/20261013T102222Z-e95313b3",
+      "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+      "calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "selected_fiscal_years": [
+        2025
+      ]
+    },
+    "result_id": "sha256:fd73a6b3af93494b482bbf81609766fe1b4f56951c11f79e9f92bbf92f7a1257",
+    "value_length": 17765,
+    "value_sha256": "ecf514f0deb6acefc935a41ecee27842190cee64b3da306e303e96a4a9adafe9",
+    "result_files": 7,
+    "result_bytes": 409480,
+    "metrics": [
+      {
+        "metric_id": "D02",
+        "status": "NO_SOURCE_CONTENT_CHANGE",
+        "attempt_id": "4fdf39920a16472084cc7d9b84157fca",
+        "version": "37f2dc59340c45f189bde5a58767c893",
+        "result_id": "sha256:fd73a6b3af93494b482bbf81609766fe1b4f56951c11f79e9f92bbf92f7a1257",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-company-ford-20261013/state/updates/D02/periods/FY2025/results/37f2dc59340c45f189bde5a58767c893",
+        "result_reason_code": "PASS",
+        "raw_input_unchanged": true,
+        "calculation_performed": false,
+        "new_candidate_created": false,
+        "source_check_versions": {
+          "scripts/vnext/ordinary_current_update.py": "a4b696fad5860ce0e818a891941dde246662edfccd50bf6ca4da6137c2d5d696",
+          "scripts/vnext/request_bindings.py": "d0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee"
+        },
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2025,
+        "defect_holds": [],
+        "read_result_id": "sha256:fd73a6b3af93494b482bbf81609766fe1b4f56951c11f79e9f92bbf92f7a1257",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-company-ford-20261013/state/updates/D02/periods/FY2025/results/37f2dc59340c45f189bde5a58767c893",
+        "program_version": {
+          "commit": "f40b04a15e684b73ded57c67d7cd5cbc31f2aa34",
+          "has_uncommitted_changes": true
+        }
+      }
+    ],
+    "answer_hashes": {
+      "call0009/source.json": "2bc617fe57a190dbdc71920bd0e0f06e03be5128041955fdb6a28c33b9b685df",
+      "call0009/semantic-request.json": "c89df66d587068a531dad00f124ac8dbbf2378fba99d0a6440a37948e4dc406e",
+      "call0009/terminal.json": "94ef29820a6a718485b0b1c600773b8d3f2650a696ba9558a132b688618ccb10",
+      "call0009/wire/raw-response.bin": "ffbd0a51a6797fadb8292ff29bbe2d6f073ac45c559ad6a51d8e7a51d5c67d18",
+      "call0009/wire/assistant-output.bin": "e3023cee53826a2cc51b1c7a163205a322c72758d642fef95da326afba9fff27",
+      "call0009/wire/journal.json": "4265d853f5aedebe5982be103ff9e52d892ac1b9e9f5270026b66d668be682a9",
+      "call0009/invocation_control/requests/07aff1fb87b2834ecae8603033856901c338c69002e797973b37ee4ba9e7b047.bin": "40e79bb821b033427325228a742ce920ad6b858653b4ac2cf6f78fc84b0f78ad"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "phase": "read",
+  "elapsed_seconds": 0.09635599999455735,
+  "exit_code": 0,
+  "tested_commit": "f40b04a15e684b73ded57c67d7cd5cbc31f2aa34",
+  "uncommitted_paths": [
+    "?? docs/evidence/issue28_d02_company_saved_20261013/company-first.log",
+    "?? docs/evidence/issue28_d02_company_saved_20261013/company-read.log",
+    "?? docs/evidence/issue28_d02_company_saved_20261013/company-repeat.log",
+    "?? docs/evidence/issue28_d02_company_saved_20261013/fixed-anchor-controls.log",
+    "?? docs/evidence/issue28_d02_company_saved_20261013/main-combined-controls.log",
+    "?? docs/evidence/issue28_d02_company_saved_20261013/profiled-preflight-stopped.txt",
+    "?? docs/evidence/issue28_d02_company_saved_20261013/source-preflight.log",
+    "?? docs/evidence/issue28_d02_company_saved_20261013/unprofiled-source-preflight.log",
+    "?? docs/evidence/issue28_d02_company_saved_20261013/verify_company.py"
+  ],
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-d02-company-saved/SEC_metrics",
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+  "answer_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-company-ford-20261013/answers",
+  "producer_calls": {
+    "prepare_historical_legal_sources": 0,
+    "finish_historical_legal_case": 0,
+    "calculate_text_metric": 0,
+    "historical_d02_factory.<locals>.prepare": 0
+  },
+  "result_id": "sha256:fd73a6b3af93494b482bbf81609766fe1b4f56951c11f79e9f92bbf92f7a1257",
+  "value_length": 17765,
+  "value_sha256": "ecf514f0deb6acefc935a41ecee27842190cee64b3da306e303e96a4a9adafe9",
+  "result_files": 7,
+  "result_bytes": 409480
+}
