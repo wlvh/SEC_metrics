@@ -1,0 +1,39 @@
+{
+  "elapsed_seconds": 0.04467408312484622,
+  "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+  "company_id": "jpmorgan_chase",
+  "run_id": "20261009T173028Z-e1d08fc6",
+  "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+  "selected_metrics": [
+    "A04"
+  ],
+  "metrics": [
+    {
+      "metric_id": "A04",
+      "status": "INPUT_OR_EXECUTION_FAILED",
+      "attempt_id": "ffbc1360f98d424ea529789eda036bb7",
+      "error_type": "AssertionError",
+      "reason": "Completed result must not recalculate",
+      "previous_result": null,
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false
+    }
+  ],
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/issue28-current-nim/SEC_metrics",
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-current-nim/SEC_metrics",
+  "record_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-nim-e00ixjm7/state",
+  "output_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-nim-e00ixjm7/output/20261009T173028Z-e1d08fc6",
+  "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}
+RECOVERED 2 seconds 0.04597324994392693
+LATEST {"calls": {"paid": 0, "provider": 0, "sec": 0}, "company_id": "jpmorgan_chase", "metrics": [{"attempt_id": "ffbc1360f98d424ea529789eda036bb7", "error_type": "AssertionError", "metric_id": "A04", "new_calls": {"paid": 0, "provider": 0, "sec": 0}, "previous_result": null, "production_authorized": false, "reason": "Completed result must not recalculate", "status": "INPUT_OR_EXECUTION_FAILED"}], "output_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-nim-e00ixjm7/output/20261009T173028Z-e1d08fc6", "production_authorized": false, "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-current-nim/SEC_metrics", "record_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-nim-e00ixjm7/state", "record_type": "ORDINARY_COMPANY_EXECUTION_V1", "run_id": "20261009T173028Z-e1d08fc6", "selected_metrics": ["A04"], "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY", "source_root": "/Users/lyuhongwang/.codex/worktrees/issue28-current-nim/SEC_metrics", "status": "FLOW_COMPLETED_WITH_LIMITATIONS"}

@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-nim/SEC_metrics/docs/evidence/issue28_current_nim_20261010/verify_main_receiving.py", line 28, in <module>
+    assert all(Path(p).read_bytes() and hashlib.sha256(Path(p).read_bytes()).hexdigest()==digest for p,digest in before.items())
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

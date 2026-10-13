@@ -1,0 +1,13 @@
+test_a_feature_must_register_at_least_one_actual_selector (tests.test_selector_registry.SelectorRegistryTest.test_a_feature_must_register_at_least_one_actual_selector) ... ok
+test_actual_runner_keeps_all_prior_selectors_order_and_material_shards (tests.test_selector_registry.SelectorRegistryTest.test_actual_runner_keeps_all_prior_selectors_order_and_material_shards) ... ok
+test_duplicate_of_existing_selector_is_rejected (tests.test_selector_registry.SelectorRegistryTest.test_duplicate_of_existing_selector_is_rejected) ... ok
+test_duplicates_across_feature_files_or_suites_are_rejected (tests.test_selector_registry.SelectorRegistryTest.test_duplicates_across_feature_files_or_suites_are_rejected) ... ok
+test_empty_unused_suite_does_not_reject_a_nonempty_feature (tests.test_selector_registry.SelectorRegistryTest.test_empty_unused_suite_does_not_reject_a_nonempty_feature) ... ok
+test_missing_or_malformed_declaration_cannot_look_like_no_tests (tests.test_selector_registry.SelectorRegistryTest.test_missing_or_malformed_declaration_cannot_look_like_no_tests) ... ok
+test_two_independent_feature_files_are_both_consumed_in_stable_order (tests.test_selector_registry.SelectorRegistryTest.test_two_independent_feature_files_are_both_consumed_in_stable_order) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.011s
+
+OK
+{"allowed_skips": 0, "errors": 0, "failures": 0, "run": 7, "skip_reasons": [], "skipped": 0, "tests": ["tests.test_selector_registry"]}
