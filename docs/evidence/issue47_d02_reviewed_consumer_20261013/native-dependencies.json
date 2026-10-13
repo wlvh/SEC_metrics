@@ -1,0 +1,430 @@
+{
+  "observed": {
+    "scripts/vnext/d02_reviewed_source.py": [
+      "<genexpr>",
+      "_need",
+      "apply_saved_reviews",
+      "finish_historical_legal_case",
+      "item8_requests",
+      "prepare_historical_legal_sources"
+    ],
+    "scripts/vnext/historical_dei.py": [
+      "<genexpr>",
+      "_attribute",
+      "_class_view",
+      "_codes",
+      "_followed",
+      "_frozen_pattern",
+      "_function_references",
+      "_function_view",
+      "_held_cells",
+      "_imported",
+      "_in_package",
+      "_is_view",
+      "_load_chains",
+      "_members",
+      "_package_module",
+      "_refuse_unredirectable",
+      "_successors",
+      "annual_period",
+      "asks_the_dei_question",
+      "enter",
+      "fullmatch",
+      "reaches_the_dei_question",
+      "release_aware",
+      "view"
+    ],
+    "scripts/vnext/canonical.py": [
+      "<lambda>",
+      "_canonicalize",
+      "_pairs_to_object",
+      "_parse_json_decimal",
+      "_parse_json_integer",
+      "_validate_tree_unicode",
+      "_validate_unicode",
+      "canonical_json_bytes",
+      "content_hash",
+      "execution_semantics_hash",
+      "parse_decimal",
+      "parse_utc_timestamp",
+      "sha256_bytes",
+      "sha256_file",
+      "strict_json_file",
+      "strict_json_loads"
+    ],
+    "scripts/vnext/normal_period_selection.py": [
+      "<genexpr>",
+      "_derive",
+      "_need",
+      "_policy",
+      "_report_end",
+      "_selected_company",
+      "check_selected_label",
+      "check_selected_period",
+      "issuer_fiscal_year",
+      "resolve_period_selection",
+      "selected_historical_filing"
+    ],
+    "scripts/vnext/company_registry.py": [
+      "_registry_rows"
+    ],
+    "scripts/vnext/normal_history_catalog.py": [
+      "<genexpr>",
+      "<lambda>",
+      "_company",
+      "_identity",
+      "_need",
+      "_reading_cik",
+      "annual_periods",
+      "block_last_days",
+      "catalog_identity",
+      "cutoff",
+      "load_history_for_period"
+    ],
+    "scripts/vnext/normal_annual_input.py": [
+      "<genexpr>",
+      "_cik",
+      "_date",
+      "_need",
+      "_subject_policy",
+      "annual_period",
+      "dei",
+      "dei_namespace_pattern"
+    ],
+    "scripts/vnext/normal_governance_input.py": [
+      "<genexpr>",
+      "<lambda>",
+      "__init__",
+      "_date",
+      "_filings",
+      "_history_index",
+      "_need",
+      "primary",
+      "read"
+    ],
+    "scripts/sec_urls.py": [
+      "accession_document_url",
+      "accession_no_dash",
+      "cik10",
+      "companyfacts_url",
+      "submissions_url"
+    ],
+    "scripts/vnext/annual_sources.py": [
+      "_require",
+      "_rows",
+      "_utc",
+      "saved_source"
+    ],
+    "scripts/sec_http.py": [
+      "<genexpr>",
+      "legacy_response_snapshot_paths",
+      "parse_request_log_rows",
+      "read_request_snapshot_bytes",
+      "read_verified_immutable_bytes",
+      "repository_write_path",
+      "request_accession",
+      "request_artifact_candidate",
+      "request_headers_bytes_match_identity",
+      "request_log_attempt_id",
+      "request_log_manifest_path",
+      "request_log_manifest_payload",
+      "unique_request_manifest_object",
+      "validate_official_sec_url",
+      "validate_request_log_manifest"
+    ],
+    "scripts/vnext/annual_input.py": [
+      "_saved_source"
+    ],
+    "scripts/vnext/request_bindings.py": [
+      "_validate_named_row",
+      "_verified_request_locator",
+      "request_attempt_binding",
+      "validate_request_attempt_binding"
+    ],
+    "scripts/vnext/sources.py": [
+      "<genexpr>",
+      "raw_blob_record",
+      "resolve_repository_file",
+      "source_reference_record",
+      "validate_public_sec_filing_identity"
+    ],
+    "scripts/vnext/records.py": [
+      "<genexpr>",
+      "_expected_identifier",
+      "_utc_timestamp",
+      "_validate_decision_hashes",
+      "_validate_enums",
+      "_validate_field_types",
+      "_validate_record_semantics",
+      "_validate_record_status",
+      "metric_result_contract_hash",
+      "require_exact_fields",
+      "validate_identifier",
+      "validate_record"
+    ],
+    "scripts/vnext/historical_annual_input.py": [
+      "_need",
+      "arguments",
+      "prepare_historical_annual_input",
+      "prepare_original_historical_input",
+      "read"
+    ],
+    "scripts/vnext/deterministic_router.py": [
+      "<genexpr>",
+      "__init__",
+      "_freeze_xbrl_owned",
+      "_local_tag",
+      "_parse_xbrl_parts",
+      "contexts",
+      "facts",
+      "handle_data",
+      "handle_endtag",
+      "handle_starttag",
+      "parse_accession_xbrl_source"
+    ],
+    "scripts/vnext/governance_signals.py": [
+      "<genexpr>",
+      "__init__",
+      "_need",
+      "_qname",
+      "handle_data",
+      "handle_endtag",
+      "handle_startendtag",
+      "handle_starttag"
+    ],
+    "scripts/vnext/ordinary_source_authority.py": [
+      "verify_ordinary_source_proofs"
+    ],
+    "scripts/vnext/saved_source_checks.py": [
+      "_need",
+      "verify_saved_inputs"
+    ],
+    "scripts/vnext/historical_fiscal_labels.py": [
+      "inspect_prepared_fiscal_year_labels",
+      "require_actual_definition_scope"
+    ],
+    "scripts/vnext/fiscal_year_labels.py": [
+      "<genexpr>",
+      "__init__",
+      "_definitions",
+      "_flush",
+      "_inspect_prepared_input",
+      "_need",
+      "_offset",
+      "_part",
+      "handle_endtag",
+      "handle_starttag",
+      "inspect_fiscal_year_labels",
+      "raw_input"
+    ],
+    "scripts/vnext/text_results_v2.py": [
+      "<genexpr>",
+      "__init__",
+      "_iso",
+      "_need",
+      "_target",
+      "_verified_context",
+      "handle_data",
+      "handle_endtag",
+      "handle_starttag",
+      "validate_deterministic_candidate_shape"
+    ],
+    "scripts/vnext/text_coverage.py": [
+      "<genexpr>",
+      "__init__",
+      "_byte_offsets",
+      "_flush",
+      "_heading",
+      "_need",
+      "_offset",
+      "_part",
+      "_period_text",
+      "build_text_document",
+      "handle_charref",
+      "handle_data",
+      "handle_endtag",
+      "handle_entityref",
+      "handle_startendtag",
+      "handle_starttag"
+    ],
+    "scripts/vnext/normal_annual_input_v2.py": [
+      "_choose_fiscal_year",
+      "exact_json_value",
+      "plain"
+    ],
+    "scripts/vnext/d02_text_results_v3.py": [
+      "<genexpr>",
+      "<lambda>",
+      "__init__",
+      "_annual_document",
+      "_derive_candidate",
+      "_iso",
+      "_need",
+      "_page_structure_furniture",
+      "_target",
+      "_verified_reported_facts",
+      "build_text_evidence",
+      "build_text_review_unit",
+      "create_deterministic_text_candidate",
+      "handle_data",
+      "handle_endtag",
+      "handle_starttag",
+      "prepare_business_text_sources",
+      "replay_text_result",
+      "reviewed_text_observations",
+      "select_d02_page_furniture",
+      "text_policy"
+    ],
+    "scripts/vnext/xbrl_namespace_policy.py": [
+      "is_sec_namespace"
+    ],
+    "scripts/vnext/text_business_candidates.py": [
+      "<genexpr>",
+      "_bound_source",
+      "_check_document",
+      "_excerpt",
+      "_need",
+      "_note_references",
+      "_ranges",
+      "_substantive",
+      "going_concern_candidates",
+      "legal_risk_candidates",
+      "reported_legal_fact_candidates"
+    ],
+    "scripts/vnext/legal_review_contract.py": [
+      "<genexpr>",
+      "_need",
+      "_texts_digest",
+      "block_id",
+      "provider_messages",
+      "review_request",
+      "reviewed_blocks",
+      "validate_answer"
+    ],
+    "scripts/vnext/saved_legal_review.py": [
+      "<genexpr>",
+      "_need",
+      "read",
+      "read_saved_legal_review"
+    ],
+    "scripts/securegpt_sdk.py": [
+      "_text_value",
+      "assistant_content",
+      "count",
+      "normalize_response",
+      "response_usage"
+    ],
+    "scripts/vnext/specs.py": [
+      "<genexpr>",
+      "_count_ast",
+      "_expand_selection_policy",
+      "_require_string",
+      "_validate_dependencies",
+      "_validate_executable_semantics",
+      "_validate_inputs",
+      "_validate_top_level_guards",
+      "_validate_traits",
+      "compile_spec",
+      "compile_spec_file",
+      "parse_spec_document"
+    ],
+    "scripts/vnext/scope_contract.py": [
+      "<genexpr>",
+      "_ordered_text_list",
+      "scope_satisfies_contract",
+      "validate_scope_contract"
+    ],
+    "scripts/vnext/text_results.py": [
+      "<genexpr>",
+      "<lambda>",
+      "_extent_value",
+      "_need",
+      "_record",
+      "_text",
+      "build_text_result_and_trace",
+      "payload_from_observations",
+      "render_text_payload",
+      "text_claim_from_block",
+      "text_policy",
+      "validate_text_record"
+    ],
+    "scripts/vnext/text_review.py": [
+      "<lambda>",
+      "literal",
+      "render_text_review"
+    ],
+    "scripts/vnext/render.py": [
+      "visible_untrusted_text"
+    ],
+    "scripts/vnext/review.py": [
+      "_approved_claims_satisfy_unit",
+      "_create_review_decision",
+      "_system_approved_claims",
+      "build_review_unit",
+      "effective_review_decision",
+      "validate_decision_binding"
+    ],
+    "scripts/vnext/states.py": [
+      "validate_state"
+    ],
+    "scripts/vnext/traits.py": [
+      "<genexpr>",
+      "derive_company_traits",
+      "repository_company_traits"
+    ],
+    "scripts/vnext/observations.py": [
+      "_build_text_observation",
+      "scope_key"
+    ],
+    "scripts/vnext/calculator.py": [
+      "calculate_text_metric",
+      "metric_is_applicable"
+    ]
+  },
+  "missing": {
+    "scripts/vnext/render.py": [
+      "visible_untrusted_text"
+    ]
+  },
+  "consumer_files": [
+    "scripts/vnext/d02_reviewed_source.py",
+    "scripts/vnext/d02_text_results_v3.py",
+    "scripts/vnext/legal_review_contract.py",
+    "scripts/vnext/text_business_candidates.py",
+    "scripts/vnext/text_coverage.py",
+    "scripts/vnext/historical_annual_input.py",
+    "scripts/vnext/historical_dei.py",
+    "scripts/vnext/historical_fiscal_labels.py",
+    "scripts/vnext/historical_filing_inventory.py",
+    "scripts/vnext/normal_period_selection.py",
+    "scripts/vnext/normal_history_catalog.py",
+    "scripts/vnext/normal_governance_input.py",
+    "scripts/vnext/normal_annual_input.py",
+    "scripts/vnext/normal_annual_input_v2.py",
+    "scripts/vnext/fiscal_year_labels.py",
+    "scripts/vnext/xbrl_namespace_policy.py",
+    "scripts/vnext/text_results.py",
+    "scripts/vnext/text_results_v2.py",
+    "scripts/vnext/text_review.py",
+    "scripts/vnext/review.py",
+    "scripts/vnext/scope_contract.py",
+    "scripts/vnext/states.py",
+    "scripts/vnext/text_rendering_limits.py",
+    "catalog/r6/D02_legal_disclosures_v1.md",
+    "catalog/r6/text_business_candidates_v1.json",
+    "catalog/r6/text_results_v2_policy.json",
+    "config/normal_period_selection_v1.json",
+    "config/normal_fiscal_year_labels_v1.json"
+  ],
+  "reader_files": [
+    "scripts/vnext/saved_legal_review.py",
+    "scripts/vnext/legal_review_contract.py",
+    "scripts/securegpt_sdk.py",
+    "scripts/vnext/canonical.py"
+  ],
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

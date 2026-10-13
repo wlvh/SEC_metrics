@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "<stdin>", line 5, in <module>
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/d02_reviewed_source.py", line 226, in finish_historical_legal_case
+    result,trace,observations=core.replay_text_result(
+                              ~~~~~~~~~~~~~~~~~~~~~~~^
+        company_traits=repository_company_traits(repo_root=ROOT,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            company_id=args['target']['company_id']),candidate=candidate,
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        evidence_check=evidence,review_unit=unit,review_decisions=[decision],**args)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/d02_text_results_v3.py", line 648, in replay_text_result
+    observations = reviewed_text_observations(compiled_spec=compiled_spec, target=target, candidate=candidate,
+        evidence_check=evidence_check, review_unit=review_unit, review_decisions=review_decisions, **source_arguments)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/d02_text_results_v3.py", line 624, in reviewed_text_observations
+    _need(unit == expected_unit, "TEXT_V2_REVIEW_BINDING_CHANGED")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/d02_text_results_v3.py", line 56, in _need
+    raise TextResultV2Error(reason)
+vnext.d02_text_results_v3.TextResultV2Error: TEXT_V2_REVIEW_BINDING_CHANGED
