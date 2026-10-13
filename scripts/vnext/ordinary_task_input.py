@@ -82,11 +82,18 @@ class _Relations(HTMLParser):
 
 
 def parsed_d04_document(*,raw_bytes,raw_blob,source_reference,
-                        expected_company_id,expected_cik,expected_period_end):
+                        expected_company_id,expected_cik,expected_period_end,
+                        allow_annual_amendment=False):
     """Compare the complete fixed parse, retaining original citation locators."""
     doc=build_text_document(raw_bytes=raw_bytes,raw_blob=raw_blob,source_reference=source_reference,
         expected_company_id=expected_company_id,expected_cik=expected_cik,expected_period_end=expected_period_end)
-    if doc['source_state']!='COMPLETE_LOCAL_DOCUMENT':
+    # The complete-set caller may compare an amendment's exact local parse.
+    # Its single-document whole-report status remains INCOMPLETE; all other
+    # truncation/structure/identity failures still reject the comparison.
+    amendment_only=(allow_annual_amendment is True and doc['form']=='10-K/A'
+        and source_reference['source_role']=='annual_amendment'
+        and doc['source_reasons']==['TEXT_AMENDMENT_SOURCE_SET_REQUIRED'])
+    if doc['source_state']!='COMPLETE_LOCAL_DOCUMENT' and not amendment_only:
         raise ValueError('PARSED_D04_INPUT_INCOMPLETE:'+','.join(doc['source_reasons']))
     parsed=parse_accession_xbrl_source(raw_bytes=raw_bytes)
     text=raw_bytes.decode('utf-8-sig')

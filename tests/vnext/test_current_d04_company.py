@@ -140,6 +140,45 @@ class CurrentD04ParsedReuseTest(unittest.TestCase):
         self.assertEqual(third['status'],'PREVIOUS_INPUT_WITHHELD')
         self.assertEqual(len(self.created),1)
 
+    def test_complete_amendment_parse_drives_the_existing_update_branch(self):
+        # Only the business-result writer is this class's explicit small
+        # constructed result. Source records, selection and parsing are real.
+        from tests.vnext.test_ordinary_task_input import D04CompleteTaskFingerprintTest
+        from vnext.ordinary_d04_task_input import fingerprint
+        fixture=D04CompleteTaskFingerprintTest();fixture.setUp()
+        self.addCleanup(fixture.doCleanups);fixture.add_amendment()
+        source=fixture.fixture.root
+        def parsed(**kwargs):
+            return fingerprint(source_root=source,company_id='marriott_international')
+        def run():
+            return update.run_once(state_root=self.root,source_root=source,
+                company_id='marriott_international',metric_id='D04')
+        self.new_task=parsed()
+        first=run();old_record=deepcopy(self.records[first['result_root']])
+        fixture.fixture.record(fixture.amendment_url,fixture.amendment_raw.replace(
+            b'</body>',b'<script src="/extra.js"></script></body>'))
+        self.changed_raw()
+        with patch('scripts.vnext.ordinary_d04_task_input.fingerprint',side_effect=parsed), \
+             patch.object(update,'create_saved_result',side_effect=AssertionError('No assessment replay')):
+            second=run()
+            self.assertEqual(second['status'],'PREVIOUS_INPUT_WITHHELD')
+            self.assertTrue(second['task_input_unchanged'])
+            self.assertEqual(second['result_id'],first['result_id'])
+            with patch('scripts.vnext.ordinary_d04_task_input.fingerprint',
+                       side_effect=AssertionError('No second task parse')):
+                self.assertEqual(run()['result_id'],first['result_id'])
+        self.assertEqual(self.records[first['result_root']],old_record)
+        fixture.fixture.record(fixture.amendment_url,fixture.amendment_raw.replace(
+            b'</body>',b'<p>Substantial doubt exists.</p></body>'))
+        self.current_proof['content_sha256']='changed-amendment-disclosure'
+        self.census[0]['content_sha256']='changed-amendment-disclosure'
+        self.new_task=parsed()
+        with patch('scripts.vnext.ordinary_d04_task_input.fingerprint',side_effect=parsed):
+            changed=run()
+        self.assertEqual(changed['status'],'CANDIDATE_WITHHELD')
+        self.assertNotEqual(changed['result_id'],first['result_id'])
+        self.assertEqual(len(self.created),2)
+
     def test_check_only_change_with_same_raw_reuses_without_parsing(self):
         self.config['processing_files']={'scripts/vnext/request_bindings.py':'check-one'}
         first=self.run_d04()
