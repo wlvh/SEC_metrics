@@ -153,7 +153,10 @@ class HistoryCompanyDispatchTest(TestCase):
         self.assertIs(prepare_historical_statement_year_case, args['case_factories']['B04'])
         self.assertIs(prepare_historical_statement_year_case, args['case_factories']['B05'])
         self.assertIs(prepare_historical_liquidity_year_case, args['case_factories']['B08'])
-        self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric']['B07'])
+        from vnext.historical_statement_cases import processing_files_for_statement_metric
+        self.assertEqual(processing_files_for_statement_metric('B07'), args['processing_files_by_metric']['B07'])
+        self.assertEqual(processing_files_for_statement_metric('B04'), args['processing_files_by_metric']['B04'])
+        self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric']['B05'])
 
     def setUp(self):
         temporary = tempfile.TemporaryDirectory()
@@ -245,8 +248,10 @@ class HistoryCompanyDispatchTest(TestCase):
         self.assertIn(paired_source, args['processing_files_by_metric']['B02'])
         for metric in ['B01', 'B04', 'B05']:
             self.assertNotIn(paired_source, args['processing_files_by_metric'][metric])
+        from vnext.historical_statement_cases import processing_files_for_statement_metric
         for metric in ['B04', 'B05']:
-            self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric'][metric])
+            self.assertEqual(processing_files_for_statement_metric(metric), args['processing_files_by_metric'][metric])
+        self.assertEqual(PROCESSING_FILES,args['processing_files_by_metric']['B05'])
         self.assertIn('scripts/vnext/selected_income_source_v1.py', INCOME_PROCESSING_FILES)
         self.assertNotIn('scripts/vnext/selected_income_source_v1.py', PROCESSING_FILES)
         self.assertFalse((self.root/'state').exists())
