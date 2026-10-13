@@ -1,0 +1,37 @@
+{
+  "arguments": [
+    "run",
+    "--company",
+    "marriott_international",
+    "--period",
+    "fiscal-years",
+    "--fiscal-year-start",
+    "2024",
+    "--fiscal-year-end",
+    "2024",
+    "--metric",
+    "B10",
+    "--metric",
+    "D02",
+    "--source-root",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "--work-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lodging-five-year-main-20261013/full-state",
+    "--output-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/mixed-history-scope-20261013"
+  ],
+  "stdout": "",
+  "exit_code": null,
+  "exception": {
+    "type": "ValueError",
+    "reason": "LOCAL_HISTORY_SAVED_FAMILY_NOT_IMPLEMENTED: select received saved families; other history uses its original entry"
+  },
+  "seconds": 0.20097420799720567,
+  "state_files": 152,
+  "state_unchanged": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
