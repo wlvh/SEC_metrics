@@ -64,7 +64,7 @@ def replace_accrual_raw(args, raw):
 
 class TextResultV2SourceTest(unittest.TestCase):
     def test_d02_page_selection_requires_page_structure_and_keeps_repeated_matters(self):
-        from vnext.text_business_candidates import select_d02_page_furniture
+        from vnext.d02_text_results_v3 import select_d02_page_furniture
         pages=''.join('<p>'+str(n)+'</p><p>Notes to the financial statements</p>'
             '<p>Company and subsidiaries</p><h3>Note 2. Contingencies (Continued)</h3>'
             '<h4>Repeated product name</h4><p>Unique case '+str(n)+' remains unresolved.</p>'
@@ -84,7 +84,7 @@ class TextResultV2SourceTest(unittest.TestCase):
         self.assertIn('Note 2. Contingencies',kept)
 
     def test_d02_repeated_titles_and_body_without_pages_are_not_furniture(self):
-        from vnext.text_business_candidates import select_d02_page_furniture
+        from vnext.d02_text_results_v3 import select_d02_page_furniture
         repeated='<h4>Repeated product name</h4><p>The legal matter remains unresolved.</p>'*3
         from tests.vnext.test_text_business_candidates import document
         doc=document(BODY.replace('<h3>1. Procedural matters</h3>',repeated))
@@ -92,7 +92,7 @@ class TextResultV2SourceTest(unittest.TestCase):
         self.assertIs(proposal,select_d02_page_furniture(proposal=proposal,document=doc))
 
     def test_d02_page_selection_rejects_foreign_proposal_and_changed_block(self):
-        from vnext.text_business_candidates import select_d02_page_furniture
+        from vnext.d02_text_results_v3 import select_d02_page_furniture
         from vnext.canonical import content_hash
         from tests.vnext.test_text_business_candidates import document
         doc=document();proposal=legal_risk_candidates(document=doc)
