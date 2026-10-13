@@ -1,0 +1,243 @@
+{
+  "head": "a78388c65963ec4df6150fa0f6414cd71f37b87e",
+  "uncommitted_paths": [
+    " M scripts/vnext/company_local.py",
+    " M scripts/vnext/historical_d02_case.py",
+    " M tests/vnext/test_company_current_records.py",
+    "?? docs/evidence/issue28_d02_package_isolation_20261013/"
+  ],
+  "phases": {
+    "first": {
+      "argv": [
+        "run",
+        "--company",
+        "ford_motor_company",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2025",
+        "--fiscal-year-end",
+        "2025",
+        "--metric",
+        "D02",
+        "--metric",
+        "B04",
+        "--source-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+        "--saved-legal-reviews",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-invalid-package-mixed-20261013/broken-answers",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-invalid-package-mixed-20261013/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-invalid-package-mixed-20261013/runs"
+      ],
+      "seconds": 4.1297367500083055,
+      "exit_code": 2
+    },
+    "repeat": {
+      "argv": [
+        "run",
+        "--company",
+        "ford_motor_company",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2025",
+        "--fiscal-year-end",
+        "2025",
+        "--metric",
+        "D02",
+        "--metric",
+        "B04",
+        "--source-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+        "--saved-legal-reviews",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-invalid-package-mixed-20261013/broken-answers",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-invalid-package-mixed-20261013/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-invalid-package-mixed-20261013/runs"
+      ],
+      "seconds": 0.6985763749980833,
+      "exit_code": 2
+    },
+    "read": {
+      "argv": [
+        "results",
+        "--company",
+        "ford_motor_company",
+        "--state-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-invalid-package-mixed-20261013/state",
+        "--output-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-invalid-package-mixed-20261013/read"
+      ],
+      "seconds": 0.4483872909913771,
+      "exit_code": 0
+    }
+  },
+  "first_metrics": [
+    {
+      "metric_id": "D02",
+      "status": "INPUT_OR_EXECUTION_FAILED",
+      "attempt_id": "f6a9b583ae0442e0a703e5f97d63f7bf",
+      "error_type": "CanonicalError",
+      "reason": "JSON input must be a regular file: /Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-invalid-package-mixed-20261013/broken-answers/call0009/terminal.json",
+      "previous_result": null,
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2025
+    },
+    {
+      "metric_id": "B04",
+      "status": "CANDIDATE_READY",
+      "attempt_id": "56dd90e9b2254dfaac4d08a0ce0c0eb2",
+      "version": "6e343813466f43bea19a16ab9e4f85d7",
+      "result_id": "sha256:89f9cc9df7dc78e52fcd0a97eb580afa3d793c787e65cc6500529f8a2d4662e7",
+      "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-invalid-package-mixed-20261013/state/updates/B04/periods/FY2025/results/6e343813466f43bea19a16ab9e4f85d7",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "result_reason_code": "PASS",
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2025,
+      "defect_holds": [],
+      "read_result_id": "sha256:89f9cc9df7dc78e52fcd0a97eb580afa3d793c787e65cc6500529f8a2d4662e7",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-invalid-package-mixed-20261013/state/updates/B04/periods/FY2025/results/6e343813466f43bea19a16ab9e4f85d7",
+      "program_version": {
+        "commit": "a78388c65963ec4df6150fa0f6414cd71f37b87e",
+        "has_uncommitted_changes": true
+      }
+    }
+  ],
+  "repeat_metrics": [
+    {
+      "metric_id": "D02",
+      "status": "INPUT_OR_EXECUTION_FAILED",
+      "attempt_id": "c78cf10352f84d8394ebec64ff57bdf1",
+      "error_type": "CanonicalError",
+      "reason": "JSON input must be a regular file: /Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-invalid-package-mixed-20261013/broken-answers/call0009/terminal.json",
+      "previous_result": null,
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2025
+    },
+    {
+      "metric_id": "B04",
+      "status": "NO_SOURCE_CONTENT_CHANGE",
+      "attempt_id": "ae7a56729cb3467186e61995611a8a8c",
+      "version": "6e343813466f43bea19a16ab9e4f85d7",
+      "result_id": "sha256:89f9cc9df7dc78e52fcd0a97eb580afa3d793c787e65cc6500529f8a2d4662e7",
+      "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-invalid-package-mixed-20261013/state/updates/B04/periods/FY2025/results/6e343813466f43bea19a16ab9e4f85d7",
+      "result_reason_code": "PASS",
+      "raw_input_unchanged": true,
+      "calculation_performed": false,
+      "new_candidate_created": false,
+      "source_check_versions": {
+        "scripts/vnext/ordinary_current_update.py": "a4b696fad5860ce0e818a891941dde246662edfccd50bf6ca4da6137c2d5d696",
+        "scripts/vnext/request_bindings.py": "d0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee"
+      },
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2025,
+      "defect_holds": [],
+      "read_result_id": "sha256:89f9cc9df7dc78e52fcd0a97eb580afa3d793c787e65cc6500529f8a2d4662e7",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-invalid-package-mixed-20261013/state/updates/B04/periods/FY2025/results/6e343813466f43bea19a16ab9e4f85d7",
+      "program_version": {
+        "commit": "a78388c65963ec4df6150fa0f6414cd71f37b87e",
+        "has_uncommitted_changes": true
+      }
+    }
+  ],
+  "rows": {
+    "D02": {
+      "company": "",
+      "cik": "",
+      "metric_id": "D02",
+      "metric_name": "",
+      "value": "",
+      "unit": "",
+      "status": "INPUT_OR_EXECUTION_FAILED",
+      "source_class": "",
+      "formula": "",
+      "period_start": "",
+      "period_end": "",
+      "fiscal_year": "2025",
+      "fiscal_period": "",
+      "accession": "",
+      "form": "",
+      "filed_date": "",
+      "concept_or_section": "",
+      "context_or_dimension": "",
+      "confidence": "",
+      "notes": "reason: JSON input must be a regular file: /Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-invalid-package-mixed-20261013/broken-answers/call0009/terminal.json; error_type: CanonicalError",
+      "company_id": "ford_motor_company",
+      "result_id": "",
+      "record_root": "",
+      "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+      "local_metric_status": "INPUT_OR_EXECUTION_FAILED",
+      "period_role": "REQUESTED_WITHOUT_RESULT",
+      "result_validity": "NO_CURRENT_RESULT",
+      "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+      "defect_holds": "",
+      "requested_in_latest_execution": "True"
+    },
+    "B04": {
+      "company": "Ford Motor Company",
+      "cik": "37996",
+      "metric_id": "B04",
+      "metric_name": "Net income",
+      "value": "-8162000000",
+      "unit": "USD",
+      "status": "OK",
+      "source_class": "STD_XBRL",
+      "formula": "",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "fiscal_year": "2025",
+      "fiscal_period": "ANNUAL",
+      "accession": "0000037996-26-000015",
+      "form": "10-K",
+      "filed_date": "2026-02-11",
+      "concept_or_section": "Net income",
+      "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2025, \"period_end\": \"2025-12-31\", \"period_start\": \"2025-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"coverage\": \"deterministic_source_set\", \"fiscal_year\": 2025}, \"selection\": null, \"source_reference_ids\": [\"sha256:9fc7f567ee31f33b929df0694303cc3e5522c88e7afb25640fe347d2250c80d6\", \"sha256:4fe37d81a86951f5d28883627e2c475f7ec5085ba2deb3a165ecd3b6d1bbb3f2\", \"sha256:5a7fd6bdf110f3429e0cee5ebf349b6e59d8e3789cbb05a52827afc195d02ec4\"]}",
+      "confidence": "",
+      "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+      "company_id": "ford_motor_company",
+      "result_id": "sha256:89f9cc9df7dc78e52fcd0a97eb580afa3d793c787e65cc6500529f8a2d4662e7",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d02-invalid-package-mixed-20261013/state/updates/B04/periods/FY2025/results/6e343813466f43bea19a16ab9e4f85d7",
+      "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+      "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+      "period_role": "REQUESTED_RESULT",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+      "defect_holds": "[]",
+      "requested_in_latest_execution": "True"
+    }
+  },
+  "original_answer_files_unchanged": 7,
+  "result_files_unchanged": 6,
+  "reader_state_files_unchanged": 23,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d02-company-saved/SEC_metrics/docs/evidence/issue28_d02_package_isolation_20261013/verify_mixed.py", line 75, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d02-company-saved/SEC_metrics/docs/evidence/issue28_d02_package_isolation_20261013/verify_mixed.py", line 45, in main
+    assert by['D02']['status']=='INPUT_OR_EXECUTION_FAILED' and by['D02']['error_type']=='FileNotFoundError'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

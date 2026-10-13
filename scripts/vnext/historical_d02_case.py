@@ -64,6 +64,18 @@ def historical_d02_factory(*, saved_review_root):
     return prepare
 
 
+def invalid_saved_review_factory(*, error):
+    """Raise a package preparation error inside the D02 update boundary.
+
+    Its distinct producer identity prevents an earlier empty-answer success
+    from being reused when package validation now fails. The normal shared
+    controller records the original error; no result or paid call is made.
+    """
+    def invalid_package(*,repo_root,company_id,metric_id,fiscal_year):
+        raise error
+    return invalid_package
+
+
 def saved_review_input_paths(*, saved_review_root, company_id):
     """Bind the small dedicated answer set as ordinary processing inputs.
 
