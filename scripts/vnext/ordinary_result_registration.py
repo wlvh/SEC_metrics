@@ -149,6 +149,9 @@ def same_registered_processing(previous,current,manifest,root):
     if not isinstance(selected,dict):return False
     names=list(CORE_FUNCTIONS)
     if not explicit:
+        # Changing from the old default producer to an explicit factory is
+        # a real processing change, not this dispatch-only transition.
+        if not {'module','function','call_style'}<=selected.keys():return False
         route=_legacy_registration(before,previous.get('metric_id'))
         if route is None or route!={k:selected[k] for k in ('module','function','call_style')}:return False
         if route['module']=='vnext.ordinary_saved_result':names.append(route['function'])

@@ -124,3 +124,15 @@ Only substitute signatures now accept ignored keywords, retaining the pinned
 old-version data and every reprocessing/hold/recovery/file assertion. The exact
 D04/selected-history/registration combination passed28 controls/.782s,zero skips.
 No production/source/real task changed for this return; no full material replay.
+
+Receiver4262338726 default-to-supplied conversion was reproduced on E01/A04/
+A13/C04/B01: old non-explicit records met the supplied marker without module/
+function and raised KeyError. Only that shape now returns False for ordinary
+reprocessing. One small controller test proves an old default processes once
+with an explicit current factory, then forbidden-calculation repeat reuses.
+Existing explicit compatibility remains.120 affected controls9.619s/Py3.12.10,
+zero skips. The initial new small fixture lacked its physical manifest and
+mixed scripts.vnext/vnext patch namespaces; these harness-only diagnostics were
+kept privately and corrected before the final behavioral pass. No record type
+or business expectation was relaxed. Prior receiver's3.12/3.13 actual company
+reuses are read evidence and are not repeated or re-credited here.

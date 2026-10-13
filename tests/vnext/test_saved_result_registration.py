@@ -110,6 +110,18 @@ class LegacyStoreComponentTest(unittest.TestCase):
             with patch.object(registration.ast,'parse',side_effect=changed):
                 self.assertFalse(registration.same_registered_processing(previous,current,{},ROOT))
 
+    def test_old_default_to_supplied_case_reprocesses_instead_of_key_error(self):
+        import hashlib
+        from vnext import ordinary_result_registration as registration
+        original=(ROOT/'tests/vnext/fixtures/saved_result_inline_dispatch_5612.py.txt').read_bytes()
+        for metric in ('E01','A04','A13','C04','B01'):
+            with self.subTest(metric=metric):
+                current=update._configuration(ROOT,'marriott_international',metric,supplied_case=True)
+                previous=deepcopy(current);previous.pop('saved_result_registration')
+                previous['processing_files'][registration.STORE]=hashlib.sha256(original).hexdigest()
+                with patch.object(registration,'_old_source',return_value=original):
+                    self.assertFalse(registration.same_registered_processing(previous,current,{},ROOT))
+
     def test_unavailable_or_wrong_component_never_grants_compatibility(self):
         from vnext import ordinary_result_registration as registration
         current=update._configuration(ROOT,'marriott_international','D04')
@@ -119,6 +131,37 @@ class LegacyStoreComponentTest(unittest.TestCase):
             self.assertFalse(registration.same_registered_processing(previous,current,{},ROOT))
 
 class RegistrationUpdateBehaviorTest(unittest.TestCase):
+    def test_default_record_changed_to_current_factory_processes_once_then_reuses(self):
+        import hashlib
+        from tests.vnext.test_ordinary_current_update import CurrentUpdateTest, update as fixture_update
+        from scripts.vnext import ordinary_result_registration as registration
+        case=CurrentUpdateTest();case.setUp();self.addCleanup(case.doCleanups)
+        original=(ROOT/'tests/vnext/fixtures/saved_result_inline_dispatch_5612.py.txt').read_bytes()
+        case.config={'metric_id':'B01','processing_files':{registration.STORE:hashlib.sha256(original).hexdigest()}}
+        first=case.run_update()
+        import json
+        first_root=Path(first['result_root'])
+        (first_root/'manifest.json').write_text(json.dumps(case.records[str(first_root)]['manifest']))
+        case.config={**case.config,'saved_result_registration':{'call_style':'supplied_case'}}
+        calls=[]
+        def factory(*,repo_root,company_id,metric_id):calls.append(company_id);return {'test_only':True}
+        def save(**kwargs):
+            case.calculations+=1;path=kwargs['output_root'];path.mkdir(parents=True)
+            value={'manifest':{'company_id':'marriott_international','metric_id':'B01','source_proofs':[case.proof]},
+                'result':{'company_id':'marriott_international','metric_id':'B01','publication':'PUBLISHED',
+                    'period_end':'2025-12-31','result_id':'result-'+str(case.calculations)}}
+            case.records[str(path)]=value;return value
+        args={'state_root':case.root,'source_root':ROOT,'company_id':'marriott_international',
+              'metric_id':'B01','current_case_factory':factory}
+        with patch.object(registration,'_old_source',return_value=original),patch.object(fixture_update,'save_calculated_case',side_effect=save):
+            changed=fixture_update.run_once(**args)
+        self.assertEqual('CANDIDATE_READY',changed['status'],changed);self.assertEqual(2,case.calculations)
+        self.assertEqual(['marriott_international'],calls);self.assertNotEqual(first['result_id'],changed['result_id'])
+        with patch.object(fixture_update,'save_calculated_case',side_effect=AssertionError('No second calculation')):
+            again=fixture_update.run_once(**args)
+        self.assertEqual('NO_SOURCE_CONTENT_CHANGE',again['status']);self.assertEqual(changed['result_id'],again['result_id'])
+        self.assertEqual(['marriott_international'],calls)
+
     def test_other_registration_reuses_and_used_registration_reprocesses_once(self):
         from tests.vnext.test_ordinary_current_update import CurrentUpdateTest
         case=CurrentUpdateTest();case.setUp();self.addCleanup(case.doCleanups)
