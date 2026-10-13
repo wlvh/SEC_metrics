@@ -1,6 +1,7 @@
 """Finite source/period controls; constructed statements are not company results."""
 from copy import deepcopy
 import json
+import re
 import unittest
 
 from tests.vnext.test_selected_revenue_scope_v1 import originals,APPROVED,facts
@@ -15,6 +16,55 @@ def changed(source,raw):
 
 
 class SelectedReportedRevenueTest(unittest.TestCase):
+    def named_expense_statement(self, release):
+        source,annual=self.complete_expense_statement()
+        name=b'<ix:nonNumeric name="dei:EntityRegistrantName" contextRef="annual">Parent Issuer</ix:nonNumeric>'
+        raw=source['raw_bytes'].replace(b'http://xbrl.sec.gov/dei/2025',release.encode())
+        raw=raw.replace(b'<div>Consolidated Statements of Income',
+            name+b'<div>Consolidated Statements of Income',1)
+        raw=raw.replace(b'<tr><td>Net income',
+            b'<tr><td>Amounts attributable to Parent Issuer:</td><td></td></tr><tr><td>Net income')
+        return changed(source,raw),annual
+
+    def test_registrant_header_uses_the_declared_sec_release(self):
+        from vnext.selected_reported_revenue_v2 import _defined_income_headers
+        from vnext.deterministic_router import parse_accession_xbrl_source
+        from vnext.xbrl_namespace_policy import YEAR_ONLY,YEAR_QUARTER_OR_DATE
+        for release in ('http://xbrl.sec.gov/dei/2025q4','http://xbrl.sec.gov/dei/2025-01-31'):
+            with self.subTest(release=release):
+                source,annual=self.named_expense_statement(release)
+                parsed=parse_accession_xbrl_source(raw_bytes=source['raw_bytes'])
+                strict=_defined_income_headers(source,parsed,annual,dei_release=YEAR_ONLY)
+                broad=_defined_income_headers(source,parsed,annual,dei_release=YEAR_QUARTER_OR_DATE)
+                heading='amounts attributable to parent issuer:'
+                self.assertFalse(any(re.fullmatch(pattern,heading) for pattern in strict['patterns']))
+                self.assertTrue(any(re.fullmatch(pattern,heading) for pattern in broad['patterns']))
+                self.assertEqual(broad['dei_release'],YEAR_QUARTER_OR_DATE)
+
+    def test_complete_expense_statement_cannot_silently_widen_header_policy(self):
+        from vnext.xbrl_namespace_policy import YEAR_QUARTER_OR_DATE
+        source,annual=self.named_expense_statement('http://xbrl.sec.gov/dei/2025q4')
+        with self.assertRaisesRegex(ValueError,'STATEMENT_LOCAL_SCOPE_UNRESOLVED'):
+            reported_revenue_scope(primary=source,xml=source,annual=annual,approved_concepts=APPROVED,
+                annual_period_reader=annual_period,allow_single_revenue_line=True)
+        result=reported_revenue_scope(primary=source,xml=source,annual=annual,approved_concepts=APPROVED,
+            annual_period_reader=annual_period,allow_single_revenue_line=True,dei_release=YEAR_QUARTER_OR_DATE)
+        self.assertTrue(result['complete_scope_proven'])
+        self.assertEqual(result['reported_totals'][0]['total']['value'],'58496000000')
+        self.assertEqual(result['dei_release'],YEAR_QUARTER_OR_DATE)
+
+    def test_explicit_release_never_accepts_an_extension_or_unknown_suffix(self):
+        from vnext.selected_reported_revenue_v2 import _defined_income_headers
+        from vnext.deterministic_router import parse_accession_xbrl_source
+        from vnext.xbrl_namespace_policy import YEAR_QUARTER_OR_DATE
+        for release in ('https://example.test/dei/2025q4','http://xbrl.sec.gov/dei/2025q5'):
+            with self.subTest(release=release):
+                source,annual=self.named_expense_statement(release)
+                parsed=parse_accession_xbrl_source(raw_bytes=source['raw_bytes'])
+                header=_defined_income_headers(source,parsed,annual,dei_release=YEAR_QUARTER_OR_DATE)
+                self.assertFalse(any(re.fullmatch(pattern,'amounts attributable to parent issuer:')
+                    for pattern in header['patterns']))
+
     def complete_expense_statement(self):
         from tests.vnext.test_single_revenue_line import single_statement
         source,annual=single_statement()

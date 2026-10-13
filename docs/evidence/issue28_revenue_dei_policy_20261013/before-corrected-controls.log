@@ -1,0 +1,37 @@
+test_registrant_header_uses_the_declared_sec_release (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_registrant_header_uses_the_declared_sec_release) ... 
+  test_registrant_header_uses_the_declared_sec_release (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_registrant_header_uses_the_declared_sec_release) (release='http://xbrl.sec.gov/dei/2025q4') ... FAIL
+  test_registrant_header_uses_the_declared_sec_release (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_registrant_header_uses_the_declared_sec_release) (release='http://xbrl.sec.gov/dei/2025-01-31') ... FAIL
+test_complete_expense_statement_cannot_silently_widen_header_policy (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_complete_expense_statement_cannot_silently_widen_header_policy) ... FAIL
+
+======================================================================
+FAIL: test_registrant_header_uses_the_declared_sec_release (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_registrant_header_uses_the_declared_sec_release) (release='http://xbrl.sec.gov/dei/2025q4')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-dei-policy/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 40, in test_registrant_header_uses_the_declared_sec_release
+    self.assertFalse(any(re.fullmatch(pattern,heading) for pattern in strict['patterns']))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_registrant_header_uses_the_declared_sec_release (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_registrant_header_uses_the_declared_sec_release) (release='http://xbrl.sec.gov/dei/2025-01-31')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-dei-policy/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 40, in test_registrant_header_uses_the_declared_sec_release
+    self.assertFalse(any(re.fullmatch(pattern,heading) for pattern in strict['patterns']))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_complete_expense_statement_cannot_silently_widen_header_policy (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_complete_expense_statement_cannot_silently_widen_header_policy)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-dei-policy/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 47, in test_complete_expense_statement_cannot_silently_widen_header_policy
+    with self.assertRaisesRegex(ValueError,'STATEMENT_LOCAL_SCOPE_UNRESOLVED'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.038s
+
+FAILED (failures=3)
+{"allowed_skips": 0, "errors": 0, "failures": 3, "run": 2, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_registrant_header_uses_the_declared_sec_release", "tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_complete_expense_statement_cannot_silently_widen_header_policy"]}
