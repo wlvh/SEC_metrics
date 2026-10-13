@@ -52,3 +52,5 @@ python3 tools/vnext_company.py results --company marriott_international \
 Read-only sources preflight is still B01/B02/B03/E01; this candidate does not
 quietly add B04 there. Historical online discovery, additional online metrics,
 model permissions and all390 business acceptance remain incomplete.
+
+First-head company-history CI failure was read and reproduced: the B03 source-preflight control still equated the entire online set with the former defaults. It now checks old B01/B02 defaults separately from explicit B04 admission and still forbids B03 online acquisition; the original no-fetch/no-execution B03 assertions remain. The same five affected modules were rerun; exact result is in ci-scope-regression-after.log. No business value/period/unit/subject or failure assertion was deleted.

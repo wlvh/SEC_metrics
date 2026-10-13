@@ -1,0 +1,17 @@
+test_formal_sources_entry_accepts_b03_and_keeps_acquire_scope_closed (tests.vnext.test_selected_source_requirements.SelectedSourceRequirementsTest.test_formal_sources_entry_accepts_b03_and_keeps_acquire_scope_closed) ... FAIL
+
+======================================================================
+FAIL: test_formal_sources_entry_accepts_b03_and_keeps_acquire_scope_closed (tests.vnext.test_selected_source_requirements.SelectedSourceRequirementsTest.test_formal_sources_entry_accepts_b03_and_keeps_acquire_scope_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_selected_source_requirements.py", line 176, in test_formal_sources_entry_accepts_b03_and_keeps_acquire_scope_closed
+    self.assertEqual(ONLINE_METRICS,frozenset({'B01','B02'}))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Items in the first set but not the second:
+'B04'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.057s
+
+FAILED (failures=1)
+{"allowed_skips": 0, "errors": 0, "failures": 1, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_selected_source_requirements.SelectedSourceRequirementsTest.test_formal_sources_entry_accepts_b03_and_keeps_acquire_scope_closed"]}
