@@ -17,6 +17,8 @@ The same-input `run` under that guard takes0.673s and attempts to enter the fact
 
 The actual historical E01 producer, its source input and original result are unchanged. The public dependency/controller owner has this counterexample; this branch contains evidence only and does not add a historical controller, writer, compatibility platform or renderer.
 
+Public owner follow-up separates the observed three-file digest difference from the actual cause: the unused D02 dependency is confirmed by an isolated red/green control; ordinary_current_update already has a checking-version exclusion, so its changed digest is not itself a reprocessing trigger. The unused B04/B07 registration change in ordinary_saved_result remains a separate finite compatibility/responsibility check. This record does not claim all three files caused the failure or request that every writer change be ignored. The original failed control and configuration-delta bytes remain unchanged; corrected public code and actual old-task reuse still need consumer verification.
+
 After the constructed failed attempt, another independent read takes0.046s with all19 state files unchanged. It honestly shows that latest controlled execution failure/NO_CURRENT_RESULT; the old files are still present. This second read is not falsely described as continuing to present the old withheld result as the current conclusion. `read-after-control.json` records its limited scope.
 
 ## Reproduce without new calls
