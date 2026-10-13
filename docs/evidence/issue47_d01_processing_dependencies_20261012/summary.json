@@ -1,0 +1,41 @@
+{
+  "code_head": "a93b183f0be0225e4d4db09b594c1223031cd8ab",
+  "phases": {
+    "migration": {
+      "seconds": 17.6314284580003,
+      "exit": 0,
+      "control": "observe"
+    },
+    "repeat": {
+      "seconds": 0.7453792919986881,
+      "exit": 0,
+      "control": "forbid"
+    },
+    "memory_change": {
+      "seconds": 15.731501583999489,
+      "exit": 2,
+      "control": "memory-change"
+    },
+    "after_control": {
+      "seconds": 0.7576307499984978,
+      "exit": 0,
+      "control": "forbid"
+    },
+    "read": {
+      "seconds": 0.30656024999916553,
+      "exit": 0,
+      "control": "forbid"
+    }
+  },
+  "old_saved_files_unchanged": 16,
+  "result_files_protected_in_control": 12,
+  "read_state_files_unchanged": 37,
+  "heading_count": 68,
+  "value_sha256": "8b66471154344b88f8a7e94a0184d90f284e65850c089f0abcbfe8f49909a483",
+  "result_id": "sha256:e3dd15bbe689462ab075d5f24ac0d88f03b9037f9cb86f747e40e568ede99b0c",
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

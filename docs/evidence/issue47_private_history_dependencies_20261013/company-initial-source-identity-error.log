@@ -1,0 +1,41 @@
+A13 baseline-read 0.1 0
+A13 first 29.18 0
+A13 repeat-forbidden 0.365 0
+A13 independent-read 0.073 0
+{"code_head": "385991307f35bfbac771913de4d2ba4156ed7c95", "uncommitted_private_declarations": true, "metric_id": "A13", "value": "38233000000", "unit": "USD", "dates": ["2024-01-01", "2024-12-31"], "result_id": "sha256:3b6e67f20d3d769b00a5725a13760b8dce33d5471fb12183d6941cd3450cd1ac", "first_seconds": 29.180335625002044, "repeat_seconds": 0.3647862920042826, "read_seconds": 0.07323062499926891, "old_rows_preserved": 6, "prior_result_files_preserved": 36, "result_files_preserved_on_repeat": 42, "read_state_files_preserved": 99, "new_calls": [0, 0, 0]}
+B03 baseline-read 0.037 0
+B03 first 6.07 0
+B03 repeat-forbidden 0.317 0
+B03 independent-read 0.036 0
+{"code_head": "385991307f35bfbac771913de4d2ba4156ed7c95", "uncommitted_private_declarations": true, "metric_id": "B03", "value": "0.1653386454183266932270916335", "unit": "ratio", "dates": ["2024-01-01", "2024-12-31"], "result_id": "sha256:9cf2d114ca9c1f492321975b26d7c45a208cd80768364177c4588721b9e2c783", "first_seconds": 6.0704390830069315, "repeat_seconds": 0.31655925000086427, "read_seconds": 0.03574099999968894, "old_rows_preserved": 3, "prior_result_files_preserved": 42, "result_files_preserved_on_repeat": 49, "read_state_files_preserved": 102, "new_calls": [0, 0, 0]}
+B10 baseline-read 4.931 0
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/work/private-history-dependencies/verify_company.py", line 30, in <module>
+    first,first_record=invoke('first',args);assert first['metrics'][0]['calculation_performed']
+                       ~~~~~~^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/work/private-history-dependencies/verify_company.py", line 20, in invoke
+    with patch.object(socket.socket,'connect',side_effect=AssertionError('NO_NETWORK')),contextlib.redirect_stdout(io.StringIO()) as stream:code=main(args)
+                                                                                                                                                 ~~~~^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tools/vnext_company.py", line 126, in main
+    result = run_local(company_id=args.company, work_dir=args.work_dir, output_dir=args.output_dir,
+        period=args.period, metric_ids=args.metric, max_sec_requests=args.max_sec_requests,
+        sec_allowance=args.sec_allowance, source_root=args.source_root,
+        fiscal_year_start=args.fiscal_year_start, fiscal_year_end=args.fiscal_year_end,
+        saved_call_package=args.saved_call_package)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/company_local.py", line 175, in run_local
+    return _run_saved_history(company_id=company_id, source_root=source_root,
+        work_dir=work_dir, output_dir=output_dir, metric_ids=metric_ids,
+        fiscal_year_start=fiscal_year_start, fiscal_year_end=fiscal_year_end,
+        saved_call_package=saved_call_package)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/company_local.py", line 458, in _run_saved_history
+    return run_saved_company(company_id=company_id, source_root=source_root,
+        work_dir=work_dir, output_dir=output_dir, metric_ids=selected,
+        fiscal_years=list(range(fiscal_year_start, fiscal_year_end+1)),
+        case_factory=prepare_historical_lodging_year_case,
+        processing_files=HISTORICAL_LODGING_PROCESSING_FILES)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/company_current_records.py", line 118, in run_saved_company
+    _need(strict_json_file(path=config_path) == config, 'COMPANY_CURRENT_TASK_IDENTITY_CHANGED')
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/company_current_records.py", line 34, in _need
+    raise ValueError(reason)
+ValueError: COMPANY_CURRENT_TASK_IDENTITY_CHANGED

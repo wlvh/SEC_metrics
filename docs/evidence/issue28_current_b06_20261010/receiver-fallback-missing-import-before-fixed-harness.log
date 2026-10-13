@@ -1,0 +1,38 @@
+test_both_public_fallback_exports_reach_financing_with_real_traits (tests.vnext.test_current_b06_case.B06FallbackDependencyTest.test_both_public_fallback_exports_reach_financing_with_real_traits)
+TEST_ONLY proposal/facts isolate runtime dependencies, not business credit. ... 
+  test_both_public_fallback_exports_reach_financing_with_real_traits (tests.vnext.test_current_b06_case.B06FallbackDependencyTest.test_both_public_fallback_exports_reach_financing_with_real_traits) (export='vnext.ordinary_b06_resolution')
+TEST_ONLY proposal/facts isolate runtime dependencies, not business credit. ... ERROR
+  test_both_public_fallback_exports_reach_financing_with_real_traits (tests.vnext.test_current_b06_case.B06FallbackDependencyTest.test_both_public_fallback_exports_reach_financing_with_real_traits) (export='vnext.ordinary_b06_resolution')
+TEST_ONLY proposal/facts isolate runtime dependencies, not business credit. ... ERROR
+
+======================================================================
+ERROR: test_both_public_fallback_exports_reach_financing_with_real_traits (tests.vnext.test_current_b06_case.B06FallbackDependencyTest.test_both_public_fallback_exports_reach_financing_with_real_traits) (export='vnext.ordinary_b06_resolution')
+TEST_ONLY proposal/facts isolate runtime dependencies, not business credit.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-b06/SEC_metrics/tests/vnext/test_current_b06_case.py", line 161, in test_both_public_fallback_exports_reach_financing_with_real_traits
+    path,answer=resolver(data_root=root,preparation=preparation)
+                ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-b06/SEC_metrics/scripts/vnext/ordinary_b06_resolution.py", line 45, in _b06_resolution
+    traits=repository_company_traits(repo_root=data_root, company_id=prepared["company_id"]),
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+NameError: name 'repository_company_traits' is not defined
+
+======================================================================
+ERROR: test_both_public_fallback_exports_reach_financing_with_real_traits (tests.vnext.test_current_b06_case.B06FallbackDependencyTest.test_both_public_fallback_exports_reach_financing_with_real_traits) (export='vnext.ordinary_b06_resolution')
+TEST_ONLY proposal/facts isolate runtime dependencies, not business credit.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-b06/SEC_metrics/tests/vnext/test_current_b06_case.py", line 161, in test_both_public_fallback_exports_reach_financing_with_real_traits
+    path,answer=resolver(data_root=root,preparation=preparation)
+                ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-b06/SEC_metrics/scripts/vnext/ordinary_b06_resolution.py", line 45, in _b06_resolution
+    traits=repository_company_traits(repo_root=data_root, company_id=prepared["company_id"]),
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+NameError: name 'repository_company_traits' is not defined
+
+----------------------------------------------------------------------
+Ran 1 test in 0.017s
+
+FAILED (errors=2)
+{"allowed_skips": 0, "errors": 2, "failures": 0, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_current_b06_case.B06FallbackDependencyTest"]}

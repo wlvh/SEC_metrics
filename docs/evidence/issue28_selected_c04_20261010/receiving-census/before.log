@@ -1,0 +1,88 @@
+======================================================================
+FAIL: test_selected_annual_census_cannot_omit_a_conflicting_document_or_filing (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_selected_annual_census_cannot_omit_a_conflicting_document_or_filing) (changed='missing-document')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-selected-c04/SEC_metrics/tests/vnext/test_c04_selected_input.py", line 163, in test_selected_annual_census_cannot_omit_a_conflicting_document_or_filing
+    prepare_c04_registration_case(repo_root=ROOT,company_id='sample_entity',event_forms=EVENT_FORMS,
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        selected_base=base,labelled_annual=labels)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-selected-c04/SEC_metrics/scripts/vnext/c04_registration_successor.py", line 161, in prepare_c04_registration_case
+    reader = _Sources(repo_root, company_id, cik)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+AssertionError: Census omission reached source/calculation
+
+======================================================================
+FAIL: test_selected_annual_census_cannot_omit_a_conflicting_document_or_filing (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_selected_annual_census_cannot_omit_a_conflicting_document_or_filing) (changed='missing-filing')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-selected-c04/SEC_metrics/tests/vnext/test_c04_selected_input.py", line 163, in test_selected_annual_census_cannot_omit_a_conflicting_document_or_filing
+    prepare_c04_registration_case(repo_root=ROOT,company_id='sample_entity',event_forms=EVENT_FORMS,
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        selected_base=base,labelled_annual=labels)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-selected-c04/SEC_metrics/scripts/vnext/c04_registration_successor.py", line 161, in prepare_c04_registration_case
+    reader = _Sources(repo_root, company_id, cik)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+AssertionError: Census omission reached source/calculation
+
+======================================================================
+FAIL: test_selected_annual_census_cannot_omit_a_conflicting_document_or_filing (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_selected_annual_census_cannot_omit_a_conflicting_document_or_filing) (changed='duplicate-document')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-selected-c04/SEC_metrics/tests/vnext/test_c04_selected_input.py", line 163, in test_selected_annual_census_cannot_omit_a_conflicting_document_or_filing
+    prepare_c04_registration_case(repo_root=ROOT,company_id='sample_entity',event_forms=EVENT_FORMS,
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        selected_base=base,labelled_annual=labels)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-selected-c04/SEC_metrics/scripts/vnext/c04_registration_successor.py", line 161, in prepare_c04_registration_case
+    reader = _Sources(repo_root, company_id, cik)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+AssertionError: Census omission reached source/calculation
+
+======================================================================
+FAIL: test_selected_annual_census_cannot_omit_a_conflicting_document_or_filing (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_selected_annual_census_cannot_omit_a_conflicting_document_or_filing) (changed='wrong-accession')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-selected-c04/SEC_metrics/tests/vnext/test_c04_selected_input.py", line 163, in test_selected_annual_census_cannot_omit_a_conflicting_document_or_filing
+    prepare_c04_registration_case(repo_root=ROOT,company_id='sample_entity',event_forms=EVENT_FORMS,
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        selected_base=base,labelled_annual=labels)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-selected-c04/SEC_metrics/scripts/vnext/c04_registration_successor.py", line 161, in prepare_c04_registration_case
+    reader = _Sources(repo_root, company_id, cik)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+AssertionError: Census omission reached source/calculation
+
+----------------------------------------------------------------------
+Ran 1 test in 0.016s
+
+FAILED (failures=4)

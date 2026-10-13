@@ -1,0 +1,143 @@
+{
+  "rows": [
+    {
+      "company": "enphase_energy",
+      "year": 2021,
+      "input_decision": "INPUT_PROPERTY_PROVEN",
+      "primary": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:39808ae04e68862f11cf338bcf02a07e44498b167574f3360a8c11594c97297f",
+        "raw_asset_id": "sha256:d27dbecccbedb373035c6458278895442f91d04bd38274e2ae9abd6b88ec9e7a",
+        "company_id": "enphase_energy",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310122000016/enph-20211231.htm",
+        "accession": "0001463101-22-000016",
+        "document_name": "enph-20211231.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:2f78da70da49e97934551e0e0112d2add95c200735e43570fefb97b8671030e0"
+      },
+      "filing": {
+        "form": "10-K",
+        "reportDate": "2021-12-31",
+        "filingDate": "2022-02-11",
+        "accessionNumber": "0001463101-22-000016",
+        "primaryDocument": "enph-20211231.htm"
+      },
+      "new_calls": [
+        0,
+        0,
+        0
+      ],
+      "result": {
+        "company_id": "enphase_energy",
+        "metric_id": "B06",
+        "period_start": "2021-12-31",
+        "period_end": "2021-12-31",
+        "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+        "spec_closure_hash": "sha256:c094c3cfbb647d922ab7b2d64d3a5b548a56f12de5a92117ee5d4777f8f3e957",
+        "applicability": "APPLICABLE",
+        "quality": "NONE",
+        "publication": "WITHHELD",
+        "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+        "value": null,
+        "unit": null,
+        "trace_id": "sha256:363e865a01efb6a05837a7feee6d33a4eae22269a75795fc1b2299a1cde5fcda",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:cadd0b9a50d990751a30967c134e1524bd274a5d76a7fe111d87245cc7ddbc2e"
+      },
+      "selection": {
+        "classification": "SOURCE_OR_RELATIONSHIP_UNRESOLVED",
+        "reason": "NOTE_CARRYING_UNRESOLVED_FINANCING_FACT:debtinstrumentunamortizeddiscountpremiumanddebtissuancecostsnet",
+        "selection_detail_id": "sha256:d40d4c994f1f66c4f5b8fe557780af81803f7b46182405c527f4b7558b7cc1b0",
+        "calculation": {}
+      },
+      "input_assessments": {
+        "B06": {
+          "selection_detail_id": "sha256:d40d4c994f1f66c4f5b8fe557780af81803f7b46182405c527f4b7558b7cc1b0",
+          "current_input_decision": "INPUT_PROPERTY_PROVEN",
+          "amendment_checks": [],
+          "source_route": "catalog/r5/B06_note_carrying_v4.md",
+          "selection": {
+            "classification": "SOURCE_OR_RELATIONSHIP_UNRESOLVED",
+            "reason": "NOTE_CARRYING_UNRESOLVED_FINANCING_FACT:debtinstrumentunamortizeddiscountpremiumanddebtissuancecostsnet"
+          }
+        }
+      },
+      "source_reader_options": {
+        "dei_release": "YEAR_QUARTER_OR_DATE",
+        "namespace_policy": "YEAR_OR_DATE_RELEASE"
+      },
+      "seconds": "9.109662292001303"
+    },
+    {
+      "company": "salesforce",
+      "year": 2022,
+      "input_decision": "INPUT_PROPERTY_PROVEN",
+      "primary": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:2cbe15185e572cb179d0d2bbbb9f0527bf71d5e854b1779d25768e814e7d06c0",
+        "raw_asset_id": "sha256:ad88a84618e7d35b3aaf5990579dba2e42583ece4d3aaeaadc9383f9557c6b91",
+        "company_id": "salesforce",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852422000013/crm-20220131.htm",
+        "accession": "0001108524-22-000013",
+        "document_name": "crm-20220131.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:701b596f9974587b5796c3d821a58be453b068db9fc4425370b3020a27a8615a"
+      },
+      "filing": {
+        "form": "10-K",
+        "reportDate": "2022-01-31",
+        "filingDate": "2022-03-11",
+        "accessionNumber": "0001108524-22-000013",
+        "primaryDocument": "crm-20220131.htm"
+      },
+      "new_calls": [
+        0,
+        0,
+        0
+      ],
+      "result": {
+        "company_id": "salesforce",
+        "metric_id": "B06",
+        "period_start": "2022-01-31",
+        "period_end": "2022-01-31",
+        "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+        "spec_closure_hash": "sha256:0361bf99806d1cbcc24464360acf16db20d98bafced81c5aa45fdfefe765dce1",
+        "applicability": "APPLICABLE",
+        "quality": "NONE",
+        "publication": "WITHHELD",
+        "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+        "value": null,
+        "unit": null,
+        "trace_id": "sha256:6916db4119cb5ffe22c7ea684eb926b8b7b14a608a9d90711e71f1a42536077c",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:c4aac14989b1616ff6e89344a0f72eb420a02c20cf9c3d08d52a593e0c7324bc"
+      },
+      "selection": {
+        "classification": "IMPLEMENTATION_GAP",
+        "reason": "SEPARATE_LEASE_CLASSIFICATION_NOT_PROVEN",
+        "selection_detail_id": "sha256:851f8855b914765b902b907351fe7596c5ab8ea1cd51e4ea28cc85a366879eec",
+        "calculation": {}
+      },
+      "input_assessments": {
+        "B06": {
+          "selection_detail_id": "sha256:851f8855b914765b902b907351fe7596c5ab8ea1cd51e4ea28cc85a366879eec",
+          "current_input_decision": "INPUT_PROPERTY_PROVEN",
+          "amendment_checks": [],
+          "source_route": "catalog/r5/B06_new_source_v2.md",
+          "selection": {
+            "reason": "SEPARATE_LEASE_CLASSIFICATION_NOT_PROVEN",
+            "classification": "IMPLEMENTATION_GAP"
+          }
+        }
+      },
+      "source_reader_options": {
+        "dei_release": "YEAR_QUARTER_OR_DATE",
+        "namespace_policy": "YEAR_OR_DATE_RELEASE"
+      },
+      "seconds": "9.627260792003653"
+    }
+  ],
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-selected-b06-release/SEC_metrics",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "scope": "Selected public B06 source/case, not company writer/read acceptance"
+}

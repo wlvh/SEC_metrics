@@ -1,0 +1,137 @@
+{
+  "records": [
+    {
+      "filing": {
+        "form": "10-K",
+        "reportDate": "2024-12-31",
+        "filingDate": "2025-02-26",
+        "accessionNumber": "0000813828-25-000005",
+        "primaryDocument": "para-20241231.htm"
+      },
+      "sha256": "5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+      "checks": [
+        {
+          "kind": "revenue",
+          "ordinal": 86,
+          "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+          "original_text": "29,213",
+          "sign": "",
+          "scale": "6",
+          "value": "29213000000",
+          "context": {
+            "entity_identifier": "0000813828",
+            "period_start": "2024-01-01",
+            "period_end": "2024-12-31",
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "kind": "complete_expense",
+          "ordinal": 107,
+          "concept": "us-gaap:CostsAndExpenses",
+          "original_text": "34,482",
+          "sign": "",
+          "scale": "6",
+          "value": "34482000000",
+          "context": {
+            "entity_identifier": "0000813828",
+            "period_start": "2024-01-01",
+            "period_end": "2024-12-31",
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "kind": "operating_income",
+          "ordinal": 113,
+          "concept": "us-gaap:OperatingIncomeLoss",
+          "original_text": "5,269",
+          "sign": "-",
+          "scale": "6",
+          "value": "-5269000000",
+          "context": {
+            "entity_identifier": "0000813828",
+            "period_start": "2024-01-01",
+            "period_end": "2024-12-31",
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "kind": "issuer_definition",
+          "raw_span": "In December 2019, we changed our name from CBS Corporation (&#8220;CBS&#8221;) to ViacomCBS Inc. (&#8220;ViacomCBS&#8221;) in connection with the merger of Viacom Inc. (&#8220;Viacom&#8221;) and CBS. In February 2022, we changed our name to Paramount Global. Unless the context requires otherwise, references in this document to &#8220;Paramount,&#8221; &#8220;the Company,&#8221; &#8220;we,&#8221; &#8220;us&#8221; and &#8220;our&#8221; mean Paramount Global and its consolidated subsidiaries, to &#8220;CBS&#8221; mean CBS and its consolidated subsidiaries prior to the merger and to &#8220;Viacom&#8221; mean Viacom and its consolidated subsidiaries prior to the merger.",
+          "sha256": "e2fa1eee8f90b3960e5649db493ebf0f125c881d0ca58dcdd3cf7235bccacfbc"
+        }
+      ],
+      "basis": "Raw original facts/context/sign/scale and original definition bytes; does not alone prove full statement scope"
+    },
+    {
+      "filing": {
+        "form": "10-K",
+        "reportDate": "2023-12-31",
+        "filingDate": "2024-02-28",
+        "accessionNumber": "0000813828-24-000007",
+        "primaryDocument": "para-20231231.htm"
+      },
+      "sha256": "6b30f698a84b85b57f750cc46b28d21d39caa9a2560a33143cfad784ebe6ad7b",
+      "checks": [
+        {
+          "kind": "revenue",
+          "ordinal": 74,
+          "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+          "original_text": "29,652",
+          "sign": "",
+          "scale": "6",
+          "value": "29652000000",
+          "context": {
+            "entity_identifier": "0000813828",
+            "period_start": "2023-01-01",
+            "period_end": "2023-12-31",
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "kind": "complete_expense",
+          "ordinal": 95,
+          "concept": "us-gaap:CostsAndExpenses",
+          "original_text": "30,103",
+          "sign": "",
+          "scale": "6",
+          "value": "30103000000",
+          "context": {
+            "entity_identifier": "0000813828",
+            "period_start": "2023-01-01",
+            "period_end": "2023-12-31",
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "kind": "operating_income",
+          "ordinal": 101,
+          "concept": "us-gaap:OperatingIncomeLoss",
+          "original_text": "451",
+          "sign": "-",
+          "scale": "6",
+          "value": "-451000000",
+          "context": {
+            "entity_identifier": "0000813828",
+            "period_start": "2023-01-01",
+            "period_end": "2023-12-31",
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "kind": "issuer_definition",
+          "raw_span": "In December 2019, we changed our name from CBS Corporation (&#8220;CBS&#8221;) to ViacomCBS Inc. in connection with the merger of Viacom Inc. (&#8220;Viacom&#8221;) and CBS (the &#8220;Merger&#8221;). In February 2022, we changed our name to Paramount Global. Unless the context requires otherwise, references in this document to &#8220;Paramount,&#8221; &#8220;the Company,&#8221; &#8220;we,&#8221; &#8220;us&#8221; and &#8220;our&#8221; mean Paramount Global and its consolidated subsidiaries, to &#8220;CBS&#8221; mean CBS and its consolidated subsidiaries prior to the Merger and to &#8220;Viacom&#8221; mean Viacom and its consolidated subsidiaries prior to the Merger.",
+          "sha256": "b240dfc3b5e69087a4fb447ef3c12949c314eab96d6b19913cc54f5a65e62f88"
+        }
+      ],
+      "basis": "Raw original facts/context/sign/scale and original definition bytes; does not alone prove full statement scope"
+    }
+  ],
+  "growth_from_two_originals": "-0.01480507217051126399568325914",
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "scope": "Independent original witness check; full-scope validation remains in the shared reader and company path"
+}

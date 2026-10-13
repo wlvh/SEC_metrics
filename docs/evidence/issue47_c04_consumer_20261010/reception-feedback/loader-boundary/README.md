@@ -1,0 +1,24 @@
+# PR143 returns upstream shard-selection feedback r4240713054
+
+The historical loader `load_history_for_period` had a fresh, distinct boundary defect after the shared C04 reread was repaired: it still stopped at the index's literal `filingTo` and used that literal to report unread relevant shards. It could therefore omit a saved shard whose already derived effective last day reaches the selected/prior period. The downstream C04 core then correctly refuses incomplete input. This is an upstream source-selection defect, not a missing auditor or a business zero.
+
+Four small constructed metadata tests call the actual loader/index/coherence implementation. Before the fix they produce5 failed assertions across4tests (`before.log`): the needed gap shard is not read; unread effective-boundary metadata is not shown; consequently an out-of-range/count-corrupt or foreign-subject shard also bypasses verification. Two predicates now use the existing `last_days[shard.name]`: the break and unloaded checks. Actual reader calls, prior discovery, metadata validation, whole-body date/filing count, identity, duplicate checks and limits stay unchanged. No new reader or arbitrary range is introduced.
+
+The same4tests pass.004s, zero skips (`after.log`), including leaving an unrelated older block unread. 87 affected selected C04/history/inventory/fiscal-range/source/compensation controls pass8.715s, zero skips (`affected-tests.log`). They distinguish a saved coherent gap shard, genuinely missing source, wrong count, dates beyond the derived bound and wrong CIK. The shared public C04 core remains exactly a1bafae4; this historical fix consumes its same bound, not a competing implementation.
+
+One actual saved JPMorganFY2021 metadata path is read with network forbidden in2.381s: complete selected/prior window,42 inventories loaded, no limitation, and no newly relevant boundary for this particular actual source. `actual-saved-metadata.json` records exact requested/prior ends, source SHA, real row count and inventories. This verifies real stored metadata remains coherent, not that JPMorgan supplied the constructed missed-boundary example. The initial log's row-count print was mistakenly zero due to an integer/list formatting expression; the JSON's integer count is the authoritative observation, the original stdout is retained, and the driver formatting is corrected without another source read. No financial/auditor/metric calculation runs here.
+
+The preceding real Ford new-task/forbidden-repeat/independent-read evidence remains under the unchanged shared core and its original code version. The loader delta does not alter arithmetic, current/prior auditor parsing or saved-result reading; those unchanged checks are reused instead of rerunning all companies/years. On actual sources without a newly relevant gap, source selection is unchanged. Earlier wrong results, original gap refusals and prior checks remain as evidence.
+
+Reproduce from this PR head:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts:tools:. python3 tests/required_unittests.py \
+ tests.vnext.test_historical_auditor_selection.HistoricalAuditorShardBoundaryTest
+```
+
+The existing test module/path is already executed by PR143's company and fast workflows; no new CI platform or runner is added. New-head remote execution is checked separately. Public owner #28 receives this exact loader patch for its same interface. No source GET/provider/paid call, modified original source/Run/result, Ready/merge/adoption/deploy/active action. Receiver must personally recheck the returned P2; the prior green head is not completion of this new finding.
+
+Before publication, actual main advanced to c6f5c90f: PR140's canonical five-layer CI and PR164/165's received Lumen revenue capability. The candidate normally receives that main. Public workflow selectors/paths and mandatory summary stay intact; the two existing historical C04 modules are now one required step on company-history, with their test-file triggers retained, as directed by the received public CI policy. No source/budget/Result is changed for this merge. The Lumen source/consumer/guide remain main implementations; no alternate version is installed. The original loader checks above retain their execution version; a short post-union validation is recorded separately.
+
+Post-main-union45 C04 selection/dependencies, received Lumen complete-revenue and fiscal-range checks pass1.263s, zero skips (`main-c6f-union.log`). The workflow adaptation initially used the system Python without PyYAML and stopped before writing; it was rerun with the existing project venv, without installing/changing dependencies. Final YAML preserves main selectors and five layers, adds only the required historical C04 step/path union, and contains no merge markers. Financial results are not rerun for the CI/document union.

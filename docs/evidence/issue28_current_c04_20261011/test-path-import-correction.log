@@ -1,0 +1,50 @@
+test_changed_period_not_projected_as_current (tests.vnext.test_current_auditor_case.CurrentAuditorCaseTest.test_changed_period_not_projected_as_current) ... ok
+test_current_case_selects_explicit_core_and_keeps_noncalendar_period (tests.vnext.test_current_auditor_case.CurrentAuditorCaseTest.test_current_case_selects_explicit_core_and_keeps_noncalendar_period) ... ok
+test_only_c04_consumes_new_wrapper_dependency (tests.vnext.test_current_auditor_case.CurrentAuditorCaseTest.test_only_c04_consumes_new_wrapper_dependency) ... ok
+test_writer_selects_current_c04_without_zero_ai_formula (tests.vnext.test_current_auditor_case.CurrentAuditorCaseTest.test_writer_selects_current_c04_without_zero_ai_formula) ... ok
+test_amended_8k_keeps_its_form_and_cannot_be_deleted_before_zero (tests.vnext.test_normal_governance_input.AuditorV2InputTest.test_amended_8k_keeps_its_form_and_cannot_be_deleted_before_zero) ... ok
+test_v2_preserves_ordered_current_and_prior_amendments_without_changing_v1 (tests.vnext.test_normal_governance_input.AuditorV2InputTest.test_v2_preserves_ordered_current_and_prior_amendments_without_changing_v1) ... ok
+test_actual_legacy_attempt_is_pinned_without_inventing_id (tests.vnext.test_normal_governance_input.NormalGovernanceBoundaryTest.test_actual_legacy_attempt_is_pinned_without_inventing_id) ... ok
+test_imported_registry_cannot_relabel_a_different_subject (tests.vnext.test_normal_governance_input.NormalGovernanceBoundaryTest.test_imported_registry_cannot_relabel_a_different_subject) ... ok
+test_later_failed_get_never_falls_back_to_success (tests.vnext.test_normal_governance_input.NormalGovernanceBoundaryTest.test_later_failed_get_never_falls_back_to_success) ... ok
+test_preparation_reads_original_proofs_without_derived_inventories (tests.vnext.test_normal_governance_input.NormalGovernanceBoundaryTest.test_preparation_reads_original_proofs_without_derived_inventories) ... ok
+test_current_amendment_prior_proxy_and_amended_event_are_distinct (tests.vnext.test_normal_governance_input.NormalGovernanceMetadataTest.test_current_amendment_prior_proxy_and_amended_event_are_distinct) ... ok
+test_metadata_cik_history_range_and_columns_fail_closed (tests.vnext.test_normal_governance_input.NormalGovernanceMetadataTest.test_metadata_cik_history_range_and_columns_fail_closed) ... ok
+test_missing_relevant_history_or_overlapping_accession_is_not_ignored (tests.vnext.test_normal_governance_input.NormalGovernanceMetadataTest.test_missing_relevant_history_or_overlapping_accession_is_not_ignored) ... ok
+test_missing_same_subject_prior_does_not_borrow_predecessor (tests.vnext.test_normal_governance_input.NormalGovernanceMetadataTest.test_missing_same_subject_prior_does_not_borrow_predecessor) ... ok
+test_new_period_without_ordinary_cannot_choose_previous_success (tests.vnext.test_normal_governance_input.NormalGovernanceMetadataTest.test_new_period_without_ordinary_cannot_choose_previous_success) ... ok
+test_prior_in_newly_loaded_history_is_selected_by_report_period (tests.vnext.test_normal_governance_input.NormalGovernanceMetadataTest.test_prior_in_newly_loaded_history_is_selected_by_report_period) ... ok
+test_same_day_amendments_need_real_acceptance_time (tests.vnext.test_normal_governance_input.NormalGovernanceMetadataTest.test_same_day_amendments_need_real_acceptance_time) ... ok
+test_saved_shard_range_conflict_is_a_coverage_gap_not_no_events (tests.vnext.test_normal_governance_input.NormalGovernanceMetadataTest.test_saved_shard_range_conflict_is_a_coverage_gap_not_no_events) ... ok
+test_current_producer_explicitly_selects_the_same_four_form_core (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_current_producer_explicitly_selects_the_same_four_form_core) ... ERROR
+test_explicit_release_still_rejects_wrong_entity_and_period (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_explicit_release_still_rejects_wrong_entity_and_period) ... ok
+test_fake_namespace_and_invalid_policy_are_not_releases (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_fake_namespace_and_invalid_policy_are_not_releases) ... ok
+test_quarter_and_date_release_require_explicit_existing_policy (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_quarter_and_date_release_require_explicit_existing_policy) ... ok
+test_selected_annual_census_cannot_omit_a_conflicting_document_or_filing (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_selected_annual_census_cannot_omit_a_conflicting_document_or_filing) ... ok
+test_selected_base_and_labelled_annual_are_a_pair_before_latest_read (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_selected_base_and_labelled_annual_are_a_pair_before_latest_read) ... ok
+test_selected_coordinate_prior_and_label_changes_refuse_before_sources (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_selected_coordinate_prior_and_label_changes_refuse_before_sources) ... ok
+test_selected_history_reuses_index_derived_gap_boundary_and_all_row_count (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_selected_history_reuses_index_derived_gap_boundary_and_all_row_count) ... ok
+test_year_only_checked_filing_default_dictionary_matches_main (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_year_only_checked_filing_default_dictionary_matches_main) ... ok
+test_derived_boundary_does_not_relax_all_row_count_or_outside_dates (tests.vnext.test_c04_selected_input.SharedAuditorShardBoundaryTest.test_derived_boundary_does_not_relax_all_row_count_or_outside_dates) ... ok
+test_gap_day_shard_is_loaded_before_an_older_irrelevant_block (tests.vnext.test_c04_selected_input.SharedAuditorShardBoundaryTest.test_gap_day_shard_is_loaded_before_an_older_irrelevant_block) ... ok
+test_unread_derived_boundary_reaches_requested_end (tests.vnext.test_c04_selected_input.SharedAuditorShardBoundaryTest.test_unread_derived_boundary_reaches_requested_end) ... ok
+test_wrong_shard_entity_is_rejected (tests.vnext.test_c04_selected_input.SharedAuditorShardBoundaryTest.test_wrong_shard_entity_is_rejected) ... ok
+test_original_annual_alias_needs_matching_proof_and_same_cik_url (tests.vnext.test_c04_registration_successor.C04RegistrationSuccessorTest.test_original_annual_alias_needs_matching_proof_and_same_cik_url) ... ok
+test_registration_event_outside_history_index_cannot_be_omitted_before_zero (tests.vnext.test_c04_registration_successor.C04RegistrationSuccessorTest.test_registration_event_outside_history_index_cannot_be_omitted_before_zero) ... ok
+test_rejects_unapproved_form_subset_and_wrong_metric (tests.vnext.test_c04_registration_successor.C04RegistrationSuccessorTest.test_rejects_unapproved_form_subset_and_wrong_metric) ... ok
+test_saved_marriott_default_identity_and_explicit_successor (tests.vnext.test_c04_registration_successor.C04RegistrationSuccessorTest.test_saved_marriott_default_identity_and_explicit_successor) ... ok
+
+======================================================================
+ERROR: test_current_producer_explicitly_selects_the_same_four_form_core (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_current_producer_explicitly_selects_the_same_four_form_core)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04/SEC_metrics/tests/vnext/test_c04_selected_input.py", line 203, in test_current_producer_explicitly_selects_the_same_four_form_core
+    observed=run_once(state_root=Path(folder)/'state',source_root=ROOT,
+                                 ^^^^
+NameError: name 'Path' is not defined. Did you mean: 'patch'?
+
+----------------------------------------------------------------------
+Ran 35 tests in 8.077s
+
+FAILED (errors=1)
+{"allowed_skips": 0, "errors": 1, "failures": 0, "run": 35, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_current_auditor_case", "tests.vnext.test_normal_governance_input", "tests.vnext.test_c04_selected_input", "tests.vnext.test_c04_registration_successor"]}

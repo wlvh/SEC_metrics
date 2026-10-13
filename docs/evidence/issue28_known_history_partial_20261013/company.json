@@ -1,0 +1,221 @@
+{
+  "base_commit": "18fa7a43afcf1173de6af23525d62c24a37f4067",
+  "working_tree_files": {
+    "scripts/vnext/company_local.py": "60796e2e394a515c775a64c19651981fe273856208942e6c93b7e706069df663",
+    "scripts/vnext/company_current_records.py": "a762be0eadd6afc9ee05e0c3e177db486391f6fcfb7da5b89e06737c4e605d25"
+  },
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-known-history-partial/SEC_metrics",
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+  "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/known-history-partial-marriott-20261013-fixed-profile/state",
+  "phases": [
+    {
+      "phase": "first",
+      "seconds": 2.0338341660099104,
+      "exit_code": 2,
+      "report": {
+        "elapsed_seconds": 2.0329337079892866,
+        "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+        "company_id": "marriott_international",
+        "run_id": "20261013T043343Z-7f591930",
+        "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+        "selected_metrics": [
+          "B04",
+          "D02"
+        ],
+        "metrics": [
+          {
+            "metric_id": "B04",
+            "status": "CANDIDATE_READY",
+            "attempt_id": "deac875daf84405eb404ba561fe945fa",
+            "version": "cf7c3308ea114e15b9ffab7070f9677a",
+            "result_id": "sha256:93e0d562375105fa889e094c463667054e32eb24406d7ea01333cc8dc6fba0ea",
+            "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/known-history-partial-marriott-20261013-fixed-profile/state/updates/B04/periods/FY2025/results/cf7c3308ea114e15b9ffab7070f9677a",
+            "calculation_performed": true,
+            "new_candidate_created": true,
+            "result_reason_code": "PASS",
+            "source_observation_errors": [],
+            "new_calls": {
+              "provider": 0,
+              "paid": 0,
+              "sec": 0
+            },
+            "production_authorized": false,
+            "requested_fiscal_year": 2025,
+            "defect_holds": [],
+            "read_result_id": "sha256:93e0d562375105fa889e094c463667054e32eb24406d7ea01333cc8dc6fba0ea",
+            "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/known-history-partial-marriott-20261013-fixed-profile/state/updates/B04/periods/FY2025/results/cf7c3308ea114e15b9ffab7070f9677a",
+            "program_version": {
+              "commit": "18fa7a43afcf1173de6af23525d62c24a37f4067",
+              "has_uncommitted_changes": true
+            }
+          },
+          {
+            "metric_id": "D02",
+            "status": "PROCESSING_INPUT_OR_IMPLEMENTATION_REQUIRED",
+            "reason": "This saved-source branch has no complete current processing interface for D02",
+            "requested_fiscal_year": 2025
+          }
+        ],
+        "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+        "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-known-history-partial/SEC_metrics",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/known-history-partial-marriott-20261013-fixed-profile/state",
+        "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/known-history-partial-marriott-20261013-fixed-profile/first/20261013T043343Z-7f591930",
+        "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "selected_fiscal_years": [
+          2025
+        ]
+      }
+    },
+    {
+      "phase": "repeat-forbidden",
+      "seconds": 2.652001917012967,
+      "exit_code": 2,
+      "report": {
+        "elapsed_seconds": 2.596366083016619,
+        "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+        "company_id": "marriott_international",
+        "run_id": "20261013T043345Z-9991b2c3",
+        "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+        "selected_metrics": [
+          "B04",
+          "D02"
+        ],
+        "metrics": [
+          {
+            "metric_id": "B04",
+            "status": "NO_SOURCE_CONTENT_CHANGE",
+            "attempt_id": "c30f33a63f514d02940566339a8c5b24",
+            "version": "cf7c3308ea114e15b9ffab7070f9677a",
+            "result_id": "sha256:93e0d562375105fa889e094c463667054e32eb24406d7ea01333cc8dc6fba0ea",
+            "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/known-history-partial-marriott-20261013-fixed-profile/state/updates/B04/periods/FY2025/results/cf7c3308ea114e15b9ffab7070f9677a",
+            "result_reason_code": "PASS",
+            "raw_input_unchanged": true,
+            "calculation_performed": false,
+            "new_candidate_created": false,
+            "source_check_versions": {
+              "scripts/vnext/ordinary_current_update.py": "010907fc9357bec243cf1f35e2915f27fe27e44b24d9410e19f954db8802917c",
+              "scripts/vnext/request_bindings.py": "d0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee"
+            },
+            "source_observation_errors": [],
+            "new_calls": {
+              "provider": 0,
+              "paid": 0,
+              "sec": 0
+            },
+            "production_authorized": false,
+            "requested_fiscal_year": 2025,
+            "defect_holds": [],
+            "read_result_id": "sha256:93e0d562375105fa889e094c463667054e32eb24406d7ea01333cc8dc6fba0ea",
+            "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/known-history-partial-marriott-20261013-fixed-profile/state/updates/B04/periods/FY2025/results/cf7c3308ea114e15b9ffab7070f9677a",
+            "program_version": {
+              "commit": "18fa7a43afcf1173de6af23525d62c24a37f4067",
+              "has_uncommitted_changes": true
+            }
+          },
+          {
+            "metric_id": "D02",
+            "status": "PROCESSING_INPUT_OR_IMPLEMENTATION_REQUIRED",
+            "reason": "This saved-source branch has no complete current processing interface for D02",
+            "requested_fiscal_year": 2025
+          }
+        ],
+        "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+        "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-known-history-partial/SEC_metrics",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/known-history-partial-marriott-20261013-fixed-profile/state",
+        "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/known-history-partial-marriott-20261013-fixed-profile/repeat-forbidden/20261013T043345Z-9991b2c3",
+        "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "selected_fiscal_years": [
+          2025
+        ]
+      }
+    }
+  ],
+  "read_seconds": 0.09496383400983177,
+  "csv_rows": [
+    {
+      "company": "Marriott International",
+      "cik": "1048286",
+      "metric_id": "B04",
+      "metric_name": "Net income",
+      "value": "2601000000",
+      "unit": "USD",
+      "status": "OK",
+      "source_class": "STD_XBRL",
+      "formula": "",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "fiscal_year": "2025",
+      "fiscal_period": "ANNUAL",
+      "accession": "0001048286-26-000007",
+      "form": "10-K",
+      "filed_date": "2026-02-10",
+      "concept_or_section": "Net income",
+      "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2025, \"period_end\": \"2025-12-31\", \"period_start\": \"2025-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"coverage\": \"deterministic_source_set\", \"fiscal_year\": 2025}, \"selection\": null, \"source_reference_ids\": [\"sha256:8483c531940100379bd44f9d4f6c3fc1ed47986590151c30f340f2b4a305ef9f\", \"sha256:40127921b5837f721fb7ec41028d9eeeefb0855d09261b0fef4a1985f5298d4b\", \"sha256:3109bea68ae11f5e3c6ebd77114cda1d6f17d60e772b2630baffdb2639c483e9\"]}",
+      "confidence": "",
+      "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+      "company_id": "marriott_international",
+      "result_id": "sha256:93e0d562375105fa889e094c463667054e32eb24406d7ea01333cc8dc6fba0ea",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/known-history-partial-marriott-20261013-fixed-profile/state/updates/B04/periods/FY2025/results/cf7c3308ea114e15b9ffab7070f9677a",
+      "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+      "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+      "period_role": "REQUESTED_RESULT",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+      "defect_holds": "[]",
+      "requested_in_latest_execution": "True"
+    },
+    {
+      "company": "",
+      "cik": "",
+      "metric_id": "D02",
+      "metric_name": "",
+      "value": "",
+      "unit": "",
+      "status": "PROCESSING_INPUT_OR_IMPLEMENTATION_REQUIRED",
+      "source_class": "",
+      "formula": "",
+      "period_start": "",
+      "period_end": "",
+      "fiscal_year": "2025",
+      "fiscal_period": "",
+      "accession": "",
+      "form": "",
+      "filed_date": "",
+      "concept_or_section": "",
+      "context_or_dimension": "",
+      "confidence": "",
+      "notes": "reason: This saved-source branch has no complete current processing interface for D02",
+      "company_id": "marriott_international",
+      "result_id": "",
+      "record_root": "",
+      "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+      "local_metric_status": "PROCESSING_INPUT_OR_IMPLEMENTATION_REQUIRED",
+      "period_role": "REQUESTED_WITHOUT_RESULT",
+      "result_validity": "NO_CURRENT_RESULT",
+      "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+      "defect_holds": "",
+      "requested_in_latest_execution": "True"
+    }
+  ],
+  "state_files_preserved": 17,
+  "business_result_files": 6,
+  "source_registration_and_log_unchanged": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "verification": "ONE_SUPPORTED_NEIGHBOUR_AND_EXPLICIT_IMPLEMENTATION_GAP"
+}

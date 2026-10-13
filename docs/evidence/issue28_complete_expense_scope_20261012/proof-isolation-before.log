@@ -1,0 +1,32 @@
+test_unproven_complete_expense_route_leaves_existing_fallback_available (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_unproven_complete_expense_route_leaves_existing_fallback_available) ... ERROR
+
+======================================================================
+ERROR: test_unproven_complete_expense_route_leaves_existing_fallback_available (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_unproven_complete_expense_route_leaves_existing_fallback_available)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-complete-expense-combination/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 111, in test_unproven_complete_expense_route_leaves_existing_fallback_available
+    scope=reported_revenue_scope(primary=primary,xml=primary,annual=annual,
+        approved_concepts=APPROVED,allow_single_revenue_line=True)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-complete-expense-combination/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 81, in reported_revenue_scope
+    complete_expenses=_complete_expense_statement(primary,xml,annual,options,
+        index,parsed,table,cell,row,same,column_year=column_year)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-complete-expense-combination/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 272, in _complete_expense_statement
+    _need(fact['context_ref']==revenue['context_ref']
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          and fact['unit_ref']==next(f for f in parsed.facts if f['ordinal']==revenue['ordinal'])['unit_ref']
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+          and ' '.join(_label(table,intermediate_cell).casefold().split())in {'gains on dispositions','net gains on dispositions'},
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'COMPLETE_EXPENSE_INTERVENING_AMOUNT_UNPROVEN')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-complete-expense-combination/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 18, in _need
+    if not condition:raise IncomeSourceError('SELECTED_REPORTED_REVENUE_'+reason)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REPORTED_REVENUE_COMPLETE_EXPENSE_INTERVENING_AMOUNT_UNPROVEN
+
+----------------------------------------------------------------------
+Ran 1 test in 0.041s
+
+FAILED (errors=1)
+{"allowed_skips": 0, "errors": 1, "failures": 0, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_unproven_complete_expense_route_leaves_existing_fallback_available"]}

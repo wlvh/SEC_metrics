@@ -1,0 +1,16 @@
+test_d02_year_columns_next_to_repeated_disclosures_are_not_page_headers (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_d02_year_columns_next_to_repeated_disclosures_are_not_page_headers) ... FAIL
+
+======================================================================
+FAIL: test_d02_year_columns_next_to_repeated_disclosures_are_not_page_headers (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_d02_year_columns_next_to_repeated_disclosures_are_not_page_headers)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_text_results_v2.py", line 76, in test_d02_year_columns_next_to_repeated_disclosures_are_not_page_headers
+    self.assertEqual(proposal,selected)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+AssertionError: {'rec[4674 chars]ex': 22, 'text': 'We remain subject to litigat[4714 chars]afc'} != {'rec[4674 chars]ex': 30, 'text': 'The court has not resolved t[2623 chars]449'}
+Diff is 17138 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 1 test in 0.010s
+
+FAILED (failures=1)

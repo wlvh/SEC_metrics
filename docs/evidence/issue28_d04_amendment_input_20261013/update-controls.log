@@ -1,0 +1,33 @@
+test_complete_nonempty_findings_are_allowed_without_inventing_doubt (tests.vnext.test_current_d04_company.CurrentD04CompanyGateTest.test_complete_nonempty_findings_are_allowed_without_inventing_doubt) ... ok
+test_missing_failed_and_conflicting_groups_are_rejected (tests.vnext.test_current_d04_company.CurrentD04CompanyGateTest.test_missing_failed_and_conflicting_groups_are_rejected) ... ok
+test_missing_group_cannot_be_complete_even_with_a_stale_true_flag (tests.vnext.test_current_d04_company.CurrentD04CompanyGateTest.test_missing_group_cannot_be_complete_even_with_a_stale_true_flag) ... ok
+test_unresolved_or_failed_evidence_is_never_company_credit (tests.vnext.test_current_d04_company.CurrentD04CompanyGateTest.test_unresolved_or_failed_evidence_is_never_company_credit) ... ok
+test_source_or_interpretation_change_rechecks_once_then_reuses (tests.vnext.test_current_d04_company.CurrentD04DependencyUpdateTest.test_source_or_interpretation_change_rechecks_once_then_reuses) ... ok
+test_changed_business_input_or_configuration_does_not_reuse (tests.vnext.test_current_d04_company.CurrentD04ParsedReuseTest.test_changed_business_input_or_configuration_does_not_reuse) ... ok
+test_changed_raw_and_check_version_does_not_relax_parsed_equivalence (tests.vnext.test_current_d04_company.CurrentD04ParsedReuseTest.test_changed_raw_and_check_version_does_not_relax_parsed_equivalence) ... ok
+test_changed_raw_same_task_reuses_withheld_then_no_second_parse (tests.vnext.test_current_d04_company.CurrentD04ParsedReuseTest.test_changed_raw_same_task_reuses_withheld_then_no_second_parse) ... ok
+test_check_only_change_with_same_raw_reuses_without_parsing (tests.vnext.test_current_d04_company.CurrentD04ParsedReuseTest.test_check_only_change_with_same_raw_reuses_without_parsing) ... ok
+test_complete_amendment_parse_drives_the_existing_update_branch (tests.vnext.test_current_d04_company.CurrentD04ParsedReuseTest.test_complete_amendment_parse_drives_the_existing_update_branch) ... ERROR
+test_new_company_source_dependency_cannot_be_ignored_by_equal_parse (tests.vnext.test_current_d04_company.CurrentD04ParsedReuseTest.test_new_company_source_dependency_cannot_be_ignored_by_equal_parse) ... ok
+test_old_record_without_task_assessment_uses_original_processing (tests.vnext.test_current_d04_company.CurrentD04ParsedReuseTest.test_old_record_without_task_assessment_uses_original_processing) ... ok
+test_parse_failure_falls_back_to_complete_processing (tests.vnext.test_current_d04_company.CurrentD04ParsedReuseTest.test_parse_failure_falls_back_to_complete_processing) ... ok
+test_reuse_pointer_interruption_recovers_original_result (tests.vnext.test_current_d04_company.CurrentD04ParsedReuseTest.test_reuse_pointer_interruption_recovers_original_result) ... ok
+test_source_failures_are_not_cleared_by_equal_task (tests.vnext.test_current_d04_company.CurrentD04ParsedReuseTest.test_source_failures_are_not_cleared_by_equal_task) ... ok
+test_success_and_withheld_both_preserve_original_credit_on_equal_task (tests.vnext.test_current_d04_company.CurrentD04ParsedReuseTest.test_success_and_withheld_both_preserve_original_credit_on_equal_task) ... ok
+test_default_request_is_not_saved_response_only (tests.vnext.test_current_d04_company.D04SavedResponseOnlyBoundaryTest.test_default_request_is_not_saved_response_only) ... ok
+test_saved_response_object_cannot_execute_even_if_replay_flag_is_cleared (tests.vnext.test_current_d04_company.D04SavedResponseOnlyBoundaryTest.test_saved_response_object_cannot_execute_even_if_replay_flag_is_cleared) ... ok
+
+======================================================================
+ERROR: test_complete_amendment_parse_drives_the_existing_update_branch (tests.vnext.test_current_d04_company.CurrentD04ParsedReuseTest.test_complete_amendment_parse_drives_the_existing_update_branch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-amendment-input/SEC_metrics/tests/vnext/test_current_d04_company.py", line 157, in test_complete_amendment_parse_drives_the_existing_update_branch
+    first=run();old_record=copy.deepcopy(self.records[first['result_root']])
+                           ^^^^
+NameError: name 'copy' is not defined. Did you forget to import 'copy'?
+
+----------------------------------------------------------------------
+Ran 18 tests in 0.302s
+
+FAILED (errors=1)
+{"allowed_skips": 0, "errors": 1, "failures": 0, "run": 18, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_current_d04_company"]}

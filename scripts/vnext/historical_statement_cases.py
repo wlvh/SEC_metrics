@@ -10,7 +10,7 @@ from pathlib import Path
 from sec_urls import companyfacts_url, submissions_url
 from .batch_workflow import _structured_concepts
 from .calculator import calculate_metric, withheld_metric_result, metric_is_applicable
-from .canonical import content_hash
+from .canonical import content_hash, strict_json_loads
 from .historical_annual_input import prepare_historical_annual_input
 from .historical_dei import annual_period
 from .historical_filing_inventory import filing_inventory, prior_filing
@@ -23,12 +23,17 @@ from .normal_period_selection import resolve_period_selection
 from .observations import scope_key
 from .ordinary_source_authority import verify_ordinary_source_proofs
 from .paired_measure_v1 import paired_measure_problem
+from .selected_income_source_v1 import IncomeSourceError
 from .sources import companyfacts_structured_facts
 from .traits import repository_company_traits
 from .zero_ai_r2 import _load_deterministic_catalog, _deterministic_metric_graph, _manual_result_trace
 
 METRICS = frozenset({'B01', 'B02', 'B04', 'B05'})
 CURRENT_ANNUAL_METRICS = frozenset({'B04', 'B05', 'B07'})
+# Explicit single-line source bounds have a fixed corrective implementation.
+# Only the paired original-revenue consumer opts in; old Total/component
+# defaults and existing saved results retain their original meaning.
+PAIRED_SINGLE_REVENUE_LINE_ENABLED = True
 PROCESSING_FILES = (
     'scripts/vnext/historical_statement_cases.py',
     'scripts/vnext/normal_period_selection.py',
@@ -43,14 +48,31 @@ PROCESSING_FILES = (
     'scripts/vnext/batch_workflow.py',
     'scripts/vnext/zero_ai_r2.py',
     'scripts/vnext/paired_measure_v1.py',
+    'scripts/vnext/annual_amendment_scope.py',
+    'scripts/vnext/annual_amendment_scope_v2.py',
+    'scripts/vnext/text_coverage.py',
+    'scripts/vnext/xbrl_namespace_policy.py',
+    'scripts/vnext/amendment_note_layout.py',
+    'config/annual_amendment_scope_v1.json',
     'config/normal_period_selection_v1.json',
     'config/normal_fiscal_year_labels_v1.json',
     'catalog/deterministic_metrics.json',
 )
 INCOME_PROCESSING_FILES = (*PROCESSING_FILES,
+    'scripts/vnext/normal_source_requirements.py',
     'scripts/vnext/selected_income_source_v1.py',
+    'scripts/vnext/selected_revenue_scope_v1.py',
+    'scripts/vnext/selected_reported_revenue_v2.py',
+    'scripts/vnext/selected_fiscal_definition_scope_v1.py',
+    'scripts/vnext/normal_annual_input_v2.py',
+    'scripts/vnext/fiscal_year_labels.py',
+    'scripts/vnext/composite_scope.py',
     'scripts/vnext/xbrl_namespace_policy.py',
     'scripts/vnext/ordinary_income_input.py',
+    'scripts/vnext/instant_balance_amendment.py',
+    'scripts/vnext/instant_balance_amendment_v2.py',
+    'config/ordinary_income_input_v1.json',
+    'config/instant_balance_amendment_v1.json',
     'scripts/vnext/financial_duration.py',
     'scripts/vnext/financial_structured.py',
     'scripts/vnext/text_results_v2.py',
@@ -61,17 +83,44 @@ INCOME_PROCESSING_FILES = (*PROCESSING_FILES,
 )
 
 
+from .selected_reported_revenue_v2 import STATEMENT_GROUP_PROCESSING_FILES
+
+PAIRED_REVENUE_PROCESSING_FILES = tuple(dict.fromkeys((
+    *INCOME_PROCESSING_FILES, 'scripts/vnext/historical_paired_revenue.py',
+    *STATEMENT_GROUP_PROCESSING_FILES)))
+
+STATEMENT_METRIC_PROCESSING_FILES = tuple(dict.fromkeys((*PROCESSING_FILES,
+    'scripts/vnext/statement_metric_amendment.py',
+    'scripts/vnext/table_grid.py', 'scripts/vnext/ordinary_income_input.py',
+    'scripts/vnext/instant_balance_amendment.py',
+    'scripts/vnext/instant_balance_amendment_v2.py',
+    'scripts/vnext/amendment_note_layout.py', 'scripts/vnext/normal_annual_input_v2.py',
+    'scripts/vnext/text_results_v2.py', 'scripts/vnext/xbrl_namespace_policy.py',
+    'config/ordinary_income_input_v1.json', 'config/instant_balance_amendment_v1.json')))
+
+
+def processing_files_for_statement_metric(metric_id):
+    return STATEMENT_METRIC_PROCESSING_FILES if metric_id in {'B04','B07'} else PROCESSING_FILES
+
 
 class StatementCaseError(ValueError):
-    def __init__(self, reason, category='SOURCE_INTEGRITY_ERROR'):
+    def __init__(self, reason, category='SOURCE_INTEGRITY_ERROR', *, revenue_scope=None):
         super().__init__(reason)
         self.category = category
+        self.revenue_scope = revenue_scope
 
 
 def _need(condition, reason, category='SOURCE_INTEGRITY_ERROR'):
     if not condition:
         raise StatementCaseError(reason, category)
 
+
+def _revenue_claims_admitted_by_original(*, reader, prepared, filing, period, claims, concepts):
+    """Retained adapter seam; B02's own scope implementation is independent."""
+    from .historical_paired_revenue import revenue_claims_admitted_by_original
+    return revenue_claims_admitted_by_original(reader=reader, prepared=prepared,
+        filing=filing, period=period, claims=claims, concepts=concepts,
+        allow_single_revenue_line=PAIRED_SINGLE_REVENUE_LINE_ENABLED)
 
 def _registry_for_selected_period(*, registry, prepared, selection):
     """Reuse the retained history rule for a predecessor's own annual period."""
@@ -92,11 +141,12 @@ def _registry_for_selected_period(*, registry, prepared, selection):
     return {**registry, 'primary_cik': reporting, 'entity_continuity_status': 'continuous'}, detail
 
 
-def prepare_historical_statement_year_case(*, repo_root, company_id, metric_id, fiscal_year):
+def prepare_historical_statement_year_case(*, repo_root, company_id, metric_id, fiscal_year,
+                                           period_selection=None):
     """Select one issuer year and supply the existing common computation."""
     _need(metric_id in METRICS, 'HISTORICAL_STATEMENT_FAMILY_NOT_RECEIVED', 'IMPLEMENTATION_GAP')
     return _prepare_historical_statement_case(repo_root=repo_root, company_id=company_id,
-        metric_id=metric_id, fiscal_year=fiscal_year)
+        metric_id=metric_id, fiscal_year=fiscal_year, period_selection=period_selection)
 
 
 def prepare_historical_current_annual_year_case(*, repo_root, company_id, metric_id, fiscal_year):
@@ -175,19 +225,160 @@ def _metadata_outcome_case(*, source, company_id, metric_id, prepared, selection
         'rules_root': str(ROOT)}
 
 
+def _statement_amendment_checks(reader, prepared, *, metric_id=None, income_properties=None,
+                                statement_properties=None, namespace_policy=None, checks=None):
+    """Consume the shared original-statement proof for this selected filing."""
+    if not prepared['amendments']:
+        return []
+    from .annual_amendment_scope_v2 import inspect_annual_amendment_scope
+    from .annual_amendment_scope import AmendmentScopeError
+    from .text_coverage import TextCoverageError
+    original_source = reader.primary(prepared['filing'])
+    original = {'raw':original_source['raw_bytes'], 'blob':original_source['raw_blob'],
+        'reference':original_source['source_reference'], 'filing':prepared['filing']}
+    checks = [] if checks is None else checks
+    for filing in prepared['amendments']:
+        amended = reader.primary(filing)
+        try:
+            checked = inspect_annual_amendment_scope(original=original,
+                amendment={'raw':amended['raw_bytes'], 'blob':amended['raw_blob'],
+                    'reference':amended['source_reference'], 'filing':filing},
+                company_id=prepared['company_id'], cik=prepared['entity'],
+                note_layout='inline-paragraphs-v2',
+                **({} if namespace_policy is None else {'namespace_policy':namespace_policy}))
+        except (AmendmentScopeError, TextCoverageError) as error:
+            if namespace_policy is None:
+                raise
+            raise StatementCaseError('HISTORICAL_PRIOR_AMENDMENT_SOURCE_PROPERTY_NOT_PROVEN:'
+                + str(error), 'AMENDMENT_INPUT_NOT_CLEARED') from error
+        checks.append(checked)
+        _need(checked['fiscal_window_unchanged'] and not checked['issues'],
+              'HISTORICAL_STATEMENT_AMENDMENT_ORIGINAL_VALUES_NOT_PROVEN',
+              'AMENDMENT_INPUT_NOT_CLEARED')
+        original_values = ('ORIGINAL_STATEMENT_VALUES' in checked['unchanged_input_classes']
+                          and checked['original_statement_admission_requires_further_review'] is False)
+        if (not original_values and metric_id in {'B01', 'B02', 'B03'}
+                and checked['classification'] == 'PART_III_ADDITION_WITH_EXPLICIT_NO_NEW_FINANCIAL_STATEMENTS'):
+            # The annual source proves only its stated limited scope. Reuse
+            # the public income property for the selected original values;
+            # do not mutate that source scope into a statement-value proof.
+            _need(type(income_properties) is list,
+                  'HISTORICAL_STATEMENT_INCOME_AMENDMENT_EVIDENCE_TARGET_REQUIRED',
+                  'IMPLEMENTATION_GAP')
+            from .canonical import strict_json_file
+            from .ordinary_income_input import inspect_income_amendment, IncomeInputError, POLICY_PATH
+            from .instant_balance_amendment import InstantAmendmentError
+            rules = strict_json_file(path=ROOT/POLICY_PATH)
+            try:
+                property_check = inspect_income_amendment(checked, amended['raw_bytes'], rules)
+            except (IncomeInputError, InstantAmendmentError) as error:
+                raise StatementCaseError('HISTORICAL_STATEMENT_INCOME_AMENDMENT_PROPERTY_NOT_PROVEN:'
+                    + str(error), 'AMENDMENT_INPUT_NOT_CLEARED') from error
+            _need(property_check.get('original_scope_id') == checked['scope_id']
+                  and property_check.get('input_class') == rules['input_class'],
+                  'HISTORICAL_STATEMENT_INCOME_AMENDMENT_PROPERTY_BINDING_CHANGED')
+            income_properties.append({'source_scope_id':checked['scope_id'],
+                'metric_id':metric_id, 'income_property':property_check})
+            original_values = True
+        if (not original_values and metric_id in {'B04','B07'}
+                and checked['classification'] == 'PART_III_ADDITION_WITH_EXPLICIT_NO_NEW_FINANCIAL_STATEMENTS'):
+            _need(type(statement_properties) is list,
+                  'HISTORICAL_STATEMENT_METRIC_AMENDMENT_EVIDENCE_TARGET_REQUIRED', 'IMPLEMENTATION_GAP')
+            from .statement_metric_amendment import inspect_statement_metric_amendment, CATALOG_PATH
+            from .ordinary_income_input import IncomeInputError
+            from .instant_balance_amendment import InstantAmendmentError
+            from .canonical import sha256_bytes, sha256_file, strict_json_file
+            try:
+                property_check = inspect_statement_metric_amendment(checked, amended['raw_bytes'], metric_id=metric_id)
+            except (IncomeInputError, InstantAmendmentError) as error:
+                raise StatementCaseError('HISTORICAL_STATEMENT_METRIC_AMENDMENT_PROPERTY_NOT_PROVEN:'
+                    + str(error), 'AMENDMENT_INPUT_NOT_CLEARED') from error
+            definition = strict_json_file(path=ROOT/CATALOG_PATH)['metrics'][metric_id]
+            roles = sorted({c['role'] for branch in definition['branches'] for c in branch['components']})
+            expected_class = {'B04':'ORIGINAL_REPORTED_NET_INCOME_VALUES',
+                              'B07':'ORIGINAL_INTEREST_COVERAGE_COMPONENT_VALUES'}[metric_id]
+            body = {key:value for key,value in property_check.items() if key!='property_id'}
+            _need(property_check.get('record_type')=='ORIGINAL_STATEMENT_METRIC_INPUT_PROPERTY'
+                and property_check.get('metric_id')==metric_id
+                and property_check.get('original_scope_id')==checked['scope_id']
+                and property_check.get('covered_component_roles')==roles
+                and property_check.get('input_class')==expected_class
+                and property_check.get('metric_definition_sha256')==sha256_file(path=ROOT/CATALOG_PATH)
+                and property_check.get('amendment_raw_sha256')==sha256_bytes(content=amended['raw_bytes'])
+                and property_check.get('original_source_reference')==original_source['source_reference']
+                and property_check.get('amendment_source_reference')==amended['source_reference']
+                and property_check.get('property_id')==content_hash(value=body)
+                and property_check.get('source_property',{}).get('original_scope_id')==checked['scope_id']
+                and property_check.get('source_property',{}).get('input_class')==expected_class,
+                'HISTORICAL_STATEMENT_METRIC_AMENDMENT_PROPERTY_BINDING_CHANGED')
+            statement_properties.append({'source_scope_id':checked['scope_id'],
+                'metric_id':metric_id,'statement_property':property_check})
+            original_values = True
+        _need(original_values,
+              'HISTORICAL_STATEMENT_AMENDMENT_ORIGINAL_VALUES_NOT_PROVEN',
+              'AMENDMENT_INPUT_NOT_CLEARED')
+    return checks
+
+
 def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fiscal_year,
-                                       withhold_known_source_errors=False):
+                                       withhold_known_source_errors=False, period_selection=None,
+                                       prepared_current_annual=None):
     """Shared selected-filing case; catalog and Calculator retain computation."""
     source = Path(repo_root)
-    selection = resolve_period_selection(repo_root=source, company_id=company_id,
-                                         fiscal_year=fiscal_year, rules_root=ROOT)
-    prepared = prepare_historical_annual_input(repo_root=source, company_id=company_id,
+    if prepared_current_annual is None:
+        selection = (resolve_period_selection(repo_root=source, company_id=company_id,
+                                          fiscal_year=fiscal_year, rules_root=ROOT)
+                 if period_selection is None else period_selection)
+        prepared = prepare_historical_annual_input(repo_root=source, company_id=company_id,
                                                period_selection=selection, rules_root=ROOT)
+    else:
+        _need(metric_id in CURRENT_ANNUAL_METRICS and period_selection is None,
+              'CURRENT_STATEMENT_PREPARED_INPUT_SCOPE_INVALID')
+        route=_load_deterministic_catalog(repo_root=ROOT)['metrics'][metric_id]
+        _need(route['adapter_id']=='companyfacts' and route['result_period_role']=='current_annual'
+              and all(c['accession_role']=='current' and c['period_role']=='current_annual'
+                      for branch in route['branches'] for c in branch['components']),
+              'CURRENT_STATEMENT_PREPARED_INPUT_ROLE_CHANGED')
+        prepared = prepared_current_annual
+        _need(prepared['company_id'] == company_id
+              and prepared['input_id'] == content_hash(value={
+                  k:v for k,v in prepared.items() if k!='input_id'})
+              and prepared['selection_rule']=='LATEST_ORDINARY_PERIOD_IN_SAVED_SUBMISSIONS'
+              and prepared['fiscal_label_policy']=='SOURCE_ISSUER_YEAR_WITH_RAW_METADATA_RETAINED'
+              and type(fiscal_year) is int
+              and prepared['table_input']['target_period']['fiscal_year']==fiscal_year,
+              'CURRENT_STATEMENT_PREPARED_INPUT_CHANGED')
+        period=prepared['table_input']['target_period']
+        _need(prepared['companyfacts_input']['target_period']==period
+              and all(prepared['original_input']['table_input']['target_period'][key]==period[key]
+                      for key in ('period_start','period_end')),
+              'CURRENT_STATEMENT_PREPARED_DATES_CHANGED')
+        verify_ordinary_source_proofs(data_root=source,proofs=prepared['source_proofs'])
+        selection = {'record_type':'CURRENT_STATEMENT_ANNUAL_SELECTION',
+            'company_id':company_id,'reporting_cik':prepared['entity'],
+            'selected_fiscal_year':fiscal_year,'filing':prepared['filing'],
+            'prior_filing':None,'prior_amendments':[],
+            'historical_catalog_required':False}
+    # Explicit selection saves the preceding fiscal-year search only. Annual
+    # preparation re-derives its source selection, and the requested label is
+    # still checked even when the selection was originally made by report end.
+    if period_selection is not None:
+        _need(type(fiscal_year) is int and prepared['table_input']['target_period']['fiscal_year'] == fiscal_year,
+              'HISTORICAL_STATEMENT_REQUESTED_FISCAL_YEAR_CHANGED')
     if prepared['subject_policy']['mode'] == 'SUCCESSOR_REGISTRANT_ONLY' and metric_id != 'B01':
         return _successor_comparability_case(source=source, company_id=company_id,
             metric_id=metric_id, prepared=prepared, selection=selection)
-    _need(not prepared['amendments'] and prepared['subject_policy']['mode'] == 'CONTINUOUS_PRIMARY',
+    _need(prepared['subject_policy']['mode'] == 'CONTINUOUS_PRIMARY'
+          and (not prepared['amendments'] or metric_id in METRICS | {'B07'}),
           'HISTORICAL_STATEMENT_AMENDMENT_OR_SUCCESSOR_NOT_RECEIVED', 'IMPLEMENTATION_GAP')
+    reader = _Sources(source, company_id, prepared['entity']) if prepared['amendments'] else None
+    income_amendment_properties = []
+    statement_metric_properties = []
+    amendment_checks = _statement_amendment_checks(reader, prepared,
+        **({'metric_id':metric_id, 'income_properties':income_amendment_properties}
+           if metric_id in {'B01','B02'} else {}),
+        **({'metric_id':metric_id, 'statement_properties':statement_metric_properties}
+           if metric_id in {'B04','B07'} else {}))
     period = prepared['table_input']['target_period']
     documents = installed_ordinary_spec_documents()
     spec = documents[metric_id]['compiled_spec']
@@ -212,12 +403,23 @@ def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fisc
                 'applicability_rule':spec['compiled']['applicability'], 'traits':traits,
                 'statement_values_used':False, 'source_extraction_failure':False},
             record_type='HISTORICAL_STRUCTURAL_APPLICABILITY_INPUT', assessment_name='structural_applicability')
-    reader = _Sources(source, company_id, prepared['entity'])
+    if reader is None:
+        reader = _Sources(source, company_id, prepared['entity'])
     main = reader.read(submissions_url(cik=int(prepared['entity'])),
                        role='sec_submissions_inventory', media_type='application/json')
     reader.primary(prepared['filing'])
-    current_inventory = filing_inventory(reader=reader, inventory=main,
-        period_selection=selection, cik=prepared['entity'], accession=prepared['filing']['accessionNumber'])
+    if prepared_current_annual is None:
+        current_inventory = filing_inventory(reader=reader, inventory=main,
+            period_selection=selection, cik=prepared['entity'], accession=prepared['filing']['accessionNumber'])
+    else:
+        from .normal_governance_input import _filings
+        rows=_filings(strict_json_loads(text=main['raw_bytes'].decode('utf-8')),
+                      inventory_name='current-main')
+        matching=[row for row in rows if row['accessionNumber']==prepared['filing']['accessionNumber']]
+        _need(len(matching)==1 and all(matching[0][key]==prepared['filing'][key] for key in (
+            'accessionNumber','form','reportDate','filingDate','primaryDocument')),
+            'CURRENT_STATEMENT_MAIN_FILING_IDENTITY_CHANGED')
+        current_inventory=main
     catalog = _load_deterministic_catalog(repo_root=ROOT)
     concepts = (_structured_concepts(compiled_spec=spec) if metric_id == 'B01' else
         sorted({c for b in catalog['metrics'][metric_id]['branches']
@@ -228,9 +430,12 @@ def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fisc
     periods = {'current': period, 'prior': None}
     filings = {'current': prepared['filing'], 'prior': None}
     prior_error = None
+    prior_amendment_checks = []
     if metric_id == 'B02':
         try:
-            prior, listed_in = prior_filing(reader, main, prepared)
+            prior_amendments = selection.get('prior_amendments', [])
+            prior, listed_in = prior_filing(reader, main, prepared,
+                **({'period_selection':selection} if prior_amendments else {}))
             _need(selection['prior_filing'] is not None
                   and prior['accessionNumber'] == selection['prior_filing']['accessionNumber'],
                   'HISTORICAL_STATEMENT_PRIOR_DIFFERS_FROM_SELECTION')
@@ -243,20 +448,99 @@ def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fisc
             _need(date.fromisoformat(actual[0]['period_end']) + timedelta(days=1)
                   == date.fromisoformat(period['period_start']),
                   'HISTORICAL_STATEMENT_PRIOR_NOT_ADJACENT')
+            # This identity is proven independently of amendment admission.
+            # Retain it even if that later property is still unsupported.
+            periods['prior'], filings['prior'] = actual[0], prior
+            if prior_amendments:
+                from .xbrl_namespace_policy import YEAR_QUARTER_OR_DATE
+                _statement_amendment_checks(reader,
+                    {'company_id':prepared['company_id'], 'entity':prepared['entity'],
+                     'filing':prior, 'amendments':prior_amendments},
+                    namespace_policy=YEAR_QUARTER_OR_DATE, checks=prior_amendment_checks)
             prior_source, by_role['prior'] = _filing_source(reader, prepared, prior, listed_in, concepts)
             sources.append({**prior_source, 'accession_role': 'prior'})
-            periods['prior'], filings['prior'] = actual[0], prior
         except (*_SOURCE_ERRORS, NormalCompanyfactsError, StatementCaseError) as error:
             prior_error = {'reason': str(error), 'error_type': type(error).__name__,
                 'category': ('IMPLEMENTATION_GAP' if str(error) ==
                     'NORMAL_COMPANYFACTS_PRIOR_AMENDMENT_REPLAY_NOT_IMPLEMENTED'
-                    else getattr(error, 'category', 'SOURCE_OR_IMPLEMENTATION_UNRESOLVED'))}
+                    else getattr(error, 'category', 'SOURCE_OR_IMPLEMENTATION_UNRESOLVED')),
+                **({'unresolved_amendment_role':'prior',
+                    'prior_original_filing':selection['prior_filing'],
+                    'prior_amendment_filings':prior_amendments,
+                    'prior_amendment_namespace_policy':'YEAR_QUARTER_OR_DATE'} if prior_amendments else {})}
     scope = ({'entity_scope': 'registrant', 'period_basis': 'source_annual_duration'}
              if metric_id == 'B01' else {'coverage': 'deterministic_source_set', 'fiscal_year': fiscal_year})
     target = {'company_id': company_id, 'period_start': period['period_start'],
               'period_end': period['period_end'], 'scope': scope, 'scope_key': scope_key(scope=scope)}
     assessment = prior_error
+    paired_revenue_scopes = {}
+    if metric_id == 'B02' and not prior_error:
+        try:
+            for role in ('current', 'prior'):
+                by_role[role], paired_revenue_scopes[role] = _revenue_claims_admitted_by_original(
+                    reader=reader, prepared=prepared, filing=filings[role], period=periods[role],
+                    claims=by_role[role], concepts=concepts)
+        except (*_SOURCE_ERRORS, NormalCompanyfactsError, StatementCaseError, IncomeSourceError) as error:
+            unresolved_scope = getattr(error, 'revenue_scope', None)
+            if unresolved_scope is not None:
+                paired_revenue_scopes[role] = unresolved_scope
+            prior_error = {'category': getattr(error, 'category', 'SOURCE_OR_IMPLEMENTATION_UNRESOLVED'),
+                'reason': str(error), 'error_type': type(error).__name__,
+                'unresolved_revenue_role': role,
+                'paired_revenue_scopes': paired_revenue_scopes}
+            assessment = prior_error
     if metric_id == 'B01':
+        from .selected_revenue_scope_v1 import (
+            selected_revenue_scope, admit_revenue_facts, verify_revenue_observations, STATEMENT_CONCEPTS)
+        from .selected_reported_revenue_v2 import (reported_revenue_scope,
+            admit_reported_revenue_facts, verify_reported_revenue_observations)
+        from .selected_income_source_v1 import visible_income_periods
+        from .selected_income_source_v1 import native_income_reports
+        from .deterministic_router import parse_accession_xbrl_source
+        from .xbrl_namespace_policy import YEAR_OR_DATE_RELEASE, YEAR_QUARTER_OR_DATE
+        from .ordinary_income_input import verify_income_observations
+        originals = reader.auditor_filing(prepared['filing'])
+        by_kind = {kind: [original for original in originals
+                   if original['raw_blob']['media_type'] == media]
+                   for kind, media in [('primary', 'text/html'), ('xml', 'application/xml')]}
+        _need(all(len(originals) == 1 for originals in by_kind.values()),
+              'HISTORICAL_INCOME_ORIGINAL_SOURCE_SET_AMBIGUOUS')
+        # Native source identity uses the literal DEI label, while the company
+        # result uses the separately resolved issuer fiscal label and dates.
+        source_annual = prepared.get('original_input', prepared)
+        _need(all(source_annual['table_input']['target_period'][key] == period[key]
+                  for key in ('period_start', 'period_end')),
+              'HISTORICAL_INCOME_ORIGINAL_PERIOD_CHANGED')
+        reported_scope = reported_revenue_scope(primary=by_kind['primary'][0],
+            xml=by_kind['xml'][0], annual=source_annual, approved_concepts=concepts,
+            namespace_policy=YEAR_OR_DATE_RELEASE, annual_period_reader=annual_period,
+            dei_release=YEAR_QUARTER_OR_DATE,
+            fiscal_label_resolution=prepared.get('fiscal_year_label_resolution'),
+            allow_single_revenue_line=True)
+        if reported_scope['complete_scope_proven']:
+            revenue_scope = reported_scope
+            admit_facts = admit_reported_revenue_facts
+            check_observations = verify_reported_revenue_observations
+            reports = {'primary':reported_scope['original_reports'],
+                       'xml':native_income_reports(by_kind['xml'][0],source_annual,
+                           sorted(set(concepts)|set(STATEMENT_CONCEPTS)),
+                           namespace_policy=YEAR_OR_DATE_RELEASE,annual_period_reader=annual_period)}
+        else:
+            revenue_scope = selected_revenue_scope(primary=by_kind['primary'][0],
+                xml=by_kind['xml'][0], annual=source_annual, approved_concepts=concepts,
+                namespace_policy=YEAR_OR_DATE_RELEASE, annual_period_reader=annual_period)
+            admit_facts = admit_revenue_facts
+            check_observations = verify_revenue_observations
+            reports = revenue_scope['original_reports']
+        # Preserve the existing visible check for a native short-period fact;
+        # the scope helper does not grant that fact an annual interpretation.
+        short = [row for row in reports['primary']
+                 if row['period_start'] != period['period_start']]
+        if short:
+            raw = by_kind['primary'][0]['raw_bytes']
+            visible = visible_income_periods(raw, parse_accession_xbrl_source(raw_bytes=raw), short)
+            for row in short:
+                row['visible_period_check'] = visible[row['ordinal']]
         facts_source = reader.read(companyfacts_url(cik=int(prepared['entity'])),
             accession=prepared['filing']['accessionNumber'], role='companyfacts', media_type='application/json')
         facts = companyfacts_structured_facts(raw_bytes=facts_source['raw_bytes'],
@@ -264,37 +548,22 @@ def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fisc
             allowed_ciks=[prepared['entity']], include_instant=False)
         result, trace, observations = calculate_metric(compiled_spec=spec,
             target={**target, 'entity': prepared['entity'], 'accession': prepared['filing']['accessionNumber']},
-            company_traits=traits, structured_facts=facts, verified_observations=[])
+            company_traits=traits, structured_facts=admit_facts(facts=facts, scope=revenue_scope),
+            verified_observations=[])
+        check_observations(observations=observations, scope=revenue_scope)
+        assessment = {'selected_revenue_scope': revenue_scope}
         # Bind the CompanyFacts observation to this selected filing's originals.
         # The public reader does no current-year selection or amendment admission.
         if result['publication'] == 'PUBLISHED' and observations:
-            from .selected_income_source_v1 import native_income_reports
-            from .xbrl_namespace_policy import YEAR_OR_DATE_RELEASE
-            from .ordinary_income_input import verify_income_observations
-            originals = reader.auditor_filing(prepared['filing'])
-            by_kind = {kind: [source for source in originals
-                       if source['raw_blob']['media_type'] == media]
-                       for kind, media in [('primary', 'text/html'), ('xml', 'application/xml')]}
-            _need(all(len(sources) == 1 for sources in by_kind.values()),
-                  'HISTORICAL_INCOME_ORIGINAL_SOURCE_SET_AMBIGUOUS')
-            # The annual preparer retains the literal DEI label and separately
-            # resolves the issuer's fiscal label. The source reader checks the
-            # literal original; observations retain the resolved label/dates.
-            source_annual = prepared.get('original_input', prepared)
-            _need(all(source_annual['table_input']['target_period'][key] == period[key]
-                      for key in ('period_start', 'period_end')),
-                  'HISTORICAL_INCOME_ORIGINAL_PERIOD_CHANGED')
-            reports = {kind: native_income_reports(sources[0], source_annual, concepts,
-                           check_visible_short_period=kind == 'primary',
-                           namespace_policy=YEAR_OR_DATE_RELEASE, annual_period_reader=annual_period)
-                       for kind, sources in by_kind.items()}
             checks = verify_income_observations({'annual_input': prepared,
                 'statement_period': period, 'original_reports': reports}, observations)
-            assessment = {'income_observation_checks': checks}
+            assessment['income_observation_checks'] = checks
         selected_claims = claims
     elif prior_error:
         result, trace = withheld_metric_result(compiled_spec=spec, target=target,
-                                               reason_code='HISTORICAL_PRIOR_INPUT_UNRESOLVED')
+            reason_code=('HISTORICAL_PAIRED_REVENUE_SCOPE_UNRESOLVED'
+                         if 'unresolved_revenue_role' in prior_error
+                         else 'HISTORICAL_PRIOR_INPUT_UNRESOLVED'))
         observations, selected_claims = [], []
     else:
         context = {'repo_root': ROOT, 'deterministic_catalog': catalog,
@@ -317,6 +586,14 @@ def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fisc
                 reason_code='HISTORICAL_CURRENT_ANNUAL_INPUT_UNRESOLVED')
             observations, selected_claims = [], []
         else:
+            if metric_id == 'B02':
+                _need(len(graph['claims']) == 2 and all(
+                    len([claim for claim in graph['claims']
+                         if claim['attributes']['accession'] == filings[role]['accessionNumber']
+                         and claim['verified_claim_id'] in
+                         {source_claim['verified_claim_id'] for source_claim in by_role[role]}]) == 1
+                    for role in ('current', 'prior')),
+                    'HISTORICAL_PAIRED_REVENUE_SELECTED_OPERAND_CHANGED')
             problem, bridged = paired_measure_problem(route=catalog['metrics'][metric_id],
                 claims=graph['claims'], current_claims=by_role['current'],
                 accessions={role: (filing or {}).get('accessionNumber') for role, filing in filings.items()})
@@ -330,6 +607,22 @@ def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fisc
                 observations = [graph['observation']] if graph['observation'] else []
                 selected_claims = graph['claims']
                 assessment = {'paired_measure_bridge': bridged} if bridged else None
+    if amendment_checks:
+        assessment = {**(assessment or {}), 'statement_amendment_checks': [
+            {key:check[key] for key in ('scope_id','classification','fiscal_window_unchanged',
+                'unchanged_input_classes','issues','policy_hash')}
+            for check in amendment_checks]}
+    if income_amendment_properties:
+        assessment = {**(assessment or {}),
+            'statement_income_amendment_properties':income_amendment_properties}
+    if statement_metric_properties:
+        assessment = {**(assessment or {}),
+            'statement_metric_amendment_properties':statement_metric_properties}
+    if paired_revenue_scopes:
+        assessment = {**(assessment or {}), 'paired_revenue_scopes': paired_revenue_scopes}
+    if prior_amendment_checks:
+        assessment = {**(assessment or {}), 'prior_statement_amendment_checks': prior_amendment_checks,
+            'prior_amendment_namespace_policy': 'YEAR_QUARTER_OR_DATE'}
     if period_continuity is not None:
         assessment = {**(assessment or {}), 'period_continuity': period_continuity}
     proofs = list({content_hash(value=p): p for p in
@@ -342,11 +635,45 @@ def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fisc
         'actual_periods': periods, 'source_sets': [s['manifest'] for s in sources],
         'claims_by_accession_role': by_role,
         'spec_closure_hash': spec['spec_closure_hash'], 'source_proofs': proofs,
-        'assessment': assessment}
+        'assessment': assessment,
+        **({'prior_statement_amendment_checks':prior_amendment_checks,
+            'prior_amendment_namespace_policy':'YEAR_QUARTER_OR_DATE'} if prior_amendment_checks else {}),
+        **({'statement_amendment_checks':amendment_checks} if amendment_checks else {})}
+    display_assessment = assessment
+    if assessment and 'selected_revenue_scope' in assessment:
+        revenue_scope = assessment['selected_revenue_scope']
+        display_assessment = {**assessment, 'selected_revenue_scope': {
+            key: revenue_scope[key] for key in ('scope_id', 'status', 'complete_scope_proven')}}
+        if 'income_observation_checks' in assessment:
+            display_assessment['income_observation_checks'] = [
+                {'observation_id': check['observation_id'],
+                 'source_roles': sorted(check['original_reports'])}
+                for check in assessment['income_observation_checks']]
+    if assessment and 'paired_revenue_scopes' in assessment:
+        display_assessment = {**(display_assessment or {}), 'paired_revenue_scopes': {
+            role: {key: source_scope[key] for key in ('scope_id', 'status', 'complete_scope_proven')}
+            for role, source_scope in assessment['paired_revenue_scopes'].items()}}
+    if assessment and 'prior_statement_amendment_checks' in assessment:
+        display_assessment = {**(display_assessment or {}), 'prior_statement_amendment_checks': [
+            {key:check[key] for key in ('scope_id','classification','fiscal_window_unchanged',
+                'unchanged_input_classes','issues','policy_hash')}
+            for check in prior_amendment_checks]}
+    if income_amendment_properties:
+        display_assessment = {**(display_assessment or {}),
+            'statement_income_amendment_properties':[
+                {'source_scope_id':item['source_scope_id'], 'metric_id':item['metric_id'],
+                 'input_class':item['income_property']['input_class']}
+                for item in income_amendment_properties]}
+    if statement_metric_properties:
+        display_assessment = {**(display_assessment or {}), 'statement_metric_amendment_properties':[
+            {'source_scope_id':item['source_scope_id'],'metric_id':item['metric_id'],
+             'property_id':item['statement_property']['property_id'],
+             'covered_component_roles':item['statement_property']['covered_component_roles']}
+            for item in statement_metric_properties]}
     return {'kind': 'STRUCTURED', 'primary_metric_id': metric_id, 'input_binding': binding,
         'compiled_specs': {metric_id: spec}, 'spec_paths': {metric_id: documents[metric_id]['path']},
         'target_period': period, 'prepared_annual_input': prepared, 'expected_records': records,
         'results': {metric_id: result}, 'traces': {metric_id: trace},
         'references': [r for r in source_records if r['record_type'] == 'SOURCE_REFERENCE'],
-        'source_proofs': proofs, 'admission': admission, 'selection': assessment, 'rules_root': str(ROOT),
+        'source_proofs': proofs, 'admission': admission, 'selection': display_assessment, 'rules_root': str(ROOT),
         **({'input_assessments': {'historical_statement': assessment}} if assessment else {})}

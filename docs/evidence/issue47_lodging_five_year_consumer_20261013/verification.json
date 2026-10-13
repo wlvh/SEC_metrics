@@ -1,0 +1,1139 @@
+{
+  "code_main": "ce7a9f69d020c752f6d4996aacadf3deb5b9d74c",
+  "production_code_changed": false,
+  "phases": [
+    {
+      "arguments": [
+        "run",
+        "--company",
+        "marriott_international",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2021",
+        "--fiscal-year-end",
+        "2023",
+        "--metric",
+        "B10",
+        "--metric",
+        "B11",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/issue47-history-consumers/SEC_metrics",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pr71-first-batch-20261009/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lodging-five-year-main-20261013/first/run"
+      ],
+      "exit_code": 2,
+      "seconds": 11.377156625007046,
+      "old_result_files_preserved": true,
+      "result_files_before_after": [
+        36,
+        48
+      ],
+      "state_files_before_after": [
+        97,
+        138
+      ],
+      "old_and_new_results_unchanged": false,
+      "all_state_unchanged": false,
+      "source_registration_and_ledger_unchanged": true,
+      "new_calls": [
+        0,
+        0,
+        0
+      ],
+      "phase": "first",
+      "metrics": [
+        {
+          "metric_id": "B10",
+          "requested_fiscal_year": 2021,
+          "status": "INPUT_OR_EXECUTION_FAILED",
+          "reason": "ORDINARY_PERIOD_SELECTION_CANDIDATE_SOURCE_UNAVAILABLE:2022-12-31:SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000162828023003485/mar-20221231.htm; 2021-12-31:SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000162828022002666/mar-20211231.htm",
+          "error_category": "SOURCE_UNAVAILABLE",
+          "calculation_performed": null,
+          "result_id": null
+        },
+        {
+          "metric_id": "B11",
+          "requested_fiscal_year": 2021,
+          "status": "INPUT_OR_EXECUTION_FAILED",
+          "reason": "ORDINARY_PERIOD_SELECTION_CANDIDATE_SOURCE_UNAVAILABLE:2022-12-31:SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000162828023003485/mar-20221231.htm; 2021-12-31:SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000162828022002666/mar-20211231.htm",
+          "error_category": "SOURCE_UNAVAILABLE",
+          "calculation_performed": null,
+          "result_id": null
+        },
+        {
+          "metric_id": "B10",
+          "requested_fiscal_year": 2022,
+          "status": "INPUT_OR_EXECUTION_FAILED",
+          "reason": "ORDINARY_PERIOD_SELECTION_CANDIDATE_SOURCE_UNAVAILABLE:2022-12-31:SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000162828023003485/mar-20221231.htm",
+          "error_category": "SOURCE_UNAVAILABLE",
+          "calculation_performed": null,
+          "result_id": null
+        },
+        {
+          "metric_id": "B11",
+          "requested_fiscal_year": 2022,
+          "status": "INPUT_OR_EXECUTION_FAILED",
+          "reason": "ORDINARY_PERIOD_SELECTION_CANDIDATE_SOURCE_UNAVAILABLE:2022-12-31:SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000162828023003485/mar-20221231.htm",
+          "error_category": "SOURCE_UNAVAILABLE",
+          "calculation_performed": null,
+          "result_id": null
+        },
+        {
+          "metric_id": "B10",
+          "requested_fiscal_year": 2023,
+          "status": "CANDIDATE_READY",
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": true,
+          "result_id": "sha256:6db171f257825e4340edc690fbda2aec76717fe60e5c5f5eb471b797a5d6ef2e"
+        },
+        {
+          "metric_id": "B11",
+          "requested_fiscal_year": 2023,
+          "status": "CANDIDATE_READY",
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": true,
+          "result_id": "sha256:e9286bf6c87b28ccb7baa0df30461f463bce82592294aee3afa2e2254933b052"
+        }
+      ]
+    },
+    {
+      "arguments": [
+        "run",
+        "--company",
+        "marriott_international",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2023",
+        "--fiscal-year-end",
+        "2023",
+        "--metric",
+        "B10",
+        "--metric",
+        "B11",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/issue47-history-consumers/SEC_metrics",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pr71-first-batch-20261009/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lodging-five-year-main-20261013/old-task-fy2023-repeat/run"
+      ],
+      "exit_code": 2,
+      "seconds": 0.7712098749907454,
+      "old_result_files_preserved": true,
+      "result_files_before_after": [
+        48,
+        48
+      ],
+      "state_files_before_after": [
+        138,
+        142
+      ],
+      "old_and_new_results_unchanged": true,
+      "all_state_unchanged": false,
+      "source_registration_and_ledger_unchanged": true,
+      "new_calls": [
+        0,
+        0,
+        0
+      ],
+      "phase": "old-task-fy2023-repeat",
+      "metrics": [
+        {
+          "metric_id": "B10",
+          "requested_fiscal_year": 2023,
+          "status": "INPUT_OR_EXECUTION_FAILED",
+          "reason": "module, class, method, function, traceback, frame, or code object was expected, got MagicMock",
+          "error_category": null,
+          "calculation_performed": null,
+          "result_id": null
+        },
+        {
+          "metric_id": "B11",
+          "requested_fiscal_year": 2023,
+          "status": "INPUT_OR_EXECUTION_FAILED",
+          "reason": "module, class, method, function, traceback, frame, or code object was expected, got MagicMock",
+          "error_category": null,
+          "calculation_performed": null,
+          "result_id": null
+        }
+      ]
+    },
+    {
+      "arguments": [
+        "run",
+        "--company",
+        "marriott_international",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2023",
+        "--fiscal-year-end",
+        "2023",
+        "--metric",
+        "B10",
+        "--metric",
+        "B11",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/issue47-history-consumers/SEC_metrics",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pr71-first-batch-20261009/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lodging-five-year-main-20261013/old-task-fy2023-repeat-corrected/run"
+      ],
+      "exit_code": 0,
+      "seconds": 6.215266167011578,
+      "old_result_files_preserved": true,
+      "result_files_before_after": [
+        48,
+        48
+      ],
+      "state_files_before_after": [
+        142,
+        146
+      ],
+      "old_and_new_results_unchanged": true,
+      "all_state_unchanged": false,
+      "source_registration_and_ledger_unchanged": true,
+      "new_calls": [
+        0,
+        0,
+        0
+      ],
+      "phase": "old-task-fy2023-repeat-corrected",
+      "metrics": [
+        {
+          "metric_id": "B10",
+          "requested_fiscal_year": 2023,
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": false,
+          "result_id": "sha256:6db171f257825e4340edc690fbda2aec76717fe60e5c5f5eb471b797a5d6ef2e"
+        },
+        {
+          "metric_id": "B11",
+          "requested_fiscal_year": 2023,
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": false,
+          "result_id": "sha256:e9286bf6c87b28ccb7baa0df30461f463bce82592294aee3afa2e2254933b052"
+        }
+      ]
+    },
+    {
+      "arguments": [
+        "results",
+        "--company",
+        "marriott_international",
+        "--state-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pr71-first-batch-20261009/state",
+        "--output-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lodging-five-year-main-20261013/old-task-read/csv"
+      ],
+      "exit_code": 0,
+      "seconds": 1.3393823749938747,
+      "old_result_files_preserved": true,
+      "result_files_before_after": [
+        48,
+        48
+      ],
+      "state_files_before_after": [
+        142,
+        142
+      ],
+      "old_and_new_results_unchanged": true,
+      "all_state_unchanged": true,
+      "source_registration_and_ledger_unchanged": true,
+      "new_calls": [
+        0,
+        0,
+        0
+      ],
+      "phase": "old-task-read",
+      "metrics": [
+        {
+          "metric_id": "B10",
+          "requested_fiscal_year": null,
+          "status": null,
+          "reason": "module, class, method, function, traceback, frame, or code object was expected, got MagicMock",
+          "error_category": null,
+          "calculation_performed": null,
+          "result_id": "sha256:6db171f257825e4340edc690fbda2aec76717fe60e5c5f5eb471b797a5d6ef2e"
+        },
+        {
+          "metric_id": "B11",
+          "requested_fiscal_year": null,
+          "status": null,
+          "reason": "module, class, method, function, traceback, frame, or code object was expected, got MagicMock",
+          "error_category": null,
+          "calculation_performed": null,
+          "result_id": "sha256:e9286bf6c87b28ccb7baa0df30461f463bce82592294aee3afa2e2254933b052"
+        },
+        {
+          "metric_id": "B10",
+          "requested_fiscal_year": null,
+          "status": null,
+          "reason": "ORDINARY_PERIOD_SELECTION_CANDIDATE_SOURCE_UNAVAILABLE:2022-12-31:SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000162828023003485/mar-20221231.htm; 2021-12-31:SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000162828022002666/mar-20211231.htm",
+          "error_category": "SOURCE_UNAVAILABLE",
+          "calculation_performed": null,
+          "result_id": null
+        },
+        {
+          "metric_id": "B10",
+          "requested_fiscal_year": null,
+          "status": null,
+          "reason": "ORDINARY_PERIOD_SELECTION_CANDIDATE_SOURCE_UNAVAILABLE:2022-12-31:SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000162828023003485/mar-20221231.htm",
+          "error_category": "SOURCE_UNAVAILABLE",
+          "calculation_performed": null,
+          "result_id": null
+        },
+        {
+          "metric_id": "B10",
+          "requested_fiscal_year": null,
+          "status": null,
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": null,
+          "result_id": "sha256:badff04d957477e02ef59acc4a6c0fba1c33a8c55a76542463355485caa6c09d"
+        },
+        {
+          "metric_id": "B10",
+          "requested_fiscal_year": null,
+          "status": null,
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": null,
+          "result_id": "sha256:aa6ba37d3be16202c3bb9d69e67a3759832c8ecc5e986d0e0a5e42e9fc19d119"
+        },
+        {
+          "metric_id": "B11",
+          "requested_fiscal_year": null,
+          "status": null,
+          "reason": "ORDINARY_PERIOD_SELECTION_CANDIDATE_SOURCE_UNAVAILABLE:2022-12-31:SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000162828023003485/mar-20221231.htm; 2021-12-31:SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000162828022002666/mar-20211231.htm",
+          "error_category": "SOURCE_UNAVAILABLE",
+          "calculation_performed": null,
+          "result_id": null
+        },
+        {
+          "metric_id": "B11",
+          "requested_fiscal_year": null,
+          "status": null,
+          "reason": "ORDINARY_PERIOD_SELECTION_CANDIDATE_SOURCE_UNAVAILABLE:2022-12-31:SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000162828023003485/mar-20221231.htm",
+          "error_category": "SOURCE_UNAVAILABLE",
+          "calculation_performed": null,
+          "result_id": null
+        },
+        {
+          "metric_id": "B11",
+          "requested_fiscal_year": null,
+          "status": null,
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": null,
+          "result_id": "sha256:92ece36375fcbde6b729f2424652dca4eb6a1f332bb235e9bd49f7f47b505b31"
+        },
+        {
+          "metric_id": "B11",
+          "requested_fiscal_year": null,
+          "status": null,
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": null,
+          "result_id": "sha256:a5e7be84a5c4f67ec4fce97e29fcf61d6532ac6befee6d250607fc58524fde19"
+        }
+      ]
+    },
+    {
+      "arguments": [
+        "run",
+        "--company",
+        "marriott_international",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2021",
+        "--fiscal-year-end",
+        "2025",
+        "--metric",
+        "B10",
+        "--metric",
+        "B11",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lodging-five-year-main-20261013/full-state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lodging-five-year-main-20261013/full-first/run"
+      ],
+      "exit_code": 0,
+      "seconds": 58.75296774999879,
+      "old_result_files_preserved": true,
+      "result_files_before_after": [
+        0,
+        60
+      ],
+      "state_files_before_after": [
+        0,
+        128
+      ],
+      "old_and_new_results_unchanged": false,
+      "all_state_unchanged": false,
+      "source_registration_and_ledger_unchanged": true,
+      "new_calls": [
+        0,
+        0,
+        0
+      ],
+      "phase": "full-first",
+      "metrics": [
+        {
+          "metric_id": "B10",
+          "requested_fiscal_year": 2021,
+          "status": "CANDIDATE_READY",
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": true,
+          "result_id": "sha256:ceca3311fd1fddba830539624660bf35735870645f35c94f4a958856cd0aef61"
+        },
+        {
+          "metric_id": "B11",
+          "requested_fiscal_year": 2021,
+          "status": "CANDIDATE_READY",
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": true,
+          "result_id": "sha256:6ddf73e5c169428f2114744871bc5abfda1189d4f56b011d10966a011e1fc227"
+        },
+        {
+          "metric_id": "B10",
+          "requested_fiscal_year": 2022,
+          "status": "CANDIDATE_READY",
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": true,
+          "result_id": "sha256:5fda38aa5d7a220034fe8b5d70e84a4f8eb8cc2ca120d2c61f348a740a3be5ba"
+        },
+        {
+          "metric_id": "B11",
+          "requested_fiscal_year": 2022,
+          "status": "CANDIDATE_READY",
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": true,
+          "result_id": "sha256:6aabd6a33c3fa5aaf0aefa13f030b98d6ba90a02a74c87328278387721367ee8"
+        },
+        {
+          "metric_id": "B10",
+          "requested_fiscal_year": 2023,
+          "status": "CANDIDATE_READY",
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": true,
+          "result_id": "sha256:6db171f257825e4340edc690fbda2aec76717fe60e5c5f5eb471b797a5d6ef2e"
+        },
+        {
+          "metric_id": "B11",
+          "requested_fiscal_year": 2023,
+          "status": "CANDIDATE_READY",
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": true,
+          "result_id": "sha256:e9286bf6c87b28ccb7baa0df30461f463bce82592294aee3afa2e2254933b052"
+        },
+        {
+          "metric_id": "B10",
+          "requested_fiscal_year": 2024,
+          "status": "CANDIDATE_READY",
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": true,
+          "result_id": "sha256:badff04d957477e02ef59acc4a6c0fba1c33a8c55a76542463355485caa6c09d"
+        },
+        {
+          "metric_id": "B11",
+          "requested_fiscal_year": 2024,
+          "status": "CANDIDATE_READY",
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": true,
+          "result_id": "sha256:92ece36375fcbde6b729f2424652dca4eb6a1f332bb235e9bd49f7f47b505b31"
+        },
+        {
+          "metric_id": "B10",
+          "requested_fiscal_year": 2025,
+          "status": "CANDIDATE_READY",
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": true,
+          "result_id": "sha256:aa6ba37d3be16202c3bb9d69e67a3759832c8ecc5e986d0e0a5e42e9fc19d119"
+        },
+        {
+          "metric_id": "B11",
+          "requested_fiscal_year": 2025,
+          "status": "CANDIDATE_READY",
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": true,
+          "result_id": "sha256:a5e7be84a5c4f67ec4fce97e29fcf61d6532ac6befee6d250607fc58524fde19"
+        }
+      ]
+    },
+    {
+      "arguments": [
+        "run",
+        "--company",
+        "marriott_international",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2021",
+        "--fiscal-year-end",
+        "2025",
+        "--metric",
+        "B10",
+        "--metric",
+        "B11",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lodging-five-year-main-20261013/full-state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lodging-five-year-main-20261013/full-repeat/run"
+      ],
+      "exit_code": 0,
+      "seconds": 30.576588459007326,
+      "old_result_files_preserved": true,
+      "result_files_before_after": [
+        60,
+        60
+      ],
+      "state_files_before_after": [
+        128,
+        148
+      ],
+      "old_and_new_results_unchanged": true,
+      "all_state_unchanged": false,
+      "source_registration_and_ledger_unchanged": true,
+      "new_calls": [
+        0,
+        0,
+        0
+      ],
+      "phase": "full-repeat",
+      "metrics": [
+        {
+          "metric_id": "B10",
+          "requested_fiscal_year": 2021,
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": false,
+          "result_id": "sha256:ceca3311fd1fddba830539624660bf35735870645f35c94f4a958856cd0aef61"
+        },
+        {
+          "metric_id": "B11",
+          "requested_fiscal_year": 2021,
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": false,
+          "result_id": "sha256:6ddf73e5c169428f2114744871bc5abfda1189d4f56b011d10966a011e1fc227"
+        },
+        {
+          "metric_id": "B10",
+          "requested_fiscal_year": 2022,
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": false,
+          "result_id": "sha256:5fda38aa5d7a220034fe8b5d70e84a4f8eb8cc2ca120d2c61f348a740a3be5ba"
+        },
+        {
+          "metric_id": "B11",
+          "requested_fiscal_year": 2022,
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": false,
+          "result_id": "sha256:6aabd6a33c3fa5aaf0aefa13f030b98d6ba90a02a74c87328278387721367ee8"
+        },
+        {
+          "metric_id": "B10",
+          "requested_fiscal_year": 2023,
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": false,
+          "result_id": "sha256:6db171f257825e4340edc690fbda2aec76717fe60e5c5f5eb471b797a5d6ef2e"
+        },
+        {
+          "metric_id": "B11",
+          "requested_fiscal_year": 2023,
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": false,
+          "result_id": "sha256:e9286bf6c87b28ccb7baa0df30461f463bce82592294aee3afa2e2254933b052"
+        },
+        {
+          "metric_id": "B10",
+          "requested_fiscal_year": 2024,
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": false,
+          "result_id": "sha256:badff04d957477e02ef59acc4a6c0fba1c33a8c55a76542463355485caa6c09d"
+        },
+        {
+          "metric_id": "B11",
+          "requested_fiscal_year": 2024,
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": false,
+          "result_id": "sha256:92ece36375fcbde6b729f2424652dca4eb6a1f332bb235e9bd49f7f47b505b31"
+        },
+        {
+          "metric_id": "B10",
+          "requested_fiscal_year": 2025,
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": false,
+          "result_id": "sha256:aa6ba37d3be16202c3bb9d69e67a3759832c8ecc5e986d0e0a5e42e9fc19d119"
+        },
+        {
+          "metric_id": "B11",
+          "requested_fiscal_year": 2025,
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": false,
+          "result_id": "sha256:a5e7be84a5c4f67ec4fce97e29fcf61d6532ac6befee6d250607fc58524fde19"
+        }
+      ]
+    },
+    {
+      "arguments": [
+        "results",
+        "--company",
+        "marriott_international",
+        "--state-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lodging-five-year-main-20261013/full-state",
+        "--output-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lodging-five-year-main-20261013/full-read/csv"
+      ],
+      "exit_code": 0,
+      "seconds": 12.07909795800515,
+      "old_result_files_preserved": true,
+      "result_files_before_after": [
+        60,
+        60
+      ],
+      "state_files_before_after": [
+        148,
+        148
+      ],
+      "old_and_new_results_unchanged": true,
+      "all_state_unchanged": true,
+      "source_registration_and_ledger_unchanged": true,
+      "new_calls": [
+        0,
+        0,
+        0
+      ],
+      "phase": "full-read",
+      "metrics": [
+        {
+          "metric_id": "B10",
+          "requested_fiscal_year": null,
+          "status": null,
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": null,
+          "result_id": "sha256:ceca3311fd1fddba830539624660bf35735870645f35c94f4a958856cd0aef61"
+        },
+        {
+          "metric_id": "B11",
+          "requested_fiscal_year": null,
+          "status": null,
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": null,
+          "result_id": "sha256:6ddf73e5c169428f2114744871bc5abfda1189d4f56b011d10966a011e1fc227"
+        },
+        {
+          "metric_id": "B10",
+          "requested_fiscal_year": null,
+          "status": null,
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": null,
+          "result_id": "sha256:5fda38aa5d7a220034fe8b5d70e84a4f8eb8cc2ca120d2c61f348a740a3be5ba"
+        },
+        {
+          "metric_id": "B11",
+          "requested_fiscal_year": null,
+          "status": null,
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": null,
+          "result_id": "sha256:6aabd6a33c3fa5aaf0aefa13f030b98d6ba90a02a74c87328278387721367ee8"
+        },
+        {
+          "metric_id": "B10",
+          "requested_fiscal_year": null,
+          "status": null,
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": null,
+          "result_id": "sha256:6db171f257825e4340edc690fbda2aec76717fe60e5c5f5eb471b797a5d6ef2e"
+        },
+        {
+          "metric_id": "B11",
+          "requested_fiscal_year": null,
+          "status": null,
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": null,
+          "result_id": "sha256:e9286bf6c87b28ccb7baa0df30461f463bce82592294aee3afa2e2254933b052"
+        },
+        {
+          "metric_id": "B10",
+          "requested_fiscal_year": null,
+          "status": null,
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": null,
+          "result_id": "sha256:badff04d957477e02ef59acc4a6c0fba1c33a8c55a76542463355485caa6c09d"
+        },
+        {
+          "metric_id": "B11",
+          "requested_fiscal_year": null,
+          "status": null,
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": null,
+          "result_id": "sha256:92ece36375fcbde6b729f2424652dca4eb6a1f332bb235e9bd49f7f47b505b31"
+        },
+        {
+          "metric_id": "B10",
+          "requested_fiscal_year": null,
+          "status": null,
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": null,
+          "result_id": "sha256:aa6ba37d3be16202c3bb9d69e67a3759832c8ecc5e986d0e0a5e42e9fc19d119"
+        },
+        {
+          "metric_id": "B11",
+          "requested_fiscal_year": null,
+          "status": null,
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": null,
+          "result_id": "sha256:a5e7be84a5c4f67ec4fce97e29fcf61d6532ac6befee6d250607fc58524fde19"
+        }
+      ]
+    },
+    {
+      "arguments": [
+        "run",
+        "--company",
+        "marriott_international",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2023",
+        "--fiscal-year-end",
+        "2023",
+        "--metric",
+        "B10",
+        "--metric",
+        "B11",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lodging-five-year-main-20261013/full-state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lodging-five-year-main-20261013/full-subset/run"
+      ],
+      "exit_code": 0,
+      "seconds": 6.3291511249990435,
+      "old_result_files_preserved": true,
+      "result_files_before_after": [
+        60,
+        60
+      ],
+      "state_files_before_after": [
+        148,
+        152
+      ],
+      "old_and_new_results_unchanged": true,
+      "all_state_unchanged": false,
+      "source_registration_and_ledger_unchanged": true,
+      "new_calls": [
+        0,
+        0,
+        0
+      ],
+      "phase": "full-subset",
+      "metrics": [
+        {
+          "metric_id": "B10",
+          "requested_fiscal_year": 2023,
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": false,
+          "result_id": "sha256:6db171f257825e4340edc690fbda2aec76717fe60e5c5f5eb471b797a5d6ef2e"
+        },
+        {
+          "metric_id": "B11",
+          "requested_fiscal_year": 2023,
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": false,
+          "result_id": "sha256:e9286bf6c87b28ccb7baa0df30461f463bce82592294aee3afa2e2254933b052"
+        }
+      ]
+    },
+    {
+      "arguments": [
+        "results",
+        "--company",
+        "marriott_international",
+        "--state-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lodging-five-year-main-20261013/full-state",
+        "--output-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lodging-five-year-main-20261013/full-subset-read/csv"
+      ],
+      "exit_code": 0,
+      "seconds": 11.706249666996882,
+      "old_result_files_preserved": true,
+      "result_files_before_after": [
+        60,
+        60
+      ],
+      "state_files_before_after": [
+        152,
+        152
+      ],
+      "old_and_new_results_unchanged": true,
+      "all_state_unchanged": true,
+      "source_registration_and_ledger_unchanged": true,
+      "new_calls": [
+        0,
+        0,
+        0
+      ],
+      "phase": "full-subset-read",
+      "metrics": [
+        {
+          "metric_id": "B10",
+          "requested_fiscal_year": null,
+          "status": null,
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": null,
+          "result_id": "sha256:6db171f257825e4340edc690fbda2aec76717fe60e5c5f5eb471b797a5d6ef2e"
+        },
+        {
+          "metric_id": "B11",
+          "requested_fiscal_year": null,
+          "status": null,
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": null,
+          "result_id": "sha256:e9286bf6c87b28ccb7baa0df30461f463bce82592294aee3afa2e2254933b052"
+        },
+        {
+          "metric_id": "B10",
+          "requested_fiscal_year": null,
+          "status": null,
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": null,
+          "result_id": "sha256:ceca3311fd1fddba830539624660bf35735870645f35c94f4a958856cd0aef61"
+        },
+        {
+          "metric_id": "B10",
+          "requested_fiscal_year": null,
+          "status": null,
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": null,
+          "result_id": "sha256:5fda38aa5d7a220034fe8b5d70e84a4f8eb8cc2ca120d2c61f348a740a3be5ba"
+        },
+        {
+          "metric_id": "B10",
+          "requested_fiscal_year": null,
+          "status": null,
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": null,
+          "result_id": "sha256:badff04d957477e02ef59acc4a6c0fba1c33a8c55a76542463355485caa6c09d"
+        },
+        {
+          "metric_id": "B10",
+          "requested_fiscal_year": null,
+          "status": null,
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": null,
+          "result_id": "sha256:aa6ba37d3be16202c3bb9d69e67a3759832c8ecc5e986d0e0a5e42e9fc19d119"
+        },
+        {
+          "metric_id": "B11",
+          "requested_fiscal_year": null,
+          "status": null,
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": null,
+          "result_id": "sha256:6ddf73e5c169428f2114744871bc5abfda1189d4f56b011d10966a011e1fc227"
+        },
+        {
+          "metric_id": "B11",
+          "requested_fiscal_year": null,
+          "status": null,
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": null,
+          "result_id": "sha256:6aabd6a33c3fa5aaf0aefa13f030b98d6ba90a02a74c87328278387721367ee8"
+        },
+        {
+          "metric_id": "B11",
+          "requested_fiscal_year": null,
+          "status": null,
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": null,
+          "result_id": "sha256:92ece36375fcbde6b729f2424652dca4eb6a1f332bb235e9bd49f7f47b505b31"
+        },
+        {
+          "metric_id": "B11",
+          "requested_fiscal_year": null,
+          "status": null,
+          "reason": null,
+          "error_category": null,
+          "calculation_performed": null,
+          "result_id": "sha256:a5e7be84a5c4f67ec4fce97e29fcf61d6532ac6befee6d250607fc58524fde19"
+        }
+      ]
+    }
+  ],
+  "reference_comparison": {
+    "rows": [
+      {
+        "metric_id": "B10",
+        "fiscal_year": 2021,
+        "value": "51.3",
+        "unit": "percent",
+        "period_start": "2021-01-01",
+        "period_end": "2021-12-31",
+        "accession": "0001628280-22-002666",
+        "result_id": "sha256:ceca3311fd1fddba830539624660bf35735870645f35c94f4a958856cd0aef61",
+        "matches_existing_reading": true
+      },
+      {
+        "metric_id": "B11",
+        "fiscal_year": 2021,
+        "value": "74.66",
+        "unit": "USD",
+        "period_start": "2021-01-01",
+        "period_end": "2021-12-31",
+        "accession": "0001628280-22-002666",
+        "result_id": "sha256:6ddf73e5c169428f2114744871bc5abfda1189d4f56b011d10966a011e1fc227",
+        "matches_existing_reading": true
+      },
+      {
+        "metric_id": "B10",
+        "fiscal_year": 2022,
+        "value": "64",
+        "unit": "percent",
+        "period_start": "2022-01-01",
+        "period_end": "2022-12-31",
+        "accession": "0001628280-23-003485",
+        "result_id": "sha256:5fda38aa5d7a220034fe8b5d70e84a4f8eb8cc2ca120d2c61f348a740a3be5ba",
+        "matches_existing_reading": true
+      },
+      {
+        "metric_id": "B11",
+        "fiscal_year": 2022,
+        "value": "110.64",
+        "unit": "USD",
+        "period_start": "2022-01-01",
+        "period_end": "2022-12-31",
+        "accession": "0001628280-23-003485",
+        "result_id": "sha256:6aabd6a33c3fa5aaf0aefa13f030b98d6ba90a02a74c87328278387721367ee8",
+        "matches_existing_reading": true
+      },
+      {
+        "metric_id": "B10",
+        "fiscal_year": 2023,
+        "value": "69.2",
+        "unit": "percent",
+        "period_start": "2023-01-01",
+        "period_end": "2023-12-31",
+        "accession": "0001628280-24-004372",
+        "result_id": "sha256:6db171f257825e4340edc690fbda2aec76717fe60e5c5f5eb471b797a5d6ef2e",
+        "matches_existing_reading": true
+      },
+      {
+        "metric_id": "B11",
+        "fiscal_year": 2023,
+        "value": "124.7",
+        "unit": "USD",
+        "period_start": "2023-01-01",
+        "period_end": "2023-12-31",
+        "accession": "0001628280-24-004372",
+        "result_id": "sha256:e9286bf6c87b28ccb7baa0df30461f463bce82592294aee3afa2e2254933b052",
+        "matches_existing_reading": true
+      },
+      {
+        "metric_id": "B10",
+        "fiscal_year": 2024,
+        "value": "69.8",
+        "unit": "percent",
+        "period_start": "2024-01-01",
+        "period_end": "2024-12-31",
+        "accession": "0001628280-25-004818",
+        "result_id": "sha256:badff04d957477e02ef59acc4a6c0fba1c33a8c55a76542463355485caa6c09d",
+        "matches_existing_reading": true
+      },
+      {
+        "metric_id": "B11",
+        "fiscal_year": 2024,
+        "value": "128.23",
+        "unit": "USD",
+        "period_start": "2024-01-01",
+        "period_end": "2024-12-31",
+        "accession": "0001628280-25-004818",
+        "result_id": "sha256:92ece36375fcbde6b729f2424652dca4eb6a1f332bb235e9bd49f7f47b505b31",
+        "matches_existing_reading": true
+      },
+      {
+        "metric_id": "B10",
+        "fiscal_year": 2025,
+        "value": "69.3",
+        "unit": "percent",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "accession": "0001048286-26-000007",
+        "result_id": "sha256:aa6ba37d3be16202c3bb9d69e67a3759832c8ecc5e986d0e0a5e42e9fc19d119",
+        "matches_existing_reading": true
+      },
+      {
+        "metric_id": "B11",
+        "fiscal_year": 2025,
+        "value": "128.8",
+        "unit": "USD",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "accession": "0001048286-26-000007",
+        "result_id": "sha256:a5e7be84a5c4f67ec4fce97e29fcf61d6532ac6befee6d250607fc58524fde19",
+        "matches_existing_reading": true
+      }
+    ],
+    "reference_commit": "bcc0c0bc0293ba6b6ffc58b1f4e9034dbb52a786",
+    "comparison_after_calculation": true,
+    "supplied_to_calculation": false,
+    "subset_keeps_all_ten_rows": true,
+    "subset_requested_flags": [
+      {
+        "metric_id": "B10",
+        "fiscal_year": "2023",
+        "requested_in_latest_execution": "True"
+      },
+      {
+        "metric_id": "B11",
+        "fiscal_year": "2023",
+        "requested_in_latest_execution": "True"
+      },
+      {
+        "metric_id": "B10",
+        "fiscal_year": "2021",
+        "requested_in_latest_execution": "False"
+      },
+      {
+        "metric_id": "B10",
+        "fiscal_year": "2022",
+        "requested_in_latest_execution": "False"
+      },
+      {
+        "metric_id": "B10",
+        "fiscal_year": "2024",
+        "requested_in_latest_execution": "False"
+      },
+      {
+        "metric_id": "B10",
+        "fiscal_year": "2025",
+        "requested_in_latest_execution": "False"
+      },
+      {
+        "metric_id": "B11",
+        "fiscal_year": "2021",
+        "requested_in_latest_execution": "False"
+      },
+      {
+        "metric_id": "B11",
+        "fiscal_year": "2022",
+        "requested_in_latest_execution": "False"
+      },
+      {
+        "metric_id": "B11",
+        "fiscal_year": "2024",
+        "requested_in_latest_execution": "False"
+      },
+      {
+        "metric_id": "B11",
+        "fiscal_year": "2025",
+        "requested_in_latest_execution": "False"
+      }
+    ]
+  },
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "main_992_receiving_read": {
+    "arguments": [
+      "results",
+      "--company",
+      "marriott_international",
+      "--state-root",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lodging-five-year-main-20261013/full-state",
+      "--output-root",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lodging-five-year-main-20261013/main-992-read/csv"
+    ],
+    "exit_code": 0,
+    "seconds": 11.632274624993443,
+    "old_result_files_preserved": true,
+    "result_files_before_after": [
+      60,
+      60
+    ],
+    "state_files_before_after": [
+      152,
+      152
+    ],
+    "old_and_new_results_unchanged": true,
+    "all_state_unchanged": true,
+    "source_registration_and_ledger_unchanged": true,
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "same_ten_values_ids_dates_units_selection": true
+  }
+}

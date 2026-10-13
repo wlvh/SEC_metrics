@@ -1,0 +1,166 @@
+{
+  "execution": "uncommitted main302 subsection repair",
+  "local_head": "302074f4d242dc85fd6abb844e46a61dfd278616",
+  "phases": {
+    "first": {
+      "arguments": [
+        "run",
+        "--company",
+        "southwest_airlines",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2024",
+        "--fiscal-year-end",
+        "2024",
+        "--metric",
+        "E01",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/e01-sw24-subsections-20261012-47/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/e01-sw24-subsections-20261012-47/runs"
+      ],
+      "seconds_subprocess_inclusive": 12.401364958001068,
+      "exit": 2
+    },
+    "repeat": {
+      "arguments": [
+        "run",
+        "--company",
+        "southwest_airlines",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2024",
+        "--fiscal-year-end",
+        "2024",
+        "--metric",
+        "E01",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/e01-sw24-subsections-20261012-47/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/e01-sw24-subsections-20261012-47/runs"
+      ],
+      "seconds_subprocess_inclusive": 0.8038448750012321,
+      "exit": 2
+    },
+    "read": {
+      "arguments": [
+        "results",
+        "--company",
+        "southwest_airlines",
+        "--state-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/e01-sw24-subsections-20261012-47/state",
+        "--output-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/e01-sw24-subsections-20261012-47/read"
+      ],
+      "seconds_subprocess_inclusive": 0.40703241700248327,
+      "exit": 0
+    }
+  },
+  "metric": {
+    "metric_id": "E01",
+    "status": "CANDIDATE_WITHHELD",
+    "attempt_id": "76cd9ea6b2ac445492b05967ea5a4022",
+    "version": "a5cbac1614684f4b9c4887651569f450",
+    "result_id": "sha256:29806686aff92f5d5fd3dfb1fcda8351c698d400a77551f03fede5a03b2a29d0",
+    "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/e01-sw24-subsections-20261012-47/state/updates/E01/periods/FY2024/results/a5cbac1614684f4b9c4887651569f450",
+    "calculation_performed": true,
+    "new_candidate_created": true,
+    "result_reason_code": "E01_CONTENT_RESPONSE_NOT_AVAILABLE_FOR_REQUEST",
+    "source_observation_errors": [],
+    "new_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false,
+    "requested_fiscal_year": 2024,
+    "defect_holds": [],
+    "read_result_id": "sha256:29806686aff92f5d5fd3dfb1fcda8351c698d400a77551f03fede5a03b2a29d0",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/e01-sw24-subsections-20261012-47/state/updates/E01/periods/FY2024/results/a5cbac1614684f4b9c4887651569f450",
+    "program_version": {
+      "commit": "302074f4d242dc85fd6abb844e46a61dfd278616",
+      "has_uncommitted_changes": true
+    }
+  },
+  "repeat_metric": {
+    "metric_id": "E01",
+    "status": "PREVIOUS_INPUT_WITHHELD",
+    "attempt_id": "40228657e4ae467b918e0b6621749621",
+    "version": "a5cbac1614684f4b9c4887651569f450",
+    "result_id": "sha256:29806686aff92f5d5fd3dfb1fcda8351c698d400a77551f03fede5a03b2a29d0",
+    "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/e01-sw24-subsections-20261012-47/state/updates/E01/periods/FY2024/results/a5cbac1614684f4b9c4887651569f450",
+    "result_reason_code": "E01_CONTENT_RESPONSE_NOT_AVAILABLE_FOR_REQUEST",
+    "raw_input_unchanged": true,
+    "calculation_performed": false,
+    "new_candidate_created": false,
+    "source_check_versions": {
+      "scripts/vnext/ordinary_current_update.py": "dea7fc5d0551287c4bb50d56d6b8d7e7a23aa649902edb0bf1b62206f02cf1e6",
+      "scripts/vnext/request_bindings.py": "d0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee"
+    },
+    "source_observation_errors": [],
+    "new_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false,
+    "requested_fiscal_year": 2024,
+    "defect_holds": [],
+    "read_result_id": "sha256:29806686aff92f5d5fd3dfb1fcda8351c698d400a77551f03fede5a03b2a29d0",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/e01-sw24-subsections-20261012-47/state/updates/E01/periods/FY2024/results/a5cbac1614684f4b9c4887651569f450",
+    "program_version": {
+      "commit": "302074f4d242dc85fd6abb844e46a61dfd278616",
+      "has_uncommitted_changes": true
+    }
+  },
+  "row": {
+    "company": "Southwest Airlines",
+    "cik": "92380",
+    "metric_id": "E01",
+    "metric_name": "M&A announcements (content-confirmed)",
+    "value": "",
+    "unit": "count",
+    "status": "WITHHELD",
+    "source_class": "8K_ITEM",
+    "formula": "",
+    "period_start": "2024-01-01",
+    "period_end": "2024-12-31",
+    "fiscal_year": "2024",
+    "fiscal_period": "TARGET_PERIOD",
+    "accession": "",
+    "form": "10-K",
+    "filed_date": "2025-02-07",
+    "concept_or_section": "",
+    "confidence": "",
+    "notes": "Content-confirmed M&A announcements under the selected successor contract. Filing item codes or financing keywords alone do not establish an announcement; missing matching semantic responses remain withheld. No accepted value is asserted for this target period. Native state: WITHHELD; reason: E01_CONTENT_RESPONSE_NOT_AVAILABLE_FOR_REQUEST.",
+    "company_id": "southwest_airlines",
+    "result_id": "sha256:29806686aff92f5d5fd3dfb1fcda8351c698d400a77551f03fede5a03b2a29d0",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/e01-sw24-subsections-20261012-47/state/updates/E01/periods/FY2024/results/a5cbac1614684f4b9c4887651569f450",
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "local_metric_status": "PREVIOUS_INPUT_WITHHELD",
+    "period_role": "REQUESTED_RESULT",
+    "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+    "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+    "defect_holds": "[]",
+    "requested_in_latest_execution": "True"
+  },
+  "stable_result_files": 7,
+  "read_state_files_unchanged": 17,
+  "source_metadata_hashes_unchanged": {
+    "config/company_registry.csv": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+    "evidence/requests_log.csv": "61252ac5844ad1c5917040f753c04a7ed4f6e1d75e2fb0803804773fd6c0eef9",
+    "evidence/requests_log_manifest.json": "e91193401733b86ddc28c69cbae0debd74eeb899a328e60fcfb32532ed6a85ab"
+  },
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "full_context_or_dimension_sha256": "cde061dd8d9b101253aa584373738b38d15da62b7b62cc024d60ae2828f110ac"
+}

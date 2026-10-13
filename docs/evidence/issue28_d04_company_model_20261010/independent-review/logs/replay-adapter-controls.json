@@ -1,0 +1,70 @@
+{
+  "seconds": 0.016055417014285922,
+  "scenarios": [
+    {
+      "scenario": "positive",
+      "accepted": true,
+      "original_plan_and_receipt_unchanged": true
+    },
+    {
+      "scenario": "current-validator-only-change",
+      "accepted": true,
+      "original_plan_and_receipt_unchanged": true
+    },
+    {
+      "scenario": "source-change",
+      "accepted": false,
+      "reason": "NATIVE_SAVED_REQUEST_OR_SOURCE_CHANGED",
+      "lower_receipt_reader_called": false
+    },
+    {
+      "scenario": "request-change",
+      "accepted": false,
+      "reason": "NATIVE_SAVED_REQUEST_OR_SOURCE_CHANGED",
+      "lower_receipt_reader_called": false
+    },
+    {
+      "scenario": "body-change",
+      "accepted": false,
+      "reason": "NATIVE_ORIGINAL_PLAN_OR_BODY_CHANGED",
+      "lower_receipt_reader_called": false
+    },
+    {
+      "scenario": "failed-terminal",
+      "accepted": false,
+      "reason": "NATIVE_SUCCESSFUL_ORIGINAL_TERMINAL_REQUIRED",
+      "lower_receipt_reader_called": false
+    },
+    {
+      "scenario": "intent-mismatch",
+      "accepted": false,
+      "reason": "NATIVE_SUCCESSFUL_ORIGINAL_TERMINAL_REQUIRED",
+      "lower_receipt_reader_called": false
+    },
+    {
+      "scenario": "plan-evidence-change",
+      "accepted": false,
+      "reason": "NATIVE_ORIGINAL_PLAN_OR_BODY_CHANGED",
+      "lower_receipt_reader_called": false
+    },
+    {
+      "scenario": "retry-change",
+      "accepted": false,
+      "reason": "NATIVE_ORIGINAL_TRANSPORT_POLICY_CHANGED",
+      "lower_receipt_reader_called": false
+    },
+    {
+      "scenario": "reuse-change",
+      "accepted": false,
+      "reason": "NATIVE_ORIGINAL_TRANSPORT_POLICY_CHANGED",
+      "lower_receipt_reader_called": false
+    },
+    {
+      "scenario": "semantic-record-change",
+      "accepted": false,
+      "reason": "NATIVE_ORIGINAL_ACCEPTANCE_SEMANTICS_CHANGED",
+      "lower_receipt_reader_called": true
+    }
+  ],
+  "scope": "Real replay adapter checks and revalidation; lower original receipt reader, source semantic acceptor, and authority context are mocked. No actual ledger/source/model accessed."
+}

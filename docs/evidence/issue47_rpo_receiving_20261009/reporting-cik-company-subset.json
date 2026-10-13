@@ -1,0 +1,208 @@
+{
+  "code_commit": "e6dfa26f0aa29ca868a1feefd819cee20b61d571",
+  "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/rpo-structural-companies-1791548400539347000/paramount_skydance_paramount_global/state",
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/rpo-structural-companies-1791548400539347000/paramount_skydance_paramount_global/reporter-update-1791551782031035000",
+  "operations": [
+    {
+      "name": "only-fy2021-related-update",
+      "seconds": 7.998087249929085,
+      "exit_code": 0,
+      "metrics": [
+        {
+          "metric_id": "B12",
+          "status": "CANDIDATE_READY",
+          "attempt_id": "b4245112966d43c0a4815db98f63b6bf",
+          "version": "1455fda5b5d64c2a98264b58db66702e",
+          "result_id": "sha256:d6225bff1c520b4913952c747dbdf60963243f71f833eb75078f18f676134f22",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/rpo-structural-companies-1791548400539347000/paramount_skydance_paramount_global/state/updates/B12/periods/FY2021/results/1455fda5b5d64c2a98264b58db66702e",
+          "calculation_performed": true,
+          "new_candidate_created": true,
+          "result_reason_code": "TRAIT_NOT_APPLICABLE",
+          "source_observation_errors": [],
+          "new_calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "requested_fiscal_year": 2021,
+          "defect_holds": [],
+          "read_result_id": "sha256:d6225bff1c520b4913952c747dbdf60963243f71f833eb75078f18f676134f22",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/rpo-structural-companies-1791548400539347000/paramount_skydance_paramount_global/state/updates/B12/periods/FY2021/results/1455fda5b5d64c2a98264b58db66702e",
+          "program_version": {
+            "commit": "e6dfa26f0aa29ca868a1feefd819cee20b61d571",
+            "has_uncommitted_changes": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "same-input-forbid-factory",
+      "seconds": 0.9051039998885244,
+      "exit_code": 0,
+      "metrics": [
+        {
+          "metric_id": "B12",
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "attempt_id": "c3ef45a9db8a46e08088209a287320c9",
+          "version": "1455fda5b5d64c2a98264b58db66702e",
+          "result_id": "sha256:d6225bff1c520b4913952c747dbdf60963243f71f833eb75078f18f676134f22",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/rpo-structural-companies-1791548400539347000/paramount_skydance_paramount_global/state/updates/B12/periods/FY2021/results/1455fda5b5d64c2a98264b58db66702e",
+          "result_reason_code": "TRAIT_NOT_APPLICABLE",
+          "raw_input_unchanged": true,
+          "calculation_performed": false,
+          "new_candidate_created": false,
+          "source_observation_errors": [],
+          "new_calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "requested_fiscal_year": 2021,
+          "defect_holds": [],
+          "read_result_id": "sha256:d6225bff1c520b4913952c747dbdf60963243f71f833eb75078f18f676134f22",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/rpo-structural-companies-1791548400539347000/paramount_skydance_paramount_global/state/updates/B12/periods/FY2021/results/1455fda5b5d64c2a98264b58db66702e",
+          "program_version": {
+            "commit": "e6dfa26f0aa29ca868a1feefd819cee20b61d571",
+            "has_uncommitted_changes": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "independent-read-all-years",
+      "seconds": 0.582155958050862,
+      "exit_code": 0,
+      "metrics": [
+        {
+          "metric_id": "B12",
+          "result_id": "sha256:d6225bff1c520b4913952c747dbdf60963243f71f833eb75078f18f676134f22",
+          "period_start": "2021-12-31",
+          "period_end": "2021-12-31",
+          "fiscal_year": 2021,
+          "value": null,
+          "unit": null,
+          "publication": "PUBLISHED",
+          "quality": "NONE",
+          "reason_code": "TRAIT_NOT_APPLICABLE",
+          "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+          "defect_holds": [],
+          "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+          "requested_in_latest_execution": true,
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/rpo-structural-companies-1791548400539347000/paramount_skydance_paramount_global/state/updates/B12/periods/FY2021/results/1455fda5b5d64c2a98264b58db66702e"
+        },
+        {
+          "metric_id": "B12",
+          "result_id": "sha256:d333ee3107737af1ec36013f517af46545cb6a11e0e6b50558b9446500da7e72",
+          "period_start": "2022-12-31",
+          "period_end": "2022-12-31",
+          "fiscal_year": 2022,
+          "value": null,
+          "unit": null,
+          "publication": "PUBLISHED",
+          "quality": "NONE",
+          "reason_code": "TRAIT_NOT_APPLICABLE",
+          "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+          "defect_holds": [],
+          "latest_observation": "NOT_REQUESTED_IN_LATEST_EXECUTION",
+          "requested_in_latest_execution": false,
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/rpo-structural-companies-1791548400539347000/paramount_skydance_paramount_global/state/updates/B12/periods/FY2022/results/efe51f46cac243e08590a9d25cd7c4f1"
+        },
+        {
+          "metric_id": "B12",
+          "result_id": "sha256:c7cd52d870391b60a4c5abd8f9f2da1de11cd1817c49be84e590dfe79e8d100a",
+          "period_start": "2023-12-31",
+          "period_end": "2023-12-31",
+          "fiscal_year": 2023,
+          "value": null,
+          "unit": null,
+          "publication": "PUBLISHED",
+          "quality": "NONE",
+          "reason_code": "TRAIT_NOT_APPLICABLE",
+          "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+          "defect_holds": [],
+          "latest_observation": "NOT_REQUESTED_IN_LATEST_EXECUTION",
+          "requested_in_latest_execution": false,
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/rpo-structural-companies-1791548400539347000/paramount_skydance_paramount_global/state/updates/B12/periods/FY2023/results/ec1315a4c11b49ab80d0b79e5db2df40"
+        },
+        {
+          "metric_id": "B12",
+          "result_id": "sha256:babe4b3587f0bb8ee1150885019d53d1300806253c10bcd7d7b66cd5c6111595",
+          "period_start": "2024-12-31",
+          "period_end": "2024-12-31",
+          "fiscal_year": 2024,
+          "value": null,
+          "unit": null,
+          "publication": "PUBLISHED",
+          "quality": "NONE",
+          "reason_code": "TRAIT_NOT_APPLICABLE",
+          "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+          "defect_holds": [],
+          "latest_observation": "NOT_REQUESTED_IN_LATEST_EXECUTION",
+          "requested_in_latest_execution": false,
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/rpo-structural-companies-1791548400539347000/paramount_skydance_paramount_global/state/updates/B12/periods/FY2024/results/24a734afc8814186b182d5bd9e7e513b"
+        },
+        {
+          "metric_id": "B12",
+          "result_id": "sha256:f1d56770fc0959fb3d51c8e3d0ed756f9b67f74a988c28c0255a49e4f13c8a6d",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "fiscal_year": 2025,
+          "value": null,
+          "unit": null,
+          "publication": "PUBLISHED",
+          "quality": "NONE",
+          "reason_code": "TRAIT_NOT_APPLICABLE",
+          "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+          "defect_holds": [],
+          "latest_observation": "NOT_REQUESTED_IN_LATEST_EXECUTION",
+          "requested_in_latest_execution": false,
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/rpo-structural-companies-1791548400539347000/paramount_skydance_paramount_global/state/updates/B12/periods/FY2025/results/675c6a41e30a4f04ba6b8700d369c597"
+        }
+      ]
+    }
+  ],
+  "updated_row": {
+    "company": "Paramount Skydance / Paramount Global",
+    "cik": "813828",
+    "metric_id": "B12",
+    "metric_name": "Remaining performance obligation (RPO substitute)",
+    "value": "",
+    "unit": "USD",
+    "status": "N_A_STRUCTURAL",
+    "source_class": "NOT_AVAILABLE",
+    "formula": "",
+    "period_start": "2021-12-31",
+    "period_end": "2021-12-31",
+    "fiscal_year": "2021",
+    "fiscal_period": "STRUCTURAL",
+    "accession": "",
+    "form": "",
+    "filed_date": "",
+    "concept_or_section": "",
+    "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2021, \"period_end\": \"2021-12-31\", \"period_start\": \"2021-01-01\"}, \"measurement_kind\": \"STRUCTURAL\", \"scope\": {\"coverage\": \"deterministic_source_set\", \"fiscal_year\": 2021}, \"selection\": null, \"source_reference_ids\": [\"sha256:61199b5b50703b802a686ef3abe519dc58675db5fc17338abd4b76b8ba5aaf6a\", \"sha256:cc4b119849e582425aeeaf5b6d6be60f44cdc3fa998c1a97bdc2b8bfab4dd921\"]}",
+    "confidence": "",
+    "notes": "Trait applicability is structurally false. No financial measurement is asserted; dates retain the filing group. Native state: PUBLISHED; reason: TRAIT_NOT_APPLICABLE.",
+    "company_id": "paramount_skydance_paramount_global",
+    "result_id": "sha256:d6225bff1c520b4913952c747dbdf60963243f71f833eb75078f18f676134f22",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/rpo-structural-companies-1791548400539347000/paramount_skydance_paramount_global/state/updates/B12/periods/FY2021/results/1455fda5b5d64c2a98264b58db66702e",
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+    "period_role": "REQUESTED_RESULT",
+    "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+    "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+    "defect_holds": "[]",
+    "requested_in_latest_execution": "True"
+  },
+  "all_five_saved_years_read": true,
+  "other_four_years_not_processed": true,
+  "all_old_result_files_unchanged": true,
+  "protected_old_result_files": 30,
+  "repeat_factory_calls": 0,
+  "new_calls": {
+    "sec": 0,
+    "provider": 0,
+    "paid": 0
+  }
+}

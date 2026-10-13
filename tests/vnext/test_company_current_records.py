@@ -2,6 +2,7 @@
 import csv
 import fcntl
 import json
+import shutil
 from pathlib import Path
 import tempfile
 import unittest
@@ -57,6 +58,106 @@ class CurrentCompanyTest(unittest.TestCase):
         self.assertFalse((self.work/'programs').exists());self.assertFalse((self.work/'source').exists())
         self.assertTrue(all(row['source_root']==str(self.source) for row in self.rows(r)))
 
+    def test_corrupt_d02_answer_members_do_not_abort_a_mixed_company_batch(self):
+        from vnext import company_local,historical_d02_case
+        answers=self.root/'answers';call=answers/'call';call.mkdir(parents=True)
+        request={'record_type':'D02_ITEM_8_LEGAL_REVIEW_REQUEST','request_id':'request',
+            'company_id':'marriott_international','period_end':'2025-12-31'}
+        (call/'semantic-request.json').write_text(json.dumps(request))
+        old_update=current.run_once.side_effect
+        def processing(**kw):
+            if kw['metric_id']=='D02':
+                return kw['case_factory'](repo_root=kw['source_root'],company_id=kw['company_id'],
+                    metric_id='D02',fiscal_year=kw['fiscal_year'])
+            return old_update(**{**kw,'state_root':kw['state_root']/'periods'/'FY2025'})
+        for index,raw in enumerate((None,'{bad-json','{}')):
+            with self.subTest(terminal=raw):
+                terminal=call/'terminal.json'
+                if raw is None:
+                    if terminal.exists():terminal.unlink()
+                else:terminal.write_text(raw)
+                with patch.object(current,'run_once',side_effect=processing), \
+                     patch.object(historical_d02_case,'prepare_historical_legal_sources',
+                        side_effect=AssertionError('Invalid package must stop before source preparation')):
+                    report=company_local._run_saved_history(company_id='marriott_international',
+                        source_root=self.source,work_dir=self.root/('mixed-'+str(index)),
+                        output_dir=self.root/('mixed-out-'+str(index)),metric_ids=['D02','B04'],
+                        fiscal_year_start=2025,fiscal_year_end=2025,saved_legal_reviews=answers)
+                states={m['metric_id']:m['status'] for m in report['metrics']}
+                self.assertEqual({'D02':'INPUT_OR_EXECUTION_FAILED','B04':'CANDIDATE_READY'},states)
+                self.assertEqual('FLOW_COMPLETED_WITH_LIMITATIONS',report['status'])
+                self.assertTrue((Path(report['output_root'])/'company-results.json').is_file())
+                rows={r['metric_id']:r for r in self.rows(report)}
+                self.assertEqual('100',rows['B04']['value'])
+                self.assertEqual('',rows['D02']['value'])
+                self.assertEqual('NO_CURRENT_RESULT',rows['D02']['result_validity'])
+
+    def restored_task(self):
+        self.run_company(['B01'])
+        restored=self.root/'restored';shutil.copytree(self.work,restored)
+        old=self.work/'updates/B01/results/first';new=restored/'updates/B01/results/first'
+        self.values[str(new)]=self.values[str(old)]
+        shutil.rmtree(self.work)  # Test-owned state only; original location is unavailable.
+        return restored,new
+
+    def test_restored_task_reads_its_local_result_without_original_location(self):
+        restored,new=self.restored_task()
+        with patch.object(current,'run_once',side_effect=AssertionError('No recalculation')):
+            view=current.read_current_company(state_root=restored,company_id='marriott_international',
+                defects_file=self.registry,output_root=self.root/'reader')
+        with (self.root/'reader'/'metrics_matrix.csv').open() as stream:
+            self.assertEqual(list(csv.DictReader(stream))[0]['value'],'100')
+        self.assertEqual(view['metrics'][0]['record_root'],str(new))
+        self.assertEqual(len(view['metrics']),1)
+
+    def test_restored_task_does_not_map_an_unrelated_external_record(self):
+        restored,new=self.restored_task();p=restored/'latest-execution.json';d=json.loads(p.read_text())
+        d['metrics'][0]['record_root']=str(self.root/'unrelated/results/first')
+        d['metrics'][0]['result_root']=d['metrics'][0]['record_root'];p.write_text(json.dumps(d))
+        with self.assertRaisesRegex(ValueError,'RECORD_OUTSIDE_STATE'):
+            current.read_current_company(state_root=restored,company_id='marriott_international',defects_file=self.registry)
+
+    def test_restored_task_still_checks_result_identity(self):
+        restored,new=self.restored_task();self.values[str(new)]['result']['result_id']='wrong-result'
+        with self.assertRaisesRegex(ValueError,'READ_COORDINATE_CHANGED'):
+            current.read_current_company(state_root=restored,company_id='marriott_international',defects_file=self.registry)
+
+    def test_restored_task_rejects_wrong_metric_hierarchy_or_version(self):
+        restored,new=self.restored_task();p=restored/'latest-execution.json';base=json.loads(p.read_text())
+        for kind in ('metric','version'):
+            d=json.loads(json.dumps(base))
+            if kind=='metric':
+                d['metrics'][0]['record_root']=str(self.work/'updates/B02/results/first')
+            else:d['metrics'][0]['version']='other-version'
+            p.write_text(json.dumps(d))
+            with self.subTest(kind=kind),self.assertRaisesRegex(ValueError,'RESTORED_RECORD_(LAYOUT|VERSION)_CHANGED'):
+                current.read_current_company(state_root=restored,company_id='marriott_international',defects_file=self.registry)
+
+    def test_restored_task_does_not_follow_a_result_symlink_outside_state(self):
+        restored,new=self.restored_task();outside=self.root/'outside';outside.mkdir()
+        shutil.rmtree(new);new.symlink_to(outside,target_is_directory=True)
+        with self.assertRaisesRegex(ValueError,'RECORD_OUTSIDE_STATE'):
+            current.read_current_company(state_root=restored,company_id='marriott_international',defects_file=self.registry)
+
+    def test_restored_declared_history_year_must_match_saved_result(self):
+        restored,new=self.restored_task();p=restored/'latest-execution.json';d=json.loads(p.read_text())
+        d['metrics'][0]['requested_fiscal_year']=2025;p.write_text(json.dumps(d))
+        view=current.read_current_company(state_root=restored,company_id='marriott_international',defects_file=self.registry)
+        self.assertEqual(view['metrics'][0]['fiscal_year'],2025)
+        d['metrics'][0]['requested_fiscal_year']=2024;p.write_text(json.dumps(d))
+        with self.assertRaisesRegex(ValueError,'REQUESTED_PERIOD_CHANGED'):
+            current.read_current_company(state_root=restored,company_id='marriott_international',defects_file=self.registry)
+
+    def test_restored_fiscal_directory_must_match_saved_manifest_year(self):
+        restored,new=self.restored_task();target=restored/'updates/B01/periods/FY2024/results/first'
+        target.parent.mkdir(parents=True);shutil.move(str(new),target)
+        self.values[str(target)]=self.values[str(new)]
+        p=restored/'latest-execution.json';d=json.loads(p.read_text())
+        d['metrics'][0]['record_root']=str(self.work/'updates/B01/periods/FY2024/results/first')
+        p.write_text(json.dumps(d))
+        with self.assertRaisesRegex(ValueError,'RESULT_PERIOD_PATH_CHANGED'):
+            current.read_current_company(state_root=restored,company_id='marriott_international',defects_file=self.registry)
+
     def test_existing_local_entry_selects_saved_branch_without_configure_task(self):
         from vnext.company_local import run_local
         with patch('vnext.company_local.configure_task',side_effect=AssertionError('No legacy installation')), \
@@ -100,7 +201,8 @@ class CurrentCompanyTest(unittest.TestCase):
         self.assertTrue(all(row['period_role']=='REQUESTED_WITHOUT_RESULT' for row in self.rows(r)))
 
     def test_missing_ai_and_deprecated_e01_do_not_manufacture_results(self):
-        r=self.run_company(['D04','E01'])
+        with patch.object(current,'run_once',side_effect=ValueError('D04_COMPLETE_SAVED_RESPONSE_SET_REQUIRED')):
+            r=self.run_company(['D04','E01'])
         self.assertEqual(self.updates,[]);self.assertEqual(r['status'],'FLOW_COMPLETED_WITH_LIMITATIONS')
         self.assertTrue(all(row['value']=='' for row in self.rows(r)))
 
@@ -131,6 +233,72 @@ class CurrentCompanyTest(unittest.TestCase):
             view=current.read_current_company(state_root=self.work,company_id='marriott_international')
         self.assertEqual(len(view['metrics']),2)
         self.assertEqual(view['source_freshness'],'NOT_CHECKED_BY_SAVED_READER')
+
+    def test_independent_read_keeps_failed_input_reason_without_a_result(self):
+        failure={'status':'INPUT_OR_EXECUTION_FAILED','reason':'SAVED_AMENDMENT_NOT_RECEIVED',
+                 'error_type':'CaseError','error_category':'IMPLEMENTATION_GAP'}
+        with patch.object(current,'run_once',return_value=failure):self.run_company(['B01'])
+        with patch.object(current,'run_once',side_effect=AssertionError('No update')):
+            view=current.read_current_company(state_root=self.work,company_id='marriott_international',
+                output_root=self.root/'read')
+        row=view['metrics'][0]
+        self.assertIsNone(row['value']);self.assertEqual(row['reason'],failure['reason'])
+        self.assertEqual(row['error_type'],failure['error_type'])
+        self.assertEqual(row['error_category'],failure['error_category'])
+        with (self.root/'read/metrics_matrix.csv').open() as stream:csv_row=list(csv.DictReader(stream))[0]
+        self.assertIn(failure['reason'],csv_row['notes']);self.assertIn('IMPLEMENTATION_GAP',csv_row['notes'])
+
+    def test_failed_check_remains_visible_after_requesting_another_metric(self):
+        failure={'status':'INPUT_OR_EXECUTION_FAILED','reason':'SAVED_AMENDMENT_NOT_RECEIVED',
+                 'error_type':'CaseError','error_category':'IMPLEMENTATION_GAP','requested_fiscal_year':2025}
+        controller=self.work/'updates/B01/periods/FY2025';controller.mkdir(parents=True)
+        (controller/'latest-check.json').write_text(json.dumps(failure))
+        self.run_company(['B02'])
+        with patch.object(current,'run_once',side_effect=AssertionError('No update')):
+            view=current.read_current_company(state_root=self.work,company_id='marriott_international',
+                output_root=self.root/'read-later-subset')
+        failed=next(m for m in view['metrics'] if m['metric_id']=='B01')
+        self.assertIsNone(failed['value']);self.assertEqual(failed['reason'],failure['reason'])
+        self.assertEqual(failed['fiscal_year'],2025);self.assertFalse(failed['requested_in_latest_execution'])
+        with (self.root/'read-later-subset/metrics_matrix.csv').open() as stream:
+            row=next(r for r in csv.DictReader(stream) if r['metric_id']=='B01')
+        self.assertEqual(row['period_role'],'SAVED_CHECK_NOT_REQUESTED_WITHOUT_RESULT')
+        self.assertEqual(row['requested_in_latest_execution'],'False')
+        self.assertIn('IMPLEMENTATION_GAP',row['notes'])
+
+    def test_failure_detail_does_not_relabel_a_previous_success_as_current(self):
+        self.run_company(['B01'])
+        self.values[str(self.work/'updates/B01/results/first')]['result'].update(value='100',unit='USD')
+        failure={'status':'INPUT_OR_EXECUTION_FAILED','reason':'LATEST_SOURCE_REQUEST_FAILED',
+                 'error_type':'SourceError','error_category':'SOURCE_UNAVAILABLE'}
+        with patch.object(current,'run_once',return_value=failure):self.run_company(['B01'])
+        with patch.object(current,'run_once',side_effect=AssertionError('No update')):
+            view=current.read_current_company(state_root=self.work,company_id='marriott_international',
+                output_root=self.root/'read-previous')
+        row=view['metrics'][0]
+        self.assertEqual(row['reason'],failure['reason'])
+        self.assertEqual(row['latest_observation'],'INPUT_OR_EXECUTION_FAILED')
+        self.assertIsNone(row['value']);self.assertEqual(row['previous_result_value'],'100')
+        with (self.root/'read-previous/metrics_matrix.csv').open() as stream:csv_row=list(csv.DictReader(stream))[0]
+        self.assertEqual(csv_row['period_role'],'PREVIOUS_RESULT')
+        self.assertIn(failure['reason'],csv_row['notes'])
+        self.assertNotEqual(csv_row['status'],'OK')
+
+    def test_current_failure_does_not_hide_an_existing_exact_known_defect(self):
+        self.run_company(['B01'])
+        self.registry.write_text(json.dumps({'defects':[{'defect_id':'known',
+            'company_id':'marriott_international','metric_id':'B01','period_end':'2025-12-31',
+            'result_id':'B01-result','released':[]}]}))
+        with patch.object(current,'run_once',return_value={'status':'INPUT_OR_EXECUTION_FAILED',
+                'reason':'LATEST_SOURCE_REQUEST_FAILED','error_category':'SOURCE_UNAVAILABLE'}):
+            self.run_company(['B01'])
+        view=current.read_current_company(state_root=self.work,company_id='marriott_international',
+            defects_file=self.registry,output_root=self.root/'read-invalid')
+        self.assertEqual(view['metrics'][0]['result_validity'],'CONFIRMED_INVALID')
+        self.assertIsNone(view['metrics'][0]['value']);self.assertIsNone(view['metrics'][0]['previous_result_value'])
+        with (self.root/'read-invalid/metrics_matrix.csv').open() as stream:row=list(csv.DictReader(stream))[0]
+        self.assertEqual(row['status'],'WITHHELD_KNOWN_DEFECT')
+        self.assertIn('LATEST_SOURCE_REQUEST_FAILED',row['notes']);self.assertIn('known',row['notes'])
 
     def test_unrelated_source_discovery_failure_still_shows_limitation(self):
         self.run_company()
@@ -381,11 +549,14 @@ class PerMetricProducerTest(unittest.TestCase):
         self.assertEqual(seen[0]['processing_files'],('explicit-a13.py',))
         self.assertEqual(report['metrics'][0]['status'],'INPUT_OR_EXECUTION_FAILED')
 
-    def test_default_a13_stays_unimplemented_and_unknown_explicit_core_rejects(self):
-        with patch.object(current,'run_once',side_effect=AssertionError('No default A13 calculator')):
+    def test_current_a13_enters_update_and_unknown_explicit_core_rejects(self):
+        with patch.object(current,'run_once',return_value={
+                'status':'INPUT_OR_EXECUTION_FAILED','reason':'CONTROL_NEW_CURRENT_A13_DISPATCH'}) as boundary:
             report=current.run_saved_company(company_id='marriott_international',source_root=self.source,
                 work_dir=self.work,output_dir=self.outputs,metric_ids=['A13'])
-        self.assertEqual(report['metrics'][0]['status'],'PROCESSING_INPUT_OR_IMPLEMENTATION_REQUIRED')
+        boundary.assert_called_once()
+        self.assertEqual(boundary.call_args.kwargs['metric_id'],'A13')
+        self.assertEqual(report['metrics'][0]['reason'],'CONTROL_NEW_CURRENT_A13_DISPATCH')
         with self.assertRaisesRegex(ValueError,'METRIC_FACTORIES_INVALID'):
             current.run_saved_company(company_id='marriott_international',source_root=self.source,
                 work_dir=self.work,output_dir=self.outputs,metric_ids=['D03'],fiscal_years=[2021],
@@ -399,7 +570,12 @@ class PerMetricProducerTest(unittest.TestCase):
             period=kw['state_root']/'periods'/'FY2021'
             observation=original_update(**{**kw,'state_root':period})
             value=self.values[observation['result_root']]
-            value['result'].update(value='100',unit='USD',publication='PUBLISHED')
+            value['result'].update(value='100',unit='USD',publication='PUBLISHED',
+                                  period_start='2021-01-01',period_end='2021-12-31')
+            value['manifest']['target_period']['fiscal_year']=2021
+            row=next(csv.DictReader(value['files']['metrics_matrix.csv'].decode().splitlines()))
+            row.update(fiscal_year='2021',period_start='2021-01-01',period_end='2021-12-31')
+            value['files']['metrics_matrix.csv']=_csv_bytes(rows=[row],fieldnames=METRIC_FIELDS)
             pointer=period/'current-result.json'
             state=json.loads(pointer.read_text());state['requested_fiscal_year']=2021
             pointer.write_text(json.dumps(state))

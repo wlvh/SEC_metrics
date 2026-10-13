@@ -67,6 +67,17 @@ class PreparedPeriodBusinessTest(unittest.TestCase):
 
 
 class SelectedLodgingSourceTest(unittest.TestCase):
+    def test_historical_consumers_declare_the_actual_structure_reader(self):
+        from tests.vnext.processing_dependency_checks import processing_calls
+        from vnext.historical_lodging_results import HISTORICAL_LODGING_PROCESSING_FILES
+        with processing_calls(ROOT) as observed:
+            result=lodging.read_selected_lodging_source(**self.arguments())
+        self.assertEqual('0.693',result['selection']['facts']['B10']['value'])
+        self.assertEqual('128.8',result['selection']['facts']['B11']['value'])
+        path='scripts/vnext/composite_scope.py'
+        self.assertIn('index_source_structure',observed[path])
+        self.assertIn(path,HISTORICAL_LODGING_PROCESSING_FILES)
+
     @classmethod
     def setUpClass(cls):
         cls.specs = {m: compile_spec_file(path=ROOT / p, dependency_specs={})

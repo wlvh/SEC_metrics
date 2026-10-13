@@ -49,8 +49,6 @@ def paired_measure_problem(*, route, claims, current_claims, accessions):
         if len(used['current']) != 1 or len(used['prior']) != 1:
             continue
         current, prior = _claim_view(used['current'][0]), _claim_view(used['prior'][0])
-        if current['concept'] == prior['concept']:
-            continue
         reported = sorted({str(Decimal(str(claim['value'])))
                            for claim in current_claims
                            if claim['attributes']['accession'] == accessions['current']
@@ -60,7 +58,15 @@ def paired_measure_problem(*, route, claims, current_claims, accessions):
                            and claim['unit'] == prior['unit']})
         pair = {'current': current, 'prior': prior,
                 'target_filing_reports_the_prior_year_under_the_current_concept': reported}
-        if reported == [str(Decimal(prior['value']))]:
+        comparison_matches = {Decimal(v) for v in reported} == {Decimal(prior['value'])}
+        if current['concept'] == prior['concept']:
+            # A shared label does not resolve an explicit contradictory
+            # prior-period comparison in the current filing. Keep the original
+            # prior value; never replace it with a later recast amount.
+            if reported and not comparison_matches:
+                return {'reason_code': PAIRED_MEASURE_REASON, **pair}, bridged
+            continue
+        if comparison_matches:
             bridged.append(pair)
             continue
         return {'reason_code': PAIRED_MEASURE_REASON, **pair}, bridged

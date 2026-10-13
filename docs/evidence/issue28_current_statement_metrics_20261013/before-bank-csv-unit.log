@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-statement-metrics/SEC_metrics/docs/evidence/issue28_current_statement_metrics_20261013/verify_bank_company.py", line 100, in <module>
+    if __name__=='__main__':run()
+                            ^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-statement-metrics/SEC_metrics/docs/evidence/issue28_current_statement_metrics_20261013/verify_bank_company.py", line 85, in run
+    assert row['value']==(old['value'] or '') and row['unit']==(old['unit'] or '')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

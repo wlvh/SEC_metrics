@@ -1,0 +1,19 @@
+E..
+======================================================================
+ERROR: test_republished_report_contents_does_not_become_part_of_the_note (tests.vnext.test_amendment_note_layout.AmendmentNoteLayoutTest.test_republished_report_contents_does_not_become_part_of_the_note)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-income-paragraph-dispatch/SEC_metrics/tests/vnext/test_amendment_note_layout.py", line 31, in test_republished_report_contents_does_not_become_part_of_the_note
+    note = scope._note(doc, raw=raw)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-income-paragraph-dispatch/SEC_metrics/scripts/vnext/annual_amendment_scope_v2.py", line 21, in _note
+    _need(start+1<end and count<=8,"AMENDMENT_EXPLANATORY_SCOPE_UNSUPPORTED")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-income-paragraph-dispatch/SEC_metrics/scripts/vnext/annual_amendment_scope.py", line 38, in _need
+    if not condition:raise AmendmentScopeError(reason)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+vnext.annual_amendment_scope.AmendmentScopeError: AMENDMENT_EXPLANATORY_SCOPE_UNSUPPORTED
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.002s
+
+FAILED (errors=1)

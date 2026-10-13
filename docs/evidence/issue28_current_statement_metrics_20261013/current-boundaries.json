@@ -1,0 +1,253 @@
+{
+  "base_commit": "a8941ea87aa56e68706a32103fbf6fa23ca67339",
+  "working_tree_test": true,
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+  "results": [
+    {
+      "company": "salesforce",
+      "metric": "B04",
+      "current": {
+        "value": "7457000000",
+        "unit": "USD",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "period_start": "2025-02-01",
+        "period_end": "2026-01-31",
+        "result_id": "sha256:c381836a0c8ec3c44aee90fa908157f059b66c481d90a585449d14b910367e78"
+      },
+      "baseline": {
+        "value": "7457000000",
+        "unit": "USD",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "period_start": "2025-02-01",
+        "period_end": "2026-01-31",
+        "result_id": "sha256:c381836a0c8ec3c44aee90fa908157f059b66c481d90a585449d14b910367e78"
+      },
+      "same_result_id": true,
+      "target_period": {
+        "fiscal_year": 2026,
+        "period_start": "2025-02-01",
+        "period_end": "2026-01-31"
+      },
+      "actual_selection": {
+        "company_id": "salesforce",
+        "metric_id": "B04",
+        "selection_rule": "LATEST_ORDINARY_PERIOD_IN_SAVED_SUBMISSIONS",
+        "filing": {
+          "accessionNumber": "0001108524-26-000060",
+          "filingDate": "2026-03-02",
+          "reportDate": "2026-01-31",
+          "acceptanceDateTime": "2026-03-02T21:24:59.000Z",
+          "act": "34",
+          "form": "10-K",
+          "fileNumber": "001-32224",
+          "filmNumber": "26708076",
+          "items": "",
+          "core_type": "XBRL",
+          "size": 14681239,
+          "isXBRL": 1,
+          "isInlineXBRL": 1,
+          "isXBRLNumeric": null,
+          "primaryDocument": "crm-20260131.htm",
+          "primaryDocDescription": "10-K"
+        },
+        "entity": "1108524",
+        "target_period": {
+          "fiscal_year": 2026,
+          "period_start": "2025-02-01",
+          "period_end": "2026-01-31"
+        },
+        "ordinary_annual_input_id": "sha256:e58b1a3c0020e0b03721f9c2cce223077fff4ac96a46408ac33dd84f5301ef9b",
+        "current_sec_freshness_verified": false
+      },
+      "current_seconds": 2.137706999987131
+    },
+    {
+      "company": "salesforce",
+      "metric": "B07",
+      "current": {
+        "value": "25.71296296296296296296296296",
+        "unit": "ratio",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "period_start": "2025-02-01",
+        "period_end": "2026-01-31",
+        "result_id": "sha256:043c03088226133c318ea90f2301bfa9c283ae6c0a36957a46184e75b7ee8875"
+      },
+      "baseline": {
+        "value": "25.71296296296296296296296296",
+        "unit": "ratio",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "period_start": "2025-02-01",
+        "period_end": "2026-01-31",
+        "result_id": "sha256:043c03088226133c318ea90f2301bfa9c283ae6c0a36957a46184e75b7ee8875"
+      },
+      "same_result_id": true,
+      "target_period": {
+        "fiscal_year": 2026,
+        "period_start": "2025-02-01",
+        "period_end": "2026-01-31"
+      },
+      "actual_selection": {
+        "company_id": "salesforce",
+        "metric_id": "B07",
+        "selection_rule": "LATEST_ORDINARY_PERIOD_IN_SAVED_SUBMISSIONS",
+        "filing": {
+          "accessionNumber": "0001108524-26-000060",
+          "filingDate": "2026-03-02",
+          "reportDate": "2026-01-31",
+          "acceptanceDateTime": "2026-03-02T21:24:59.000Z",
+          "act": "34",
+          "form": "10-K",
+          "fileNumber": "001-32224",
+          "filmNumber": "26708076",
+          "items": "",
+          "core_type": "XBRL",
+          "size": 14681239,
+          "isXBRL": 1,
+          "isInlineXBRL": 1,
+          "isXBRLNumeric": null,
+          "primaryDocument": "crm-20260131.htm",
+          "primaryDocDescription": "10-K"
+        },
+        "entity": "1108524",
+        "target_period": {
+          "fiscal_year": 2026,
+          "period_start": "2025-02-01",
+          "period_end": "2026-01-31"
+        },
+        "ordinary_annual_input_id": "sha256:e58b1a3c0020e0b03721f9c2cce223077fff4ac96a46408ac33dd84f5301ef9b",
+        "current_sec_freshness_verified": false
+      },
+      "current_seconds": 2.1418184579815716
+    },
+    {
+      "company": "paramount_skydance_paramount_global",
+      "metric": "B04",
+      "current": {
+        "value": null,
+        "unit": null,
+        "quality": "NOT_MEANINGFUL",
+        "reason_code": "ENTITY_CONTINUITY_NOT_COMPARABLE",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "result_id": "sha256:aafc16bdde5283a21fb2a29960bf5283d5fef5a41a1073c34a17db911e50fe6b"
+      },
+      "baseline": {
+        "value": null,
+        "unit": null,
+        "quality": "NOT_MEANINGFUL",
+        "reason_code": "ENTITY_CONTINUITY_NOT_COMPARABLE",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "result_id": "sha256:aafc16bdde5283a21fb2a29960bf5283d5fef5a41a1073c34a17db911e50fe6b"
+      },
+      "same_result_id": true,
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "actual_selection": {
+        "company_id": "paramount_skydance_paramount_global",
+        "metric_id": "B04",
+        "selection_rule": "LATEST_ORDINARY_PERIOD_IN_SAVED_SUBMISSIONS",
+        "filing": {
+          "accessionNumber": "0002041610-26-000011",
+          "filingDate": "2026-02-25",
+          "reportDate": "2025-12-31",
+          "acceptanceDateTime": "2026-02-25T22:19:07.000Z",
+          "act": "34",
+          "form": "10-K",
+          "fileNumber": "001-42791",
+          "filmNumber": "26680216",
+          "items": "",
+          "core_type": "XBRL",
+          "size": 34702318,
+          "isXBRL": 1,
+          "isInlineXBRL": 1,
+          "isXBRLNumeric": null,
+          "primaryDocument": "psky-20251231.htm",
+          "primaryDocDescription": "10-K"
+        },
+        "entity": "2041610",
+        "target_period": {
+          "fiscal_year": 2025,
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31"
+        },
+        "ordinary_annual_input_id": "sha256:bc7e88638e3ec85ad5d07d768689e689c6e63d6e7a8a774f00aafd3bee2d6733",
+        "current_sec_freshness_verified": false
+      },
+      "current_seconds": 3.187157499982277
+    },
+    {
+      "company": "paramount_skydance_paramount_global",
+      "metric": "B07",
+      "current": {
+        "value": null,
+        "unit": null,
+        "quality": "NOT_MEANINGFUL",
+        "reason_code": "ENTITY_CONTINUITY_NOT_COMPARABLE",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "result_id": "sha256:1422ef8d536f353fe17b295937fdf915cd285d387312caee5368309f2c8a0add"
+      },
+      "baseline": {
+        "value": null,
+        "unit": null,
+        "quality": "NOT_MEANINGFUL",
+        "reason_code": "ENTITY_CONTINUITY_NOT_COMPARABLE",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "result_id": "sha256:1422ef8d536f353fe17b295937fdf915cd285d387312caee5368309f2c8a0add"
+      },
+      "same_result_id": true,
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "actual_selection": {
+        "company_id": "paramount_skydance_paramount_global",
+        "metric_id": "B07",
+        "selection_rule": "LATEST_ORDINARY_PERIOD_IN_SAVED_SUBMISSIONS",
+        "filing": {
+          "accessionNumber": "0002041610-26-000011",
+          "filingDate": "2026-02-25",
+          "reportDate": "2025-12-31",
+          "acceptanceDateTime": "2026-02-25T22:19:07.000Z",
+          "act": "34",
+          "form": "10-K",
+          "fileNumber": "001-42791",
+          "filmNumber": "26680216",
+          "items": "",
+          "core_type": "XBRL",
+          "size": 34702318,
+          "isXBRL": 1,
+          "isInlineXBRL": 1,
+          "isXBRLNumeric": null,
+          "primaryDocument": "psky-20251231.htm",
+          "primaryDocDescription": "10-K"
+        },
+        "entity": "2041610",
+        "target_period": {
+          "fiscal_year": 2025,
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31"
+        },
+        "ordinary_annual_input_id": "sha256:bc7e88638e3ec85ad5d07d768689e689c6e63d6e7a8a774f00aafd3bee2d6733",
+        "current_sec_freshness_verified": false
+      },
+      "current_seconds": 3.189853749994654
+    }
+  ],
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "scope": "DIRECT_CASE_COMPARISON_NOT_COMPANY_PERSISTENCE"
+}

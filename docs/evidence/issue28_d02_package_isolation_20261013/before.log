@@ -1,0 +1,83 @@
+test_corrupt_d02_answer_members_do_not_abort_a_mixed_company_batch (tests.vnext.test_company_current_records.CurrentCompanyTest.test_corrupt_d02_answer_members_do_not_abort_a_mixed_company_batch) ... 
+  test_corrupt_d02_answer_members_do_not_abort_a_mixed_company_batch (tests.vnext.test_company_current_records.CurrentCompanyTest.test_corrupt_d02_answer_members_do_not_abort_a_mixed_company_batch) (terminal=None) ... ERROR
+  test_corrupt_d02_answer_members_do_not_abort_a_mixed_company_batch (tests.vnext.test_company_current_records.CurrentCompanyTest.test_corrupt_d02_answer_members_do_not_abort_a_mixed_company_batch) (terminal='{bad-json') ... ERROR
+  test_corrupt_d02_answer_members_do_not_abort_a_mixed_company_batch (tests.vnext.test_company_current_records.CurrentCompanyTest.test_corrupt_d02_answer_members_do_not_abort_a_mixed_company_batch) (terminal='{}') ... ERROR
+
+======================================================================
+ERROR: test_corrupt_d02_answer_members_do_not_abort_a_mixed_company_batch (tests.vnext.test_company_current_records.CurrentCompanyTest.test_corrupt_d02_answer_members_do_not_abort_a_mixed_company_batch) (terminal=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d02-company-saved/SEC_metrics/tests/vnext/test_company_current_records.py", line 82, in test_corrupt_d02_answer_members_do_not_abort_a_mixed_company_batch
+    report=company_local._run_saved_history(company_id='marriott_international',
+        source_root=self.source,work_dir=self.root/('mixed-'+str(index)),
+        output_dir=self.root/('mixed-out-'+str(index)),metric_ids=['D02','B04'],
+        fiscal_year_start=2025,fiscal_year_end=2025,saved_legal_reviews=answers)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d02-company-saved/SEC_metrics/scripts/vnext/company_local.py", line 417, in _run_saved_history
+    d02_inputs=saved_review_input_paths(saved_review_root=saved_legal_reviews,company_id=company_id)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d02-company-saved/SEC_metrics/scripts/vnext/historical_d02_case.py", line 81, in saved_review_input_paths
+    terminal=strict_json_file(path=path/'terminal.json')
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d02-company-saved/SEC_metrics/scripts/vnext/canonical.py", line 213, in strict_json_file
+    raise CanonicalError(
+        "JSON input must be a regular file: {}".format(path)
+    )
+vnext.canonical.CanonicalError: JSON input must be a regular file: /private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmp3jhpgnt1/answers/call/terminal.json
+
+======================================================================
+ERROR: test_corrupt_d02_answer_members_do_not_abort_a_mixed_company_batch (tests.vnext.test_company_current_records.CurrentCompanyTest.test_corrupt_d02_answer_members_do_not_abort_a_mixed_company_batch) (terminal='{bad-json')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d02-company-saved/SEC_metrics/scripts/vnext/canonical.py", line 175, in strict_json_loads
+    value = json.loads(
+        text,
+    ...<3 lines>...
+        parse_constant=lambda token: _reject_constant(value=token),
+    )
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/__init__.py", line 365, in loads
+    return cls(**kw).decode(s)
+           ~~~~~~~~~~~~~~~~^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/decoder.py", line 345, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/decoder.py", line 361, in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ~~~~~~~~~~~~~~^^^^^^^^
+json.decoder.JSONDecodeError: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d02-company-saved/SEC_metrics/tests/vnext/test_company_current_records.py", line 82, in test_corrupt_d02_answer_members_do_not_abort_a_mixed_company_batch
+    report=company_local._run_saved_history(company_id='marriott_international',
+        source_root=self.source,work_dir=self.root/('mixed-'+str(index)),
+        output_dir=self.root/('mixed-out-'+str(index)),metric_ids=['D02','B04'],
+        fiscal_year_start=2025,fiscal_year_end=2025,saved_legal_reviews=answers)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d02-company-saved/SEC_metrics/scripts/vnext/company_local.py", line 417, in _run_saved_history
+    d02_inputs=saved_review_input_paths(saved_review_root=saved_legal_reviews,company_id=company_id)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d02-company-saved/SEC_metrics/scripts/vnext/historical_d02_case.py", line 81, in saved_review_input_paths
+    terminal=strict_json_file(path=path/'terminal.json')
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d02-company-saved/SEC_metrics/scripts/vnext/canonical.py", line 222, in strict_json_file
+    return strict_json_loads(text=text, allowed_fields=allowed_fields)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d02-company-saved/SEC_metrics/scripts/vnext/canonical.py", line 183, in strict_json_loads
+    raise CanonicalError("Invalid strict JSON") from error
+vnext.canonical.CanonicalError: Invalid strict JSON
+
+======================================================================
+ERROR: test_corrupt_d02_answer_members_do_not_abort_a_mixed_company_batch (tests.vnext.test_company_current_records.CurrentCompanyTest.test_corrupt_d02_answer_members_do_not_abort_a_mixed_company_batch) (terminal='{}')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d02-company-saved/SEC_metrics/tests/vnext/test_company_current_records.py", line 82, in test_corrupt_d02_answer_members_do_not_abort_a_mixed_company_batch
+    report=company_local._run_saved_history(company_id='marriott_international',
+        source_root=self.source,work_dir=self.root/('mixed-'+str(index)),
+        output_dir=self.root/('mixed-out-'+str(index)),metric_ids=['D02','B04'],
+        fiscal_year_start=2025,fiscal_year_end=2025,saved_legal_reviews=answers)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d02-company-saved/SEC_metrics/scripts/vnext/company_local.py", line 417, in _run_saved_history
+    d02_inputs=saved_review_input_paths(saved_review_root=saved_legal_reviews,company_id=company_id)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d02-company-saved/SEC_metrics/scripts/vnext/historical_d02_case.py", line 82, in saved_review_input_paths
+    providers=[p for p in terminal['evidence'] if p.startswith('invocation_control/requests/') and p.endswith('.bin')]
+                          ~~~~~~~~^^^^^^^^^^^^
+KeyError: 'evidence'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.070s
+
+FAILED (errors=3)

@@ -1,0 +1,18 @@
+test_b07_uses_same_definition_and_other_metrics_cannot_enter (tests.vnext.test_current_statement_metric_case.CurrentStatementMetricCaseTest.test_b07_uses_same_definition_and_other_metrics_cannot_enter) ... ok
+test_changed_period_entity_or_filing_cannot_replace_current_selection (tests.vnext.test_current_statement_metric_case.CurrentStatementMetricCaseTest.test_changed_period_entity_or_filing_cannot_replace_current_selection) ... ok
+test_prior_or_instant_catalog_component_cannot_enter_current_annual_case (tests.vnext.test_current_statement_metric_case.CurrentStatementMetricCaseTest.test_prior_or_instant_catalog_component_cannot_enter_current_annual_case) ... ok
+test_source_issuer_year_and_exact_current_report_end_reach_the_same_core (tests.vnext.test_current_statement_metric_case.CurrentStatementMetricCaseTest.test_source_issuer_year_and_exact_current_report_end_reach_the_same_core) ... ok
+test_adjusted_compensation_target_is_not_a_reported_operating_income_row (tests.vnext.test_statement_metric_amendment.StatementMetricAmendmentTest.test_adjusted_compensation_target_is_not_a_reported_operating_income_row) ... ok
+test_changed_component_definition_cannot_keep_old_property (tests.vnext.test_statement_metric_amendment.StatementMetricAmendmentTest.test_changed_component_definition_cannot_keep_old_property) ... ok
+test_clean_property_is_explicit_and_preserves_old_scope_and_defaults (tests.vnext.test_statement_metric_amendment.StatementMetricAmendmentTest.test_clean_property_is_explicit_and_preserves_old_scope_and_defaults) ... ok
+test_current_component_corrections_plain_and_inline_are_not_cleared (tests.vnext.test_statement_metric_amendment.StatementMetricAmendmentTest.test_current_component_corrections_plain_and_inline_are_not_cleared) ... ok
+test_flag_quote_period_and_unknown_layout_remain_refused (tests.vnext.test_statement_metric_amendment.StatementMetricAmendmentTest.test_flag_quote_period_and_unknown_layout_remain_refused) ... ok
+test_new_unmarked_component_amount_needs_a_relation_proof (tests.vnext.test_statement_metric_amendment.StatementMetricAmendmentTest.test_new_unmarked_component_amount_needs_a_relation_proof) ... ok
+test_other_metrics_and_mismatched_raw_bytes_gain_no_property (tests.vnext.test_statement_metric_amendment.StatementMetricAmendmentTest.test_other_metrics_and_mismatched_raw_bytes_gain_no_property) ... ok
+test_unmarked_table_components_keep_their_row_relationship (tests.vnext.test_statement_metric_amendment.StatementMetricAmendmentTest.test_unmarked_table_components_keep_their_row_relationship) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.165s
+
+OK
+{"allowed_skips": 0, "errors": 0, "failures": 0, "run": 12, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_current_statement_metric_case", "tests.vnext.test_statement_metric_amendment"]}

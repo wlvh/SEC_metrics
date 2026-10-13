@@ -1,0 +1,80 @@
+{
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/config-reception/SEC_metrics",
+  "copied_original_state": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/macys-d04-control-version-20261013/state",
+  "test_state": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/config-reception-20261013/state",
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+  "run_seconds": 0.30741595901781693,
+  "independent_read_seconds": 0.4600494169862941,
+  "metric": {
+    "metric_id": "D04",
+    "status": "PREVIOUS_INPUT_WITHHELD",
+    "attempt_id": "eb3404f6e74948d18532eccc52354136",
+    "version": "8ae5778e13d44a0bb213499a4fffc2ee",
+    "result_id": "sha256:a2a0bb5fe143c07d445284f9b0d3def00f887440032ac1031a3e31bfc3aa2069",
+    "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/config-reception-20261013/state/updates/D04/results/8ae5778e13d44a0bb213499a4fffc2ee",
+    "result_reason_code": "D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE",
+    "raw_input_unchanged": true,
+    "calculation_performed": false,
+    "new_candidate_created": false,
+    "source_check_versions": {
+      "scripts/vnext/ordinary_current_update.py": "0dd95f46fb6058ddb65e2ee8adb3db33b5837e2cb143f92bc1597e6ad918d42c",
+      "scripts/vnext/request_bindings.py": "d0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee",
+      "scripts/vnext/ordinary_update_compatibility.py": "cb32e6089db88a9111e3195c7a0043b36b76aab4d87c73bb72635fd5fadeeb02"
+    },
+    "source_observation_errors": [],
+    "new_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false,
+    "defect_holds": [],
+    "read_result_id": "sha256:a2a0bb5fe143c07d445284f9b0d3def00f887440032ac1031a3e31bfc3aa2069",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/config-reception-20261013/state/updates/D04/results/8ae5778e13d44a0bb213499a4fffc2ee",
+    "program_version": {
+      "commit": "e16ca31653886aecb1a254696f84849b3e8f03c5",
+      "has_uncommitted_changes": true
+    }
+  },
+  "row": {
+    "company": "Macy's",
+    "cik": "794367",
+    "metric_id": "D04",
+    "metric_name": "Going concern source statements and defined-scope assessment",
+    "value": "",
+    "unit": "text",
+    "status": "TEXT_QUAL",
+    "source_class": "10-K",
+    "formula": "source-reported going concern statements",
+    "period_start": "2025-02-02",
+    "period_end": "2026-01-31",
+    "fiscal_year": "2025",
+    "fiscal_period": "",
+    "accession": "0001628280-26-021721",
+    "form": "10-K",
+    "filed_date": "2026-03-27",
+    "concept_or_section": "",
+    "context_or_dimension": "",
+    "confidence": "",
+    "notes": "未披露持续经营疑虑：已检查保存的完整年报及本期修订、原生事实和续接对象；这不表示对未来财务状况作保证。",
+    "company_id": "macys",
+    "result_id": "sha256:a2a0bb5fe143c07d445284f9b0d3def00f887440032ac1031a3e31bfc3aa2069",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/config-reception-20261013/state/updates/D04/results/8ae5778e13d44a0bb213499a4fffc2ee",
+    "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+    "local_metric_status": "PREVIOUS_INPUT_WITHHELD",
+    "period_role": "REQUESTED_RESULT",
+    "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+    "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+    "defect_holds": "[]",
+    "requested_in_latest_execution": "True"
+  },
+  "result_layer_files_preserved": 9,
+  "original_state_files_preserved": 23,
+  "producer_and_calculator_forbidden": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "business_content_not_newly_accepted": true
+}

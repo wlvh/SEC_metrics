@@ -1,0 +1,44 @@
+{
+  "head": "b56e92f29c20d06e67525f848020c495d7083ae8",
+  "observations": [
+    {
+      "name": "company-current",
+      "job_id": 115099176451,
+      "url": "https://github.com/wlvh/SEC_metrics/actions/runs/38336750506/job/115099176451",
+      "excerpt": [
+        "2026-10-13T02:27:44.2230123Z   COMPANY_HISTORY_RESULT: failure"
+      ]
+    },
+    {
+      "name": "vNext fast suite",
+      "job_id": 115098453741,
+      "url": "https://github.com/wlvh/SEC_metrics/actions/runs/38336750539/job/115098453741",
+      "excerpt": [
+        "2026-10-13T02:25:08.4702964Z FAIL: test_interest_coverage_adds_only_its_current_annual_case (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_interest_coverage_adds_only_its_current_annual_case)",
+        "2026-10-13T02:25:08.4712957Z   File \"/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_history_company_dispatch.py\", line 156, in test_interest_coverage_adds_only_its_current_annual_case",
+        "2026-10-13T02:25:08.4714298Z     self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric']['B07'])",
+        "2026-10-13T02:25:08.4720536Z FAIL: test_statement_pilot_uses_original_per_metric_factories_and_dependencies (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_statement_pilot_uses_original_per_metric_factories_and_dependencies)",
+        "2026-10-13T02:25:08.4723789Z   File \"/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_history_company_dispatch.py\", line 249, in test_statement_pilot_uses_original_per_metric_factories_and_dependencies",
+        "2026-10-13T02:25:08.4725099Z     self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric'][metric])",
+        "2026-10-13T02:25:08.4731266Z FAILED (failures=2)"
+      ]
+    },
+    {
+      "name": "company-history",
+      "job_id": 115098453205,
+      "url": "https://github.com/wlvh/SEC_metrics/actions/runs/38336750506/job/115098453205",
+      "excerpt": [
+        "2026-10-13T02:25:10.3424412Z FAIL: test_interest_coverage_adds_only_its_current_annual_case (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_interest_coverage_adds_only_its_current_annual_case)",
+        "2026-10-13T02:25:10.3438574Z   File \"/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_history_company_dispatch.py\", line 156, in test_interest_coverage_adds_only_its_current_annual_case",
+        "2026-10-13T02:25:10.3440849Z     self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric']['B07'])",
+        "2026-10-13T02:25:10.3450815Z FAIL: test_statement_pilot_uses_original_per_metric_factories_and_dependencies (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_statement_pilot_uses_original_per_metric_factories_and_dependencies)",
+        "2026-10-13T02:25:10.3453661Z   File \"/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_history_company_dispatch.py\", line 249, in test_statement_pilot_uses_original_per_metric_factories_and_dependencies",
+        "2026-10-13T02:25:10.3454783Z     self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric'][metric])",
+        "2026-10-13T02:25:10.3460596Z FAILED (failures=2)"
+      ]
+    }
+  ],
+  "conclusion": "Two old dispatch dependency expectations fail in fast/history; company-current is the dependent gate, not a third business assertion.",
+  "test_writer": "Issue47 historical consumer owner",
+  "production_glue_unchanged": true
+}

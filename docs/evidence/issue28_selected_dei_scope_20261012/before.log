@@ -1,0 +1,44 @@
+test_date_quarter_source_requires_explicit_policy_and_replays_exact_bytes (tests.vnext.test_selected_dei_text_scope.SelectedDeiTextScopeTest.test_date_quarter_source_requires_explicit_policy_and_replays_exact_bytes) ... 
+  test_date_quarter_source_requires_explicit_policy_and_replays_exact_bytes (tests.vnext.test_selected_dei_text_scope.SelectedDeiTextScopeTest.test_date_quarter_source_requires_explicit_policy_and_replays_exact_bytes) (uri='http://xbrl.sec.gov/dei/2020-01-31') ... ERROR
+  test_date_quarter_source_requires_explicit_policy_and_replays_exact_bytes (tests.vnext.test_selected_dei_text_scope.SelectedDeiTextScopeTest.test_date_quarter_source_requires_explicit_policy_and_replays_exact_bytes) (uri='https://xbrl.sec.gov/dei/2021q4') ... ERROR
+test_defaults_match_complete_legacy_objects_and_invalid_policy_still_refuses (tests.vnext.test_selected_dei_text_scope.SelectedDeiTextScopeTest.test_defaults_match_complete_legacy_objects_and_invalid_policy_still_refuses) ... ERROR
+test_explicit_amendment_and_false_correction_flag_share_the_same_policy (tests.vnext.test_selected_dei_text_scope.SelectedDeiTextScopeTest.test_explicit_amendment_and_false_correction_flag_share_the_same_policy) ... ERROR
+
+======================================================================
+ERROR: test_date_quarter_source_requires_explicit_policy_and_replays_exact_bytes (tests.vnext.test_selected_dei_text_scope.SelectedDeiTextScopeTest.test_date_quarter_source_requires_explicit_policy_and_replays_exact_bytes) (uri='http://xbrl.sec.gov/dei/2020-01-31')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-dei-text-scope/SEC_metrics/tests/vnext/test_selected_dei_text_scope.py", line 18, in test_date_quarter_source_requires_explicit_policy_and_replays_exact_bytes
+    doc=build_text_document(**args,namespace_policy=YEAR_QUARTER_OR_DATE)
+TypeError: build_text_document() got an unexpected keyword argument 'namespace_policy'
+
+======================================================================
+ERROR: test_date_quarter_source_requires_explicit_policy_and_replays_exact_bytes (tests.vnext.test_selected_dei_text_scope.SelectedDeiTextScopeTest.test_date_quarter_source_requires_explicit_policy_and_replays_exact_bytes) (uri='https://xbrl.sec.gov/dei/2021q4')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-dei-text-scope/SEC_metrics/tests/vnext/test_selected_dei_text_scope.py", line 18, in test_date_quarter_source_requires_explicit_policy_and_replays_exact_bytes
+    doc=build_text_document(**args,namespace_policy=YEAR_QUARTER_OR_DATE)
+TypeError: build_text_document() got an unexpected keyword argument 'namespace_policy'
+
+======================================================================
+ERROR: test_defaults_match_complete_legacy_objects_and_invalid_policy_still_refuses (tests.vnext.test_selected_dei_text_scope.SelectedDeiTextScopeTest.test_defaults_match_complete_legacy_objects_and_invalid_policy_still_refuses)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-dei-text-scope/SEC_metrics/tests/vnext/test_selected_dei_text_scope.py", line 48, in test_defaults_match_complete_legacy_objects_and_invalid_policy_still_refuses
+    self.assertEqual(a,build_text_document(**args,namespace_policy=YEAR_ONLY));self.assertNotIn('namespace_policy',a)
+                       ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: build_text_document() got an unexpected keyword argument 'namespace_policy'
+
+======================================================================
+ERROR: test_explicit_amendment_and_false_correction_flag_share_the_same_policy (tests.vnext.test_selected_dei_text_scope.SelectedDeiTextScopeTest.test_explicit_amendment_and_false_correction_flag_share_the_same_policy)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-dei-text-scope/SEC_metrics/tests/vnext/test_selected_dei_text_scope.py", line 39, in test_explicit_amendment_and_false_correction_flag_share_the_same_policy
+    scope=inspect_annual_amendment_scope(**args,namespace_policy=YEAR_QUARTER_OR_DATE)
+TypeError: inspect_annual_amendment_scope() got an unexpected keyword argument 'namespace_policy'
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.004s
+
+FAILED (errors=4)
+{"allowed_skips": 0, "errors": 4, "failures": 0, "run": 3, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_selected_dei_text_scope"]}

@@ -1,0 +1,68 @@
+test_caller_cannot_omit_a_selected_amendment (tests.vnext.test_ordinary_task_input.D04CompleteTaskFingerprintTest.test_caller_cannot_omit_a_selected_amendment) ... FAIL
+test_changed_companyfacts_and_filing_identity_are_changes (tests.vnext.test_ordinary_task_input.D04CompleteTaskFingerprintTest.test_changed_companyfacts_and_filing_identity_are_changes) ... ok
+test_external_script_only_is_equal_but_original_citations_remain (tests.vnext.test_ordinary_task_input.D04CompleteTaskFingerprintTest.test_external_script_only_is_equal_but_original_citations_remain) ... ok
+test_full_amendment_set_can_compare_nonbusiness_and_business_changes (tests.vnext.test_ordinary_task_input.D04CompleteTaskFingerprintTest.test_full_amendment_set_can_compare_nonbusiness_and_business_changes) ... ERROR
+test_latest_failed_original_never_uses_equivalent_old_body (tests.vnext.test_ordinary_task_input.D04CompleteTaskFingerprintTest.test_latest_failed_original_never_uses_equivalent_old_body) ... ok
+test_missing_failed_truncated_and_wrong_identity_amendments_are_not_equivalent (tests.vnext.test_ordinary_task_input.D04CompleteTaskFingerprintTest.test_missing_failed_truncated_and_wrong_identity_amendments_are_not_equivalent) ... 
+  test_missing_failed_truncated_and_wrong_identity_amendments_are_not_equivalent (tests.vnext.test_ordinary_task_input.D04CompleteTaskFingerprintTest.test_missing_failed_truncated_and_wrong_identity_amendments_are_not_equivalent) (status=200, raw_tail=b'/h2><p>None.</p></body></html>') ... FAIL
+test_new_visible_content_table_unit_and_media_relationship_change_task (tests.vnext.test_ordinary_task_input.D04CompleteTaskFingerprintTest.test_new_visible_content_table_unit_and_media_relationship_change_task) ... ok
+test_amendment_comparison_keeps_single_document_coverage_incomplete (tests.vnext.test_ordinary_task_input.ParsedTaskInputTest.test_amendment_comparison_keeps_single_document_coverage_incomplete) ... ERROR
+test_empty_external_script_change_is_task_equivalent_with_original_spans (tests.vnext.test_ordinary_task_input.ParsedTaskInputTest.test_empty_external_script_change_is_task_equivalent_with_original_spans) ... ok
+test_existing_annual_comparison_uses_task_parse_only_for_changed_html (tests.vnext.test_ordinary_task_input.ParsedTaskInputTest.test_existing_annual_comparison_uses_task_parse_only_for_changed_html) ... ok
+test_inline_svg_complete_drawing_styles_and_nested_content_are_not_lost (tests.vnext.test_ordinary_task_input.ParsedTaskInputTest.test_inline_svg_complete_drawing_styles_and_nested_content_are_not_lost) ... ok
+test_media_target_and_ids_are_not_globally_masked (tests.vnext.test_ordinary_task_input.ParsedTaskInputTest.test_media_target_and_ids_are_not_globally_masked) ... ok
+test_native_context_and_unit_changes_are_retained (tests.vnext.test_ordinary_task_input.ParsedTaskInputTest.test_native_context_and_unit_changes_are_retained) ... ok
+test_period_and_subject_mismatch_are_errors (tests.vnext.test_ordinary_task_input.ParsedTaskInputTest.test_period_and_subject_mismatch_are_errors) ... ok
+test_same_words_in_quotation_container_change_model_input (tests.vnext.test_ordinary_task_input.ParsedTaskInputTest.test_same_words_in_quotation_container_change_model_input) ... ok
+test_table_number_unit_and_header_relation_are_changes (tests.vnext.test_ordinary_task_input.ParsedTaskInputTest.test_table_number_unit_and_header_relation_are_changes) ... ok
+test_verbatim_unicode_is_not_nfc_collapsed (tests.vnext.test_ordinary_task_input.ParsedTaskInputTest.test_verbatim_unicode_is_not_nfc_collapsed) ... ok
+test_visible_disclosure_and_embedded_script_data_cannot_disappear (tests.vnext.test_ordinary_task_input.ParsedTaskInputTest.test_visible_disclosure_and_embedded_script_data_cannot_disappear) ... ok
+
+======================================================================
+ERROR: test_full_amendment_set_can_compare_nonbusiness_and_business_changes (tests.vnext.test_ordinary_task_input.D04CompleteTaskFingerprintTest.test_full_amendment_set_can_compare_nonbusiness_and_business_changes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-amendment-input/SEC_metrics/tests/vnext/test_ordinary_task_input.py", line 212, in test_full_amendment_set_can_compare_nonbusiness_and_business_changes
+    self.add_amendment();first=self.fingerprint()
+                               ~~~~~~~~~~~~~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-amendment-input/SEC_metrics/tests/vnext/test_ordinary_task_input.py", line 159, in fingerprint
+    return fingerprint(source_root=self.fixture.root,company_id=COMPANY)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-amendment-input/SEC_metrics/scripts/vnext/ordinary_d04_task_input.py", line 39, in fingerprint
+    parsed=parsed_d04_document(raw_bytes=item['raw'],raw_blob=blob,source_reference=ref,
+        expected_company_id=company_id,expected_cik=annual['entity'],
+        expected_period_end=annual['table_input']['target_period']['period_end'])
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-amendment-input/SEC_metrics/scripts/vnext/ordinary_task_input.py", line 90, in parsed_d04_document
+    raise ValueError('PARSED_D04_INPUT_INCOMPLETE:'+','.join(doc['source_reasons']))
+ValueError: PARSED_D04_INPUT_INCOMPLETE:TEXT_AMENDMENT_SOURCE_SET_REQUIRED
+
+======================================================================
+ERROR: test_amendment_comparison_keeps_single_document_coverage_incomplete (tests.vnext.test_ordinary_task_input.ParsedTaskInputTest.test_amendment_comparison_keeps_single_document_coverage_incomplete)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-amendment-input/SEC_metrics/tests/vnext/test_ordinary_task_input.py", line 73, in test_amendment_comparison_keeps_single_document_coverage_incomplete
+    compared=parsed_d04_document(**args,allow_annual_amendment=True)
+TypeError: parsed_d04_document() got an unexpected keyword argument 'allow_annual_amendment'
+
+======================================================================
+FAIL: test_caller_cannot_omit_a_selected_amendment (tests.vnext.test_ordinary_task_input.D04CompleteTaskFingerprintTest.test_caller_cannot_omit_a_selected_amendment)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-amendment-input/SEC_metrics/tests/vnext/test_ordinary_task_input.py", line 230, in test_caller_cannot_omit_a_selected_amendment
+    with self.assertRaisesRegex(ValueError,'D04_TASK_INPUT_SELECTION_CHANGED'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_missing_failed_truncated_and_wrong_identity_amendments_are_not_equivalent (tests.vnext.test_ordinary_task_input.D04CompleteTaskFingerprintTest.test_missing_failed_truncated_and_wrong_identity_amendments_are_not_equivalent) (status=200, raw_tail=b'/h2><p>None.</p></body></html>')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-amendment-input/SEC_metrics/tests/vnext/test_ordinary_task_input.py", line 244, in test_missing_failed_truncated_and_wrong_identity_amendments_are_not_equivalent
+    with self.assertRaises(ValueError):self.fingerprint()
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 18 tests in 1.045s
+
+FAILED (failures=2, errors=2)
+{"allowed_skips": 0, "errors": 2, "failures": 2, "run": 18, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_ordinary_task_input"]}

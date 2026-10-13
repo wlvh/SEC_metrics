@@ -1,0 +1,6 @@
+C01 2025 0 FLOW_COMPLETED 11.79768529185094
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-reporting-cik/SEC_metrics/docs/evidence/issue28_reporting_cik_20261009/verify_historical_event_receiving.py", line 48, in <module>
+    assert protected=={str(p.relative_to(base/'state')):hashlib.sha256(p.read_bytes()).hexdigest() for p in (base/'state').rglob('*') if p.is_file() and p.name!='latest-execution.json'}
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

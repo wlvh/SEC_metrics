@@ -1,0 +1,41 @@
+{
+  "seconds": 0.3317171669914387,
+  "exit_code": 2,
+  "report": {
+    "elapsed_seconds": 0.3274412500031758,
+    "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+    "company_id": "macys",
+    "run_id": "20261013T120546Z-f1480351",
+    "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+    "selected_metrics": [
+      "D04"
+    ],
+    "metrics": [
+      {
+        "metric_id": "D04",
+        "status": "INPUT_OR_EXECUTION_FAILED",
+        "attempt_id": "22436bf3da4b4d2f85648227f398b9a2",
+        "error_type": "AssertionError",
+        "reason": "UNCHANGED_D04_PROCESSING_FORBIDDEN",
+        "previous_result": null,
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false
+      }
+    ],
+    "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+    "program_root": "/Users/lyuhongwang/.codex/worktrees/source-ci/SEC_metrics",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/macys-d04-control-version-20261013/state",
+    "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/macys-d04-control-version-20261013/before-output/20261013T120546Z-f1480351",
+    "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false
+  }
+}

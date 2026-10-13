@@ -1,0 +1,108 @@
+{
+  "phases": {
+    "processing": {
+      "seconds": 14.204961124996771,
+      "exit_code": 2,
+      "arguments": [
+        "run",
+        "--company",
+        "macys",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2022",
+        "--fiscal-year-end",
+        "2022",
+        "--metric",
+        "B02",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b02-note-baseline-negative-20261011-47/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/marriott-b02-after-20261012-47/macys-negative/runs"
+      ]
+    },
+    "repeat": {
+      "seconds": 0.6572664169943891,
+      "exit_code": 2,
+      "arguments": [
+        "run",
+        "--company",
+        "macys",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2022",
+        "--fiscal-year-end",
+        "2022",
+        "--metric",
+        "B02",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b02-note-baseline-negative-20261011-47/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/marriott-b02-after-20261012-47/macys-negative/runs"
+      ]
+    },
+    "read": {
+      "seconds": 0.27462670899694785,
+      "exit_code": 0,
+      "arguments": [
+        "results",
+        "--company",
+        "macys",
+        "--state-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b02-note-baseline-negative-20261011-47/state",
+        "--output-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/marriott-b02-after-20261012-47/macys-negative/read"
+      ]
+    }
+  },
+  "row": {
+    "company": "Macy's",
+    "cik": "794367",
+    "metric_id": "B02",
+    "metric_name": "Revenue YoY growth",
+    "value": "",
+    "unit": "ratio",
+    "status": "WITHHELD",
+    "source_class": "DERIVED",
+    "formula": "",
+    "period_start": "2022-01-30",
+    "period_end": "2023-01-28",
+    "fiscal_year": "2022",
+    "fiscal_period": "TARGET_PERIOD",
+    "accession": "",
+    "form": "10-K",
+    "filed_date": "2023-03-24",
+    "concept_or_section": "",
+    "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2022, \"period_end\": \"2023-01-28\", \"period_start\": \"2022-01-30\"}, \"measurement_kind\": \"TARGET_PERIOD\", \"scope\": {\"coverage\": \"deterministic_source_set\", \"fiscal_year\": 2022}, \"selection\": {\"category\": \"IMPLEMENTATION_GAP\", \"error_type\": \"StatementCaseError\", \"paired_revenue_scopes\": {\"current\": {\"complete_scope_proven\": false, \"scope_id\": \"sha256:b602af1c5e9ad87a61b7305351007c037e8ff3cee4b78142cad87ac9c188a0ab\", \"status\": \"NO_DEMONSTRATED_SPLIT\"}}, \"reason\": \"HISTORICAL_PAIRED_REVENUE_COMPLETE_SCOPE_UNPROVEN\", \"unresolved_revenue_role\": \"current\"}, \"source_reference_ids\": [\"sha256:bda4fee952c97c0a8f9ff51423551e575d045b61ac6b079ddc6c9267eb6249a6\", \"sha256:c07930c47134001e778c8ef315aae3408624a3158da0db24ba40ca79390af057\", \"sha256:ad727eb6b2472ca84507603a535189c4e7f5c01197c49bacd84afa53f8e61efa\", \"sha256:f8e7997df65c7004c62811415058a3df6777ac102fb67746577e83d4dd5e92db\", \"sha256:d8682f44cd518458408f02fdb62b0b610d444d09760cb03dc418ece2683f21f3\", \"sha256:82c8613c4ee55fab4c52876c07fa2d96ec2bdf318192733ff18aefae95965dec\", \"sha256:f489be1212e54ba01adb8ec8da71cc01e9c1baceed60fe1c459ed5ab9cec6125\"]}",
+    "confidence": "",
+    "notes": "Source-rebuilt native result; exact measurement dates are retained. No accepted value is asserted for this target period. Native state: WITHHELD; reason: HISTORICAL_PAIRED_REVENUE_SCOPE_UNRESOLVED.",
+    "company_id": "macys",
+    "result_id": "sha256:8b9f993ad0e23660ea5ed57982223c1ee6c4f359d564d05c75c873daa0e99956",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b02-note-baseline-negative-20261011-47/state/updates/B02/periods/FY2022/results/31cc123137614387b90d00d302ae8f76",
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "local_metric_status": "PREVIOUS_INPUT_WITHHELD",
+    "period_role": "REQUESTED_RESULT",
+    "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+    "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+    "defect_holds": "[]",
+    "requested_in_latest_execution": "True"
+  },
+  "assessment": {
+    "category": "IMPLEMENTATION_GAP",
+    "error_type": "StatementCaseError",
+    "reason": "HISTORICAL_PAIRED_REVENUE_COMPLETE_SCOPE_UNPROVEN",
+    "unresolved_revenue_role": "current"
+  },
+  "old_result_files_unchanged": 14,
+  "read_state_files_unchanged": 39,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

@@ -1,0 +1,18 @@
+test_changed_raw_same_task_reuses_withheld_then_no_second_parse (tests.vnext.test_current_d04_company.CurrentD04ParsedReuseTest.test_changed_raw_same_task_reuses_withheld_then_no_second_parse) ... FAIL
+
+======================================================================
+FAIL: test_changed_raw_same_task_reuses_withheld_then_no_second_parse (tests.vnext.test_current_d04_company.CurrentD04ParsedReuseTest.test_changed_raw_same_task_reuses_withheld_then_no_second_parse)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics/tests/vnext/test_current_d04_company.py", line 134, in test_changed_raw_same_task_reuses_withheld_then_no_second_parse
+    self.assertEqual(same['status'],'PREVIOUS_INPUT_WITHHELD')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'INPUT_OR_EXECUTION_FAILED' != 'PREVIOUS_INPUT_WITHHELD'
+- INPUT_OR_EXECUTION_FAILED
++ PREVIOUS_INPUT_WITHHELD
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.008s
+
+FAILED (failures=1)

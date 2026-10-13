@@ -1,0 +1,27 @@
+F
+======================================================================
+FAIL: test_special_scope_consumes_existing_reported_lease_source_successor (tests.vnext.test_current_b06_case.CurrentB06CompositionTest.test_special_scope_consumes_existing_reported_lease_source_successor)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-reported-lease/SEC_metrics/tests/vnext/test_current_b06_case.py", line 72, in test_special_scope_consumes_existing_reported_lease_source_successor
+    result=self.current.prepare_current_b06_case(source_root=Path('/sources'),company_id='enphase_energy')
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-reported-lease/SEC_metrics/scripts/vnext/current_b06_case.py", line 134, in prepare_current_b06_case
+    return prepare_selected_b06_case(source_root=source,company_id=company_id,
+        preparation=preparation,annual=annual,packet=packet)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-reported-lease/SEC_metrics/scripts/vnext/current_b06_case.py", line 171, in prepare_selected_b06_case
+    case=prepare_special_debt_case(repo_root=source,company_id=company_id,
+        rules_root=ROOT,preparation=preparation)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+AssertionError: Old source must not hide proved relation
+
+----------------------------------------------------------------------
+Ran 1 test in 0.051s
+
+FAILED (failures=1)

@@ -1,0 +1,24 @@
+test_formal_history_cli_selects_specific_dependencies_without_running_factories (tests.vnext.test_statement_metric_dispatch.StatementMetricDispatchTest.test_formal_history_cli_selects_specific_dependencies_without_running_factories) ... FAIL
+
+======================================================================
+FAIL: test_formal_history_cli_selects_specific_dependencies_without_running_factories (tests.vnext.test_statement_metric_dispatch.StatementMetricDispatchTest.test_formal_history_cli_selects_specific_dependencies_without_running_factories)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-statement-metric-dispatch/SEC_metrics/tests/vnext/test_statement_metric_dispatch.py", line 29, in test_formal_history_cli_selects_specific_dependencies_without_running_factories
+    self.assertEqual(args['processing_files_by_metric'][metric],
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        cases.processing_files_for_statement_metric(metric))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Tuples differ: ('scr[903 chars]json') != ('scr[903 chars]json', 'scripts/vnext/statement_metric_amendme[333 chars]son')
+
+Second tuple contains 9 additional elements.
+First extra element 22:
+'scripts/vnext/statement_metric_amendment.py'
+
+Diff is 1510 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 1 test in 0.022s
+
+FAILED (failures=1)
+{"allowed_skips": 0, "errors": 0, "failures": 1, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_statement_metric_dispatch"]}

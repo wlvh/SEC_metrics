@@ -1,0 +1,42 @@
+{
+  "seconds": 0.5472480000007636,
+  "state_files_unchanged": 18,
+  "row": {
+    "company": "Enphase Energy",
+    "cik": "1463101",
+    "metric_id": "B06",
+    "metric_name": "Debt-to-equity",
+    "value": "1.563451362278755750189672227",
+    "unit": "ratio",
+    "status": "OK",
+    "source_class": "DERIVED",
+    "formula": "defined carrying debt / shareholders equity",
+    "period_start": "2024-12-31",
+    "period_end": "2024-12-31",
+    "fiscal_year": "2024",
+    "fiscal_period": "INSTANT",
+    "accession": "0001463101-25-000024",
+    "form": "10-K",
+    "filed_date": "2025-02-10",
+    "concept_or_section": "LongTermDebtCurrent+LongTermDebtNoncurrent+StockholdersEquity",
+    "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2024, \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\"}, \"measurement_kind\": \"INSTANT\", \"scope\": {\"entity_scope\": \"consolidated\"}, \"selection\": {\"calculation\": {\"branch\": \"BORROWING_CURRENT_NONCURRENT_NO_FINANCE_LEASE\", \"debt\": \"1302380000\", \"equity\": \"833016000\", \"nonpositive_equity\": false, \"resolver\": \"debt_equity_financing_set_v3\", \"selection_id\": \"sha256:23acfbcec9aa2077a077e67a98f307c797ca392b3e1071354a53268cdbc2bbe3\"}, \"classification\": \"SOURCE_RECONCILED_NOTE_CARRYING\", \"selection_detail_id\": \"sha256:b16a294f7339fc25be898e13dae3ed85713aa405a1c7d0a94020a3a9a4b83408\"}, \"source_reference_ids\": [\"sha256:b1869089f69b10998eb75396b0ef44bac2b7d06c684bd40e69b7ca0f54a8afc3\", \"sha256:970bf7b3a93a1b983fc96a706fcdc6c3b62389f0715b7dc297d3e165b9f50ca5\", \"sha256:6acc94ab8ef9ac2500724c34232c37a1b412b0e3490a91709c49ebface27f86b\", \"sha256:a1606a8a8171ba34d8979b41e1f129d0684cd87f2d9eacb9c1e0c0b379c83b7a\", \"sha256:e0a5f2f5392d027cc7a82e8dfc7075cf4f09f3efe94b8f8ed432694bba59d82e\"]}",
+    "confidence": "",
+    "notes": "Recognized borrowing, bond and finance lease carrying amounts divided by source-verified shareholders equity. Measurement is as of 2024-12-31. Native state: PUBLISHED; reason: PASS.",
+    "company_id": "enphase_energy",
+    "result_id": "sha256:fd16acda5e3c00d11d5324eb14a3fb81c03ce60cefb91624627606616bd2472a",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-b06-company-fo41o0__/enphase_energy/state/updates/B06/periods/FY2024/results/de08d114cd884e62983328322d590124",
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+    "period_role": "REQUESTED_RESULT",
+    "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+    "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+    "defect_holds": "[]",
+    "requested_in_latest_execution": "True"
+  },
+  "stdout": "{\n  \"elapsed_seconds\": 0.08666762500070035,\n  \"record_type\": \"ORDINARY_COMPANY_RESULT_VIEW_V1\",\n  \"company_id\": \"enphase_energy\",\n  \"source_root\": \"/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs\",\n  \"metrics\": [\n    {\n      \"metric_id\": \"B06\",\n      \"result_id\": \"sha256:fd16acda5e3c00d11d5324eb14a3fb81c03ce60cefb91624627606616bd2472a\",\n      \"period_start\": \"2024-12-31\",\n      \"period_end\": \"2024-12-31\",\n      \"fiscal_year\": 2024,\n      \"value\": \"1.563451362278755750189672227\",\n      \"unit\": \"ratio\",\n      \"publication\": \"PUBLISHED\",\n      \"quality\": \"EXACT\",\n      \"reason_code\": \"PASS\",\n      \"result_validity\": \"SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED\",\n      \"defect_holds\": [],\n      \"latest_observation\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"requested_in_latest_execution\": true,\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-b06-company-fo41o0__/enphase_energy/state/updates/B06/periods/FY2024/results/de08d114cd884e62983328322d590124\"\n    }\n  ],\n  \"source_freshness\": \"NOT_CHECKED_BY_SAVED_READER\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false,\n  \"output_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-b06-portable-read-qtl9gbjn/read\"\n}\n",
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

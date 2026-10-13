@@ -1,0 +1,14 @@
+test_history_option_enters_received_exporter_instead_of_missing_module (tests.vnext.test_history_source_export.HistorySourceExportEntryTest.test_history_option_enters_received_exporter_instead_of_missing_module) ... ok
+test_retained_native_export_still_requires_its_original_trust (tests.vnext.test_history_source_export.HistorySourceExportEntryTest.test_retained_native_export_still_requires_its_original_trust) ... ok
+test_unconnected_history_metric_is_rejected_before_exporter (tests.vnext.test_history_source_export.HistorySourceExportEntryTest.test_unconnected_history_metric_is_rejected_before_exporter) ... ok
+test_copy_interruption_removes_staging_and_never_publishes_incomplete_package (tests.vnext.test_history_source_export.HistorySourceExportSmallTest.test_copy_interruption_removes_staging_and_never_publishes_incomplete_package) ... ok
+test_explicit_issuer_latest_label_is_used_instead_of_report_end_year (tests.vnext.test_history_source_export.HistorySourceExportSmallTest.test_explicit_issuer_latest_label_is_used_instead_of_report_end_year) ... ok
+test_failed_current_source_is_not_replaced_by_old_success_and_output_is_not_overwritten (tests.vnext.test_history_source_export.HistorySourceExportSmallTest.test_failed_current_source_is_not_replaced_by_old_success_and_output_is_not_overwritten) ... ok
+test_missing_required_source_reports_incomplete_and_publishes_no_partial_package (tests.vnext.test_history_source_export.HistorySourceExportSmallTest.test_missing_required_source_reports_incomplete_and_publishes_no_partial_package) ... ok
+test_real_small_public_export_copies_exact_source_and_is_readable_without_journal (tests.vnext.test_history_source_export.HistorySourceExportSmallTest.test_real_small_public_export_copies_exact_source_and_is_readable_without_journal) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 1.992s
+
+OK
+{"allowed_skips": 0, "errors": 0, "failures": 0, "run": 8, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_history_source_export"]}

@@ -1,0 +1,58 @@
+test_actual_scope_checks_are_declared_for_both_average_consumers (tests.vnext.test_historical_average_risk_cases.HistoricalAverageRiskCaseTest.test_actual_scope_checks_are_declared_for_both_average_consumers) ... FAIL
+test_amendment_or_successor_remains_withheld_before_inspection (tests.vnext.test_historical_average_risk_cases.HistoricalAverageRiskCaseTest.test_amendment_or_successor_remains_withheld_before_inspection) ... ok
+test_lcr_quarter_is_measurement_while_fiscal_year_remains_annual_group (tests.vnext.test_historical_average_risk_cases.HistoricalAverageRiskCaseTest.test_lcr_quarter_is_measurement_while_fiscal_year_remains_annual_group) ... ok
+test_measurement_rejects_unknown_family_instead_of_treating_as_var (tests.vnext.test_historical_average_risk_cases.HistoricalAverageRiskCaseTest.test_measurement_rejects_unknown_family_instead_of_treating_as_var) ... ok
+test_structural_not_applicable_skips_amount_inspection (tests.vnext.test_historical_average_risk_cases.HistoricalAverageRiskCaseTest.test_structural_not_applicable_skips_amount_inspection) ... ok
+test_unresolved_component_cannot_reuse_candidate_value (tests.vnext.test_historical_average_risk_cases.HistoricalAverageRiskCaseTest.test_unresolved_component_cannot_reuse_candidate_value) ... ok
+test_var_annual_average_keeps_annual_period_and_usd_value (tests.vnext.test_historical_average_risk_cases.HistoricalAverageRiskCaseTest.test_var_annual_average_keeps_annual_period_and_usd_value) ... ok
+test_wrong_family_refuses_before_any_source_selection (tests.vnext.test_historical_average_risk_cases.HistoricalAverageRiskCaseTest.test_wrong_family_refuses_before_any_source_selection) ... ok
+test_wrong_source_error_is_not_disclosure_absence (tests.vnext.test_historical_average_risk_cases.HistoricalAverageRiskCaseTest.test_wrong_source_error_is_not_disclosure_absence) ... ok
+test_general_note_only_before_lettered_notes_and_never_across_heading (tests.vnext.test_historical_average_risk_cases.HistoricalAverageRiskWordingTest.test_general_note_only_before_lettered_notes_and_never_across_heading) ... ok
+test_known_forms_compile_without_mutating_shared_functions (tests.vnext.test_historical_average_risk_cases.HistoricalAverageRiskWordingTest.test_known_forms_compile_without_mutating_shared_functions) ... ok
+test_old_lcr_note_grammar_preserves_unit_and_duration_rejections (tests.vnext.test_historical_average_risk_cases.HistoricalAverageRiskWordingTest.test_old_lcr_note_grammar_preserves_unit_and_duration_rejections) ... ok
+test_original_resolved_answer_is_kept_without_fallback (tests.vnext.test_historical_average_risk_cases.HistoricalAverageRiskWordingTest.test_original_resolved_answer_is_kept_without_fallback) ... ok
+test_resolved_known_form_retains_original_status_and_provenance (tests.vnext.test_historical_average_risk_cases.HistoricalAverageRiskWordingTest.test_resolved_known_form_retains_original_status_and_provenance) ... ok
+test_unresolved_fallback_keeps_original_competitors (tests.vnext.test_historical_average_risk_cases.HistoricalAverageRiskWordingTest.test_unresolved_fallback_keeps_original_competitors) ... ok
+test_history_passes_shared_release_option_without_recursive_view (tests.vnext.test_historical_average_risk_cases.HistoricalExplicitAnnualInterfaceTest.test_history_passes_shared_release_option_without_recursive_view) ... ok
+test_remaining_fiscal_label_view_uses_explicit_annual_adapter (tests.vnext.test_historical_average_risk_cases.HistoricalExplicitAnnualInterfaceTest.test_remaining_fiscal_label_view_uses_explicit_annual_adapter) ... ok
+test_shared_source_failure_propagates_as_failure (tests.vnext.test_historical_average_risk_cases.HistoricalExplicitAnnualInterfaceTest.test_shared_source_failure_propagates_as_failure) ... ok
+test_amendment_and_successor_remain_named_withheld_before_inspection (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeCaseTest.test_amendment_and_successor_remain_named_withheld_before_inspection) ... ok
+test_resolved_aum_and_nonaccrual_keep_filing_end_instant (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeCaseTest.test_resolved_aum_and_nonaccrual_keep_filing_end_instant) ... ok
+test_resolved_nim_is_annual_and_uses_managed_rate (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeCaseTest.test_resolved_nim_is_annual_and_uses_managed_rate) ... ok
+test_scope_dependency_covers_annual_and_instant_consumers (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeCaseTest.test_scope_dependency_covers_annual_and_instant_consumers) ... FAIL
+test_source_failure_propagates_without_inventing_disclosure_absence (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeCaseTest.test_source_failure_propagates_without_inventing_disclosure_absence) ... ok
+test_structural_not_applicable_never_reads_financial_amount (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeCaseTest.test_structural_not_applicable_never_reads_financial_amount) ... ok
+test_unresolved_source_is_not_a_partial_bank_sum (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeCaseTest.test_unresolved_source_is_not_a_partial_bank_sum) ... ok
+test_wrong_family_refuses_before_selecting_any_sources (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeCaseTest.test_wrong_family_refuses_before_selecting_any_sources) ... ok
+test_source_conflict_remains_distinct_from_implementation_gap (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeClassificationTest.test_source_conflict_remains_distinct_from_implementation_gap) ... ok
+test_scope_change_processes_each_consumer_once_then_reuses (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeProcessingTest.test_scope_change_processes_each_consumer_once_then_reuses) ... ok
+test_a09_local_import_rebinding_retains_native_ambiguity_gate (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeWordingTest.test_a09_local_import_rebinding_retains_native_ambiguity_gate) ... ok
+test_compilation_keeps_shared_functions_and_known_forms_are_finite (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeWordingTest.test_compilation_keeps_shared_functions_and_known_forms_are_finite) ... ok
+test_missing_native_source_propagates_and_never_reaches_html (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeWordingTest.test_missing_native_source_propagates_and_never_reaches_html) ... ok
+test_old_glossary_accepts_one_colon_and_preserves_subset_text (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeWordingTest.test_old_glossary_accepts_one_colon_and_preserves_subset_text) ... ok
+test_old_segment_list_cannot_hide_conflicting_or_noncorporate_remainder (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeWordingTest.test_old_segment_list_cannot_hide_conflicting_or_noncorporate_remainder) ... ok
+test_original_native_success_is_kept_without_old_form (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeWordingTest.test_original_native_success_is_kept_without_old_form) ... ok
+
+======================================================================
+FAIL: test_actual_scope_checks_are_declared_for_both_average_consumers (tests.vnext.test_historical_average_risk_cases.HistoricalAverageRiskCaseTest.test_actual_scope_checks_are_declared_for_both_average_consumers)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-result-projection-dependencies/SEC_metrics/tests/vnext/test_historical_average_risk_cases.py", line 39, in test_actual_scope_checks_are_declared_for_both_average_consumers
+    with self.assertRaisesRegex(AssertionError,'scope_contract.py'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_scope_dependency_covers_annual_and_instant_consumers (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeCaseTest.test_scope_dependency_covers_annual_and_instant_consumers)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-result-projection-dependencies/SEC_metrics/tests/vnext/test_historical_bank_scope_cases.py", line 33, in test_scope_dependency_covers_annual_and_instant_consumers
+    with self.assertRaisesRegex(AssertionError,'scope_contract.py'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+----------------------------------------------------------------------
+Ran 34 tests in 0.115s
+
+FAILED (failures=2)
+{"allowed_skips": 0, "errors": 0, "failures": 2, "run": 34, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_historical_average_risk_cases", "tests.vnext.test_historical_bank_scope_cases"]}

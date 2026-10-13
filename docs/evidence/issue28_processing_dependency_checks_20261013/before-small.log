@@ -1,0 +1,60 @@
+test_actual_called_parser_and_comparability_modules_are_fingerprinted (tests.vnext.test_processing_dependency_checks.ProcessingDependencyCheckTest.test_actual_called_parser_and_comparability_modules_are_fingerprinted) ... FAIL
+test_explicit_consumer_paths_count_but_unknown_files_are_not_exempt (tests.vnext.test_processing_dependency_checks.ProcessingDependencyCheckTest.test_explicit_consumer_paths_count_but_unknown_files_are_not_exempt) ... ok
+test_mechanical_guard_fails_when_a_used_file_is_removed (tests.vnext.test_processing_dependency_checks.ProcessingDependencyCheckTest.test_mechanical_guard_fails_when_a_used_file_is_removed) ... ok
+test_profile_restores_after_failure_and_nested_observation (tests.vnext.test_processing_dependency_checks.ProcessingDependencyCheckTest.test_profile_restores_after_failure_and_nested_observation) ... ok
+test_real_configuration_parser_or_pairing_change_processes_once (tests.vnext.test_processing_dependency_checks.ProcessingChangeReentryTest.test_real_configuration_parser_or_pairing_change_processes_once) ... 
+  test_real_configuration_parser_or_pairing_change_processes_once (tests.vnext.test_processing_dependency_checks.ProcessingChangeReentryTest.test_real_configuration_parser_or_pairing_change_processes_once) (filename='text_coverage.py') ... FAIL
+  test_real_configuration_parser_or_pairing_change_processes_once (tests.vnext.test_processing_dependency_checks.ProcessingChangeReentryTest.test_real_configuration_parser_or_pairing_change_processes_once) (filename='normal_governance_input.py') ... FAIL
+  test_real_configuration_parser_or_pairing_change_processes_once (tests.vnext.test_processing_dependency_checks.ProcessingChangeReentryTest.test_real_configuration_parser_or_pairing_change_processes_once) (filename='paired_measure_v1.py') ... FAIL
+
+======================================================================
+FAIL: test_actual_called_parser_and_comparability_modules_are_fingerprinted (tests.vnext.test_processing_dependency_checks.ProcessingDependencyCheckTest.test_actual_called_parser_and_comparability_modules_are_fingerprinted)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-b06-text-dependency/SEC_metrics/tests/vnext/test_processing_dependency_checks.py", line 24, in test_actual_called_parser_and_comparability_modules_are_fingerprinted
+    assert_processing_calls(observed,configuration)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-b06-text-dependency/SEC_metrics/tests/vnext/processing_dependency_checks.py", line 46, in assert_processing_calls
+    raise AssertionError('PROCESSING_DEPENDENCY_UNDECLARED: '+detail)
+AssertionError: PROCESSING_DEPENDENCY_UNDECLARED: scripts/vnext/paired_measure_v1.py:_paired_concept_lists,paired_measure_problem; scripts/vnext/text_coverage.py:_byte_offsets
+
+======================================================================
+FAIL: test_real_configuration_parser_or_pairing_change_processes_once (tests.vnext.test_processing_dependency_checks.ProcessingChangeReentryTest.test_real_configuration_parser_or_pairing_change_processes_once) (filename='text_coverage.py')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-b06-text-dependency/SEC_metrics/tests/vnext/test_processing_dependency_checks.py", line 63, in test_real_configuration_parser_or_pairing_change_processes_once
+    self.assertEqual(result['status'],'CANDIDATE_READY')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'NO_SOURCE_CONTENT_CHANGE' != 'CANDIDATE_READY'
+- NO_SOURCE_CONTENT_CHANGE
++ CANDIDATE_READY
+
+
+======================================================================
+FAIL: test_real_configuration_parser_or_pairing_change_processes_once (tests.vnext.test_processing_dependency_checks.ProcessingChangeReentryTest.test_real_configuration_parser_or_pairing_change_processes_once) (filename='normal_governance_input.py')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-b06-text-dependency/SEC_metrics/tests/vnext/test_processing_dependency_checks.py", line 63, in test_real_configuration_parser_or_pairing_change_processes_once
+    self.assertEqual(result['status'],'CANDIDATE_READY')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'NO_SOURCE_CONTENT_CHANGE' != 'CANDIDATE_READY'
+- NO_SOURCE_CONTENT_CHANGE
++ CANDIDATE_READY
+
+
+======================================================================
+FAIL: test_real_configuration_parser_or_pairing_change_processes_once (tests.vnext.test_processing_dependency_checks.ProcessingChangeReentryTest.test_real_configuration_parser_or_pairing_change_processes_once) (filename='paired_measure_v1.py')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-b06-text-dependency/SEC_metrics/tests/vnext/test_processing_dependency_checks.py", line 63, in test_real_configuration_parser_or_pairing_change_processes_once
+    self.assertEqual(result['status'],'CANDIDATE_READY')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'NO_SOURCE_CONTENT_CHANGE' != 'CANDIDATE_READY'
+- NO_SOURCE_CONTENT_CHANGE
++ CANDIDATE_READY
+
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.067s
+
+FAILED (failures=4)

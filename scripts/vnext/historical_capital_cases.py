@@ -54,6 +54,17 @@ def inspect_historical_capital_source(**arguments):
 
 def prepare_historical_capital_year_case(*, repo_root, company_id, metric_id, fiscal_year):
     _need(metric_id in METRICS, 'FAMILY_NOT_RECEIVED')
+    return _prepare_selected_native_year_case(repo_root=repo_root, company_id=company_id,
+        metric_id=metric_id, fiscal_year=fiscal_year)
+
+
+def _prepare_selected_native_year_case(*, repo_root, company_id, metric_id, fiscal_year):
+    # Only the existing native policy's A01/A02/B12 routes are received here.
+    _need(metric_id in METRICS | {'B12'}, 'NATIVE_FAMILY_NOT_RECEIVED')
+    prefix = 'HISTORICAL_RPO_' if metric_id == 'B12' else 'HISTORICAL_CAPITAL_'
+    def need(condition, reason):
+        if not condition:
+            raise NormalAccessionError(prefix + reason)
     source_root = Path(repo_root)
     selected = resolve_period_selection(repo_root=source_root, company_id=company_id,
         fiscal_year=fiscal_year, rules_root=ROOT)
@@ -61,7 +72,7 @@ def prepare_historical_capital_year_case(*, repo_root, company_id, metric_id, fi
         period_selection=selected, rules_root=ROOT)
     registry = next(r for r in _registry_rows(repo_root=source_root) if r['company_id'] == company_id)
     expected = next(r for r in _registry_rows(repo_root=ROOT) if r['company_id'] == company_id)
-    _need(registry == expected, 'SOURCE_SUBJECT_CHANGED')
+    need(registry == expected, 'SOURCE_SUBJECT_CHANGED')
     annual = prepared['table_input']['target_period']
     period = {**annual, 'period_start': annual['period_end']}
     documents = installed_ordinary_spec_documents()
@@ -92,13 +103,13 @@ def prepare_historical_capital_year_case(*, repo_root, company_id, metric_id, fi
             entity=prepared['entity'], unit=None)
     else:
         try:
-            _need(not prepared['amendments'] and prepared['subject_policy']['mode'] == 'CONTINUOUS_PRIMARY',
+            need(not prepared['amendments'] and prepared['subject_policy']['mode'] == 'CONTINUOUS_PRIMARY',
                   'AMENDMENT_OR_SUCCESSOR_NOT_RECEIVED')
             inspection, used = inspect_historical_capital_source(raw_bytes=source['raw_bytes'],
                 source_reference=source['source_reference'], source_set_manifest=manifest,
                 expected_cik=prepared['entity'], period_end=period['period_end'], route=route,
                 metric_id=metric_id, policy=policy)
-            _need(inspection['status'] == 'SOURCE_SCOPE_PROVEN', 'SOURCE_SCOPE_UNRESOLVED')
+            need(inspection['status'] == 'SOURCE_SCOPE_PROVEN', 'SOURCE_SCOPE_UNRESOLVED')
             claims = sorted(inspection['selected_claims'], key=lambda c: c['verified_claim_id'])
             ref = source['source_reference']
             observation = structured_observation(metric_id=metric_id, semantic_role='deterministic_value',
@@ -115,7 +126,7 @@ def prepare_historical_capital_year_case(*, repo_root, company_id, metric_id, fi
         except NormalAccessionError as error:
             inspection = {**(inspection or {}), 'status': 'UNRESOLVED', 'reason': str(error)}
             result, trace = withheld_metric_result(compiled_spec=spec, target=target,
-                reason_code='HISTORICAL_CAPITAL_SOURCE_UNRESOLVED')
+                reason_code=prefix + 'SOURCE_UNRESOLVED')
     proofs = list({content_hash(value=p): p for p in
         [*prepared['source_proofs'], *[s['proof'] for s in reader.proofs.values()]]}.values())
     admission = verify_ordinary_source_proofs(data_root=source_root, proofs=proofs)

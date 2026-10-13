@@ -3,7 +3,7 @@ from contextlib import ExitStack
 from pathlib import Path
 from types import SimpleNamespace
 from unittest import TestCase
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 from vnext import historical_event_cases as cases
 from vnext.normal_run_specs import installed_ordinary_spec_documents
 from vnext.normal_history_catalog import HistoryCatalogError
@@ -17,6 +17,44 @@ PREPARED = {'company_id': 'marriott_international', 'entity': '1048286',
 
 
 class HistoricalEventCaseTest(TestCase):
+    def test_amendment_text_reader_change_reprocesses_the_selected_completed_check(self):
+        # Constructed state only: real public updater, no filing conclusion.
+        from tests.vnext.test_selected_history_result_state import SelectedHistoryResultStateTest
+        from tests.vnext import test_ordinary_current_update as shared
+        control = SelectedHistoryResultStateTest()
+        control.setUp()
+        self.addCleanup(control.doCleanups)
+        update = shared.update
+        actual_hash = update.sha256_file
+        text_version = ['one']
+
+        def processing_hash(*, path):
+            if path == cases.ROOT/'scripts/vnext/text_coverage.py':
+                return 'CONSTRUCTED_TEXT_READER_'+text_version[0]
+            return actual_hash(path=path)
+
+        def run():
+            with patch.object(update, 'save_calculated_case', side_effect=control.save_control):
+                return update.run_once(state_root=control.root/'C01', source_root=cases.ROOT,
+                    company_id='marriott_international', metric_id='C01', fiscal_year=2024,
+                    case_factory=control.factory, processing_files=cases.PROCESSING_FILES)
+
+        with patch.object(update, 'sha256_file', side_effect=processing_hash):
+            first = run()
+            self.assertEqual('CANDIDATE_READY', first['status'])
+            same = run()
+            self.assertFalse(same['calculation_performed'])
+            self.assertEqual(1, len(control.factory_calls))
+            text_version[0] = 'two'
+            changed = run()
+            self.assertTrue(changed['calculation_performed'])
+            self.assertEqual(2, len(control.factory_calls))
+            control.forbid_factory = True
+            repeated = run()
+            self.assertFalse(repeated['calculation_performed'])
+            self.assertEqual(changed['result_id'], repeated['result_id'])
+            self.assertTrue((control.period_root(2024, 'C01')/'results'/first['version']).is_dir())
+
     def test_content_confirmation_route_is_not_silently_counted(self):
         with patch.object(cases, 'resolve_period_selection') as select:
             with self.assertRaisesRegex(cases.NormalZeroAiError, 'CONTENT_FAMILY_NOT_RECEIVED'):
@@ -83,7 +121,7 @@ class HistoricalEventCaseTest(TestCase):
                 cases._event_amendment_checks(reader, prepared)
 
     def control(self, error):
-        reader = SimpleNamespace(records={}, proofs={},
+        reader = SimpleNamespace(records={}, proofs={}, primary=Mock(),
             read=lambda *args, **kwargs: {'source_reference': {'source_reference_id': 'constructed'}})
         stack = ExitStack(); self.addCleanup(stack.close)
         for name, value in [('resolve_period_selection', {}),
@@ -145,7 +183,7 @@ class HistoricalEventHistoryStrategyTest(TestCase):
 
 class HistoricalEventRecordRetentionTest(TestCase):
     def test_source_reference_does_not_overwrite_its_raw_blob(self):
-        reader = SimpleNamespace(records={}, proofs={})
+        reader = SimpleNamespace(records={}, proofs={}, primary=Mock())
         raw = {'record_type': 'RAW_BLOB', 'raw_asset_id': 'sha256:constructed',
                'media_type': 'text/plain', 'storage_uri': 'constructed.hdr'}
         ref = {'record_type': 'SOURCE_REFERENCE', 'source_reference_id': 'source:constructed',
@@ -167,4 +205,5 @@ class HistoricalEventRecordRetentionTest(TestCase):
                 company_id='marriott_international', metric_id='E02', fiscal_year=2024)
         self.assertIn(raw, case['expected_records']); self.assertIn(ref, case['expected_records'])
         self.assertIn(ref, case['references'])
+        reader.primary.assert_not_called()
         self.assertIsNone(case['results']['E02']['value'])

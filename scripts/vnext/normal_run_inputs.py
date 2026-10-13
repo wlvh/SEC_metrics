@@ -20,13 +20,23 @@ def _need(condition, reason):
 
 
 def prepare_ordinary_zero_ai_run_input(*, repo_root: Path, company_id: str, metric_id: str, rules_root=None,
-                                     validate_depreciation_scope=False):
+                                     validate_depreciation_scope=False, validate_revenue_scope=False,
+                                     revenue_scope_contract='components-v1', allow_single_revenue_line=False):
     specifications = validate_ordinary_spec_files(repo_root=repo_root if rules_root is None else Path(rules_root))
     _need(metric_id in specifications,"ORDINARY_RUN_METRIC_NOT_IN_ZERO_AI_SET")
+    _need(revenue_scope_contract in {'components-v1','reported-total-v2'}
+          and (validate_revenue_scope or revenue_scope_contract=='components-v1'),
+          'ORDINARY_RUN_REVENUE_SCOPE_CONTRACT_INVALID')
+    _need(type(allow_single_revenue_line) is bool and (not allow_single_revenue_line
+          or validate_revenue_scope and revenue_scope_contract=='reported-total-v2'),
+          'ORDINARY_RUN_SINGLE_REVENUE_OPTION_INVALID')
     expected_ids = {metric_id, *specifications[metric_id]["compiled_spec"]["compiled"]["dependencies"]}
     if metric_id in SUPPORTED_METRICS:
         component = resolve_ordinary_zero_ai_metric(repo_root=repo_root,company_id=company_id,metric_id=metric_id,
             **({'validate_depreciation_scope':True} if validate_depreciation_scope else {}),
+            **({'validate_revenue_scope':True} if validate_revenue_scope else {}),
+            **({'revenue_scope_contract':revenue_scope_contract} if revenue_scope_contract!='components-v1' else {}),
+            **({'allow_single_revenue_line':True} if allow_single_revenue_line else {}),
             **({} if rules_root is None else {'rules_root':rules_root}))
         specs = {metric_id:component["compiled_spec"],**component["dependency_specs"]}
         records = list(component["records"])
@@ -39,6 +49,9 @@ def prepare_ordinary_zero_ai_run_input(*, repo_root: Path, company_id: str, metr
         # entry as well, so a complete Run never invents or omits its result.
         for dependency in sorted(expected_ids-present_results):
             value = resolve_ordinary_zero_ai_metric(repo_root=repo_root,company_id=company_id,metric_id=dependency,
+                **({'validate_revenue_scope':True} if validate_revenue_scope else {}),
+                **({'revenue_scope_contract':revenue_scope_contract} if revenue_scope_contract!='components-v1' else {}),
+                **({'allow_single_revenue_line':True} if allow_single_revenue_line else {}),
                 **({} if rules_root is None else {'rules_root':rules_root}))
             _need(value["source_records"] == source_records and value["source_proofs"] == component["source_proofs"],
                   "ORDINARY_RUN_DEPENDENCY_SOURCE_SET_DIFFERS")
@@ -48,6 +61,8 @@ def prepare_ordinary_zero_ai_run_input(*, repo_root: Path, company_id: str, metr
                 **({} if rules_root is None else {'rules_root':rules_root}))
             if metric_id in {"A01","A02","B12"} else
             resolve_ordinary_companyfacts_metrics(repo_root=repo_root,company_id=company_id,
+                **({'validate_revenue_scope':True} if metric_id=='B02' and validate_revenue_scope else {}),
+                **({'allow_single_revenue_line':True} if metric_id=='B02' and allow_single_revenue_line else {}),
                 **({} if rules_root is None else {'rules_root':rules_root})))
         metric = component["metrics"][metric_id]
         specs = {metric_id:metric["compiled_spec"]}

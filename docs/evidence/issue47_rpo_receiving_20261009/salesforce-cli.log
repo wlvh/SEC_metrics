@@ -1,0 +1,8 @@
+first 0 25.42969529214315
+repeat 0 2.026051291031763
+cold-read 0 0.5084621671121567
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-events/SEC_metrics/work/rpo-receiving/run_salesforce.py", line 14, in <module>
+    y=int(row['fiscal_year']);assert row['value']==expected[y] and row['unit']=='USD' and row['period_start']==row['period_end']==str(y)+'-01-31';assert 'RPO != ARR' in row['notes']
+                                                                                                                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

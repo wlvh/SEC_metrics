@@ -82,11 +82,18 @@ class _Relations(HTMLParser):
 
 
 def parsed_d04_document(*,raw_bytes,raw_blob,source_reference,
-                        expected_company_id,expected_cik,expected_period_end):
+                        expected_company_id,expected_cik,expected_period_end,
+                        allow_annual_amendment=False):
     """Compare the complete fixed parse, retaining original citation locators."""
     doc=build_text_document(raw_bytes=raw_bytes,raw_blob=raw_blob,source_reference=source_reference,
         expected_company_id=expected_company_id,expected_cik=expected_cik,expected_period_end=expected_period_end)
-    if doc['source_state']!='COMPLETE_LOCAL_DOCUMENT':
+    # The complete-set caller may compare an amendment's exact local parse.
+    # Its single-document whole-report status remains INCOMPLETE; all other
+    # truncation/structure/identity failures still reject the comparison.
+    amendment_only=(allow_annual_amendment is True and doc['form']=='10-K/A'
+        and source_reference['source_role']=='annual_amendment'
+        and doc['source_reasons']==['TEXT_AMENDMENT_SOURCE_SET_REQUIRED'])
+    if doc['source_state']!='COMPLETE_LOCAL_DOCUMENT' and not amendment_only:
         raise ValueError('PARSED_D04_INPUT_INCOMPLETE:'+','.join(doc['source_reasons']))
     parsed=parse_accession_xbrl_source(raw_bytes=raw_bytes)
     text=raw_bytes.decode('utf-8-sig')
@@ -96,13 +103,20 @@ def parsed_d04_document(*,raw_bytes,raw_blob,source_reference,
     if relations.svg_depth: raise ValueError('PARSED_D04_UNCLOSED_SVG')
     grid=build_table_grid(html_bytes=raw_bytes,parent_raw_asset_ids=[raw_blob['raw_asset_id']],
                          storage_uri='derived/parsed-task-grid.json')
-    dependencies=('ordinary_task_input.py','text_coverage.py','table_grid.py',
+    dependencies=('ordinary_task_input.py','text_coverage.py','table_grid.py','regulatory_investigation_candidates.py',
                   'deterministic_router.py','governance_signals.py','resource_limits.py')
+    # D04's actual model input identifies HTML quotation containers per block.
+    # Equal text with changed quotation ownership is not equal task input.
+    from .regulatory_investigation_candidates import _quotation_ranges
+    quoted=_quotation_ranges(raw_bytes)
+    quotation_context=[{'block_index':b['block_index'],
+        'html_quotation_context':any(a<b['raw_end_byte'] and b['raw_start_byte']<z for a,z in quoted)}
+        for b in doc['blocks']]
     body={'task_metric':'D04','parser_version':1,
         'parser_files':{p:sha256_file(path=Path(__file__).with_name(p)) for p in dependencies},
         'source':{k:source_reference[k] for k in ('company_id','source_url','accession','document_name','source_role')},
         'identity':{k:doc[k] for k in ('company_id','cik','period_end','form','registrant_names','source_state','source_reasons')},
-        'blocks':_plain(doc['blocks'],omit_offsets=True),'sections':_plain(doc['sections'],omit_offsets=True),
+        'blocks':_plain(doc['blocks'],omit_offsets=True),'quotation_context':quotation_context,'sections':_plain(doc['sections'],omit_offsets=True),
         'native_contexts':_plain(parsed.contexts),'native_facts':_plain(parsed.facts),
         'native_fact_attributes':_plain(attrs.facts),'native_units':_plain(attrs.units),
         'tables':_plain(grid['tables']),'relationships':relations.rows,

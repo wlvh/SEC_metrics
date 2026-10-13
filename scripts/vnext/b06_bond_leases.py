@@ -9,6 +9,7 @@ from decimal import Decimal
 from datetime import date
 import re
 
+from .xbrl_namespace_policy import is_fasb_namespace, source_reader_options
 from . import b06_disclosure as disclosure
 from .b06_financing_inventory import inspect_financing_inventory
 from .canonical import content_hash, decimal_text, strict_json_file
@@ -151,9 +152,10 @@ def _lease_maturity(note, reports, prepared):
             'members':members,'totals':values,'columns':columns}
 
 
-def inspect_separate_finance_leases(*, primary, xml, prepared):
+def inspect_separate_finance_leases(*, primary, xml, prepared, dei_release='YEAR_ONLY', namespace_policy='YEAR_ONLY'):
     """A source component only, pending complete debt-set composition."""
-    inventory = inspect_financing_inventory(primary=primary,xml=xml,prepared=prepared)
+    reader_options = source_reader_options(dei_release=dei_release, namespace_policy=namespace_policy)
+    inventory = inspect_financing_inventory(primary=primary,xml=xml,prepared=prepared, **reader_options)
     notes = _notes(primary,xml,prepared); end = prepared['filing']['reportDate']
     reports = _finance_reports(inventory,end)
     classification = _lease_classification(notes['lease_classification'],end,reports)
@@ -165,11 +167,12 @@ def inspect_separate_finance_leases(*, primary, xml, prepared):
         'source_acquisition_credit':False,'production_authorized':False}
 
 
-def inspect_supplier_payment_terms(*, primary, xml, prepared):
+def inspect_supplier_payment_terms(*, primary, xml, prepared, dei_release='YEAR_ONLY', namespace_policy='YEAR_ONLY'):
     """Recognize the reported unchanged trade-payable arrangement, not its name."""
+    reader_options = source_reader_options(dei_release=dei_release, namespace_policy=namespace_policy)
     from .b06_disclosure_v2 import _Narrative
     from .fiscal_year_labels import _DefinitionBlocks
-    inventory = inspect_financing_inventory(primary=primary,xml=xml,prepared=prepared)
+    inventory = inspect_financing_inventory(primary=primary,xml=xml,prepared=prepared, **reader_options)
     notes = _notes(primary,xml,prepared,concepts=POLICY['supplier_note_concepts'])
     names = []
     for source in [primary,xml]:
@@ -236,7 +239,8 @@ def inspect_supplier_payment_terms(*, primary, xml, prepared):
         'whole_b06_proven':False,'source_acquisition_credit':False,'production_authorized':False}
 
 
-def _balance_reports(primary, xml, prepared):
+def _balance_reports(primary, xml, prepared, *, dei_release='YEAR_ONLY', namespace_policy='YEAR_ONLY'):
+    reader_options = source_reader_options(dei_release=dei_release, namespace_policy=namespace_policy)
     from .text_results_v2 import _ReportedFactMetadata, _verified_context
     from .governance_signals import _source_value
     from .financial_structured import _InlineTableIndex, _fact_cells
@@ -258,7 +262,7 @@ def _balance_reports(primary, xml, prepared):
             context = {**c,'dimensions':dict(c['dimensions'])}; context_proof = _verified_context(native=context,metadata=meta)
             _need(meta.units.get(f['unit_ref']) == {'measures':[('http://www.xbrl.org/2003/iso4217','USD')],'divided':False},
                   'BALANCE_UNIT_CONFLICT')
-            standard = re.fullmatch(r'https?://fasb\.org/us-gaap/[0-9]{4}',uri) is not None
+            standard = is_fasb_namespace(uri, namespace_policy=namespace_policy)
             value = _source_value(f,m)
             for role in roles:
                 _need(standard == POLICY['balance_concepts'][role].startswith('us-gaap:') and uri.startswith(('http://','https://')),
@@ -328,7 +332,7 @@ def _bond_schedule(note, end, reports):
             raise BondLeaseError('BOND_LEASE_UNKNOWN_BOND_ROW:'+label)
     _need(set(totals) == {'current','noncurrent'} and all(parts.values()) and set(adjustments) == {'cost','premium'},
           'BOND_COMPONENTS_INCOMPLETE')
-    _need(len({p['label'] for group in parts.values() for p in group}) == sum(len(v) for v in parts.values()),
+    _need(all(len({p['label'] for p in group}) == len(group) for group in parts.values()),
           'BOND_MEMBER_DUPLICATED')
     current = sum(Decimal(p['value']) for p in parts['current'])
     gross_long = sum(Decimal(p['value']) for p in parts['noncurrent'])
@@ -338,8 +342,21 @@ def _bond_schedule(note, end, reports):
           and Decimal(adjustments['premium']['value']) == v['premium'],'BOND_GROSS_ADJUSTMENT_CONFLICT')
     _need(gross_long-v['cost']+v['premium'] == Decimal(totals['noncurrent']['value']) == v['carrying']
           and v['carrying']+v['current'] == v['total_borrowing'],'BOND_CARRYING_RECONCILIATION_CONFLICT')
-    return {'table_id':table['table_id'],'grid_sha256':table['grid_sha256'],'members':parts,
+    result = {'table_id':table['table_id'],'grid_sha256':table['grid_sha256'],'members':parts,
             'adjustments':adjustments,'totals':totals,'reported_borrowing':decimal_text(value=v['total_borrowing'])}
+    labels = [row['label'] for group in parts.values() for row in group]
+    if len(set(labels)) != len(labels):
+        result['section_grid_shape_hash'] = _bond_grid_shape_hash(table)
+    return result
+
+
+def _bond_grid_shape_hash(table):
+    """Match decoded note cells and geometry, independent of document order."""
+    shape = {k:v for k,v in table.items() if k not in {
+        'table_id','order','grid_sha256','caption_raw_text','rows'}}
+    shape['rows'] = [dict(row,cells=[{k:v for k,v in cell.items() if k != 'raw_text'}
+        for cell in row['cells']]) for row in table['rows']]
+    return content_hash(value=shape)
 
 
 def _fair_value_scope(notes, end, reports):
@@ -400,14 +417,15 @@ def _balance_separation(primary, end, reports, lease, supplier):
             'reported_combined_lease_liabilities':reports['combined_lease']['chosen']['value']}
 
 
-def inspect_bond_lease_composition(*, primary, xml, prepared):
+def inspect_bond_lease_composition(*, primary, xml, prepared, dei_release='YEAR_ONLY', namespace_policy='YEAR_ONLY'):
     """Reconcile composition; independent financing completeness is still pending."""
+    reader_options = source_reader_options(dei_release=dei_release, namespace_policy=namespace_policy)
     notes = _notes(primary,xml,prepared); end = prepared['filing']['reportDate']
-    reports = _balance_reports(primary,xml,prepared)
+    reports = _balance_reports(primary,xml,prepared, **reader_options)
     bonds = _bond_schedule(notes['schedule'],end,reports)
     fair_value = _fair_value_scope(notes,end,reports)
-    lease = inspect_separate_finance_leases(primary=primary,xml=xml,prepared=prepared)
-    supplier = inspect_supplier_payment_terms(primary=primary,xml=xml,prepared=prepared)
+    lease = inspect_separate_finance_leases(primary=primary,xml=xml,prepared=prepared, **reader_options)
+    supplier = inspect_supplier_payment_terms(primary=primary,xml=xml,prepared=prepared, **reader_options)
     separation = _balance_separation(primary,end,reports,lease,supplier)
     total = Decimal(bonds['reported_borrowing'])+Decimal(lease['recognized_finance_lease'])
     return {'record_type':'BOND_AND_LEASE_COMPOSITION_COMPONENT','policy_hash':content_hash(value=POLICY),
@@ -418,12 +436,19 @@ def inspect_bond_lease_composition(*, primary, xml, prepared):
         'source_acquisition_credit':False,'production_authorized':False}
 
 
-def _native_bond_members(primary, xml, prepared, bonds):
+def _native_bond_members(primary, xml, prepared, bonds, *, dei_release='YEAR_ONLY', namespace_policy='YEAR_ONLY'):
     """Bind each current note dimension to an actual current-column table row."""
+    reader_options = source_reader_options(dei_release=dei_release, namespace_policy=namespace_policy)
     from .text_results_v2 import _ReportedFactMetadata, _verified_context
     from .governance_signals import _source_value
     from .financial_structured import _InlineTableIndex, _fact_cells
-    expected = {row['label']:row['value'] for group in bonds['members'].values() for row in group}
+    section_aware = 'section_grid_shape_hash' in bonds
+    expected = {(section,row['label']) if section_aware else row['label']:row['value']
+                for section,group in bonds['members'].items() for row in group}
+    positions = {row['row']['row_index']:(section,row['label'])
+                 for section,group in bonds['members'].items() for row in group}
+    _need(len(expected) == len(positions) == sum(len(group) for group in bonds['members'].values()),
+          'BOND_SECTION_MEMBER_DUPLICATED')
     sources = {}
     for kind,source in [('xml',xml),('primary',primary)]:
         raw = source['raw_bytes']; parsed = parse_accession_xbrl_source(raw_bytes=raw)
@@ -436,7 +461,7 @@ def _native_bond_members(primary, xml, prepared, bonds):
                 local.casefold() == 'debtcurrent' and bool(c['dimensions']))
             if not bond_amount or c['period_start'] != c['period_end'] or c['period_end'] != prepared['filing']['reportDate']:
                 continue
-            _need(re.fullmatch(r'https?://fasb\.org/us-gaap/[0-9]{4}',uri) and not c['typed_dimension_count']
+            _need(is_fasb_namespace(uri, namespace_policy=namespace_policy) and not c['typed_dimension_count']
                   and str(int(c['entity_identifier'])) == prepared['entity'],'BOND_MEMBER_SCOPE_OR_NAMESPACE_CONFLICT')
             _need(c['dimensions'] and any(k.split(':')[-1] == 'DebtInstrumentAxis' for k in c['dimensions']),
                   'BOND_MEMBER_DIMENSION_MISSING')
@@ -446,6 +471,8 @@ def _native_bond_members(primary, xml, prepared, bonds):
             proof = _verified_context(native=context,metadata=meta)
             found.append({'ordinal':f['ordinal'],'context_ref':f['context_ref'],'dimensions':dict(c['dimensions']),
                 'context_proof':proof,'value':_source_value(f,m),'decimals':m['attrs'].get('decimals')})
+            if section_aware:
+                found[-1]['classification'] = 'current' if local.casefold() == 'debtcurrent' else 'noncurrent'
         _need(found,'BOND_NATIVE_MEMBERS_MISSING')
         if kind == 'primary':
             index = _InlineTableIndex(raw); index.feed(raw.decode('utf-8-sig')); index.close()
@@ -454,15 +481,23 @@ def _native_bond_members(primary, xml, prepared, bonds):
                 _need(r['ordinal'] in cells,'BOND_MEMBER_VISIBLE_CELL_MISSING')
                 table,cell = cells[r['ordinal']]; row = table['rows'][cell['origin_row_index']]
                 label = disclosure.label(row); col,width,_ = disclosure._period_column(table,prepared['filing']['reportDate'],False)
-                _need(label in expected and expected[label] == r['value'] and col <= cell['column_index'] < col+width,
+                member = (r['classification'],label) if section_aware else label
+                _need(member in expected and expected[member] == r['value']
+                      and col <= cell['column_index'] < col+width
+                      and (not section_aware or (positions.get(row['row_index']) == member
+                           and _bond_grid_shape_hash(table) == bonds['section_grid_shape_hash'])),
                       'BOND_MEMBER_NOT_IN_CURRENT_COMPOSITION')
                 _need(any(disclosure.label(row) == POLICY['bond_cost_label'] for row in table['rows']),
                       'BOND_MEMBER_IN_UNRELATED_TABLE')
                 r['source_row'] = {'table_id':table['table_id'],'grid_sha256':table['grid_sha256'],
                     'row_index':row['row_index'],'label':label,'cell':cell}
-            _need({r['source_row']['label'] for r in found} == set(expected),'BOND_NATIVE_MEMBER_ROW_SET_DIFFERS')
+            observed = {(r['classification'],r['source_row']['label']) if section_aware
+                        else r['source_row']['label'] for r in found}
+            _need(observed == set(expected),'BOND_NATIVE_MEMBER_ROW_SET_DIFFERS')
         groups = {}
-        for r in found: groups.setdefault(content_hash(value=r['dimensions']),[]).append(r)
+        for r in found:
+            key = {'classification':r['classification'],'dimensions':r['dimensions']} if section_aware else r['dimensions']
+            groups.setdefault(content_hash(value=key),[]).append(r)
         sources[kind] = groups
     _need(set(sources['xml']) == set(sources['primary']),'BOND_NATIVE_DIMENSION_SETS_DIFFER')
     result = []
@@ -472,6 +507,8 @@ def _native_bond_members(primary, xml, prepared, bonds):
         _need(len({r['source_row']['label'] for r in right}) == 1,'BOND_DIMENSION_REUSED_FOR_DIFFERENT_ROWS')
         result.append({'dimensions':left[0]['dimensions'],'value':chosen['value'],
                        'xml_reports':left,'primary_reports':right})
+        if section_aware:
+            result[-1]['classification'] = left[0]['classification']
     _need(len(result) == len(expected),'BOND_MEMBER_DIMENSION_CARDINALITY_CONFLICT')
     return result
 
@@ -486,21 +523,68 @@ def _reported_other_natures(notes, prepared):
     zero = re.search(r'As of '+dates+r', there were no outstanding borrowings under the agreement\.',debt)
     _need(zero is not None,'REVOLVER_CURRENT_ZERO_UNPROVEN')
     standby = re.search(r'There were \$([0-9,]+) million and \$([0-9,]+) million of other standby letters of credit outstanding as of '
-        +dates+r', respectively, which reduced the available borrowing capacity to \$([0-9,]+) million and \$([0-9,]+) million, respectively\.',debt)
+        +dates+r', respectively(?:, which reduced the available borrowing capacity to \$([0-9,]+) million and \$([0-9,]+) million, respectively)?\.',debt)
     _need(standby is not None,'STANDBY_CAPACITY_NATURE_UNPROVEN')
-    limit = re.search(r'The Amendment reduced the asset-based credit facility to \$([0-9,]+) million',debt)
-    _need(limit is not None,'REVOLVER_LIMIT_UNPROVEN')
     amount = lambda value:Decimal(value.replace(',',''))*POLICY['scale']
-    _need(amount(standby[1])+amount(standby[3]) == amount(limit[1]),'STANDBY_UNUSED_CAPACITY_RECONCILIATION_CONFLICT')
+    unused_capacity = facility_limit = None
+    if standby[3] is not None:
+        limit = re.search(r'The Amendment reduced the asset-based credit facility to \$([0-9,]+) million',debt)
+        _need(limit is not None,'REVOLVER_LIMIT_UNPROVEN')
+        _need(amount(standby[1])+amount(standby[3]) == amount(limit[1]),'STANDBY_UNUSED_CAPACITY_RECONCILIATION_CONFLICT')
+        unused_capacity=decimal_text(value=amount(standby[3]))
+        facility_limit=decimal_text(value=amount(limit[1]))
     commitments = disclosure.text(notes['commitments']['text'])
-    purchase = re.search(r'Our estimated total purchase obligations, which primarily consist of merchandise purchase obligations and obligations under outsourcing arrangements, software license and other service commitments, energy and other supply agreements identified by the Company and construction contracts, were approximately \$([0-9,]+) million and \$([0-9,]+) million as of '
+    purchase = re.search(r'Our estimated total purchase obligations, which primarily consist of merchandise purchase obligations and obligations under outsourcing arrangements, software license and other service commitments, energy and other supply agreements identified by the Company,? and construction contracts, were approximately \$([0-9,]+) million and \$([0-9,]+) million as of '
         +dates+r', respectively\. These purchase obligations are primarily due within 1 year and recorded as liabilities when goods are received or services rendered\.',commitments)
     _need(purchase is not None,'PURCHASE_GOODS_SERVICES_RECOGNITION_UNPROVEN')
-    return {'revolver_zero_statement':zero[0],'standby_statement':standby[0],
+    result = {'revolver_zero_statement':zero[0],'standby_statement':standby[0],
         'standby_current':decimal_text(value=amount(standby[1])),
-        'unused_capacity':decimal_text(value=amount(standby[3])),
-        'facility_limit':decimal_text(value=amount(limit[1])),
+        'unused_capacity':unused_capacity,
+        'facility_limit':facility_limit,
         'purchase_statement':purchase[0],'purchase_current':decimal_text(value=amount(purchase[1]))}
+    if unused_capacity is None:
+        result['capacity_field_scope'] = 'NOT_REPORTED_IN_SELECTED_DEBT_NOTE'
+    return result
+
+
+def _supplementary_standby_capacity(primary, prepared, other):
+    """Bind the disclosed MD&A relationship; note-only absence is not full scope."""
+    from hashlib import sha256
+    from .fiscal_year_labels import _DefinitionBlocks
+    from .b06_disclosure_v2 import _date_text
+    raw=primary['raw_bytes'];text=raw.decode('utf-8-sig');parser=_DefinitionBlocks(text)
+    parser.feed(text);parser.close();parser._flush()
+    blocks=parser.blocks
+    headings=[i for i,b in enumerate(blocks) if not b['linked']
+              and b['text']=='Liquidity and Capital Resources']
+    end_text=re.escape(_date_text(prepared['filing']['reportDate']))
+    pattern=(r'the Company is party to the ABL Credit Facility with certain financial institutions providing for a '
+        r'\$([0-9,]+) million Revolving ABL Facility\. As of '+end_text+
+        r', borrowing capacity of the ABL Credit Facility was \$([0-9,]+) million, which reflects a '
+        r'\$([0-9,]+) million reduction due to standby letters of credit outstanding and borrowing availability '
+        r'was \$([0-9,]+) million, which considers a further \$([0-9,]+) million reduction due to inventory '
+        r'levels and its impact on the ABL borrowing base\.')
+    matches=[]
+    for heading in headings:
+        stop=next((i for i in range(heading+1,len(blocks)) if not blocks[i]['linked']
+                   and re.match(r'Item 7A\.|Item 8\.',blocks[i]['text'])),len(blocks))
+        for block in blocks[heading+1:stop]:
+            if block.get('quoted_context'):continue
+            match=re.search(pattern,block['text'])
+            if match:matches.append((block,match))
+    _need(len(matches)==1,'FULL_ANNUAL_STANDBY_CAPACITY_RELATION_UNPROVEN')
+    block,match=matches[0];amount=lambda s:Decimal(s.replace(',',''))*POLICY['scale']
+    limit,capacity,standby,available,inventory=map(amount,match.groups())
+    _need(limit-standby==capacity and capacity-inventory==available
+          and standby==Decimal(other['standby_current']), 'FULL_ANNUAL_STANDBY_CAPACITY_CONFLICT')
+    bom=3 if raw.startswith(b'\xef\xbb\xbf') else 0
+    start=bom+len(text[:block['start']].encode('utf-8'));end=bom+len(text[:block['end']].encode('utf-8'))
+    return {'source_region':'LIQUIDITY_AND_CAPITAL_RESOURCES','period_end':prepared['filing']['reportDate'],
+        'facility_limit':decimal_text(value=limit),'borrowing_capacity':decimal_text(value=capacity),
+        'standby_reduction':decimal_text(value=standby),'borrowing_availability':decimal_text(value=available),
+        'inventory_reduction':decimal_text(value=inventory),'statement':match[0],
+        'raw_start_byte':start,'raw_end_byte':end,'raw_span_sha256':sha256(raw[start:end]).hexdigest(),
+        'source_reference':primary['source_reference'],'raw_asset_id':primary['raw_blob']['raw_asset_id']}
 
 
 def _current_borrowing_assertions(notes, prepared, other):
@@ -541,7 +625,7 @@ def _current_borrowing_assertions(notes, prepared, other):
                 disposition = 'COMPLETED_DEBT_REPURCHASE_ACTIVITY'
             elif re.fullmatch(r'The Company recognized (?:a \$[0-9,]+ million loss|\$[0-9,]+ million of losses) related to the extinguishment of debt on the Consolidated Statements of Income during [0-9]{4} as a result of the transactions above\.',sentence):
                 disposition = 'REPORTED_INCOME_STATEMENT_DEBT_EXTINGUISHMENT_EXPENSE'
-            elif re.fullmatch(r'The Company recognized \$[0-9,]+ million of losses on extinguishment of debt on the Consolidated Statements of Income during the third quarter of [0-9]{4}\.',sentence):
+            elif re.fullmatch(r'The Company recognized \$[0-9,]+ million of losses on (?:extinguishment|early retirement) of debt on the Consolidated Statements of Income during the third quarter of [0-9]{4}\.',sentence):
                 disposition = 'REPORTED_INCOME_STATEMENT_DEBT_EXTINGUISHMENT_EXPENSE'
             else:
                 raise BondLeaseError('BOND_LEASE_CURRENT_BORROWING_ASSERTION_UNRESOLVED:'+sentence)
@@ -549,8 +633,9 @@ def _current_borrowing_assertions(notes, prepared, other):
     return result
 
 
-def _financing_inventory(primary, xml, prepared, composition, members, other):
+def _financing_inventory(primary, xml, prepared, composition, members, other, *, dei_release='YEAR_ONLY', namespace_policy='YEAR_ONLY'):
     """Every current potential financing fact is retained, including dimensions."""
+    reader_options = source_reader_options(dei_release=dei_release, namespace_policy=namespace_policy)
     from .text_results_v2 import _ReportedFactMetadata, _verified_context
     from .governance_signals import _source_value, _qname
     result = {}
@@ -573,8 +658,8 @@ def _financing_inventory(primary, xml, prepared, composition, members, other):
             context = {**c,'dimensions':dict(c['dimensions'])}; _verified_context(native=context,metadata=meta)
             unit = meta.units.get(f['unit_ref']); usd = unit == {'measures':[('http://www.xbrl.org/2003/iso4217','USD')],'divided':False}
             pure = unit == {'measures':[('http://www.xbrl.org/2003/instance','pure')],'divided':False}
-            standard = re.fullmatch(r'https?://fasb\.org/us-gaap/[0-9]{4}',uri) is not None
-            if name == 'lineofcreditfacilityfairvalueofamountoutstanding' and f['text'].strip().casefold() == 'no':
+            standard = is_fasb_namespace(uri, namespace_policy=namespace_policy)
+            if name in {'lineofcreditfacilityfairvalueofamountoutstanding','lineofcredit'} and f['text'].strip().casefold() == 'no':
                 transform_uri,transform = _qname(m['attrs'].get('format',''),m['namespaces'])
                 nil = [v for k,v in m['attrs'].items() if _qname(k,m['namespaces']) == ('http://www.w3.org/2001/XMLSchema-instance','nil')]
                 _need(standard and usd and transform == 'fixed-zero'
@@ -597,6 +682,7 @@ def _financing_inventory(primary, xml, prepared, composition, members, other):
                 _need(value == Decimal(other['standby_current']),'STANDBY_NATIVE_AMOUNT_CONFLICT')
                 disposition = 'RECONCILED_STANDBY_CAPACITY_WITH_ZERO_REVOLVER_BORROWING'
             elif usd and standard and name == 'lineofcreditfacilityremainingborrowingcapacity':
+                _need(other['unused_capacity'] is not None,'UNUSED_CAPACITY_SOURCE_RELATION_UNPROVEN')
                 _need(value == Decimal(other['unused_capacity']),'UNUSED_CAPACITY_NATIVE_AMOUNT_CONFLICT')
                 disposition = 'RECONCILED_UNUSED_BORROWING_CAPACITY'
             elif usd and standard and name == 'purchaseobligation':
@@ -651,13 +737,16 @@ def _financing_inventory(primary, xml, prepared, composition, members, other):
     return result
 
 
-def inspect_bond_debt_scope(*, primary, xml, prepared):
-    composition = inspect_bond_lease_composition(primary=primary,xml=xml,prepared=prepared)
+def inspect_bond_debt_scope(*, primary, xml, prepared, dei_release='YEAR_ONLY', namespace_policy='YEAR_ONLY'):
+    reader_options = source_reader_options(dei_release=dei_release, namespace_policy=namespace_policy)
+    composition = inspect_bond_lease_composition(primary=primary,xml=xml,prepared=prepared, **reader_options)
     notes = _notes(primary,xml,prepared)
-    members = _native_bond_members(primary,xml,prepared,composition['bonds'])
+    members = _native_bond_members(primary,xml,prepared,composition['bonds'], **reader_options)
     other = _reported_other_natures(notes,prepared)
+    if other['unused_capacity'] is None:
+        other['supplementary_capacity_context'] = _supplementary_standby_capacity(primary,prepared,other)
     assertions = _current_borrowing_assertions(notes,prepared,other)
-    inventory = _financing_inventory(primary,xml,prepared,composition,members,other)
+    inventory = _financing_inventory(primary,xml,prepared,composition,members,other, **reader_options)
     return {**composition,'record_type':'BOND_AND_SEPARATE_LEASE_DEBT_SCOPE_PROOF',
         'native_bond_members':members,'other_reported_natures':other,'borrowing_assertions':assertions,
         'independent_financing_inventory':inventory,'complete_b06_proven':True,'remaining_check':None}

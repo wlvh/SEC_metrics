@@ -31,7 +31,12 @@ jobs:
         env:
           PYTHONDONTWRITEBYTECODE: "1"
           PYTHONPATH: scripts:tools
-        run: python3 -m unittest -v tests.vnext.test_historical_statement_cases.HistoricalStatementScopeTest tests.vnext.test_historical_filing_inventory_small.ABlockIsHeldToThePriorYearWalksChecks tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest tests.vnext.test_historical_liquidity_cases.HistoricalLiquidityScopeTest tests.vnext.test_historical_capital_cases.HistoricalCapitalSourceTest tests.vnext.test_historical_bank_performance_cases.BankSourceRoleTest tests.vnext.test_historical_bank_performance_cases.BankPairedMeasureTest tests.vnext.test_historical_statement_cases.HistoricalCurrentAnnualScopeTest tests.vnext.test_historical_statement_cases.HistoricalPeriodSubjectTest tests.vnext.test_historical_statement_cases.HistoricalSuccessorComparabilityTest tests.vnext.test_historical_statement_cases.HistoricalStructuralApplicabilityTest
+        run: python3 -m unittest -v tests.vnext.test_historical_statement_cases.HistoricalStatementScopeTest tests.vnext.test_historical_filing_inventory_small.ABlockIsHeldToThePriorYearWalksChecks tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest tests.vnext.test_historical_liquidity_cases.HistoricalLiquidityScopeTest tests.vnext.test_historical_capital_cases.HistoricalCapitalSourceTest tests.vnext.test_historical_bank_performance_cases.BankSourceRoleTest tests.vnext.test_historical_bank_performance_cases.BankPairedMeasureTest tests.vnext.test_historical_statement_cases.HistoricalCurrentAnnualScopeTest tests.vnext.test_historical_statement_cases.HistoricalPeriodSubjectTest tests.vnext.test_historical_statement_cases.HistoricalSuccessorComparabilityTest tests.vnext.test_historical_statement_cases.HistoricalStructuralApplicabilityTest tests.vnext.test_historical_compensation_case tests.vnext.test_historical_auditor_selection tests.vnext.test_historical_auditor_case
+      - name: Historical D04 selected source and saved response consumer
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts:tools
+        run: python3 tests/required_unittests.py tests.vnext.test_historical_d04_selection tests.vnext.test_historical_d04_case
 
       - name: Selected filing income source checks (small state)
         env:
@@ -71,6 +76,28 @@ jobs:
           PYTHONDONTWRITEBYTECODE: "1"
           PYTHONPATH: scripts:tools
         run: python3 -m unittest -v tests.vnext.test_ordinary_depreciation_sources
+
+      - name: Verify original D04 replay and saved-answer update inputs
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts:tools
+        run: python3 tests/required_unittests.py tests.vnext.test_saved_d04_replay tests.vnext.test_current_d04_company tests.vnext.test_ordinary_current_update.SelectedPeriodUpdateTest tests.vnext.test_company_current_records
+      - name: Verify saved D04 provenance and complete company group gates
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts:tools
+        run: python3 tests/required_unittests.py tests.vnext.test_d04_provenance_reuse tests.vnext.test_current_d04_company tests.vnext.test_registered_native_update.RegisteredNativeUpdateTest
+      - name: Verify explicit SEC compensation release selection
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts:tools
+        run: python3 tests/required_unittests.py tests.vnext.test_c03_sec_release tests.vnext.test_governance_signals tests.vnext.test_xbrl_namespace_policy tests.vnext.test_c03_company_seam
+
+      - name: Verify saved proxy compensation source and light identity
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts:tools
+        run: python3 tests/required_unittests.py tests.vnext.test_proxy_compensation_source tests.vnext.test_organization_name_core
 
 
   inherited-source-material:
@@ -119,7 +146,7 @@ jobs:
           PYTHONDONTWRITEBYTECODE: "1"
           PYTHONPATH: scripts:tools
         run: |
-          python3 -m unittest -v tests.test_foundation_ci tests.vnext.test_main_scalability_audit tests.vnext.test_issue28_requirement_transition
+          python3 -m unittest -v tests.test_foundation_ci tests.test_selector_registry tests.vnext.test_main_scalability_audit tests.vnext.test_issue28_requirement_transition
           python3 tools/check_main_scalability.py --output /tmp/main-scalability-audit.csv
           python3 tools/check_provider_egress.py
           python3 tools/generate_metrics_reference.py --check

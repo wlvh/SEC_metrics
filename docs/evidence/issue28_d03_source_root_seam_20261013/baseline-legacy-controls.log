@@ -1,0 +1,157 @@
+test_default_wire_bytes_and_context_identity_are_preserved (tests.vnext.test_request_limits.RequestLimitsTest.test_default_wire_bytes_and_context_identity_are_preserved) ... ERROR
+test_digest_records_resource_change_without_inventing_call_permission (tests.vnext.test_request_limits.RequestLimitsTest.test_digest_records_resource_change_without_inventing_call_permission) ... ok
+test_explicit_8192_reaches_wire_measurement_and_usage_validation (tests.vnext.test_request_limits.RequestLimitsTest.test_explicit_8192_reaches_wire_measurement_and_usage_validation) ... ERROR
+test_grouper_uses_same_limit_without_dropping_units (tests.vnext.test_request_limits.RequestLimitsTest.test_grouper_uses_same_limit_without_dropping_units) ... ERROR
+test_output_reserve_total_context_payload_and_invalid_types_are_distinct (tests.vnext.test_request_limits.RequestLimitsTest.test_output_reserve_total_context_payload_and_invalid_types_are_distinct) ... ERROR
+test_saved_envelope_changes_only_output_parameter_and_preserves_source_strings (tests.vnext.test_request_limits.RequestLimitsTest.test_saved_envelope_changes_only_output_parameter_and_preserves_source_strings) ... ok
+test_unknown_usage_cost_and_legacy_check_behavior_stay_explicit (tests.vnext.test_request_limits.RequestLimitsTest.test_unknown_usage_cost_and_legacy_check_behavior_stay_explicit) ... ok
+setUpClass (tests.vnext.test_native_request_construction.RequestConstructionScopeTest) ... ERROR
+
+======================================================================
+ERROR: test_default_wire_bytes_and_context_identity_are_preserved (tests.vnext.test_request_limits.RequestLimitsTest.test_default_wire_bytes_and_context_identity_are_preserved)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-material-backup/SEC_metrics/tests/vnext/test_request_limits.py", line 32, in test_default_wire_bytes_and_context_identity_are_preserved
+    a=measure_request(raw,require_reference=True)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-material-backup/SEC_metrics/scripts/vnext/continuous_request_context.py", line 111, in measure_request
+    _need(not require_reference or tokenizer is not None,
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'CONTINUOUS_CONTEXT_REFERENCE_REQUIRED:' + str(fallback))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-material-backup/SEC_metrics/scripts/vnext/continuous_request_context.py", line 30, in _need
+    raise ValueError(reason)
+ValueError: CONTINUOUS_CONTEXT_REFERENCE_REQUIRED:TOKENIZER_DEPENDENCY_UNAVAILABLE
+
+======================================================================
+ERROR: test_explicit_8192_reaches_wire_measurement_and_usage_validation (tests.vnext.test_request_limits.RequestLimitsTest.test_explicit_8192_reaches_wire_measurement_and_usage_validation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-material-backup/SEC_metrics/tests/vnext/test_request_limits.py", line 42, in test_explicit_8192_reaches_wire_measurement_and_usage_validation
+    measured=measure_request(raw,require_reference=True,limits=limits)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-material-backup/SEC_metrics/scripts/vnext/continuous_request_context.py", line 111, in measure_request
+    _need(not require_reference or tokenizer is not None,
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'CONTINUOUS_CONTEXT_REFERENCE_REQUIRED:' + str(fallback))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-material-backup/SEC_metrics/scripts/vnext/continuous_request_context.py", line 30, in _need
+    raise ValueError(reason)
+ValueError: CONTINUOUS_CONTEXT_REFERENCE_REQUIRED:TOKENIZER_DEPENDENCY_UNAVAILABLE
+
+======================================================================
+ERROR: test_grouper_uses_same_limit_without_dropping_units (tests.vnext.test_request_limits.RequestLimitsTest.test_grouper_uses_same_limit_without_dropping_units)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-material-backup/SEC_metrics/tests/vnext/test_request_limits.py", line 78, in test_grouper_uses_same_limit_without_dropping_units
+    single=measure_request(request_body(factory(units[:1]),POLICY,limits=chosen),limits=chosen,require_reference=True)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-material-backup/SEC_metrics/scripts/vnext/continuous_request_context.py", line 111, in measure_request
+    _need(not require_reference or tokenizer is not None,
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'CONTINUOUS_CONTEXT_REFERENCE_REQUIRED:' + str(fallback))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-material-backup/SEC_metrics/scripts/vnext/continuous_request_context.py", line 30, in _need
+    raise ValueError(reason)
+ValueError: CONTINUOUS_CONTEXT_REFERENCE_REQUIRED:TOKENIZER_DEPENDENCY_UNAVAILABLE
+
+======================================================================
+ERROR: test_output_reserve_total_context_payload_and_invalid_types_are_distinct (tests.vnext.test_request_limits.RequestLimitsTest.test_output_reserve_total_context_payload_and_invalid_types_are_distinct)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-material-backup/SEC_metrics/tests/vnext/test_request_limits.py", line 54, in test_output_reserve_total_context_payload_and_invalid_types_are_distinct
+    measured=measure_request(request_body(REQUEST,POLICY,limits=limits),limits=limits,require_reference=True)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-material-backup/SEC_metrics/scripts/vnext/continuous_request_context.py", line 111, in measure_request
+    _need(not require_reference or tokenizer is not None,
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'CONTINUOUS_CONTEXT_REFERENCE_REQUIRED:' + str(fallback))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-material-backup/SEC_metrics/scripts/vnext/continuous_request_context.py", line 30, in _need
+    raise ValueError(reason)
+ValueError: CONTINUOUS_CONTEXT_REFERENCE_REQUIRED:TOKENIZER_DEPENDENCY_UNAVAILABLE
+
+======================================================================
+ERROR: setUpClass (tests.vnext.test_native_request_construction.RequestConstructionScopeTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-material-backup/SEC_metrics/scripts/vnext/requirements.py", line 2028, in load_requirement_snapshot
+    return load_profile_requirement_snapshot(
+        snapshot_dir=snapshot_dir,
+        parent_loader=load_requirement_snapshot,
+    )
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-material-backup/SEC_metrics/scripts/vnext/requirement_profile.py", line 77, in load_profile_requirement_snapshot
+    return engine.load_profile_requirement_snapshot(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        snapshot_dir=snapshot_dir, parent_loader=parent_loader,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-material-backup/SEC_metrics/scripts/vnext/requirement_profile_v12.py", line 92, in load_profile_requirement_snapshot
+    need(path.is_file() and not path.is_symlink()
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         and sha256_file(path=path) == binding["sha256"]
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         and sha256_file(path=code_root / relative) == binding["sha256"]
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         and path.stat().st_size == binding["size"],
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         "Normal candidate rule bytes differ: " + relative)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-material-backup/SEC_metrics/scripts/vnext/requirement_profile_v12.py", line 19, in need
+    raise v1.RequirementProfileError(reason)
+vnext.requirement_profile_v1.RequirementProfileError: Normal candidate rule bytes differ: scripts/vnext/normal_source_authority.py
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-material-backup/SEC_metrics/tests/vnext/test_native_request_construction.py", line 15, in setUpClass
+    def setUpClass(cls):cls.requirement=load_requirement_snapshot(snapshot_dir=ROOT/'requirements/issue_28_v14')
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-material-backup/SEC_metrics/scripts/vnext/requirements.py", line 2028, in load_requirement_snapshot
+    return load_profile_requirement_snapshot(
+        snapshot_dir=snapshot_dir,
+        parent_loader=load_requirement_snapshot,
+    )
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-material-backup/SEC_metrics/scripts/vnext/requirement_profile.py", line 77, in load_profile_requirement_snapshot
+    return engine.load_profile_requirement_snapshot(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        snapshot_dir=snapshot_dir, parent_loader=parent_loader,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-material-backup/SEC_metrics/scripts/vnext/requirement_profile_v15.py", line 30, in load_profile_requirement_snapshot
+    parent = parent_loader(snapshot_dir=root/'requirements'/PARENT_ID)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-material-backup/SEC_metrics/scripts/vnext/requirements.py", line 2028, in load_requirement_snapshot
+    return load_profile_requirement_snapshot(
+        snapshot_dir=snapshot_dir,
+        parent_loader=load_requirement_snapshot,
+    )
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-material-backup/SEC_metrics/scripts/vnext/requirement_profile.py", line 77, in load_profile_requirement_snapshot
+    return engine.load_profile_requirement_snapshot(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        snapshot_dir=snapshot_dir, parent_loader=parent_loader,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-material-backup/SEC_metrics/scripts/vnext/requirement_profile_v14.py", line 34, in load_profile_requirement_snapshot
+    parent = parent_loader(snapshot_dir=root / "requirements" / PARENT_ID)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-material-backup/SEC_metrics/scripts/vnext/requirements.py", line 2028, in load_requirement_snapshot
+    return load_profile_requirement_snapshot(
+        snapshot_dir=snapshot_dir,
+        parent_loader=load_requirement_snapshot,
+    )
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-material-backup/SEC_metrics/scripts/vnext/requirement_profile.py", line 77, in load_profile_requirement_snapshot
+    return engine.load_profile_requirement_snapshot(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        snapshot_dir=snapshot_dir, parent_loader=parent_loader,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-material-backup/SEC_metrics/scripts/vnext/requirement_profile_v13.py", line 34, in load_profile_requirement_snapshot
+    parent = parent_loader(snapshot_dir=root / "requirements" / PARENT_ID)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-material-backup/SEC_metrics/scripts/vnext/requirements.py", line 2033, in load_requirement_snapshot
+    raise RequirementError(str(error)) from error
+vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_source_authority.py
+
+----------------------------------------------------------------------
+Ran 7 tests in 1.157s
+
+FAILED (errors=5)
+{"allowed_skips": 0, "errors": 5, "failures": 0, "run": 7, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_request_limits", "tests.vnext.test_native_request_construction"]}

@@ -146,6 +146,60 @@ def replay_native_response(*, prepared, path):
     return _replay_native_response(prepared=prepared, path=path, request=request)
 
 
+def replay_original_d04_response(*, prepared, path):
+    """Read a paid original as input, preserving its plan and receipt identity.
+
+    This explicit current-company path verifies source/request/body and the
+    original execution receipts. It does not create a plan, claim, execution,
+    or authority for another call. Current semantic checks must still agree.
+    Old runtime proof archives are not a new ordinary-runtime prerequisite.
+    """
+    from . import invocation_control as control
+    request = strict_json_loads(text=prepared.request_bytes.decode())
+    need(prepared.requirement.get('record_type') == 'CURRENT_REQUEST_CONFIGURATION_V1'
+         and request.get('metric_id') == 'D04'
+         and request.get('record_type') == 'D04_NATIVE_INTERPRETATION_REQUEST',
+         'CURRENT_ORIGINAL_D04_INPUT_REQUIRED')
+    need((path/'semantic-request.json').read_bytes() == prepared.request_bytes
+         and (path/'source.json').read_bytes() == prepared.source_bytes,
+         'NATIVE_SAVED_REQUEST_OR_SOURCE_CHANGED')
+    terminal = strict_json_file(path=path/'terminal.json')
+    intent = strict_json_file(path=path/'intent.json')
+    need(terminal['status'] == 'SUCCEEDED' and not terminal['stop_reason']
+         and terminal['terminal_id'] == content_hash(value={k:v for k,v in terminal.items() if k!='terminal_id'})
+         and intent['intent_id'] == terminal['intent_id'] and intent['channel'] == 'PROVIDER'
+         and intent['intent_id'] == content_hash(value={k:v for k,v in intent.items() if k!='intent_id'}),
+         'NATIVE_SUCCESSFUL_ORIGINAL_TERMINAL_REQUIRED')
+    plan_path = 'invocation_control/plans/'+intent['plan_id'][7:]+'.json'
+    plan = strict_json_file(path=resolve_repository_file(repo_root=path,repo_relative_path=plan_path))
+    need(plan['ai_invocation_plan_id'] == intent['plan_id']
+         and plan['requirement_id'] == intent['requirement_id']
+         and plan['requirement_closure_hash'] == intent['requirement_closure_hash']
+         and plan['provider_request_body_sha256'] == sha256_bytes(content=prepared.provider_request_body_bytes)
+         and terminal['evidence'].get(plan_path) == sha256_file(path=path/plan_path),
+         'NATIVE_ORIGINAL_PLAN_OR_BODY_CHANGED')
+    _, policy, transport = prepared.authority._check()
+    identity = {'artifact_requirement_generation':'EXPLICIT_REQUIREMENT_V1',
+        'requirement_id':plan['requirement_id'],
+        'requirement_closure_hash':plan['requirement_closure_hash'],
+        'requirement_hashes':plan['requirement_hashes']}
+    original_policy = plan['invocation_policy']
+    need(original_policy['automatic_retry_count'] == policy['automatic_retry_count'] == 0
+         and original_policy['response_reuse_authorized'] is False,
+         'NATIVE_ORIGINAL_TRANSPORT_POLICY_CHANGED')
+    class OriginalInputView:
+        def _check(self):
+            return identity, original_policy, transport
+    view = control.HistoricalAnnualInvocationView(factory=control._SUCCESSOR_AUTHORITY_FACTORY,
+                                                  authority=OriginalInputView())
+    with control._successor_plan_context(repo_root=ROOT,authority=prepared.authority):
+        success = control.load_successful_response(workspace_dir=path,plan=plan,_historical_view=view)
+    expected = _acceptor(request,path)(prepared=prepared,plan=plan,response_body=success['response_body'])
+    revalidation = revalidation_receipt(prepared=prepared,plan=plan,
+        original=success['acceptance_receipt'],expected=expected)
+    return {'plan':plan,'success':success,'revalidation':revalidation}
+
+
 def _replay_native_response(*, prepared, path, request):
     from .continuous_semantic_calls import build_plan
     from . import invocation_control as control

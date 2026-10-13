@@ -1,0 +1,356 @@
+{
+  "kind": "missing-companyfacts",
+  "fixture": "explicit constructed saved HTTP/ledger in isolated temporary test root",
+  "expected_pending_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+  "output_exposes_pending_url": true,
+  "exit_code": 2,
+  "result": {
+    "elapsed_seconds": 0.006890250006108545,
+    "record_type": "COMPANY_FISCAL_RANGE_SOURCE_V1",
+    "company_id": "marriott_international",
+    "fiscal_years": [
+      2024,
+      2025
+    ],
+    "metric_ids": [
+      "B01"
+    ],
+    "candidates": [
+      {
+        "report_end": "2025-12-31",
+        "reporting_cik": "1048286",
+        "source_fiscal_year_resolved": false,
+        "metadata_scope": {
+          "target_report_end": "2024-01-01",
+          "window_oldest_report_end": "2024-01-01",
+          "loaded_inventories": [
+            "CIK0001048286.json"
+          ],
+          "outside_window_report_ends": [],
+          "unloaded_older_history_files": []
+        },
+        "source_requirements": [
+          {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/annual-2025.htm",
+            "method": "GET",
+            "roles": [
+              "fiscal_label_primary"
+            ],
+            "accession": "0001048286-26-000007",
+            "media_type": "text/html",
+            "refresh_for_new_discovery": false,
+            "saved_status": "VERIFIED_SAVED_SOURCE",
+            "source_acquisition_credit": false,
+            "source_reference": {
+              "record_type": "SOURCE_REFERENCE",
+              "source_reference_id": "sha256:46350a5838dc30a502062151991a685ef5781ad85141fef99d97d5870d8897e8",
+              "raw_asset_id": "sha256:f09cc13bb61320a61be44c4e415fcd13243ec076bf135a4f593d8d0e67014d73",
+              "company_id": "marriott_international",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/annual-2025.htm",
+              "accession": "0001048286-26-000007",
+              "document_name": "annual-2025.htm",
+              "source_role": "fiscal_label_primary",
+              "request_attempt_id": "request:attempt:d5e0486bca6bf700e118f560a591b83d0db931cfacac79b9e3d97cef8f11ff4f"
+            },
+            "proof": {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/annual-2025.htm",
+              "accession": "0001048286-26-000007",
+              "document_name": "annual-2025.htm",
+              "content_sha256": "f09cc13bb61320a61be44c4e415fcd13243ec076bf135a4f593d8d0e67014d73",
+              "request_body_sha256": "f09cc13bb61320a61be44c4e415fcd13243ec076bf135a4f593d8d0e67014d73",
+              "request_body_size": 952,
+              "request_headers_repo_relative_path": "evidence/request_attempts/f0/f09cc13bb61320a61be44c4e415fcd13243ec076bf135a4f593d8d0e67014d73/annual-2025.htm.fac1978369e6c8edf5f6b019fa55b42290dab83a02540b8489b9ef5806f7a431.headers.json",
+              "request_headers_sha256": "fac1978369e6c8edf5f6b019fa55b42290dab83a02540b8489b9ef5806f7a431",
+              "request_headers_size": 295,
+              "request_locator_kind": "IMMUTABLE_ATTEMPT",
+              "request_repo_relative_path": "evidence/request_attempts/f0/f09cc13bb61320a61be44c4e415fcd13243ec076bf135a4f593d8d0e67014d73/annual-2025.htm",
+              "request_attempt_id": "request:attempt:d5e0486bca6bf700e118f560a591b83d0db931cfacac79b9e3d97cef8f11ff4f"
+            }
+          },
+          {
+            "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+            "method": "GET",
+            "roles": [
+              "fiscal_label_companyfacts"
+            ],
+            "accession": "",
+            "media_type": "application/json",
+            "refresh_for_new_discovery": false,
+            "saved_status": "MISSING_SAVED_SOURCE",
+            "source_acquisition_credit": false
+          }
+        ],
+        "source_limitations": [
+          {
+            "phase": "FISCAL_LABEL",
+            "report_end": "2025-12-31",
+            "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+            "saved_status": "MISSING_SAVED_SOURCE",
+            "reason": "MISSING_SAVED_SOURCE",
+            "category": "SOURCE_UNAVAILABLE"
+          }
+        ],
+        "limitation": {
+          "phase": "FISCAL_LABEL",
+          "report_end": "2025-12-31",
+          "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+          "saved_status": "MISSING_SAVED_SOURCE",
+          "reason": "MISSING_SAVED_SOURCE",
+          "category": "SOURCE_UNAVAILABLE"
+        }
+      },
+      {
+        "report_end": "2024-12-31",
+        "reporting_cik": "1048286",
+        "source_fiscal_year_resolved": false,
+        "metadata_scope": {
+          "target_report_end": "2024-01-01",
+          "window_oldest_report_end": "2024-01-01",
+          "loaded_inventories": [
+            "CIK0001048286.json"
+          ],
+          "outside_window_report_ends": [],
+          "unloaded_older_history_files": []
+        },
+        "source_requirements": [
+          {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828625000007/annual-2024.htm",
+            "method": "GET",
+            "roles": [
+              "fiscal_label_primary"
+            ],
+            "accession": "0001048286-25-000007",
+            "media_type": "text/html",
+            "refresh_for_new_discovery": false,
+            "saved_status": "VERIFIED_SAVED_SOURCE",
+            "source_acquisition_credit": false,
+            "source_reference": {
+              "record_type": "SOURCE_REFERENCE",
+              "source_reference_id": "sha256:f833aee56b3cb596904608e5e72c690b10310dc7fd068efe1be9d7aa6957ff10",
+              "raw_asset_id": "sha256:9a69c6e89cf5c200bfa2e2461e8e2dd66caec18e241a5107387524284d920242",
+              "company_id": "marriott_international",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828625000007/annual-2024.htm",
+              "accession": "0001048286-25-000007",
+              "document_name": "annual-2024.htm",
+              "source_role": "fiscal_label_primary",
+              "request_attempt_id": "request:attempt:d583fd836e1bf6f46bcfa94210123ed69606bc3e681f0b8a144bba97f408d208"
+            },
+            "proof": {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828625000007/annual-2024.htm",
+              "accession": "0001048286-25-000007",
+              "document_name": "annual-2024.htm",
+              "content_sha256": "9a69c6e89cf5c200bfa2e2461e8e2dd66caec18e241a5107387524284d920242",
+              "request_body_sha256": "9a69c6e89cf5c200bfa2e2461e8e2dd66caec18e241a5107387524284d920242",
+              "request_body_size": 952,
+              "request_headers_repo_relative_path": "evidence/request_attempts/9a/9a69c6e89cf5c200bfa2e2461e8e2dd66caec18e241a5107387524284d920242/annual-2024.htm.5b7cc9869e3f07066a139bd864aff0499ac7677bcb6d5b4ee4bc5ae5a24749a3.headers.json",
+              "request_headers_sha256": "5b7cc9869e3f07066a139bd864aff0499ac7677bcb6d5b4ee4bc5ae5a24749a3",
+              "request_headers_size": 295,
+              "request_locator_kind": "IMMUTABLE_ATTEMPT",
+              "request_repo_relative_path": "evidence/request_attempts/9a/9a69c6e89cf5c200bfa2e2461e8e2dd66caec18e241a5107387524284d920242/annual-2024.htm",
+              "request_attempt_id": "request:attempt:d583fd836e1bf6f46bcfa94210123ed69606bc3e681f0b8a144bba97f408d208"
+            }
+          },
+          {
+            "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+            "method": "GET",
+            "roles": [
+              "fiscal_label_companyfacts"
+            ],
+            "accession": "",
+            "media_type": "application/json",
+            "refresh_for_new_discovery": false,
+            "saved_status": "MISSING_SAVED_SOURCE",
+            "source_acquisition_credit": false
+          }
+        ],
+        "source_limitations": [
+          {
+            "phase": "FISCAL_LABEL",
+            "report_end": "2024-12-31",
+            "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+            "saved_status": "MISSING_SAVED_SOURCE",
+            "reason": "MISSING_SAVED_SOURCE",
+            "category": "SOURCE_UNAVAILABLE"
+          }
+        ],
+        "limitation": {
+          "phase": "FISCAL_LABEL",
+          "report_end": "2024-12-31",
+          "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+          "saved_status": "MISSING_SAVED_SOURCE",
+          "reason": "MISSING_SAVED_SOURCE",
+          "category": "SOURCE_UNAVAILABLE"
+        }
+      }
+    ],
+    "tasks": [
+      {
+        "fiscal_year": 2024,
+        "status": "FISCAL_YEAR_SOURCE_UNRESOLVED",
+        "limitations": [
+          {
+            "phase": "FISCAL_LABEL",
+            "report_end": "2025-12-31",
+            "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+            "saved_status": "MISSING_SAVED_SOURCE",
+            "reason": "MISSING_SAVED_SOURCE",
+            "category": "SOURCE_UNAVAILABLE"
+          },
+          {
+            "phase": "FISCAL_LABEL",
+            "report_end": "2024-12-31",
+            "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+            "saved_status": "MISSING_SAVED_SOURCE",
+            "reason": "MISSING_SAVED_SOURCE",
+            "category": "SOURCE_UNAVAILABLE"
+          }
+        ]
+      },
+      {
+        "fiscal_year": 2025,
+        "status": "FISCAL_YEAR_SOURCE_UNRESOLVED",
+        "limitations": [
+          {
+            "phase": "FISCAL_LABEL",
+            "report_end": "2025-12-31",
+            "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+            "saved_status": "MISSING_SAVED_SOURCE",
+            "reason": "MISSING_SAVED_SOURCE",
+            "category": "SOURCE_UNAVAILABLE"
+          },
+          {
+            "phase": "FISCAL_LABEL",
+            "report_end": "2024-12-31",
+            "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+            "saved_status": "MISSING_SAVED_SOURCE",
+            "reason": "MISSING_SAVED_SOURCE",
+            "category": "SOURCE_UNAVAILABLE"
+          }
+        ]
+      }
+    ],
+    "status": "FISCAL_RANGE_UNRESOLVED",
+    "all_source_bytes_available": false,
+    "known_source_requirements": [
+      {
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/annual-2025.htm",
+        "method": "GET",
+        "roles": [
+          "fiscal_label_primary"
+        ],
+        "accession": "0001048286-26-000007",
+        "media_type": "text/html",
+        "refresh_for_new_discovery": false,
+        "saved_status": "VERIFIED_SAVED_SOURCE",
+        "source_acquisition_credit": false,
+        "source_reference": {
+          "record_type": "SOURCE_REFERENCE",
+          "source_reference_id": "sha256:46350a5838dc30a502062151991a685ef5781ad85141fef99d97d5870d8897e8",
+          "raw_asset_id": "sha256:f09cc13bb61320a61be44c4e415fcd13243ec076bf135a4f593d8d0e67014d73",
+          "company_id": "marriott_international",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/annual-2025.htm",
+          "accession": "0001048286-26-000007",
+          "document_name": "annual-2025.htm",
+          "source_role": "fiscal_label_primary",
+          "request_attempt_id": "request:attempt:d5e0486bca6bf700e118f560a591b83d0db931cfacac79b9e3d97cef8f11ff4f"
+        },
+        "proof": {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/annual-2025.htm",
+          "accession": "0001048286-26-000007",
+          "document_name": "annual-2025.htm",
+          "content_sha256": "f09cc13bb61320a61be44c4e415fcd13243ec076bf135a4f593d8d0e67014d73",
+          "request_body_sha256": "f09cc13bb61320a61be44c4e415fcd13243ec076bf135a4f593d8d0e67014d73",
+          "request_body_size": 952,
+          "request_headers_repo_relative_path": "evidence/request_attempts/f0/f09cc13bb61320a61be44c4e415fcd13243ec076bf135a4f593d8d0e67014d73/annual-2025.htm.fac1978369e6c8edf5f6b019fa55b42290dab83a02540b8489b9ef5806f7a431.headers.json",
+          "request_headers_sha256": "fac1978369e6c8edf5f6b019fa55b42290dab83a02540b8489b9ef5806f7a431",
+          "request_headers_size": 295,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/f0/f09cc13bb61320a61be44c4e415fcd13243ec076bf135a4f593d8d0e67014d73/annual-2025.htm",
+          "request_attempt_id": "request:attempt:d5e0486bca6bf700e118f560a591b83d0db931cfacac79b9e3d97cef8f11ff4f"
+        }
+      },
+      {
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+        "method": "GET",
+        "roles": [
+          "fiscal_label_companyfacts"
+        ],
+        "accession": "",
+        "media_type": "application/json",
+        "refresh_for_new_discovery": false,
+        "saved_status": "MISSING_SAVED_SOURCE",
+        "source_acquisition_credit": false
+      },
+      {
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828625000007/annual-2024.htm",
+        "method": "GET",
+        "roles": [
+          "fiscal_label_primary"
+        ],
+        "accession": "0001048286-25-000007",
+        "media_type": "text/html",
+        "refresh_for_new_discovery": false,
+        "saved_status": "VERIFIED_SAVED_SOURCE",
+        "source_acquisition_credit": false,
+        "source_reference": {
+          "record_type": "SOURCE_REFERENCE",
+          "source_reference_id": "sha256:f833aee56b3cb596904608e5e72c690b10310dc7fd068efe1be9d7aa6957ff10",
+          "raw_asset_id": "sha256:9a69c6e89cf5c200bfa2e2461e8e2dd66caec18e241a5107387524284d920242",
+          "company_id": "marriott_international",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828625000007/annual-2024.htm",
+          "accession": "0001048286-25-000007",
+          "document_name": "annual-2024.htm",
+          "source_role": "fiscal_label_primary",
+          "request_attempt_id": "request:attempt:d583fd836e1bf6f46bcfa94210123ed69606bc3e681f0b8a144bba97f408d208"
+        },
+        "proof": {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828625000007/annual-2024.htm",
+          "accession": "0001048286-25-000007",
+          "document_name": "annual-2024.htm",
+          "content_sha256": "9a69c6e89cf5c200bfa2e2461e8e2dd66caec18e241a5107387524284d920242",
+          "request_body_sha256": "9a69c6e89cf5c200bfa2e2461e8e2dd66caec18e241a5107387524284d920242",
+          "request_body_size": 952,
+          "request_headers_repo_relative_path": "evidence/request_attempts/9a/9a69c6e89cf5c200bfa2e2461e8e2dd66caec18e241a5107387524284d920242/annual-2024.htm.5b7cc9869e3f07066a139bd864aff0499ac7677bcb6d5b4ee4bc5ae5a24749a3.headers.json",
+          "request_headers_sha256": "5b7cc9869e3f07066a139bd864aff0499ac7677bcb6d5b4ee4bc5ae5a24749a3",
+          "request_headers_size": 295,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/9a/9a69c6e89cf5c200bfa2e2461e8e2dd66caec18e241a5107387524284d920242/annual-2024.htm",
+          "request_attempt_id": "request:attempt:d583fd836e1bf6f46bcfa94210123ed69606bc3e681f0b8a144bba97f408d208"
+        }
+      }
+    ],
+    "pending_source_requirements": [
+      {
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+        "method": "GET",
+        "roles": [
+          "fiscal_label_companyfacts"
+        ],
+        "accession": "",
+        "media_type": "application/json",
+        "refresh_for_new_discovery": false,
+        "saved_status": "MISSING_SAVED_SOURCE",
+        "source_acquisition_credit": false
+      }
+    ],
+    "complete_known_source_graph": false,
+    "discovery_scope": "EXISTING_TARGET_AND_NEAREST_PRIOR_METADATA_WINDOW",
+    "all_older_history_excluded_by_fiscal_label": false,
+    "current_sec_freshness_proven": false,
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "fetch_authorized": false,
+    "metric_executed": false,
+    "metric_acceptance_proven": false,
+    "production_authorized": false,
+    "range_id": "sha256:2dcd874edd7f67e60a33e71db07a138324d1e9970137709682d4391986cf5fde"
+  },
+  "real_calls": [
+    0,
+    0,
+    0
+  ]
+}

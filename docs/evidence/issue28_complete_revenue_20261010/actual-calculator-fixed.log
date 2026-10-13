@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/private/tmp/issue28-actual-revenue-calc.py", line 19, in <module>
+    select=resolve_period_selection(repo_root=root,company_id='pfizer',metric_id='B01',fiscal_year=2023)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: resolve_period_selection() got an unexpected keyword argument 'metric_id'

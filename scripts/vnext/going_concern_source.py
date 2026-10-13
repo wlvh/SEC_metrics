@@ -22,6 +22,7 @@ from .normal_source_authority import verify_saved_source_proofs
 from .sources import raw_blob_record, source_reference_record, resolve_repository_file
 from .text_business_candidates import _bound_source, _excerpt, going_concern_candidates
 from .text_coverage import build_text_document
+from .xbrl_namespace_policy import YEAR_ONLY, is_sec_namespace
 
 
 METHOD = "GOING_CONCERN_SOURCE_PREPARATION_V1"
@@ -99,16 +100,18 @@ def _cover_name_relation(dei_name, cover_name):
             "terminal_legal_form": left[-1]}
 
 
-def _registrant_name_binding(document, parsed, metadata):
+def _registrant_name_binding(document, parsed, metadata, *, namespace_policy=YEAR_ONLY):
     """Prove an alias using the explicit cover name and current official DEI.
 
     SEC name markers are not treated as current incorporation states; their
     letters may differ from the jurisdiction reported in the same filing.
     """
+    is_sec_namespace('', taxonomy='dei', namespace_policy=namespace_policy)
     dei_facts, invalid_contexts = [], []
     for fact in parsed.facts:
         namespace, local = metadata.facts[fact["ordinal"]]["concept"]
-        if local.casefold() != "entityregistrantname" or not re.fullmatch(r"https?://xbrl\.sec\.gov/dei/\d{4}", namespace):
+        if local.casefold() != "entityregistrantname" or not is_sec_namespace(
+                namespace, taxonomy='dei', namespace_policy=namespace_policy):
             continue
         context = parsed.contexts[fact["context_ref"]]
         entity = context["entity_identifier"]

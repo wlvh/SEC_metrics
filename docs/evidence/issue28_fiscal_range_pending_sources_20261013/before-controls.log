@@ -1,0 +1,37 @@
+test_failed_or_missing_label_sources_keep_exact_pending_observations (tests.vnext.test_company_fiscal_range.CompanyFiscalRangeTest.test_failed_or_missing_label_sources_keep_exact_pending_observations) ... 
+  test_failed_or_missing_label_sources_keep_exact_pending_observations (tests.vnext.test_company_fiscal_range.CompanyFiscalRangeTest.test_failed_or_missing_label_sources_keep_exact_pending_observations) (kind='latest503') ... ERROR
+  test_failed_or_missing_label_sources_keep_exact_pending_observations (tests.vnext.test_company_fiscal_range.CompanyFiscalRangeTest.test_failed_or_missing_label_sources_keep_exact_pending_observations) (kind='missing-primary') ... ERROR
+  test_failed_or_missing_label_sources_keep_exact_pending_observations (tests.vnext.test_company_fiscal_range.CompanyFiscalRangeTest.test_failed_or_missing_label_sources_keep_exact_pending_observations) (kind='missing-companyfacts') ... ERROR
+
+======================================================================
+ERROR: test_failed_or_missing_label_sources_keep_exact_pending_observations (tests.vnext.test_company_fiscal_range.CompanyFiscalRangeTest.test_failed_or_missing_label_sources_keep_exact_pending_observations) (kind='latest503')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fiscal-range-pending-sources/SEC_metrics/tests/vnext/test_company_fiscal_range.py", line 37, in test_failed_or_missing_label_sources_keep_exact_pending_observations
+    pending=next(r for r in result['pending_source_requirements'] if r['source_url']==url)
+                            ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'pending_source_requirements'
+
+======================================================================
+ERROR: test_failed_or_missing_label_sources_keep_exact_pending_observations (tests.vnext.test_company_fiscal_range.CompanyFiscalRangeTest.test_failed_or_missing_label_sources_keep_exact_pending_observations) (kind='missing-primary')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fiscal-range-pending-sources/SEC_metrics/tests/vnext/test_company_fiscal_range.py", line 37, in test_failed_or_missing_label_sources_keep_exact_pending_observations
+    pending=next(r for r in result['pending_source_requirements'] if r['source_url']==url)
+                            ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'pending_source_requirements'
+
+======================================================================
+ERROR: test_failed_or_missing_label_sources_keep_exact_pending_observations (tests.vnext.test_company_fiscal_range.CompanyFiscalRangeTest.test_failed_or_missing_label_sources_keep_exact_pending_observations) (kind='missing-companyfacts')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fiscal-range-pending-sources/SEC_metrics/tests/vnext/test_company_fiscal_range.py", line 37, in test_failed_or_missing_label_sources_keep_exact_pending_observations
+    pending=next(r for r in result['pending_source_requirements'] if r['source_url']==url)
+                            ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'pending_source_requirements'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.226s
+
+FAILED (errors=3)
+{"allowed_skips": 0, "errors": 3, "failures": 0, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_company_fiscal_range.CompanyFiscalRangeTest.test_failed_or_missing_label_sources_keep_exact_pending_observations"]}

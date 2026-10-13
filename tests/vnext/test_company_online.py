@@ -1,5 +1,5 @@
 """Small count/failure checks; real HTTP-boundary CLI evidence is separate."""
-import io,json
+import io,json,csv
 from pathlib import Path
 import tempfile,unittest
 from unittest.mock import patch
@@ -26,6 +26,53 @@ class CompanyOnlineTest(unittest.TestCase):
             'requirement_id':'ordinary-company-capture-v1','requirement_closure_hash':content_hash(value={'recorded':True})}
         self.url='https://data.sec.gov/submissions/CIK0001048286.json'
         self.capture=online.Capture(self.root/'source',self.ledger,self.context,5)
+
+    def edit_registry(self, company, **changes):
+        path=self.capture.source/'config/company_registry.csv'
+        with path.open(newline='') as stream:
+            reader=csv.DictReader(stream);fields=reader.fieldnames;rows=list(reader)
+        next(row for row in rows if row['company_id']==company).update(changes)
+        with path.open('w',newline='') as stream:
+            writer=csv.DictWriter(stream,fieldnames=fields);writer.writeheader();writer.writerows(rows)
+
+    def test_resume_unrelated_registry_change_reuses_saved_response_without_claim(self):
+        with patch('vnext.recorded_sec_http.RecordedSecHttpClient.reply',return_value=(200,b'{"cik":1048286}',{},'')):
+            self.capture.get(self.url)
+        self.edit_registry('pfizer',display_name='Pfizer unrelated source display')
+        before={str(p.relative_to(self.capture.source)):p.read_bytes()
+                for p in self.capture.source.rglob('*') if p.is_file()}
+        with patch('vnext.recorded_sec_http.RecordedSecHttpClient.reply',side_effect=AssertionError('No repeated capture')) as transport:
+            resumed=online.Capture(self.capture.source,self.ledger,self.context,5)
+            response=resumed.get(self.url)
+        self.assertEqual(response['raw'],b'{"cik":1048286}')
+        transport.assert_not_called()
+        with self.ledger.locked():self.assertEqual(self.ledger.snapshot()['counts'],[0,0,1])
+        self.assertEqual(before,{str(p.relative_to(self.capture.source)):p.read_bytes()
+                for p in self.capture.source.rglob('*') if p.is_file()})
+
+    def test_invalid_unrelated_registry_stops_before_transport_or_claim(self):
+        from vnext.request_bindings import BatchWorkflowError
+        path=self.capture.source/'config/company_registry.csv';original=path.read_bytes()
+        for raw in (original+original.splitlines(keepends=True)[2],
+                    original.replace(b'pfizer,Pfizer,78003,',b'pfizer,Pfizer,not-a-cik,')):
+            with self.subTest(raw=raw[-50:]):
+                path.write_bytes(raw)
+                with patch('vnext.recorded_sec_http.RecordedSecHttpClient.__init__',side_effect=AssertionError('No invalid-registry client')):
+                    with self.assertRaises((ValueError,BatchWorkflowError)):
+                        online.Capture(self.capture.source,self.ledger,self.context,5)
+        with self.ledger.locked():self.assertEqual(self.ledger.snapshot()['counts'],[0,0,0])
+
+    def test_changed_target_registry_stops_before_claim_or_transport(self):
+        path=self.capture.source/'config/company_registry.csv';original=path.read_bytes()
+        for field,value in (('primary_cik','19617'),('roles','primary:19617'),
+                ('industry_profile','pharma'),('fiscal_year_end','0131'),
+                ('target_period_policy','changed'),('entity_continuity_status','changed')):
+            with self.subTest(field=field):
+                path.write_bytes(original);self.edit_registry('marriott_international',**{field:value})
+                with patch('vnext.recorded_sec_http.RecordedSecHttpClient.__init__',side_effect=AssertionError('No transport construction')):
+                    with self.assertRaisesRegex(ValueError,'REGISTRY_CHANGED'):
+                        online.Capture(self.capture.source,self.ledger,self.context,5)
+        with self.ledger.locked():self.assertEqual(self.ledger.snapshot()['counts'],[0,0,0])
 
     def test_one_native_http_attempt_uses_existing_count_and_no_retry(self):
         with patch('vnext.recorded_sec_http.RecordedSecHttpClient.reply',return_value=(200,b'{"cik":1048286}',{},'')) as transport:
@@ -134,3 +181,63 @@ class CompanyOnlineTest(unittest.TestCase):
                 online.Capture(self.root/'missing-replies',self.ledger,context,5)
         network.assert_not_called()
         with self.ledger.locked():self.assertEqual(self.ledger.snapshot()['counts'],[0,0,0])
+
+
+class CompanyCliPeriodRoutingTest(unittest.TestCase):
+    """Public argument routing controls; stubs are not computed results."""
+    def setUp(self):
+        self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup)
+        self.root=Path(self.tmp.name)
+        self.base=['run','--company','ford_motor','--metric','B01',
+                   '--work-dir',str(self.root/'state'),'--output-dir',str(self.root/'output')]
+
+    def test_online_historical_range_rejected_before_context_or_writer(self):
+        from tools.vnext_company import main
+        with patch.object(online,'run_online_company',return_value={'status':'FLOW_COMPLETED'}) as run, \
+             patch.object(online,'_ledger',side_effect=AssertionError('No ledger')) as ledger, \
+             patch('sys.stderr',io.StringIO()),patch('sys.stdout',io.StringIO()):
+            with self.assertRaises(SystemExit) as caught:
+                main(self.base+['--period','fiscal-years','--fiscal-year-start','2021',
+                     '--fiscal-year-end','2025','--call-context',str(self.root/'not-readable.json')])
+        self.assertEqual(caught.exception.code,2);run.assert_not_called();ledger.assert_not_called()
+        self.assertEqual(list(self.root.iterdir()),[])
+
+    def test_latest_does_not_silently_ignore_supplied_years(self):
+        from tools.vnext_company import main
+        for years in (['--fiscal-year-start','2021'],['--fiscal-year-end','2025'],
+                      ['--fiscal-year-start','2021','--fiscal-year-end','2025']):
+            with self.subTest(years=years), \
+                 patch.object(online,'run_online_company',return_value={'status':'FLOW_COMPLETED'}) as run, \
+                 patch('sys.stderr',io.StringIO()),patch('sys.stdout',io.StringIO()):
+                with self.assertRaises(SystemExit) as caught:
+                    main(self.base+['--call-context',str(self.root/'missing-context')]+years)
+                self.assertEqual(caught.exception.code,2);run.assert_not_called()
+        self.assertEqual(list(self.root.iterdir()),[])
+
+    def test_latest_saved_source_also_rejects_ignored_year_arguments(self):
+        from tools.vnext_company import main
+        with patch('vnext.company_local.run_local',return_value={'status':'FLOW_COMPLETED'}) as run, \
+             patch('sys.stderr',io.StringIO()),patch('sys.stdout',io.StringIO()):
+            with self.assertRaises(SystemExit):
+                main(self.base+['--source-root',str(self.root/'source'),'--fiscal-year-start','2021'])
+        run.assert_not_called()
+
+    def test_supported_current_online_dispatch_unchanged(self):
+        from tools.vnext_company import main
+        with patch.object(online,'run_online_company',return_value={'status':'FLOW_COMPLETED'}) as run, \
+             patch('sys.stdout',io.StringIO()):
+            self.assertEqual(main(self.base+['--call-context',str(self.root/'context')]),0)
+        self.assertEqual(run.call_args.kwargs['company_id'],'ford_motor')
+        self.assertEqual(run.call_args.kwargs['metric_ids'],['B01'])
+        self.assertEqual(run.call_args.kwargs['call_context'],self.root/'context')
+        self.assertNotIn('fiscal_year_start',run.call_args.kwargs)
+
+    def test_saved_history_range_forwarded_to_existing_public_consumer(self):
+        from tools.vnext_company import main
+        with patch('vnext.company_local.run_local',return_value={'status':'FLOW_COMPLETED'}) as run, \
+             patch('sys.stdout',io.StringIO()):
+            self.assertEqual(main(self.base+['--period','fiscal-years','--fiscal-year-start','2021',
+                '--fiscal-year-end','2025','--source-root',str(self.root/'source')]),0)
+        self.assertEqual(run.call_args.kwargs['period'],'fiscal-years')
+        self.assertEqual(run.call_args.kwargs['fiscal_year_start'],2021)
+        self.assertEqual(run.call_args.kwargs['fiscal_year_end'],2025)

@@ -1,0 +1,83 @@
+{
+  "old_failed_check_files_unchanged": {
+    "updates/B02/periods/FY2022/checks/02f7e3e03b9446809505d5d846187763/intent.json": "ce52b80c3c45eb14cc86468d014215b2275150d47b51a3bbc53b003a2ed47973",
+    "updates/B02/periods/FY2022/checks/02f7e3e03b9446809505d5d846187763/terminal.json": "eb004b390817fe00082bf61aa3a295b7167a004bef13eb12b82e528936237eb7",
+    "updates/B02/periods/FY2022/checks/b6310aed74f94b219b79f40f8c9aaf33/intent.json": "88349805f317e70a875a944cf86301d11614871a9cfd054237fabd30e6c83895",
+    "updates/B02/periods/FY2022/checks/b6310aed74f94b219b79f40f8c9aaf33/terminal.json": "d1d9b5fef11bcffa330e1529be2c52b3599649404d7dbe620917fee859a62309"
+  },
+  "actual_original_operands": [
+    {
+      "role": "current",
+      "value": "20773000000",
+      "total_cell": {
+        "colspan": 2,
+        "column_index": 3,
+        "grid_sha256": "sha256:e8b3ec50c47af21dc106898ef8d5dd4441ae8d377157f80d9ec707bd7519f439",
+        "origin_column_index": 3,
+        "origin_row_index": 11,
+        "raw_text": "20,773&#160;",
+        "row_index": 11,
+        "rowspan": 1,
+        "table_id": "table_000026",
+        "text": "20,773"
+      },
+      "annual_period": {
+        "fiscal_year": 2022,
+        "period_end": "2022-12-31",
+        "period_start": "2022-01-01"
+      },
+      "source": {
+        "accession": "0001628280-23-003485",
+        "company_id": "marriott_international",
+        "document_name": "mar-20221231.htm",
+        "raw_asset_id": "sha256:c041a0501c788a5cc6bb2e6155e6ea345834e1baca2d6165d6d7af22e1b5e95d",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:5836da53826ffe45979f0e9f98d74d08d6dbf8e96fb514089e19cb748bde4924",
+        "source_reference_id": "sha256:5c52fe5d4bfa948787dcbb4dc0c94753b4386277e72cb5de0faa16d51132e16c",
+        "source_role": "target_primary",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828023003485/mar-20221231.htm"
+      },
+      "xml_check": "MATCH"
+    },
+    {
+      "role": "prior",
+      "value": "13857000000",
+      "total_cell": {
+        "colspan": 2,
+        "column_index": 3,
+        "grid_sha256": "sha256:e8a64a23efe65f8ca0b09b91d475fe943e8d8146421c960673c188e1f8cdc015",
+        "origin_column_index": 3,
+        "origin_row_index": 11,
+        "raw_text": "13,857&#160;",
+        "row_index": 11,
+        "rowspan": 1,
+        "table_id": "table_000028",
+        "text": "13,857"
+      },
+      "annual_period": {
+        "fiscal_year": 2021,
+        "period_end": "2021-12-31",
+        "period_start": "2021-01-01"
+      },
+      "source": {
+        "accession": "0001628280-22-002666",
+        "company_id": "marriott_international",
+        "document_name": "mar-20211231.htm",
+        "raw_asset_id": "sha256:54effe78b84966cd0793dcb23b8db4ad30b0614ea3d42074f3ece89adebe8bf5",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:36f896c0fded2624677e9814f876621965fe1f061b3e483c1e706c578c541637",
+        "source_reference_id": "sha256:d0c992921c09a5397ceb543f3ceadb77c0de62273773b81ceec4836d559e37b0",
+        "source_role": "target_primary",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828022002666/mar-20211231.htm"
+      },
+      "xml_check": "MATCH"
+    }
+  ],
+  "expected_growth": "0.4990979288446272641985999856",
+  "summary_old_files_count_note": "The driver watched results/attempts; this failed task has only checks, corrected here without repeating processing.",
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

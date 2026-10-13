@@ -1,0 +1,240 @@
+...EEEEEEEEEFE.
+======================================================================
+ERROR: test_first_install_interruption_never_exposes_uncommitted_source (tests.vnext.test_company_handoff.CompanyImportTest.test_first_install_interruption_never_exposes_uncommitted_source) (position='before_source_replace')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/tests/vnext/test_company_handoff.py", line 104, in test_first_install_interruption_never_exposes_uncommitted_source
+    self.install(1, fail)
+    ~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/tests/vnext/test_company_handoff.py", line 44, in install
+    return handoff.install_company(package_root=self.packages[ordinal-1],
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        state_root=self.state, company_id='test_company', fault=fault)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/scripts/vnext/company_handoff.py", line 411, in install_company
+    package = external(package_root)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/scripts/vnext/company_handoff.py", line 34, in external
+    need(path.is_absolute() and first_symlink_in_path(path=path) is None,
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         'COMPANY_HANDOFF_ABSOLUTE_NONALIAS_PATH_REQUIRED')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: COMPANY_HANDOFF_ABSOLUTE_NONALIAS_PATH_REQUIRED
+
+======================================================================
+ERROR: test_first_install_interruption_never_exposes_uncommitted_source (tests.vnext.test_company_handoff.CompanyImportTest.test_first_install_interruption_never_exposes_uncommitted_source) (position='after_old_source_move')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/tests/vnext/test_company_handoff.py", line 104, in test_first_install_interruption_never_exposes_uncommitted_source
+    self.install(1, fail)
+    ~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/tests/vnext/test_company_handoff.py", line 44, in install
+    return handoff.install_company(package_root=self.packages[ordinal-1],
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        state_root=self.state, company_id='test_company', fault=fault)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/scripts/vnext/company_handoff.py", line 411, in install_company
+    package = external(package_root)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/scripts/vnext/company_handoff.py", line 34, in external
+    need(path.is_absolute() and first_symlink_in_path(path=path) is None,
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         'COMPANY_HANDOFF_ABSOLUTE_NONALIAS_PATH_REQUIRED')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: COMPANY_HANDOFF_ABSOLUTE_NONALIAS_PATH_REQUIRED
+
+======================================================================
+ERROR: test_first_install_interruption_never_exposes_uncommitted_source (tests.vnext.test_company_handoff.CompanyImportTest.test_first_install_interruption_never_exposes_uncommitted_source) (position='after_new_source_move')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/tests/vnext/test_company_handoff.py", line 104, in test_first_install_interruption_never_exposes_uncommitted_source
+    self.install(1, fail)
+    ~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/tests/vnext/test_company_handoff.py", line 44, in install
+    return handoff.install_company(package_root=self.packages[ordinal-1],
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        state_root=self.state, company_id='test_company', fault=fault)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/scripts/vnext/company_handoff.py", line 411, in install_company
+    package = external(package_root)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/scripts/vnext/company_handoff.py", line 34, in external
+    need(path.is_absolute() and first_symlink_in_path(path=path) is None,
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         'COMPANY_HANDOFF_ABSOLUTE_NONALIAS_PATH_REQUIRED')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: COMPANY_HANDOFF_ABSOLUTE_NONALIAS_PATH_REQUIRED
+
+======================================================================
+ERROR: test_import_and_compute_lock_blocks_another_process (tests.vnext.test_company_handoff.CompanyImportTest.test_import_and_compute_lock_blocks_another_process)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/tests/vnext/test_company_handoff.py", line 135, in test_import_and_compute_lock_blocks_another_process
+    with handoff.locked_company(self.state):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/scripts/vnext/company_handoff.py", line 322, in locked_company
+    root = external(state_root)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/scripts/vnext/company_handoff.py", line 34, in external
+    need(path.is_absolute() and first_symlink_in_path(path=path) is None,
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         'COMPANY_HANDOFF_ABSOLUTE_NONALIAS_PATH_REQUIRED')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: COMPANY_HANDOFF_ABSOLUTE_NONALIAS_PATH_REQUIRED
+
+======================================================================
+ERROR: test_interruptions_keep_previous_result_and_source_then_allow_retry (tests.vnext.test_company_handoff.CompanyImportTest.test_interruptions_keep_previous_result_and_source_then_allow_retry) (position='before_source_replace')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/tests/vnext/test_company_handoff.py", line 51, in test_interruptions_keep_previous_result_and_source_then_allow_retry
+    first = self.install(1)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/tests/vnext/test_company_handoff.py", line 44, in install
+    return handoff.install_company(package_root=self.packages[ordinal-1],
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        state_root=self.state, company_id='test_company', fault=fault)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/scripts/vnext/company_handoff.py", line 411, in install_company
+    package = external(package_root)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/scripts/vnext/company_handoff.py", line 34, in external
+    need(path.is_absolute() and first_symlink_in_path(path=path) is None,
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         'COMPANY_HANDOFF_ABSOLUTE_NONALIAS_PATH_REQUIRED')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: COMPANY_HANDOFF_ABSOLUTE_NONALIAS_PATH_REQUIRED
+
+======================================================================
+ERROR: test_interruptions_keep_previous_result_and_source_then_allow_retry (tests.vnext.test_company_handoff.CompanyImportTest.test_interruptions_keep_previous_result_and_source_then_allow_retry) (position='after_old_source_move')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/tests/vnext/test_company_handoff.py", line 51, in test_interruptions_keep_previous_result_and_source_then_allow_retry
+    first = self.install(1)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/tests/vnext/test_company_handoff.py", line 44, in install
+    return handoff.install_company(package_root=self.packages[ordinal-1],
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        state_root=self.state, company_id='test_company', fault=fault)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/scripts/vnext/company_handoff.py", line 411, in install_company
+    package = external(package_root)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/scripts/vnext/company_handoff.py", line 34, in external
+    need(path.is_absolute() and first_symlink_in_path(path=path) is None,
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         'COMPANY_HANDOFF_ABSOLUTE_NONALIAS_PATH_REQUIRED')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: COMPANY_HANDOFF_ABSOLUTE_NONALIAS_PATH_REQUIRED
+
+======================================================================
+ERROR: test_interruptions_keep_previous_result_and_source_then_allow_retry (tests.vnext.test_company_handoff.CompanyImportTest.test_interruptions_keep_previous_result_and_source_then_allow_retry) (position='after_new_source_move')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/tests/vnext/test_company_handoff.py", line 51, in test_interruptions_keep_previous_result_and_source_then_allow_retry
+    first = self.install(1)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/tests/vnext/test_company_handoff.py", line 44, in install
+    return handoff.install_company(package_root=self.packages[ordinal-1],
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        state_root=self.state, company_id='test_company', fault=fault)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/scripts/vnext/company_handoff.py", line 411, in install_company
+    package = external(package_root)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/scripts/vnext/company_handoff.py", line 34, in external
+    need(path.is_absolute() and first_symlink_in_path(path=path) is None,
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         'COMPANY_HANDOFF_ABSOLUTE_NONALIAS_PATH_REQUIRED')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: COMPANY_HANDOFF_ABSOLUTE_NONALIAS_PATH_REQUIRED
+
+======================================================================
+ERROR: test_nonprefix_history_cannot_replace_committed_source (tests.vnext.test_company_handoff.CompanyImportTest.test_nonprefix_history_cannot_replace_committed_source)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/tests/vnext/test_company_handoff.py", line 118, in test_nonprefix_history_cannot_replace_committed_source
+    self.install(1)
+    ~~~~~~~~~~~~^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/tests/vnext/test_company_handoff.py", line 44, in install
+    return handoff.install_company(package_root=self.packages[ordinal-1],
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        state_root=self.state, company_id='test_company', fault=fault)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/scripts/vnext/company_handoff.py", line 411, in install_company
+    package = external(package_root)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/scripts/vnext/company_handoff.py", line 34, in external
+    need(path.is_absolute() and first_symlink_in_path(path=path) is None,
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         'COMPANY_HANDOFF_ABSOLUTE_NONALIAS_PATH_REQUIRED')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: COMPANY_HANDOFF_ABSOLUTE_NONALIAS_PATH_REQUIRED
+
+======================================================================
+ERROR: test_nonroot_readonly_packages_install_update_and_recover (tests.vnext.test_company_handoff.CompanyImportTest.test_nonroot_readonly_packages_install_update_and_recover)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/tests/vnext/test_company_handoff.py", line 146, in test_nonroot_readonly_packages_install_update_and_recover
+    first=self.install(1)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/tests/vnext/test_company_handoff.py", line 44, in install
+    return handoff.install_company(package_root=self.packages[ordinal-1],
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        state_root=self.state, company_id='test_company', fault=fault)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/scripts/vnext/company_handoff.py", line 411, in install_company
+    package = external(package_root)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/scripts/vnext/company_handoff.py", line 34, in external
+    need(path.is_absolute() and first_symlink_in_path(path=path) is None,
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         'COMPANY_HANDOFF_ABSOLUTE_NONALIAS_PATH_REQUIRED')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: COMPANY_HANDOFF_ABSOLUTE_NONALIAS_PATH_REQUIRED
+
+======================================================================
+ERROR: test_wrong_company_cannot_replace_committed_source (tests.vnext.test_company_handoff.CompanyImportTest.test_wrong_company_cannot_replace_committed_source)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/tests/vnext/test_company_handoff.py", line 111, in test_wrong_company_cannot_replace_committed_source
+    first = self.install(1)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/tests/vnext/test_company_handoff.py", line 44, in install
+    return handoff.install_company(package_root=self.packages[ordinal-1],
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        state_root=self.state, company_id='test_company', fault=fault)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/scripts/vnext/company_handoff.py", line 411, in install_company
+    package = external(package_root)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/scripts/vnext/company_handoff.py", line 34, in external
+    need(path.is_absolute() and first_symlink_in_path(path=path) is None,
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         'COMPANY_HANDOFF_ABSOLUTE_NONALIAS_PATH_REQUIRED')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: COMPANY_HANDOFF_ABSOLUTE_NONALIAS_PATH_REQUIRED
+
+======================================================================
+FAIL: test_symlink_paths_and_unowned_sources_are_refused (tests.vnext.test_company_handoff.CompanyImportTest.test_symlink_paths_and_unowned_sources_are_refused)
+----------------------------------------------------------------------
+ValueError: COMPANY_HANDOFF_ABSOLUTE_NONALIAS_PATH_REQUIRED
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/tests/vnext/test_company_handoff.py", line 126, in test_symlink_paths_and_unowned_sources_are_refused
+    with self.assertRaisesRegex(ValueError, 'UNOWNED_SOURCE_ROOT'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "UNOWNED_SOURCE_ROOT" does not match "COMPANY_HANDOFF_ABSOLUTE_NONALIAS_PATH_REQUIRED"
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.091s
+
+FAILED (failures=1, errors=10)

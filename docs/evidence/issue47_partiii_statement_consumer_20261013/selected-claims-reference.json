@@ -1,0 +1,128 @@
+[
+  {
+    "metric_id": "B04",
+    "claims": [
+      {
+        "attributes": {
+          "accession": "0000813828-25-000005",
+          "deterministic_router_semantic_version": "2",
+          "entity": "813828",
+          "filed": "2025-02-26",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "frame": "CY2024"
+        },
+        "claim_kind": "COMPANYFACTS_NUMERIC_FACT",
+        "company_id": "paramount_skydance_paramount_global",
+        "locator": {
+          "concept": "NetIncomeLoss",
+          "fact_id": "fact:sha256:8187ae0315e7b257adee931b64e1d4fa4276ec1353893a96dfac294d03570d26",
+          "period_end": "2024-12-31",
+          "period_start": "2024-01-01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:bd844e503713bd57c9fa596fdd49f9d874d6a245ce9474e3db0e0b56c866afcb",
+        "source_role": "companyfacts",
+        "source_set_manifest_id": "sha256:c2504924474ba3b9df8570afb7eb13fa79109e4fc7bd2907a5d7bc0b1e142f4d",
+        "unit": "USD",
+        "value": "-6190000000",
+        "verified_claim_id": "sha256:85a99021d87972efbcc4ccb0232328998ce706c9773eef316bce41c2319e800a"
+      }
+    ],
+    "result": {
+      "applicability": "APPLICABLE",
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "B04",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "record_type": "METRIC_RESULT",
+      "result_id": "sha256:d65c1791a5a018d28b9ea84dbbcfc383fdd5ab98b15695fd9b24bb673302002e",
+      "scope_key": "sha256:f06038f2e9777c98996ef385a9dea78ca1e4f6d3c0dcb7aad3ceb958c192321e",
+      "spec_closure_hash": "sha256:22b0fe3ad2841f90450d503cd628fe65207ae1777968156abc13c4ee28ffb3e2",
+      "trace_id": "sha256:c0c06db1fb106fc237e0af57de7174d5c46b3be0747a8e6deedf9e708e5e50ef",
+      "unit": "USD",
+      "value": "-6190000000"
+    },
+    "source_reference_commit": "df8f84c283f56aa23a2a6899e677f7068eb03f4a",
+    "reference_not_supplied_to_runtime": true
+  },
+  {
+    "metric_id": "B07",
+    "claims": [
+      {
+        "attributes": {
+          "accession": "0000813828-25-000005",
+          "deterministic_router_semantic_version": "2",
+          "entity": "813828",
+          "filed": "2025-02-26",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "frame": "CY2024"
+        },
+        "claim_kind": "COMPANYFACTS_NUMERIC_FACT",
+        "company_id": "paramount_skydance_paramount_global",
+        "locator": {
+          "concept": "OperatingIncomeLoss",
+          "fact_id": "fact:sha256:52288676224fcd6ce4be6422597c775c3e056bda27be769903bf5a4d2c5d6bda",
+          "period_end": "2024-12-31",
+          "period_start": "2024-01-01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:bd844e503713bd57c9fa596fdd49f9d874d6a245ce9474e3db0e0b56c866afcb",
+        "source_role": "companyfacts",
+        "source_set_manifest_id": "sha256:c2504924474ba3b9df8570afb7eb13fa79109e4fc7bd2907a5d7bc0b1e142f4d",
+        "unit": "USD",
+        "value": "-5269000000",
+        "verified_claim_id": "sha256:edb6a577d7af97153fae6e2bc35bd5ac50a5c39717d42df98bbc012345a2bdd6"
+      },
+      {
+        "attributes": {
+          "accession": "0000813828-25-000005",
+          "deterministic_router_semantic_version": "2",
+          "entity": "813828",
+          "filed": "2025-02-26",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "frame": "CY2024"
+        },
+        "claim_kind": "COMPANYFACTS_NUMERIC_FACT",
+        "company_id": "paramount_skydance_paramount_global",
+        "locator": {
+          "concept": "InterestExpenseNonoperating",
+          "fact_id": "fact:sha256:1840f2c90d4718e1b48817b2f1b1e4734777f0a7f6707f8da21aa269571982b7",
+          "period_end": "2024-12-31",
+          "period_start": "2024-01-01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:bd844e503713bd57c9fa596fdd49f9d874d6a245ce9474e3db0e0b56c866afcb",
+        "source_role": "companyfacts",
+        "source_set_manifest_id": "sha256:c2504924474ba3b9df8570afb7eb13fa79109e4fc7bd2907a5d7bc0b1e142f4d",
+        "unit": "USD",
+        "value": "860000000",
+        "verified_claim_id": "sha256:eeb2b9233e15a8df76ad6d336c1654d14512e9d7bf3336769f8e95ff946948ee"
+      }
+    ],
+    "result": {
+      "applicability": "APPLICABLE",
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "B07",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NOT_MEANINGFUL",
+      "reason_code": "RATIO_NUMERATOR_NOT_POSITIVE",
+      "record_type": "METRIC_RESULT",
+      "result_id": "sha256:c64e4a16f96fe87165385772c2ad887897837085cfff243596ca51cca4767573",
+      "scope_key": "sha256:f06038f2e9777c98996ef385a9dea78ca1e4f6d3c0dcb7aad3ceb958c192321e",
+      "spec_closure_hash": "sha256:0eb533e576d3bbcb418812e362d9e377373f83c76dd9bfa62ecb41d49475bb78",
+      "trace_id": "sha256:ec87a45060ffbb9416bdeae63fcc3ed099bb9d0a401afef214f4e4cdae5a183e",
+      "unit": "ratio",
+      "value": null
+    },
+    "source_reference_commit": "df8f84c283f56aa23a2a6899e677f7068eb03f4a",
+    "reference_not_supplied_to_runtime": true
+  }
+]

@@ -35,7 +35,7 @@ PROCESSING_FILES = tuple('scripts/vnext/' + name + '.py' for name in (
     'historical_dei', 'historical_fiscal_labels', 'normal_governance_input',
     'normal_annual_input', 'deterministic_router', 'public_projection',
     'annual_amendment_scope', 'annual_amendment_scope_v2', 'amendment_note_layout',
-    'composite_scope', 'text_results_v2', 'zero_ai_r2')) + (
+    'composite_scope', 'text_results_v2', 'text_coverage', 'zero_ai_r2')) + (
     'config/normal_period_selection_v1.json', 'config/normal_fiscal_year_labels_v1.json',
     'config/annual_amendment_scope_v1.json', 'catalog/event_routes.json',
     'catalog/r6/text_results_v2_policy.json', 'catalog/zero_ai_public_projection.json')
@@ -112,6 +112,8 @@ def prepare_historical_event_year_case(*, repo_root, company_id, metric_id, fisc
     claims, source_sets, filings, observations, selection = [], [], [], [], None
     packet, amendment_checks = None, []
     try:
+        # The event inventory and source sets prove this route's reporter.
+        # Annual files are read here only when amendment impact requires them.
         amendment_checks = _event_amendment_checks(reader, prepared)
         packet = read_selected_event_sources(data_root=source, rules_root=ROOT,
             prepared=prepared, period=period, registered_union=registered_union,

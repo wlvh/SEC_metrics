@@ -1,0 +1,73 @@
+{
+  "utc_start": "2026-10-09T12:59:01.227918+00:00",
+  "utc_end": "2026-10-09T12:59:01.569852+00:00",
+  "elapsed_seconds": 0.3416729159653187,
+  "base_sha": "4a03f22393182eb642a0472f1480354ff430267c",
+  "patch_sha": "79ff47b4aad95946f4bd403d5a06f5731656d369",
+  "case_gzip_sha256": "5ba07aea42fdefbc37fdb679685a1cbe26475429f6676ab510ac5285513a6898",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "independent_actions": [
+    "read genuine B12 precalculated case",
+    "render base projection only",
+    "save with final patch",
+    "read saved result again"
+  ],
+  "metric_row_changes": {
+    "cik": [
+      "2041610",
+      "813828"
+    ]
+  },
+  "metric_row": {
+    "company": "Paramount Skydance / Paramount Global",
+    "cik": "813828",
+    "metric_id": "B12",
+    "metric_name": "Remaining performance obligation (RPO substitute)",
+    "value": "",
+    "unit": "USD",
+    "status": "N_A_STRUCTURAL",
+    "source_class": "NOT_AVAILABLE",
+    "formula": "",
+    "period_start": "2021-12-31",
+    "period_end": "2021-12-31",
+    "fiscal_year": "2021",
+    "fiscal_period": "STRUCTURAL",
+    "accession": "",
+    "form": "",
+    "filed_date": "",
+    "concept_or_section": "",
+    "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2021, \"period_end\": \"2021-12-31\", \"period_start\": \"2021-01-01\"}, \"measurement_kind\": \"STRUCTURAL\", \"scope\": {\"coverage\": \"deterministic_source_set\", \"fiscal_year\": 2021}, \"selection\": null, \"source_reference_ids\": [\"sha256:61199b5b50703b802a686ef3abe519dc58675db5fc17338abd4b76b8ba5aaf6a\", \"sha256:cc4b119849e582425aeeaf5b6d6be60f44cdc3fa998c1a97bdc2b8bfab4dd921\"]}",
+    "confidence": "",
+    "notes": "Trait applicability is structurally false. No financial measurement is asserted; dates retain the filing group. Native state: PUBLISHED; reason: TRAIT_NOT_APPLICABLE."
+  },
+  "evidence_row_count": 0,
+  "result_id": "sha256:d6225bff1c520b4913952c747dbdf60963243f71f833eb75078f18f676134f22",
+  "trace_id": "sha256:9dc69eea24a20f2a7638dd7e64efd71efb9b234f0a9dcbc48b0fde5681257325",
+  "trace_calculation_target": {
+    "accession": "0000813828-22-000005",
+    "company_id": "paramount_skydance_paramount_global",
+    "entity": "813828",
+    "period_end": "2021-12-31",
+    "period_start": "2021-12-31",
+    "scope": {
+      "coverage": "deterministic_source_set",
+      "fiscal_year": 2021
+    },
+    "scope_key": "sha256:0384f27d1ebcbba9d12396a47fb665f746bb66b569bb89588c42fee4cff6cc92"
+  },
+  "input_id": "sha256:cc29abcec089c0ce62de0c3bf3b3ccf1cd01b887c8c82b1194ee428b488520da",
+  "all_expected_records_preserved": true,
+  "case_object_unchanged": true,
+  "registry_bytes_unchanged": true,
+  "saved_files_unchanged_by_read": true,
+  "prepare_ordinary_zero_ai_run_input_forbidden": true,
+  "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+  },
+  "network": "socket connect/create_connection denied",
+  "temporary_output_removed_at_completion": true,
+  "business_credit": "No independent B12 applicability/amount validation or Issue #47 business acceptance",
+  "initial_harness_error": "First probe lacked PYTHONPATH=scripts and failed importing git_workspace before processing; corrected for this run"
+}

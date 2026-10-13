@@ -1,0 +1,182 @@
+{
+  "prior_probe_error": "Initial direct frozen-parser baseline probe used the constructed historical 2021q4 namespace without release_aware and stopped with DEI_MISSING_OR_AMBIGUOUS:DocumentType. Corrected below to the same existing historical wrapper used by both old input and the new helper. No product edit or annual business execution occurred.",
+  "tested_tree_hash_matches": {
+    "scripts/vnext/company_fiscal_range.py": true,
+    "scripts/vnext/company_local.py": true,
+    "scripts/vnext/historical_fiscal_labels.py": true,
+    "scripts/vnext/historical_statement_cases.py": true,
+    "tools/vnext_company.py": true,
+    "tests/vnext/test_company_fiscal_range.py": true,
+    "tests/vnext/test_selected_historical_fiscal_label.py": true,
+    ".github/workflows/company-current-records.yml": true,
+    "docs/evidence/issue28_continuous/known_result_defects.json": true
+  },
+  "original_receipt_is_uncommitted": true,
+  "actual_new_discovery_on_constructed_conditional_source": {
+    "status": "FISCAL_RANGE_RESOLVED",
+    "all_source_bytes_available": true,
+    "tasks": [
+      {
+        "fiscal_year": 2026,
+        "status": "FISCAL_YEAR_RESOLVED",
+        "report_end": "2025-12-31",
+        "raw_dei": 2025,
+        "selected_label": 2026
+      }
+    ],
+    "metric_executed": false,
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    }
+  },
+  "inherited_parser_on_same_conditional": {
+    "status": "SOURCE_LABEL_CONFLICT",
+    "chosen_label": [
+      2022,
+      "EXPLICIT_SOURCE_ISSUER_DEFINITION"
+    ]
+  },
+  "two_peer_product_files_exact_equal": true,
+  "repeat_receipt_top_fields": [
+    "first_company_seconds",
+    "repeat_seconds",
+    "repeat_exit",
+    "repeat",
+    "independent_results_seconds",
+    "read_exit",
+    "read",
+    "protected_files",
+    "protected_files_preserved",
+    "result_directory_count_before_after",
+    "csv_rows",
+    "latest_execution_operational_report_is_mutable",
+    "FY2023_exact_known_defects_held",
+    "FY2022_scope"
+  ],
+  "repeat_receipt_scalars": {
+    "first_company_seconds": 20.848060332937166,
+    "repeat_seconds": 1.235188917024061,
+    "repeat_exit": 2,
+    "independent_results_seconds": 0.12096887500956655,
+    "read_exit": 0,
+    "protected_files_preserved": true,
+    "result_directory_count_before_after": 4,
+    "latest_execution_operational_report_is_mutable": true,
+    "FY2023_exact_known_defects_held": "B01 5f17 / B02 db60; not resolved by source range",
+    "FY2022_scope": "unconfirmed source-scope lead; not diagnosed wrong, not final business acceptance"
+  },
+  "repeat_receipt_dict_fields": {
+    "repeat": [
+      "elapsed_seconds",
+      "record_type",
+      "company_id",
+      "run_id",
+      "status",
+      "selected_metrics",
+      "metrics",
+      "source_root",
+      "program_root",
+      "record_root",
+      "output_root",
+      "source_mode",
+      "calls",
+      "production_authorized",
+      "selected_fiscal_years"
+    ],
+    "read": [
+      "elapsed_seconds",
+      "record_type",
+      "company_id",
+      "source_root",
+      "metrics",
+      "source_freshness",
+      "calls",
+      "production_authorized",
+      "output_root"
+    ],
+    "protected_files": [
+      "company-task.json",
+      "updates/B01/periods/FY2023/current-result.json",
+      "updates/B01/periods/FY2023/completed-check.json",
+      "updates/B01/periods/FY2022/current-result.json",
+      "updates/B01/periods/FY2022/completed-check.json",
+      "updates/B01/periods/FY2022/results/35cda32319ec4aa2a16e2a2bf7ba7390/metrics_matrix.csv",
+      "updates/B01/periods/FY2022/results/35cda32319ec4aa2a16e2a2bf7ba7390/metric_evidence.csv",
+      "updates/B01/periods/FY2022/results/35cda32319ec4aa2a16e2a2bf7ba7390/records.jsonl",
+      "updates/B01/periods/FY2022/results/35cda32319ec4aa2a16e2a2bf7ba7390/input-assessments.json",
+      "updates/B01/periods/FY2022/results/35cda32319ec4aa2a16e2a2bf7ba7390/manifest.json",
+      "updates/B01/periods/FY2022/results/35cda32319ec4aa2a16e2a2bf7ba7390/write.lock",
+      "updates/B01/periods/FY2022/results/35cda32319ec4aa2a16e2a2bf7ba7390/receipt.json",
+      "updates/B01/periods/FY2023/results/27eff59d82714d92acfec931c5ffe6ac/metrics_matrix.csv",
+      "updates/B01/periods/FY2023/results/27eff59d82714d92acfec931c5ffe6ac/metric_evidence.csv",
+      "updates/B01/periods/FY2023/results/27eff59d82714d92acfec931c5ffe6ac/records.jsonl",
+      "updates/B01/periods/FY2023/results/27eff59d82714d92acfec931c5ffe6ac/input-assessments.json",
+      "updates/B01/periods/FY2023/results/27eff59d82714d92acfec931c5ffe6ac/manifest.json",
+      "updates/B01/periods/FY2023/results/27eff59d82714d92acfec931c5ffe6ac/write.lock",
+      "updates/B01/periods/FY2023/results/27eff59d82714d92acfec931c5ffe6ac/receipt.json",
+      "updates/B02/periods/FY2023/current-result.json",
+      "updates/B02/periods/FY2023/completed-check.json",
+      "updates/B02/periods/FY2022/current-result.json",
+      "updates/B02/periods/FY2022/completed-check.json",
+      "updates/B02/periods/FY2022/results/dcec70dd1710426aba0aeed6192ba7c2/metrics_matrix.csv",
+      "updates/B02/periods/FY2022/results/dcec70dd1710426aba0aeed6192ba7c2/metric_evidence.csv",
+      "updates/B02/periods/FY2022/results/dcec70dd1710426aba0aeed6192ba7c2/records.jsonl",
+      "updates/B02/periods/FY2022/results/dcec70dd1710426aba0aeed6192ba7c2/manifest.json",
+      "updates/B02/periods/FY2022/results/dcec70dd1710426aba0aeed6192ba7c2/write.lock",
+      "updates/B02/periods/FY2022/results/dcec70dd1710426aba0aeed6192ba7c2/receipt.json",
+      "updates/B02/periods/FY2023/results/1bc76579876542ff9714df94d9d700ac/metrics_matrix.csv",
+      "updates/B02/periods/FY2023/results/1bc76579876542ff9714df94d9d700ac/metric_evidence.csv",
+      "updates/B02/periods/FY2023/results/1bc76579876542ff9714df94d9d700ac/records.jsonl",
+      "updates/B02/periods/FY2023/results/1bc76579876542ff9714df94d9d700ac/manifest.json",
+      "updates/B02/periods/FY2023/results/1bc76579876542ff9714df94d9d700ac/write.lock",
+      "updates/B02/periods/FY2023/results/1bc76579876542ff9714df94d9d700ac/receipt.json"
+    ]
+  },
+  "registered_fy23_results": [
+    {
+      "defect_id": "MACYS_FY2023_B01_NET_SALES_SUBTOTAL_IN_TOTAL_REVENUE_TASK",
+      "result_id": "sha256:5f17ec97a234f3b8bae22bcaedd2bdb9ff2ace36056c7a52adfbc821ff088731",
+      "period_end": "2024-02-03",
+      "released": []
+    },
+    {
+      "defect_id": "MACYS_FY2023_B02_NET_SALES_SUBTOTAL_IN_TOTAL_REVENUE_TASK",
+      "result_id": "sha256:db609edd1f286ee1bf61e51126b8084fea1f0817b03847d8010e02cd1b1e81b7",
+      "period_end": "2024-02-03",
+      "released": []
+    }
+  ],
+  "line_locations": {
+    "scripts/vnext/historical_fiscal_labels.py": [
+      {
+        "line": 187,
+        "text": "def resolve_selected_fiscal_year_label(*, primary_bytes, companyfacts_bytes,"
+      },
+      {
+        "line": 207,
+        "text": "year, basis = _choose_fiscal_year(inspected)"
+      }
+    ],
+    "scripts/vnext/company_fiscal_range.py": [
+      {
+        "line": 158,
+        "text": "def range_case_factories(*,company_id,fiscal_years,metric_ids,case_factories):"
+      },
+      {
+        "line": 166,
+        "text": "_need(company_id==expected_company and metric_id==metric and fiscal_year in fiscal_years,'FACTORY_SCOPE_CHANGED')"
+      },
+      {
+        "line": 172,
+        "text": "fiscal_year_start=fiscal_years[0],fiscal_year_end=fiscal_years[-1],metric_ids=sorted(selected))"
+      }
+    ]
+  },
+  "executed_test_ids": 62,
+  "distinct_test_ids": 48,
+  "review_end_local": "2026-10-10T07:49:11+08:00",
+  "test_count_correction": "Multiline unittest descriptions require counting all test header lines, including the header without an inline ellipsis.",
+  "tool_count_including_nested": 38
+}

@@ -1,0 +1,220 @@
+{
+  "inspection_utc": "2026-10-09T21:22:37.951533+00:00",
+  "head": "62243bfdce042a79508f242df65cc897fcfaf035",
+  "actual_recorded_program": {
+    "base": "f6ef7886d6630f7675c25cd42e306c373ab05769",
+    "uncommitted": true
+  },
+  "actual_scope": {
+    "status": "REPORTED_COMPONENTS_AND_TOTAL",
+    "complete_scope_proven": true,
+    "total": "58496000000",
+    "parts": [
+      "50914000000",
+      "7582000000"
+    ],
+    "period": [
+      "2023-01-01",
+      "2023-12-31"
+    ],
+    "xml_check": "MATCH",
+    "title_sources": [
+      {
+        "start_byte": 2128992,
+        "end_byte": 2129150,
+        "tag": "div",
+        "attributes": [],
+        "inside_table": false,
+        "structure_path": [
+          "html:1",
+          "body:1",
+          "div:919",
+          "div:2"
+        ],
+        "visible_text": "Consolidated Statements of Income",
+        "span_sha256": "1052e83a3a48bdb7c0b5dca42f30f0a4da5b81268966041392cec1ff9fc9c582"
+      }
+    ],
+    "intervening_sources": [
+      {
+        "start_byte": 2128992,
+        "end_byte": 2129150,
+        "tag": "div",
+        "attributes": [],
+        "inside_table": false,
+        "structure_path": [
+          "html:1",
+          "body:1",
+          "div:919",
+          "div:2"
+        ],
+        "visible_text": "Consolidated Statements of Income",
+        "span_sha256": "1052e83a3a48bdb7c0b5dca42f30f0a4da5b81268966041392cec1ff9fc9c582"
+      },
+      {
+        "start_byte": 2129150,
+        "end_byte": 2129310,
+        "tag": "div",
+        "attributes": [],
+        "inside_table": false,
+        "structure_path": [
+          "html:1",
+          "body:1",
+          "div:919",
+          "div:3"
+        ],
+        "visible_text": "Pfizer Inc. and Subsidiary Companies",
+        "span_sha256": "a415bcf75f9ad914c0b2c03592f63d68142d01d5446515dbe36a34859bb866e4"
+      }
+    ],
+    "table_span": {
+      "table_order": 112,
+      "start_byte": 2129373,
+      "end_byte": 2196129,
+      "structure_path": [
+        "html:1",
+        "body:1",
+        "div:920",
+        "table:1"
+      ],
+      "span_sha256": "23e02e3cd55fb3dda96e42779d66748222d612821cc41718d8b8181a4bef370f"
+    },
+    "unresolved_annotations": []
+  },
+  "actual_result": {
+    "original": "50914000000",
+    "new": "58496000000",
+    "new_result_id": "sha256:128c170a19b5505f3ce22e837aaea836159b4652e334aa4b5bdf298e007786da"
+  },
+  "program_file_checks": {
+    "scripts/vnext/selected_revenue_scope_v1.py": {
+      "expected": "2122e7a107670e0c448bb1f28558664910a2cc58c1841ccc2c1edf39fb59a6bb",
+      "actual": "2122e7a107670e0c448bb1f28558664910a2cc58c1841ccc2c1edf39fb59a6bb",
+      "matches": true
+    },
+    "scripts/vnext/ordinary_current_update.py": {
+      "expected": "80c265023ffdb3baa0a15172b5175c5e4d20a05df3da9d530a698a010b86a856",
+      "actual": "80c265023ffdb3baa0a15172b5175c5e4d20a05df3da9d530a698a010b86a856",
+      "matches": true
+    },
+    "tests/vnext/test_selected_revenue_scope_v1.py": {
+      "expected": "059be03f50c31ec332197da5cbbdf14c3a16482f9db0bb22e55bb3089f1f4678",
+      "actual": "059be03f50c31ec332197da5cbbdf14c3a16482f9db0bb22e55bb3089f1f4678",
+      "matches": true
+    }
+  },
+  "current_record": {
+    "exits": [
+      0,
+      0,
+      0
+    ],
+    "calls": [
+      0,
+      0,
+      0
+    ],
+    "repeated_files_identical": true,
+    "row": {
+      "value": "62579000000",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:536f3b1286e2f586e083ebd1ae7361c965f287cb4ec7ea176c08005f0d1ee1bf",
+      "local_metric_status": "NO_SOURCE_CONTENT_CHANGE"
+    },
+    "old_result_sha_checks": {
+      "updates/B01/results/5b771dd8f39e49c092298563c2311211/metrics_matrix.csv": {
+        "matches": true,
+        "exists": true
+      },
+      "updates/B01/results/5b771dd8f39e49c092298563c2311211/metric_evidence.csv": {
+        "matches": true,
+        "exists": true
+      },
+      "updates/B01/results/5b771dd8f39e49c092298563c2311211/records.jsonl": {
+        "matches": true,
+        "exists": true
+      },
+      "updates/B01/results/5b771dd8f39e49c092298563c2311211/input-assessments.json": {
+        "matches": true,
+        "exists": true
+      },
+      "updates/B01/results/5b771dd8f39e49c092298563c2311211/manifest.json": {
+        "matches": true,
+        "exists": true
+      },
+      "updates/B01/results/5b771dd8f39e49c092298563c2311211/write.lock": {
+        "matches": true,
+        "exists": true
+      },
+      "updates/B01/results/5b771dd8f39e49c092298563c2311211/receipt.json": {
+        "matches": true,
+        "exists": true
+      }
+    },
+    "all_saved_result_sha_checks": {
+      "updates/B01/results/5b771dd8f39e49c092298563c2311211/metrics_matrix.csv": {
+        "matches": true,
+        "exists": true
+      },
+      "updates/B01/results/5b771dd8f39e49c092298563c2311211/metric_evidence.csv": {
+        "matches": true,
+        "exists": true
+      },
+      "updates/B01/results/5b771dd8f39e49c092298563c2311211/records.jsonl": {
+        "matches": true,
+        "exists": true
+      },
+      "updates/B01/results/5b771dd8f39e49c092298563c2311211/input-assessments.json": {
+        "matches": true,
+        "exists": true
+      },
+      "updates/B01/results/5b771dd8f39e49c092298563c2311211/manifest.json": {
+        "matches": true,
+        "exists": true
+      },
+      "updates/B01/results/5b771dd8f39e49c092298563c2311211/write.lock": {
+        "matches": true,
+        "exists": true
+      },
+      "updates/B01/results/5b771dd8f39e49c092298563c2311211/receipt.json": {
+        "matches": true,
+        "exists": true
+      },
+      "updates/B01/results/6c8b654775df4658a8e4285a8764f674/metrics_matrix.csv": {
+        "matches": true,
+        "exists": true
+      },
+      "updates/B01/results/6c8b654775df4658a8e4285a8764f674/metric_evidence.csv": {
+        "matches": true,
+        "exists": true
+      },
+      "updates/B01/results/6c8b654775df4658a8e4285a8764f674/records.jsonl": {
+        "matches": true,
+        "exists": true
+      },
+      "updates/B01/results/6c8b654775df4658a8e4285a8764f674/input-assessments.json": {
+        "matches": true,
+        "exists": true
+      },
+      "updates/B01/results/6c8b654775df4658a8e4285a8764f674/manifest.json": {
+        "matches": true,
+        "exists": true
+      },
+      "updates/B01/results/6c8b654775df4658a8e4285a8764f674/write.lock": {
+        "matches": true,
+        "exists": true
+      },
+      "updates/B01/results/6c8b654775df4658a8e4285a8764f674/receipt.json": {
+        "matches": true,
+        "exists": true
+      }
+    },
+    "scope": {
+      "status": "NO_DEMONSTRATED_SPLIT",
+      "complete_scope_proven": false,
+      "scope_id": "sha256:b58e51070c1ac07776ada64e8cf72cb8146c4dad8a4eeb5f13c4510f4e6cd2ac"
+    }
+  },
+  "configuration_policy_has_reported_monetary_literal": false
+}

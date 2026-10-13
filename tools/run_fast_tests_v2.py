@@ -191,8 +191,6 @@ FAST_TESTS += ('tests.vnext.test_historical_statement_cases.HistoricalCurrentAnn
 FAST_TESTS += ('tests.vnext.test_historical_statement_cases.HistoricalPeriodSubjectTest',)
 FAST_TESTS += ('tests.vnext.test_historical_statement_cases.HistoricalSuccessorComparabilityTest',)
 FAST_TESTS += ('tests.vnext.test_historical_statement_cases.HistoricalStructuralApplicabilityTest',)
-FAST_TESTS += ("tests.vnext.test_selected_event_source_v1",)
-FAST_TESTS += ("tests.vnext.test_registered_event_projection",)
 FAST_TESTS += ('tests.vnext.test_historical_event_cases.HistoricalEventCaseTest',)
 FAST_TESTS += ('tests.vnext.test_historical_event_cases.HistoricalEventHistoryStrategyTest',)
 FAST_TESTS += ('tests.vnext.test_historical_event_cases.HistoricalEventRecordRetentionTest',)
@@ -203,7 +201,23 @@ FAST_TESTS += ("tests.vnext.test_bank_scope_dei_release",)
 FAST_TESTS += ('tests.vnext.test_existing_historical_sec_state',)
 FAST_TESTS += ('tests.vnext.test_historical_sec_capture_adapter',)
 FAST_TESTS += ('tests.vnext.test_b03_current_input_scope.ContractAggregateTest',)
-FAST_TESTS += ('tests.vnext.test_ordinary_configuration_compatibility',)
+FAST_TESTS += ('tests.vnext.test_paired_measure_contradiction',)
+FAST_TESTS += ('tests.vnext.test_reporting_company_projection.ReportingCompanyProjectionTest',)
+SOURCE_TESTS += ('tests.vnext.test_reporting_company_projection.CurrentNullableTraceProjectionTest',)
+FAST_TESTS += ('tests.vnext.test_current_d04_company',)
+FAST_TESTS += ('tests.vnext.test_securegpt_documented_response',)
+FAST_TESTS += ('tests.vnext.test_explicit_e01_company',)
+FAST_TESTS += ('tests.vnext.test_c04_selected_input',)
+FAST_TESTS += ('tests.vnext.test_historical_auditor_selection',)
+FAST_TESTS += ('tests.vnext.test_historical_auditor_case',)
+# New additive features use their own files, retaining deterministic order.
+# Existing selectors and source-material sharding are not reclassified.
+from feature_test_selectors import load_feature_selectors
+_FEATURE_SELECTORS=load_feature_selectors(
+    directory=inherited.REPO_ROOT/'tests/feature_selectors',
+    existing_fast=FAST_TESTS,existing_source=SOURCE_TESTS)
+FAST_TESTS += _FEATURE_SELECTORS['fast']
+SOURCE_TESTS += _FEATURE_SELECTORS['source-material']
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # The unchanged full original-source module passed on head 698b9a45 in

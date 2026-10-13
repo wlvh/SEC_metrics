@@ -1,0 +1,15 @@
+test_selected_release_forms_need_explicit_options_and_keep_the_default (tests.vnext.test_b06_guarded_result_v3.B06GuardSourceTest.test_selected_release_forms_need_explicit_options_and_keep_the_default) ... ERROR
+
+======================================================================
+ERROR: test_selected_release_forms_need_explicit_options_and_keep_the_default (tests.vnext.test_b06_guarded_result_v3.B06GuardSourceTest.test_selected_release_forms_need_explicit_options_and_keep_the_default)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-selected-b06-release/SEC_metrics/tests/vnext/test_b06_guarded_result_v3.py", line 83, in test_selected_release_forms_need_explicit_options_and_keep_the_default
+    proof=guard._rebuild_equity(**dated,dei_release='YEAR_QUARTER_OR_DATE',namespace_policy='YEAR_OR_DATE_RELEASE')
+TypeError: _rebuild_equity() got an unexpected keyword argument 'dei_release'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+{"allowed_skips": 0, "errors": 1, "failures": 0, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_b06_guarded_result_v3.B06GuardSourceTest.test_selected_release_forms_need_explicit_options_and_keep_the_default"]}

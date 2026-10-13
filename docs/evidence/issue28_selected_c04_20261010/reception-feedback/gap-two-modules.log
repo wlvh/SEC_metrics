@@ -1,0 +1,18 @@
+test_explicit_release_still_rejects_wrong_entity_and_period (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_explicit_release_still_rejects_wrong_entity_and_period) ... ok
+test_fake_namespace_and_invalid_policy_are_not_releases (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_fake_namespace_and_invalid_policy_are_not_releases) ... ok
+test_quarter_and_date_release_require_explicit_existing_policy (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_quarter_and_date_release_require_explicit_existing_policy) ... ok
+test_selected_base_and_labelled_annual_are_a_pair_before_latest_read (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_selected_base_and_labelled_annual_are_a_pair_before_latest_read) ... ok
+test_selected_coordinate_prior_and_label_changes_refuse_before_sources (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_selected_coordinate_prior_and_label_changes_refuse_before_sources) ... ok
+test_selected_gate_does_not_open_default_current_producer (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_selected_gate_does_not_open_default_current_producer) ... ok
+test_selected_history_reuses_index_derived_gap_boundary_and_all_row_count (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_selected_history_reuses_index_derived_gap_boundary_and_all_row_count) ... ok
+test_year_only_checked_filing_default_dictionary_matches_main (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_year_only_checked_filing_default_dictionary_matches_main) ... ok
+test_original_annual_alias_needs_matching_proof_and_same_cik_url (tests.vnext.test_c04_registration_successor.C04RegistrationSuccessorTest.test_original_annual_alias_needs_matching_proof_and_same_cik_url) ... ok
+test_registration_event_outside_history_index_cannot_be_omitted_before_zero (tests.vnext.test_c04_registration_successor.C04RegistrationSuccessorTest.test_registration_event_outside_history_index_cannot_be_omitted_before_zero) ... ok
+test_rejects_unapproved_form_subset_and_wrong_metric (tests.vnext.test_c04_registration_successor.C04RegistrationSuccessorTest.test_rejects_unapproved_form_subset_and_wrong_metric) ... ok
+test_saved_marriott_default_identity_and_explicit_successor (tests.vnext.test_c04_registration_successor.C04RegistrationSuccessorTest.test_saved_marriott_default_identity_and_explicit_successor) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 6.808s
+
+OK
+{"allowed_skips": 0, "errors": 0, "failures": 0, "run": 12, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_c04_selected_input", "tests.vnext.test_c04_registration_successor"]}

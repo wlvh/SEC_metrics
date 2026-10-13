@@ -1,0 +1,21 @@
+test_formal_history_cli_selects_specific_dependencies_without_running_factories (tests.vnext.test_statement_metric_dispatch.StatementMetricDispatchTest.test_formal_history_cli_selects_specific_dependencies_without_running_factories) ... ERROR
+
+======================================================================
+ERROR: test_formal_history_cli_selects_specific_dependencies_without_running_factories (tests.vnext.test_statement_metric_dispatch.StatementMetricDispatchTest.test_formal_history_cli_selects_specific_dependencies_without_running_factories)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-statement-metric-dispatch/SEC_metrics/tests/vnext/test_statement_metric_dispatch.py", line 21, in test_formal_history_cli_selects_specific_dependencies_without_running_factories
+    code=main(['run','--company','paramount_skydance_paramount_global','--source-root',str(source),
+        '--work-dir',str(root/'state'),'--output-dir',str(root/'out'),'--period','fiscal-years',
+        '--fiscal-year-start','2024','--fiscal-year-end','2024',
+        '--metric','B04','--metric','B05','--metric','B07'])
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-statement-metric-dispatch/SEC_metrics/tools/vnext_company.py", line 241, in main
+    return 0 if result['status'] == 'FLOW_COMPLETED' else 2
+                ~~~~~~^^^^^^^^^^
+KeyError: 'status'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.138s
+
+FAILED (errors=1)
+{"allowed_skips": 0, "errors": 1, "failures": 0, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_statement_metric_dispatch"]}

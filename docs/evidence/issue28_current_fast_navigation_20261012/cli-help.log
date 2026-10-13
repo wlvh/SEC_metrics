@@ -1,0 +1,12 @@
+usage: run_foundation_ci.py [-h] --suite {fast,source-material} [--jobs JOBS]
+                            [--list]
+
+Current CI: small tests share a process; full originals keep their own tier.
+The old runner stays available for saved-version diagnostics. This current
+entry keeps its selectors visible without launching Python for each unit test.
+
+options:
+  -h, --help            show this help message and exit
+  --suite {fast,source-material}
+  --jobs JOBS
+  --list

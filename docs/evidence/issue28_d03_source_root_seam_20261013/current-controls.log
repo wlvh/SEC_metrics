@@ -1,0 +1,15 @@
+test_a_nonboolean_source_mode_is_not_reinterpreted (tests.vnext.test_d03_source_root_seam.D03SourceRootSeamTest.test_a_nonboolean_source_mode_is_not_reinterpreted) ... ok
+test_actual_successor_dispatch_passes_the_prepared_source_root (tests.vnext.test_d03_source_root_seam.D03SourceRootSeamTest.test_actual_successor_dispatch_passes_the_prepared_source_root) ... ok
+test_changed_source_or_original_request_still_fails (tests.vnext.test_d03_source_root_seam.D03SourceRootSeamTest.test_changed_source_or_original_request_still_fails) ... ok
+test_legacy_unmarked_rebuild_keeps_the_original_default_call (tests.vnext.test_d03_source_root_seam.D03SourceRootSeamTest.test_legacy_unmarked_rebuild_keeps_the_original_default_call) ... ok
+test_rebuilt_external_requests_still_cannot_claim_or_reach_transport (tests.vnext.test_d03_source_root_seam.D03SourceRootSeamTest.test_rebuilt_external_requests_still_cannot_claim_or_reach_transport) ... ok
+test_registered_source_rebuild_retains_actual_root_and_mode (tests.vnext.test_d03_source_root_seam.D03SourceRootSeamTest.test_registered_source_rebuild_retains_actual_root_and_mode) ... ok
+test_real_transport_configuration_change_is_detected (tests.vnext.test_current_request_runtime.CurrentConfigurationTest.test_real_transport_configuration_change_is_detected) ... ok
+test_retired_proof_fields_are_not_current_processing_dependencies (tests.vnext.test_current_request_runtime.CurrentConfigurationTest.test_retired_proof_fields_are_not_current_processing_dependencies) ... ok
+test_real_variant_selection_keeps_body_and_transport_limits (tests.vnext.test_current_request_runtime.CurrentVariantLimitsTest.test_real_variant_selection_keeps_body_and_transport_limits) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.062s
+
+OK
+{"allowed_skips": 0, "errors": 0, "failures": 0, "run": 9, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_d03_source_root_seam", "tests.vnext.test_current_request_runtime.CurrentConfigurationTest", "tests.vnext.test_current_request_runtime.CurrentVariantLimitsTest"]}

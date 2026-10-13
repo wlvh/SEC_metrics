@@ -1,0 +1,25 @@
+{
+  "probe": "virtual dependency digest changes only; no source or implementation files mutated",
+  "dependencies": [
+    {
+      "dependency": "scripts/vnext/text_results_v2.py",
+      "is_hashed": false,
+      "configuration_equal_after_virtual_digest_change": true
+    },
+    {
+      "dependency": "catalog/r6/text_results_v2_policy.json",
+      "is_hashed": false,
+      "configuration_equal_after_virtual_digest_change": true
+    }
+  ],
+  "actual_policy_behavior_changed": {
+    "baseline": "PASS",
+    "changed_cik_identifier_schemes": "D02_FACT_ENTITY_SCHEME_NOT_PROVEN"
+  },
+  "controller_effect": "unchanged-input return at ordinary_current_update.py:236 precedes current_case_factory at line253",
+  "business_calls": [
+    0,
+    0,
+    0
+  ]
+}

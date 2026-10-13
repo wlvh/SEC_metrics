@@ -1,0 +1,17 @@
+test_operating_components_or_wrong_unit_or_segment_do_not_get_total_credit (tests.vnext.test_selected_reported_revenue_v2.ReportedOperatingRevenueTest.test_operating_components_or_wrong_unit_or_segment_do_not_get_total_credit) ... ok
+test_reported_operating_total_preserves_approved_native_amount_and_whole_statement (tests.vnext.test_selected_reported_revenue_v2.ReportedOperatingRevenueTest.test_reported_operating_total_preserves_approved_native_amount_and_whole_statement) ... FAIL
+
+======================================================================
+FAIL: test_reported_operating_total_preserves_approved_native_amount_and_whole_statement (tests.vnext.test_selected_reported_revenue_v2.ReportedOperatingRevenueTest.test_reported_operating_total_preserves_approved_native_amount_and_whole_statement)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-single-revenue-line/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 180, in test_reported_operating_total_preserves_approved_native_amount_and_whole_statement
+    self.assertTrue(result['complete_scope_proven'])
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.202s
+
+FAILED (failures=1)
+{"allowed_skips": 0, "errors": 0, "failures": 1, "run": 2, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_selected_reported_revenue_v2.ReportedOperatingRevenueTest"]}

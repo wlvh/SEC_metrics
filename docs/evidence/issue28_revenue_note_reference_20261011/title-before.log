@@ -1,0 +1,24 @@
+test_consolidated_income_statement_title_order_keeps_original_scope (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_consolidated_income_statement_title_order_keeps_original_scope) ... ERROR
+
+======================================================================
+ERROR: test_consolidated_income_statement_title_order_keeps_original_scope (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_consolidated_income_statement_title_order_keeps_original_scope)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 22, in test_consolidated_income_statement_title_order_keeps_original_scope
+    scope=reported_revenue_scope(primary=source,xml=xml,annual=annual,approved_concepts=APPROVED)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 128, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=single_operating)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 113, in _statement_scope
+    _need(bool(titles) or bool(caption), 'CONSOLIDATED_STATEMENT_TITLE_UNPROVEN')
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_CONSOLIDATED_STATEMENT_TITLE_UNPROVEN
+
+----------------------------------------------------------------------
+Ran 1 test in 0.155s
+
+FAILED (errors=1)
+{"allowed_skips": 0, "errors": 1, "failures": 0, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_consolidated_income_statement_title_order_keeps_original_scope"]}

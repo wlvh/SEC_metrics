@@ -1,0 +1,18 @@
+test_comparison_control_version_alone_does_not_recalculate (tests.vnext.test_ordinary_current_update.CurrentUpdateTest.test_comparison_control_version_alone_does_not_recalculate) ... FAIL
+
+======================================================================
+FAIL: test_comparison_control_version_alone_does_not_recalculate (tests.vnext.test_ordinary_current_update.CurrentUpdateTest.test_comparison_control_version_alone_does_not_recalculate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/ci-guide/SEC_metrics/tests/vnext/test_ordinary_current_update.py", line 66, in test_comparison_control_version_alone_does_not_recalculate
+    self.assertEqual('NO_SOURCE_CONTENT_CHANGE',again['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'NO_SOURCE_CONTENT_CHANGE' != 'INPUT_OR_EXECUTION_FAILED'
+- NO_SOURCE_CONTENT_CHANGE
++ INPUT_OR_EXECUTION_FAILED
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.006s
+
+FAILED (failures=1)

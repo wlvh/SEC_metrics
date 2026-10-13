@@ -8,6 +8,7 @@ from decimal import Decimal
 from pathlib import Path
 import re
 
+from .xbrl_namespace_policy import is_fasb_namespace, source_reader_options
 from .b06_disclosure import label
 from .calculator import withheld_metric_result
 from .canonical import content_hash, sha256_bytes, sha256_file, strict_json_file
@@ -31,12 +32,13 @@ def need(condition, reason):
         raise ValueError('B06_SPECIAL_SCOPE_' + reason)
 
 
-def native(source, annual):
+def native(source, annual, *, dei_release='YEAR_ONLY', namespace_policy='YEAR_ONLY'):
+    reader_options = source_reader_options(dei_release=dei_release, namespace_policy=namespace_policy)
     raw = source['raw_bytes']
     need(source['source_reference']['raw_asset_id'] == 'sha256:' + sha256_bytes(content=raw)
          and source['source_reference']['accession'] == annual['filing']['accessionNumber'],
          'ORIGINAL_BINDING_CHANGED')
-    need(annual_period(raw=raw, cik=annual['entity'], filing=annual['filing'])
+    need(annual_period(raw=raw, cik=annual['entity'], filing=annual['filing'], **({'dei_release': dei_release} if dei_release != 'YEAR_ONLY' else {}))
          == annual['table_input']['target_period'], 'ANNUAL_IDENTITY_CHANGED')
     parsed = parse_accession_xbrl_source(raw_bytes=raw)
     meta = _ReportedFactMetadata()
@@ -45,9 +47,10 @@ def native(source, annual):
     return parsed, meta
 
 
-def inspect_special_scope(*, primary, xml, annual, financial_institution, rules):
+def inspect_special_scope(*, primary, xml, annual, financial_institution, rules, dei_release='YEAR_ONLY', namespace_policy='YEAR_ONLY'):
+    reader_options = source_reader_options(dei_release=dei_release, namespace_policy=namespace_policy)
     sources = {'primary': primary, 'xml': xml}
-    native_sources = {kind: native(source, annual) for kind, source in sources.items()}
+    native_sources = {kind: native(source, annual, **reader_options) for kind, source in sources.items()}
     end = annual['table_input']['target_period']['period_end']
     contexts = native_sources['xml'][0].contexts
     industrial = {tuple(sorted(c['dimensions'].items())) for c in contexts.values()
@@ -76,7 +79,7 @@ def inspect_special_scope(*, primary, xml, annual, financial_institution, rules)
                 continue
             need(str(int(c['entity_identifier'])) == annual['entity'] and not c['typed_dimension_count'],
                  'SUBJECT_OR_DIMENSION_CHANGED')
-            need(re.fullmatch(r'https?://fasb\.org/us-gaap/[0-9]{4}', uri) is not None,
+            need(is_fasb_namespace(uri, namespace_policy=namespace_policy),
                  'OFFICIAL_CONCEPT_REQUIRED')
             need(meta.units.get(fact['unit_ref']) == {
                 'measures': [('http://www.xbrl.org/2003/iso4217', 'USD')], 'divided': False}, 'USD_REQUIRED')
@@ -149,20 +152,23 @@ def inspect_special_scope(*, primary, xml, annual, financial_institution, rules)
     return {**body, 'scope_source_id': content_hash(value=body)}
 
 
-def prepare_special_debt_case(*, repo_root: Path, company_id: str):
-    rules = strict_json_file(path=repo_root / POLICY_PATH)
+def prepare_special_debt_case(*, repo_root: Path, company_id: str, rules_root=None, preparation=None, dei_release='YEAR_ONLY', namespace_policy='YEAR_ONLY'):
+    reader_options = source_reader_options(dei_release=dei_release, namespace_policy=namespace_policy)
+    rule_root = repo_root if rules_root is None else Path(rules_root)
+    rules = strict_json_file(path=rule_root / POLICY_PATH)
     need(rules == strict_json_file(path=ROOT / POLICY_PATH) and rules['full_ratio_enabled'] is False,
          'INSTALLED_RULES_CHANGED')
-    preparation = _prepare_b06(repo_root=repo_root, company_id=company_id)
+    preparation = (_prepare_b06(repo_root=repo_root, company_id=company_id)
+                   if preparation is None else preparation)
     annual = preparation['input_binding']['prepared_annual_input']
-    company = next(c for c in _registry_rows(repo_root=repo_root) if c['company_id'] == company_id)
+    company = next(c for c in _registry_rows(repo_root=rule_root) if c['company_id'] == company_id)
     inspected = inspect_special_scope(primary=preparation['primary'], xml=preparation['xml'], annual=annual,
-        financial_institution=company['industry_profile'] == 'financial_institution', rules=rules)
+        financial_institution=company['industry_profile'] == 'financial_institution', rules=rules, **reader_options)
     if inspected is None:
         return None
     proofs = [*preparation['input_binding']['source_proofs'], *annual['source_proofs']]
     admission = verify_ordinary_source_proofs(data_root=repo_root, proofs=proofs)
-    spec_path = rules['spec_path']; spec = compile_spec_file(path=repo_root / spec_path, dependency_specs={})
+    spec_path = rules['spec_path']; spec = compile_spec_file(path=rule_root / spec_path, dependency_specs={})
     need(spec == compile_spec_file(path=ROOT / spec_path, dependency_specs={}), 'SPEC_CHANGED')
     end = inspected['period_end']; scope = {'entity_scope': 'consolidated'}
     target = {'company_id': company_id, 'period_start': end, 'period_end': end,
@@ -175,9 +181,10 @@ def prepare_special_debt_case(*, repo_root: Path, company_id: str):
         'scope_source': inspected, 'reported_subtotal': inspected['reported_subtotal'], 'ratio': None}
     return {'kind': 'STRUCTURED', 'primary_metric_id': 'B06',
         'input_binding': {'original_source_input': preparation['input_binding'], 'scope_source': inspected,
-                          'source_proofs': proofs, 'policy_sha256': sha256_file(path=repo_root / POLICY_PATH)},
+                          'source_proofs': proofs, 'policy_sha256': sha256_file(path=rule_root / POLICY_PATH)},
         'source_records': records, 'references': [r for r in records if r['record_type'] == 'SOURCE_REFERENCE'],
         'source_proofs': proofs, 'admission': admission, 'spec_paths': {'B06': spec_path},
         'compiled_specs': {'B06': spec}, 'target_period': {'fiscal_year': annual['table_input']['target_period']['fiscal_year'],
             'period_start': end, 'period_end': end}, 'expected_records': [*records, trace, result],
-        'results': {'B06': result}, 'traces': {'B06': trace}, 'observations': [], 'selection': selection}
+        'results': {'B06': result}, 'traces': {'B06': trace}, 'observations': [], 'selection': selection,
+        **({} if rules_root is None else {'rules_root':str(rule_root)})}

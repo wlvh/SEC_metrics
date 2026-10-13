@@ -26,6 +26,10 @@ def main(argv=None):
     run.add_argument('--source-root', type=Path,
                      help='Use saved sources and ordinary records; no online discovery, capture or AI calls')
     run.add_argument('--call-context', type=Path, help='Existing scoped SEC ledger context for the lightweight online B01/B02 path; no new allowance')
+    run.add_argument('--saved-call-package', type=Path,
+                     help='Original read-only D04 answer archive; requires saved-source historical mode and explicit D04')
+    run.add_argument('--saved-legal-reviews',type=Path,
+                     help='Read-only D02 answer set for one company/period; saved-source historical mode, no model call')
     run.add_argument('--max-sec-requests', type=int, default=120, help='Invocation cap, no automatic retries')
     run.add_argument('--sec-allowance', type=int, default=120, help='Fixed cumulative task allowance')
     acquire = sub.add_parser('acquire', help='Only discover/capture sources; never calculate or call AI')
@@ -35,13 +39,23 @@ def main(argv=None):
     acquire.add_argument('--metric', action='append', help='Online source scope, B01/B02 only')
     acquire.add_argument('--max-sec-requests', type=int, default=120)
     acquire.add_argument('--sec-allowance', type=int, default=120)
+    sources = sub.add_parser('sources', help='Read-only selected annual B01/B02/B03 or E01 source preflight; no fetching or calculation')
+    sources.add_argument('--company', required=True)
+    sources.add_argument('--source-root', required=True, type=Path)
+    source_period=sources.add_mutually_exclusive_group(required=True)
+    source_period.add_argument('--report-end', help='SEC report end date; never a guessed fiscal-year label')
+    source_period.add_argument('--fiscal-year-start', type=int, help='First issuer fiscal year, resolved from original sources')
+    sources.add_argument('--fiscal-year-end', type=int, help='Last issuer year; at most five consecutive years')
+    sources.add_argument('--metric', required=True, action='append', choices=['B01','B02','B03','E01'])
     export = sub.add_parser('export', help='Controlled preparation: source-only company export')
     export.add_argument('--source-root', required=True, type=Path)
     export.add_argument('--output-root', required=True, type=Path)
-    export.add_argument('--trust-root', required=True, type=Path)
+    export.add_argument('--trust-root', type=Path,
+                        help='Required by retained native export; unused for ordinary --history-years export')
     export.add_argument('--company', required=True)
     export.add_argument('--metric', action='append')
-    export.add_argument('--history-years', type=int, choices=[5])
+    export.add_argument('--history-years', type=int, choices=[5],
+                        help='Saved-source export for five issuer years; explicit B01/B02/B03 only')
     processing = sub.add_parser('export-processing', help='Authenticate complete saved D04 separately from SEC sources')
     processing.add_argument('--installed-root', required=True, type=Path)
     processing.add_argument('--output-root', required=True, type=Path)
@@ -89,6 +103,21 @@ def main(argv=None):
     view.add_argument('--runtime-root', action='append', type=Path, default=[])
     view.add_argument('--output-root', type=Path, help='Write ordinary daily CSV/evidence without updating inputs')
     args = parser.parse_args(argv)
+    if args.command == 'run':
+        if args.saved_legal_reviews is not None and not (args.source_root is not None
+                and args.period=='fiscal-years' and args.metric is not None
+                and 'D02' in args.metric and args.call_context is None):
+            parser.error('--saved-legal-reviews requires --source-root, --period fiscal-years and explicit --metric D02')
+        if args.saved_call_package is not None and not (args.source_root is not None
+                and args.period == 'fiscal-years' and args.metric is not None
+                and 'D04' in args.metric and args.call_context is None):
+            parser.error('--saved-call-package requires --source-root, --period fiscal-years and explicit --metric D04')
+        if args.period == 'fiscal-years' and args.metric and 'D04' in args.metric and args.saved_call_package is None:
+            parser.error('Historical D04 requires --saved-call-package with the original answer archive')
+        if args.period == 'latest-complete-fy' and (args.fiscal_year_start is not None or args.fiscal_year_end is not None):
+            parser.error('Fiscal-year arguments require --period fiscal-years')
+        if args.call_context is not None and args.period != 'latest-complete-fy':
+            parser.error('Historical online discovery is not connected; use --source-root with --period fiscal-years')
     start = time.monotonic()
     if args.command == 'run':
         if args.call_context is not None:
@@ -103,7 +132,8 @@ def main(argv=None):
             result = run_local(company_id=args.company, work_dir=args.work_dir, output_dir=args.output_dir,
                 period=args.period, metric_ids=args.metric, max_sec_requests=args.max_sec_requests,
                 sec_allowance=args.sec_allowance, source_root=args.source_root,
-                fiscal_year_start=args.fiscal_year_start, fiscal_year_end=args.fiscal_year_end)
+                fiscal_year_start=args.fiscal_year_start, fiscal_year_end=args.fiscal_year_end,
+                saved_call_package=args.saved_call_package,saved_legal_reviews=args.saved_legal_reviews)
     elif args.command == 'acquire' and args.call_context is not None:
         from vnext.company_online import run_online_company
         result = run_online_company(company_id=args.company, work_dir=args.work_dir,
@@ -137,16 +167,34 @@ def main(argv=None):
             os.environ[ACQUISITION_TRUST] = str(work/'trust/acquisition')
             session = local_session(root=work/'acquisition', company_id=args.company, allowance=args.sec_allowance)
             result = acquire_only(session=session, company_id=args.company, max_requests=args.max_sec_requests)
+    elif args.command == 'sources':
+        if args.report_end is not None:
+            if args.fiscal_year_end is not None:parser.error('--fiscal-year-end requires --fiscal-year-start')
+            from vnext.selected_source_requirements import discover_selected_source_requirements
+            result = discover_selected_source_requirements(repo_root=args.source_root,
+                company_id=args.company, report_end=args.report_end, metric_ids=args.metric)
+        else:
+            if args.fiscal_year_end is None:parser.error('--fiscal-year-start requires --fiscal-year-end')
+            from vnext.company_fiscal_range import discover_fiscal_range
+            result = discover_fiscal_range(repo_root=args.source_root, company_id=args.company,
+                fiscal_year_start=args.fiscal_year_start, fiscal_year_end=args.fiscal_year_end,
+                metric_ids=args.metric)
     elif args.command == 'export':
         from vnext.company_handoff import export_company
         declaration = None
+        export_options = {}
+        if not args.history_years and args.trust_root is None:
+            parser.error('Retained native export requires --trust-root')
         if args.history_years:
-            from vnext.historical_source_acquisition import declared_frame
-            declaration = lambda source, company: declared_frame(
-                repo_root=source, company_id=company, years=args.history_years)
+            from vnext.company_history_export import latest_history_source_frame, METRIC_IDS
+            if not args.metric or not set(args.metric) <= METRIC_IDS:
+                parser.error('--history-years requires explicit received B01/B02/B03 metrics')
+            declaration = lambda source, company: latest_history_source_frame(
+                repo_root=source, company_id=company, years=args.history_years, metric_ids=args.metric)
+            export_options['saved_source_only'] = True
         result = export_company(source_root=args.source_root, output_root=args.output_root,
                                 trust_root=args.trust_root, company_id=args.company,
-                                metric_ids=args.metric, declared_frame=declaration)
+                                metric_ids=args.metric, declared_frame=declaration, **export_options)
     elif args.command == 'export-processing':
         from vnext.company_processing import export_processing
         result = export_processing(installed_root=args.installed_root, output_root=args.output_root,
@@ -202,7 +250,10 @@ def main(argv=None):
     if args.command == 'compute':
         return 0 if all(m['status'] in {'CANDIDATE_READY', 'NO_SOURCE_CONTENT_CHANGE'}
                         for m in result['metrics']) else 2
-    return 2 if result.get('status') == 'EXPORTED_PARTIAL' else 0
+    if args.command == 'sources':
+        return 0 if (result['status']=='SAVED_SOURCE_BYTES_AVAILABLE' or
+            result['status']=='FISCAL_RANGE_RESOLVED' and result['all_source_bytes_available']) else 2
+    return 2 if result.get('status') in {'EXPORTED_PARTIAL', 'SOURCE_EXPORT_INCOMPLETE'} else 0
 
 
 if __name__ == '__main__':

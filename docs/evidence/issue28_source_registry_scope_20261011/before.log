@@ -1,0 +1,48 @@
+EE
+======================================================================
+ERROR: test_unrelated_registered_company_change_does_not_block_selected_sources (tests.vnext.test_selected_source_requirements.SelectedSourceRequirementsTest.test_unrelated_registered_company_change_does_not_block_selected_sources)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-source-registry-scope/SEC_metrics/tests/vnext/test_selected_source_requirements.py", line 84, in test_unrelated_registered_company_change_does_not_block_selected_sources
+    before=self.digest_tree();actual=self.plan()
+                                     ~~~~~~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-source-registry-scope/SEC_metrics/tests/vnext/test_selected_source_requirements.py", line 60, in plan
+    return preflight.discover_selected_annual_requirements(repo_root=self.root,
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+        company_id=COMPANY,report_end='2025-12-31',metric_ids=list(metrics),**kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-source-registry-scope/SEC_metrics/scripts/vnext/selected_source_requirements.py", line 133, in discover_selected_annual_requirements
+    _need(sha256_file(path=source/'config/company_registry.csv')
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          == sha256_file(path=ROOT/'config/company_registry.csv'), 'COMPANY_REGISTRY_CHANGED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-source-registry-scope/SEC_metrics/scripts/vnext/selected_source_requirements.py", line 24, in _need
+    raise ValueError('SELECTED_SOURCE_' + reason)
+ValueError: SELECTED_SOURCE_COMPANY_REGISTRY_CHANGED
+
+======================================================================
+ERROR: test_unrelated_registry_change_preserves_resolved_range_and_formal_entry (tests.vnext.test_company_fiscal_range.CompanyFiscalRangeTest.test_unrelated_registry_change_preserves_resolved_range_and_formal_entry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-source-registry-scope/SEC_metrics/tests/vnext/test_company_fiscal_range.py", line 39, in test_unrelated_registry_change_preserves_resolved_range_and_formal_entry
+    before=self.fixture.digest_tree();actual=self.discover()
+                                             ~~~~~~~~~~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-source-registry-scope/SEC_metrics/tests/vnext/test_company_fiscal_range.py", line 33, in discover
+    return ranges.discover_fiscal_range(repo_root=self.source,company_id=COMPANY,
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        fiscal_year_start=first,fiscal_year_end=last,metric_ids=['B01','B02'])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-source-registry-scope/SEC_metrics/scripts/vnext/company_fiscal_range.py", line 82, in discover_fiscal_range
+    _need(sha256_file(path=source/'config/company_registry.csv')==
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          sha256_file(path=ROOT/'config/company_registry.csv'),'SOURCE_COMPANY_REGISTRY_CHANGED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-source-registry-scope/SEC_metrics/scripts/vnext/company_fiscal_range.py", line 32, in _need
+    if not condition:raise ValueError('COMPANY_FISCAL_RANGE_'+reason)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: COMPANY_FISCAL_RANGE_SOURCE_COMPANY_REGISTRY_CHANGED
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.135s
+
+FAILED (errors=2)

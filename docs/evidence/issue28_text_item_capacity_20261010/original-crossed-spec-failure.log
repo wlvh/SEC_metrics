@@ -1,0 +1,16 @@
+test_new_renderer_cannot_be_bound_to_an_old_or_smaller_spec_in_direct_builder (tests.vnext.test_text_item_capacity.TextItemCapacityTest.test_new_renderer_cannot_be_bound_to_an_old_or_smaller_spec_in_direct_builder) ... FAIL
+
+======================================================================
+FAIL: test_new_renderer_cannot_be_bound_to_an_old_or_smaller_spec_in_direct_builder (tests.vnext.test_text_item_capacity.TextItemCapacityTest.test_new_renderer_cannot_be_bound_to_an_old_or_smaller_spec_in_direct_builder)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-text-item-capacity/SEC_metrics/tests/vnext/test_text_item_capacity.py", line 94, in test_new_renderer_cannot_be_bound_to_an_old_or_smaller_spec_in_direct_builder
+    with self.assertRaisesRegex(ValueError,'TEXT_PAYLOAD_SPEC_POLICY_CHANGED'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.048s
+
+FAILED (failures=1)
+{"allowed_skips": 0, "errors": 0, "failures": 1, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_text_item_capacity.TextItemCapacityTest.test_new_renderer_cannot_be_bound_to_an_old_or_smaller_spec_in_direct_builder"]}

@@ -1,0 +1,15 @@
+{
+  "seconds": 0.29991549999976996,
+  "exit_code": 0,
+  "arguments": [
+    "results",
+    "--company",
+    "jpmorgan_chase",
+    "--state-root",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/bank-scope-dependency-receiving-20261013/state",
+    "--output-root",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/bank-scope-dependency-receiving-20261013/read"
+  ],
+  "stdout": "{\n  \"elapsed_seconds\": 0.06867524998961017,\n  \"record_type\": \"ORDINARY_COMPANY_RESULT_VIEW_V1\",\n  \"company_id\": \"jpmorgan_chase\",\n  \"source_root\": \"/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs\",\n  \"metrics\": [\n    {\n      \"metric_id\": \"A09\",\n      \"result_id\": \"sha256:f9426c8f3fbcf1ff99cf8bf39fb3228bad41bf77fe88b27dfa932c1f5e80c1c2\",\n      \"period_start\": \"2021-12-31\",\n      \"period_end\": \"2021-12-31\",\n      \"fiscal_year\": 2021,\n      \"value\": \"0.0072\",\n      \"unit\": \"ratio\",\n      \"publication\": \"PUBLISHED\",\n      \"quality\": \"EXACT\",\n      \"reason_code\": \"PASS\",\n      \"result_validity\": \"SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED\",\n      \"defect_holds\": [],\n      \"latest_observation\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"requested_in_latest_execution\": true,\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/bank-scope-dependency-receiving-20261013/state/updates/A09/periods/FY2021/results/844dd96ca4c34855905bfb5e27965d8f\"\n    }\n  ],\n  \"source_freshness\": \"NOT_CHECKED_BY_SAVED_READER\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false,\n  \"output_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/bank-scope-dependency-receiving-20261013/read\"\n}\n",
+  "stderr": ""
+}

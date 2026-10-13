@@ -1,0 +1,162 @@
+{
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-saved-legal-review/SEC_metrics",
+  "base_commit": "731f8fd1720ec976fafc008c522cc4e044573c5d",
+  "working_tree_test": true,
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+  "original_git_commit": "bcc0c0bc0293ba6b6ffc58b1f4e9034dbb52a786",
+  "original_archive_path": "evidence/issue47_model_calls/9a368413797ddef1/model-ledger.tar.gz",
+  "original_archive_sha256": "970c98e67b7c7b8c1b55eae6b9dd602917cec45af8c193ec1ac9a5d941acf9a0",
+  "members": {
+    "semantic-request.json": {
+      "bytes": 3573,
+      "sha256": "c89df66d587068a531dad00f124ac8dbbf2378fba99d0a6440a37948e4dc406e"
+    },
+    "source.json": {
+      "bytes": 6658,
+      "sha256": "2bc617fe57a190dbdc71920bd0e0f06e03be5128041955fdb6a28c33b9b685df"
+    },
+    "terminal.json": {
+      "bytes": 2670,
+      "sha256": "94ef29820a6a718485b0b1c600773b8d3f2650a696ba9558a132b688618ccb10"
+    },
+    "wire/journal.json": {
+      "bytes": 974,
+      "sha256": "4265d853f5aedebe5982be103ff9e52d892ac1b9e9f5270026b66d668be682a9"
+    },
+    "wire/raw-response.bin": {
+      "bytes": 499,
+      "sha256": "ffbd0a51a6797fadb8292ff29bbe2d6f073ac45c559ad6a51d8e7a51d5c67d18"
+    },
+    "wire/assistant-output.bin": {
+      "bytes": 35,
+      "sha256": "e3023cee53826a2cc51b1c7a163205a322c72758d642fef95da326afba9fff27"
+    },
+    "invocation_control/requests/07aff1fb87b2834ecae8603033856901c338c69002e797973b37ee4ba9e7b047.bin": {
+      "bytes": 3862,
+      "sha256": "40e79bb821b033427325228a742ce920ad6b858653b4ac2cf6f78fc84b0f78ad"
+    }
+  },
+  "source_document_id": "sha256:cf486bd77edf58e86d6642743a8c0471495ffb331812ecf152f5e27bf81ca3b8",
+  "request_id": "sha256:7f0d2be204ae60689397a55ac102ec07f3ad0923c57ab00db59060abd9fe8908",
+  "input_blocks": 1,
+  "must_decide": [],
+  "full_source_candidate_count": 53,
+  "prepare_seconds": 2.4902680840168614,
+  "read_seconds": 0.00048395799240097404,
+  "protected_source_hashes": {
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs/evidence/request_attempts/3b/3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9/f-20251231.htm": "3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs/evidence/request_attempts/2e/2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53/CIK0000037996.json": "2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs/config/company_registry.csv": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs/evidence/requests_log.csv": "1c9f81687e591f07f745ca5bf4543af70ef26af146cc7746859d515a1d4e18e6",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs/evidence/requests_log_manifest.json": "8c552c5580677a4319d3e45fbf19f0eb8e5416795895a890a3edbd0cf1a3f524"
+  },
+  "original_call_bytes_preserved": true,
+  "review": {
+    "record_type": "SAVED_D02_ITEM8_REVIEW_READ",
+    "request_id": "sha256:7f0d2be204ae60689397a55ac102ec07f3ad0923c57ab00db59060abd9fe8908",
+    "source_id": "sha256:81eaa388232423c92e6bc941ea19de7871797da5816b0248f41ff3dacfada835",
+    "company_id": "ford_motor_company",
+    "target_cik": "37996",
+    "period_end": "2025-12-31",
+    "filing": {
+      "source_reference_id": "sha256:4fe37d81a86951f5d28883627e2c475f7ec5085ba2deb3a165ecd3b6d1bbb3f2",
+      "raw_asset_id": "sha256:3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9",
+      "text_document_id": "sha256:cf486bd77edf58e86d6642743a8c0471495ffb331812ecf152f5e27bf81ca3b8"
+    },
+    "source_proofs": [
+      {
+        "accession": "",
+        "content_sha256": "2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53",
+        "document_name": "CIK0000037996.json",
+        "request_attempt_id": "request:attempt:aba148c9f3725e411dc9b3a3d98e62c8ab6ab758fecd5616c4106e35cc91bef8",
+        "request_body_sha256": "2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53",
+        "request_body_size": 160015,
+        "request_headers_repo_relative_path": "evidence/request_attempts/2e/2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53/CIK0000037996.json.8ae085d80b07462565087561336d087caa41c1e35ac725ffbdb341bb931b2530.headers.json",
+        "request_headers_sha256": "8ae085d80b07462565087561336d087caa41c1e35ac725ffbdb341bb931b2530",
+        "request_headers_size": 736,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/2e/2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53/CIK0000037996.json",
+        "source_url": "https://data.sec.gov/submissions/CIK0000037996.json"
+      },
+      {
+        "accession": "0000037996-26-000015",
+        "content_sha256": "3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9",
+        "document_name": "f-20251231.htm",
+        "request_attempt_id": "request:attempt:f48f8c4bd2da27d84a15410bacc45567b52c7d580d8658b036550fa4a6c414af",
+        "request_body_sha256": "3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9",
+        "request_body_size": 5281502,
+        "request_headers_repo_relative_path": "evidence/request_attempts/3b/3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9/f-20251231.htm.938a270bf2677fc73b26034eae7699cbdd55257202de14c7bf9c5e0728532e69.headers.json",
+        "request_headers_sha256": "938a270bf2677fc73b26034eae7699cbdd55257202de14c7bf9c5e0728532e69",
+        "request_headers_size": 1083,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/3b/3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9/f-20251231.htm",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799626000015/f-20251231.htm"
+      },
+      {
+        "accession": "0000037996-26-000015",
+        "content_sha256": "db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e",
+        "document_name": "CIK0000037996.json",
+        "request_attempt_id": "request:attempt:c160b39060f39a60f351ad4460665e4036d557e7748c0db18914f5f04fc2568d",
+        "request_body_sha256": "db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e",
+        "request_body_size": 3672318,
+        "request_headers_repo_relative_path": "evidence/request_attempts/db/db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e/CIK0000037996.json.47538fb5f208ed1d28a2c6fc76e8621e7ebe347e6f97e1e8db2221c23ca62960.headers.json",
+        "request_headers_sha256": "47538fb5f208ed1d28a2c6fc76e8621e7ebe347e6f97e1e8db2221c23ca62960",
+        "request_headers_size": 707,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/db/db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e/CIK0000037996.json",
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000037996.json"
+      }
+    ],
+    "decisions": {},
+    "also_in_scope": {},
+    "included_block_ids": [],
+    "withheld_reason": null,
+    "unsettled_block_ids": [],
+    "original_execution_mode": "LIVE",
+    "original_terminal_id": "sha256:e4d1923650d6580f10ffb1d47db501ca2f82311d3222edd7cadde4102a20e0c9",
+    "original_execution_id": "sha256:d420dd6323238bde7fc9819b50959aaa6b0c50840549037a56a39925dba77d13",
+    "original_wire_id": "sha256:025156faf3ea0f6b49b8c618dbdcd51987a478485e7a9ae8c5b3a7b8737e3672",
+    "original_counts": [
+      1,
+      1,
+      0
+    ],
+    "original_counts_kind": "ACTUAL_OR_UNKNOWN_CHARGED",
+    "provider_parameters": {
+      "max_tokens": 4096,
+      "model": "deepseek-flash",
+      "response_format": {
+        "type": "json_object"
+      },
+      "stream": false,
+      "temperature": 0,
+      "thinking": {
+        "type": "disabled"
+      }
+    },
+    "usage": {
+      "input_tokens": 963,
+      "output_tokens": 13,
+      "total_tokens": 976,
+      "actual_cost": null
+    },
+    "usage_known": true,
+    "response_form_valid": true,
+    "semantic_correctness_verified": false,
+    "current_source_verified": false,
+    "complete_company_result": false,
+    "new_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "run_created": false,
+    "production_authorized": false
+  },
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "verification": "ONE_ACTUAL_ITEM8_SUBREVIEW_NOT_COMPANY_RESULT"
+}

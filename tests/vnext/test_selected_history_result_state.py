@@ -53,14 +53,163 @@ class SelectedHistoryResultStateTest(TestCase):
         self.records[str(path)] = value
         return value
 
-    def run_control(self, year, metric="B10"):
+    def run_control(self, year, metric="B10", processing_files=()):
         with patch.object(update, "save_calculated_case", side_effect=self.save_control):
             return update.run_once(state_root=self.root / metric, source_root=ROOT,
                 company_id="marriott_international", metric_id=metric,
-                fiscal_year=year, case_factory=self.factory)
+                fiscal_year=year, case_factory=self.factory,
+                processing_files=processing_files)
+
+    def test_historical_d01_shared_dependency_changes_reprocess_then_reuse(self):
+        from vnext.historical_risk_heading_case import PROCESSING_FILES
+        actual_hash = update.sha256_file
+        # Only the digest is changed in memory. The source/code tree is never
+        # edited; these state substitutes are not financial source results.
+        for year, name in enumerate(('scope_contract', 'states', 'text_results_v2'), 2021):
+            with self.subTest(module=name):
+                self.forbid_factory = False
+                first = self.run_control(year, 'D01', PROCESSING_FILES)
+                count = len(self.factory_calls)
+                self.forbid_factory = True
+                self.assertEqual('NO_SOURCE_CONTENT_CHANGE',
+                    self.run_control(year, 'D01', PROCESSING_FILES)['status'])
+                self.assertEqual(count, len(self.factory_calls))
+                target = ROOT / ('scripts/vnext/' + name + '.py')
+                def changed_hash(*, path):
+                    return 'constructed-d01-dependency-change' if path == target else actual_hash(path=path)
+                self.forbid_factory = False
+                with patch.object(update, 'sha256_file', side_effect=changed_hash):
+                    changed = self.run_control(year, 'D01', PROCESSING_FILES)
+                    self.assertEqual('CANDIDATE_READY', changed['status'])
+                    self.assertTrue(changed['calculation_performed'])
+                    self.assertEqual(count + 1, len(self.factory_calls))
+                    self.assertNotEqual(first['version'], changed['version'])
+                    self.forbid_factory = True
+                    repeat = self.run_control(year, 'D01', PROCESSING_FILES)
+                    self.assertEqual('NO_SOURCE_CONTENT_CHANGE', repeat['status'])
+                    self.assertEqual(changed['version'], repeat['version'])
+                self.assertEqual(count + 1, len(self.factory_calls))
 
     def period_root(self, year, metric="B10"):
         return self.root.resolve() / metric / "periods" / ("FY" + str(year))
+
+    def test_range_requirement_version_reprocesses_only_income_consumers(self):
+        from vnext import historical_statement_cases as statement
+        target = ROOT / 'scripts/vnext/normal_source_requirements.py'
+        original_hash = update.sha256_file
+        def changed_hash(*, path):
+            return 'CONSTRUCTED_RANGE_REQUIREMENT_VERSION_CHANGE' if path == target else original_hash(path=path)
+        groups = (('B01', statement.INCOME_PROCESSING_FILES, True),
+                  ('B02', statement.PAIRED_REVENUE_PROCESSING_FILES, True),
+                  ('B04', statement.PROCESSING_FILES, False),
+                  ('B05', statement.PROCESSING_FILES, False),
+                  ('B07', statement.PROCESSING_FILES, False))
+        # This is a constructed state control, not a financial amount or an
+        # assertion that every metric uses the income-statement source rule.
+        for metric, files, affected in groups:
+            with self.subTest(metric=metric):
+                # The company entry deduplicates income + range declarations.
+                files = tuple(dict.fromkeys(files))
+                self.forbid_factory = False
+                first = self.run_control(2024, metric, files)
+                count = len(self.factory_calls)
+                self.forbid_factory = True
+                self.assertEqual('NO_SOURCE_CONTENT_CHANGE', self.run_control(2024, metric, files)['status'])
+                with patch.object(update, 'sha256_file', side_effect=changed_hash):
+                    self.forbid_factory = not affected
+                    changed = self.run_control(2024, metric, files)
+                    self.assertEqual(count + int(affected), len(self.factory_calls))
+                    self.assertEqual(affected, changed['calculation_performed'])
+                    self.assertEqual('CANDIDATE_READY' if affected else 'NO_SOURCE_CONTENT_CHANGE', changed['status'])
+                    self.assertEqual(affected, changed['version'] != first['version'])
+                    self.forbid_factory = True
+                    again = self.run_control(2024, metric, files)
+                    self.assertEqual('NO_SOURCE_CONTENT_CHANGE', again['status'])
+                    self.assertEqual(changed['version'], again['version'])
+                self.assertEqual(count + int(affected), len(self.factory_calls))
+
+    def test_statement_property_version_reprocesses_only_explicit_income_metrics(self):
+        from vnext.historical_statement_cases import processing_files_for_statement_metric
+        original_hash = update.sha256_file
+        target = ROOT / 'scripts/vnext/statement_metric_amendment.py'
+        def changed_hash(*, path):
+            return 'CONSTRUCTED_STATEMENT_PROPERTY_VERSION_CHANGE' if path == target else original_hash(path=path)
+        for metric in ('B04','B07','B05'):
+            files = processing_files_for_statement_metric(metric)
+            self.forbid_factory = False
+            first = self.run_control(2024,metric,files)
+            count = len(self.factory_calls)
+            with self.subTest(metric=metric),patch.object(update,'sha256_file',side_effect=changed_hash):
+                self.forbid_factory = metric == 'B05'
+                after = self.run_control(2024,metric,files)
+                expected = metric != 'B05'
+                self.assertEqual(expected,after['calculation_performed'])
+                self.assertEqual(count + int(expected),len(self.factory_calls))
+                self.assertEqual(expected,after['version'] != first['version'])
+                self.forbid_factory = True
+                repeat = self.run_control(2024,metric,files)
+                self.assertEqual('NO_SOURCE_CONTENT_CHANGE',repeat['status'])
+                self.assertEqual(after['version'],repeat['version'])
+            self.assertEqual(count + int(metric != 'B05'),len(self.factory_calls))
+
+    def test_private_historical_dependencies_reprocess_then_reuse(self):
+        from vnext import historical_geography_cases as geography, historical_b03_case as b03
+        from vnext.historical_lodging_results import HISTORICAL_LODGING_PROCESSING_FILES
+        original_hash=update.sha256_file
+        groups=(('A13',geography.PROCESSING_FILES,('zero_ai_r2',)),
+                ('B03',b03.PROCESSING_FILES,('r5_b06_scope','b06_disclosure','r5_b06_structured')),
+                ('B10',HISTORICAL_LODGING_PROCESSING_FILES,('composite_scope',)),
+                ('B11',HISTORICAL_LODGING_PROCESSING_FILES,('composite_scope',)))
+        for metric,files,names in groups:
+            for year,name in enumerate(names,2021):
+                with self.subTest(metric=metric,module=name):
+                    self.forbid_factory=False
+                    first=self.run_control(year,metric,files)
+                    count=len(self.factory_calls)
+                    self.forbid_factory=True
+                    self.assertEqual('NO_SOURCE_CONTENT_CHANGE',self.run_control(year,metric,files)['status'])
+                    target=ROOT/('scripts/vnext/'+name+'.py')
+                    def changed_hash(*,path):
+                        return 'CONSTRUCTED_PRIVATE_HISTORY_DEPENDENCY_CHANGE' if path==target else original_hash(path=path)
+                    self.forbid_factory=False
+                    with patch.object(update,'sha256_file',side_effect=changed_hash):
+                        changed=self.run_control(year,metric,files)
+                        self.assertTrue(changed['calculation_performed'])
+                        self.assertEqual(count+1,len(self.factory_calls))
+                        self.assertNotEqual(first['version'],changed['version'])
+                        self.forbid_factory=True
+                        repeat=self.run_control(year,metric,files)
+                        self.assertEqual('NO_SOURCE_CONTENT_CHANGE',repeat['status'])
+                        self.assertEqual(changed['version'],repeat['version'])
+                    self.assertEqual(count+1,len(self.factory_calls))
+
+    def test_average_scope_dependency_change_processes_once_then_reuses(self):
+        from vnext.historical_average_risk_cases import PROCESSING_FILES
+        original_hash=update.sha256_file
+        target=ROOT/'scripts/vnext/scope_contract.py'
+        # The saver and values remain explicit state controls, not bank facts.
+        for metric in ('A03','A12'):
+            with self.subTest(metric=metric):
+                self.forbid_factory=False
+                first=self.run_control(2021,metric,PROCESSING_FILES)
+                count=len(self.factory_calls)
+                self.forbid_factory=True
+                self.assertEqual('NO_SOURCE_CONTENT_CHANGE',
+                    self.run_control(2021,metric,PROCESSING_FILES)['status'])
+                self.assertEqual(count,len(self.factory_calls))
+                def changed_hash(*,path):
+                    return 'CONSTRUCTED_AVERAGE_SCOPE_CHANGE' if path==target else original_hash(path=path)
+                self.forbid_factory=False
+                with patch.object(update,'sha256_file',side_effect=changed_hash):
+                    changed=self.run_control(2021,metric,PROCESSING_FILES)
+                    self.assertEqual('CANDIDATE_READY',changed['status'])
+                    self.assertEqual(count+1,len(self.factory_calls))
+                    self.assertNotEqual(first['version'],changed['version'])
+                    self.forbid_factory=True
+                    repeat=self.run_control(2021,metric,PROCESSING_FILES)
+                    self.assertEqual('NO_SOURCE_CONTENT_CHANGE',repeat['status'])
+                    self.assertEqual(changed['version'],repeat['version'])
+                self.assertEqual(count+1,len(self.factory_calls))
 
     def test_success_and_stable_withheld_reuse_in_distinct_historical_coordinates(self):
         self.outcomes[2025, "B11"] = "WITHHELD"

@@ -1,0 +1,9 @@
+Finite date repair probes and exact actual source driver (in-memory output sink=/dev/null); no code/source/receipt edits.
+correct full date: ACCEPTED REPORTED_CONSOLIDATED_TOTAL complete_scope_proven=True
+wrong full date: IncomeSourceError SELECTED_REPORTED_REVENUE_VISIBLE_DATE_CONFLICT
+wrong shared year-end day: IncomeSourceError SELECTED_REPORTED_REVENUE_VISIBLE_END_DAY_CONFLICT
+earlier current-column wrong full date with later year-only row: ACCEPTED REPORTED_CONSOLIDATED_TOTAL complete_scope_proven=True
+REPORTED_CONSOLIDATED_TOTAL 23866000000 {'fiscal_year': 2023, 'period_start': '2023-01-29', 'period_end': '2024-02-03'} 1.123707874910906
+Macy critical fields equal current parent repair receipt: TRUE (committed original331 comparison independently recorded in binding.log)
+Macy repair end_headers=[]
+Parent receipt SHA unchanged: dc69efdbf53587e016c7e517f8d80488526af9a9a0652a0fe4ced73d7b0bafa1

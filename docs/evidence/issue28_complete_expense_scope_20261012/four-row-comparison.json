@@ -1,0 +1,81 @@
+{
+  "before_program": "302074f4d242dc85fd6abb844e46a61dfd278616",
+  "candidate_local_head": "6f2b861e6cf19da25c4bfb9bd033cd98502f947c",
+  "candidate_working_diff": "scripts/vnext/selected_reported_revenue_v2.py plus two tests, recorded file SHA below",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "before_state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/cost-return-fourrows-20261012/before-state",
+  "after_state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/cost-return-fourrows-20261012/after-state",
+  "compared_fields": [
+    "metric_id",
+    "value",
+    "unit",
+    "fiscal_year",
+    "period_start",
+    "period_end",
+    "status",
+    "result_id"
+  ],
+  "rows_equal": [
+    {
+      "metric_id": "B01",
+      "value": "28586000000",
+      "unit": "USD",
+      "fiscal_year": "2021",
+      "period_start": "2021-01-01",
+      "period_end": "2021-12-31",
+      "status": "OK",
+      "result_id": "sha256:ba43668519d6bf929a0a89d4c7e3afd8441bfae78161420c4106ddc73d9cf456"
+    },
+    {
+      "metric_id": "B01",
+      "value": "30154000000",
+      "unit": "USD",
+      "fiscal_year": "2022",
+      "period_start": "2022-01-01",
+      "period_end": "2022-12-31",
+      "status": "OK",
+      "result_id": "sha256:7fbe4d0a8229f00e547631cd21c80098131be1e80d43f174f14e2f14d056439e"
+    },
+    {
+      "metric_id": "B03",
+      "value": "0.2339256978940740222486531869",
+      "unit": "ratio",
+      "fiscal_year": "2021",
+      "period_start": "2021-01-01",
+      "period_end": "2021-12-31",
+      "status": "OK",
+      "result_id": "sha256:59255ad50de3a563856cf0e05c21101bcf79d717cc19d20b29e18284565fe716"
+    },
+    {
+      "metric_id": "B03",
+      "value": "0.09109902500497446441599787756",
+      "unit": "ratio",
+      "fiscal_year": "2022",
+      "period_start": "2022-01-01",
+      "period_end": "2022-12-31",
+      "status": "OK",
+      "result_id": "sha256:6eaaae501109edbd56267d5f8241cbc465a8b8243c90df00697505cac2a4f766"
+    }
+  ],
+  "before_first_seconds": null,
+  "before_timing_boundary": "First official run completed but outer wrong-output-path failed; resumed reads/repeat only, no recomputation",
+  "after_first_seconds": 42.72380666599929,
+  "before_repeat_seconds": 1.0639642919995822,
+  "after_repeat_seconds": 1.0510562919953372,
+  "before_read_seconds": 0.13397779200022342,
+  "after_read_seconds": 0.13507333299639868,
+  "before_state_files": 63,
+  "after_state_files": 63,
+  "all_repeat_calculation_false": true,
+  "all_result_ids_equal": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "files": {
+    "scripts/vnext/selected_reported_revenue_v2.py": "9164009f0c4bdaa2b17fd6f98be762f21564729a7327e4ef90c82d68eb3f31a0",
+    "tests/vnext/test_selected_reported_revenue_v2.py": "2773e56ed8a0e145791e987718e713a5de0c3f7aec8c47ac5ba1f7420c4a9f94",
+    "tests/vnext/test_historical_statement_cases.py": "30b7f93c02b431c3cadc053b7f12c872773c8cbde709e681b329eaea86184c7f"
+  }
+}
