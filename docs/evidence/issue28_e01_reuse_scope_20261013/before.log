@@ -1,0 +1,16 @@
+test_e01_does_not_consume_d02_page_selection_but_d02_still_does (tests.vnext.test_ordinary_current_update.CurrentProcessingConfigurationTest.test_e01_does_not_consume_d02_page_selection_but_d02_still_does) ... FAIL
+
+======================================================================
+FAIL: test_e01_does_not_consume_d02_page_selection_but_d02_still_does (tests.vnext.test_ordinary_current_update.CurrentProcessingConfigurationTest.test_e01_does_not_consume_d02_page_selection_but_d02_still_does)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/ci-guide/SEC_metrics/tests/vnext/test_ordinary_current_update.py", line 194, in test_e01_does_not_consume_d02_page_selection_but_d02_still_does
+    self.assertEqual(before['E01'],after['E01'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'com[6347 chars]y': '5e75598ea4c3bc99701cdffed9560d50525eb93f0[6105 chars]alse} != {'com[6347 chars]y': 'changed-d02-only-page-selection', 'script[6072 chars]alse}
+Diff is 16241 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 1 test in 0.015s
+
+FAILED (failures=1)
