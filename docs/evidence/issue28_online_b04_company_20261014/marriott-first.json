@@ -1,0 +1,219 @@
+{
+  "elapsed_seconds": 5.085028749977937,
+  "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+  "company_id": "marriott_international",
+  "run_id": "20261013T165936Z-536b3b4c",
+  "status": "FLOW_COMPLETED",
+  "selected_metrics": [
+    "B04"
+  ],
+  "metrics": [
+    {
+      "metric_id": "B04",
+      "status": "CANDIDATE_READY",
+      "attempt_id": "b7032353eb3b477c87051e41ed90afa3",
+      "version": "13fbfaefea8e45df98c4d21264c3e920",
+      "result_id": "sha256:58ed6c58f8142b7d36f6c66c85d129ecb6826fe1a431bce4f3b7839eadb579cc",
+      "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b04-company-20261014/task/company-state/updates/B04/results/13fbfaefea8e45df98c4d21264c3e920",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "result_reason_code": "PASS",
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "defect_holds": [],
+      "read_result_id": "sha256:58ed6c58f8142b7d36f6c66c85d129ecb6826fe1a431bce4f3b7839eadb579cc",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b04-company-20261014/task/company-state/updates/B04/results/13fbfaefea8e45df98c4d21264c3e920",
+      "program_version": {
+        "commit": "c25872ee388c933b697d9d3a9764e5eb7d1859e3",
+        "has_uncommitted_changes": true
+      }
+    }
+  ],
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b04-company-20261014/task/sources",
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics",
+  "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b04-company-20261014/task/company-state",
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b04-company-20261014/output/20261013T165936Z-536b3b4c",
+  "source_mode": "ONLINE_DISCOVERY_WITH_ORDINARY_RECORDS",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false,
+  "discovery": {
+    "status": "SOURCES_READY_FOR_SELECTED_METRICS",
+    "filing": {
+      "accessionNumber": "0001048286-26-000007",
+      "filingDate": "2026-02-10",
+      "reportDate": "2025-12-31",
+      "acceptanceDateTime": "2026-02-10T18:35:55.000Z",
+      "act": "34",
+      "form": "10-K",
+      "fileNumber": "001-13881",
+      "filmNumber": "26614897",
+      "items": "",
+      "core_type": "XBRL",
+      "size": 12393244,
+      "isXBRL": 1,
+      "isInlineXBRL": 1,
+      "isXBRLNumeric": null,
+      "primaryDocument": "mar-20251231.htm",
+      "primaryDocDescription": "10-K"
+    },
+    "metric_ids": [
+      "B04"
+    ],
+    "metric_limitations": [],
+    "all_39_sources_proven": false
+  },
+  "simulated_sec_claims": 5,
+  "execution_mode": "RECORDED_TEST_ONLY",
+  "unknown_capture_ordinal": null,
+  "source_capture_receipts": [
+    {
+      "record_type": "ORDINARY_COMPANY_SEC_RECEIPT",
+      "intent_id": "sha256:5df541542ad5fe71fd1fe205453a6941e20d9be5bb0e3ddeaf2a95a1b6fed5bc",
+      "execution_mode": "RECORDED_TEST_ONLY",
+      "actual_sec_egress_count": 0,
+      "automatic_retry_count": 0,
+      "status": "SUCCEEDED",
+      "stop_reason": "",
+      "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b04-company-20261014/task/sources",
+      "ledger_row_index": 0,
+      "ledger_row": {
+        "timestamp_utc": "2026-10-13T16:59:32.188022+00:00",
+        "method": "GET",
+        "source_url": "https://data.sec.gov/submissions/CIK0001048286.json",
+        "status_code": "200",
+        "purpose": "RECORDED_TEST_ONLY_ORDINARY_COMPANY",
+        "repo_relative_path": "evidence/request_attempts/76/76cd1c3621618173eebcc404ed4d01a0d744971d1d7f0f9b6e4962ed1bafa161/CIK0001048286.json",
+        "headers_repo_relative_path": "evidence/request_attempts/76/76cd1c3621618173eebcc404ed4d01a0d744971d1d7f0f9b6e4962ed1bafa161/CIK0001048286.json.bdcccbf2d4579d767db15c29fea8dcc5c91b9630fabeeea42f8d9481157c1160.headers.json",
+        "content_length": "147569",
+        "content_sha256": "76cd1c3621618173eebcc404ed4d01a0d744971d1d7f0f9b6e4962ed1bafa161",
+        "accession": "",
+        "document_name": "CIK0001048286.json",
+        "user_agent": "axaxl 12@qq.com",
+        "retry_attempt": "0",
+        "error": ""
+      },
+      "receipt_id": "sha256:f1811b9be56066bed14a94b10dae561573fa50037005fec26cc12aaddd57942e"
+    },
+    {
+      "record_type": "ORDINARY_COMPANY_SEC_RECEIPT",
+      "intent_id": "sha256:2b525ff9c5873b3b5d2fac9f0a052749ed170a3b0510c6fff42d2878f9c69856",
+      "execution_mode": "RECORDED_TEST_ONLY",
+      "actual_sec_egress_count": 0,
+      "automatic_retry_count": 0,
+      "status": "SUCCEEDED",
+      "stop_reason": "",
+      "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b04-company-20261014/task/sources",
+      "ledger_row_index": 1,
+      "ledger_row": {
+        "timestamp_utc": "2026-10-13T16:59:33.209029+00:00",
+        "method": "GET",
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+        "status_code": "200",
+        "purpose": "RECORDED_TEST_ONLY_ORDINARY_COMPANY",
+        "repo_relative_path": "evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json",
+        "headers_repo_relative_path": "evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json.7ccbd2497c8a268f2c7909eafb69cb1e09531fef98edcb2232132e9989770439.headers.json",
+        "content_length": "3269111",
+        "content_sha256": "af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+        "accession": "",
+        "document_name": "CIK0001048286.json",
+        "user_agent": "axaxl 12@qq.com",
+        "retry_attempt": "0",
+        "error": ""
+      },
+      "receipt_id": "sha256:8bca6764ca3b3c7f68169425cae089c56964de7b58083c9e3a979d1d8ad4d6ab"
+    },
+    {
+      "record_type": "ORDINARY_COMPANY_SEC_RECEIPT",
+      "intent_id": "sha256:bd444a8f09bf88588de9d7398e395c3f55c01089f227587b564d71ab189456aa",
+      "execution_mode": "RECORDED_TEST_ONLY",
+      "actual_sec_egress_count": 0,
+      "automatic_retry_count": 0,
+      "status": "SUCCEEDED",
+      "stop_reason": "",
+      "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b04-company-20261014/task/sources",
+      "ledger_row_index": 2,
+      "ledger_row": {
+        "timestamp_utc": "2026-10-13T16:59:34.216217+00:00",
+        "method": "GET",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
+        "status_code": "200",
+        "purpose": "RECORDED_TEST_ONLY_ORDINARY_COMPANY",
+        "repo_relative_path": "evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm",
+        "headers_repo_relative_path": "evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm.7c4138c3ecd8dd2318b99145fa2d9b28bafaa285b14f3afd264ebbcc7bad6629.headers.json",
+        "content_length": "2048661",
+        "content_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+        "accession": "0001048286-26-000007",
+        "document_name": "mar-20251231.htm",
+        "user_agent": "axaxl 12@qq.com",
+        "retry_attempt": "0",
+        "error": ""
+      },
+      "receipt_id": "sha256:8dc28a828927295200f493fc03278596a47b629ad40914aabff54337b4412077"
+    },
+    {
+      "record_type": "ORDINARY_COMPANY_SEC_RECEIPT",
+      "intent_id": "sha256:bb7a13b0f6bb1097eb36662b7683f904e8da5ee18f0697d266fd6abb398c4fc7",
+      "execution_mode": "RECORDED_TEST_ONLY",
+      "actual_sec_egress_count": 0,
+      "automatic_retry_count": 0,
+      "status": "SUCCEEDED",
+      "stop_reason": "",
+      "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b04-company-20261014/task/sources",
+      "ledger_row_index": 3,
+      "ledger_row": {
+        "timestamp_utc": "2026-10-13T16:59:35.220811+00:00",
+        "method": "GET",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/index.json",
+        "status_code": "200",
+        "purpose": "RECORDED_TEST_ONLY_ORDINARY_COMPANY",
+        "repo_relative_path": "evidence/request_attempts/a2/a2b20ee4c353b24e3772bfbe4e2b6e43a17f244e63b32a1c70d6d780d46d7398/index.json",
+        "headers_repo_relative_path": "evidence/request_attempts/a2/a2b20ee4c353b24e3772bfbe4e2b6e43a17f244e63b32a1c70d6d780d46d7398/index.json.7fd4b1fa9a61fc920b64db5029e6a63bd9b9c37f186d653ce098c43afcb87ec9.headers.json",
+        "content_length": "9638",
+        "content_sha256": "a2b20ee4c353b24e3772bfbe4e2b6e43a17f244e63b32a1c70d6d780d46d7398",
+        "accession": "0001048286-26-000007",
+        "document_name": "index.json",
+        "user_agent": "axaxl 12@qq.com",
+        "retry_attempt": "0",
+        "error": ""
+      },
+      "receipt_id": "sha256:08ce7457132279ae4f45a2af418b375d0995fc824ff3048dfae04bfb0a73024a"
+    },
+    {
+      "record_type": "ORDINARY_COMPANY_SEC_RECEIPT",
+      "intent_id": "sha256:496e4b704da9f0af39b66a8b649d49ce9b945521033f6af78e47c3c0112c946d",
+      "execution_mode": "RECORDED_TEST_ONLY",
+      "actual_sec_egress_count": 0,
+      "automatic_retry_count": 0,
+      "status": "SUCCEEDED",
+      "stop_reason": "",
+      "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b04-company-20261014/task/sources",
+      "ledger_row_index": 4,
+      "ledger_row": {
+        "timestamp_utc": "2026-10-13T16:59:36.231143+00:00",
+        "method": "GET",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231_htm.xml",
+        "status_code": "200",
+        "purpose": "RECORDED_TEST_ONLY_ORDINARY_COMPANY",
+        "repo_relative_path": "evidence/request_attempts/39/39cdb4be609ec4e5e081e68f9be2d83cb8cc29c4ba915afa59a4847a24356150/mar-20251231_htm.xml",
+        "headers_repo_relative_path": "evidence/request_attempts/39/39cdb4be609ec4e5e081e68f9be2d83cb8cc29c4ba915afa59a4847a24356150/mar-20251231_htm.xml.dd5be7c96a7e07408bd1cf8ebde5dcf8abaa206cce1cc21e82872b250d1b3261.headers.json",
+        "content_length": "1596144",
+        "content_sha256": "39cdb4be609ec4e5e081e68f9be2d83cb8cc29c4ba915afa59a4847a24356150",
+        "accession": "0001048286-26-000007",
+        "document_name": "mar-20251231_htm.xml",
+        "user_agent": "axaxl 12@qq.com",
+        "retry_attempt": "0",
+        "error": ""
+      },
+      "receipt_id": "sha256:6ddedc069317b1c97ca780a32d1196586f3cf1bd317b2a37eff134d09a9546ed"
+    }
+  ]
+}
