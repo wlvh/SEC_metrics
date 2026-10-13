@@ -1,6 +1,19 @@
 # 历史D02：完整保存子审阅消费与原生case
 
-本方负责历史来源/期间、完整Item8请求及只替Item8的业务汇总，公共[#239](https://github.com/wlvh/SEC_metrics/pull/239)负责七文件保存回答读取；公司分派/controller/store/renderer由#28接。有限源页眉规则消费[#240](https://github.com/wlvh/SEC_metrics/pull/240)当前5a74，默认旧路径不改。候选用同一可取得组合，不能依赖对方未提交目录。
+本方负责历史来源/期间、完整Item8请求及只替Item8的业务汇总，公共[#239](https://github.com/wlvh/SEC_metrics/pull/239)负责七文件保存回答读取；公司分派/controller/store/renderer由#28接。有限源页眉规则须消费[#240](https://github.com/wlvh/SEC_metrics/pull/240)修后79fc9502，默认旧路径不改；本文记录的原生case按当时5a74执行，公共接线须使用修后年份保护。候选用同一可取得组合，不能依赖对方未提交目录。
+
+## 业务范围复核：引用整段上下文不等于每段都是法律发现
+
+公共负责人通读实际Ford45块后询问担保/一般保修部分。已有针对性参照已明示这种引用边界，不能仅以旧value相同或SYSTEM Evidence PASS回答：
+
+- [既有双向阅读](https://github.com/wlvh/SEC_metrics/blob/bcc0c0bc0293ba6b6ffc58b1f4e9034dbb52a786/docs/evidence/issue47_history/content-acceptance/d02-both-directions-read.json) 的`ford_2025.why_the_whole_note`：Item3只指“See Note24 ... discussion of loss contingencies”，不指定caption，因此原口径保整个Note24三部分。Marriott为反例：Item3指定caption，仅取那个caption，guarantee table仍在外。
+- [四份集合核对](https://github.com/wlvh/SEC_metrics/blob/bcc0c0bc0293ba6b6ffc58b1f4e9034dbb52a786/docs/evidence/issue47_history/d02-content-read/four-sets-both-directions.json) 逐项记录Ford20个Item3块加被引用Note24，排除8页眉；[旧阅读说明](https://github.com/wlvh/SEC_metrics/blob/bcc0c0bc0293ba6b6ffc58b1f4e9034dbb52a786/docs/evidence/issue47_history/d02-older-years/reader-brief.md) 对NOTE范围保引用上下文、对Item8 incidental内容另判。
+
+具体原文位置：3958/3959财务担保、3960 de-minimis非财务担保、3978/3979一般保修计提/回收及其后表格，在这个整note引用范围内保留为来源上下文，**不能称为独立诉讼发现或诉讼负债**。3961说明合同违约/第三方claim可触发的赔偿责任，也不据此断言实际已起诉。3956总引言说明三部分构成；实际诉讼/claims、损失确认政策和Item3中Hetsler/石棉/消费诉讼/NJDEP/Brazil税务诉讼仍按其原段落表述。
+
+H1 V1的保证无claim排除应用于它明确的Item8问题池；不能据此裁旧答案、无声将整个引用note缩成一个caption，也不能反过来说所有Note24段落都是法律发现。基础MD只给来源及文本存在性，Spec不主张案件数或总诉讼负债。上述整段范围是已有读取/业务参照判断，不是本次新增owner批准或新指标口径；当前公司呈现必须明确区分来源上下文和法律发现，不能借“完整45”隐含每块语义都已另行认可。公共方已获得这些固定链接/段落，按实际合同与引用关系对齐，若需后继表达修正不改旧Run/回答/接受记录。
+
+P1年份误当页码另在原PR240修回79fc9502；完整公共消费必须选修后规则，旧5a可比较身份但不能给后继成功。本文对原参照的复用不代替接收者亲复P1。
 
 ## 固定接口
 
