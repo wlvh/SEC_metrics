@@ -17,12 +17,46 @@ from .normal_run_specs import installed_ordinary_spec_documents
 from .records import validate_record
 
 METRIC_IDS = frozenset(installed_ordinary_spec_documents())
-LODGING_METRIC_IDS = frozenset({'B10','B11'})
-CURRENT_FINANCIAL_METRICS = frozenset({'A04'})
-SAVED_MODEL_METRIC_IDS = frozenset({'D04'})
-SAVED_METRIC_IDS = METRIC_IDS | LODGING_METRIC_IDS | CURRENT_FINANCIAL_METRICS | SAVED_MODEL_METRIC_IDS | {'B06','C04','A13'}
-EXPLICIT_CASE_METRICS = frozenset({'A03','A04','A09','A11','A12','A13','C03','C04','D01','D02','E01'})
 CURRENT_E01_SPEC_PATH = 'catalog/r6/E01_content_confirmed_ma_v1.md'
+ROUTE_CONFIG_PATH = 'config/ordinary_saved_result_routes_v1.json'
+
+
+def _route_catalog():
+    value = strict_json_file(path=Path(__file__).resolve().parents[2]/ROUTE_CONFIG_PATH)
+    _need(type(value) is dict and set(value) == {'schema_version','default','routes','explicit_case_metrics'}
+          and value['schema_version'] == 1, 'SAVED_ROUTE_CONFIG_INVALID')
+    _need(type(value['routes']) is dict and type(value['explicit_case_metrics']) is list
+          and all(type(m) is str and m for m in value['explicit_case_metrics'])
+          and len(value['explicit_case_metrics']) == len(set(value['explicit_case_metrics'])),
+          'SAVED_ROUTE_CONFIG_INVALID')
+    for metric, entry in [('default',value['default']),*value['routes'].items()]:
+        _need(type(metric) is str and type(entry) is dict
+              and set(entry) == {'module','function','call_style','family'}
+              and all(type(v) is str and v for v in entry.values())
+              and entry['module'].startswith('vnext.') and all(part.isidentifier() for part in entry['module'].split('.'))
+              and entry['function'].isidentifier()
+              and entry['family'] in {'ordinary','financial','statement','geography','auditor','borrowings','saved_model','lodging'}
+              and entry['call_style'] in {'positional3','source_company','source_company_metric','repo_company_metric_rules'},
+              'SAVED_ROUTE_ENTRY_INVALID:'+str(metric))
+    return value
+
+
+def selected_case_registration(metric_id):
+    catalog = _route_catalog()
+    return dict(catalog['routes'].get(metric_id,catalog['default']))
+
+
+def _need(condition, reason):
+    if not condition:
+        raise ValueError(reason)
+
+
+_INITIAL_ROUTES = _route_catalog()
+LODGING_METRIC_IDS = frozenset(m for m,e in _INITIAL_ROUTES['routes'].items() if e['family']=='lodging')
+CURRENT_FINANCIAL_METRICS = frozenset(m for m,e in _INITIAL_ROUTES['routes'].items() if e['family']=='financial')
+SAVED_MODEL_METRIC_IDS = frozenset(m for m,e in _INITIAL_ROUTES['routes'].items() if e['family']=='saved_model')
+SAVED_METRIC_IDS = METRIC_IDS | frozenset(_INITIAL_ROUTES['routes'])
+EXPLICIT_CASE_METRICS = frozenset(_INITIAL_ROUTES['explicit_case_metrics'])
 
 
 def current_e01_scope(saved):
@@ -41,11 +75,6 @@ def _program_version(root):
         return completed.stdout.strip() if completed.returncode == 0 else None
     return {'commit': git('rev-parse', 'HEAD'),
             'has_uncommitted_changes': bool(git('status', '--porcelain'))}
-
-
-def _need(condition, reason):
-    if not condition:
-        raise ValueError(reason)
 
 
 def _json(value):
@@ -122,29 +151,19 @@ def _current_financial_case(source, company, metric):
 def create_saved_result(*, source_root, output_root, company_id, metric_id, shared_input_root=None):
     """Prepare through the existing Calculator and save its actual records."""
     _need(metric_id in SAVED_METRIC_IDS, 'SAVED_RESULT_ROUTE_NOT_IMPLEMENTED')
+    registration = selected_case_registration(metric_id)
     def prepare(source):
-        if metric_id in CURRENT_FINANCIAL_METRICS:
-            return _current_financial_case(source,company_id,metric_id)
-        if metric_id in {'B04','B07'}:
-            from .current_statement_metric_case import prepare_current_statement_metric_case
-            return prepare_current_statement_metric_case(source_root=source,company_id=company_id,metric_id=metric_id)
-        if metric_id == 'A13':
-            from .current_geography_case import prepare_current_geography_case
-            return prepare_current_geography_case(source_root=source,company_id=company_id)
-        if metric_id == 'C04':
-            from .current_auditor_case import prepare_current_auditor_case
-            return prepare_current_auditor_case(source_root=source,company_id=company_id)
-        if metric_id == 'B06':
-            from .current_b06_case import prepare_current_b06_case
-            return prepare_current_b06_case(source_root=source,company_id=company_id)
-        if metric_id in SAVED_MODEL_METRIC_IDS:
-            from .ordinary_d04_saved_route import prepare_case
-            return prepare_case(source_root=source,company_id=company_id,metric_id=metric_id)
-        if metric_id in LODGING_METRIC_IDS:
-            from .normal_lodging_results import prepare_ordinary_lodging_case
-            return prepare_ordinary_lodging_case(repo_root=source,company_id=company_id,metric_id=metric_id,
-                rules_root=Path(__file__).resolve().parents[2])
-        return _ordinary_case(source,company_id,metric_id)
+        from importlib import import_module
+        factory = getattr(import_module(registration['module']),registration['function'])
+        style = registration['call_style']
+        if style == 'positional3':
+            return factory(source,company_id,metric_id)
+        if style == 'source_company_metric':
+            return factory(source_root=source,company_id=company_id,metric_id=metric_id)
+        if style == 'source_company':
+            return factory(source_root=source,company_id=company_id)
+        return factory(repo_root=source,company_id=company_id,metric_id=metric_id,
+                       rules_root=Path(__file__).resolve().parents[2])
     return _save_case(source_root=source_root, output_root=output_root, company_id=company_id,
         metric_id=metric_id, factory=prepare,
         calculation_performed=True, shared_input_root=shared_input_root)

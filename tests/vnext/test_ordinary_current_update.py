@@ -204,6 +204,9 @@ class CurrentProcessingConfigurationTest(unittest.TestCase):
         from copy import deepcopy
         from scripts.vnext.ordinary_update_compatibility import compatible_configuration
         current=update._configuration(ROOT,'pfizer','E01')
+        # This test covers the original finite historical conversion only.
+        # The new registration transition has its own actual-code tests.
+        current['processing_files']['scripts/vnext/ordinary_saved_result.py']='9f7de93d41929669c7f08f394425c1e3ad181896bdde3fa6d079ca3924272d21'
         previous=deepcopy(current)
         previous['processing_files']['scripts/vnext/ordinary_saved_result.py']='f7229fa090da9558f8fbbe759491671bc0adbf668e193e303fbbc42206947681'
         previous['processing_files']['scripts/vnext/ordinary_current_update.py']='010907fc9357bec243cf1f35e2915f27fe27e44b24d9410e19f954db8802917c'

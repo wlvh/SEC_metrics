@@ -1,0 +1,113 @@
+{
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics",
+  "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/selected-registration-new-company-20261013/state",
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+  "phases": [
+    {
+      "name": "first",
+      "seconds": 1.979564292007126,
+      "exit_code": 0,
+      "metric": {
+        "metric_id": "B01",
+        "status": "CANDIDATE_READY",
+        "attempt_id": "e124a5e822df4edc842fbf569a9231a3",
+        "version": "de8caac15d5a46b196a0105a2fc6a015",
+        "result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/selected-registration-new-company-20261013/state/updates/B01/results/de8caac15d5a46b196a0105a2fc6a015",
+        "calculation_performed": true,
+        "new_candidate_created": true,
+        "result_reason_code": "PASS",
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "defect_holds": [],
+        "read_result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/selected-registration-new-company-20261013/state/updates/B01/results/de8caac15d5a46b196a0105a2fc6a015",
+        "program_version": {
+          "commit": "5612d1648b609202cc8fcc9db902e2219564b4a8",
+          "has_uncommitted_changes": true
+        }
+      }
+    },
+    {
+      "name": "repeat",
+      "seconds": 0.05687970801955089,
+      "exit_code": 0,
+      "metric": {
+        "metric_id": "B01",
+        "status": "NO_SOURCE_CONTENT_CHANGE",
+        "attempt_id": "1606ae4f2fd543559a7d94322ba25bbb",
+        "version": "de8caac15d5a46b196a0105a2fc6a015",
+        "result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/selected-registration-new-company-20261013/state/updates/B01/results/de8caac15d5a46b196a0105a2fc6a015",
+        "result_reason_code": "PASS",
+        "raw_input_unchanged": true,
+        "calculation_performed": false,
+        "new_candidate_created": false,
+        "source_check_versions": {
+          "scripts/vnext/ordinary_current_update.py": "f9c91f109474497151866f9c0cb6a6a16a01267e44a07ba6d3eacf9fe3568e3c",
+          "scripts/vnext/request_bindings.py": "d0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee",
+          "scripts/vnext/ordinary_update_compatibility.py": "dcd5f7fad86dd36fec7ffc1ce15cb274cd3670dba213777b6cdaa4a4090d80b9",
+          "scripts/vnext/ordinary_result_registration.py": "018f655c160d44ebc6088406d50754126db6377b12d49bc3814d1bf8b792a680"
+        },
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "defect_holds": [],
+        "read_result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/selected-registration-new-company-20261013/state/updates/B01/results/de8caac15d5a46b196a0105a2fc6a015",
+        "program_version": {
+          "commit": "5612d1648b609202cc8fcc9db902e2219564b4a8",
+          "has_uncommitted_changes": true
+        }
+      }
+    }
+  ],
+  "row": {
+    "company": "Marriott International",
+    "cik": "1048286",
+    "metric_id": "B01",
+    "metric_name": "Revenue",
+    "value": "26186000000",
+    "unit": "USD",
+    "status": "OK",
+    "source_class": "STD_XBRL",
+    "formula": "direct",
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31",
+    "fiscal_year": "2025",
+    "fiscal_period": "ANNUAL",
+    "accession": "0001048286-26-000007",
+    "form": "10-K",
+    "filed_date": "2026-02-10",
+    "concept_or_section": "Revenues",
+    "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2025, \"period_end\": \"2025-12-31\", \"period_start\": \"2025-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"entity_scope\": \"registrant\", \"period_basis\": \"source_annual_duration\"}, \"selection\": {\"reason_code\": \"PASS\", \"revenue_scope\": {\"complete_scope_proven\": false, \"method\": \"SELECTED_REVENUE_COMPONENT_ADMISSION_V1\", \"scope_id\": \"sha256:289f1cdd585f2962cc9557c9f6daf0deb2601c3df2e5dc62b449443043f3bf45\", \"status\": \"NO_DEMONSTRATED_SPLIT\"}, \"selected_fact_ids\": [\"fact:sha256:640d9a21651aece0a442d56ed33584b1de816baa0a4cbeb0b717c112ca0c878a\"], \"source_candidate_count\": 3, \"source_reported_periods\": [[\"2023-01-01\", \"2023-12-31\"], [\"2024-01-01\", \"2024-12-31\"], [\"2025-01-01\", \"2025-12-31\"]]}, \"source_reference_ids\": [\"sha256:8483c531940100379bd44f9d4f6c3fc1ed47986590151c30f340f2b4a305ef9f\", \"sha256:40127921b5837f721fb7ec41028d9eeeefb0855d09261b0fef4a1985f5298d4b\", \"sha256:3109bea68ae11f5e3c6ebd77114cda1d6f17d60e772b2630baffdb2639c483e9\"]}",
+    "confidence": "",
+    "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+    "company_id": "marriott_international",
+    "result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/selected-registration-new-company-20261013/state/updates/B01/results/de8caac15d5a46b196a0105a2fc6a015",
+    "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+    "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+    "period_role": "REQUESTED_RESULT",
+    "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+    "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+    "defect_holds": "[]",
+    "requested_in_latest_execution": "True"
+  },
+  "independent_read_seconds": 0.40456100000301376,
+  "result_files_preserved": 7,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

@@ -66,7 +66,7 @@ def _configuration(source, company, metric):
             'config/b06_special_scope_v1.json','catalog/r5/B06_bond_leases_v5.md',
             'catalog/r5/B06_inclusive_table_v6.md','catalog/r5/B06_note_carrying_v4.md'})
     paths.update({'scripts/vnext/ordinary_current_update.py','scripts/vnext/ordinary_saved_result.py',
-                  'scripts/vnext/csv_output.py','scripts/vnext/ordinary_update_compatibility.py',
+                  'scripts/vnext/csv_output.py','scripts/vnext/ordinary_update_compatibility.py','scripts/vnext/ordinary_result_registration.py',
                   'config/issue28_normal_results_v2.json'})
     # The old Requirement inherited these dependencies implicitly. Ordinary
     # records must name their actual shared parser/calculator dependencies.
@@ -154,7 +154,12 @@ def _configuration(source, company, metric):
     repository_company_traits(repo_root=ROOT,company_id=company)
     paths.discard('config/company_registry.csv')
     paths.add('scripts/vnext/ordinary_registry_scope.py')
+    from .ordinary_saved_result import selected_case_registration
+    registration = selected_case_registration(metric)
+    producer_path = ROOT/('scripts/'+registration['module'].replace('.','/')+'.py')
+    paths.add(str(producer_path.relative_to(ROOT)))
     return {'company_id':company,'metric_id':metric,'source_root':str(source),
+            'saved_result_registration':registration,
         'processing_files':{p:sha256_file(path=ROOT/p) for p in sorted(paths)},
         'company_registry_rows':{
             'program':registered_company_row(repo_root=ROOT,company_id=company),
@@ -171,7 +176,8 @@ def _same_processing_configuration(previous, current):
     """
     checking = {'scripts/vnext/ordinary_current_update.py',
                 'scripts/vnext/request_bindings.py',
-                'scripts/vnext/ordinary_update_compatibility.py'}
+                'scripts/vnext/ordinary_update_compatibility.py',
+                'scripts/vnext/ordinary_result_registration.py'}
     def business(config):
         return {**config,'processing_files':{path:digest for path,digest in config.get('processing_files',{}).items()
                                             if path not in checking}}
@@ -311,6 +317,8 @@ def run_once(*, state_root, source_root, company_id, metric_id, shared_input_roo
                                     'previous_result':previous,'previous_check':completed})
         try:
             configuration = _configuration(source,company_id,metric_id)
+            if (case_factory is not None or current_case_factory is not None) and 'saved_result_registration' in configuration:
+                configuration = {**configuration,'saved_result_registration':{'call_style':'supplied_case'}}
             _need(type(processing_files) in (list,tuple) and len(processing_files)==len(set(processing_files)),
                   'CURRENT_UPDATE_PROCESSING_FILES_INVALID')
             extra = {}
@@ -359,8 +367,11 @@ def run_once(*, state_root, source_root, company_id, metric_id, shared_input_roo
                        for p in saved['manifest']['source_proofs']]
                 from .ordinary_update_compatibility import compatible_configuration
                 same_processing = _same_processing_configuration(comparison['configuration'], configuration)
-                compatible = not same_processing and compatible_configuration(
-                    comparison['configuration'], configuration)
+                from .ordinary_result_registration import same_registered_processing
+                registration_compatible = not same_processing and same_registered_processing(
+                    comparison['configuration'],configuration,saved['manifest'],ROOT)
+                compatible = registration_compatible or (not same_processing and compatible_configuration(
+                    comparison['configuration'], configuration))
                 parsed_equivalent=False
                 if (metric_id=='D04' and fiscal_year is None
                         and configuration==comparison['configuration'] and not source_errors
@@ -387,7 +398,7 @@ def run_once(*, state_root, source_root, company_id, metric_id, shared_input_roo
                         'raw_input_unchanged':True,'calculation_performed':False,'new_candidate_created':False,
                         'source_check_versions':{path:configuration.get('processing_files',{}).get(path)
                             for path in ('scripts/vnext/ordinary_current_update.py','scripts/vnext/request_bindings.py',
-                                         'scripts/vnext/ordinary_update_compatibility.py')},
+                                         'scripts/vnext/ordinary_update_compatibility.py','scripts/vnext/ordinary_result_registration.py')},
                         'source_observation_errors':source_errors,
                         'new_calls':{'provider':0,'paid':0,'sec':0},'production_authorized':False}
                     if fiscal_year is not None:report['requested_fiscal_year']=fiscal_year
@@ -403,7 +414,8 @@ def run_once(*, state_root, source_root, company_id, metric_id, shared_input_roo
                         # A new check can recognize the same inputs; the old
                         # result, terminal and last success keep their identities.
                         report['configuration_compatibility'] = (
-                            'FINITE_INSPECTED_E01_DISPATCH_ONLY' if metric_id=='E01'
+                            'INLINE_TO_SELECTED_REGISTRATION' if registration_compatible
+                            else 'FINITE_INSPECTED_E01_DISPATCH_ONLY' if metric_id=='E01'
                             else 'FINITE_D04_DISPATCH_ONLY')
                         report['completed_check'] = {**comparison, 'configuration':configuration,
                             'status':('CANDIDATE_WITHHELD' if status=='PREVIOUS_INPUT_WITHHELD'
