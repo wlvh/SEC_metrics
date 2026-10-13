@@ -1,6 +1,6 @@
 {
  "record_type": "D02_PREPARATION_COMPARISON",
- "tool_sha256": "cfc16e3b335052d8d5b3f439689f735b47b2160490edba1197eea08542ebde03",
+ "tool_sha256": "53bba2d7345e749db4574570249fc82d33bf7c8dee87e51577d52433022a09b6",
  "entry": "vnext.d02_reviewed_source.prepare_historical_legal_sources",
  "versions": {
   "baseline": {
@@ -107,7 +107,7 @@
    "samples": [
     "marriott_international:2021"
    ],
-   "seconds": 12.7
+   "seconds": 11.9
   },
   {
    "returncode": 0,
@@ -117,7 +117,7 @@
    "samples": [
     "marriott_international:2022"
    ],
-   "seconds": 14.0
+   "seconds": 13.7
   },
   {
    "returncode": 0,
@@ -137,7 +137,7 @@
    "samples": [
     "marriott_international:2024"
    ],
-   "seconds": 14.0
+   "seconds": 13.7
   },
   {
    "returncode": 0,
@@ -147,7 +147,7 @@
    "samples": [
     "marriott_international:2025"
    ],
-   "seconds": 10.6
+   "seconds": 9.7
   },
   {
    "returncode": 0,
@@ -157,7 +157,7 @@
    "samples": [
     "southwest_airlines:2021"
    ],
-   "seconds": 17.6
+   "seconds": 14.6
   },
   {
    "returncode": 0,
@@ -167,7 +167,7 @@
    "samples": [
     "southwest_airlines:2022"
    ],
-   "seconds": 20.2
+   "seconds": 18.0
   },
   {
    "returncode": 0,
@@ -176,306 +176,6 @@
    "label": "baseline",
    "samples": [
     "southwest_airlines:2023"
-   ],
-   "seconds": 19.3
-  },
-  {
-   "returncode": 0,
-   "timeout": false,
-   "stderr_tail": "",
-   "label": "baseline",
-   "samples": [
-    "southwest_airlines:2024"
-   ],
-   "seconds": 20.4
-  },
-  {
-   "returncode": 0,
-   "timeout": false,
-   "stderr_tail": "",
-   "label": "baseline",
-   "samples": [
-    "southwest_airlines:2025"
-   ],
-   "seconds": 10.4
-  },
-  {
-   "returncode": 0,
-   "timeout": false,
-   "stderr_tail": "",
-   "label": "baseline",
-   "samples": [
-    "ford_motor_company:2021"
-   ],
-   "seconds": 26.9
-  },
-  {
-   "returncode": 0,
-   "timeout": false,
-   "stderr_tail": "",
-   "label": "baseline",
-   "samples": [
-    "ford_motor_company:2022"
-   ],
-   "seconds": 33.0
-  },
-  {
-   "returncode": 0,
-   "timeout": false,
-   "stderr_tail": "",
-   "label": "baseline",
-   "samples": [
-    "ford_motor_company:2023"
-   ],
-   "seconds": 30.9
-  },
-  {
-   "returncode": 0,
-   "timeout": false,
-   "stderr_tail": "",
-   "label": "baseline",
-   "samples": [
-    "ford_motor_company:2024"
-   ],
-   "seconds": 30.5
-  },
-  {
-   "returncode": 0,
-   "timeout": false,
-   "stderr_tail": "",
-   "label": "baseline",
-   "samples": [
-    "ford_motor_company:2025"
-   ],
-   "seconds": 21.8
-  },
-  {
-   "returncode": 0,
-   "timeout": false,
-   "stderr_tail": "",
-   "label": "baseline",
-   "samples": [
-    "pfizer:2021"
-   ],
-   "seconds": 27.5
-  },
-  {
-   "returncode": 0,
-   "timeout": false,
-   "stderr_tail": "",
-   "label": "baseline",
-   "samples": [
-    "pfizer:2022"
-   ],
-   "seconds": 30.4
-  },
-  {
-   "returncode": 0,
-   "timeout": false,
-   "stderr_tail": "",
-   "label": "baseline",
-   "samples": [
-    "pfizer:2023"
-   ],
-   "seconds": 31.3
-  },
-  {
-   "returncode": 0,
-   "timeout": false,
-   "stderr_tail": "",
-   "label": "baseline",
-   "samples": [
-    "pfizer:2024"
-   ],
-   "seconds": 28.9
-  },
-  {
-   "returncode": 0,
-   "timeout": false,
-   "stderr_tail": "",
-   "label": "baseline",
-   "samples": [
-    "pfizer:2025"
-   ],
-   "seconds": 22.9
-  },
-  {
-   "returncode": 0,
-   "timeout": false,
-   "stderr_tail": "",
-   "label": "baseline",
-   "samples": [
-    "jpmorgan_chase:2021"
-   ],
-   "seconds": 119.1
-  },
-  {
-   "returncode": 0,
-   "timeout": false,
-   "stderr_tail": "",
-   "label": "baseline",
-   "samples": [
-    "jpmorgan_chase:2022"
-   ],
-   "seconds": 125.6
-  },
-  {
-   "returncode": 0,
-   "timeout": false,
-   "stderr_tail": "",
-   "label": "baseline",
-   "samples": [
-    "jpmorgan_chase:2023"
-   ],
-   "seconds": 108.8
-  },
-  {
-   "returncode": 0,
-   "timeout": false,
-   "stderr_tail": "",
-   "label": "baseline",
-   "samples": [
-    "jpmorgan_chase:2024"
-   ],
-   "seconds": 95.2
-  },
-  {
-   "returncode": 0,
-   "timeout": false,
-   "stderr_tail": "",
-   "label": "baseline",
-   "samples": [
-    "jpmorgan_chase:2025"
-   ],
-   "seconds": 63.3
-  },
-  {
-   "returncode": 0,
-   "timeout": false,
-   "stderr_tail": "",
-   "label": "baseline",
-   "samples": [
-    "salesforce:2021"
-   ],
-   "seconds": 18.1
-  },
-  {
-   "returncode": 0,
-   "timeout": false,
-   "stderr_tail": "",
-   "label": "baseline",
-   "samples": [
-    "salesforce:2022"
-   ],
-   "seconds": 16.8
-  },
-  {
-   "returncode": 0,
-   "timeout": false,
-   "stderr_tail": "",
-   "label": "baseline",
-   "samples": [
-    "salesforce:2023"
-   ],
-   "seconds": 18.7
-  },
-  {
-   "returncode": 0,
-   "timeout": false,
-   "stderr_tail": "",
-   "label": "baseline",
-   "samples": [
-    "salesforce:2024"
-   ],
-   "seconds": 16.9
-  },
-  {
-   "returncode": 0,
-   "timeout": false,
-   "stderr_tail": "",
-   "label": "baseline",
-   "samples": [
-    "salesforce:2025"
-   ],
-   "seconds": 16.6
-  },
-  {
-   "returncode": 0,
-   "timeout": false,
-   "stderr_tail": "",
-   "label": "baseline",
-   "samples": [
-    "lumen_technologies:2021"
-   ],
-   "seconds": 18.9
-  },
-  {
-   "returncode": 0,
-   "timeout": false,
-   "stderr_tail": "",
-   "label": "baseline",
-   "samples": [
-    "lumen_technologies:2022"
-   ],
-   "seconds": 20.2
-  },
-  {
-   "returncode": 0,
-   "timeout": false,
-   "stderr_tail": "",
-   "label": "baseline",
-   "samples": [
-    "lumen_technologies:2023"
-   ],
-   "seconds": 19.7
-  },
-  {
-   "returncode": 0,
-   "timeout": false,
-   "stderr_tail": "",
-   "label": "baseline",
-   "samples": [
-    "lumen_technologies:2024"
-   ],
-   "seconds": 22.5
-  },
-  {
-   "returncode": 0,
-   "timeout": false,
-   "stderr_tail": "",
-   "label": "baseline",
-   "samples": [
-    "lumen_technologies:2025"
-   ],
-   "seconds": 16.3
-  },
-  {
-   "returncode": 0,
-   "timeout": false,
-   "stderr_tail": "",
-   "label": "baseline",
-   "samples": [
-    "macys:2021"
-   ],
-   "seconds": 32.4
-  },
-  {
-   "returncode": 0,
-   "timeout": false,
-   "stderr_tail": "",
-   "label": "baseline",
-   "samples": [
-    "macys:2022"
-   ],
-   "seconds": 22.4
-  },
-  {
-   "returncode": 0,
-   "timeout": false,
-   "stderr_tail": "",
-   "label": "baseline",
-   "samples": [
-    "macys:2023"
    ],
    "seconds": 17.5
   },
@@ -485,9 +185,9 @@
    "stderr_tail": "",
    "label": "baseline",
    "samples": [
-    "macys:2024"
+    "southwest_airlines:2024"
    ],
-   "seconds": 16.3
+   "seconds": 19.5
   },
   {
    "returncode": 0,
@@ -495,9 +195,9 @@
    "stderr_tail": "",
    "label": "baseline",
    "samples": [
-    "macys:2025"
+    "southwest_airlines:2025"
    ],
-   "seconds": 16.6
+   "seconds": 9.9
   },
   {
    "returncode": 0,
@@ -505,9 +205,9 @@
    "stderr_tail": "",
    "label": "baseline",
    "samples": [
-    "paramount_skydance_paramount_global:2021"
+    "ford_motor_company:2021"
    ],
-   "seconds": 23.9
+   "seconds": 31.3
   },
   {
    "returncode": 0,
@@ -515,7 +215,37 @@
    "stderr_tail": "",
    "label": "baseline",
    "samples": [
-    "paramount_skydance_paramount_global:2022"
+    "ford_motor_company:2022"
+   ],
+   "seconds": 38.3
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "ford_motor_company:2023"
+   ],
+   "seconds": 35.9
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "ford_motor_company:2024"
+   ],
+   "seconds": 39.7
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "ford_motor_company:2025"
    ],
    "seconds": 27.8
   },
@@ -525,9 +255,279 @@
    "stderr_tail": "",
    "label": "baseline",
    "samples": [
+    "pfizer:2021"
+   ],
+   "seconds": 35.2
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "pfizer:2022"
+   ],
+   "seconds": 41.5
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "pfizer:2023"
+   ],
+   "seconds": 40.3
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "pfizer:2024"
+   ],
+   "seconds": 34.2
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "pfizer:2025"
+   ],
+   "seconds": 27.9
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "jpmorgan_chase:2021"
+   ],
+   "seconds": 134.4
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "jpmorgan_chase:2022"
+   ],
+   "seconds": 140.0
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "jpmorgan_chase:2023"
+   ],
+   "seconds": 126.6
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "jpmorgan_chase:2024"
+   ],
+   "seconds": 107.4
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "jpmorgan_chase:2025"
+   ],
+   "seconds": 59.3
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "salesforce:2021"
+   ],
+   "seconds": 14.5
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "salesforce:2022"
+   ],
+   "seconds": 14.9
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "salesforce:2023"
+   ],
+   "seconds": 17.8
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "salesforce:2024"
+   ],
+   "seconds": 17.4
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "salesforce:2025"
+   ],
+   "seconds": 16.5
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "lumen_technologies:2021"
+   ],
+   "seconds": 16.3
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "lumen_technologies:2022"
+   ],
+   "seconds": 17.0
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "lumen_technologies:2023"
+   ],
+   "seconds": 17.8
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "lumen_technologies:2024"
+   ],
+   "seconds": 21.0
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "lumen_technologies:2025"
+   ],
+   "seconds": 16.1
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "macys:2021"
+   ],
+   "seconds": 29.1
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "macys:2022"
+   ],
+   "seconds": 20.6
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "macys:2023"
+   ],
+   "seconds": 14.2
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "macys:2024"
+   ],
+   "seconds": 13.6
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "macys:2025"
+   ],
+   "seconds": 13.8
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "paramount_skydance_paramount_global:2021"
+   ],
+   "seconds": 19.1
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "paramount_skydance_paramount_global:2022"
+   ],
+   "seconds": 23.1
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
     "paramount_skydance_paramount_global:2023"
    ],
-   "seconds": 25.3
+   "seconds": 21.7
   },
   {
    "returncode": 0,
@@ -537,7 +537,7 @@
    "samples": [
     "paramount_skydance_paramount_global:2024"
    ],
-   "seconds": 22.3
+   "seconds": 18.4
   },
   {
    "returncode": 0,
@@ -547,7 +547,7 @@
    "samples": [
     "paramount_skydance_paramount_global:2025"
    ],
-   "seconds": 15.3
+   "seconds": 13.5
   },
   {
    "returncode": 0,
@@ -557,7 +557,7 @@
    "samples": [
     "enphase_energy:2021"
    ],
-   "seconds": 18.1
+   "seconds": 14.9
   },
   {
    "returncode": 0,
@@ -567,7 +567,7 @@
    "samples": [
     "enphase_energy:2022"
    ],
-   "seconds": 20.7
+   "seconds": 18.2
   },
   {
    "returncode": 0,
@@ -577,7 +577,7 @@
    "samples": [
     "enphase_energy:2023"
    ],
-   "seconds": 20.1
+   "seconds": 17.7
   },
   {
    "returncode": 0,
@@ -587,7 +587,7 @@
    "samples": [
     "enphase_energy:2024"
    ],
-   "seconds": 20.1
+   "seconds": 17.3
   },
   {
    "returncode": 0,
@@ -597,7 +597,7 @@
    "samples": [
     "enphase_energy:2025"
    ],
-   "seconds": 14.7
+   "seconds": 12.8
   },
   {
    "returncode": 0,
@@ -607,7 +607,7 @@
    "samples": [
     "marriott_international:2021"
    ],
-   "seconds": 12.4
+   "seconds": 11.0
   },
   {
    "returncode": 0,
@@ -617,7 +617,7 @@
    "samples": [
     "marriott_international:2022"
    ],
-   "seconds": 14.5
+   "seconds": 12.6
   },
   {
    "returncode": 0,
@@ -627,7 +627,7 @@
    "samples": [
     "marriott_international:2023"
    ],
-   "seconds": 15.6
+   "seconds": 12.5
   },
   {
    "returncode": 0,
@@ -637,7 +637,7 @@
    "samples": [
     "marriott_international:2024"
    ],
-   "seconds": 16.2
+   "seconds": 12.6
   },
   {
    "returncode": 0,
@@ -647,7 +647,7 @@
    "samples": [
     "marriott_international:2025"
    ],
-   "seconds": 11.6
+   "seconds": 9.5
   },
   {
    "returncode": 0,
@@ -657,7 +657,7 @@
    "samples": [
     "southwest_airlines:2021"
    ],
-   "seconds": 17.4
+   "seconds": 15.4
   },
   {
    "returncode": 0,
@@ -667,7 +667,7 @@
    "samples": [
     "southwest_airlines:2022"
    ],
-   "seconds": 21.8
+   "seconds": 17.9
   },
   {
    "returncode": 0,
@@ -677,7 +677,7 @@
    "samples": [
     "southwest_airlines:2023"
    ],
-   "seconds": 20.9
+   "seconds": 18.5
   },
   {
    "returncode": 0,
@@ -687,7 +687,7 @@
    "samples": [
     "southwest_airlines:2024"
    ],
-   "seconds": 21.3
+   "seconds": 18.2
   },
   {
    "returncode": 0,
@@ -697,7 +697,7 @@
    "samples": [
     "southwest_airlines:2025"
    ],
-   "seconds": 11.4
+   "seconds": 9.1
   },
   {
    "returncode": 0,
@@ -707,7 +707,7 @@
    "samples": [
     "ford_motor_company:2021"
    ],
-   "seconds": 30.5
+   "seconds": 24.4
   },
   {
    "returncode": 0,
@@ -717,7 +717,7 @@
    "samples": [
     "ford_motor_company:2022"
    ],
-   "seconds": 35.5
+   "seconds": 29.0
   },
   {
    "returncode": 0,
@@ -727,7 +727,7 @@
    "samples": [
     "ford_motor_company:2023"
    ],
-   "seconds": 33.5
+   "seconds": 27.4
   },
   {
    "returncode": 0,
@@ -737,7 +737,7 @@
    "samples": [
     "ford_motor_company:2024"
    ],
-   "seconds": 33.2
+   "seconds": 26.8
   },
   {
    "returncode": 0,
@@ -747,7 +747,7 @@
    "samples": [
     "ford_motor_company:2025"
    ],
-   "seconds": 23.8
+   "seconds": 20.3
   },
   {
    "returncode": 0,
@@ -757,7 +757,7 @@
    "samples": [
     "pfizer:2021"
    ],
-   "seconds": 31.0
+   "seconds": 24.8
   },
   {
    "returncode": 0,
@@ -767,7 +767,7 @@
    "samples": [
     "pfizer:2022"
    ],
-   "seconds": 29.2
+   "seconds": 24.7
   },
   {
    "returncode": 0,
@@ -777,7 +777,7 @@
    "samples": [
     "pfizer:2023"
    ],
-   "seconds": 29.2
+   "seconds": 24.1
   },
   {
    "returncode": 0,
@@ -787,7 +787,7 @@
    "samples": [
     "pfizer:2024"
    ],
-   "seconds": 29.9
+   "seconds": 23.8
   },
   {
    "returncode": 0,
@@ -797,7 +797,7 @@
    "samples": [
     "pfizer:2025"
    ],
-   "seconds": 20.9
+   "seconds": 16.8
   },
   {
    "returncode": 0,
@@ -807,7 +807,7 @@
    "samples": [
     "jpmorgan_chase:2021"
    ],
-   "seconds": 122.7
+   "seconds": 103.3
   },
   {
    "returncode": 0,
@@ -817,7 +817,7 @@
    "samples": [
     "jpmorgan_chase:2022"
    ],
-   "seconds": 130.9
+   "seconds": 108.5
   },
   {
    "returncode": 0,
@@ -827,7 +827,7 @@
    "samples": [
     "jpmorgan_chase:2023"
    ],
-   "seconds": 112.2
+   "seconds": 97.0
   },
   {
    "returncode": 0,
@@ -837,7 +837,7 @@
    "samples": [
     "jpmorgan_chase:2024"
    ],
-   "seconds": 97.5
+   "seconds": 84.5
   },
   {
    "returncode": 0,
@@ -847,7 +847,7 @@
    "samples": [
     "jpmorgan_chase:2025"
    ],
-   "seconds": 63.9
+   "seconds": 54.3
   },
   {
    "returncode": 0,
@@ -857,7 +857,7 @@
    "samples": [
     "salesforce:2021"
    ],
-   "seconds": 17.7
+   "seconds": 14.7
   },
   {
    "returncode": 0,
@@ -867,7 +867,7 @@
    "samples": [
     "salesforce:2022"
    ],
-   "seconds": 16.6
+   "seconds": 14.0
   },
   {
    "returncode": 0,
@@ -877,7 +877,7 @@
    "samples": [
     "salesforce:2023"
    ],
-   "seconds": 19.5
+   "seconds": 16.7
   },
   {
    "returncode": 0,
@@ -887,7 +887,7 @@
    "samples": [
     "salesforce:2024"
    ],
-   "seconds": 18.1
+   "seconds": 15.6
   },
   {
    "returncode": 0,
@@ -897,7 +897,7 @@
    "samples": [
     "salesforce:2025"
    ],
-   "seconds": 17.9
+   "seconds": 14.8
   },
   {
    "returncode": 0,
@@ -907,7 +907,7 @@
    "samples": [
     "lumen_technologies:2021"
    ],
-   "seconds": 18.5
+   "seconds": 15.9
   },
   {
    "returncode": 0,
@@ -917,7 +917,7 @@
    "samples": [
     "lumen_technologies:2022"
    ],
-   "seconds": 19.1
+   "seconds": 17.3
   },
   {
    "returncode": 0,
@@ -927,7 +927,7 @@
    "samples": [
     "lumen_technologies:2023"
    ],
-   "seconds": 19.7
+   "seconds": 16.6
   },
   {
    "returncode": 0,
@@ -937,7 +937,7 @@
    "samples": [
     "lumen_technologies:2024"
    ],
-   "seconds": 22.4
+   "seconds": 19.8
   },
   {
    "returncode": 0,
@@ -947,7 +947,7 @@
    "samples": [
     "lumen_technologies:2025"
    ],
-   "seconds": 17.1
+   "seconds": 15.3
   },
   {
    "returncode": 0,
@@ -957,7 +957,7 @@
    "samples": [
     "macys:2021"
    ],
-   "seconds": 31.4
+   "seconds": 27.5
   },
   {
    "returncode": 0,
@@ -967,7 +967,7 @@
    "samples": [
     "macys:2022"
    ],
-   "seconds": 21.8
+   "seconds": 19.5
   },
   {
    "returncode": 0,
@@ -977,7 +977,7 @@
    "samples": [
     "macys:2023"
    ],
-   "seconds": 15.7
+   "seconds": 14.0
   },
   {
    "returncode": 0,
@@ -987,7 +987,7 @@
    "samples": [
     "macys:2024"
    ],
-   "seconds": 15.3
+   "seconds": 13.8
   },
   {
    "returncode": 0,
@@ -997,7 +997,7 @@
    "samples": [
     "macys:2025"
    ],
-   "seconds": 15.2
+   "seconds": 13.2
   },
   {
    "returncode": 0,
@@ -1007,7 +1007,7 @@
    "samples": [
     "paramount_skydance_paramount_global:2021"
    ],
-   "seconds": 21.2
+   "seconds": 18.8
   },
   {
    "returncode": 0,
@@ -1017,7 +1017,7 @@
    "samples": [
     "paramount_skydance_paramount_global:2022"
    ],
-   "seconds": 25.1
+   "seconds": 22.8
   },
   {
    "returncode": 0,
@@ -1027,7 +1027,7 @@
    "samples": [
     "paramount_skydance_paramount_global:2023"
    ],
-   "seconds": 24.5
+   "seconds": 21.3
   },
   {
    "returncode": 0,
@@ -1037,7 +1037,7 @@
    "samples": [
     "paramount_skydance_paramount_global:2024"
    ],
-   "seconds": 19.5
+   "seconds": 18.0
   },
   {
    "returncode": 0,
@@ -1047,7 +1047,7 @@
    "samples": [
     "paramount_skydance_paramount_global:2025"
    ],
-   "seconds": 14.2
+   "seconds": 13.5
   },
   {
    "returncode": 0,
@@ -1057,7 +1057,7 @@
    "samples": [
     "enphase_energy:2021"
    ],
-   "seconds": 17.1
+   "seconds": 15.3
   },
   {
    "returncode": 0,
@@ -1067,7 +1067,7 @@
    "samples": [
     "enphase_energy:2022"
    ],
-   "seconds": 20.5
+   "seconds": 17.9
   },
   {
    "returncode": 0,
@@ -1077,7 +1077,7 @@
    "samples": [
     "enphase_energy:2023"
    ],
-   "seconds": 19.3
+   "seconds": 17.4
   },
   {
    "returncode": 0,
@@ -1087,7 +1087,7 @@
    "samples": [
     "enphase_energy:2024"
    ],
-   "seconds": 18.7
+   "seconds": 16.8
   },
   {
    "returncode": 0,
@@ -1097,7 +1097,7 @@
    "samples": [
     "enphase_energy:2025"
    ],
-   "seconds": 14.0
+   "seconds": 12.6
   }
  ],
  "problems": [],
