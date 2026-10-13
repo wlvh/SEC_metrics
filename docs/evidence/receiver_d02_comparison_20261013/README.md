@@ -1,6 +1,6 @@
 # D02 准备对照工具：首次实际运行（#259 已知案例）
 
-- 工具：`tools/compare_d02_preparation.py`（与本目录同一 PR）。`manifest.json` 中的 `tool_sha256` 即本 PR 的工具文件。
+- 工具：`tools/compare_d02_preparation.py`（与本目录同一 PR）。本次运行用的是提交 `8e028b03` 中的版本，`manifest.json` 的 `tool_sha256`（`9080f608…`）即该版本；之后只增加了 `--companies` 输入校验，不影响全注册表默认运行。
 - 对照版本：`c25872ee`，即当时的 main。候选版本：#259 的 head `9934615f`，它已包含 `c25872ee`。两个提交都能在仓库中取到（main 历史与 `refs/pull/259/head`），可以复查或重跑。
 - 来源根：按 #52 `evidence/issue47_acquired` 离线恢复的历史保存来源，共 4505 个文件，哈希 `sha256:a1975d77…`，运行前后一致。
 - 范围：注册表 10 家 × FY2021–2025，共 50 个样本，全部比到。每个样本单独一个工作进程，4 个并行，Python 3.13.16，网络禁止，总用时 约 12.6 分钟。

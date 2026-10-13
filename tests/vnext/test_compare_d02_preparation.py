@@ -208,6 +208,9 @@ class PinnedCommitRunTest(unittest.TestCase):
             self.git(repo, 'commit', '-q', '-m', 'baseline')
             baseline = self.git(repo, 'rev-parse', 'HEAD')
             (repo / 'scripts' / 'vnext' / 'd02_reviewed_source.py').write_text('REFUSE = False\n' + STUB)
+            # Only the candidate registers the company whose producer leaves a file behind.
+            (repo / 'config' / 'company_registry.csv').write_text('company_id,display_name\n'
+                                                                  'alpha,alpha\nrefused,refused\nlitter,litter\n')
             self.git(repo, 'commit', '-q', '-am', 'candidate')
             candidate = self.git(repo, 'rev-parse', 'HEAD')
             write_sources(sources, ['alpha', 'refused'])
@@ -217,6 +220,9 @@ class PinnedCommitRunTest(unittest.TestCase):
                 code = tool.main(common + ['--output-dir', str(Path(tmp, 'out1')), '--fail-on', 'OK_TO_FAIL'])
                 flagged = tool.main(common + ['--output-dir', str(Path(tmp, 'out2')), '--fail-on', 'FAIL_TO_OK'])
                 littered = tool.main(common + ['--output-dir', str(Path(tmp, 'out3')), '--companies', 'litter'])
+                for invalid in ('nosuch', ',', 'alpha,alpha'):
+                    with self.subTest(companies=invalid), self.assertRaises(SystemExit):
+                        tool.main(common + ['--output-dir', str(Path(tmp, 'bad', invalid)), '--companies', invalid])
             summary = Path(tmp, 'out1', 'summary.md').read_text()
             manifest = json.loads(Path(tmp, 'out1', 'manifest.json').read_text())
             littered_summary = Path(tmp, 'out3', 'summary.md').read_text()

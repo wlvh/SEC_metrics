@@ -485,9 +485,12 @@ def main(argv=None):
             _git(repo, 'worktree', 'add', '--detach', str(code / label), versions[label]['commit'])
             added.append(code / label)
         registry = {label: registry_companies(code / label) for label in versions}
-        companies = [c for c in args.companies.split(',') if c] if args.companies else registry['baseline']
-        if len(companies) != len(set(companies)):
-            raise SystemExit('--companies repeats a company id')
+        companies = ([c for c in args.companies.split(',') if c] if args.companies is not None
+                     else registry['baseline'])
+        unknown = sorted(set(companies) - set(registry['baseline']) - set(registry['candidate']))
+        if not companies or unknown or len(companies) != len(set(companies)):
+            raise SystemExit('--companies must name distinct companies from either registry; unknown: '
+                             + (', '.join(unknown) or 'none'))
         years = parse_years(args.fiscal_years)
         samples = [f'{company}:{year}' for company in companies for year in years]
         pairs = [[company, year] for company in companies for year in years]

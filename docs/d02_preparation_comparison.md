@@ -26,7 +26,7 @@ python3 tools/compare_d02_preparation.py --baseline origin/main --candidate "$C"
 ```
 
 其他参数：
-- `--companies`：默认是对照版本注册表里的全部公司；只给一部分时，结果会标明“部分范围”。
+- `--companies`：默认是对照版本注册表里的全部公司；只给一部分时，结果会标明“部分范围”。所给公司必须出现在任一版本的注册表中，为空或有重复都直接报错。
 - `--fiscal-years`：默认 `2021-2025`。
 - `--jobs`：默认 4，是两个版本合计同时运行的工作进程数。每个样本单独一个进程，一个样本崩溃或卡住只影响它自己。
 - `--timeout-per-sample`：默认 600 秒，限制单个样本；超时的样本记为未比到。
@@ -74,6 +74,7 @@ python3 tools/compare_d02_preparation.py --baseline origin/main --candidate "$C"
 - 只覆盖 D02 准备，不含 D03 结果、模型回答的应用、公司全链和 CSV。
 - 样本只取注册公司。原件目录里为其他用途保存、但不在注册表中的文档，不在比较范围内。
 - 结果依赖所用的保存来源根。双方应核对 `manifest.json` 里的来源根哈希一致；历史来源可按 #52 的 `evidence/issue47_acquired` 离线恢复。
+- 工具不能阻止被测代码写入来源根，只在运行后比对哈希，发现改动即判为不完整。请对可恢复的副本运行（例如按 #52 恢复的目录）。
 - 两个工作树建在输出目录下，运行结束后删除；运行被中断时，用 `git worktree prune` 清理。
 
 ## 维护
