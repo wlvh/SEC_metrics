@@ -1,0 +1,28 @@
+{
+  "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+  "metrics": [
+    {
+      "metric_id": "B04",
+      "status": "INPUT_OR_EXECUTION_FAILED",
+      "reason": "module, class, method, function, traceback, frame, or code object was expected, got MagicMock",
+      "error_type": "TypeError",
+      "read_result_id": "sha256:93e0d562375105fa889e094c463667054e32eb24406d7ea01333cc8dc6fba0ea",
+      "requested_fiscal_year": 2025
+    },
+    {
+      "metric_id": "D02",
+      "status": "PROCESSING_INPUT_OR_IMPLEMENTATION_REQUIRED",
+      "reason": "This saved-source branch has no complete current processing interface for D02",
+      "error_type": null,
+      "read_result_id": null,
+      "requested_fiscal_year": 2025
+    }
+  ],
+  "verification": "REPEAT_SPY_REPLACED_CALLABLE_IDENTITY_NOT_BUSINESS_FAILURE",
+  "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/known-history-partial-marriott-20261013/state",
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

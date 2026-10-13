@@ -1,0 +1,103 @@
+test_known_missing_only_has_no_fabricated_case (tests.vnext.test_known_history_partial_scope.KnownHistoryPartialScopeTest.test_known_missing_only_has_no_fabricated_case) ... ERROR
+test_supported_neighbour_is_dispatched_without_a_fake_missing_producer (tests.vnext.test_known_history_partial_scope.KnownHistoryPartialScopeTest.test_supported_neighbour_is_dispatched_without_a_fake_missing_producer) ... ERROR
+test_unknown_duplicate_or_empty_scope_stops_before_shared_writes (tests.vnext.test_known_history_partial_scope.KnownHistoryPartialScopeTest.test_unknown_duplicate_or_empty_scope_stops_before_shared_writes) ... 
+  test_unknown_duplicate_or_empty_scope_stops_before_shared_writes (tests.vnext.test_known_history_partial_scope.KnownHistoryPartialScopeTest.test_unknown_duplicate_or_empty_scope_stops_before_shared_writes) (metrics=['B10', 'D99']) ... FAIL
+  test_unknown_duplicate_or_empty_scope_stops_before_shared_writes (tests.vnext.test_known_history_partial_scope.KnownHistoryPartialScopeTest.test_unknown_duplicate_or_empty_scope_stops_before_shared_writes) (metrics=['B10', 'B10']) ... FAIL
+  test_unknown_duplicate_or_empty_scope_stops_before_shared_writes (tests.vnext.test_known_history_partial_scope.KnownHistoryPartialScopeTest.test_unknown_duplicate_or_empty_scope_stops_before_shared_writes) (metrics=[]) ... FAIL
+
+======================================================================
+ERROR: test_known_missing_only_has_no_fabricated_case (tests.vnext.test_known_history_partial_scope.KnownHistoryPartialScopeTest.test_known_missing_only_has_no_fabricated_case)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-known-history-partial/SEC_metrics/tests/vnext/test_known_history_partial_scope.py", line 24, in test_known_missing_only_has_no_fabricated_case
+    self.run_history(metric_ids=['D03'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-known-history-partial/SEC_metrics/tests/vnext/test_history_company_dispatch.py", line 170, in run_history
+    return local.run_local(**{**args, **changes})
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-known-history-partial/SEC_metrics/scripts/vnext/company_local.py", line 175, in run_local
+    return _run_saved_history(company_id=company_id, source_root=source_root,
+        work_dir=work_dir, output_dir=output_dir, metric_ids=metric_ids,
+        fiscal_year_start=fiscal_year_start, fiscal_year_end=fiscal_year_end,
+        saved_call_package=saved_call_package)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-known-history-partial/SEC_metrics/scripts/vnext/company_local.py", line 397, in _run_saved_history
+    need(selected and len(selected) == len(set(selected))
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         and set(selected) <= set(SUPPORTED_METRICS) | set(statement_metrics) | set(liquidity_metrics) | set(capital_metrics) | set(bank_metrics) | set(event_metrics) | set(geography_metrics) | set(average_risk_metrics) | set(bank_scope_metrics) | set(rpo_metrics) | set(compensation_metrics) | set(debt_metrics) | set(income_compute_metrics) | set(auditor_metrics) | set(e01_metrics) | set(risk_heading_metrics) | {'B07', 'D04'},
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         'LOCAL_HISTORY_SAVED_FAMILY_NOT_IMPLEMENTED: select received saved families; other history uses its original entry')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-known-history-partial/SEC_metrics/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: LOCAL_HISTORY_SAVED_FAMILY_NOT_IMPLEMENTED: select received saved families; other history uses its original entry
+
+======================================================================
+ERROR: test_supported_neighbour_is_dispatched_without_a_fake_missing_producer (tests.vnext.test_known_history_partial_scope.KnownHistoryPartialScopeTest.test_supported_neighbour_is_dispatched_without_a_fake_missing_producer)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-known-history-partial/SEC_metrics/tests/vnext/test_known_history_partial_scope.py", line 15, in test_supported_neighbour_is_dispatched_without_a_fake_missing_producer
+    self.run_history(metric_ids=['B10','D02'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-known-history-partial/SEC_metrics/tests/vnext/test_history_company_dispatch.py", line 170, in run_history
+    return local.run_local(**{**args, **changes})
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-known-history-partial/SEC_metrics/scripts/vnext/company_local.py", line 175, in run_local
+    return _run_saved_history(company_id=company_id, source_root=source_root,
+        work_dir=work_dir, output_dir=output_dir, metric_ids=metric_ids,
+        fiscal_year_start=fiscal_year_start, fiscal_year_end=fiscal_year_end,
+        saved_call_package=saved_call_package)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-known-history-partial/SEC_metrics/scripts/vnext/company_local.py", line 397, in _run_saved_history
+    need(selected and len(selected) == len(set(selected))
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         and set(selected) <= set(SUPPORTED_METRICS) | set(statement_metrics) | set(liquidity_metrics) | set(capital_metrics) | set(bank_metrics) | set(event_metrics) | set(geography_metrics) | set(average_risk_metrics) | set(bank_scope_metrics) | set(rpo_metrics) | set(compensation_metrics) | set(debt_metrics) | set(income_compute_metrics) | set(auditor_metrics) | set(e01_metrics) | set(risk_heading_metrics) | {'B07', 'D04'},
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         'LOCAL_HISTORY_SAVED_FAMILY_NOT_IMPLEMENTED: select received saved families; other history uses its original entry')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-known-history-partial/SEC_metrics/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: LOCAL_HISTORY_SAVED_FAMILY_NOT_IMPLEMENTED: select received saved families; other history uses its original entry
+
+======================================================================
+FAIL: test_unknown_duplicate_or_empty_scope_stops_before_shared_writes (tests.vnext.test_known_history_partial_scope.KnownHistoryPartialScopeTest.test_unknown_duplicate_or_empty_scope_stops_before_shared_writes) (metrics=['B10', 'D99'])
+----------------------------------------------------------------------
+ValueError: LOCAL_HISTORY_SAVED_FAMILY_NOT_IMPLEMENTED: select received saved families; other history uses its original entry
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-known-history-partial/SEC_metrics/tests/vnext/test_known_history_partial_scope.py", line 32, in test_unknown_duplicate_or_empty_scope_stops_before_shared_writes
+    self.assertRaisesRegex(ValueError,'METRIC_SCOPE_INVALID'):
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "METRIC_SCOPE_INVALID" does not match "LOCAL_HISTORY_SAVED_FAMILY_NOT_IMPLEMENTED: select received saved families; other history uses its original entry"
+
+======================================================================
+FAIL: test_unknown_duplicate_or_empty_scope_stops_before_shared_writes (tests.vnext.test_known_history_partial_scope.KnownHistoryPartialScopeTest.test_unknown_duplicate_or_empty_scope_stops_before_shared_writes) (metrics=['B10', 'B10'])
+----------------------------------------------------------------------
+ValueError: LOCAL_HISTORY_SAVED_FAMILY_NOT_IMPLEMENTED: select received saved families; other history uses its original entry
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-known-history-partial/SEC_metrics/tests/vnext/test_known_history_partial_scope.py", line 32, in test_unknown_duplicate_or_empty_scope_stops_before_shared_writes
+    self.assertRaisesRegex(ValueError,'METRIC_SCOPE_INVALID'):
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "METRIC_SCOPE_INVALID" does not match "LOCAL_HISTORY_SAVED_FAMILY_NOT_IMPLEMENTED: select received saved families; other history uses its original entry"
+
+======================================================================
+FAIL: test_unknown_duplicate_or_empty_scope_stops_before_shared_writes (tests.vnext.test_known_history_partial_scope.KnownHistoryPartialScopeTest.test_unknown_duplicate_or_empty_scope_stops_before_shared_writes) (metrics=[])
+----------------------------------------------------------------------
+ValueError: LOCAL_HISTORY_SAVED_FAMILY_NOT_IMPLEMENTED: select received saved families; other history uses its original entry
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-known-history-partial/SEC_metrics/tests/vnext/test_known_history_partial_scope.py", line 32, in test_unknown_duplicate_or_empty_scope_stops_before_shared_writes
+    self.assertRaisesRegex(ValueError,'METRIC_SCOPE_INVALID'):
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "METRIC_SCOPE_INVALID" does not match "LOCAL_HISTORY_SAVED_FAMILY_NOT_IMPLEMENTED: select received saved families; other history uses its original entry"
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.334s
+
+FAILED (failures=3, errors=2)
+{"allowed_skips": 0, "errors": 2, "failures": 3, "run": 3, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_known_history_partial_scope"]}
