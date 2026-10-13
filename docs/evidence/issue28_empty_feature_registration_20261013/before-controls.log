@@ -1,0 +1,37 @@
+test_a_feature_must_register_at_least_one_actual_selector (tests.test_selector_registry.SelectorRegistryTest.test_a_feature_must_register_at_least_one_actual_selector) ... 
+  test_a_feature_must_register_at_least_one_actual_selector (tests.test_selector_registry.SelectorRegistryTest.test_a_feature_must_register_at_least_one_actual_selector) (record={'fast': []}) ... FAIL
+  test_a_feature_must_register_at_least_one_actual_selector (tests.test_selector_registry.SelectorRegistryTest.test_a_feature_must_register_at_least_one_actual_selector) (record={'source-material': []}) ... FAIL
+  test_a_feature_must_register_at_least_one_actual_selector (tests.test_selector_registry.SelectorRegistryTest.test_a_feature_must_register_at_least_one_actual_selector) (record={'fast': [], 'source-material': []}) ... FAIL
+
+======================================================================
+FAIL: test_a_feature_must_register_at_least_one_actual_selector (tests.test_selector_registry.SelectorRegistryTest.test_a_feature_must_register_at_least_one_actual_selector) (record={'fast': []})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-empty-feature-registration/SEC_metrics/tests/test_selector_registry.py", line 55, in test_a_feature_must_register_at_least_one_actual_selector
+    with self.assertRaisesRegex(ValueError,'FEATURE_TEST_EMPTY_DECLARATION'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_a_feature_must_register_at_least_one_actual_selector (tests.test_selector_registry.SelectorRegistryTest.test_a_feature_must_register_at_least_one_actual_selector) (record={'source-material': []})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-empty-feature-registration/SEC_metrics/tests/test_selector_registry.py", line 55, in test_a_feature_must_register_at_least_one_actual_selector
+    with self.assertRaisesRegex(ValueError,'FEATURE_TEST_EMPTY_DECLARATION'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_a_feature_must_register_at_least_one_actual_selector (tests.test_selector_registry.SelectorRegistryTest.test_a_feature_must_register_at_least_one_actual_selector) (record={'fast': [], 'source-material': []})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-empty-feature-registration/SEC_metrics/tests/test_selector_registry.py", line 55, in test_a_feature_must_register_at_least_one_actual_selector
+    with self.assertRaisesRegex(ValueError,'FEATURE_TEST_EMPTY_DECLARATION'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=3)
+{"allowed_skips": 0, "errors": 0, "failures": 3, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.test_selector_registry.SelectorRegistryTest.test_a_feature_must_register_at_least_one_actual_selector"]}

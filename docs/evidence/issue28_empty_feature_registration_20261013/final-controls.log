@@ -1,0 +1,20 @@
+test_a_feature_must_register_at_least_one_actual_selector (tests.test_selector_registry.SelectorRegistryTest.test_a_feature_must_register_at_least_one_actual_selector) ... ok
+test_actual_runner_keeps_all_prior_selectors_order_and_material_shards (tests.test_selector_registry.SelectorRegistryTest.test_actual_runner_keeps_all_prior_selectors_order_and_material_shards) ... ok
+test_duplicate_of_existing_selector_is_rejected (tests.test_selector_registry.SelectorRegistryTest.test_duplicate_of_existing_selector_is_rejected) ... ok
+test_duplicates_across_feature_files_or_suites_are_rejected (tests.test_selector_registry.SelectorRegistryTest.test_duplicates_across_feature_files_or_suites_are_rejected) ... ok
+test_empty_unused_suite_does_not_reject_a_nonempty_feature (tests.test_selector_registry.SelectorRegistryTest.test_empty_unused_suite_does_not_reject_a_nonempty_feature) ... ok
+test_missing_or_malformed_declaration_cannot_look_like_no_tests (tests.test_selector_registry.SelectorRegistryTest.test_missing_or_malformed_declaration_cannot_look_like_no_tests) ... ok
+test_two_independent_feature_files_are_both_consumed_in_stable_order (tests.test_selector_registry.SelectorRegistryTest.test_two_independent_feature_files_are_both_consumed_in_stable_order) ... ok
+test_a_required_suite_that_only_skips_is_not_a_pass (tests.test_foundation_ci.FoundationCiPartitionTest.test_a_required_suite_that_only_skips_is_not_a_pass) ... ok
+test_all_inherited_selectors_are_active_or_explicitly_retired_once (tests.test_foundation_ci.FoundationCiPartitionTest.test_all_inherited_selectors_are_active_or_explicitly_retired_once) ... ok
+test_assertion_error_missing_selector_and_skip_remain_explicit (tests.test_foundation_ci.FoundationCiPartitionTest.test_assertion_error_missing_selector_and_skip_remain_explicit) ... ok
+test_cli_preserves_fast_or_material_failure (tests.test_foundation_ci.FoundationCiPartitionTest.test_cli_preserves_fast_or_material_failure) ... ok
+test_duplicate_inherited_selector_is_rejected (tests.test_foundation_ci.FoundationCiPartitionTest.test_duplicate_inherited_selector_is_rejected) ... ok
+test_material_and_old_object_readers_fetch_only_needed_versions (tests.test_foundation_ci.FoundationCiPartitionTest.test_material_and_old_object_readers_fetch_only_needed_versions) ... ok
+test_shared_class_preparation_runs_once_and_every_test_executes (tests.test_foundation_ci.FoundationCiPartitionTest.test_shared_class_preparation_runs_once_and_every_test_executes) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.006s
+
+OK
+{"allowed_skips": 0, "errors": 0, "failures": 0, "run": 14, "skip_reasons": [], "skipped": 0, "tests": ["tests.test_selector_registry", "tests.test_foundation_ci"]}
