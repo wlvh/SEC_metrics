@@ -1,0 +1,5 @@
+first 2 7.19044499998563 [{'metric_id': 'D04', 'status': 'INPUT_OR_EXECUTION_FAILED', 'attempt_id': 'f1029e47b2054c258e61439c4c4e473d', 'error_type': 'ValueError', 'reason': 'CONTINUOUS_CONTEXT_REFERENCE_REQUIRED:TOKENIZER_DEPENDENCY_UNAVAILABLE', 'previous_result': None, 'new_calls': {'provider': 0, 'paid': 0, 'sec': 0}, 'production_authorized': False}]
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/ford-d04-company-20261014/run.py", line 37, in <module>
+    raise AssertionError('Actual company input not accepted; retained accurate failure, no replacement answer')
+AssertionError: Actual company input not accepted; retained accurate failure, no replacement answer
