@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-standby-note-relation/SEC_metrics/docs/evidence/issue28_standby_note_relation_20261013/verify_saved_note.py", line 15, in <module>
+    other=bond._reported_other_natures(notes,annual)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-standby-note-relation/SEC_metrics/scripts/vnext/b06_bond_leases.py", line 539, in _reported_other_natures
+    _need(purchase is not None,'PURCHASE_GOODS_SERVICES_RECOGNITION_UNPROVEN')
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-standby-note-relation/SEC_metrics/scripts/vnext/b06_bond_leases.py", line 30, in _need
+    if not condition: raise BondLeaseError('BOND_LEASE_'+reason)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+vnext.b06_bond_leases.BondLeaseError: BOND_LEASE_PURCHASE_GOODS_SERVICES_RECOGNITION_UNPROVEN

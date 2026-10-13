@@ -193,7 +193,8 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
         sections = (r'operating revenues:',r'operating expenses(?:, net)?:',
                     r'(?:non-operating|other) expenses \(income\):') if operating else ()
         if segment or single_net:
-            sections=(*sections,r'other income(?: \(expense\))?, net:?',r'net income per share:?',
+            sections=(*sections,r'other (?:income(?: \(expense\))?|expense), net:?',
+                      r'net income(?: \(loss\))? per share:?',
                       r'shares used in per share calculation:?')
         if single_operating:
             sections = (r'operating expenses:?', r'other expense:?',

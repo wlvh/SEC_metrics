@@ -1,0 +1,201 @@
+EEFFFFFFE.EE.EE
+======================================================================
+ERROR: test_both_positive_classes_have_separate_native_values (tests.vnext.test_bond_maturity_sections.BondMaturitySectionTest.test_both_positive_classes_have_separate_native_values)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-bond-maturity-sections/SEC_metrics/tests/vnext/test_bond_maturity_sections.py", line 69, in test_both_positive_classes_have_separate_native_values
+    bonds, members = self.composition()
+                     ~~~~~~~~~~~~~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-bond-maturity-sections/SEC_metrics/tests/vnext/test_bond_maturity_sections.py", line 65, in composition
+    bonds = bond_schedule(note, END, reports)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-bond-maturity-sections/SEC_metrics/scripts/vnext/b06_bond_leases.py", line 335, in _bond_schedule
+    _need(len({p['label'] for group in parts.values() for p in group}) == sum(len(v) for v in parts.values()),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'BOND_MEMBER_DUPLICATED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-bond-maturity-sections/SEC_metrics/scripts/vnext/b06_bond_leases.py", line 30, in _need
+    if not condition: raise BondLeaseError('BOND_LEASE_'+reason)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+vnext.b06_bond_leases.BondLeaseError: BOND_LEASE_BOND_MEMBER_DUPLICATED
+
+======================================================================
+ERROR: test_changed_cell_span_cannot_keep_the_old_schedule_identity (tests.vnext.test_bond_maturity_sections.BondMaturitySectionTest.test_changed_cell_span_cannot_keep_the_old_schedule_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-bond-maturity-sections/SEC_metrics/tests/vnext/test_bond_maturity_sections.py", line 139, in test_changed_cell_span_cannot_keep_the_old_schedule_identity
+    bonds = bond_schedule(note, END, reports)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-bond-maturity-sections/SEC_metrics/scripts/vnext/b06_bond_leases.py", line 335, in _bond_schedule
+    _need(len({p['label'] for group in parts.values() for p in group}) == sum(len(v) for v in parts.values()),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'BOND_MEMBER_DUPLICATED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-bond-maturity-sections/SEC_metrics/scripts/vnext/b06_bond_leases.py", line 30, in _need
+    if not condition: raise BondLeaseError('BOND_LEASE_'+reason)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+vnext.b06_bond_leases.BondLeaseError: BOND_LEASE_BOND_MEMBER_DUPLICATED
+
+======================================================================
+ERROR: test_disagreeing_xml_amount_cannot_use_the_visible_note (tests.vnext.test_bond_maturity_sections.BondMaturitySectionTest.test_disagreeing_xml_amount_cannot_use_the_visible_note)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-bond-maturity-sections/SEC_metrics/tests/vnext/test_bond_maturity_sections.py", line 113, in test_disagreeing_xml_amount_cannot_use_the_visible_note
+    bonds = bond_schedule(note, END, reports)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-bond-maturity-sections/SEC_metrics/scripts/vnext/b06_bond_leases.py", line 335, in _bond_schedule
+    _need(len({p['label'] for group in parts.values() for p in group}) == sum(len(v) for v in parts.values()),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'BOND_MEMBER_DUPLICATED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-bond-maturity-sections/SEC_metrics/scripts/vnext/b06_bond_leases.py", line 30, in _need
+    if not condition: raise BondLeaseError('BOND_LEASE_'+reason)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+vnext.b06_bond_leases.BondLeaseError: BOND_LEASE_BOND_MEMBER_DUPLICATED
+
+======================================================================
+ERROR: test_generated_table_order_and_entity_spelling_do_not_change_source_cells (tests.vnext.test_bond_maturity_sections.BondMaturitySectionTest.test_generated_table_order_and_entity_spelling_do_not_change_source_cells)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-bond-maturity-sections/SEC_metrics/tests/vnext/test_bond_maturity_sections.py", line 131, in test_generated_table_order_and_entity_spelling_do_not_change_source_cells
+    bonds = bond_schedule(note, END, reports)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-bond-maturity-sections/SEC_metrics/scripts/vnext/b06_bond_leases.py", line 335, in _bond_schedule
+    _need(len({p['label'] for group in parts.values() for p in group}) == sum(len(v) for v in parts.values()),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'BOND_MEMBER_DUPLICATED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-bond-maturity-sections/SEC_metrics/scripts/vnext/b06_bond_leases.py", line 30, in _need
+    if not condition: raise BondLeaseError('BOND_LEASE_'+reason)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+vnext.b06_bond_leases.BondLeaseError: BOND_LEASE_BOND_MEMBER_DUPLICATED
+
+======================================================================
+ERROR: test_matching_amount_cannot_move_a_native_fact_to_the_other_class (tests.vnext.test_bond_maturity_sections.BondMaturitySectionTest.test_matching_amount_cannot_move_a_native_fact_to_the_other_class)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-bond-maturity-sections/SEC_metrics/tests/vnext/test_bond_maturity_sections.py", line 105, in test_matching_amount_cannot_move_a_native_fact_to_the_other_class
+    bonds = bond_schedule(note, END, reports)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-bond-maturity-sections/SEC_metrics/scripts/vnext/b06_bond_leases.py", line 335, in _bond_schedule
+    _need(len({p['label'] for group in parts.values() for p in group}) == sum(len(v) for v in parts.values()),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'BOND_MEMBER_DUPLICATED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-bond-maturity-sections/SEC_metrics/scripts/vnext/b06_bond_leases.py", line 30, in _need
+    if not condition: raise BondLeaseError('BOND_LEASE_'+reason)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+vnext.b06_bond_leases.BondLeaseError: BOND_LEASE_BOND_MEMBER_DUPLICATED
+
+======================================================================
+ERROR: test_unrelated_grid_or_changed_context_is_not_a_member_witness (tests.vnext.test_bond_maturity_sections.BondMaturitySectionTest.test_unrelated_grid_or_changed_context_is_not_a_member_witness)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-bond-maturity-sections/SEC_metrics/tests/vnext/test_bond_maturity_sections.py", line 120, in test_unrelated_grid_or_changed_context_is_not_a_member_witness
+    bonds = bond_schedule(note, END, reports)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-bond-maturity-sections/SEC_metrics/scripts/vnext/b06_bond_leases.py", line 335, in _bond_schedule
+    _need(len({p['label'] for group in parts.values() for p in group}) == sum(len(v) for v in parts.values()),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'BOND_MEMBER_DUPLICATED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-bond-maturity-sections/SEC_metrics/scripts/vnext/b06_bond_leases.py", line 30, in _need
+    if not condition: raise BondLeaseError('BOND_LEASE_'+reason)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+vnext.b06_bond_leases.BondLeaseError: BOND_LEASE_BOND_MEMBER_DUPLICATED
+
+======================================================================
+ERROR: test_zero_class_is_preserved_as_a_distinct_source_occurrence (tests.vnext.test_bond_maturity_sections.BondMaturitySectionTest.test_zero_class_is_preserved_as_a_distinct_source_occurrence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-bond-maturity-sections/SEC_metrics/tests/vnext/test_bond_maturity_sections.py", line 77, in test_zero_class_is_preserved_as_a_distinct_source_occurrence
+    bonds, members = self.composition(long=0)
+                     ~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-bond-maturity-sections/SEC_metrics/tests/vnext/test_bond_maturity_sections.py", line 65, in composition
+    bonds = bond_schedule(note, END, reports)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-bond-maturity-sections/SEC_metrics/scripts/vnext/b06_bond_leases.py", line 335, in _bond_schedule
+    _need(len({p['label'] for group in parts.values() for p in group}) == sum(len(v) for v in parts.values()),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'BOND_MEMBER_DUPLICATED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-bond-maturity-sections/SEC_metrics/scripts/vnext/b06_bond_leases.py", line 30, in _need
+    if not condition: raise BondLeaseError('BOND_LEASE_'+reason)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+vnext.b06_bond_leases.BondLeaseError: BOND_LEASE_BOND_MEMBER_DUPLICATED
+
+======================================================================
+FAIL: test_current_and_gross_reconciliations_are_retained (tests.vnext.test_bond_maturity_sections.BondMaturitySectionTest.test_current_and_gross_reconciliations_are_retained) (role='current')
+----------------------------------------------------------------------
+vnext.b06_bond_leases.BondLeaseError: BOND_LEASE_BOND_MEMBER_DUPLICATED
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-bond-maturity-sections/SEC_metrics/tests/vnext/test_bond_maturity_sections.py", line 100, in test_current_and_gross_reconciliations_are_retained
+    with self.assertRaisesRegex(ValueError, 'RECONCILIATION_CONFLICT|ADJUSTMENT_CONFLICT'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "RECONCILIATION_CONFLICT|ADJUSTMENT_CONFLICT" does not match "BOND_LEASE_BOND_MEMBER_DUPLICATED"
+
+======================================================================
+FAIL: test_current_and_gross_reconciliations_are_retained (tests.vnext.test_bond_maturity_sections.BondMaturitySectionTest.test_current_and_gross_reconciliations_are_retained) (role='gross')
+----------------------------------------------------------------------
+vnext.b06_bond_leases.BondLeaseError: BOND_LEASE_BOND_MEMBER_DUPLICATED
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-bond-maturity-sections/SEC_metrics/tests/vnext/test_bond_maturity_sections.py", line 100, in test_current_and_gross_reconciliations_are_retained
+    with self.assertRaisesRegex(ValueError, 'RECONCILIATION_CONFLICT|ADJUSTMENT_CONFLICT'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "RECONCILIATION_CONFLICT|ADJUSTMENT_CONFLICT" does not match "BOND_LEASE_BOND_MEMBER_DUPLICATED"
+
+======================================================================
+FAIL: test_current_and_gross_reconciliations_are_retained (tests.vnext.test_bond_maturity_sections.BondMaturitySectionTest.test_current_and_gross_reconciliations_are_retained) (role='cost')
+----------------------------------------------------------------------
+vnext.b06_bond_leases.BondLeaseError: BOND_LEASE_BOND_MEMBER_DUPLICATED
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-bond-maturity-sections/SEC_metrics/tests/vnext/test_bond_maturity_sections.py", line 100, in test_current_and_gross_reconciliations_are_retained
+    with self.assertRaisesRegex(ValueError, 'RECONCILIATION_CONFLICT|ADJUSTMENT_CONFLICT'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "RECONCILIATION_CONFLICT|ADJUSTMENT_CONFLICT" does not match "BOND_LEASE_BOND_MEMBER_DUPLICATED"
+
+======================================================================
+FAIL: test_current_and_gross_reconciliations_are_retained (tests.vnext.test_bond_maturity_sections.BondMaturitySectionTest.test_current_and_gross_reconciliations_are_retained) (role='premium')
+----------------------------------------------------------------------
+vnext.b06_bond_leases.BondLeaseError: BOND_LEASE_BOND_MEMBER_DUPLICATED
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-bond-maturity-sections/SEC_metrics/tests/vnext/test_bond_maturity_sections.py", line 100, in test_current_and_gross_reconciliations_are_retained
+    with self.assertRaisesRegex(ValueError, 'RECONCILIATION_CONFLICT|ADJUSTMENT_CONFLICT'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "RECONCILIATION_CONFLICT|ADJUSTMENT_CONFLICT" does not match "BOND_LEASE_BOND_MEMBER_DUPLICATED"
+
+======================================================================
+FAIL: test_current_and_gross_reconciliations_are_retained (tests.vnext.test_bond_maturity_sections.BondMaturitySectionTest.test_current_and_gross_reconciliations_are_retained) (role='carrying')
+----------------------------------------------------------------------
+vnext.b06_bond_leases.BondLeaseError: BOND_LEASE_BOND_MEMBER_DUPLICATED
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-bond-maturity-sections/SEC_metrics/tests/vnext/test_bond_maturity_sections.py", line 100, in test_current_and_gross_reconciliations_are_retained
+    with self.assertRaisesRegex(ValueError, 'RECONCILIATION_CONFLICT|ADJUSTMENT_CONFLICT'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "RECONCILIATION_CONFLICT|ADJUSTMENT_CONFLICT" does not match "BOND_LEASE_BOND_MEMBER_DUPLICATED"
+
+======================================================================
+FAIL: test_current_and_gross_reconciliations_are_retained (tests.vnext.test_bond_maturity_sections.BondMaturitySectionTest.test_current_and_gross_reconciliations_are_retained) (role='total_borrowing')
+----------------------------------------------------------------------
+vnext.b06_bond_leases.BondLeaseError: BOND_LEASE_BOND_MEMBER_DUPLICATED
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-bond-maturity-sections/SEC_metrics/tests/vnext/test_bond_maturity_sections.py", line 100, in test_current_and_gross_reconciliations_are_retained
+    with self.assertRaisesRegex(ValueError, 'RECONCILIATION_CONFLICT|ADJUSTMENT_CONFLICT'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "RECONCILIATION_CONFLICT|ADJUSTMENT_CONFLICT" does not match "BOND_LEASE_BOND_MEMBER_DUPLICATED"
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.014s
+
+FAILED (failures=6, errors=7)

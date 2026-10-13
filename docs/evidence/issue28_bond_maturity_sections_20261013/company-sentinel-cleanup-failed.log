@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-bond-maturity-sections/SEC_metrics/docs/evidence/issue28_bond_maturity_sections_20261013/company_consumer.py", line 33, in <module>
+    with contextlib.ExitStack() as stack:
+         ~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/contextlib.py", line 619, in __exit__
+    raise exc
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/contextlib.py", line 604, in __exit__
+    if cb(*exc_details):
+       ~~^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1648, in __exit__
+    delattr(self.target, self.attribute)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: __code__ must be set to a code object
