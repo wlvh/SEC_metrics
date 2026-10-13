@@ -1,6 +1,6 @@
 # 历史公司使用指南
 
-截至2026-10-13，本指南使用可取得的main版本 `99249a45`。它包含原 `c6f5c90f` 的公司入口及后续接收增量。同一 `tools/vnext_company.py`、公共更新器、保存器和结果读口支持保存来源的历史 B10/B11，以及连续主体的 B01/B02/B03/B04/B05和所选CIK余额的B08/B09；修订和来源范围仍受各族的明确检查约束。酒店共用计算与四指标历史适配已 main；C03首次代理选择及ECD／适用普通表格读取已随PR148–151入main；PR58 合入的是机械 D02 引文检查，D02 公司模型链和完整五年业务验收仍未完成。
+截至2026-10-13，本指南使用可取得的main版本 `293e495f`。它包含原 `c6f5c90f` 的公司入口及后续接收增量。同一 `tools/vnext_company.py`、公共更新器、保存器和结果读口支持保存来源的历史 B10/B11，以及连续主体的 B01/B02/B03/B04/B05和所选CIK余额的B08/B09；修订和来源范围仍受各族的明确检查约束。酒店共用计算与四指标历史适配已 main；C03首次代理选择及ECD／适用普通表格读取已随PR148–151入main；PR58 合入的是机械 D02 引文检查，D02 公司模型链和完整五年业务验收仍未完成。
 
 A01/A02资本、A05/A06/A07/A08/A10银行指标和B07年度计算也已main。C01/E02–E05普通历史适配及公共事件源/宽窗接口已在main；[PR90](https://github.com/wlvh/SEC_metrics/pull/90)和[PR89](https://github.com/wlvh/SEC_metrics/pull/89)已由接收方合入；后续消费者记录继续按本记录的执行版本解释，不改旧运行记录。PR83 的普通在线接续不等于历史模式已能在线发现与补齐来源；本指南的 `fiscal-years` 仍需已保存来源根。代码合入不表示正式采纳、发布或 active 切换。
 
@@ -352,7 +352,7 @@ python3 tools/vnext_company.py results --company marriott_international \
 
 当前扣留不得被同年旧成功替代。公共 `completed-check.json` 表示最近完成检查，`current-result.json` 保留最近成功；日常 CSV 读取最近完成结论。后续只请求另一指标或另一年，仍能读出原坐标当前扣留，旧成功只留作历史。`requested_in_latest_execution` 区分本次请求，不能把未请求项算成本次新成功。
 
-缺源年份、实现失败和业务扣留应分别解释。`run` 的 JSON、当次 `run_summary.json` 和状态目录 `latest-execution.json` 保留失败项的具体 `error_category` / `reason`，其他年份及指标的成功记录保留。main `6c57ddc2` 已接收 PR131：独立 `results` 为无结果失败项保留 `reason`、`error_type`、`error_category`，CSV 的 `notes` 同步显示原因；后一次只请求其他坐标时，旧失败仍标明 `requested_in_latest_execution=False`，CSV `period_role=SAVED_CHECK_NOT_REQUESTED_WITHOUT_RESULT`。真实 D01 失败、Salesforce 相邻年份及旧 Pfizer 精确扣留的只读核对见[main 接收记录](https://github.com/wlvh/SEC_metrics/blob/f134c7c1/docs/evidence/issue47_result_failure_receiving_20261010/main-g1/README.md)。这次变化只修日常读取，不重算财报，也不解除业务缺口。`FLOW_COMPLETED_WITH_LIMITATIONS` 表示有明确限制，不能当成所有指标交付。`SOURCE_UNAVAILABLE` 不是正确零值；`IMPLEMENTATION_GAP` 表示已有材料或路径尚未实现。当前 main 未支持的历史家族在入口拒绝，不能省略 `--metric` 后把默认39项当成已支持。
+缺源年份、实现失败和业务扣留应分别解释。`run` 的 JSON、当次 `run_summary.json` 和状态目录 `latest-execution.json` 保留失败项的具体 `error_category` / `reason`，其他年份及指标的成功记录保留。main `6c57ddc2` 已接收 PR131：独立 `results` 为无结果失败项保留 `reason`、`error_type`、`error_category`，CSV 的 `notes` 同步显示原因；后一次只请求其他坐标时，旧失败仍标明 `requested_in_latest_execution=False`，CSV `period_role=SAVED_CHECK_NOT_REQUESTED_WITHOUT_RESULT`。真实 D01 失败、Salesforce 相邻年份及旧 Pfizer 精确扣留的只读核对见[main 接收记录](https://github.com/wlvh/SEC_metrics/blob/f134c7c1/docs/evidence/issue47_result_failure_receiving_20261010/main-g1/README.md)。这次变化只修日常读取，不重算财报，也不解除业务缺口。`FLOW_COMPLETED_WITH_LIMITATIONS` 表示有明确限制，不能当成所有指标交付。`SOURCE_UNAVAILABLE` 不是正确零值；`IMPLEMENTATION_GAP` 表示已有材料或路径尚未实现。main `293e495f` 已接收 PR241：同一历史命令可以混合已接入指标与已定义但尚未接入的指标。已接入项正常处理或复用；尚未接入项显示 `PROCESSING_INPUT_OR_IMPLEMENTATION_REQUIRED`、`NO_CURRENT_RESULT`，不创建结果，也不阻断邻居。整条命令有这些限制时返回2；拼错、重复或空指标仍在写入前拒绝。默认39项表示请求范围，不能当成39项均已实现。 已有Marriott五年酒店任务请求FY2024的B10+D02时，B10两次均零计算复用，D02为无结果待实现；独立CSV保十个原酒店值与一条具名D02限制。[原任务实际接收记录](evidence/issue47_mixed_history_receiving_20261013/README.md)。
 
 当前 main 历史选择器明确保留修订情况，但尚未完成修订历史酒店处理；主体变换也未取得完整适配接受。Paramount 可见 August7 与原生 context August8 的真实期间冲突仍保留两种证据，不任选日期、年化或拼接前身。它不是本酒店接收的输入；这条范围限制不授其他指标接受。
 
