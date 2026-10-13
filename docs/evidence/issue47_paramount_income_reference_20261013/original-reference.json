@@ -1,0 +1,1920 @@
+{
+  "sources": [
+    {
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:0f1a9b2a108d1f35340ea3a4a473d82a3a3b8710de577bd4402e408dbe712af5",
+        "raw_asset_id": "sha256:5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+        "company_id": "paramount_skydance_paramount_global",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231.htm",
+        "accession": "0000813828-25-000005",
+        "document_name": "para-20241231.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:255bb923386890b3db4f807546f3fac75d33f941ccdc035730d90d98d37c4b6e"
+      },
+      "raw_blob": {
+        "record_type": "RAW_BLOB",
+        "raw_asset_id": "sha256:5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+        "byte_length": 3551281,
+        "media_type": "text/html",
+        "storage_uri": "evidence/request_attempts/5e/5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a/para-20241231.htm"
+      },
+      "facts": [
+        {
+          "ordinal": 113,
+          "concept": "us-gaap:OperatingIncomeLoss",
+          "value_usd": "-5269000000",
+          "raw_text": "5,269",
+          "scale": "6",
+          "sign": "-",
+          "decimals": "-6",
+          "context_ref": "c-1",
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "ordinal": 116,
+          "concept": "us-gaap:InterestExpenseNonoperating",
+          "value_usd": "860000000",
+          "raw_text": "860",
+          "scale": "6",
+          "sign": "",
+          "decimals": "-6",
+          "context_ref": "c-1",
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "ordinal": 128,
+          "concept": "us-gaap:OtherNonoperatingIncomeExpense",
+          "value_usd": "-182000000",
+          "raw_text": "182",
+          "scale": "6",
+          "sign": "-",
+          "decimals": "-6",
+          "context_ref": "c-1",
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "ordinal": 131,
+          "concept": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesMinorityInterestAndIncomeLossFromEquityMethodInvestments",
+          "value_usd": "-6177000000",
+          "raw_text": "6,177",
+          "scale": "6",
+          "sign": "-",
+          "decimals": "-6",
+          "context_ref": "c-1",
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "ordinal": 146,
+          "concept": "us-gaap:ProfitLoss",
+          "value_usd": "-6149000000",
+          "raw_text": "6,149",
+          "scale": "6",
+          "sign": "-",
+          "decimals": "-6",
+          "context_ref": "c-1",
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "ordinal": 152,
+          "concept": "us-gaap:NetIncomeLoss",
+          "value_usd": "-6190000000",
+          "raw_text": "6,190",
+          "scale": "6",
+          "sign": "-",
+          "decimals": "-6",
+          "context_ref": "c-1",
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "ordinal": 161,
+          "concept": "us-gaap:NetIncomeLoss",
+          "value_usd": "-6190000000",
+          "raw_text": "6,190",
+          "scale": "6",
+          "sign": "-",
+          "decimals": "-6",
+          "context_ref": "c-1",
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "ordinal": 188,
+          "concept": "us-gaap:ProfitLoss",
+          "value_usd": "-6149000000",
+          "raw_text": "6,149",
+          "scale": "6",
+          "sign": "-",
+          "decimals": "-6",
+          "context_ref": "c-1",
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "ordinal": 316,
+          "concept": "us-gaap:ProfitLoss",
+          "value_usd": "-6149000000",
+          "raw_text": "6,149",
+          "scale": "6",
+          "sign": "-",
+          "decimals": "-6",
+          "context_ref": "c-1",
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "ordinal": 532,
+          "concept": "us-gaap:ProfitLoss",
+          "value_usd": "-6149000000",
+          "raw_text": "6,149",
+          "scale": "6",
+          "sign": "-",
+          "decimals": "-6",
+          "context_ref": "c-1",
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "ordinal": 646,
+          "concept": "us-gaap:NetIncomeLoss",
+          "value_usd": "-6190000000",
+          "raw_text": "6,190",
+          "scale": "6",
+          "sign": "-",
+          "decimals": "-6",
+          "context_ref": "c-1",
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "ordinal": 1451,
+          "concept": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesMinorityInterestAndIncomeLossFromEquityMethodInvestments",
+          "value_usd": "-6177000000",
+          "raw_text": "6,177",
+          "scale": "6",
+          "sign": "-",
+          "decimals": "-6",
+          "context_ref": "c-1",
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "ordinal": 2118,
+          "concept": "us-gaap:OperatingIncomeLoss",
+          "value_usd": "-5269000000",
+          "raw_text": "5,269",
+          "scale": "6",
+          "sign": "-",
+          "decimals": "-6",
+          "context_ref": "c-1",
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "ordinal": 2121,
+          "concept": "us-gaap:InterestExpenseNonoperating",
+          "value_usd": "860000000",
+          "raw_text": "860",
+          "scale": "6",
+          "sign": "",
+          "decimals": "-6",
+          "context_ref": "c-1",
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "ordinal": 2133,
+          "concept": "us-gaap:OtherNonoperatingIncomeExpense",
+          "value_usd": "-182000000",
+          "raw_text": "182",
+          "scale": "6",
+          "sign": "-",
+          "decimals": "-6",
+          "context_ref": "c-1",
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "ordinal": 2136,
+          "concept": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesMinorityInterestAndIncomeLossFromEquityMethodInvestments",
+          "value_usd": "-6177000000",
+          "raw_text": "6,177",
+          "scale": "6",
+          "sign": "-",
+          "decimals": "-6",
+          "context_ref": "c-1",
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "ordinal": 2151,
+          "concept": "us-gaap:ProfitLoss",
+          "value_usd": "-6149000000",
+          "raw_text": "6,149",
+          "scale": "6",
+          "sign": "-",
+          "decimals": "-6",
+          "context_ref": "c-1",
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "ordinal": 2157,
+          "concept": "us-gaap:NetIncomeLoss",
+          "value_usd": "-6190000000",
+          "raw_text": "6,190",
+          "scale": "6",
+          "sign": "-",
+          "decimals": "-6",
+          "context_ref": "c-1",
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "ordinal": 2314,
+          "concept": "us-gaap:OtherNonoperatingIncomeExpense",
+          "value_usd": "-182000000",
+          "raw_text": "182",
+          "scale": "6",
+          "sign": "-",
+          "decimals": "-6",
+          "context_ref": "c-1",
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          }
+        }
+      ]
+    },
+    {
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:f5fbc8c1603235d141b2bd20721c58c8d9e6786a617f980f02523e4b58e71ee5",
+        "raw_asset_id": "sha256:e19bf7b9db2b6076c791220adbb3f2d66615dc8a26110a2a29a4d0c676a9fd8e",
+        "company_id": "paramount_skydance_paramount_global",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231_htm.xml",
+        "accession": "0000813828-25-000005",
+        "document_name": "para-20241231_htm.xml",
+        "source_role": "auditor_facts",
+        "request_attempt_id": "request:attempt:1b55e8c2e5cc6e379def0e809d4f9d158aabe1b2a8d88ffaced1e6dbabd06909"
+      },
+      "raw_blob": {
+        "record_type": "RAW_BLOB",
+        "raw_asset_id": "sha256:e19bf7b9db2b6076c791220adbb3f2d66615dc8a26110a2a29a4d0c676a9fd8e",
+        "byte_length": 3408412,
+        "media_type": "application/xml",
+        "storage_uri": "evidence/request_attempts/e1/e19bf7b9db2b6076c791220adbb3f2d66615dc8a26110a2a29a4d0c676a9fd8e/para-20241231_htm.xml"
+      },
+      "facts": [
+        {
+          "ordinal": 113,
+          "concept": "us-gaap:OperatingIncomeLoss",
+          "value_usd": "-5269000000",
+          "raw_text": "-5269000000",
+          "scale": "0",
+          "sign": "",
+          "decimals": "-6",
+          "context_ref": "c-1",
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "ordinal": 116,
+          "concept": "us-gaap:InterestExpenseNonoperating",
+          "value_usd": "860000000",
+          "raw_text": "860000000",
+          "scale": "0",
+          "sign": "",
+          "decimals": "-6",
+          "context_ref": "c-1",
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "ordinal": 128,
+          "concept": "us-gaap:OtherNonoperatingIncomeExpense",
+          "value_usd": "-182000000",
+          "raw_text": "-182000000",
+          "scale": "0",
+          "sign": "",
+          "decimals": "-6",
+          "context_ref": "c-1",
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "ordinal": 131,
+          "concept": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesMinorityInterestAndIncomeLossFromEquityMethodInvestments",
+          "value_usd": "-6177000000",
+          "raw_text": "-6177000000",
+          "scale": "0",
+          "sign": "",
+          "decimals": "-6",
+          "context_ref": "c-1",
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "ordinal": 146,
+          "concept": "us-gaap:ProfitLoss",
+          "value_usd": "-6149000000",
+          "raw_text": "-6149000000",
+          "scale": "0",
+          "sign": "",
+          "decimals": "-6",
+          "context_ref": "c-1",
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "ordinal": 152,
+          "concept": "us-gaap:NetIncomeLoss",
+          "value_usd": "-6190000000",
+          "raw_text": "-6190000000",
+          "scale": "0",
+          "sign": "",
+          "decimals": "-6",
+          "context_ref": "c-1",
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "ordinal": 161,
+          "concept": "us-gaap:NetIncomeLoss",
+          "value_usd": "-6190000000",
+          "raw_text": "-6190000000",
+          "scale": "0",
+          "sign": "",
+          "decimals": "-6",
+          "context_ref": "c-1",
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "ordinal": 188,
+          "concept": "us-gaap:ProfitLoss",
+          "value_usd": "-6149000000",
+          "raw_text": "-6149000000",
+          "scale": "0",
+          "sign": "",
+          "decimals": "-6",
+          "context_ref": "c-1",
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "ordinal": 316,
+          "concept": "us-gaap:ProfitLoss",
+          "value_usd": "-6149000000",
+          "raw_text": "-6149000000",
+          "scale": "0",
+          "sign": "",
+          "decimals": "-6",
+          "context_ref": "c-1",
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "ordinal": 532,
+          "concept": "us-gaap:ProfitLoss",
+          "value_usd": "-6149000000",
+          "raw_text": "-6149000000",
+          "scale": "0",
+          "sign": "",
+          "decimals": "-6",
+          "context_ref": "c-1",
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "ordinal": 646,
+          "concept": "us-gaap:NetIncomeLoss",
+          "value_usd": "-6190000000",
+          "raw_text": "-6190000000",
+          "scale": "0",
+          "sign": "",
+          "decimals": "-6",
+          "context_ref": "c-1",
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "ordinal": 1451,
+          "concept": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesMinorityInterestAndIncomeLossFromEquityMethodInvestments",
+          "value_usd": "-6177000000",
+          "raw_text": "-6177000000",
+          "scale": "0",
+          "sign": "",
+          "decimals": "-6",
+          "context_ref": "c-1",
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "ordinal": 2118,
+          "concept": "us-gaap:OperatingIncomeLoss",
+          "value_usd": "-5269000000",
+          "raw_text": "-5269000000",
+          "scale": "0",
+          "sign": "",
+          "decimals": "-6",
+          "context_ref": "c-1",
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "ordinal": 2121,
+          "concept": "us-gaap:InterestExpenseNonoperating",
+          "value_usd": "860000000",
+          "raw_text": "860000000",
+          "scale": "0",
+          "sign": "",
+          "decimals": "-6",
+          "context_ref": "c-1",
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "ordinal": 2133,
+          "concept": "us-gaap:OtherNonoperatingIncomeExpense",
+          "value_usd": "-182000000",
+          "raw_text": "-182000000",
+          "scale": "0",
+          "sign": "",
+          "decimals": "-6",
+          "context_ref": "c-1",
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "ordinal": 2136,
+          "concept": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesMinorityInterestAndIncomeLossFromEquityMethodInvestments",
+          "value_usd": "-6177000000",
+          "raw_text": "-6177000000",
+          "scale": "0",
+          "sign": "",
+          "decimals": "-6",
+          "context_ref": "c-1",
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "ordinal": 2151,
+          "concept": "us-gaap:ProfitLoss",
+          "value_usd": "-6149000000",
+          "raw_text": "-6149000000",
+          "scale": "0",
+          "sign": "",
+          "decimals": "-6",
+          "context_ref": "c-1",
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "ordinal": 2157,
+          "concept": "us-gaap:NetIncomeLoss",
+          "value_usd": "-6190000000",
+          "raw_text": "-6190000000",
+          "scale": "0",
+          "sign": "",
+          "decimals": "-6",
+          "context_ref": "c-1",
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "ordinal": 2314,
+          "concept": "us-gaap:OtherNonoperatingIncomeExpense",
+          "value_usd": "-182000000",
+          "raw_text": "-182000000",
+          "scale": "0",
+          "sign": "",
+          "decimals": "-6",
+          "context_ref": "c-1",
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000813828",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2024-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2024-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          }
+        }
+      ]
+    }
+  ],
+  "seconds": 0.5681604169949424,
+  "inputs_not_supplied_to_production": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "xml_lexical_name_case_initial_filter_miss_corrected": true,
+  "original_statement_rows": [
+    {
+      "ordinal": 113,
+      "table_id": "table_000053",
+      "table_grid_sha256": "sha256:fc0fc611142d74fb9fe2d5c28b0c308a5e4aef3e4cc3089117e667465e642959",
+      "row_index": 13,
+      "row_label": "Operating income (loss)",
+      "cells": [
+        {
+          "text": "Operating income (loss)",
+          "raw_text": "Operating income (loss)",
+          "row_index": 13,
+          "column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "is_origin": true
+        },
+        {
+          "text": "(5,269)",
+          "raw_text": "(5,269)",
+          "row_index": 13,
+          "column_index": 3,
+          "rowspan": 1,
+          "colspan": 2,
+          "is_origin": true
+        },
+        {
+          "text": "",
+          "raw_text": "",
+          "row_index": 13,
+          "column_index": 5,
+          "rowspan": 1,
+          "colspan": 1,
+          "is_origin": true
+        },
+        {
+          "text": "",
+          "raw_text": "",
+          "row_index": 13,
+          "column_index": 6,
+          "rowspan": 1,
+          "colspan": 3,
+          "is_origin": true
+        },
+        {
+          "text": "(451)",
+          "raw_text": "(451)",
+          "row_index": 13,
+          "column_index": 9,
+          "rowspan": 1,
+          "colspan": 2,
+          "is_origin": true
+        },
+        {
+          "text": "",
+          "raw_text": "",
+          "row_index": 13,
+          "column_index": 11,
+          "rowspan": 1,
+          "colspan": 1,
+          "is_origin": true
+        },
+        {
+          "text": "",
+          "raw_text": "",
+          "row_index": 13,
+          "column_index": 12,
+          "rowspan": 1,
+          "colspan": 3,
+          "is_origin": true
+        },
+        {
+          "text": "2,342",
+          "raw_text": "2,342&#160;",
+          "row_index": 13,
+          "column_index": 15,
+          "rowspan": 1,
+          "colspan": 2,
+          "is_origin": true
+        },
+        {
+          "text": "",
+          "raw_text": "",
+          "row_index": 13,
+          "column_index": 17,
+          "rowspan": 1,
+          "colspan": 1,
+          "is_origin": true
+        }
+      ]
+    },
+    {
+      "ordinal": 116,
+      "table_id": "table_000053",
+      "table_grid_sha256": "sha256:fc0fc611142d74fb9fe2d5c28b0c308a5e4aef3e4cc3089117e667465e642959",
+      "row_index": 14,
+      "row_label": "Interest expense",
+      "cells": [
+        {
+          "text": "Interest expense",
+          "raw_text": "Interest expense",
+          "row_index": 14,
+          "column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "is_origin": true
+        },
+        {
+          "text": "(860)",
+          "raw_text": "(860)",
+          "row_index": 14,
+          "column_index": 3,
+          "rowspan": 1,
+          "colspan": 2,
+          "is_origin": true
+        },
+        {
+          "text": "",
+          "raw_text": "",
+          "row_index": 14,
+          "column_index": 5,
+          "rowspan": 1,
+          "colspan": 1,
+          "is_origin": true
+        },
+        {
+          "text": "",
+          "raw_text": "",
+          "row_index": 14,
+          "column_index": 6,
+          "rowspan": 1,
+          "colspan": 3,
+          "is_origin": true
+        },
+        {
+          "text": "(920)",
+          "raw_text": "(920)",
+          "row_index": 14,
+          "column_index": 9,
+          "rowspan": 1,
+          "colspan": 2,
+          "is_origin": true
+        },
+        {
+          "text": "",
+          "raw_text": "",
+          "row_index": 14,
+          "column_index": 11,
+          "rowspan": 1,
+          "colspan": 1,
+          "is_origin": true
+        },
+        {
+          "text": "",
+          "raw_text": "",
+          "row_index": 14,
+          "column_index": 12,
+          "rowspan": 1,
+          "colspan": 3,
+          "is_origin": true
+        },
+        {
+          "text": "(931)",
+          "raw_text": "(931)",
+          "row_index": 14,
+          "column_index": 15,
+          "rowspan": 1,
+          "colspan": 2,
+          "is_origin": true
+        },
+        {
+          "text": "",
+          "raw_text": "",
+          "row_index": 14,
+          "column_index": 17,
+          "rowspan": 1,
+          "colspan": 1,
+          "is_origin": true
+        }
+      ]
+    },
+    {
+      "ordinal": 128,
+      "table_id": "table_000053",
+      "table_grid_sha256": "sha256:fc0fc611142d74fb9fe2d5c28b0c308a5e4aef3e4cc3089117e667465e642959",
+      "row_index": 18,
+      "row_label": "Other items, net",
+      "cells": [
+        {
+          "text": "Other items, net",
+          "raw_text": "Other items, net",
+          "row_index": 18,
+          "column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "is_origin": true
+        },
+        {
+          "text": "(182)",
+          "raw_text": "(182)",
+          "row_index": 18,
+          "column_index": 3,
+          "rowspan": 1,
+          "colspan": 2,
+          "is_origin": true
+        },
+        {
+          "text": "",
+          "raw_text": "",
+          "row_index": 18,
+          "column_index": 5,
+          "rowspan": 1,
+          "colspan": 1,
+          "is_origin": true
+        },
+        {
+          "text": "",
+          "raw_text": "",
+          "row_index": 18,
+          "column_index": 6,
+          "rowspan": 1,
+          "colspan": 3,
+          "is_origin": true
+        },
+        {
+          "text": "(216)",
+          "raw_text": "(216)",
+          "row_index": 18,
+          "column_index": 9,
+          "rowspan": 1,
+          "colspan": 2,
+          "is_origin": true
+        },
+        {
+          "text": "",
+          "raw_text": "",
+          "row_index": 18,
+          "column_index": 11,
+          "rowspan": 1,
+          "colspan": 1,
+          "is_origin": true
+        },
+        {
+          "text": "",
+          "raw_text": "",
+          "row_index": 18,
+          "column_index": 12,
+          "rowspan": 1,
+          "colspan": 3,
+          "is_origin": true
+        },
+        {
+          "text": "(124)",
+          "raw_text": "(124)",
+          "row_index": 18,
+          "column_index": 15,
+          "rowspan": 1,
+          "colspan": 2,
+          "is_origin": true
+        },
+        {
+          "text": "",
+          "raw_text": "",
+          "row_index": 18,
+          "column_index": 17,
+          "rowspan": 1,
+          "colspan": 1,
+          "is_origin": true
+        }
+      ]
+    },
+    {
+      "ordinal": 131,
+      "table_id": "table_000053",
+      "table_grid_sha256": "sha256:fc0fc611142d74fb9fe2d5c28b0c308a5e4aef3e4cc3089117e667465e642959",
+      "row_index": 19,
+      "row_label": "Earnings (loss) from continuing operations before income taxes and equity in loss of investee companies",
+      "cells": [
+        {
+          "text": "Earnings (loss) from continuing operations before income taxes and equity in loss of investee companies",
+          "raw_text": "\nEarnings (loss) from continuing operations before income taxes \nand equity in loss of investee companies",
+          "row_index": 19,
+          "column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "is_origin": true
+        },
+        {
+          "text": "(6,177)",
+          "raw_text": "(6,177)",
+          "row_index": 19,
+          "column_index": 3,
+          "rowspan": 1,
+          "colspan": 2,
+          "is_origin": true
+        },
+        {
+          "text": "",
+          "raw_text": "",
+          "row_index": 19,
+          "column_index": 5,
+          "rowspan": 1,
+          "colspan": 1,
+          "is_origin": true
+        },
+        {
+          "text": "",
+          "raw_text": "",
+          "row_index": 19,
+          "column_index": 6,
+          "rowspan": 1,
+          "colspan": 3,
+          "is_origin": true
+        },
+        {
+          "text": "(1,253)",
+          "raw_text": "(1,253)",
+          "row_index": 19,
+          "column_index": 9,
+          "rowspan": 1,
+          "colspan": 2,
+          "is_origin": true
+        },
+        {
+          "text": "",
+          "raw_text": "",
+          "row_index": 19,
+          "column_index": 11,
+          "rowspan": 1,
+          "colspan": 1,
+          "is_origin": true
+        },
+        {
+          "text": "",
+          "raw_text": "",
+          "row_index": 19,
+          "column_index": 12,
+          "rowspan": 1,
+          "colspan": 3,
+          "is_origin": true
+        },
+        {
+          "text": "1,266",
+          "raw_text": "1,266&#160;",
+          "row_index": 19,
+          "column_index": 15,
+          "rowspan": 1,
+          "colspan": 2,
+          "is_origin": true
+        },
+        {
+          "text": "",
+          "raw_text": "",
+          "row_index": 19,
+          "column_index": 17,
+          "rowspan": 1,
+          "colspan": 1,
+          "is_origin": true
+        }
+      ]
+    },
+    {
+      "ordinal": 146,
+      "table_id": "table_000053",
+      "table_grid_sha256": "sha256:fc0fc611142d74fb9fe2d5c28b0c308a5e4aef3e4cc3089117e667465e642959",
+      "row_index": 24,
+      "row_label": "Net earnings (loss) (Paramount and noncontrolling interests)",
+      "cells": [
+        {
+          "text": "Net earnings (loss) (Paramount and noncontrolling interests)",
+          "raw_text": "Net earnings (loss) (Paramount and noncontrolling interests)",
+          "row_index": 24,
+          "column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "is_origin": true
+        },
+        {
+          "text": "(6,149)",
+          "raw_text": "(6,149)",
+          "row_index": 24,
+          "column_index": 3,
+          "rowspan": 1,
+          "colspan": 2,
+          "is_origin": true
+        },
+        {
+          "text": "",
+          "raw_text": "",
+          "row_index": 24,
+          "column_index": 5,
+          "rowspan": 1,
+          "colspan": 1,
+          "is_origin": true
+        },
+        {
+          "text": "",
+          "raw_text": "",
+          "row_index": 24,
+          "column_index": 6,
+          "rowspan": 1,
+          "colspan": 3,
+          "is_origin": true
+        },
+        {
+          "text": "(576)",
+          "raw_text": "(576)",
+          "row_index": 24,
+          "column_index": 9,
+          "rowspan": 1,
+          "colspan": 2,
+          "is_origin": true
+        },
+        {
+          "text": "",
+          "raw_text": "",
+          "row_index": 24,
+          "column_index": 11,
+          "rowspan": 1,
+          "colspan": 1,
+          "is_origin": true
+        },
+        {
+          "text": "",
+          "raw_text": "",
+          "row_index": 24,
+          "column_index": 12,
+          "rowspan": 1,
+          "colspan": 3,
+          "is_origin": true
+        },
+        {
+          "text": "1,214",
+          "raw_text": "1,214&#160;",
+          "row_index": 24,
+          "column_index": 15,
+          "rowspan": 1,
+          "colspan": 2,
+          "is_origin": true
+        },
+        {
+          "text": "",
+          "raw_text": "",
+          "row_index": 24,
+          "column_index": 17,
+          "rowspan": 1,
+          "colspan": 1,
+          "is_origin": true
+        }
+      ]
+    },
+    {
+      "ordinal": 152,
+      "table_id": "table_000053",
+      "table_grid_sha256": "sha256:fc0fc611142d74fb9fe2d5c28b0c308a5e4aef3e4cc3089117e667465e642959",
+      "row_index": 26,
+      "row_label": "Net earnings (loss) attributable to Paramount",
+      "cells": [
+        {
+          "text": "Net earnings (loss) attributable to Paramount",
+          "raw_text": "Net earnings (loss) attributable to Paramount",
+          "row_index": 26,
+          "column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "is_origin": true
+        },
+        {
+          "text": "$",
+          "raw_text": "$",
+          "row_index": 26,
+          "column_index": 3,
+          "rowspan": 1,
+          "colspan": 1,
+          "is_origin": true
+        },
+        {
+          "text": "(6,190)",
+          "raw_text": "(6,190)",
+          "row_index": 26,
+          "column_index": 4,
+          "rowspan": 1,
+          "colspan": 1,
+          "is_origin": true
+        },
+        {
+          "text": "",
+          "raw_text": "",
+          "row_index": 26,
+          "column_index": 5,
+          "rowspan": 1,
+          "colspan": 1,
+          "is_origin": true
+        },
+        {
+          "text": "",
+          "raw_text": "",
+          "row_index": 26,
+          "column_index": 6,
+          "rowspan": 1,
+          "colspan": 3,
+          "is_origin": true
+        },
+        {
+          "text": "$",
+          "raw_text": "$",
+          "row_index": 26,
+          "column_index": 9,
+          "rowspan": 1,
+          "colspan": 1,
+          "is_origin": true
+        },
+        {
+          "text": "(608)",
+          "raw_text": "(608)",
+          "row_index": 26,
+          "column_index": 10,
+          "rowspan": 1,
+          "colspan": 1,
+          "is_origin": true
+        },
+        {
+          "text": "",
+          "raw_text": "",
+          "row_index": 26,
+          "column_index": 11,
+          "rowspan": 1,
+          "colspan": 1,
+          "is_origin": true
+        },
+        {
+          "text": "",
+          "raw_text": "",
+          "row_index": 26,
+          "column_index": 12,
+          "rowspan": 1,
+          "colspan": 3,
+          "is_origin": true
+        },
+        {
+          "text": "$",
+          "raw_text": "$",
+          "row_index": 26,
+          "column_index": 15,
+          "rowspan": 1,
+          "colspan": 1,
+          "is_origin": true
+        },
+        {
+          "text": "1,104",
+          "raw_text": "1,104&#160;",
+          "row_index": 26,
+          "column_index": 16,
+          "rowspan": 1,
+          "colspan": 1,
+          "is_origin": true
+        },
+        {
+          "text": "",
+          "raw_text": "",
+          "row_index": 26,
+          "column_index": 17,
+          "rowspan": 1,
+          "colspan": 1,
+          "is_origin": true
+        }
+      ]
+    },
+    {
+      "ordinal": 161,
+      "table_id": "table_000053",
+      "table_grid_sha256": "sha256:fc0fc611142d74fb9fe2d5c28b0c308a5e4aef3e4cc3089117e667465e642959",
+      "row_index": 31,
+      "row_label": "Net earnings (loss) attributable to Paramount",
+      "cells": [
+        {
+          "text": "Net earnings (loss) attributable to Paramount",
+          "raw_text": "Net earnings (loss) attributable to Paramount",
+          "row_index": 31,
+          "column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "is_origin": true
+        },
+        {
+          "text": "$",
+          "raw_text": "$",
+          "row_index": 31,
+          "column_index": 3,
+          "rowspan": 1,
+          "colspan": 1,
+          "is_origin": true
+        },
+        {
+          "text": "(6,190)",
+          "raw_text": "(6,190)",
+          "row_index": 31,
+          "column_index": 4,
+          "rowspan": 1,
+          "colspan": 1,
+          "is_origin": true
+        },
+        {
+          "text": "",
+          "raw_text": "",
+          "row_index": 31,
+          "column_index": 5,
+          "rowspan": 1,
+          "colspan": 1,
+          "is_origin": true
+        },
+        {
+          "text": "",
+          "raw_text": "",
+          "row_index": 31,
+          "column_index": 6,
+          "rowspan": 1,
+          "colspan": 3,
+          "is_origin": true
+        },
+        {
+          "text": "$",
+          "raw_text": "$",
+          "row_index": 31,
+          "column_index": 9,
+          "rowspan": 1,
+          "colspan": 1,
+          "is_origin": true
+        },
+        {
+          "text": "(608)",
+          "raw_text": "(608)",
+          "row_index": 31,
+          "column_index": 10,
+          "rowspan": 1,
+          "colspan": 1,
+          "is_origin": true
+        },
+        {
+          "text": "",
+          "raw_text": "",
+          "row_index": 31,
+          "column_index": 11,
+          "rowspan": 1,
+          "colspan": 1,
+          "is_origin": true
+        },
+        {
+          "text": "",
+          "raw_text": "",
+          "row_index": 31,
+          "column_index": 12,
+          "rowspan": 1,
+          "colspan": 3,
+          "is_origin": true
+        },
+        {
+          "text": "$",
+          "raw_text": "$",
+          "row_index": 31,
+          "column_index": 15,
+          "rowspan": 1,
+          "colspan": 1,
+          "is_origin": true
+        },
+        {
+          "text": "1,104",
+          "raw_text": "1,104&#160;",
+          "row_index": 31,
+          "column_index": 16,
+          "rowspan": 1,
+          "colspan": 1,
+          "is_origin": true
+        },
+        {
+          "text": "",
+          "raw_text": "",
+          "row_index": 31,
+          "column_index": 17,
+          "rowspan": 1,
+          "colspan": 1,
+          "is_origin": true
+        }
+      ]
+    }
+  ]
+}
