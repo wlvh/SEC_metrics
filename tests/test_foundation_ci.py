@@ -102,6 +102,17 @@ class FoundationCiPartitionTest(unittest.TestCase):
         self.assertEqual((len(result['failures']), len(result['errors']), len(result['skips'])),(1,2,1))
         self.assertIn('unresolved source', str(result['errors']))
 
+    def test_a_required_suite_that_only_skips_is_not_a_pass(self):
+        class Pending(unittest.TestCase):
+            @unittest.skip('constructed unavailable required input')
+            def test_required(self): pass
+        module=types.ModuleType('_ci_pending_example');module.Pending=Pending
+        with patch.dict(sys.modules,{'_ci_pending_example':module}):
+            result=ci.run_fast_suite(('_ci_pending_example.Pending',))
+        self.assertEqual(result['test_count'],1)
+        self.assertEqual(len(result['skips']),1)
+        self.assertEqual(result['return_code'],1)
+
 
 if __name__ == '__main__':
     unittest.main()

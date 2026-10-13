@@ -210,16 +210,14 @@ FAST_TESTS += ('tests.vnext.test_explicit_e01_company',)
 FAST_TESTS += ('tests.vnext.test_c04_selected_input',)
 FAST_TESTS += ('tests.vnext.test_historical_auditor_selection',)
 FAST_TESTS += ('tests.vnext.test_historical_auditor_case',)
-FAST_TESTS += ("tests.vnext.test_statement_group_totals",)
-FAST_TESTS += ("tests.vnext.test_cover_dei_release",)
-FAST_TESTS += ("tests.vnext.test_single_segment_revenue",)
-FAST_TESTS += ("tests.vnext.test_processing_dependency_checks",)
-SOURCE_TESTS += ("tests.vnext.test_processing_dependency_material",)
-FAST_TESTS += ("tests.vnext.test_history_source_export",)
-FAST_TESTS += ("tests.vnext.test_d03_source_root_seam",)
-FAST_TESTS += ("tests.vnext.test_income_section_captions",)
-FAST_TESTS += ("tests.vnext.test_bond_maturity_sections",)
-FAST_TESTS += ("tests.vnext.test_standby_note_relation",)
+# New additive features use their own files, retaining deterministic order.
+# Existing selectors and source-material sharding are not reclassified.
+from feature_test_selectors import load_feature_selectors
+_FEATURE_SELECTORS=load_feature_selectors(
+    directory=inherited.REPO_ROOT/'tests/feature_selectors',
+    existing_fast=FAST_TESTS,existing_source=SOURCE_TESTS)
+FAST_TESTS += _FEATURE_SELECTORS['fast']
+SOURCE_TESTS += _FEATURE_SELECTORS['source-material']
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # The unchanged full original-source module passed on head 698b9a45 in
