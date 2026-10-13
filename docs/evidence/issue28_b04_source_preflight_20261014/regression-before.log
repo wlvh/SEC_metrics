@@ -1,0 +1,101 @@
+test_b04_names_only_consumed_current_primary_facts_and_metadata (tests.vnext.test_selected_source_requirements.SelectedSourceRequirementsTest.test_b04_names_only_consumed_current_primary_facts_and_metadata) ... ERROR
+test_formal_b04_source_preflight_is_read_only_and_keeps_b05_unconnected (tests.vnext.test_selected_source_requirements.SelectedSourceRequirementsTest.test_formal_b04_source_preflight_is_read_only_and_keeps_b05_unconnected) ... usage: required_unittests.py sources [-h] --company COMPANY
+                                     --source-root SOURCE_ROOT
+                                     (--report-end REPORT_END |
+                                     --fiscal-year-start FISCAL_YEAR_START)
+                                     [--fiscal-year-end FISCAL_YEAR_END]
+                                     --metric {B01,B02,B03,E01}
+required_unittests.py sources: error: argument --metric: invalid choice: 'B04' (choose from 'B01', 'B02', 'B03', 'E01')
+ERROR
+
+======================================================================
+ERROR: test_b04_names_only_consumed_current_primary_facts_and_metadata (tests.vnext.test_selected_source_requirements.SelectedSourceRequirementsTest.test_b04_names_only_consumed_current_primary_facts_and_metadata)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_selected_source_requirements.py", line 142, in test_b04_names_only_consumed_current_primary_facts_and_metadata
+    before=self.digest_tree();value=self.plan(('B04',))
+                                    ~~~~~~~~~^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_selected_source_requirements.py", line 61, in plan
+    return preflight.discover_selected_annual_requirements(repo_root=self.root,
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+        company_id=COMPANY,report_end='2025-12-31',metric_ids=list(metrics),**kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/scripts/vnext/selected_source_requirements.py", line 146, in discover_selected_annual_requirements
+    _need(type(metric_ids) in (list,tuple) and metric_ids and
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          len(metric_ids) == len(set(metric_ids)) and set(metric_ids) <= METRIC_IDS,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'METRIC_SCOPE_NOT_CONNECTED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/scripts/vnext/selected_source_requirements.py", line 27, in _need
+    raise ValueError('SELECTED_SOURCE_' + reason)
+ValueError: SELECTED_SOURCE_METRIC_SCOPE_NOT_CONNECTED
+
+======================================================================
+ERROR: test_formal_b04_source_preflight_is_read_only_and_keeps_b05_unconnected (tests.vnext.test_selected_source_requirements.SelectedSourceRequirementsTest.test_formal_b04_source_preflight_is_read_only_and_keeps_b05_unconnected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/argparse.py", line 2047, in _parse_known_args2
+    namespace, args = self._parse_known_args(args, namespace, intermixed)
+                      ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/argparse.py", line 2298, in _parse_known_args
+    start_index = consume_optional(start_index)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/argparse.py", line 2222, in consume_optional
+    take_action(action, args, option_string)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/argparse.py", line 2108, in take_action
+    argument_values = self._get_values(action, argument_strings)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/argparse.py", line 2625, in _get_values
+    self._check_value(action, value)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/argparse.py", line 2696, in _check_value
+    raise ArgumentError(action, msg % args)
+argparse.ArgumentError: argument --metric: invalid choice: 'B04' (choose from 'B01', 'B02', 'B03', 'E01')
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_selected_source_requirements.py", line 160, in test_formal_b04_source_preflight_is_read_only_and_keeps_b05_unconnected
+    self.assertEqual(main(args),0)
+                     ~~~~^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tools/vnext_company.py", line 105, in main
+    args = parser.parse_args(argv)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/argparse.py", line 2008, in parse_args
+    args, argv = self.parse_known_args(args, namespace)
+                 ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/argparse.py", line 2018, in parse_known_args
+    return self._parse_known_args2(args, namespace, intermixed=False)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/argparse.py", line 2047, in _parse_known_args2
+    namespace, args = self._parse_known_args(args, namespace, intermixed)
+                      ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/argparse.py", line 2279, in _parse_known_args
+    positionals_end_index = consume_positionals(start_index)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/argparse.py", line 2254, in consume_positionals
+    take_action(action, args)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/argparse.py", line 2123, in take_action
+    action(self, namespace, argument_values, option_string)
+    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/argparse.py", line 1318, in __call__
+    subnamespace, arg_strings = subparser.parse_known_args(arg_strings, None)
+                                ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/argparse.py", line 2018, in parse_known_args
+    return self._parse_known_args2(args, namespace, intermixed=False)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/argparse.py", line 2049, in _parse_known_args2
+    self.error(str(err))
+    ~~~~~~~~~~^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/argparse.py", line 2785, in error
+    self.exit(2, _('%(prog)s: error: %(message)s\n') % args)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/argparse.py", line 2772, in exit
+    _sys.exit(status)
+    ~~~~~~~~~^^^^^^^^
+SystemExit: 2
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.131s
+
+FAILED (errors=2)
+{"allowed_skips": 0, "errors": 2, "failures": 0, "run": 2, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_selected_source_requirements.SelectedSourceRequirementsTest.test_b04_names_only_consumed_current_primary_facts_and_metadata", "tests.vnext.test_selected_source_requirements.SelectedSourceRequirementsTest.test_formal_b04_source_preflight_is_read_only_and_keeps_b05_unconnected"]}

@@ -149,7 +149,7 @@ python /path/to/SEC_metrics/tools/vnext_company.py run \
 
 来源保存在任务 `sources`，普通计算状态在 `company-state`，输出在指定输出目录；用户不手工准备 FULL_SOURCE 或选择内部程序树。独立采集用同版 `acquire --company ... --work-dir ... --call-context ... --metric B01 --metric B02 --max-sec-requests 20`；单独计算可用同版保存来源 `run --source-root <任务/sources>` 指向另一个普通状态目录。日常读取用 `results --state-root <任务/company-state> --company ...`，不重放计算。已有原生任务继续原固定入口，不覆盖旧原生状态。
 
-候选 `task/issue28-current-online-b04` 允许显式 `--metric B04` 复用同一获取—计算链；不指定指标时仍只选择 B01/B02。它仍要求原用途适用、指标范围包含 B04 的现存调用上下文，不增加真实获取许可。候选分支的 Marriott FY2025 与 Salesforce FY2026 录制接缝、未变复跑和独立读取见[主要验证记录](evidence/issue28_online_b04_company_20261014/README.md)；尚未进入 main，不表示在线39项已完成。
+main 已接收 [PR263](https://github.com/wlvh/SEC_metrics/pull/263)，允许显式 `--metric B04` 复用同一获取—计算链；不指定指标时仍只选择 B01/B02。它仍要求原用途适用、显式选择 B04 的现存调用上下文，不增加真实获取许可。Marriott FY2025 与 Salesforce FY2026 的录制接缝、未变复跑和独立读取见[主要验证记录](evidence/issue28_online_b04_company_20261014/README.md)；代码已进入 main，业务结果未正式采纳，不表示在线39项已完成。
 
 在线注册表兼容后继 `task/issue28-online-registry-scope` 允许来源根保留其他公司的合法旧注册行，只要求本次公司的完整注册行与程序一致；目标主体/期间规则变化及无效CSV仍在客户端和申领前拒绝。该候选不改元数据刷新计数、不重取不可变年报，不增加在线指标或调用许可，尚待接收。
 
@@ -185,6 +185,8 @@ python3 tools/vnext_company.py sources --company marriott_international \
 ```
 
 该入口按现有保存目录列出这一任务的目标、修订及必要前期年报、目录/XML、Company Facts和选源元数据。`--report-end`是SEC报告期结束日期；原件齐备时显示原件DEI的原始财年标签，不把日期年份当标签；与其他财年文字或机器标签的最终对照仍由既有计算侧选期实现处理，本预检不替代它。文件齐备返回`SAVED_SOURCE_BYTES_AVAILABLE`/exit0；缺件、末次失败或来源身份问题返回具体原因/exit2。只选择B01时不要求未被使用的前期原件；B02需要前期，只有既有完整、来源已核对且日期相邻的原生XML可以满足未保存的前期正文，失败GET不能被替代。
+
+候选 `task/issue28-b04-source-preflight` 增加同一 `sources --metric B04` 只读入口及已有发行人财年范围发现。它按当前 B04 实际消费列出当期正文、Company Facts、所需选源元数据与本期修订正文，不将未使用的前期正文／目录／实例作为 B04 单选的必需项；与 B01/B02/B03 混选仍保原依赖并集。它不运行计算、不授权或执行获取、不证明修订可接受或指标正确；原始 DEI 标签照报，最终公司财年仍由计算侧核定。历史 B04 计算不因来源规划而自动接入。
 
 main已收到PR169的注册表范围检查 只对本任务公司的完整注册行比较来源包与程序规则；另一家公司合法行变化不阻断它，整表重复身份、缺字段和非法CIK仍拒绝。它基于当前main的B01/B02入口，与PR168的B03扩展独立，已接收。
 
