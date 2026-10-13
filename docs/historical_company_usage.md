@@ -274,8 +274,8 @@ Ford FY2025 的已核输入来自 PR52 保留提交 `bcc0c0bc0293ba6b6ffc58b1f4e
 ```bash
 git fetch origin bcc0c0bc0293ba6b6ffc58b1f4e9034dbb52a786
 ISSUE47_D02_INPUT="$HOME/sec-metrics-d02-saved-inputs-20261013"
-mkdir "$ISSUE47_D02_INPUT"  # 若已存在，另选新目录，保留原文件
-git show bcc0c0bc0293ba6b6ffc58b1f4e9034dbb52a786:evidence/issue47_model_calls/9a368413797ddef1/model-ledger.tar.gz > "$ISSUE47_D02_INPUT/model-ledger.tar.gz"
+mkdir "$ISSUE47_D02_INPUT" && \
+git show bcc0c0bc0293ba6b6ffc58b1f4e9034dbb52a786:evidence/issue47_model_calls/9a368413797ddef1/model-ledger.tar.gz > "$ISSUE47_D02_INPUT/model-ledger.tar.gz" && \
 python3 - "$ISSUE47_D02_INPUT" <<'PY_RESTORE'
 import hashlib, json, sys, tarfile
 from pathlib import Path
