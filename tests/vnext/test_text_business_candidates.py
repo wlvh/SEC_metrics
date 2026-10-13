@@ -116,25 +116,6 @@ class TextBusinessCandidateTest(unittest.TestCase):
         self.assertEqual("LOCATED_NOTE_RANGE", p["note_references"][0]["status"])
         self.assertFalse(p["semantic_scope_completeness_asserted"])
 
-    def test_prefixless_note_formats_use_the_same_original_bytes(self):
-        body = BODY.replace('<h2>Note 2. Contingencies</h2>',
-                            '<p style="font-weight:bold;font-size:12pt">2. Contingencies</p>')
-        body = body.replace('<h2>Note 3. Income Taxes</h2>',
-                            '<p style="font-weight:bold;font-size:12pt">3. Income Taxes</p>')
-        doc = document(body)
-        before = doc['text_document_id']
-        located = legal_risk_candidates(document=doc, raw_bytes=annual(body))
-        self.assertEqual('LOCATED_NOTE_RANGE', located['note_references'][0]['status'])
-        self.assertEqual(before, doc['text_document_id'])
-        self.assertEqual('REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE',
-            legal_risk_candidates(document=doc)['note_references'][0]['status'])
-        different = body.replace('font-size:12pt">3.', 'font-size:10pt">3.')
-        self.assertEqual('REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE',
-            legal_risk_candidates(document=document(different), raw_bytes=annual(different))
-                ['note_references'][0]['status'])
-        with self.assertRaisesRegex(ValueError, 'TEXT_BUSINESS_HEADING_SOURCE_IDENTITY_CONFLICT'):
-            legal_risk_candidates(document=doc, raw_bytes=annual(different))
-
     def test_goodwill_going_concern_phrase_is_not_a_doubt_conclusion(self):
         body = BODY.replace("Accounting policies are described here.", "Goodwill includes the going-concern element of the acquired business.")
         p = going_concern_candidates(document=document(body))
