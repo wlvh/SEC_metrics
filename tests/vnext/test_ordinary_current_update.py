@@ -29,7 +29,7 @@ class CurrentUpdateTest(unittest.TestCase):
                    'result':result}
             self.records[str(path)]=value
             return value
-        for target,kwargs in [('_configuration',{'side_effect':lambda *args:dict(self.config)}),
+        for target,kwargs in [('_configuration',{'side_effect':lambda *args,**kwargs:dict(self.config)}),
             ('_source_census',{'side_effect':lambda *args:list(self.census)}),
             ('_current_sources',{'side_effect':lambda *args:[dict(self.proof)]}),
             ('create_saved_result',{'side_effect':create}),

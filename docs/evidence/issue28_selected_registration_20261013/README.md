@@ -101,3 +101,18 @@ These are combination controls, not repeat of the receiver's 45-source review.
 The actual producer/writer remains selected by the registered entry. A change
 to a genuinely used renderer is still a processing change; this candidate does
 not claim all future shared renderer changes are irrelevant to all metrics.
+
+Automated review4262062904 was traced through actual configuration and run_once.
+The original supplied marker did not remove a newly selected but unused default
+producer dependency: default E01 routing changed to existing current_b06_case,
+old full configuration became different although the supplied marker was same.
+Original code-component reproduction is logged separately. Configuration now
+knows whether the explicit producer is used before adding registered-module
+paths. Registry structural checking, actual shared writer/reader dependencies,
+explicit producer/declarations and source/Spec changes remain. Optional flag
+has the previous False default. One synthetic configuration fixture accepts
+the new optional keyword without changing its returned values or assertions.
+132 affected controls /9.728s under Python3.12.10, zero skips; earlier fixture
+errors are kept, not renamed passes. No real company recomputation is needed
+for this configuration-only responsibility. Other unneeded shared renderer
+versions are not claimed solved by this change.

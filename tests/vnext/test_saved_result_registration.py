@@ -11,17 +11,31 @@ class SavedResultRegistrationTest(unittest.TestCase):
     def setUp(self):
         self.catalog=saved._route_catalog();self.read=saved.strict_json_file
 
-    def configuration(self,metric,catalog):
+    def configuration(self,metric,catalog,*,supplied_case=False):
         def read(*,path):
             return deepcopy(catalog) if Path(path)==ROOT/saved.ROUTE_CONFIG_PATH else self.read(path=path)
         with patch.object(saved,'strict_json_file',side_effect=read):
-            return update._configuration(ROOT,'marriott_international',metric)
+            return update._configuration(ROOT,'marriott_international',metric,supplied_case=supplied_case)
 
     def test_unrelated_new_registration_does_not_change_existing_inputs(self):
         changed=deepcopy(self.catalog);changed['routes']['A99']=dict(changed['routes']['A04'])
         for metric in ('B01','D04','E01','D02'):
             with self.subTest(metric=metric):
                 self.assertEqual(self.configuration(metric,self.catalog),self.configuration(metric,changed))
+
+    def test_supplied_case_does_not_acquire_unused_default_module_dependency(self):
+        changed=deepcopy(self.catalog)
+        changed['default']={**changed['default'],'module':'vnext.current_b06_case','function':'prepare_current_b06_case'}
+        for metric in ('D01','D02','E01'):
+            with self.subTest(metric=metric):
+                original=self.configuration(metric,self.catalog,supplied_case=True)
+                actual=self.configuration(metric,changed,supplied_case=True)
+                self.assertEqual(original,actual)
+                self.assertEqual({'call_style':'supplied_case'},actual['saved_result_registration'])
+                self.assertIn('scripts/vnext/ordinary_saved_result.py',actual['processing_files'])
+        # Actual default-dispatch tasks do consume their selected module.
+        actual=self.configuration('E01',changed)
+        self.assertIn('scripts/vnext/current_b06_case.py',actual['processing_files'])
 
     def test_used_registration_change_is_a_processing_change(self):
         changed=deepcopy(self.catalog);changed['routes']['D04']['function']='another_producer'

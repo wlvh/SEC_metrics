@@ -29,7 +29,7 @@ def _write(path, value):
     path.parent.mkdir(parents=True,exist_ok=True); _atomic_json(path,value)
 
 
-def _configuration(source, company, metric):
+def _configuration(source, company, metric, *, supplied_case=False):
     policy = strict_json_file(path=ROOT/'config/issue28_normal_results_v2.json')
     paths = set(policy['rule_paths']) | set(policy['presentation_paths'])
     # Ordinary records verify saved inputs directly, without registering a
@@ -155,8 +155,10 @@ def _configuration(source, company, metric):
     paths.discard('config/company_registry.csv')
     paths.add('scripts/vnext/ordinary_registry_scope.py')
     from .ordinary_saved_result import selected_case_registration
-    registration = selected_case_registration(metric)
-    paths.add('scripts/'+registration['module'].replace('.','/')+'.py')
+    selected = selected_case_registration(metric)
+    registration = {'call_style':'supplied_case'} if supplied_case else selected
+    if not supplied_case:
+        paths.add('scripts/'+selected['module'].replace('.','/')+'.py')
     return {'company_id':company,'metric_id':metric,'source_root':str(source),
             'saved_result_registration':registration,
         'processing_files':{p:sha256_file(path=ROOT/p) for p in sorted(paths)},
@@ -315,9 +317,9 @@ def run_once(*, state_root, source_root, company_id, metric_id, shared_input_roo
         _write(attempt/'intent.json',{'attempt_id':identity,'company_id':company_id,'metric_id':metric_id,
                                     'previous_result':previous,'previous_check':completed})
         try:
-            configuration = _configuration(source,company_id,metric_id)
-            if (case_factory is not None or current_case_factory is not None) and 'saved_result_registration' in configuration:
-                configuration = {**configuration,'saved_result_registration':{'call_style':'supplied_case'}}
+            configuration = (_configuration(source,company_id,metric_id,supplied_case=True)
+                if case_factory is not None or current_case_factory is not None
+                else _configuration(source,company_id,metric_id))
             _need(type(processing_files) in (list,tuple) and len(processing_files)==len(set(processing_files)),
                   'CURRENT_UPDATE_PROCESSING_FILES_INVALID')
             extra = {}
