@@ -386,8 +386,15 @@ def render_summary(manifest, report):
                  f"`{before['digest']}`; unchanged during run: {inputs['unchanged_during_run']}")
     years = scope['fiscal_years']
     shown = f'{years[0]}-{years[-1]}' if years == list(range(years[0], years[-1] + 1)) else ','.join(map(str, years))
+    outside = scope['outside_baseline_registry']
+    if outside:
+        extent = f' (includes companies outside the baseline registry: {outside})'
+    elif scope['subset_of_registry']:
+        extent = ' (SUBSET of the baseline registry)'
+    else:
+        extent = ' (whole baseline registry)'
     lines.append(f"- scope: {len(scope['companies'])} companies x fiscal years {shown} = {report['requested']} samples"
-                 + (' (SUBSET of the baseline registry)' if scope['subset_of_registry'] else ' (whole baseline registry)'))
+                 + extent)
     added = sorted(set(scope['registry_candidate']) - set(scope['registry_baseline']))
     removed = sorted(set(scope['registry_baseline']) - set(scope['registry_candidate']))
     if added or removed:
@@ -525,7 +532,8 @@ def main(argv=None):
             'inputs': {'source_root': str(source_root), 'source_root_before': before,
                        'source_root_after': after, 'unchanged_during_run': before == after},
             'scope': {'companies': companies, 'fiscal_years': years,
-                      'subset_of_registry': set(companies) != set(registry['baseline']),
+                      'subset_of_registry': set(companies) < set(registry['baseline']),
+                      'outside_baseline_registry': sorted(set(companies) - set(registry['baseline'])),
                       'registry_baseline': registry['baseline'], 'registry_candidate': registry['candidate']},
             'environment': {'python': platform.python_version(), 'implementation': platform.python_implementation(),
                             'platform': platform.platform(), 'git': _git(repo, '--version'),

@@ -235,6 +235,9 @@ class PinnedCommitRunTest(unittest.TestCase):
         # A file the producer leaves in its code worktree, even untracked, makes the run incomplete.
         self.assertIn('result: INCOMPLETE', littered_summary)
         self.assertIn('generated.cfg', littered_summary)
+        # 'litter' is registered only by the candidate, so the scope is not a baseline subset.
+        self.assertIn("outside the baseline registry: ['litter']", littered_summary)
+        self.assertNotIn('SUBSET of the baseline registry', littered_summary)
         self.assertEqual(len(worktrees.splitlines()), 1)
 
 
