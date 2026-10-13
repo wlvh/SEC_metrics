@@ -1,0 +1,31 @@
+test_completed_item_metadata_body_conflict_is_saved_as_withheld_not_zero (tests.vnext.test_historical_e01_company_case.HistoricalE01CompanyCaseTest.test_completed_item_metadata_body_conflict_is_saved_as_withheld_not_zero) ... ERROR
+test_other_item_parser_and_integrity_errors_keep_their_original_failure (tests.vnext.test_historical_e01_company_case.HistoricalE01CompanyCaseTest.test_other_item_parser_and_integrity_errors_keep_their_original_failure) ... ok
+
+======================================================================
+ERROR: test_completed_item_metadata_body_conflict_is_saved_as_withheld_not_zero (tests.vnext.test_historical_e01_company_case.HistoricalE01CompanyCaseTest.test_completed_item_metadata_body_conflict_is_saved_as_withheld_not_zero)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_historical_e01_company_case.py", line 295, in test_completed_item_metadata_body_conflict_is_saved_as_withheld_not_zero
+    context,_,_=self.prepare(source_only=True,confirmation_error=error)
+                ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_historical_e01_company_case.py", line 169, in prepare
+    case=cases.prepare_historical_e01_source_context(repo_root='/constructed',
+        company_id=annual['company_id'],fiscal_year=2024)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/historical_e01_company_case.py", line 93, in prepare_historical_e01_source_context
+    confirmation = content_confirmation_candidates(repo_root=source,route=route,
+        claims=packet['claims'],records=records,keep_text=True)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+vnext.historical_event_items.EventItemTextError: EVENT_ITEM_HEADED_BUT_NOT_LISTED:0001193125-23-294930:2.01
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.004s
+
+FAILED (errors=1)
+{"allowed_skips": 0, "errors": 1, "failures": 0, "run": 2, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_historical_e01_company_case.HistoricalE01CompanyCaseTest.test_completed_item_metadata_body_conflict_is_saved_as_withheld_not_zero", "tests.vnext.test_historical_e01_company_case.HistoricalE01CompanyCaseTest.test_other_item_parser_and_integrity_errors_keep_their_original_failure"]}
