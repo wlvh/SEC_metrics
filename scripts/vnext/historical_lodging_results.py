@@ -110,6 +110,7 @@ HISTORICAL_LODGING_PROCESSING_FILES = (
     'scripts/vnext/fiscal_year_labels.py',
     'scripts/vnext/normal_annual_input_v2.py',
     'scripts/vnext/normal_governance_input.py',
+    'scripts/vnext/composite_scope.py',
     'config/normal_period_selection_v1.json',
     'config/normal_fiscal_year_labels_v1.json',
 )

@@ -1,0 +1,45 @@
+test_saved_factories_use_only_declared_processing_modules (tests.vnext.test_processing_dependency_material.ProcessingDependencyMaterialTest.test_saved_factories_use_only_declared_processing_modules) ... 
+  test_saved_factories_use_only_declared_processing_modules (tests.vnext.test_processing_dependency_material.ProcessingDependencyMaterialTest.test_saved_factories_use_only_declared_processing_modules) (metric='B01') ... FAIL
+  test_saved_factories_use_only_declared_processing_modules (tests.vnext.test_processing_dependency_material.ProcessingDependencyMaterialTest.test_saved_factories_use_only_declared_processing_modules) (metric='B04') ... FAIL
+test_saved_jpm_a13_scope_functions_are_in_the_actual_configuration (tests.vnext.test_processing_dependency_material.ProcessingDependencyMaterialTest.test_saved_jpm_a13_scope_functions_are_in_the_actual_configuration) ... FAIL
+
+======================================================================
+FAIL: test_saved_factories_use_only_declared_processing_modules (tests.vnext.test_processing_dependency_material.ProcessingDependencyMaterialTest.test_saved_factories_use_only_declared_processing_modules) (metric='B01')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-result-projection-dependencies/SEC_metrics/tests/vnext/test_processing_dependency_material.py", line 22, in test_saved_factories_use_only_declared_processing_modules
+    self.assertEqual(report['status'],'CANDIDATE_READY',report)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'INPUT_OR_EXECUTION_FAILED' != 'CANDIDATE_READY'
+- INPUT_OR_EXECUTION_FAILED
++ CANDIDATE_READY
+ : {'status': 'INPUT_OR_EXECUTION_FAILED', 'attempt_id': 'ffb68322814e403887e0f97107f406a1', 'error_type': 'AssertionError', 'reason': 'Historical result read: /private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmpkxhvndi4/B01/results/e38f6300be3042edb50bcc119d133e2e/metrics_matrix.csv', 'previous_result': None, 'new_calls': {'provider': 0, 'paid': 0, 'sec': 0}, 'production_authorized': False}
+
+======================================================================
+FAIL: test_saved_factories_use_only_declared_processing_modules (tests.vnext.test_processing_dependency_material.ProcessingDependencyMaterialTest.test_saved_factories_use_only_declared_processing_modules) (metric='B04')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-result-projection-dependencies/SEC_metrics/tests/vnext/test_processing_dependency_material.py", line 22, in test_saved_factories_use_only_declared_processing_modules
+    self.assertEqual(report['status'],'CANDIDATE_READY',report)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'INPUT_OR_EXECUTION_FAILED' != 'CANDIDATE_READY'
+- INPUT_OR_EXECUTION_FAILED
++ CANDIDATE_READY
+ : {'status': 'INPUT_OR_EXECUTION_FAILED', 'attempt_id': '2751239ab65b40e0984cc7c77c550456', 'error_type': 'AssertionError', 'reason': 'Historical result read: /private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmpkxhvndi4/B04/results/1075fa6a86ff4a4fab92cadc0d2c65db/metrics_matrix.csv', 'previous_result': None, 'new_calls': {'provider': 0, 'paid': 0, 'sec': 0}, 'production_authorized': False}
+
+======================================================================
+FAIL: test_saved_jpm_a13_scope_functions_are_in_the_actual_configuration (tests.vnext.test_processing_dependency_material.ProcessingDependencyMaterialTest.test_saved_jpm_a13_scope_functions_are_in_the_actual_configuration)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-result-projection-dependencies/SEC_metrics/tests/vnext/test_processing_dependency_material.py", line 38, in test_saved_jpm_a13_scope_functions_are_in_the_actual_configuration
+    assert_processing_calls(observed, configuration)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-result-projection-dependencies/SEC_metrics/tests/vnext/processing_dependency_checks.py", line 57, in assert_processing_calls
+    raise AssertionError('PROCESSING_DEPENDENCY_UNDECLARED: '+detail)
+AssertionError: PROCESSING_DEPENDENCY_UNDECLARED: scripts/sec_http.py:<genexpr>,legacy_response_snapshot_paths,read_request_snapshot_bytes,read_verified_immutable_bytes,repository_write_path,request_accession,request_artifact_candidate,request_headers_bytes_match_identity
+
+----------------------------------------------------------------------
+Ran 2 tests in 44.332s
+
+FAILED (failures=3)
+{"allowed_skips": 0, "errors": 0, "failures": 3, "run": 2, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_processing_dependency_material"]}

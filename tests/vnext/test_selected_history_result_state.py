@@ -93,6 +93,37 @@ class SelectedHistoryResultStateTest(TestCase):
     def period_root(self, year, metric="B10"):
         return self.root.resolve() / metric / "periods" / ("FY" + str(year))
 
+    def test_private_historical_dependencies_reprocess_then_reuse(self):
+        from vnext import historical_geography_cases as geography, historical_b03_case as b03
+        from vnext.historical_lodging_results import HISTORICAL_LODGING_PROCESSING_FILES
+        original_hash=update.sha256_file
+        groups=(('A13',geography.PROCESSING_FILES,('zero_ai_r2',)),
+                ('B03',b03.PROCESSING_FILES,('r5_b06_scope','b06_disclosure','r5_b06_structured')),
+                ('B10',HISTORICAL_LODGING_PROCESSING_FILES,('composite_scope',)),
+                ('B11',HISTORICAL_LODGING_PROCESSING_FILES,('composite_scope',)))
+        for metric,files,names in groups:
+            for year,name in enumerate(names,2021):
+                with self.subTest(metric=metric,module=name):
+                    self.forbid_factory=False
+                    first=self.run_control(year,metric,files)
+                    count=len(self.factory_calls)
+                    self.forbid_factory=True
+                    self.assertEqual('NO_SOURCE_CONTENT_CHANGE',self.run_control(year,metric,files)['status'])
+                    target=ROOT/('scripts/vnext/'+name+'.py')
+                    def changed_hash(*,path):
+                        return 'CONSTRUCTED_PRIVATE_HISTORY_DEPENDENCY_CHANGE' if path==target else original_hash(path=path)
+                    self.forbid_factory=False
+                    with patch.object(update,'sha256_file',side_effect=changed_hash):
+                        changed=self.run_control(year,metric,files)
+                        self.assertTrue(changed['calculation_performed'])
+                        self.assertEqual(count+1,len(self.factory_calls))
+                        self.assertNotEqual(first['version'],changed['version'])
+                        self.forbid_factory=True
+                        repeat=self.run_control(year,metric,files)
+                        self.assertEqual('NO_SOURCE_CONTENT_CHANGE',repeat['status'])
+                        self.assertEqual(changed['version'],repeat['version'])
+                    self.assertEqual(count+1,len(self.factory_calls))
+
     def test_average_scope_dependency_change_processes_once_then_reuses(self):
         from vnext.historical_average_risk_cases import PROCESSING_FILES
         original_hash=update.sha256_file

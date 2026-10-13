@@ -26,7 +26,7 @@ PROCESSING_FILES = tuple('scripts/vnext/' + name + '.py' for name in (
     'financial_results', 'financial_structured', 'financial_candidates',
     'financial_duration', 'financial_relationships', 'composite_scope', 'constraints',
     'r4_task_contracts', 'table_task_contracts',
-    'resource_limits', 'deterministic_router', 'table_grid')) + (
+    'resource_limits', 'deterministic_router', 'table_grid', 'zero_ai_r2')) + (
     'config/normal_period_selection_v1.json', 'config/normal_fiscal_year_labels_v1.json',
     'catalog/r4_normal/A13_geographic_exposure.md', 'catalog/r4_v2/A13_geographic_exposure.md',
     'catalog/table_task_contracts.json', 'config/r4_task_contracts_v2.json',

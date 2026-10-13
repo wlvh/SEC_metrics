@@ -1,0 +1,60 @@
+[
+  {
+    "metric": "A13",
+    "state_files_preserved": 99,
+    "processing_additions": [
+      "config/normal_numeric_projection_v1.json",
+      "scripts/sec_http.py",
+      "scripts/sec_urls.py",
+      "scripts/vnext/normal_numeric_projection.py"
+    ],
+    "result_id": "sha256:3b6e67f20d3d769b00a5725a13760b8dce33d5471fb12183d6941cd3450cd1ac",
+    "value": "38233000000",
+    "date": [
+      "2024-01-01",
+      "2024-12-31"
+    ],
+    "read_only": true,
+    "formal_run_repeated": false
+  },
+  {
+    "metric": "B03",
+    "state_files_preserved": 102,
+    "processing_additions": [
+      "config/normal_numeric_projection_v1.json",
+      "scripts/sec_http.py",
+      "scripts/sec_urls.py",
+      "scripts/vnext/normal_numeric_projection.py",
+      "scripts/vnext/scope_contract.py"
+    ],
+    "result_id": "sha256:9cf2d114ca9c1f492321975b26d7c45a208cd80768364177c4588721b9e2c783",
+    "value": "0.1653386454183266932270916335",
+    "date": [
+      "2024-01-01",
+      "2024-12-31"
+    ],
+    "read_only": true,
+    "formal_run_repeated": false
+  },
+  {
+    "metric": "B10",
+    "state_files_preserved": 97,
+    "processing_additions": [
+      "config/normal_numeric_projection_v1.json",
+      "scripts/sec_http.py",
+      "scripts/sec_urls.py",
+      "scripts/vnext/normal_numeric_projection.py",
+      "scripts/vnext/scope_contract.py",
+      "scripts/vnext/text_coverage.py",
+      "scripts/vnext/text_results_v2.py"
+    ],
+    "result_id": "sha256:badff04d957477e02ef59acc4a6c0fba1c33a8c55a76542463355485caa6c09d",
+    "value": "0.698",
+    "date": [
+      "2024-01-01",
+      "2024-12-31"
+    ],
+    "read_only": true,
+    "formal_run_repeated": false
+  }
+]
