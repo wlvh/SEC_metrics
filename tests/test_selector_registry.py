@@ -46,6 +46,23 @@ class SelectorRegistryTest(unittest.TestCase):
             (directory/'one.json').write_text(json.dumps({'fast':['tests.one']}))
             with self.assertRaises(ValueError):self.load(directory,existing_fast=('tests.one',))
 
+    def test_a_feature_must_register_at_least_one_actual_selector(self):
+        with TemporaryDirectory() as temp:
+            directory=Path(temp)
+            for record in ({'fast':[]},{'source-material':[]},{'fast':[],'source-material':[]}):
+                with self.subTest(record=record):
+                    (directory/'empty.json').write_text(json.dumps(record))
+                    with self.assertRaisesRegex(ValueError,'FEATURE_TEST_EMPTY_DECLARATION'):
+                        self.load(directory)
+
+    def test_empty_unused_suite_does_not_reject_a_nonempty_feature(self):
+        with TemporaryDirectory() as temp:
+            directory=Path(temp)
+            (directory/'material.json').write_text(json.dumps(
+                {'fast':[],'source-material':['tests.material']}))
+            self.assertEqual(self.load(directory),
+                {'fast':(),'source-material':('tests.material',)})
+
     def test_actual_runner_keeps_all_prior_selectors_order_and_material_shards(self):
         import run_fast_tests_v2 as runner
         old=json.loads((ROOT/'docs/evidence/issue28_feature_test_registration_20261013/before-selectors.json').read_text())

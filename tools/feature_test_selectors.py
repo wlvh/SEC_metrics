@@ -28,4 +28,5 @@ def load_feature_selectors(*,directory,existing_fast=(),existing_source=()):
             for selector in selectors:
                 if selector in seen:raise ValueError('FEATURE_TEST_SELECTOR_DUPLICATE:'+selector)
                 seen.add(selector);additions[suite].append(selector)
+        if not any(record.values()):raise ValueError('FEATURE_TEST_EMPTY_DECLARATION:'+path.name)
     return {suite:tuple(selectors) for suite,selectors in additions.items()}
