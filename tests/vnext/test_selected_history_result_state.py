@@ -93,6 +93,41 @@ class SelectedHistoryResultStateTest(TestCase):
     def period_root(self, year, metric="B10"):
         return self.root.resolve() / metric / "periods" / ("FY" + str(year))
 
+    def test_range_requirement_version_reprocesses_only_income_consumers(self):
+        from vnext import historical_statement_cases as statement
+        target = ROOT / 'scripts/vnext/normal_source_requirements.py'
+        original_hash = update.sha256_file
+        def changed_hash(*, path):
+            return 'CONSTRUCTED_RANGE_REQUIREMENT_VERSION_CHANGE' if path == target else original_hash(path=path)
+        groups = (('B01', statement.INCOME_PROCESSING_FILES, True),
+                  ('B02', statement.PAIRED_REVENUE_PROCESSING_FILES, True),
+                  ('B04', statement.PROCESSING_FILES, False),
+                  ('B05', statement.PROCESSING_FILES, False),
+                  ('B07', statement.PROCESSING_FILES, False))
+        # This is a constructed state control, not a financial amount or an
+        # assertion that every metric uses the income-statement source rule.
+        for metric, files, affected in groups:
+            with self.subTest(metric=metric):
+                # The company entry deduplicates income + range declarations.
+                files = tuple(dict.fromkeys(files))
+                self.forbid_factory = False
+                first = self.run_control(2024, metric, files)
+                count = len(self.factory_calls)
+                self.forbid_factory = True
+                self.assertEqual('NO_SOURCE_CONTENT_CHANGE', self.run_control(2024, metric, files)['status'])
+                with patch.object(update, 'sha256_file', side_effect=changed_hash):
+                    self.forbid_factory = not affected
+                    changed = self.run_control(2024, metric, files)
+                    self.assertEqual(count + int(affected), len(self.factory_calls))
+                    self.assertEqual(affected, changed['calculation_performed'])
+                    self.assertEqual('CANDIDATE_READY' if affected else 'NO_SOURCE_CONTENT_CHANGE', changed['status'])
+                    self.assertEqual(affected, changed['version'] != first['version'])
+                    self.forbid_factory = True
+                    again = self.run_control(2024, metric, files)
+                    self.assertEqual('NO_SOURCE_CONTENT_CHANGE', again['status'])
+                    self.assertEqual(changed['version'], again['version'])
+                self.assertEqual(count + int(affected), len(self.factory_calls))
+
     def test_statement_property_version_reprocesses_only_explicit_income_metrics(self):
         from vnext.historical_statement_cases import processing_files_for_statement_metric
         original_hash = update.sha256_file

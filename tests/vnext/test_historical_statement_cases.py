@@ -186,6 +186,30 @@ class HistoricalRevenueScopeConsumerTest(unittest.TestCase):
         self.assertNotIn('scripts/vnext/selected_revenue_scope_v1.py', cases.PROCESSING_FILES)
         self.assertNotIn('scripts/vnext/selected_reported_revenue_v2.py', cases.PROCESSING_FILES)
 
+    def test_income_range_registers_the_saved_requirement_reader_it_actually_calls(self):
+        from tests.vnext.test_company_fiscal_range import CompanyFiscalRangeTest
+        from tests.vnext.processing_dependency_checks import processing_calls, assert_processing_calls
+        from vnext import ordinary_current_update as update
+        from vnext.normal_source_authority import ROOT
+        fixture = CompanyFiscalRangeTest()
+        fixture.setUp()
+        try:
+            before = fixture.fixture.digest_tree()
+            with processing_calls(ROOT) as observed:
+                discovery = fixture.discover()
+            self.assertEqual('FISCAL_RANGE_RESOLVED', discovery['status'])
+            dependency = 'scripts/vnext/normal_source_requirements.py'
+            self.assertIn('require', observed[dependency])
+            for metric, files in (('B01', cases.INCOME_PROCESSING_FILES),
+                                  ('B02', cases.PAIRED_REVENUE_PROCESSING_FILES)):
+                with self.subTest(metric=metric):
+                    assert_processing_calls({dependency: observed[dependency]},
+                        update._configuration(fixture.source, discovery['company_id'], metric), files)
+            self.assertEqual(before, fixture.fixture.digest_tree())
+            self.assertNotIn(dependency, cases.PROCESSING_FILES)
+        finally:
+            fixture.doCleanups()
+
     def test_sole_consolidated_revenue_path_is_explicitly_consumed_before_priority_selection(self):
         from vnext import selected_reported_revenue_v2 as reported
         with patch.object(reported, 'reported_revenue_scope', wraps=reported.reported_revenue_scope) as shared:
