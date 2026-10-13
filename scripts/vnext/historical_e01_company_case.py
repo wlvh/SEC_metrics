@@ -12,7 +12,8 @@ from .deterministic_router import load_event_route_catalog, project_event_result
 from .historical_annual_input import prepare_historical_annual_input
 from .historical_event_cases import (check_historical_event_block, _event_amendment_checks,
                                      PROCESSING_FILES as EVENT_PROCESSING_FILES)
-from .historical_event_items import content_confirmation_candidates, successor_event_route
+from .historical_event_items import (content_confirmation_candidates, successor_event_route,
+                                     EventItemTextError, HEADED_NOT_LISTED)
 from .historical_event_attachments import attachment_dependencies, POLICY_PATH
 from .historical_e01_incorporated_input import prepare_incorporated_e01_input
 from .historical_ma_confirmation import confirmation_request
@@ -77,6 +78,7 @@ def prepare_historical_e01_source_context(*, repo_root, company_id, fiscal_year,
     reader = _Sources(source,company_id,annual['entity'])
     reader.primary(annual['filing'])  # Bind the actual annual reporter in ordinary output.
     packet, request, incorporated, dependencies, candidates = None,None,None,[],[]
+    item_source_conflict = None
     amendment_checks = []
     reason = 'E01_CONTENT_RESPONSE_NOT_AVAILABLE_FOR_REQUEST'
     if annual['subject_policy']['mode'] != 'CONTINUOUS_PRIMARY':
@@ -90,10 +92,24 @@ def prepare_historical_e01_source_context(*, repo_root, company_id, fiscal_year,
             history_validator=check_historical_event_block,history_last_days=block_last_days)
         records = {r.get('raw_asset_id') if r['record_type']=='RAW_BLOB' else r['source_reference_id']:r
                    for r in packet['source_records']}
-        confirmation = content_confirmation_candidates(repo_root=source,route=route,
-            claims=packet['claims'],records=records,keep_text=True)
-        candidates = confirmation['candidates']
-        if candidates:
+        try:
+            confirmation = content_confirmation_candidates(repo_root=source,route=route,
+                claims=packet['claims'],records=records,keep_text=True)
+        except EventItemTextError as error:
+            # The complete saved walk has found an actual header/body
+            # disagreement. Preserve that completed rejection for ordinary
+            # save/reuse/read; do not choose an item number or report zero.
+            # Other source, parser and missing-document failures still raise.
+            if not str(error).startswith(HEADED_NOT_LISTED + ':'):
+                raise
+            item_source_conflict = {'reason':str(error),'category':error.category,
+                                    'status':'SOURCE_CONTENT_CONFLICT'}
+            reason = 'E01_ITEM_METADATA_BODY_CONFLICT'
+        else:
+            candidates = confirmation['candidates']
+        if item_source_conflict is not None:
+            pass
+        elif candidates:
             request = confirmation_request(route=route,company_id=company_id,
                 target_cik=annual['entity'],window=period,candidates=candidates)
             policy = strict_json_file(path=ROOT/POLICY_PATH)
@@ -144,7 +160,10 @@ def prepare_historical_e01_source_context(*, repo_root, company_id, fiscal_year,
         'attachment_dependencies':dependencies,'matching_response_available':False,
         'old_answer_reused':False,'partial_count_exported':False,
         'target_model_execution_authorized':False,'new_calls':[0,0,0]}
-    complete = packet is not None and reason != 'E01_REQUIRED_INCORPORATED_SOURCE_UNAVAILABLE'
+    if item_source_conflict is not None:
+        assessment['item_source_conflict'] = item_source_conflict
+    complete = (packet is not None and item_source_conflict is None
+                and reason != 'E01_REQUIRED_INCORPORATED_SOURCE_UNAVAILABLE')
     return {'record_type':'HISTORICAL_E01_SOURCE_CONTEXT_V1',
         'company_id':company_id,'fiscal_year':fiscal_year,'target_period':period,
         'prepared_annual_input':annual,'period_selection':selection,

@@ -138,7 +138,7 @@ class HistoricalE01CompanyCaseTest(TestCase):
         assert_processing_calls(observed,configuration,cases.PROCESSING_FILES)
 
     def prepare(self, *, dependency=None, successor=False, packet_error=None, amendment_checks=None,
-                source_only=False, no_candidates=False):
+                source_only=False, no_candidates=False, confirmation_error=None):
         annual={'company_id':'paramount_skydance_paramount_global','entity':'813828',
             'filing':{'accessionNumber':'constructed'},'amendments':[],
             'subject_policy':{'mode':'SUCCESSOR_REGISTRANT_ONLY' if successor else 'CONTINUOUS_PRIMARY'},
@@ -158,6 +158,9 @@ class HistoricalE01CompanyCaseTest(TestCase):
                 stack.enter_context(patch.object(cases,name,return_value=value))
             walk=stack.enter_context(patch.object(cases,'read_selected_event_sources',return_value=packet,
                 side_effect=packet_error))
+            if confirmation_error is not None:
+                stack.enter_context(patch.object(cases,'content_confirmation_candidates',
+                    side_effect=confirmation_error))
             deps=stack.enter_context(patch.object(cases,'attachment_dependencies',return_value=[dependency]))
             incorporated=stack.enter_context(patch.object(cases,'prepare_incorporated_e01_input',return_value={
                 'request_id':'constructed-new-request','contract':'NEW_SUPPLIED_SOURCE_CONTRACT',
@@ -282,6 +285,31 @@ class HistoricalE01CompanyCaseTest(TestCase):
     def test_source_error_is_not_no_candidate_or_zero(self):
         with self.assertRaisesRegex(ValueError,'MISSING_EVENT_HEADER'):
             self.prepare(packet_error=ValueError('MISSING_EVENT_HEADER'))
+
+    def test_completed_item_metadata_body_conflict_is_saved_as_withheld_not_zero(self):
+        # Constructed control of the existing real Pfizer conflict. No model
+        # classification or replacement of either original item number.
+        reason='EVENT_ITEM_HEADED_BUT_NOT_LISTED:0001193125-23-294930:2.01'
+        error=items.EventItemTextError(reason)
+        with patch.object(cases,'project_event_result',side_effect=AssertionError('NO_COUNT')):
+            context,_,_=self.prepare(source_only=True,confirmation_error=error)
+            case,_,build=self.prepare(confirmation_error=error)
+        self.assertFalse(context['source_graph_known'])
+        self.assertIsNone(context['request'])
+        self.assertIsNone(context['assessment']['complete_annual_count'])
+        self.assertEqual(reason,context['assessment']['item_source_conflict']['reason'])
+        self.assertIsNone(case['results']['E01']['value'])
+        self.assertEqual('E01_ITEM_METADATA_BODY_CONFLICT',case['results']['E01']['reason_code'])
+        self.assertEqual(reason,case['selection']['e01_content']['item_source_conflict']['reason'])
+        build.assert_not_called()
+
+    def test_other_item_parser_and_integrity_errors_keep_their_original_failure(self):
+        for error in (items.EventItemTextError('EVENT_ITEM_HEADED_MORE_THAN_ONCE:2.01'),
+                      items.EventItemTextError('EVENT_ITEM_PRIMARY_IS_ANOTHER_FILING','SOURCE_INTEGRITY_ERROR'),
+                      ValueError('EVENT_ITEM_HEADED_BUT_NOT_LISTED:untyped')):
+            with self.subTest(error=str(error)),self.assertRaises(type(error)) as raised:
+                self.prepare(confirmation_error=error)
+            self.assertIs(error,raised.exception)
 
     def test_display_summary_keeps_amendment_conclusion_and_full_evidence_separate(self):
         source={'filing':{'accessionNumber':'constructed'},'period':{'period_end':'2024-12-31'},
