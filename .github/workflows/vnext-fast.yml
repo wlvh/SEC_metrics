@@ -146,7 +146,7 @@ jobs:
           PYTHONDONTWRITEBYTECODE: "1"
           PYTHONPATH: scripts:tools
         run: |
-          python3 -m unittest -v tests.test_foundation_ci tests.vnext.test_main_scalability_audit tests.vnext.test_issue28_requirement_transition
+          python3 -m unittest -v tests.test_foundation_ci tests.test_selector_registry tests.vnext.test_main_scalability_audit tests.vnext.test_issue28_requirement_transition
           python3 tools/check_main_scalability.py --output /tmp/main-scalability-audit.csv
           python3 tools/check_provider_egress.py
           python3 tools/generate_metrics_reference.py --check

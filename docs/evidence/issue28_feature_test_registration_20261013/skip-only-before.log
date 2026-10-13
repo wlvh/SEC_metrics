@@ -1,0 +1,16 @@
+test_a_required_suite_that_only_skips_is_not_a_pass (tests.test_foundation_ci.FoundationCiPartitionTest.test_a_required_suite_that_only_skips_is_not_a_pass) ... FAIL
+
+======================================================================
+FAIL: test_a_required_suite_that_only_skips_is_not_a_pass (tests.test_foundation_ci.FoundationCiPartitionTest.test_a_required_suite_that_only_skips_is_not_a_pass)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-feature-test-registration/SEC_metrics/tests/test_foundation_ci.py", line 114, in test_a_required_suite_that_only_skips_is_not_a_pass
+    self.assertEqual(result['return_code'],1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)
+{"allowed_skips": 0, "errors": 0, "failures": 1, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.test_foundation_ci.FoundationCiPartitionTest.test_a_required_suite_that_only_skips_is_not_a_pass"]}

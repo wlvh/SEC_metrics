@@ -35,6 +35,12 @@ For final reception this successor explicitly consumes fixed PR218 `b215ca0b` (s
 
 `combined-218-controls.log`: **63 related controls /3.380s /zero skips**, both source failures and E01/annual routing retained. `southwest-mixed-range.json`: actual complete saved originals through the formal fiscal-year-range entry with B01+E01, network/claims/calculation forbidden; **16.897s**, exit0,45 known sources, zero pending, complete source graph. Original six-item request34507016 is unchanged, count remains null. Extra label-window sources remain explicit; no clipping to maintain an old URL count. New support is source dependency observation, not a financial/M&A result. Earlier Salesforce positive remains valid for its unchanged annual responsibility. The final combined tested blobs are in `combined-tested-worktree.json`.
 
-Suggested reception is PR218 then this finite successor. This PR does not change PR218's already tested content or block receiving it, and does not pull a whole peer branch. No unrelated development, source/response payload or new financial calculation is imported.
+Receiver comment [6134823122](https://github.com/wlvh/SEC_metrics/pull/223#issuecomment-6134823122), read directly, requests a single combined reception: this branch includes PR218, so PR223 targets main rather than requiring two separate receptions. It does not pull a whole peer development branch or import unrelated source/response payloads.
+
+## Received current test registration
+
+The branch normally merges actual main `16e82aae8a7b3d75a42bb2cf6aef7b7e2dc344f4`, which includes received PR219/220 and PR224. The only conflict is the additive selector section. The resolution retains main's feature-file loader and all existing feature declarations, placing this branch's E01 source test in `tests/feature_selectors/20261013-10-company-event-sources.json`. No `ours`/`theirs` choice drops another feature. Source/range implementation and the earlier actual Salesforce/Southwest source executions remain unchanged.
+
+`received-main-registration-controls.log`: 103 required registration, foundation-CI, fiscal range, selected-source, label and E01 controls /3.413s /zero failures/errors/skips. This is an actual merged working-tree run. The already passed large-source observations above are reused for unchanged code; they are not relabeled as newly executed on this merge. The later actual main `ce7a9f69` adds only the independently received historical usage guide.
 
 New provider/paid/SEC **0/0/0**. No key/account/new company/scope/model/production permission. No author Ready/merge/adoption/deployment/active. Complete online acquisition/processing and390/automatic-update goals remain incomplete; this closes the already known failure-state seam only.

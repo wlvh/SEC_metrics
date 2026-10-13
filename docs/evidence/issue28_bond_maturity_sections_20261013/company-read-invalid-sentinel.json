@@ -1,0 +1,26 @@
+{
+  "elapsed_seconds": 0.06613900000229478,
+  "record_type": "ORDINARY_COMPANY_RESULT_VIEW_V1",
+  "company_id": "macys",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "metrics": [
+    {
+      "metric_id": "B06",
+      "value": null,
+      "result_validity": "NO_CURRENT_RESULT",
+      "latest_observation": "INPUT_OR_EXECUTION_FAILED",
+      "fiscal_year": 2024,
+      "requested_in_latest_execution": true,
+      "reason": "module, class, method, function, traceback, frame, or code object was expected, got MagicMock",
+      "error_type": "TypeError"
+    }
+  ],
+  "source_freshness": "NOT_CHECKED_BY_SAVED_READER",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false,
+  "output_root": "/private/tmp/issue28-bond-sections-company-20261013/read"
+}

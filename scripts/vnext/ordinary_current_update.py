@@ -65,10 +65,17 @@ def _configuration(source, company, metric):
     # records must name their actual shared parser/calculator dependencies.
     paths.update('scripts/vnext/'+name+'.py' for name in (
         'deterministic_router','calculator','canonical','records','observations',
-        'specs','sources','table_grid','resource_limits','traits','projector',
+        'specs','scope_contract','text_coverage','text_results_v2',
+        'sources','table_grid','resource_limits','traits','projector',
         'governance_signals','annual_input','annual_sources','deterministic_catalog',
         'saved_source_checks','request_bindings','company_registry',
         'normal_annual_input'))
+    # These URL constructors actually select saved source inputs. They are
+    # outside vnext but share the same ordinary processing responsibility.
+    paths.add('scripts/sec_urls.py')
+    # Saved readers also execute its artifact/snapshot selection helpers,
+    # beyond the manifest check repeated by the controller.
+    paths.add('scripts/sec_http.py')
     # Source blocks, registered original reads and context interpretation are
     # business inputs of these actual annual factories, not check-only code.
     if metric in METRIC_IDS or metric in {'B06','C04','A13','D01'}:

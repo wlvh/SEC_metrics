@@ -31,6 +31,8 @@ name: Company saved-source records
     - docs/evidence/issue28_c04_label_identity_20261012/**
     - tests/vnext/test_statement_group_totals.py
     - tests/vnext/test_single_segment_revenue.py
+    - tests/vnext/test_income_section_captions.py
+    - docs/evidence/issue28_income_section_captions_20261013/**
     - docs/evidence/issue28_single_segment_revenue_20261012/**
     - tests/vnext/test_cover_dei_release.py
     - tests/vnext/test_processing_dependency_checks.py
@@ -155,7 +157,7 @@ jobs:
     - name: Ordinary B06 source composition and incomplete relation guards
       env:
         PYTHONDONTWRITEBYTECODE: '1'
-      run: python3 tests/required_unittests.py tests.vnext.test_current_b06_case tests.vnext.test_b06_guarded_result_v3.B06GuardSourceTest
+      run: python3 tests/required_unittests.py tests.vnext.test_current_b06_case tests.vnext.test_b06_guarded_result_v3.B06GuardSourceTest tests.vnext.test_bond_maturity_sections tests.vnext.test_standby_note_relation
     - name: Shared B06 complete note forms and source refusals
       env:
         PYTHONDONTWRITEBYTECODE: '1'
@@ -283,7 +285,7 @@ jobs:
     - name: Explicit single revenue source and unchanged period defaults
       env:
         PYTHONDONTWRITEBYTECODE: '1'
-      run: python3 tests/required_unittests.py tests.vnext.test_statement_group_totals tests.vnext.test_single_revenue_line tests.vnext.test_selected_reported_revenue_v2 tests.vnext.test_cover_dei_release tests.vnext.test_single_segment_revenue
+      run: python3 tests/required_unittests.py tests.vnext.test_statement_group_totals tests.vnext.test_single_revenue_line tests.vnext.test_selected_reported_revenue_v2 tests.vnext.test_cover_dei_release tests.vnext.test_single_segment_revenue tests.vnext.test_income_section_captions
         tests.vnext.test_financial_duration tests.vnext.test_selected_income_source_v1
     - name: Selected shared income, coordinates and historical consumer
       env:

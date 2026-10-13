@@ -13,15 +13,24 @@ SOURCE_CHECK_EXCEPTIONS = {
     'scripts/vnext/request_bindings.py': 'request/body checking reruns before reuse',
 }
 
+# Function-specific mechanical checks and storage, never a whole-file waiver
+# for a module that also contains producers or network operations.
+MECHANICAL_CALL_EXCEPTIONS = {
+    'scripts/vnext/company_handoff.py': {'_atomic_json', '_sync_directory'},
+    'scripts/sec_http.py': {'request_log_manifest_path', 'request_log_manifest_payload',
+        'unique_request_manifest_object', 'validate_request_log_manifest',
+        'parse_request_log_rows', 'request_log_attempt_id', 'validate_official_sec_url'},
+}
+
 
 @contextmanager
 def processing_calls(program_root):
-    prefix=str((Path(program_root)/'scripts/vnext').resolve())+'/'
+    prefix=str((Path(program_root)/'scripts').resolve())+'/'
     observed={};previous=sys.getprofile()
     def profile(frame,event,arg):
         filename=frame.f_code.co_filename
         if event=='call' and frame.f_code.co_flags & 1 and filename.startswith(prefix):
-            relative='scripts/vnext/'+filename[len(prefix):]
+            relative='scripts/'+filename[len(prefix):]
             observed.setdefault(relative,set()).add(frame.f_code.co_name)
         if previous is not None:
             previous(frame,event,arg)
@@ -36,7 +45,9 @@ def undeclared_processing_calls(observed,configuration,declared_files=()):
     allowed=(set(configuration.get('processing_files',{}))
         | set(configuration.get('declared_processing_files',{}))
         | set(declared_files) | set(SOURCE_CHECK_EXCEPTIONS))
-    return {path:sorted(functions) for path,functions in sorted(observed.items()) if path not in allowed}
+    missing={path:sorted(set(functions)-MECHANICAL_CALL_EXCEPTIONS.get(path,set()))
+             for path,functions in sorted(observed.items()) if path not in allowed}
+    return {path:functions for path,functions in missing.items() if functions}
 
 
 def assert_processing_calls(observed,configuration,declared_files=()):

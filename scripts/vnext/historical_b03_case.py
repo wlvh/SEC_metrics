@@ -115,7 +115,8 @@ PROCESSING_FILES = tuple(dict.fromkeys((*SOURCE_PROCESSING_FILES, *(
         'text_results_v2', 'reported_monetary_literal', 'xbrl_namespace_policy',
         'composite_scope', 'normal_run_specs', 'batch_workflow', 'deterministic_router',
         'zero_ai_r2', 'annual_sources', 'request_bindings', 'saved_source_checks',
-        'fiscal_year_labels', 'traits')), 'catalog/metrics/B01_revenue.md',
+        'fiscal_year_labels', 'traits', 'r5_b06_scope', 'b06_disclosure',
+        'r5_b06_structured')), 'catalog/metrics/B01_revenue.md',
     'catalog/metrics/B03_ebitda_margin.md', 'catalog/r6/text_results_v2_policy.json',
     'config/annual_amendment_scope_v1.json', 'config/ordinary_income_input_v1.json',
     'config/instant_balance_amendment_v1.json')))
