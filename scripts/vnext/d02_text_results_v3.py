@@ -289,9 +289,10 @@ def select_d02_page_furniture(*, proposal, document):
         continued = re.fullmatch(r'(.+?)\s*\(continued\)',text)
         # A following note can close an already located reference range.
         # The generic numbered-heading pattern also accepts ordinary legal
-        # subsections; they are not evidence of a financial-note boundary.
+        # subsections. Only the already located range's actual end is an
+        # anchor; its accepted title format need not spell out "Note".
         ordinary_note = (i in note_ends and block.get('emphasized')
-                         and re.match(r'^note\s+',text) and _NOTE_HEADING.match(text))
+                         and _NOTE_HEADING.match(text))
         if (text not in note_titles and not ordinary_note
                 and not (continued and continued[1].rstrip() in note_titles)):
             continue
