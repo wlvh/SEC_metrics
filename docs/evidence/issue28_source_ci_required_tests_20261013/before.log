@@ -1,0 +1,15 @@
+test_material_worker_rejects_skipped_or_empty_required_coverage (tests.test_foundation_ci.FoundationCiPartitionTest.test_material_worker_rejects_skipped_or_empty_required_coverage) ... FAIL
+
+======================================================================
+FAIL: test_material_worker_rejects_skipped_or_empty_required_coverage (tests.test_foundation_ci.FoundationCiPartitionTest.test_material_worker_rejects_skipped_or_empty_required_coverage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/source-ci/SEC_metrics/tests/test_foundation_ci.py", line 37, in test_material_worker_rejects_skipped_or_empty_required_coverage
+    self.assertNotEqual(0,skipped['return_code'])
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 == 0
+
+----------------------------------------------------------------------
+Ran 1 test in 0.123s
+
+FAILED (failures=1)

@@ -256,7 +256,10 @@ def _run_source_case(name):
     timeout = SOURCE_TIMEOUT_OVERRIDES.get(name, SOURCE_TIMEOUT_SECONDS)
     environment = {**os.environ,"PYTHONDONTWRITEBYTECODE":"1"}
     try:
-        done = subprocess.run([sys.executable,"-m","unittest","-q",name],cwd=str(inherited.REPO_ROOT),
+        # Required material coverage is not satisfied by unittest's exit 0
+        # when some or all tests were skipped. Reuse the repository runner
+        # that records counts and rejects skips/empty suites by default.
+        done = subprocess.run([sys.executable,str(inherited.REPO_ROOT/'tests/required_unittests.py'),name],cwd=str(inherited.REPO_ROOT),
             env=environment,capture_output=True,encoding="utf-8",timeout=timeout)
         code,stdout,stderr = done.returncode,done.stdout,done.stderr
     except subprocess.TimeoutExpired as error:
