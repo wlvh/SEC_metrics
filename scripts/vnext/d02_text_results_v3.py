@@ -280,11 +280,18 @@ def select_d02_page_furniture(*, proposal, document):
     note_titles = {" ".join(h['text'].split()).casefold()
                    for ref in proposal['note_references']
                    for h in ref['heading_candidates']}
+    note_ends = {r['end_block_exclusive'] for ref in proposal['note_references']
+                 if ref['status']=='LOCATED_NOTE_RANGE'
+                 for r in ref['range_candidates']}
     furniture = set()
     for i,block in enumerate(blocks):
         text = " ".join(block['text'].split()).casefold()
         continued = re.fullmatch(r'(.+?)\s*\(continued\)',text)
-        ordinary_note = block.get('emphasized') and _NOTE_HEADING.match(text)
+        # A following note can close an already located reference range.
+        # The generic numbered-heading pattern also accepts ordinary legal
+        # subsections; they are not evidence of a financial-note boundary.
+        ordinary_note = (i in note_ends and block.get('emphasized')
+                         and re.match(r'^note\s+',text) and _NOTE_HEADING.match(text))
         if (text not in note_titles and not ordinary_note
                 and not (continued and continued[1].rstrip() in note_titles)):
             continue

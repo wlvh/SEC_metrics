@@ -63,6 +63,22 @@ def replace_accrual_raw(args, raw):
 
 
 class TextResultV2SourceTest(unittest.TestCase):
+    def test_d02_numbered_subsections_do_not_anchor_repeated_disclosure_removal(self):
+        from tests.vnext.test_text_business_candidates import document
+        from vnext.text_business_candidates import legal_risk_candidates
+        from vnext.d02_text_results_v3 import select_d02_page_furniture
+        for heading in ('4. Procedural matters','NOTE 40. PROCEDURAL MATTERS'):
+            with self.subTest(heading=heading):
+                pages=''.join('<p>'+str(page)+'</p>'
+                    '<p>We remain subject to litigation concerning this agreement.</p>'
+                    '<h3>'+heading+'</h3>' for page in (10,11,12))
+                doc=document(BODY.replace('<h3>1. Procedural matters</h3>',pages))
+                proposal=legal_risk_candidates(document=doc)
+                selected=select_d02_page_furniture(proposal=proposal,document=doc)
+                self.assertEqual(proposal,selected)
+                self.assertEqual(3,[c['text'] for c in selected['D02']['candidates']].count(
+                    'We remain subject to litigation concerning this agreement.'))
+
     def test_d02_year_columns_next_to_repeated_disclosures_are_not_page_headers(self):
         from tests.vnext.test_text_business_candidates import document
         from vnext.text_business_candidates import legal_risk_candidates
