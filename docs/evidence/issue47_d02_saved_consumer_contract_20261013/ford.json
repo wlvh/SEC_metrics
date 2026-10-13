@@ -1,0 +1,184 @@
+{
+  "original_archive_git_commit": "bcc0c0bc0293ba6b6ffc58b1f4e9034dbb52a786",
+  "archive_path": "evidence/issue47_model_calls/9a368413797ddef1/model-ledger.tar.gz",
+  "archive_sha256": "970c98e67b7c7b8c1b55eae6b9dd602917cec45af8c193ec1ac9a5d941acf9a0",
+  "sample_call": "0009",
+  "company_id": "ford_motor_company",
+  "metric_id": "D02",
+  "request_id": "sha256:7f0d2be204ae60689397a55ac102ec07f3ad0923c57ab00db59060abd9fe8908",
+  "source_id": "sha256:81eaa388232423c92e6bc941ea19de7871797da5816b0248f41ff3dacfada835",
+  "filing": {
+    "raw_asset_id": "sha256:3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9",
+    "source_reference_id": "sha256:4fe37d81a86951f5d28883627e2c475f7ec5085ba2deb3a165ecd3b6d1bbb3f2",
+    "text_document_id": "sha256:cf486bd77edf58e86d6642743a8c0471495ffb331812ecf152f5e27bf81ca3b8"
+  },
+  "blocks": [
+    {
+      "block_id": "b1812",
+      "text": "The Report of Independent Registered Public Accounting Firm, our Financial Statements, the accompanying Notes to the Financial Statements, and the Financial Statement Schedule that are filed as part of this Report are listed under “Item 15. Exhibits and Financial Statement Schedules” and are set forth beginning on page 108 immediately following the signature pages of this Report."
+    }
+  ],
+  "must_decide": [],
+  "provider_fields": [
+    "max_tokens",
+    "messages",
+    "model",
+    "response_format",
+    "stream",
+    "temperature",
+    "thinking"
+  ],
+  "provider_parameters": {
+    "max_tokens": 4096,
+    "model": "deepseek-flash",
+    "response_format": {
+      "type": "json_object"
+    },
+    "stream": false,
+    "temperature": 0,
+    "thinking": {
+      "type": "disabled"
+    }
+  },
+  "provider_body_sha256": "40e79bb821b033427325228a742ce920ad6b858653b4ac2cf6f78fc84b0f78ad",
+  "wire_usage": {
+    "actual_cost": null,
+    "cache_hit_input_tokens": 128,
+    "cache_miss_input_tokens": 835,
+    "input_tokens": 963,
+    "output_tokens": 13
+  },
+  "original_terminal_status": "SUCCEEDED",
+  "original_counts": [
+    1,
+    1,
+    0
+  ],
+  "original_record_path": "docs/evidence/issue47_history/model-live-round-9a368413/d02/ford_motor_company-d02-2025-12-31/run-ford_motor_company-d02-2025-12-31-D02/records.jsonl",
+  "original_result_id": "sha256:55b9e45ca81019dd1d3d04fb1b28cf47d45ecd645b700478f47b1ce423a45a6d",
+  "original_value_characters": 17765,
+  "original_value_sha256": "ecf514f0deb6acefc935a41ecee27842190cee64b3da306e303e96a4a9adafe9",
+  "request_source_reference_in_original_run": true,
+  "current_h1_fixture_is_only_a_projection": true,
+  "full_metric_zero_not_inferred_from_empty_subreview": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "members": [
+    {
+      "path": "root/calls/0009/semantic-request.json",
+      "bytes": 3573,
+      "sha256": "c89df66d587068a531dad00f124ac8dbbf2378fba99d0a6440a37948e4dc406e"
+    },
+    {
+      "path": "root/calls/0009/source.json",
+      "bytes": 6658,
+      "sha256": "2bc617fe57a190dbdc71920bd0e0f06e03be5128041955fdb6a28c33b9b685df"
+    },
+    {
+      "path": "root/calls/0009/invocation_control/requests/07aff1fb87b2834ecae8603033856901c338c69002e797973b37ee4ba9e7b047.bin",
+      "bytes": 3862,
+      "sha256": "40e79bb821b033427325228a742ce920ad6b858653b4ac2cf6f78fc84b0f78ad"
+    },
+    {
+      "path": "root/calls/0009/wire/assistant-output.bin",
+      "bytes": 35,
+      "sha256": "e3023cee53826a2cc51b1c7a163205a322c72758d642fef95da326afba9fff27"
+    },
+    {
+      "path": "root/calls/0009/wire/raw-response.bin",
+      "bytes": 499,
+      "sha256": "ffbd0a51a6797fadb8292ff29bbe2d6f073ac45c559ad6a51d8e7a51d5c67d18"
+    },
+    {
+      "path": "root/calls/0009/wire/journal.json",
+      "bytes": 974,
+      "sha256": "4265d853f5aedebe5982be103ff9e52d892ac1b9e9f5270026b66d668be682a9"
+    },
+    {
+      "path": "root/calls/0009/terminal.json",
+      "bytes": 2670,
+      "sha256": "94ef29820a6a718485b0b1c600773b8d3f2650a696ba9558a132b688618ccb10"
+    }
+  ],
+  "current_h1_validation": {
+    "contract": "D02_ITEM_8_LEGAL_REVIEW_V1",
+    "provider_messages_equal_original_request": true,
+    "raw_response_content_equals_assistant_bytes": true,
+    "reviewed_blocks": [
+      [],
+      null,
+      []
+    ],
+    "raw_response_usage": {
+      "prompt_tokens": 963,
+      "completion_tokens": 13,
+      "total_tokens": 976,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "prompt_cache_hit_tokens": 128,
+      "prompt_cache_miss_tokens": 835
+    },
+    "raw_response_model": "deepseek-flash",
+    "source_keys": [
+      "company_id",
+      "metric_id",
+      "record_type",
+      "request",
+      "source_proofs"
+    ]
+  },
+  "source_proofs": [
+    {
+      "accession": "",
+      "content_sha256": "2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53",
+      "document_name": "CIK0000037996.json",
+      "request_attempt_id": "request:attempt:aba148c9f3725e411dc9b3a3d98e62c8ab6ab758fecd5616c4106e35cc91bef8",
+      "request_body_sha256": "2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53",
+      "request_body_size": 160015,
+      "request_headers_repo_relative_path": "evidence/request_attempts/2e/2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53/CIK0000037996.json.8ae085d80b07462565087561336d087caa41c1e35ac725ffbdb341bb931b2530.headers.json",
+      "request_headers_sha256": "8ae085d80b07462565087561336d087caa41c1e35ac725ffbdb341bb931b2530",
+      "request_headers_size": 736,
+      "request_locator_kind": "IMMUTABLE_ATTEMPT",
+      "request_repo_relative_path": "evidence/request_attempts/2e/2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53/CIK0000037996.json",
+      "source_url": "https://data.sec.gov/submissions/CIK0000037996.json"
+    },
+    {
+      "accession": "0000037996-26-000015",
+      "content_sha256": "3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9",
+      "document_name": "f-20251231.htm",
+      "request_attempt_id": "request:attempt:f48f8c4bd2da27d84a15410bacc45567b52c7d580d8658b036550fa4a6c414af",
+      "request_body_sha256": "3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9",
+      "request_body_size": 5281502,
+      "request_headers_repo_relative_path": "evidence/request_attempts/3b/3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9/f-20251231.htm.938a270bf2677fc73b26034eae7699cbdd55257202de14c7bf9c5e0728532e69.headers.json",
+      "request_headers_sha256": "938a270bf2677fc73b26034eae7699cbdd55257202de14c7bf9c5e0728532e69",
+      "request_headers_size": 1083,
+      "request_locator_kind": "IMMUTABLE_ATTEMPT",
+      "request_repo_relative_path": "evidence/request_attempts/3b/3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9/f-20251231.htm",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799626000015/f-20251231.htm"
+    },
+    {
+      "accession": "0000037996-26-000015",
+      "content_sha256": "db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e",
+      "document_name": "CIK0000037996.json",
+      "request_attempt_id": "request:attempt:c160b39060f39a60f351ad4460665e4036d557e7748c0db18914f5f04fc2568d",
+      "request_body_sha256": "db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e",
+      "request_body_size": 3672318,
+      "request_headers_repo_relative_path": "evidence/request_attempts/db/db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e/CIK0000037996.json.47538fb5f208ed1d28a2c6fc76e8621e7ebe347e6f97e1e8db2221c23ca62960.headers.json",
+      "request_headers_sha256": "47538fb5f208ed1d28a2c6fc76e8621e7ebe347e6f97e1e8db2221c23ca62960",
+      "request_headers_size": 707,
+      "request_locator_kind": "IMMUTABLE_ATTEMPT",
+      "request_repo_relative_path": "evidence/request_attempts/db/db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e/CIK0000037996.json",
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000037996.json"
+    }
+  ],
+  "http_status": 200,
+  "original_execution_id": "sha256:d420dd6323238bde7fc9819b50959aaa6b0c50840549037a56a39925dba77d13",
+  "original_wire_id": "sha256:025156faf3ea0f6b49b8c618dbdcd51987a478485e7a9ae8c5b3a7b8737e3672",
+  "full_source_request_equals_semantic_request": true,
+  "original_records_sha256": "af15a2477fa3ca3352f113b4d00821a9b55949ba8eb4e2791f772e408c490e5e",
+  "original_records_bytes": 306206
+}
