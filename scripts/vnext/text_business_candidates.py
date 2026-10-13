@@ -182,9 +182,12 @@ class _NoteHeadingFormats(_Blocks):
         del self.format_stack[len(self.stack):]
 
     def _part(self, raw):
-        first = not self.parts
+        before = len(self.parts)
         super()._part(raw)
-        if first and self.parts:
+        # Keep the original block offsets, including leading whitespace, but
+        # capture the format of the first visible text rather than its indent.
+        if (self.part_format is None and len(self.parts) > before
+                and self.parts[-1][2].strip()):
             levels = [entry[0] for entry in self.format_stack if entry[0] in
                       {"h1", "h2", "h3", "h4", "h5", "h6"}]
             if levels:
