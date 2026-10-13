@@ -1,0 +1,60 @@
+{
+  "prepare_seconds": 1.378508583002258,
+  "shared_case_seconds": 0.49620645798859186,
+  "target_period": {
+    "fiscal_year": 2025,
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31"
+  },
+  "result": {
+    "company_id": "marriott_international",
+    "metric_id": "B04",
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31",
+    "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+    "spec_closure_hash": "sha256:22b0fe3ad2841f90450d503cd628fe65207ae1777968156abc13c4ee28ffb3e2",
+    "applicability": "APPLICABLE",
+    "quality": "EXACT",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "value": "2601000000",
+    "unit": "USD",
+    "trace_id": "sha256:7e93773875ba82b9182fb663e683b37013fd40cf6856f3cde28d6e938d28050a",
+    "record_type": "METRIC_RESULT",
+    "result_id": "sha256:c87ee735d9b6f33bbecd5c35658a4f5791dac5956341ab46244076781cade5d2"
+  },
+  "selection": {
+    "record_type": "CURRENT_STATEMENT_ANNUAL_SELECTION",
+    "company_id": "marriott_international",
+    "reporting_cik": "1048286",
+    "selected_fiscal_year": 2025,
+    "filing": {
+      "accessionNumber": "0001048286-26-000007",
+      "filingDate": "2026-02-10",
+      "reportDate": "2025-12-31",
+      "acceptanceDateTime": "2026-02-10T18:35:55.000Z",
+      "act": "34",
+      "form": "10-K",
+      "fileNumber": "001-13881",
+      "filmNumber": "26614897",
+      "items": "",
+      "core_type": "XBRL",
+      "size": 12393244,
+      "isXBRL": 1,
+      "isInlineXBRL": 1,
+      "isXBRLNumeric": null,
+      "primaryDocument": "mar-20251231.htm",
+      "primaryDocDescription": "10-K"
+    },
+    "prior_filing": null,
+    "prior_amendments": [],
+    "historical_catalog_required": false
+  },
+  "same_prepared_annual": true,
+  "history_entrypoints_forbidden": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

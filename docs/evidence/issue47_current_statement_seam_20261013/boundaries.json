@@ -1,0 +1,99 @@
+{
+  "rows": [
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "B04",
+      "prepare_seconds": 6.425146667024819,
+      "shared_case_seconds": 0.4361690419900697,
+      "period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "result": {
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:06a76025531bfb94492040ef1623d5d6e3747554e0ad1ed883a4cdc74aa3e462",
+        "company_id": "jpmorgan_chase",
+        "metric_id": "B04",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+        "spec_closure_hash": "sha256:22b0fe3ad2841f90450d503cd628fe65207ae1777968156abc13c4ee28ffb3e2",
+        "applicability": "N_A_STRUCTURAL",
+        "quality": "NONE",
+        "publication": "PUBLISHED",
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "value": null,
+        "unit": null,
+        "trace_id": "sha256:f383bd1a8b4a7f68e883c139c237e6296172786e83b95bd70bb239520f392fdb"
+      },
+      "same_prepared": true,
+      "history_entrypoints_forbidden": true
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "B07",
+      "prepare_seconds": 1.3735432919929735,
+      "shared_case_seconds": 0.49587616699864157,
+      "period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "result": {
+        "company_id": "marriott_international",
+        "metric_id": "B07",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+        "spec_closure_hash": "sha256:0eb533e576d3bbcb418812e362d9e377373f83c76dd9bfa62ecb41d49475bb78",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "5.118665018541409147095179234",
+        "unit": "ratio",
+        "trace_id": "sha256:e23a144b9d8dc9cdc2529b5b3e0006f9041a2581f26468d4d1e3a94c962c7f7f",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:b5199f67eb551da449705600f3763dfba9df83d981a4445e5120e48499bbe557"
+      },
+      "same_prepared": true,
+      "history_entrypoints_forbidden": true
+    },
+    {
+      "company_id": "salesforce",
+      "metric_id": "B04",
+      "prepare_seconds": 1.676705124991713,
+      "shared_case_seconds": 0.5364457500108983,
+      "period": {
+        "fiscal_year": 2026,
+        "period_start": "2025-02-01",
+        "period_end": "2026-01-31"
+      },
+      "result": {
+        "company_id": "salesforce",
+        "metric_id": "B04",
+        "period_start": "2025-02-01",
+        "period_end": "2026-01-31",
+        "scope_key": "sha256:e7b39850392dd409a89568f7dd6dce40c37fe1de0e6e3faab45e77651898ba15",
+        "spec_closure_hash": "sha256:22b0fe3ad2841f90450d503cd628fe65207ae1777968156abc13c4ee28ffb3e2",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "7457000000",
+        "unit": "USD",
+        "trace_id": "sha256:f937431eea464621254e09ca25abb9142edba1c45cff2412b89e3194f87ce35e",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:b51da0bd065ea9a592d89f7cf37cdb2f606af60e5711f70fd1b1dcdb1c0400aa"
+      },
+      "same_prepared": true,
+      "history_entrypoints_forbidden": true
+    }
+  ],
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

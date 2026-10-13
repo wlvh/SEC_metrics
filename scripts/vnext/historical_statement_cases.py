@@ -10,7 +10,7 @@ from pathlib import Path
 from sec_urls import companyfacts_url, submissions_url
 from .batch_workflow import _structured_concepts
 from .calculator import calculate_metric, withheld_metric_result, metric_is_applicable
-from .canonical import content_hash
+from .canonical import content_hash, strict_json_loads
 from .historical_annual_input import prepare_historical_annual_input
 from .historical_dei import annual_period
 from .historical_filing_inventory import filing_inventory, prior_filing
@@ -321,14 +321,44 @@ def _statement_amendment_checks(reader, prepared, *, metric_id=None, income_prop
 
 
 def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fiscal_year,
-                                       withhold_known_source_errors=False, period_selection=None):
+                                       withhold_known_source_errors=False, period_selection=None,
+                                       prepared_current_annual=None):
     """Shared selected-filing case; catalog and Calculator retain computation."""
     source = Path(repo_root)
-    selection = (resolve_period_selection(repo_root=source, company_id=company_id,
+    if prepared_current_annual is None:
+        selection = (resolve_period_selection(repo_root=source, company_id=company_id,
                                           fiscal_year=fiscal_year, rules_root=ROOT)
                  if period_selection is None else period_selection)
-    prepared = prepare_historical_annual_input(repo_root=source, company_id=company_id,
+        prepared = prepare_historical_annual_input(repo_root=source, company_id=company_id,
                                                period_selection=selection, rules_root=ROOT)
+    else:
+        _need(metric_id in CURRENT_ANNUAL_METRICS and period_selection is None,
+              'CURRENT_STATEMENT_PREPARED_INPUT_SCOPE_INVALID')
+        route=_load_deterministic_catalog(repo_root=ROOT)['metrics'][metric_id]
+        _need(route['adapter_id']=='companyfacts' and route['result_period_role']=='current_annual'
+              and all(c['accession_role']=='current' and c['period_role']=='current_annual'
+                      for branch in route['branches'] for c in branch['components']),
+              'CURRENT_STATEMENT_PREPARED_INPUT_ROLE_CHANGED')
+        prepared = prepared_current_annual
+        _need(prepared['company_id'] == company_id
+              and prepared['input_id'] == content_hash(value={
+                  k:v for k,v in prepared.items() if k!='input_id'})
+              and prepared['selection_rule']=='LATEST_ORDINARY_PERIOD_IN_SAVED_SUBMISSIONS'
+              and prepared['fiscal_label_policy']=='SOURCE_ISSUER_YEAR_WITH_RAW_METADATA_RETAINED'
+              and type(fiscal_year) is int
+              and prepared['table_input']['target_period']['fiscal_year']==fiscal_year,
+              'CURRENT_STATEMENT_PREPARED_INPUT_CHANGED')
+        period=prepared['table_input']['target_period']
+        _need(prepared['companyfacts_input']['target_period']==period
+              and all(prepared['original_input']['table_input']['target_period'][key]==period[key]
+                      for key in ('period_start','period_end')),
+              'CURRENT_STATEMENT_PREPARED_DATES_CHANGED')
+        verify_ordinary_source_proofs(data_root=source,proofs=prepared['source_proofs'])
+        selection = {'record_type':'CURRENT_STATEMENT_ANNUAL_SELECTION',
+            'company_id':company_id,'reporting_cik':prepared['entity'],
+            'selected_fiscal_year':fiscal_year,'filing':prepared['filing'],
+            'prior_filing':None,'prior_amendments':[],
+            'historical_catalog_required':False}
     # Explicit selection saves the preceding fiscal-year search only. Annual
     # preparation re-derives its source selection, and the requested label is
     # still checked even when the selection was originally made by report end.
@@ -378,8 +408,18 @@ def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fisc
     main = reader.read(submissions_url(cik=int(prepared['entity'])),
                        role='sec_submissions_inventory', media_type='application/json')
     reader.primary(prepared['filing'])
-    current_inventory = filing_inventory(reader=reader, inventory=main,
-        period_selection=selection, cik=prepared['entity'], accession=prepared['filing']['accessionNumber'])
+    if prepared_current_annual is None:
+        current_inventory = filing_inventory(reader=reader, inventory=main,
+            period_selection=selection, cik=prepared['entity'], accession=prepared['filing']['accessionNumber'])
+    else:
+        from .normal_governance_input import _filings
+        rows=_filings(strict_json_loads(text=main['raw_bytes'].decode('utf-8')),
+                      inventory_name='current-main')
+        matching=[row for row in rows if row['accessionNumber']==prepared['filing']['accessionNumber']]
+        _need(len(matching)==1 and all(matching[0][key]==prepared['filing'][key] for key in (
+            'accessionNumber','form','reportDate','filingDate','primaryDocument')),
+            'CURRENT_STATEMENT_MAIN_FILING_IDENTITY_CHANGED')
+        current_inventory=main
     catalog = _load_deterministic_catalog(repo_root=ROOT)
     concepts = (_structured_concepts(compiled_spec=spec) if metric_id == 'B01' else
         sorted({c for b in catalog['metrics'][metric_id]['branches']

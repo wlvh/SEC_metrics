@@ -618,6 +618,26 @@ class HistoricalPairedRevenueCaseTest(unittest.TestCase):
 
 
 class HistoricalCurrentAnnualScopeTest(unittest.TestCase):
+    def test_current_annual_seam_rejects_changed_input_without_history_selection(self):
+        from vnext.canonical import content_hash
+        body={'company_id':'constructed','entity':'1','selection_rule':
+            'LATEST_ORDINARY_PERIOD_IN_SAVED_SUBMISSIONS',
+            'fiscal_label_policy':'SOURCE_ISSUER_YEAR_WITH_RAW_METADATA_RETAINED',
+            'table_input':{'target_period':{'fiscal_year':2025}}}
+        prepared={**body,'input_id':content_hash(value=body)}
+        for change in ('company','year','digest','scope'):
+            value=copy.deepcopy(prepared);metric='B04';year=2025
+            if change=='company':value['company_id']='wrong'
+            elif change=='year':year=2024
+            elif change=='digest':value['input_id']='sha256:'+'0'*64
+            else:metric='B02'
+            with self.subTest(change=change), \
+                 patch.object(cases,'resolve_period_selection',side_effect=AssertionError('NO_HISTORY')), \
+                 patch.object(cases,'prepare_historical_annual_input',side_effect=AssertionError('NO_HISTORY')):
+                with self.assertRaisesRegex(ValueError,'CURRENT_STATEMENT_PREPARED_INPUT'):
+                    cases._prepare_historical_statement_case(repo_root=Path('/constructed'),
+                        company_id='constructed',metric_id=metric,fiscal_year=year,
+                        prepared_current_annual=value)
     def test_existing_entry_does_not_silently_expand_to_b07(self):
         with patch.object(cases, 'resolve_period_selection') as select:
             with self.assertRaisesRegex(cases.StatementCaseError, 'FAMILY_NOT_RECEIVED'):
