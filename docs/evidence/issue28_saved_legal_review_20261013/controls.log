@@ -1,0 +1,22 @@
+test_assistant_file_and_http_content_must_be_the_same_answer (tests.vnext.test_saved_legal_review.SavedLegalReviewTest.test_assistant_file_and_http_content_must_be_the_same_answer) ... ok
+test_changed_bytes_are_not_silently_read_from_the_old_receipt (tests.vnext.test_saved_legal_review.SavedLegalReviewTest.test_changed_bytes_are_not_silently_read_from_the_old_receipt) ... ok
+test_changed_source_or_current_period_cannot_borrow_old_answer (tests.vnext.test_saved_legal_review.SavedLegalReviewTest.test_changed_source_or_current_period_cannot_borrow_old_answer) ... ok
+test_failed_or_unfinished_original_is_not_accepted (tests.vnext.test_saved_legal_review.SavedLegalReviewTest.test_failed_or_unfinished_original_is_not_accepted) ... ok
+test_missing_mandatory_decision_is_still_refused_by_existing_contract (tests.vnext.test_saved_legal_review.SavedLegalReviewTest.test_missing_mandatory_decision_is_still_refused_by_existing_contract) ... ok
+test_missing_usage_remains_unknown_and_contradictory_counts_are_refused (tests.vnext.test_saved_legal_review.SavedLegalReviewTest.test_missing_usage_remains_unknown_and_contradictory_counts_are_refused) ... ok
+test_nonempty_review_preserves_original_identity_and_never_becomes_company_result (tests.vnext.test_saved_legal_review.SavedLegalReviewTest.test_nonempty_review_preserves_original_identity_and_never_becomes_company_result) ... ok
+test_prefix_or_http_failure_is_not_accepted_even_with_complete_json (tests.vnext.test_saved_legal_review.SavedLegalReviewTest.test_prefix_or_http_failure_is_not_accepted_even_with_complete_json) ... ok
+test_projection_or_wrong_contract_cannot_be_used_as_the_full_request (tests.vnext.test_saved_legal_review.SavedLegalReviewTest.test_projection_or_wrong_contract_cannot_be_used_as_the_full_request) ... ok
+test_provider_messages_and_wire_identity_are_checked_independently (tests.vnext.test_saved_legal_review.SavedLegalReviewTest.test_provider_messages_and_wire_identity_are_checked_independently) ... ok
+test_unsettled_review_keeps_the_original_undecided_block (tests.vnext.test_saved_legal_review.SavedLegalReviewTest.test_unsettled_review_keeps_the_original_undecided_block) ... ok
+test_documented_envelope_uses_existing_shared_answer_parser (tests.vnext.test_securegpt_documented_response.DocumentedSecureGPTResponseTest.test_documented_envelope_uses_existing_shared_answer_parser) ... ok
+test_injected_sdk_receives_one_text_request_without_private_imports (tests.vnext.test_securegpt_documented_response.DocumentedSecureGPTResponseTest.test_injected_sdk_receives_one_text_request_without_private_imports) ... ok
+test_known_counts_are_read_but_charge_is_not_invented (tests.vnext.test_securegpt_documented_response.DocumentedSecureGPTResponseTest.test_known_counts_are_read_but_charge_is_not_invented) ... ok
+test_missing_invalid_usage_remains_unknown (tests.vnext.test_securegpt_documented_response.DocumentedSecureGPTResponseTest.test_missing_invalid_usage_remains_unknown) ... ok
+test_truncated_filtered_and_error_returns_cannot_be_answers (tests.vnext.test_securegpt_documented_response.DocumentedSecureGPTResponseTest.test_truncated_filtered_and_error_returns_cannot_be_answers) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.025s
+
+OK
+{"allowed_skips": 0, "errors": 0, "failures": 0, "run": 16, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_saved_legal_review", "tests.vnext.test_securegpt_documented_response"]}
