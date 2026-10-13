@@ -70,3 +70,25 @@ execution and read peer receipts, not independent code/business acceptance. New
 provider/paid/SEC0/0/0. No new company/product scope, Ready/merge/adoption/deploy/
 active. Code unavailable or actual rule changes are visible limitations, not
 N_A/disclosure absence. Full390 and old-path exit responsibility stays open.
+
+Remote first-head CI failures were inspected, not rerun blindly. One new test
+read an unavailable Git ancestor in shallow CI; it now consumes the exact small
+old component fixture. Registry overlays intentionally present a path adapter,
+not Path; configuration no longer calls Path.relative_to on that adapter and
+retains the same relative producer dependency string. The earlier D01 reference
+configuration test now independently checks the added selected registration and
+new comparison helper while retaining every original company/source/policy
+field and dependency assertion. No status/value expectation or business
+assertion was deleted. Actual returned/source/rule reentry controls pass.
+
+Receiver feedback 6149296768 was reproduced: unchanged source had different
+ast.dump hashes in Python 3.12 and 3.13. The bounded dispatcher transition now
+compares the three original source segments; old/new core AST comparisons still
+run within the same interpreter. Selected-call changes, missing functions,
+changed storage/calculation dependencies and missing old source remain negative.
+131 affected tests passed under Python 3.12.10 (10.145s) and 3.13.3 (10.345s),
+zero skips; the stable source signature matched in both. Actual company evidence
+above belongs to its recorded earlier code state and is reused only where the
+producer/writer/reader are unchanged; this increment is cross-version/controller
+validation, not another paid or company-content execution. Public CI must be
+read on the new returned head; no prior failure is overwritten.

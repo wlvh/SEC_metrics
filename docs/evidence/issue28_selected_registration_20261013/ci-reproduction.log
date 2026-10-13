@@ -1,0 +1,248 @@
+test_consumed_rule_change_still_requires_processing (tests.vnext.test_registry_processing_scope.RegistryProcessingScopeTest.test_consumed_rule_change_still_requires_processing) ... FAIL
+test_duplicate_header_cannot_hide_behind_equal_target_row (tests.vnext.test_registry_processing_scope.RegistryProcessingScopeTest.test_duplicate_header_cannot_hide_behind_equal_target_row) ... FAIL
+test_registry_integrity_failure_never_reuses_old_success (tests.vnext.test_registry_processing_scope.RegistryProcessingScopeTest.test_registry_integrity_failure_never_reuses_old_success) ... ERROR
+test_target_cik_role_industry_and_period_fields_require_processing (tests.vnext.test_registry_processing_scope.RegistryProcessingScopeTest.test_target_cik_role_industry_and_period_fields_require_processing) ... FAIL
+test_target_row_required_and_full_context_retained (tests.vnext.test_registry_processing_scope.RegistryProcessingScopeTest.test_target_row_required_and_full_context_retained) ... ok
+test_unrelated_program_row_add_or_change_keeps_existing_result (tests.vnext.test_registry_processing_scope.RegistryProcessingScopeTest.test_unrelated_program_row_add_or_change_keeps_existing_result) ... FAIL
+test_unrelated_source_row_add_or_change_keeps_existing_result (tests.vnext.test_registry_processing_scope.RegistryProcessingScopeTest.test_unrelated_source_row_add_or_change_keeps_existing_result) ... FAIL
+test_unrelated_unknown_profile_cannot_reuse_success (tests.vnext.test_registry_processing_scope.RegistryProcessingScopeTest.test_unrelated_unknown_profile_cannot_reuse_success) ... ERROR
+test_real_configuration_parser_or_pairing_change_processes_once (tests.vnext.test_processing_dependency_checks.ProcessingChangeReentryTest.test_real_configuration_parser_or_pairing_change_processes_once) ... 
+  test_real_configuration_parser_or_pairing_change_processes_once (tests.vnext.test_processing_dependency_checks.ProcessingChangeReentryTest.test_real_configuration_parser_or_pairing_change_processes_once) (filename='text_coverage.py') ... FAIL
+  test_real_configuration_parser_or_pairing_change_processes_once (tests.vnext.test_processing_dependency_checks.ProcessingChangeReentryTest.test_real_configuration_parser_or_pairing_change_processes_once) (filename='normal_governance_input.py') ... FAIL
+  test_real_configuration_parser_or_pairing_change_processes_once (tests.vnext.test_processing_dependency_checks.ProcessingChangeReentryTest.test_real_configuration_parser_or_pairing_change_processes_once) (filename='text_results_v2.py') ... FAIL
+test_shared_scope_presentation_and_locator_changes_process_once (tests.vnext.test_processing_dependency_checks.ProcessingChangeReentryTest.test_shared_scope_presentation_and_locator_changes_process_once) ... 
+  test_shared_scope_presentation_and_locator_changes_process_once (tests.vnext.test_processing_dependency_checks.ProcessingChangeReentryTest.test_shared_scope_presentation_and_locator_changes_process_once) (relative='scripts/vnext/normal_numeric_projection.py') ... FAIL
+  test_shared_scope_presentation_and_locator_changes_process_once (tests.vnext.test_processing_dependency_checks.ProcessingChangeReentryTest.test_shared_scope_presentation_and_locator_changes_process_once) (relative='scripts/vnext/scope_contract.py') ... FAIL
+  test_shared_scope_presentation_and_locator_changes_process_once (tests.vnext.test_processing_dependency_checks.ProcessingChangeReentryTest.test_shared_scope_presentation_and_locator_changes_process_once) (relative='scripts/sec_urls.py') ... FAIL
+test_default_producer_context_keeps_main_and_dependency_changes_are_explicit (tests.vnext.test_current_risk_heading_case.DefaultCurrentConfigurationPreservationTest.test_default_producer_context_keeps_main_and_dependency_changes_are_explicit) ... 
+  test_default_producer_context_keeps_main_and_dependency_changes_are_explicit (tests.vnext.test_current_risk_heading_case.DefaultCurrentConfigurationPreservationTest.test_default_producer_context_keeps_main_and_dependency_changes_are_explicit) (metric='B01') ... FAIL
+  test_default_producer_context_keeps_main_and_dependency_changes_are_explicit (tests.vnext.test_current_risk_heading_case.DefaultCurrentConfigurationPreservationTest.test_default_producer_context_keeps_main_and_dependency_changes_are_explicit) (metric='B02') ... FAIL
+  test_default_producer_context_keeps_main_and_dependency_changes_are_explicit (tests.vnext.test_current_risk_heading_case.DefaultCurrentConfigurationPreservationTest.test_default_producer_context_keeps_main_and_dependency_changes_are_explicit) (metric='D04') ... FAIL
+  test_default_producer_context_keeps_main_and_dependency_changes_are_explicit (tests.vnext.test_current_risk_heading_case.DefaultCurrentConfigurationPreservationTest.test_default_producer_context_keeps_main_and_dependency_changes_are_explicit) (metric='C04') ... FAIL
+  test_default_producer_context_keeps_main_and_dependency_changes_are_explicit (tests.vnext.test_current_risk_heading_case.DefaultCurrentConfigurationPreservationTest.test_default_producer_context_keeps_main_and_dependency_changes_are_explicit) (metric='A13') ... FAIL
+test_omitted_and_explicit_empty_options_keep_completed_configuration (tests.vnext.test_current_risk_heading_case.DefaultCurrentConfigurationPreservationTest.test_omitted_and_explicit_empty_options_keep_completed_configuration) ... ok
+
+======================================================================
+ERROR: test_registry_integrity_failure_never_reuses_old_success (tests.vnext.test_registry_processing_scope.RegistryProcessingScopeTest.test_registry_integrity_failure_never_reuses_old_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_registry_processing_scope.py", line 98, in test_registry_integrity_failure_never_reuses_old_success
+    self.run_check();old=(self.root/'current-result.json').read_bytes()
+                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmptum27fnq/state/current-result.json'
+
+======================================================================
+ERROR: test_unrelated_unknown_profile_cannot_reuse_success (tests.vnext.test_registry_processing_scope.RegistryProcessingScopeTest.test_unrelated_unknown_profile_cannot_reuse_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_registry_processing_scope.py", line 88, in test_unrelated_unknown_profile_cannot_reuse_success
+    self.run_check();old=(self.root/'current-result.json').read_bytes()
+                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmprr9dcd2k/state/current-result.json'
+
+======================================================================
+FAIL: test_consumed_rule_change_still_requires_processing (tests.vnext.test_registry_processing_scope.RegistryProcessingScopeTest.test_consumed_rule_change_still_requires_processing)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_registry_processing_scope.py", line 85, in test_consumed_rule_change_still_requires_processing
+    self.assertEqual('CANDIDATE_READY',answer['status']);self.assertEqual(2,self.calculations)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'CANDIDATE_READY' != 'INPUT_OR_EXECUTION_FAILED'
+- CANDIDATE_READY
++ INPUT_OR_EXECUTION_FAILED
+
+
+======================================================================
+FAIL: test_duplicate_header_cannot_hide_behind_equal_target_row (tests.vnext.test_registry_processing_scope.RegistryProcessingScopeTest.test_duplicate_header_cannot_hide_behind_equal_target_row)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_registry_processing_scope.py", line 119, in test_duplicate_header_cannot_hide_behind_equal_target_row
+    self.assertIn('FIELDS_AMBIGUOUS',result['reason'])
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'FIELDS_AMBIGUOUS' not found in "argument should be a str or an os.PathLike object where __fspath__ returns a str, not 'ProgramRegistryOverlay'"
+
+======================================================================
+FAIL: test_target_cik_role_industry_and_period_fields_require_processing (tests.vnext.test_registry_processing_scope.RegistryProcessingScopeTest.test_target_cik_role_industry_and_period_fields_require_processing)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_registry_processing_scope.py", line 77, in test_target_cik_role_industry_and_period_fields_require_processing
+    self.assertEqual('CANDIDATE_READY',answer['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'CANDIDATE_READY' != 'INPUT_OR_EXECUTION_FAILED'
+- CANDIDATE_READY
++ INPUT_OR_EXECUTION_FAILED
+
+
+======================================================================
+FAIL: test_unrelated_program_row_add_or_change_keeps_existing_result (tests.vnext.test_registry_processing_scope.RegistryProcessingScopeTest.test_unrelated_program_row_add_or_change_keeps_existing_result)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_registry_processing_scope.py", line 51, in test_unrelated_program_row_add_or_change_keeps_existing_result
+    self.assertEqual('NO_SOURCE_CONTENT_CHANGE',again['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'NO_SOURCE_CONTENT_CHANGE' != 'INPUT_OR_EXECUTION_FAILED'
+- NO_SOURCE_CONTENT_CHANGE
++ INPUT_OR_EXECUTION_FAILED
+
+
+======================================================================
+FAIL: test_unrelated_source_row_add_or_change_keeps_existing_result (tests.vnext.test_registry_processing_scope.RegistryProcessingScopeTest.test_unrelated_source_row_add_or_change_keeps_existing_result)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_registry_processing_scope.py", line 62, in test_unrelated_source_row_add_or_change_keeps_existing_result
+    self.assertEqual('NO_SOURCE_CONTENT_CHANGE',again['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'NO_SOURCE_CONTENT_CHANGE' != 'INPUT_OR_EXECUTION_FAILED'
+- NO_SOURCE_CONTENT_CHANGE
++ INPUT_OR_EXECUTION_FAILED
+
+
+======================================================================
+FAIL: test_real_configuration_parser_or_pairing_change_processes_once (tests.vnext.test_processing_dependency_checks.ProcessingChangeReentryTest.test_real_configuration_parser_or_pairing_change_processes_once) (filename='text_coverage.py')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_processing_dependency_checks.py", line 160, in test_real_configuration_parser_or_pairing_change_processes_once
+    self.assertEqual(result['status'],'CANDIDATE_READY')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'INPUT_OR_EXECUTION_FAILED' != 'CANDIDATE_READY'
+- INPUT_OR_EXECUTION_FAILED
++ CANDIDATE_READY
+
+
+======================================================================
+FAIL: test_real_configuration_parser_or_pairing_change_processes_once (tests.vnext.test_processing_dependency_checks.ProcessingChangeReentryTest.test_real_configuration_parser_or_pairing_change_processes_once) (filename='normal_governance_input.py')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_processing_dependency_checks.py", line 160, in test_real_configuration_parser_or_pairing_change_processes_once
+    self.assertEqual(result['status'],'CANDIDATE_READY')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'INPUT_OR_EXECUTION_FAILED' != 'CANDIDATE_READY'
+- INPUT_OR_EXECUTION_FAILED
++ CANDIDATE_READY
+
+
+======================================================================
+FAIL: test_real_configuration_parser_or_pairing_change_processes_once (tests.vnext.test_processing_dependency_checks.ProcessingChangeReentryTest.test_real_configuration_parser_or_pairing_change_processes_once) (filename='text_results_v2.py')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_processing_dependency_checks.py", line 160, in test_real_configuration_parser_or_pairing_change_processes_once
+    self.assertEqual(result['status'],'CANDIDATE_READY')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'INPUT_OR_EXECUTION_FAILED' != 'CANDIDATE_READY'
+- INPUT_OR_EXECUTION_FAILED
++ CANDIDATE_READY
+
+
+======================================================================
+FAIL: test_shared_scope_presentation_and_locator_changes_process_once (tests.vnext.test_processing_dependency_checks.ProcessingChangeReentryTest.test_shared_scope_presentation_and_locator_changes_process_once) (relative='scripts/vnext/normal_numeric_projection.py')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_processing_dependency_checks.py", line 146, in test_shared_scope_presentation_and_locator_changes_process_once
+    self.assertEqual(result['status'],'CANDIDATE_READY')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'INPUT_OR_EXECUTION_FAILED' != 'CANDIDATE_READY'
+- INPUT_OR_EXECUTION_FAILED
++ CANDIDATE_READY
+
+
+======================================================================
+FAIL: test_shared_scope_presentation_and_locator_changes_process_once (tests.vnext.test_processing_dependency_checks.ProcessingChangeReentryTest.test_shared_scope_presentation_and_locator_changes_process_once) (relative='scripts/vnext/scope_contract.py')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_processing_dependency_checks.py", line 146, in test_shared_scope_presentation_and_locator_changes_process_once
+    self.assertEqual(result['status'],'CANDIDATE_READY')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'INPUT_OR_EXECUTION_FAILED' != 'CANDIDATE_READY'
+- INPUT_OR_EXECUTION_FAILED
++ CANDIDATE_READY
+
+
+======================================================================
+FAIL: test_shared_scope_presentation_and_locator_changes_process_once (tests.vnext.test_processing_dependency_checks.ProcessingChangeReentryTest.test_shared_scope_presentation_and_locator_changes_process_once) (relative='scripts/sec_urls.py')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_processing_dependency_checks.py", line 146, in test_shared_scope_presentation_and_locator_changes_process_once
+    self.assertEqual(result['status'],'CANDIDATE_READY')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'INPUT_OR_EXECUTION_FAILED' != 'CANDIDATE_READY'
+- INPUT_OR_EXECUTION_FAILED
++ CANDIDATE_READY
+
+
+======================================================================
+FAIL: test_default_producer_context_keeps_main_and_dependency_changes_are_explicit (tests.vnext.test_current_risk_heading_case.DefaultCurrentConfigurationPreservationTest.test_default_producer_context_keeps_main_and_dependency_changes_are_explicit) (metric='B01')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_current_risk_heading_case.py", line 195, in test_default_producer_context_keeps_main_and_dependency_changes_are_explicit
+    self.assertEqual({k:v for k,v in expected.items() if k!='processing_files'},
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        {k:v for k,v in actual.items() if k!='processing_files'})
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'com[134 chars]s', 'company_registry_rows': {'program': {'com[787 chars]alse} != {'com[134 chars]s', 'saved_result_registration': {'module': 'v[940 chars]alse}
+Diff is 2170 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_default_producer_context_keeps_main_and_dependency_changes_are_explicit (tests.vnext.test_current_risk_heading_case.DefaultCurrentConfigurationPreservationTest.test_default_producer_context_keeps_main_and_dependency_changes_are_explicit) (metric='B02')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_current_risk_heading_case.py", line 195, in test_default_producer_context_keeps_main_and_dependency_changes_are_explicit
+    self.assertEqual({k:v for k,v in expected.items() if k!='processing_files'},
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        {k:v for k,v in actual.items() if k!='processing_files'})
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'com[134 chars]s', 'company_registry_rows': {'program': {'com[787 chars]alse} != {'com[134 chars]s', 'saved_result_registration': {'module': 'v[940 chars]alse}
+Diff is 2170 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_default_producer_context_keeps_main_and_dependency_changes_are_explicit (tests.vnext.test_current_risk_heading_case.DefaultCurrentConfigurationPreservationTest.test_default_producer_context_keeps_main_and_dependency_changes_are_explicit) (metric='D04')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_current_risk_heading_case.py", line 195, in test_default_producer_context_keeps_main_and_dependency_changes_are_explicit
+    self.assertEqual({k:v for k,v in expected.items() if k!='processing_files'},
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        {k:v for k,v in actual.items() if k!='processing_files'})
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'com[134 chars]s', 'company_registry_rows': {'program': {'com[787 chars]alse} != {'com[134 chars]s', 'saved_result_registration': {'module': 'v[954 chars]alse}
+Diff is 2184 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_default_producer_context_keeps_main_and_dependency_changes_are_explicit (tests.vnext.test_current_risk_heading_case.DefaultCurrentConfigurationPreservationTest.test_default_producer_context_keeps_main_and_dependency_changes_are_explicit) (metric='C04')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_current_risk_heading_case.py", line 195, in test_default_producer_context_keeps_main_and_dependency_changes_are_explicit
+    self.assertEqual({k:v for k,v in expected.items() if k!='processing_files'},
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        {k:v for k,v in actual.items() if k!='processing_files'})
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'com[134 chars]s', 'company_registry_rows': {'program': {'com[787 chars]alse} != {'com[134 chars]s', 'saved_result_registration': {'module': 'v[955 chars]alse}
+Diff is 2185 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_default_producer_context_keeps_main_and_dependency_changes_are_explicit (tests.vnext.test_current_risk_heading_case.DefaultCurrentConfigurationPreservationTest.test_default_producer_context_keeps_main_and_dependency_changes_are_explicit) (metric='A13')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_current_risk_heading_case.py", line 195, in test_default_producer_context_keeps_main_and_dependency_changes_are_explicit
+    self.assertEqual({k:v for k,v in expected.items() if k!='processing_files'},
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        {k:v for k,v in actual.items() if k!='processing_files'})
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'com[134 chars]s', 'company_registry_rows': {'program': {'com[787 chars]alse} != {'com[134 chars]s', 'saved_result_registration': {'module': 'v[961 chars]alse}
+Diff is 2191 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.116s
+
+FAILED (failures=16, errors=2)
+{"allowed_skips": 0, "errors": 2, "failures": 16, "run": 12, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_registry_processing_scope", "tests.vnext.test_processing_dependency_checks.ProcessingChangeReentryTest", "tests.vnext.test_current_risk_heading_case.DefaultCurrentConfigurationPreservationTest"]}

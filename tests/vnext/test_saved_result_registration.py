@@ -59,10 +59,27 @@ class LegacyRegistrationShapeTest(unittest.TestCase):
         self.assertIsNone(_legacy_registration(ast.parse(code.replace('source_root=source',"source_root='/another'")),'D04'))
 
 class LegacyStoreComponentTest(unittest.TestCase):
+    def test_dispatch_transition_uses_source_and_rejects_changed_or_missing_functions(self):
+        import ast
+        from vnext import ordinary_result_registration as registration
+        source=(ROOT/registration.STORE).read_text(encoding='utf-8')
+        # Python's AST text is deliberately not the serialized signature.
+        with patch.object(registration.ast,'dump',side_effect=AssertionError('No versioned AST dump')):
+            self.assertEqual(registration.DISPATCH_TRANSITION_V1,
+                registration._dispatch_transition_signature(ast.parse(source),source))
+            changed=source.replace('def selected_case_registration(', 'def unrelated_registration(',1)
+            self.assertIsNone(registration._dispatch_transition_signature(ast.parse(changed),changed))
+            changed=source.replace("catalog['routes'].get(metric_id,catalog['default'])",
+                                   "catalog['default']",1)
+            self.assertNotEqual(source,changed)
+            self.assertNotEqual(registration.DISPATCH_TRANSITION_V1,
+                registration._dispatch_transition_signature(ast.parse(changed),changed))
+
     def test_known_old_component_is_reused_but_actual_storage_logic_changes_are_not(self):
         import hashlib,subprocess,ast
         from vnext import ordinary_result_registration as registration
-        original=subprocess.check_output(['git','show','5612d1648b609202cc8fcc9db902e2219564b4a8:'+registration.STORE])
+        # Exact earlier component fixture; no un-fetched ancestor required in CI.
+        original=(ROOT/'tests/vnext/fixtures/saved_result_inline_dispatch_5612.py.txt').read_bytes()
         current=update._configuration(ROOT,'marriott_international','D04')
         previous=deepcopy(current);previous.pop('saved_result_registration')
         previous['processing_files'][registration.STORE]=hashlib.sha256(original).hexdigest()

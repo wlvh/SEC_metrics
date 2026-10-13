@@ -10,7 +10,7 @@ import subprocess
 
 STORE = 'scripts/vnext/ordinary_saved_result.py'
 # One demonstrated old-record format transition; route-data additions do not change it.
-DISPATCH_TRANSITION_V1 = '14177b7c37177e66101628633b2f94cdd72c5742adebf7ddbe1ca01e558e94e8'
+DISPATCH_TRANSITION_V1 = '5b5939ad634738f42ef6392d13d322163d08dddd74aae811db3499c1943b73a2'
 CORE_FUNCTIONS = ('_need','_json','_program_version','_validate_records','_save_case',
                   'read_saved_result','save_calculated_case','current_e01_scope')
 CORE_IMPORTS = {'fcntl','json','Path','subprocess','time','write_immutable_bytes',
@@ -120,12 +120,15 @@ def _legacy_registration(tree, metric):
     return {'module':imports[name],'function':name,'call_style':style}
 
 
-def _dispatch_transition_signature(tree):
+def _dispatch_transition_signature(tree, source):
+    # Source segments are stable across supported Python versions. ast.dump
+    # includes fields added by Python releases even when source is unchanged.
     wanted={'_route_catalog','selected_case_registration','create_saved_result'}
     nodes=[n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name in wanted]
     if len(nodes)!=len(wanted):return None
-    data='\n'.join(ast.dump(n,include_attributes=False) for n in sorted(nodes,key=lambda n:n.name))
-    return sha256(data.encode()).hexdigest()
+    segments=[ast.get_source_segment(source,n) for n in sorted(nodes,key=lambda n:n.name)]
+    if any(segment is None for segment in segments):return None
+    return sha256('\n'.join(segments).encode()).hexdigest()
 
 
 
@@ -137,7 +140,9 @@ def same_registered_processing(previous,current,manifest,root):
     old=_old_source(manifest,old_hash,root)
     if old is None:return False
     try:
-        before=ast.parse(old);after=ast.parse((Path(root)/STORE).read_bytes())
+        before=ast.parse(old)
+        current_source=(Path(root)/STORE).read_text(encoding='utf-8')
+        after=ast.parse(current_source)
     except (SyntaxError,UnicodeError):return False
     explicit='case_producer' in previous or 'current_case_producer' in previous
     selected=current.get('saved_result_registration')
@@ -147,7 +152,7 @@ def same_registered_processing(previous,current,manifest,root):
         route=_legacy_registration(before,previous.get('metric_id'))
         if route is None or route!={k:selected[k] for k in ('module','function','call_style')}:return False
         if route['module']=='vnext.ordinary_saved_result':names.append(route['function'])
-    if _dispatch_transition_signature(after) != DISPATCH_TRANSITION_V1:return False
+    if _dispatch_transition_signature(after,current_source) != DISPATCH_TRANSITION_V1:return False
     if _component(before,names) is None or _component(before,names)!=_component(after,names):return False
     # Everything outside the shared dispatch conversion still compares normally.
     def rest(config):

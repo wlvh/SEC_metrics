@@ -156,8 +156,7 @@ def _configuration(source, company, metric):
     paths.add('scripts/vnext/ordinary_registry_scope.py')
     from .ordinary_saved_result import selected_case_registration
     registration = selected_case_registration(metric)
-    producer_path = ROOT/('scripts/'+registration['module'].replace('.','/')+'.py')
-    paths.add(str(producer_path.relative_to(ROOT)))
+    paths.add('scripts/'+registration['module'].replace('.','/')+'.py')
     return {'company_id':company,'metric_id':metric,'source_root':str(source),
             'saved_result_registration':registration,
         'processing_files':{p:sha256_file(path=ROOT/p) for p in sorted(paths)},

@@ -10,5 +10,24 @@
     "tests/vnext/test_saved_result_registration.py": "304c7e074c8234c9175ae9ef4a7484445dc85eec5336fc0779f91b90c7a9e4c5",
     "tests/vnext/test_ordinary_current_update.py": "4fe4b9abbeb359eb8813559fee0eb21d13a798746911227c7ba5d9d327e01727"
   },
-  "final_small_controls": "8 passed; archive-fallback-controls.log"
+  "final_small_controls": "8 passed; archive-fallback-controls.log",
+  "ci_repair_files": {
+    "scripts/vnext/ordinary_current_update.py": "47fd733a1f87b9ed03ce3db6c4fbac796468c3f714e48e07381769ef286118f3",
+    "tests/vnext/test_saved_result_registration.py": "d5eb021a164fc4ad4f423a7b5e7bec554ec52d619bcb0045526d23051b90e03b",
+    "tests/vnext/test_current_risk_heading_case.py": "7a2d4d76f0da817a49b2e33ecfbd95daf02776c42e8d782d48e397a6379b7e6f",
+    "tests/vnext/fixtures/saved_result_inline_dispatch_5612.py.txt": "72dcb1c08eef4cd28e82344188505577b524dae0ae65d4e02febc2f6f9a63d6b"
+  },
+  "python_version_repair": {
+    "state": "named working tree after local d52d5861; before this evidence commit",
+    "interpreters": [
+      "3.12.10",
+      "3.13.3"
+    ],
+    "tests_per_interpreter": 131,
+    "skipped": 0,
+    "files": {
+      "scripts/vnext/ordinary_result_registration.py": "8196ae9c38813ee77ee33e39a7ecb57c0fcea27855d1c34d038860d5b748a068",
+      "tests/vnext/test_saved_result_registration.py": "7df81bda9531e15f8af58c5dfea69c399f321c2f72791013bc8e4390db6192a7"
+    }
+  }
 }
