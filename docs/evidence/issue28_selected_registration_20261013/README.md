@@ -116,3 +116,11 @@ the new optional keyword without changing its returned values or assertions.
 errors are kept, not renamed passes. No real company recomputation is needed
 for this configuration-only responsibility. Other unneeded shared renderer
 versions are not claimed solved by this change.
+
+Returned cba82dd0 remote company-history was inspected: the retained D04 bridge
+fixture passed a three-argument substitute for the configuration API. New
+optional supplied_case keyword raised TypeError before its small state existed.
+Only substitute signatures now accept ignored keywords, retaining the pinned
+old-version data and every reprocessing/hold/recovery/file assertion. The exact
+D04/selected-history/registration combination passed28 controls/.782s,zero skips.
+No production/source/real task changed for this return; no full material replay.
