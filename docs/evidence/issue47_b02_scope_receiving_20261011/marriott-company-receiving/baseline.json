@@ -1,0 +1,160 @@
+{
+  "code_head": "c2267ede8e35c202d74928efdbe3149e60669a20",
+  "scope": "Actual baseline only; original reference read earlier is reused, no business value credited",
+  "phases": {
+    "first": {
+      "arguments": [
+        "run",
+        "--company",
+        "marriott_international",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2023",
+        "--fiscal-year-end",
+        "2024",
+        "--metric",
+        "B02",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/marriott-b02-baseline-20261012-47/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/marriott-b02-baseline-20261012-47/runs"
+      ],
+      "seconds": 12.985815124993678,
+      "exit": 2
+    },
+    "repeat": {
+      "arguments": [
+        "run",
+        "--company",
+        "marriott_international",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2023",
+        "--fiscal-year-end",
+        "2024",
+        "--metric",
+        "B02",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/marriott-b02-baseline-20261012-47/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/marriott-b02-baseline-20261012-47/runs"
+      ],
+      "seconds": 0.9162147919996642,
+      "exit": 2
+    },
+    "read": {
+      "arguments": [
+        "results",
+        "--company",
+        "marriott_international",
+        "--state-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/marriott-b02-baseline-20261012-47/state",
+        "--output-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/marriott-b02-baseline-20261012-47/read"
+      ],
+      "seconds": 0.2878086249984335,
+      "exit": 0
+    }
+  },
+  "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/marriott-b02-baseline-20261012-47/state",
+  "rows": [
+    {
+      "company": "Marriott International",
+      "cik": "1048286",
+      "metric_id": "B02",
+      "metric_name": "Revenue YoY growth",
+      "value": "",
+      "unit": "ratio",
+      "status": "WITHHELD",
+      "source_class": "DERIVED",
+      "formula": "",
+      "period_start": "2023-01-01",
+      "period_end": "2023-12-31",
+      "fiscal_year": "2023",
+      "fiscal_period": "TARGET_PERIOD",
+      "accession": "",
+      "form": "10-K",
+      "filed_date": "2024-02-13",
+      "concept_or_section": "",
+      "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2023, \"period_end\": \"2023-12-31\", \"period_start\": \"2023-01-01\"}, \"measurement_kind\": \"TARGET_PERIOD\", \"scope\": {\"coverage\": \"deterministic_source_set\", \"fiscal_year\": 2023}, \"selection\": {\"category\": \"IMPLEMENTATION_GAP\", \"error_type\": \"StatementCaseError\", \"paired_revenue_scopes\": {\"current\": {\"complete_scope_proven\": false, \"scope_id\": \"sha256:24b3af1c8d416a4908dcc7b2fdc4ad6f3b27240c3f29f12f061d23675668ef01\", \"status\": \"NO_DEMONSTRATED_SPLIT\"}}, \"reason\": \"HISTORICAL_PAIRED_REVENUE_COMPLETE_SCOPE_UNPROVEN\", \"unresolved_revenue_role\": \"current\"}, \"source_reference_ids\": [\"sha256:c37238976da80a6d94cfdac4177c453af617a627c1651f9bb071a20ad8ab2dfe\", \"sha256:7cf0e5ed84b13e459c4d010ac18c1bae2229587a8ce78a4fff367018cf7743d4\", \"sha256:c78685fbc9c806be8fef591c442fc95ce02a6082ade54d8923a9aeae10e1b582\", \"sha256:5c52fe5d4bfa948787dcbb4dc0c94753b4386277e72cb5de0faa16d51132e16c\", \"sha256:8dbd703eeca276eaff649a13634f5b044dcd539a4aa60d8c63fbe67012536d08\", \"sha256:71afedc392ecfe24fec6cd6bc9fc83d50d50f196d263bf0edb06ddc15e24a229\", \"sha256:79e06655e482136c976afbb4f64af60399ff8720811ceada0ed6911970bb168e\"]}",
+      "confidence": "",
+      "notes": "Source-rebuilt native result; exact measurement dates are retained. No accepted value is asserted for this target period. Native state: WITHHELD; reason: HISTORICAL_PAIRED_REVENUE_SCOPE_UNRESOLVED.",
+      "company_id": "marriott_international",
+      "result_id": "sha256:f411e7667e51aff21a226067bbaf544d53a279d9ac62750145dc9fd862096704",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/marriott-b02-baseline-20261012-47/state/updates/B02/periods/FY2023/results/fcccb51e82364447acdfbaec688efe88",
+      "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "local_metric_status": "PREVIOUS_INPUT_WITHHELD",
+      "period_role": "REQUESTED_RESULT",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+      "defect_holds": "[]",
+      "requested_in_latest_execution": "True"
+    },
+    {
+      "company": "Marriott International",
+      "cik": "1048286",
+      "metric_id": "B02",
+      "metric_name": "Revenue YoY growth",
+      "value": "",
+      "unit": "ratio",
+      "status": "WITHHELD",
+      "source_class": "DERIVED",
+      "formula": "",
+      "period_start": "2024-01-01",
+      "period_end": "2024-12-31",
+      "fiscal_year": "2024",
+      "fiscal_period": "TARGET_PERIOD",
+      "accession": "",
+      "form": "10-K",
+      "filed_date": "2025-02-11",
+      "concept_or_section": "",
+      "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2024, \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\"}, \"measurement_kind\": \"TARGET_PERIOD\", \"scope\": {\"coverage\": \"deterministic_source_set\", \"fiscal_year\": 2024}, \"selection\": {\"category\": \"IMPLEMENTATION_GAP\", \"error_type\": \"StatementCaseError\", \"paired_revenue_scopes\": {\"current\": {\"complete_scope_proven\": false, \"scope_id\": \"sha256:fddd0f1ea9ea7dd0f6d0b45904455b3e5209024d2a47ccccac03de02ff4084fc\", \"status\": \"NO_DEMONSTRATED_SPLIT\"}}, \"reason\": \"HISTORICAL_PAIRED_REVENUE_COMPLETE_SCOPE_UNPROVEN\", \"unresolved_revenue_role\": \"current\"}, \"source_reference_ids\": [\"sha256:c37238976da80a6d94cfdac4177c453af617a627c1651f9bb071a20ad8ab2dfe\", \"sha256:55e9e079de35bef789ad24d17f01994aa62ef97832ecf581e6052ec6c1c9dc88\", \"sha256:63687b69a68ec70135351fc580e0a0d4f4f9d369bfc8a4f087772217b312a630\", \"sha256:7cf0e5ed84b13e459c4d010ac18c1bae2229587a8ce78a4fff367018cf7743d4\", \"sha256:c78685fbc9c806be8fef591c442fc95ce02a6082ade54d8923a9aeae10e1b582\", \"sha256:bf544d4ea45fb264453b4e0afbb986e366f93c73b43e55513e95741b1453b855\", \"sha256:d7e4a9f6a5d5012058bd282dd004fb61de6f9a22c34c82eecc6644f85dc829a2\"]}",
+      "confidence": "",
+      "notes": "Source-rebuilt native result; exact measurement dates are retained. No accepted value is asserted for this target period. Native state: WITHHELD; reason: HISTORICAL_PAIRED_REVENUE_SCOPE_UNRESOLVED.",
+      "company_id": "marriott_international",
+      "result_id": "sha256:e60788028e67b18d555c11b5c37e824c6f5805d212925e284bf64a5f69480550",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/marriott-b02-baseline-20261012-47/state/updates/B02/periods/FY2024/results/372097be62ad414092d0fbffb7207213",
+      "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "local_metric_status": "PREVIOUS_INPUT_WITHHELD",
+      "period_role": "REQUESTED_RESULT",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+      "defect_holds": "[]",
+      "requested_in_latest_execution": "True"
+    }
+  ],
+  "details": [
+    {
+      "fiscal_year": 2023,
+      "result_id": "sha256:f411e7667e51aff21a226067bbaf544d53a279d9ac62750145dc9fd862096704",
+      "category": "IMPLEMENTATION_GAP",
+      "reason": "HISTORICAL_PAIRED_REVENUE_COMPLETE_SCOPE_UNPROVEN",
+      "unresolved_revenue_role": "current"
+    },
+    {
+      "fiscal_year": 2024,
+      "result_id": "sha256:e60788028e67b18d555c11b5c37e824c6f5805d212925e284bf64a5f69480550",
+      "category": "IMPLEMENTATION_GAP",
+      "reason": "HISTORICAL_PAIRED_REVENUE_COMPLETE_SCOPE_UNPROVEN",
+      "unresolved_revenue_role": "current"
+    }
+  ],
+  "protected_result_completed_task_files": 17,
+  "read_state_files_unchanged": 31,
+  "source_metadata_hashes": {
+    "config/company_registry.csv": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+    "evidence/requests_log.csv": "61252ac5844ad1c5917040f753c04a7ed4f6e1d75e2fb0803804773fd6c0eef9",
+    "evidence/requests_log_manifest.json": "e91193401733b86ddc28c69cbae0debd74eeb899a328e60fcfb32532ed6a85ab"
+  },
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

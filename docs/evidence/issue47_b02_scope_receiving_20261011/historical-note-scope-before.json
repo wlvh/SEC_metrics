@@ -1,0 +1,34 @@
+{
+  "constructed_format_controls": true,
+  "baseline": "488b438",
+  "cases": [
+    {
+      "label": "Total revenues (Note 4)",
+      "admitted": false,
+      "error": "HISTORICAL_PAIRED_REVENUE_COMPLETE_SCOPE_UNPROVEN",
+      "category": "IMPLEMENTATION_GAP"
+    },
+    {
+      "label": "Total revenues (Europe)",
+      "admitted": true,
+      "complete_scope_proven": true,
+      "claim_ids": [
+        "constructed-1"
+      ]
+    },
+    {
+      "label": "Total revenues (Subsidiary)",
+      "admitted": true,
+      "complete_scope_proven": true,
+      "claim_ids": [
+        "constructed-1"
+      ]
+    },
+    {
+      "label": "Total revenues (Note 4, Europe)",
+      "admitted": false,
+      "error": "HISTORICAL_PAIRED_REVENUE_COMPLETE_SCOPE_UNPROVEN",
+      "category": "IMPLEMENTATION_GAP"
+    }
+  ]
+}

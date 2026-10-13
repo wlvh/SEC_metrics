@@ -1,0 +1,16 @@
+test_changed_original_answer_or_wire_rejected (tests.vnext.test_saved_d04_replay.SavedD04ReplayTest.test_changed_original_answer_or_wire_rejected) ... ok
+test_failed_terminal_cannot_become_empty_findings (tests.vnext.test_saved_d04_replay.SavedD04ReplayTest.test_failed_terminal_cannot_become_empty_findings) ... ok
+test_missing_or_duplicate_call_or_member_rejected (tests.vnext.test_saved_d04_replay.SavedD04ReplayTest.test_missing_or_duplicate_call_or_member_rejected) ... ok
+test_original_group_rechecks_without_media_or_call_credit (tests.vnext.test_saved_d04_replay.SavedD04ReplayTest.test_original_group_rechecks_without_media_or_call_credit) ... ok
+test_wrong_year_is_not_selected_success (tests.vnext.test_saved_d04_replay.SavedD04ReplayTest.test_wrong_year_is_not_selected_success) ... ok
+test_complete_nonempty_findings_are_allowed_without_inventing_doubt (tests.vnext.test_current_d04_company.CurrentD04CompanyGateTest.test_complete_nonempty_findings_are_allowed_without_inventing_doubt) ... ok
+test_missing_failed_and_conflicting_groups_are_rejected (tests.vnext.test_current_d04_company.CurrentD04CompanyGateTest.test_missing_failed_and_conflicting_groups_are_rejected) ... ok
+test_missing_group_cannot_be_complete_even_with_a_stale_true_flag (tests.vnext.test_current_d04_company.CurrentD04CompanyGateTest.test_missing_group_cannot_be_complete_even_with_a_stale_true_flag) ... ok
+test_unresolved_or_failed_evidence_is_never_company_credit (tests.vnext.test_current_d04_company.CurrentD04CompanyGateTest.test_unresolved_or_failed_evidence_is_never_company_credit) ... ok
+test_source_or_interpretation_change_rechecks_once_then_reuses (tests.vnext.test_current_d04_company.CurrentD04DependencyUpdateTest.test_source_or_interpretation_change_rechecks_once_then_reuses) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.216s
+
+OK
+{"allowed_skips": 0, "errors": 0, "failures": 0, "run": 10, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_saved_d04_replay", "tests.vnext.test_current_d04_company"]}

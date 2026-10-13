@@ -1,10 +1,12 @@
 """Native ordinary B06 records for the explicit no-finance-lease note grammar."""
+from pathlib import Path
+from .xbrl_namespace_policy import is_fasb_namespace, source_reader_options
 from .b06_note_carrying import POLICY, POLICY_PATH, NoteCarryingError, inspect_note_carrying, matches_source_grammar
 from .calculator import withheld_metric_result
 from .canonical import content_hash, sha256_file, strict_json_file
 from .normal_annual_input import _registry_rows
 from .normal_annual_input_v2 import prepare_saved_annual_input, exact_json_value
-from .normal_candidates import _prepare_b06
+from .normal_governance_input import prepare_saved_original_financial_sources as _prepare_b06
 from .normal_source_authority import ROOT
 from .ordinary_source_authority import verify_ordinary_source_proofs
 from .r5_b06_scope import resolve_financing, validate_partition
@@ -38,25 +40,30 @@ def _spec(root):
     return spec
 
 
-def prepare_note_debt_case(*, repo_root, company_id):
+def prepare_note_debt_case(*, repo_root, company_id, rules_root=None, preparation=None, annual_input=None, dei_release='YEAR_ONLY', namespace_policy='YEAR_ONLY'):
     """None means a different grammar; a matched but failed grammar stays withheld."""
-    preparation = _prepare_b06(repo_root=repo_root,company_id=company_id)
+    reader_options = source_reader_options(dei_release=dei_release, namespace_policy=namespace_policy)
+    rules = repo_root if rules_root is None else Path(rules_root)
+    preparation = (_prepare_b06(repo_root=repo_root,company_id=company_id)
+                   if preparation is None else preparation)
     original = preparation['input_binding']['prepared_annual_input']
     end = original['filing']['reportDate']
     if not matches_source_grammar(preparation['xml']['raw_bytes'],end):
         return None
-    spec = _spec(repo_root)
-    prepared = prepare_saved_annual_input(repo_root=repo_root,company_id=company_id)
+    spec = _spec(rules)
+    prepared = (prepare_saved_annual_input(repo_root=repo_root,company_id=company_id,
+                   **({} if rules_root is None else {"ordinary_registered":True}))
+                if annual_input is None else annual_input)
     proofs = list({content_hash(value=p):p for p in [*preparation['input_binding']['source_proofs'],
         *original['source_proofs'],*prepared['source_proofs']]}.values())
     admission = verify_ordinary_source_proofs(data_root=repo_root,proofs=proofs)
     scope = {'entity_scope':'consolidated'}
     target = {'company_id':company_id,'entity':original['entity'],'accession':original['filing']['accessionNumber'],
         'period_start':end,'period_end':end,'scope':scope,'scope_key':content_hash(value=scope)}
-    traits = repository_company_traits(repo_root=repo_root,company_id=company_id)
+    traits = repository_company_traits(repo_root=rules,company_id=company_id)
     source_proof = None; measurement = None
     try:
-        company = next(c for c in _registry_rows(repo_root=repo_root) if c['company_id'] == company_id)
+        company = next(c for c in _registry_rows(repo_root=rules) if c['company_id'] == company_id)
         if company['industry_profile'] == 'financial_institution':
             raise NoteCarryingError('NOTE_CARRYING_SEPARATE_BANK_SCOPE_REQUIRED')
         from .deterministic_router import parse_accession_xbrl_source
@@ -65,8 +72,8 @@ def prepare_note_debt_case(*, repo_root, company_id):
         if any(any(str(m).split(':')[-1] in restricted for m in c['dimensions'].values())
                for c in parsed.contexts.values() if c['period_end'] == end):
             raise NoteCarryingError('NOTE_CARRYING_SEPARATE_INDUSTRIAL_SCOPE_REQUIRED')
-        source_proof = inspect_note_carrying(primary=preparation['primary'],xml=preparation['xml'],prepared=original)
-        rule = spec['compiled']['quality_rule']; path = repo_root/rule['debt_set_registry']
+        source_proof = inspect_note_carrying(primary=preparation['primary'],xml=preparation['xml'],prepared=original, **reader_options)
+        rule = spec['compiled']['quality_rule']; path = rules/rule['debt_set_registry']
         _need(sha256_file(path=path) == rule['debt_set_registry_sha256'], 'ORDINARY_NOTE_DEBT_REGISTRY_CHANGED')
         registry = strict_json_file(path=path); model = registry['debt_set_models'][POLICY['model_id']]
         validate_partition(model,registry['required_liability_classes']['consolidated_nonbank'],absent=['finance_leases'])
@@ -104,11 +111,12 @@ def prepare_note_debt_case(*, repo_root, company_id):
     records = preparation['records']
     binding = exact_json_value({'record_type':'ORDINARY_NOTE_DEBT_INPUT','original_source_input':preparation['input_binding'],
         'annual_label_input':prepared,'source_proofs':proofs,'source_proof':source_proof,'selection':selection,
-        'policy_sha256':sha256_file(path=repo_root/POLICY_PATH),'production_authorized':False})
+        'policy_sha256':sha256_file(path=rules/POLICY_PATH),'production_authorized':False})
     return {'kind':'STRUCTURED','primary_metric_id':'B06','input_binding':binding,'source_records':records,
         'references':[r for r in records if r['record_type']=='SOURCE_REFERENCE'],
         'source_proofs':proofs,'admission':admission,'spec_paths':{'B06':SPEC_PATH},'compiled_specs':{'B06':spec},
         'target_period':{'fiscal_year':prepared['table_input']['target_period']['fiscal_year'],
                          'period_start':end,'period_end':end},
         'expected_records':[*records,*observations,trace,result],
-        'results':{'B06':result},'traces':{'B06':trace},'observations':observations,'selection':selection}
+        'results':{'B06':result},'traces':{'B06':trace},'observations':observations,'selection':selection,
+        **({} if rules_root is None else {'rules_root':str(rules)})}

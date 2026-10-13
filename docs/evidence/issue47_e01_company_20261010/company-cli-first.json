@@ -1,0 +1,52 @@
+{
+  "code_commit": "1dd408e0",
+  "operations": [
+    {
+      "name": "first",
+      "seconds": 20.959377290913835,
+      "exit_code": 2,
+      "status": "CANDIDATE_WITHHELD"
+    },
+    {
+      "name": "repeat-forbid-factory",
+      "seconds": 3.443707166938111,
+      "exit_code": 2,
+      "status": "PREVIOUS_INPUT_WITHHELD",
+      "calculation_performed": false
+    },
+    {
+      "name": "independent-results",
+      "seconds": 0.6378587081562728,
+      "exit_code": 0
+    }
+  ],
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-sec-ledger-resume-20261006/source-inputs",
+  "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/e01-company-withheld-o4awh8oq/state",
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/e01-company-withheld-o4awh8oq",
+  "row": {
+    "value": "",
+    "unit": "count",
+    "status": "WITHHELD",
+    "cik": "813828",
+    "period_start": "2024-01-01",
+    "period_end": "2024-12-31",
+    "fiscal_year": "2024",
+    "notes": "Content-confirmed M&A announcements under the selected successor contract. Filing item codes or financing keywords alone do not establish an announcement; missing matching semantic responses remain withheld. No accepted value is asserted for this target period. Native state: WITHHELD; reason: E01_CONTENT_RESPONSE_NOT_AVAILABLE_FOR_REQUEST.",
+    "result_id": "sha256:3331877123ff9ef80e76165c7ab4b471840361617535342b21d6f953e3507f12",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/e01-company-withheld-o4awh8oq/state/updates/E01/periods/FY2024/results/9acbdcf3a2b54a38b53b92f970cc0929"
+  },
+  "full_exact_request_saved": true,
+  "candidate_count": 8,
+  "request_id": "sha256:2aa878ef4a047f929a40e4b808a5e7d01cc4211e254db42c9738692dbc866a41",
+  "repeat_factory_calls": 0,
+  "protected_files": 8,
+  "protected_unchanged": true,
+  "first_driver_default_csv_limit_failure_retained": true,
+  "initial_csv_context_characters": 2552214,
+  "native_run_created": false,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

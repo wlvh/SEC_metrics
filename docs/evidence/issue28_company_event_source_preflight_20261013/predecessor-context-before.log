@@ -1,0 +1,22 @@
+test_selected_predecessor_does_not_replace_the_registered_primary_catalog (tests.vnext.test_company_event_source_preflight.MixedEventSourceStateTest.test_selected_predecessor_does_not_replace_the_registered_primary_catalog) ... FAIL
+
+======================================================================
+FAIL: test_selected_predecessor_does_not_replace_the_registered_primary_catalog (tests.vnext.test_company_event_source_preflight.MixedEventSourceStateTest.test_selected_predecessor_does_not_replace_the_registered_primary_catalog)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-company-event-source-preflight/SEC_metrics/tests/vnext/test_company_event_source_preflight.py", line 57, in test_selected_predecessor_does_not_replace_the_registered_primary_catalog
+    self.event_plan(metrics=['E01'],graph=False,reporting_entity='813828')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-company-event-source-preflight/SEC_metrics/tests/vnext/test_company_event_source_preflight.py", line 53, in event_plan
+    self.assertEqual(collect.call_args.args[0].company['primary_cik'],'1048286')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '813828' != '1048286'
+- 813828
++ 1048286
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.095s
+
+FAILED (failures=1)
+{"allowed_skips": 0, "errors": 0, "failures": 1, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_company_event_source_preflight.MixedEventSourceStateTest.test_selected_predecessor_does_not_replace_the_registered_primary_catalog"]}

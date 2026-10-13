@@ -1,0 +1,43 @@
+test_unmarked_table_components_keep_their_row_relationship (tests.vnext.test_statement_metric_amendment.StatementMetricAmendmentTest.test_unmarked_table_components_keep_their_row_relationship) ... 
+  test_unmarked_table_components_keep_their_row_relationship (tests.vnext.test_statement_metric_amendment.StatementMetricAmendmentTest.test_unmarked_table_components_keep_their_row_relationship) (metric='B04', label='Net income') ... FAIL
+  test_unmarked_table_components_keep_their_row_relationship (tests.vnext.test_statement_metric_amendment.StatementMetricAmendmentTest.test_unmarked_table_components_keep_their_row_relationship) (metric='B07', label='Interest expense') ... FAIL
+  test_unmarked_table_components_keep_their_row_relationship (tests.vnext.test_statement_metric_amendment.StatementMetricAmendmentTest.test_unmarked_table_components_keep_their_row_relationship) (metric='B07', label='Operating income (loss)') ... FAIL
+
+======================================================================
+FAIL: test_unmarked_table_components_keep_their_row_relationship (tests.vnext.test_statement_metric_amendment.StatementMetricAmendmentTest.test_unmarked_table_components_keep_their_row_relationship) (metric='B04', label='Net income')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-statement-amendment-scope/SEC_metrics/tests/vnext/test_statement_metric_amendment.py", line 57, in test_unmarked_table_components_keep_their_row_relationship
+    with self.subTest(metric=metric,label=label),self.assertRaisesRegex(
+                                                 ~~~~~~~~~~~~~~~~~~~~~~^
+            ValueError,'COMPONENT_DISCLOSURE_RELATION_UNRESOLVED'):
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_unmarked_table_components_keep_their_row_relationship (tests.vnext.test_statement_metric_amendment.StatementMetricAmendmentTest.test_unmarked_table_components_keep_their_row_relationship) (metric='B07', label='Interest expense')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-statement-amendment-scope/SEC_metrics/tests/vnext/test_statement_metric_amendment.py", line 57, in test_unmarked_table_components_keep_their_row_relationship
+    with self.subTest(metric=metric,label=label),self.assertRaisesRegex(
+                                                 ~~~~~~~~~~~~~~~~~~~~~~^
+            ValueError,'COMPONENT_DISCLOSURE_RELATION_UNRESOLVED'):
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_unmarked_table_components_keep_their_row_relationship (tests.vnext.test_statement_metric_amendment.StatementMetricAmendmentTest.test_unmarked_table_components_keep_their_row_relationship) (metric='B07', label='Operating income (loss)')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-statement-amendment-scope/SEC_metrics/tests/vnext/test_statement_metric_amendment.py", line 57, in test_unmarked_table_components_keep_their_row_relationship
+    with self.subTest(metric=metric,label=label),self.assertRaisesRegex(
+                                                 ~~~~~~~~~~~~~~~~~~~~~~^
+            ValueError,'COMPONENT_DISCLOSURE_RELATION_UNRESOLVED'):
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.025s
+
+FAILED (failures=3)
+{"allowed_skips": 0, "errors": 0, "failures": 3, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_statement_metric_amendment.StatementMetricAmendmentTest.test_unmarked_table_components_keep_their_row_relationship"]}

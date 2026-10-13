@@ -1,0 +1,108 @@
+{
+  "base_main": "f6ef7886",
+  "public_commit": "656a1d3c91a7599cab5127049b4b7f26f608d2fe",
+  "tested_source_commit": "f617884b",
+  "source_tree_modified_files": [
+    "scripts/vnext/historical_risk_heading_case.py"
+  ],
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/liquidity-marriott-20261009/state",
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/marriott-d01-company-oqqymz7_",
+  "operations": [
+    {
+      "name": "first-five-d01",
+      "seconds": 25.441590250004083,
+      "exit_code": 0,
+      "status": "FLOW_COMPLETED"
+    },
+    {
+      "name": "repeat-forbid-d01-factory",
+      "seconds": 2.026878041215241,
+      "exit_code": 0,
+      "status": "FLOW_COMPLETED"
+    },
+    {
+      "name": "independent-results",
+      "seconds": 0.6984674159903079,
+      "exit_code": 0,
+      "status": null
+    }
+  ],
+  "comparisons": [
+    {
+      "metric_id": "D01",
+      "fiscal_year": "2021",
+      "unit": "text",
+      "status": "TEXT_QUAL",
+      "period_start": "2021-01-01",
+      "period_end": "2021-12-31",
+      "accession": "0001628280-22-002666",
+      "result_id": "sha256:2676b024ce2c45c87bb8e9da987375304f8e1584e4a240d4a18d371cbcbde9f3",
+      "heading_count": 42,
+      "ordered_text_matches_original_reading_with_recorded_2021_correction": true,
+      "native_id_matches_previous_reference": false
+    },
+    {
+      "metric_id": "D01",
+      "fiscal_year": "2022",
+      "unit": "text",
+      "status": "TEXT_QUAL",
+      "period_start": "2022-01-01",
+      "period_end": "2022-12-31",
+      "accession": "0001628280-23-003485",
+      "result_id": "sha256:c1ad0b7c4f6f1f6db7dfa5b735916424bc5a7f906dc84b89b08246b6ef9a7441",
+      "heading_count": 37,
+      "ordered_text_matches_original_reading_with_recorded_2021_correction": true,
+      "native_id_matches_previous_reference": false
+    },
+    {
+      "metric_id": "D01",
+      "fiscal_year": "2023",
+      "unit": "text",
+      "status": "TEXT_QUAL",
+      "period_start": "2023-01-01",
+      "period_end": "2023-12-31",
+      "accession": "0001628280-24-004372",
+      "result_id": "sha256:178bc9625bc39e3de5abd36027f310ef57070547d87ddb39cd390a364c2fa754",
+      "heading_count": 37,
+      "ordered_text_matches_original_reading_with_recorded_2021_correction": true,
+      "native_id_matches_previous_reference": true
+    },
+    {
+      "metric_id": "D01",
+      "fiscal_year": "2024",
+      "unit": "text",
+      "status": "TEXT_QUAL",
+      "period_start": "2024-01-01",
+      "period_end": "2024-12-31",
+      "accession": "0001628280-25-004818",
+      "result_id": "sha256:2058162f1b9d6e1c48a98e2186bf92d52a3ca03abce74f4302ac7ef9809a2904",
+      "heading_count": 39,
+      "ordered_text_matches_original_reading_with_recorded_2021_correction": true,
+      "native_id_matches_previous_reference": true
+    },
+    {
+      "metric_id": "D01",
+      "fiscal_year": "2025",
+      "unit": "text",
+      "status": "TEXT_QUAL",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "accession": "0001048286-26-000007",
+      "result_id": "sha256:99c76e50d0fb19cd6116a80350a6f1ca38924b5731e812695484d28381b348f8",
+      "heading_count": 38,
+      "ordered_text_matches_original_reading_with_recorded_2021_correction": true,
+      "native_id_matches_previous_reference": true
+    }
+  ],
+  "old_files": 211,
+  "all_files": 251,
+  "old_files_preserved": true,
+  "repeat_factory_calls": 0,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "driver_failure": "Original reference contained truncated2021title and imposed old2022ID. All actual CLI and file guards passed; existing output verified without rerun. Old records remain."
+}

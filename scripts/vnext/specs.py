@@ -765,10 +765,13 @@ def compile_spec(
         policy = front.get("text_policy")
         fields = {"version", "content_kind", "required_sections", "allowed_source_roles",
                   "renderer", "max_items", "max_text_chars", "review_required"}
+        from .text_rendering_limits import RENDERER_MAX_ITEMS
+        renderer_bound=(RENDERER_MAX_ITEMS.get(policy.get("renderer"))
+                        if type(policy) is dict and type(policy.get("renderer")) is str else None)
         if (type(policy) is not dict or set(policy) != fields
                 or policy["version"] != "TEXT_V1" or policy["content_kind"] != "SOURCE_EXCERPTS"
-                or policy["renderer"] != "ORDERED_NEWLINE_V1" or policy["review_required"] is not True
-                or type(policy["max_items"]) is not int or not 1 <= policy["max_items"] <= 64
+                or renderer_bound is None or policy["review_required"] is not True
+                or type(policy["max_items"]) is not int or not 1 <= policy["max_items"] <= renderer_bound
                 or type(policy["max_text_chars"]) is not int or not 1 <= policy["max_text_chars"] <= 64000):
             raise SpecError("TEXT_V1 text_policy is missing or unsupported")
         for field in ("required_sections", "allowed_source_roles"):

@@ -1,0 +1,46 @@
+test_historical_d01_shared_dependency_changes_reprocess_then_reuse (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_historical_d01_shared_dependency_changes_reprocess_then_reuse) ... 
+  test_historical_d01_shared_dependency_changes_reprocess_then_reuse (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_historical_d01_shared_dependency_changes_reprocess_then_reuse) (module='scope_contract') ... FAIL
+  test_historical_d01_shared_dependency_changes_reprocess_then_reuse (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_historical_d01_shared_dependency_changes_reprocess_then_reuse) (module='states') ... FAIL
+  test_historical_d01_shared_dependency_changes_reprocess_then_reuse (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_historical_d01_shared_dependency_changes_reprocess_then_reuse) (module='text_results_v2') ... FAIL
+
+======================================================================
+FAIL: test_historical_d01_shared_dependency_changes_reprocess_then_reuse (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_historical_d01_shared_dependency_changes_reprocess_then_reuse) (module='scope_contract')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_selected_history_result_state.py", line 85, in test_historical_d01_shared_dependency_changes_reprocess_then_reuse
+    self.assertEqual('CANDIDATE_READY', changed['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'CANDIDATE_READY' != 'NO_SOURCE_CONTENT_CHANGE'
+- CANDIDATE_READY
++ NO_SOURCE_CONTENT_CHANGE
+
+
+======================================================================
+FAIL: test_historical_d01_shared_dependency_changes_reprocess_then_reuse (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_historical_d01_shared_dependency_changes_reprocess_then_reuse) (module='states')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_selected_history_result_state.py", line 85, in test_historical_d01_shared_dependency_changes_reprocess_then_reuse
+    self.assertEqual('CANDIDATE_READY', changed['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'CANDIDATE_READY' != 'NO_SOURCE_CONTENT_CHANGE'
+- CANDIDATE_READY
++ NO_SOURCE_CONTENT_CHANGE
+
+
+======================================================================
+FAIL: test_historical_d01_shared_dependency_changes_reprocess_then_reuse (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_historical_d01_shared_dependency_changes_reprocess_then_reuse) (module='text_results_v2')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_selected_history_result_state.py", line 85, in test_historical_d01_shared_dependency_changes_reprocess_then_reuse
+    self.assertEqual('CANDIDATE_READY', changed['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'CANDIDATE_READY' != 'NO_SOURCE_CONTENT_CHANGE'
+- CANDIDATE_READY
++ NO_SOURCE_CONTENT_CHANGE
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.101s
+
+FAILED (failures=3)
+{"allowed_skips": 0, "errors": 0, "failures": 3, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_historical_d01_shared_dependency_changes_reprocess_then_reuse"]}

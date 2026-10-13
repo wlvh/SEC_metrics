@@ -16,7 +16,7 @@ from .company_handoff import _atomic_json
 from .csv_output import METRIC_FIELDS, EVIDENCE_FIELDS, _csv_bytes
 from .normal_source_authority import ROOT
 from .ordinary_current_update import run_once
-from .ordinary_saved_result import SAVED_METRIC_IDS, EXPLICIT_CASE_METRICS, read_saved_result
+from .ordinary_saved_result import SAVED_METRIC_IDS, EXPLICIT_CASE_METRICS, current_e01_scope, read_saved_result
 
 EXTRA_FIELDS = ('company_id', 'result_id', 'record_root', 'source_root',
                 'local_metric_status', 'period_role', 'result_validity',
@@ -59,7 +59,8 @@ def _defects(result, registry):
 
 def run_saved_company(*, company_id, source_root, work_dir, output_dir,
                       metric_ids=None, defects_file=None, fiscal_years=None, case_factory=None,
-                      processing_files=(), case_factories=None, processing_files_by_metric=None):
+                      processing_files=(), case_factories=None, processing_files_by_metric=None,
+                      current_case_factories=None, processing_inputs_by_metric=None):
     """Calculate changed inputs and read durable results into ordinary CSVs."""
     from .normal_annual_input import _registry_rows
     from .deterministic_router import shared_xbrl_parses
@@ -80,6 +81,11 @@ def run_saved_company(*, company_id, source_root, work_dir, output_dir,
     selected = sorted(configured) if metric_ids is None else list(metric_ids)
     _need(selected and len(selected) == len(set(selected)) and set(selected) <= set(configured),
           'COMPANY_CURRENT_METRIC_SCOPE_INVALID')
+    _need(current_case_factories is None or type(current_case_factories) is dict
+          and fiscal_years is None and case_factory is None and case_factories is None
+          and set(current_case_factories) <= set(selected) & EXPLICIT_CASE_METRICS
+          and all(callable(f) for f in current_case_factories.values()),
+          'COMPANY_CURRENT_CURRENT_FACTORIES_INVALID')
     _need(fiscal_years is None or type(fiscal_years) in (list,tuple) and 0<len(fiscal_years)<=5
           and all(type(y) is int and 1900<=y<=9998 for y in fiscal_years)
           and len(fiscal_years)==len(set(fiscal_years)), 'COMPANY_CURRENT_FISCAL_YEAR_SCOPE_INVALID')
@@ -92,6 +98,10 @@ def run_saved_company(*, company_id, source_root, work_dir, output_dir,
           and not processing_files and set(processing_files_by_metric) <= set(selected)
           and all(type(paths) in (tuple,list) for paths in processing_files_by_metric.values()),
           'COMPANY_CURRENT_METRIC_PROCESSING_FILES_INVALID')
+    _need(processing_inputs_by_metric is None or type(processing_inputs_by_metric) is dict
+          and set(processing_inputs_by_metric)<=set(selected)
+          and all(type(paths) in (tuple,list) for paths in processing_inputs_by_metric.values()),
+          'COMPANY_CURRENT_METRIC_PROCESSING_INPUTS_INVALID')
     _need((fiscal_years is None and case_factory is None and case_factories is None)
           or fiscal_years is not None and (callable(case_factory) or case_factories is not None),
           'COMPANY_CURRENT_SELECTED_YEARS_REQUIRE_CASE_FACTORY')
@@ -117,7 +127,8 @@ def run_saved_company(*, company_id, source_root, work_dir, output_dir,
             controller = work/'updates'/metric
             period_controller = controller if year is None else controller/'periods'/('FY'+str(year))
             explicit_case = (case_factories is not None and metric in EXPLICIT_CASE_METRICS
-                             and metric in case_factories)
+                             and metric in case_factories) or (
+                             current_case_factories is not None and metric in current_case_factories)
             if metric not in CURRENT_METRICS and not explicit_case:
                 observation = {'metric_id': metric, 'status': 'PROCESSING_INPUT_OR_IMPLEMENTATION_REQUIRED',
                                'reason': 'This saved-source branch has no complete current processing interface for '+metric}
@@ -128,7 +139,11 @@ def run_saved_company(*, company_id, source_root, work_dir, output_dir,
                         shared_input_root=work/'shared-inputs',fiscal_year=year,
                         case_factory=case_factory if case_factories is None else case_factories[metric],
                         processing_files=processing_files if processing_files_by_metric is None
-                            else processing_files_by_metric.get(metric, ()))}
+                            else processing_files_by_metric.get(metric, ()),
+                        processing_inputs=() if processing_inputs_by_metric is None
+                            else processing_inputs_by_metric.get(metric, ()),
+                        **({'current_case_factory':current_case_factories[metric]}
+                           if current_case_factories is not None and metric in current_case_factories else {}))}
                 except Exception as error:
                     observation = {'metric_id': metric, 'status': 'INPUT_OR_EXECUTION_FAILED',
                                    'reason': str(error), 'error_type': type(error).__name__}
@@ -149,13 +164,17 @@ def run_saved_company(*, company_id, source_root, work_dir, output_dir,
                     holds = _defects(result, registry)
                     observation['defect_holds'] = holds
                     row = _rows(saved['files']['metrics_matrix.csv'])[0]
+                    scope_ready = metric != 'E01' or current_e01_scope(saved)
                     if holds:
                         row.update(value='', unit='', status='WITHHELD_KNOWN_DEFECT',
                                    notes=row.get('notes', '')+'; '+','.join(holds))
+                    elif not scope_ready:
+                        row.update(value='',unit='',status='WITHHELD_CURRENT_SCOPE_NOT_IMPLEMENTED')
                     row.update(company_id=company_id, result_id=result['result_id'],
                         record_root=str(record), source_root=str(source),
                         local_metric_status=observation['status'], period_role='PREVIOUS_RESULT' if previous and not new_record else 'REQUESTED_RESULT',
-                        result_validity='CONFIRMED_INVALID' if holds else 'SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED',
+                        result_validity=('CONFIRMED_INVALID' if holds else 'CURRENT_SCOPE_NOT_READY' if not scope_ready
+                            else 'SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED'),
                         source_observation_status=('FAILED_CURRENT_CHECK' if previous and not new_record else
                             'SAVED_SOURCE_CHECKED_WITH_DISCOVERY_ERRORS' if observation.get('source_observation_errors') else
                             'SAVED_SOURCE_CHECKED_NOT_ONLINE_REFRESHED'),
@@ -213,17 +232,35 @@ def _read_current_company(root, company_id, defects_file, output_root):
     registry = _registry(defects_file)
     report = strict_json_file(path=root/'latest-execution.json')
     _need(report['company_id'] == company_id, 'COMPANY_CURRENT_WRONG_EXECUTION')
+    recorded_root=Path(report.get('record_root',root)).resolve()
     def normalize(observation):
         value = dict(observation)
         value.setdefault('record_root',value.get('result_root'))
         value.setdefault('read_result_id',value.get('result_id'))
+        path=value.get('record_root')
+        if path and recorded_root!=root:
+            old=Path(path).resolve()
+            if recorded_root in old.parents:
+                relative=old.relative_to(recorded_root)
+                parts=relative.parts
+                _need(len(parts)>=4 and parts[0]=='updates'
+                      and parts[1]==value['metric_id'] and parts[-2]=='results',
+                      'COMPANY_CURRENT_RESTORED_RECORD_LAYOUT_CHANGED')
+                _need(value.get('version',parts[-1])==parts[-1],
+                      'COMPANY_CURRENT_RESTORED_RECORD_VERSION_CHANGED')
+                # Resolve only the saved task's own result hierarchy. The
+                # ordinary reader still checks containment, manifest and
+                # company/metric/result identity below, without rewriting it.
+                value['record_root']=str(root/relative)
         return value
 
     def coordinate(observation):
         year = observation.get('requested_fiscal_year')
         path = observation.get('record_root')
         if path and (Path(path)/'manifest.json').is_file():
-            year = strict_json_file(path=Path(path)/'manifest.json')['target_period']['fiscal_year']
+            saved_year = strict_json_file(path=Path(path)/'manifest.json')['target_period']['fiscal_year']
+            _need(year is None or year==saved_year, 'COMPANY_CURRENT_READ_REQUESTED_PERIOD_CHANGED')
+            year = saved_year
         return observation['metric_id'],year
 
     observations = {coordinate(normalize(m)): {**normalize(m), 'requested_in_latest_execution': True}
@@ -280,12 +317,19 @@ def _read_current_company(root, company_id, defects_file, output_root):
             result = saved['result']
             _need(result['company_id'] == company_id and result['metric_id'] == observation['metric_id']
                   and result['result_id'] == observation['read_result_id'], 'COMPANY_CURRENT_READ_COORDINATE_CHANGED')
+            saved_year=saved['manifest']['target_period']['fiscal_year']
+            requested=observation.get('requested_fiscal_year')
+            _need(requested is None or requested==saved_year, 'COMPANY_CURRENT_READ_REQUESTED_PERIOD_CHANGED')
+            hierarchy=record.relative_to(root).parts
+            if len(hierarchy)>=6 and hierarchy[2]=='periods':
+                _need(hierarchy[3]=='FY'+str(saved_year), 'COMPANY_CURRENT_READ_RESULT_PERIOD_PATH_CHANGED')
             conclusion=observation.get('completed_conclusion')
             if conclusion is not None:
                 _need(result.get('publication')==('PUBLISHED' if conclusion=='CANDIDATE_READY' else 'WITHHELD'),
                       'COMPANY_CURRENT_READ_COMPLETED_PUBLICATION_CHANGED')
             holds = _defects(result, registry)
-            scope_ready = result['metric_id'] in CURRENT_METRICS | EXPLICIT_CASE_METRICS
+            scope_ready = (current_e01_scope(saved) if result['metric_id']=='E01'
+                           else result['metric_id'] in CURRENT_METRICS | EXPLICIT_CASE_METRICS)
             rows.append({'metric_id': result['metric_id'], 'result_id': result['result_id'],
                 'period_start': result.get('period_start'), 'period_end': result['period_end'],
                 'fiscal_year':saved['manifest']['target_period']['fiscal_year'],

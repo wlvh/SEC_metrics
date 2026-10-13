@@ -1,0 +1,888 @@
+[
+  {
+    "fiscal_year": 2023,
+    "filing": {
+      "form": "10-K",
+      "reportDate": "2023-12-31",
+      "filingDate": "2024-02-07",
+      "accessionNumber": "0000037996-24-000009",
+      "primaryDocument": "f-20231231.htm"
+    },
+    "target_period": {
+      "fiscal_year": 2023,
+      "period_start": "2023-01-01",
+      "period_end": "2023-12-31"
+    },
+    "sources": [
+      {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:6eb6a378ba9a2c92578561143ddf479d2a42fe32f9d750f2de472237b15267b2",
+        "raw_asset_id": "sha256:9a6f395ed1ed0084f1555151a3e4f72a69583aa86985527ae414a1259796132f",
+        "company_id": "ford_motor_company",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799624000009/f-20231231.htm",
+        "accession": "0000037996-24-000009",
+        "document_name": "f-20231231.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:f7fe511d64e2275a340a24e319334dc7cb7fb80d13db1348cc998620a46c01df"
+      },
+      {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:2a0140043c725b0a25ab027b2b94b131825bae146f422a132bdac9ec38481f43",
+        "raw_asset_id": "sha256:a2c6d69e31e61ba99679f22d332edffc4505e2140906613ba09f321f10f7dc63",
+        "company_id": "ford_motor_company",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799624000009/f-20231231_htm.xml",
+        "accession": "0000037996-24-000009",
+        "document_name": "f-20231231_htm.xml",
+        "source_role": "auditor_facts",
+        "request_attempt_id": "request:attempt:f19fcd06a579851d99a8a69bfac89f579c1835e473f1fc6eb0f1d4a69804006d"
+      }
+    ],
+    "totals": [
+      {
+        "ordinal": 243,
+        "label": "Total revenues (Note 4)",
+        "table_id": "table_000078",
+        "row": 6,
+        "column": 15,
+        "native_rows": [
+          {
+            "ordinal": 237,
+            "name": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+            "raw_text": "165,901",
+            "scale": "6",
+            "context": {
+              "context_ref": "c-18",
+              "dimensions": {
+                "us-gaap:StatementBusinessSegmentsAxis": "f:CompanyExcludingFordCreditMember"
+              },
+              "entity_identifier": "0000037996",
+              "period_end": "2023-12-31",
+              "period_start": "2023-01-01",
+              "typed_dimension_count": 0
+            },
+            "label": "Company Excluding Ford Credit"
+          },
+          {
+            "ordinal": 240,
+            "name": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+            "raw_text": "10,290",
+            "scale": "6",
+            "context": {
+              "context_ref": "c-21",
+              "dimensions": {
+                "us-gaap:StatementBusinessSegmentsAxis": "f:FordCreditMember"
+              },
+              "entity_identifier": "0000037996",
+              "period_end": "2023-12-31",
+              "period_start": "2023-01-01",
+              "typed_dimension_count": 0
+            },
+            "label": "Ford Credit"
+          },
+          {
+            "ordinal": 243,
+            "name": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+            "raw_text": "176,191",
+            "scale": "6",
+            "context": {
+              "context_ref": "c-1",
+              "dimensions": {},
+              "entity_identifier": "0000037996",
+              "period_end": "2023-12-31",
+              "period_start": "2023-01-01",
+              "typed_dimension_count": 0
+            },
+            "label": "Total revenues (Note 4)"
+          },
+          {
+            "ordinal": 246,
+            "name": "us-gaap:CostOfGoodsAndServicesSold",
+            "raw_text": "150,550",
+            "scale": "6",
+            "context": {
+              "context_ref": "c-1",
+              "dimensions": {},
+              "entity_identifier": "0000037996",
+              "period_end": "2023-12-31",
+              "period_start": "2023-01-01",
+              "typed_dimension_count": 0
+            },
+            "label": "Cost of sales"
+          },
+          {
+            "ordinal": 276,
+            "name": "us-gaap:ProfitLoss",
+            "raw_text": "4,329",
+            "scale": "6",
+            "context": {
+              "context_ref": "c-1",
+              "dimensions": {},
+              "entity_identifier": "0000037996",
+              "period_end": "2023-12-31",
+              "period_start": "2023-01-01",
+              "typed_dimension_count": 0
+            },
+            "label": "Net income/(loss)"
+          }
+        ],
+        "table_rows": [
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "For the years ended December 31,"
+          ],
+          [
+            "",
+            "2021",
+            "",
+            "2022",
+            "",
+            "2023"
+          ],
+          [
+            "Revenues",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Company Excluding Ford Credit",
+            "$",
+            "126,268",
+            "",
+            "",
+            "$",
+            "149,079",
+            "",
+            "",
+            "$",
+            "165,901",
+            ""
+          ],
+          [
+            "Ford Credit",
+            "10,073",
+            "",
+            "",
+            "8,978",
+            "",
+            "",
+            "10,290",
+            ""
+          ],
+          [
+            "Total revenues (Note 4)",
+            "136,341",
+            "",
+            "",
+            "158,057",
+            "",
+            "",
+            "176,191",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Costs and expenses",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Cost of sales",
+            "114,651",
+            "",
+            "",
+            "134,397",
+            "",
+            "",
+            "150,550",
+            ""
+          ],
+          [
+            "Selling, administrative, and other expenses",
+            "11,915",
+            "",
+            "",
+            "10,888",
+            "",
+            "",
+            "10,702",
+            ""
+          ],
+          [
+            "Ford Credit interest, operating, and other expenses",
+            "5,252",
+            "",
+            "",
+            "6,496",
+            "",
+            "",
+            "9,481",
+            ""
+          ],
+          [
+            "Total costs and expenses",
+            "131,818",
+            "",
+            "",
+            "151,781",
+            "",
+            "",
+            "170,733",
+            ""
+          ],
+          [
+            "Operating income/(loss)",
+            "4,523",
+            "",
+            "",
+            "6,276",
+            "",
+            "",
+            "5,458",
+            ""
+          ],
+          [
+            "Interest expense on Company debt excluding Ford Credit",
+            "1,803",
+            "",
+            "",
+            "1,259",
+            "",
+            "",
+            "1,302",
+            ""
+          ],
+          [
+            "Other income/(loss), net (Note 5)",
+            "14,733",
+            "",
+            "",
+            "(5,150)",
+            "",
+            "",
+            "(603)",
+            ""
+          ],
+          [
+            "Equity in net income/(loss) of affiliated companies (Note 14)",
+            "327",
+            "",
+            "",
+            "(2,883)",
+            "",
+            "",
+            "414",
+            ""
+          ],
+          [
+            "Income/(Loss) before income taxes",
+            "17,780",
+            "",
+            "",
+            "(3,016)",
+            "",
+            "",
+            "3,967",
+            ""
+          ],
+          [
+            "Provision for/(Benefit from) income taxes (Note 7)",
+            "(130)",
+            "",
+            "",
+            "(864)",
+            "",
+            "",
+            "(362)",
+            ""
+          ],
+          [
+            "Net income/(loss)",
+            "17,910",
+            "",
+            "",
+            "(2,152)",
+            "",
+            "",
+            "4,329",
+            ""
+          ],
+          [
+            "Less: Income/(Loss) attributable to noncontrolling interests",
+            "(27)",
+            "",
+            "",
+            "(171)",
+            "",
+            "",
+            "(18)",
+            ""
+          ],
+          [
+            "Net income/(loss) attributable to Ford Motor Company",
+            "$",
+            "17,937",
+            "",
+            "",
+            "$",
+            "(1,981)",
+            "",
+            "",
+            "$",
+            "4,347",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "EARNINGS/(LOSS) PER SHARE ATTRIBUTABLE TO FORD MOTOR COMPANY COMMON AND CLASS B STOCK (Note 8)"
+          ],
+          [
+            "Basic income/(loss)",
+            "$",
+            "4.49",
+            "",
+            "",
+            "$",
+            "(0.49)",
+            "",
+            "",
+            "$",
+            "1.09",
+            ""
+          ],
+          [
+            "Diluted income/(loss)",
+            "4.45",
+            "",
+            "",
+            "(0.49)",
+            "",
+            "",
+            "1.08",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Weighted-average shares used in computation of earnings/(loss) per share",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Basic shares",
+            "3,991",
+            "",
+            "",
+            "4,014",
+            "",
+            "",
+            "3,998",
+            ""
+          ],
+          [
+            "Diluted shares",
+            "4,034",
+            "",
+            "",
+            "4,014",
+            "",
+            "",
+            "4,041",
+            ""
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "fiscal_year": 2024,
+    "filing": {
+      "form": "10-K",
+      "reportDate": "2024-12-31",
+      "filingDate": "2025-02-06",
+      "accessionNumber": "0000037996-25-000013",
+      "primaryDocument": "f-20241231.htm"
+    },
+    "target_period": {
+      "fiscal_year": 2024,
+      "period_start": "2024-01-01",
+      "period_end": "2024-12-31"
+    },
+    "sources": [
+      {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:5ebe46904e53123b73181862a7369a98c633603a88b8d4cab4d9142a422ee9ae",
+        "raw_asset_id": "sha256:9b0f2f56372c6889c2b4c7a669ed898ffedac97c9a43f28bd4bd5988e71d75da",
+        "company_id": "ford_motor_company",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000013/f-20241231.htm",
+        "accession": "0000037996-25-000013",
+        "document_name": "f-20241231.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:d3e116f6c707b86aef5d71cb4c1f7a08169eaca2a320c33f69490e1416aaa474"
+      },
+      {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:2d1363bd16d0d2df34370d9e66b499721afa98485322f29c869135fb50ac4782",
+        "raw_asset_id": "sha256:cadb83d6a44e3ad04dc3eb7b5f379957fb1ffefa54ea842a86500de7539c01a6",
+        "company_id": "ford_motor_company",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000013/f-20241231_htm.xml",
+        "accession": "0000037996-25-000013",
+        "document_name": "f-20241231_htm.xml",
+        "source_role": "auditor_facts",
+        "request_attempt_id": "request:attempt:8adf179e4c333b747fbff9f6a0f3ac90d4e010c2cb9512f1345fc19e0e324000"
+      }
+    ],
+    "totals": [
+      {
+        "ordinal": 135,
+        "label": "Total revenues (Note 4)",
+        "table_id": "table_000077",
+        "row": 6,
+        "column": 15,
+        "native_rows": [
+          {
+            "ordinal": 129,
+            "name": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+            "raw_text": "172,706",
+            "scale": "6",
+            "context": {
+              "context_ref": "c-14",
+              "dimensions": {
+                "us-gaap:StatementBusinessSegmentsAxis": "f:CompanyExcludingFordCreditMember"
+              },
+              "entity_identifier": "0000037996",
+              "period_end": "2024-12-31",
+              "period_start": "2024-01-01",
+              "typed_dimension_count": 0
+            },
+            "label": "Company excluding Ford Credit"
+          },
+          {
+            "ordinal": 132,
+            "name": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+            "raw_text": "12,286",
+            "scale": "6",
+            "context": {
+              "context_ref": "c-17",
+              "dimensions": {
+                "us-gaap:StatementBusinessSegmentsAxis": "f:FordCreditMember"
+              },
+              "entity_identifier": "0000037996",
+              "period_end": "2024-12-31",
+              "period_start": "2024-01-01",
+              "typed_dimension_count": 0
+            },
+            "label": "Ford Credit"
+          },
+          {
+            "ordinal": 135,
+            "name": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+            "raw_text": "184,992",
+            "scale": "6",
+            "context": {
+              "context_ref": "c-1",
+              "dimensions": {},
+              "entity_identifier": "0000037996",
+              "period_end": "2024-12-31",
+              "period_start": "2024-01-01",
+              "typed_dimension_count": 0
+            },
+            "label": "Total revenues (Note 4)"
+          },
+          {
+            "ordinal": 138,
+            "name": "us-gaap:CostOfGoodsAndServicesSold",
+            "raw_text": "158,434",
+            "scale": "6",
+            "context": {
+              "context_ref": "c-1",
+              "dimensions": {},
+              "entity_identifier": "0000037996",
+              "period_end": "2024-12-31",
+              "period_start": "2024-01-01",
+              "typed_dimension_count": 0
+            },
+            "label": "Cost of sales"
+          },
+          {
+            "ordinal": 168,
+            "name": "us-gaap:ProfitLoss",
+            "raw_text": "5,894",
+            "scale": "6",
+            "context": {
+              "context_ref": "c-1",
+              "dimensions": {},
+              "entity_identifier": "0000037996",
+              "period_end": "2024-12-31",
+              "period_start": "2024-01-01",
+              "typed_dimension_count": 0
+            },
+            "label": "Net income/(loss)"
+          }
+        ],
+        "table_rows": [
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "For the years ended December 31,"
+          ],
+          [
+            "",
+            "2022",
+            "",
+            "2023",
+            "",
+            "2024"
+          ],
+          [
+            "Revenues",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Company excluding Ford Credit",
+            "$",
+            "149,079",
+            "",
+            "",
+            "$",
+            "165,901",
+            "",
+            "",
+            "$",
+            "172,706",
+            ""
+          ],
+          [
+            "Ford Credit",
+            "8,978",
+            "",
+            "",
+            "10,290",
+            "",
+            "",
+            "12,286",
+            ""
+          ],
+          [
+            "Total revenues (Note 4)",
+            "158,057",
+            "",
+            "",
+            "176,191",
+            "",
+            "",
+            "184,992",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Costs and expenses",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Cost of sales",
+            "134,397",
+            "",
+            "",
+            "150,550",
+            "",
+            "",
+            "158,434",
+            ""
+          ],
+          [
+            "Selling, administrative, and other expenses",
+            "10,888",
+            "",
+            "",
+            "10,702",
+            "",
+            "",
+            "10,287",
+            ""
+          ],
+          [
+            "Ford Credit interest, operating, and other expenses",
+            "6,496",
+            "",
+            "",
+            "9,481",
+            "",
+            "",
+            "11,052",
+            ""
+          ],
+          [
+            "Total costs and expenses",
+            "151,781",
+            "",
+            "",
+            "170,733",
+            "",
+            "",
+            "179,773",
+            ""
+          ],
+          [
+            "Operating income/(loss)",
+            "6,276",
+            "",
+            "",
+            "5,458",
+            "",
+            "",
+            "5,219",
+            ""
+          ],
+          [
+            "Interest expense on Company debt excluding Ford Credit",
+            "1,259",
+            "",
+            "",
+            "1,302",
+            "",
+            "",
+            "1,115",
+            ""
+          ],
+          [
+            "Other income/(loss), net (Note 5)",
+            "(5,150)",
+            "",
+            "",
+            "(603)",
+            "",
+            "",
+            "2,451",
+            ""
+          ],
+          [
+            "Equity in net income/(loss) of affiliated companies (Note 14)",
+            "(2,883)",
+            "",
+            "",
+            "414",
+            "",
+            "",
+            "678",
+            ""
+          ],
+          [
+            "Income/(Loss) before income taxes",
+            "(3,016)",
+            "",
+            "",
+            "3,967",
+            "",
+            "",
+            "7,233",
+            ""
+          ],
+          [
+            "Provision for/(Benefit from) income taxes (Note 7)",
+            "(864)",
+            "",
+            "",
+            "(362)",
+            "",
+            "",
+            "1,339",
+            ""
+          ],
+          [
+            "Net income/(loss)",
+            "(2,152)",
+            "",
+            "",
+            "4,329",
+            "",
+            "",
+            "5,894",
+            ""
+          ],
+          [
+            "Less: Income/(Loss) attributable to noncontrolling interests",
+            "(171)",
+            "",
+            "",
+            "(18)",
+            "",
+            "",
+            "15",
+            ""
+          ],
+          [
+            "Net income/(loss) attributable to Ford Motor Company",
+            "$",
+            "(1,981)",
+            "",
+            "",
+            "$",
+            "4,347",
+            "",
+            "",
+            "$",
+            "5,879",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "EARNINGS/(LOSS) PER SHARE ATTRIBUTABLE TO FORD MOTOR COMPANY COMMON AND CLASS B STOCK (Note 8)"
+          ],
+          [
+            "Basic income/(loss)",
+            "$",
+            "(0.49)",
+            "",
+            "",
+            "$",
+            "1.09",
+            "",
+            "",
+            "$",
+            "1.48",
+            ""
+          ],
+          [
+            "Diluted income/(loss)",
+            "(0.49)",
+            "",
+            "",
+            "1.08",
+            "",
+            "",
+            "1.46",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Weighted-average shares used in computation of earnings/(loss) per share",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Basic shares",
+            "4,014",
+            "",
+            "",
+            "3,998",
+            "",
+            "",
+            "3,978",
+            ""
+          ],
+          [
+            "Diluted shares",
+            "4,014",
+            "",
+            "",
+            "4,041",
+            "",
+            "",
+            "4,021",
+            ""
+          ]
+        ]
+      }
+    ]
+  }
+]

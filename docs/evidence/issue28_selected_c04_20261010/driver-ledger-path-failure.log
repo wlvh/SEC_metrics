@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-selected-c04/SEC_metrics/docs/evidence/issue28_selected_c04_20261010/verify_saved_selected.py", line 66, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-selected-c04/SEC_metrics/docs/evidence/issue28_selected_c04_20261010/verify_saved_selected.py", line 33, in main
+    times={};source_before=sha256_file(path=args.source_root/'logs/sec_request_log.csv')
+                           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-selected-c04/SEC_metrics/scripts/vnext/canonical.py", line 447, in sha256_file
+    raise CanonicalError(
+        "Hash input must be a regular file: {}".format(path)
+    )
+vnext.canonical.CanonicalError: Hash input must be a regular file: /Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs/logs/sec_request_log.csv

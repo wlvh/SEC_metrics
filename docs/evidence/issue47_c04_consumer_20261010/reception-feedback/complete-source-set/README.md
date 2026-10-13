@@ -1,0 +1,9 @@
+# Historical selected base carries complete accession source sets
+
+Public C04's new complete-source gate found a real consumer omission: ordinary `prepare_saved_governance_input` already carries `reader.file_sets`, but historical `prepare_selected_auditor_base` did not. The audited reader has already read and indexed the complete current/prior original and amendment source sets; dropping this collection prevents the public gate from comparing a supplied list with the complete index-bound set.
+
+The source preparer adds one body field, `accession_source_sets: reader.file_sets`, before computing the new binding ID. It does not infer the expected set from supplied HTML/XML, select a subset, alter old bindings or create a second reader. New selected inputs carry the existing reader-owned collection, including all original/amendment roles. Existing source proofs and the public core still verify it.
+
+One constructed source-preparer control initially raises the exact missing-field KeyError (`before.log`). The same control then proves all four current/prior original/amendment sets retain both constructed media, are exactly the reader's collection and are included in the new binding hash.29 selection/adapter/public-input checks pass.255s, zero skips (`after.log`). No fake auditor value or financial conclusion is manufactured by this fixture. Public owner #28 independently validates the new gate on the real Ford selected-company path; this receipt does not borrow that execution credit before it is returned.
+
+This is a minimal required consumer field, not a rewrite of old saved source/input identities. The prior public a1 core and loader boundary fixes remain; the upcoming public source completeness patch is a separate dependency until received. No full-year rereading, source GET/provider/paid call, old result/Run rewrite, Ready/merge/adoption/active action.

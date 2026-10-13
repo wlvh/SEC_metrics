@@ -67,7 +67,21 @@ python3 /srv/sec-metrics/runtime/ordinary-v1/tools/vnext_company.py compute \
 
 普通 `compute` 复用每指标 update controller；C04 调用专用四 form 更新入口。增量 B13 的零 AI 结构性 N/A 使用单独 `--kind native` 固定树（继承原 V14、后继 issue_54_v2）；普通树明确返回 NATIVE_RUNTIME_REQUIRED。完整已保存 D04 可通过独立处理包和其原 V14 固定运行树接入。基线直接使用其独立 SEC 公司来源；acquired 同源复用还需单独准入的原基线公司来源版本，以及完整原文、主体／期间、来源集合和实质请求责任的等价检查。新账本完整保留，不裁行或转换成基线。B13 判断登记、历史处理或变化后的来源仍返回明确待处理／拒绝；不计完成或请求新模型调用。来源包仍不携处理答案。
 
-历史准备从固定 #47 树调用 `export --history-years 5`，使用其 `declared_frame`；计算选择历史固定树并加 `--report-end YYYY-MM-DD` 或 `--fiscal-year YYYY`。这些消费者的实际通过范围须看证据索引，不能由接口存在推出五年全部业务验收。
+当前普通记录的历史来源导出使用已接入的选期和来源依赖读取器，显式支持 `B01/B02/B03`，不依赖旧历史获取模块或 `issue_47_v1`。例如：
+
+```bash
+python3 tools/vnext_company.py export --company marriott_international \
+  --source-root /saved/full-source --output-root /new/marriott-source \
+  --metric B01 --history-years 5
+python3 tools/vnext_company.py run --company marriott_international \
+  --source-root /new/marriott-source --work-dir /new/marriott-state \
+  --output-dir /new/marriott-output --metric B01 --period fiscal-years \
+  --fiscal-year-start 2025 --fiscal-year-end 2025
+```
+
+导出按最新原件中的发行人财年标签确定五年窗口，保留每个任务的原件、原生实例、选期标签、元数据及请求/响应头依赖。混合公司账本及注册表原字节保留，不裁行、重编号或授予新调用额度；其它公司原件和模型答案不打包。缺源、失败或财年未决返回 `SOURCE_EXPORT_INCOMPLETE`/退出2，不发布部分包。包使用 `run --source-root`，不支持旧原生 `install/compute`；不创建独立信任登记，兼容传入的 `--trust-root` 不被此新路径使用。五年来源可导出不等于五年指标内容已接受，支持范围及实测见[限定验证记录](evidence/issue28_history_export_entry_20261013/README.md)。
+
+已保存的旧原生历史包继续使用创建它的固定 #47 程序、原 `declared_frame`、来源登记和 `--report-end`/`--fiscal-year`。上方旧原生安装、版本切换及 trust 说明只适用于这种保留路径；不将新普通来源包改签成旧原生准入，也不要求新普通任务恢复旧权限链。
 
 `compute` 返回本次请求报告，并保存 `latest-execution.json` 与薄执行观察。`results`／`company-results.json` 从原每指标 journal、期间 current 指针和 native Run 生成公司视图；局部请求不删除其它指标及年份。既有成功指针仍由原消费者管理，不新增正式选版或 active。视图区分创建来源、最近核验来源、当前来源匹配／失败／未复核、Run／Requirement closure、最新请求及已确认缺陷。
 

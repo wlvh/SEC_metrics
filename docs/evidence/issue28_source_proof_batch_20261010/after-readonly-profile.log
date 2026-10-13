@@ -1,0 +1,25 @@
+proof_count 44 unprofiled_seconds 0.18066387507133186
+profiled_seconds 0.20103820809163153
+         498337 function calls (494201 primitive calls) in 0.201 seconds
+
+   Ordered by: cumulative time
+   List reduced from 169 to 14 due to restriction <14>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.001    0.001    0.201    0.201 ordinary_current_update.py:73(_current_sources)
+        1    0.001    0.001    0.166    0.166 request_bindings.py:342(validate_request_attempt_bindings)
+       44    0.000    0.000    0.096    0.002 request_bindings.py:234(_validate_named_row)
+       44    0.000    0.000    0.095    0.002 request_bindings.py:25(_verified_request_locator)
+        5    0.015    0.003    0.078    0.016 sec_http.py:928(parse_request_log_rows)
+    12660    0.011    0.000    0.053    0.000 csv.py:173(__next__)
+        3    0.001    0.000    0.049    0.016 sec_http.py:1065(validate_request_log_manifest)
+        3    0.000    0.000    0.049    0.016 sec_http.py:1037(request_log_manifest_payload)
+     2846    0.046    0.000    0.046    0.000 {built-in method _hashlib.openssl_sha256}
+       44    0.001    0.000    0.045    0.001 sec_http.py:760(legacy_response_snapshot_paths)
+    12665    0.040    0.000    0.040    0.000 {built-in method builtins.next}
+        1    0.000    0.000    0.033    0.033 annual_sources.py:29(_rows)
+      136    0.000    0.000    0.030    0.000 canonical.py:422(sha256_bytes)
+     2619    0.006    0.000    0.020    0.000 sec_http.py:1001(request_log_attempt_id)
+
+
+

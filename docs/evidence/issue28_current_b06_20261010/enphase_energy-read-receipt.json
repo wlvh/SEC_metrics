@@ -1,0 +1,22 @@
+{
+  "phase": "read",
+  "company": "enphase_energy",
+  "command": [
+    "tools/vnext_company.py",
+    "results",
+    "--company",
+    "enphase_energy",
+    "--state-root",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/current-b06-20261010/enphase_energy/state",
+    "--output-root",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/current-b06-20261010/enphase_energy/read"
+  ],
+  "exit": 0,
+  "seconds": 0.4038081669714302,
+  "network_forbidden": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

@@ -7,8 +7,10 @@ Unknown statements or components fail. No issuer, year or source hash approves
 a relationship. Source authenticity belongs to the ordinary admission layer.
 """
 from decimal import Decimal
+import datetime
 import re
 
+from .xbrl_namespace_policy import is_fasb_namespace, source_reader_options
 from . import b06_disclosure as disclosure
 from .canonical import content_hash, decimal_text, sha256_bytes, strict_json_file
 from .constraints import parse_numeric_claim
@@ -58,13 +60,14 @@ def _value(fact, metadata):
     return '0'
 
 
-def _source(source, prepared, kind):
+def _source(source, prepared, kind, *, dei_release='YEAR_ONLY', namespace_policy='YEAR_ONLY'):
+    reader_options = source_reader_options(dei_release=dei_release, namespace_policy=namespace_policy)
     raw = source['raw_bytes']; ref = source['source_reference']
     period = prepared['table_input']['target_period']
     _need(ref['raw_asset_id'] == 'sha256:'+sha256_bytes(content=raw)
           and ref['accession'] == prepared['filing']['accessionNumber']
           and ref['company_id'] == prepared['company_id'], 'SOURCE_BINDING_CHANGED')
-    _need(annual_period(raw=raw,cik=prepared['entity'],filing=prepared['filing']) == period,
+    _need(annual_period(raw=raw,cik=prepared['entity'],filing=prepared['filing'], **({'dei_release': dei_release} if dei_release != 'YEAR_ONLY' else {})) == period,
           'SOURCE_IDENTITY_CONFLICT')
     parsed = parse_accession_xbrl_source(raw_bytes=raw)
     meta = _ReportedFactMetadata(); meta.feed(raw.decode('utf-8-sig')); meta.close()
@@ -83,7 +86,7 @@ def _source(source, prepared, kind):
         if c['dimensions'] or c['typed_dimension_count']:
             potential = re.search(POLICY['potential_financing_concept_pattern']+'|deferredfinancecosts',local,re.I)
             if fact['unit_ref'] and c['period_start'] == c['period_end'] and potential:
-                standard = re.fullmatch(r'https?://fasb\.org/us-gaap/[0-9]{4}',uri) is not None
+                standard = is_fasb_namespace(uri, namespace_policy=namespace_policy)
                 unit = meta.units.get(fact['unit_ref'])
                 usd = unit == {'measures':[('http://www.xbrl.org/2003/iso4217','USD')],'divided':False}
                 role = next((v for k,v in POLICY['dimension_concept_roles'].items() if k.casefold() == local.casefold()),None)
@@ -105,12 +108,15 @@ def _source(source, prepared, kind):
                 elif local.casefold() == 'productwarrantyobligationsmeasurementinput' and unit == {
                         'measures':[('http://www.xbrl.org/2003/instance','pure')],'divided':False}:
                     record['disposition'] = 'DIMENSIONED_WARRANTY_MEASUREMENT_RATE'
+                elif standard and local.casefold() == 'debtinstrumentinterestrateeffectivepercentage' and unit == {
+                        'measures':[('http://www.xbrl.org/2003/instance','pure')],'divided':False}:
+                    record['disposition'] = 'DIMENSIONED_DEBT_EFFECTIVE_INTEREST_RATE'
                 else:
                     raise NoteCarryingError('NOTE_CARRYING_UNRESOLVED_FINANCING_FACT:'+local)
                 inventory.append(record)
             continue
         _need(str(int(c['entity_identifier'])) == prepared['entity'], 'SUBJECT_CONFLICT')
-        standard = re.fullmatch(r'https?://fasb\.org/us-gaap/[0-9]{4}',uri) is not None
+        standard = is_fasb_namespace(uri, namespace_policy=namespace_policy)
         roles = [k for k,v in POLICY['monetary_concepts'].items() if v.casefold() == local.casefold()]
         note_roles = [k for k,v in POLICY['note_concepts'].items() if v.casefold() == local.casefold()]
         if roles or note_roles:
@@ -235,6 +241,45 @@ def _composition(note, end):
             'balances':{k:decimal_text(value=abs(v)) for k,v in values.items()}}
 
 
+_MONTHS = 'January February March April May June July August September October November December'.split()
+_POINT = re.compile(r'\bas of (' + '|'.join(_MONTHS) + r') ([0-9]{1,2}), ([0-9]{4})\b', re.I)
+_DATE = re.compile(r'\b(?:' + '|'.join(_MONTHS) + r') [0-9]{1,2}, [0-9]{4}\b', re.I)
+
+
+def _prior_principal_balance(sentence, end):
+    """An entire balance assertion attributed solely to one earlier date.
+
+    The optional introductory repurchase clause contains no other assertion or
+    monetary amount. A current, future, mixed-date or additional balance keeps
+    the frozen reader's refusal rather than being treated as a prior balance.
+    """
+    points = list(_POINT.finditer(sentence))
+    if len(points) != 1 or len(_DATE.findall(sentence)) != 1:
+        return False
+    point = points[0]
+    try:
+        month = next(i for i, name in enumerate(_MONTHS, 1) if name.casefold() == point[1].casefold())
+        dated = datetime.date(int(point[3]), month, int(point[2]))
+        target = datetime.date.fromisoformat(end)
+    except (ValueError, StopIteration):
+        return False
+    if dated >= target or not re.fullmatch(
+            r'\s*(?:Following the repurchase combined with repurchase in previous years,\s*)?',
+            sentence[:point.start()], re.I):
+        return False
+    return bool(re.fullmatch(
+        r'\s*,?\s*\$[0-9,.]+\s+(?:thousand|million|billion)\s+'
+        r'aggregate principal amount of the Notes due [0-9]{4}\s+remained outstanding\.\s*',
+        sentence[point.end():], re.I))
+
+
+def _equity_share_counts(sentence, money):
+    """Every apparent monetary token is explicitly a count of equity shares."""
+    return bool(money and re.search(r'\b(?:options|warrants)\b', sentence, re.I) and all(
+        match[1] is None and re.match(r'\s+shares\b', sentence[match.end():], re.I)
+        for match in money))
+
+
 def _narrative(notes, composition, end):
     from .b06_disclosure_v2 import _Narrative, _BORROWING, _BALANCE, _MONETARY_CUE, _MONEY, _date_text
     class Paragraphs(_Narrative):
@@ -258,6 +303,14 @@ def _narrative(notes, composition, end):
                 inventory.append(item); continue
             money = list(_MONEY.finditer(sentence))
             _need(money, 'NARRATIVE_AMOUNT_UNREADABLE')
+            if _equity_share_counts(sentence, money):
+                item['disposition'] = 'EQUITY_INSTRUMENT_SHARE_COUNTS'
+                inventory.append(item)
+                continue
+            if _prior_principal_balance(sentence, end):
+                item['disposition'] = 'EXPLICIT_PRIOR_PERIOD_PRINCIPAL_BALANCE'
+                inventory.append(item)
+                continue
             _need(_date_text(end) in sentence, 'NARRATIVE_PERIOD_UNPROVEN:'+sentence)
             member_matches = [m for m in composition['members'] if 'Notes due '+m['year'] in sentence]
             _need(len(member_matches) == 1 and len(money) == 1, 'UNRESOLVED_NARRATIVE_BALANCE:'+sentence)
@@ -319,7 +372,7 @@ def _related_tables_inventory(notes):
                     continue
                 if name == 'scheduleofaccountsnotesloansandfinancingreceivabletextblock' and label == 'Loan receivables' and 'The principal outstanding under the Company’s loan receivables were as follows:' in text:
                     disposition = 'REPORTED_LENDER_RECEIVABLE_ASSET'
-                elif name == 'debtsecuritiesavailableforsaletabletextblock' and label == 'Commercial paper' and text.startswith('Cash equivalents, restricted cash and marketable securities consist of the following:'):
+                elif name == 'debtsecuritiesavailableforsaletabletextblock' and label == 'Commercial paper' and text.startswith(('Cash equivalents, restricted cash and marketable securities consist of the following:', 'The cash equivalents, restricted cash and marketable securities consist of the following:')):
                     disposition = 'REPORTED_CASH_OR_MARKETABLE_SECURITY_ASSET'
                 else:
                     raise NoteCarryingError('NOTE_CARRYING_UNRESOLVED_RELATED_TABLE_ROW:'+label)
@@ -328,10 +381,11 @@ def _related_tables_inventory(notes):
     return result
 
 
-def inspect_note_carrying(*, primary, xml, prepared):
+def inspect_note_carrying(*, primary, xml, prepared, dei_release='YEAR_ONLY', namespace_policy='YEAR_ONLY'):
     """Rebuild a bounded semantic proof from two complete original documents."""
-    xnotes,xrelated,xreports,xinventory = _source(xml,prepared,'xml')
-    inotes,irelated,ireports,iinventory = _source(primary,prepared,'primary')
+    reader_options = source_reader_options(dei_release=dei_release, namespace_policy=namespace_policy)
+    xnotes,xrelated,xreports,xinventory = _source(xml,prepared,'xml', **reader_options)
+    inotes,irelated,ireports,iinventory = _source(primary,prepared,'primary', **reader_options)
     raw = primary['raw_bytes'].decode('utf-8-sig')
     blocks = _DefinitionBlocks(raw); blocks.feed(raw); blocks.close(); blocks._flush()
     _need(not blocks.structural_errors and (blocks.html_count,blocks.body_count,blocks.html_closed,blocks.body_closed) == (1,1,1,1),

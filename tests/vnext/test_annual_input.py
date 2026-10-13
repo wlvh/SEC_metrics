@@ -30,8 +30,8 @@ HISTORICAL_RUN = REPO_ROOT / (
 
 
 @contextmanager
-def independent_inputs():
-    """Block actual historical matrix reads and all legacy semantic calls."""
+def independent_inputs(*, output_roots=()):
+    """Block historical answers; explicitly allow only a test's new outputs."""
     opened, calls = [], set()
     original_io, original_open = io.open, builtins.open
 
@@ -39,7 +39,9 @@ def independent_inputs():
         if isinstance(file, (str, Path)):
             path = Path(file)
             if path.name in {"metrics_matrix.csv", "metric_evidence.csv"}:
-                raise AssertionError("Historical result read: " + str(path))
+                allowed=any(path.resolve().is_relative_to(Path(root).resolve()) for root in output_roots)
+                if not allowed:
+                    raise AssertionError("Historical result read: " + str(path))
             opened.append(str(path))
 
     def checked_io(file, *args, **kwargs):

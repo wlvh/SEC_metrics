@@ -1,0 +1,4 @@
+The first read-only preparation was stopped after the local profiler dominated execution.
+No Result, Run or provider/SEC call was produced. macOS sample: 615/781 sampled frames included call_profile_func.
+The command log is retained as source-preflight.log; this is not source acceptance or a production performance measurement.
+The reproducer now uses producer guards only for repeat/read and does not profile preparation or the first calculation.

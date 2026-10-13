@@ -20,8 +20,18 @@ METRIC_IDS = frozenset(installed_ordinary_spec_documents())
 LODGING_METRIC_IDS = frozenset({'B10','B11'})
 CURRENT_FINANCIAL_METRICS = frozenset({'A04'})
 SAVED_MODEL_METRIC_IDS = frozenset({'D04'})
-SAVED_METRIC_IDS = METRIC_IDS | LODGING_METRIC_IDS | CURRENT_FINANCIAL_METRICS | SAVED_MODEL_METRIC_IDS
-EXPLICIT_CASE_METRICS = frozenset({'A03','A04','A09','A11','A12','A13'})
+SAVED_METRIC_IDS = METRIC_IDS | LODGING_METRIC_IDS | CURRENT_FINANCIAL_METRICS | SAVED_MODEL_METRIC_IDS | {'B06','C04','A13'}
+EXPLICIT_CASE_METRICS = frozenset({'A03','A04','A09','A11','A12','A13','C03','C04','D01','D02','E01'})
+CURRENT_E01_SPEC_PATH = 'catalog/r6/E01_content_confirmed_ma_v1.md'
+
+
+def current_e01_scope(saved):
+    """Saved item-code results do not acquire the successor's meaning.
+
+    The existing reader verifies the saved Spec/result relationship; this
+    marker is written only for the explicitly selected successor case.
+    """
+    return saved['manifest'].get('selected_spec_path') == CURRENT_E01_SPEC_PATH
 
 
 def _program_version(root):
@@ -60,7 +70,8 @@ def _ordinary_case(source, company, metric):
     program = Path(__file__).resolve().parents[2]
     original = prepare_ordinary_zero_ai_run_input(repo_root=source, company_id=company, metric_id=metric,
         **({'validate_depreciation_scope':True} if metric=='B03' else {}),
-        **({'validate_revenue_scope':True,'revenue_scope_contract':'reported-total-v2'} if metric in {'B01','B03'} else {}),
+        **({'validate_revenue_scope':True,'revenue_scope_contract':'reported-total-v2',
+            'allow_single_revenue_line':True} if metric in {'B01','B02','B03'} else {}),
         rules_root=program)
     income_binding = original['component'].get('input_binding',{})
     detail = original['component']
@@ -74,6 +85,8 @@ def _ordinary_case(source, company, metric):
         assessments['income_period'] = selection['income_period']
     if selection.get('revenue_scope') is not None:
         assessments['revenue_scope'] = selection['revenue_scope']
+    if selection.get('paired_revenue_scopes') is not None:
+        assessments['paired_revenue_scopes'] = selection['paired_revenue_scopes']
     return {'primary_metric_id': metric, 'kind': 'STRUCTURED', 'input_binding': original,
         'compiled_specs': original['compiled_specs'], 'spec_paths': original['spec_paths'],
         'references': original['source_references'], 'source_proofs': original['source_proofs'],
@@ -112,9 +125,21 @@ def create_saved_result(*, source_root, output_root, company_id, metric_id, shar
     def prepare(source):
         if metric_id in CURRENT_FINANCIAL_METRICS:
             return _current_financial_case(source,company_id,metric_id)
+        if metric_id in {'B04','B07'}:
+            from .current_statement_metric_case import prepare_current_statement_metric_case
+            return prepare_current_statement_metric_case(source_root=source,company_id=company_id,metric_id=metric_id)
+        if metric_id == 'A13':
+            from .current_geography_case import prepare_current_geography_case
+            return prepare_current_geography_case(source_root=source,company_id=company_id)
+        if metric_id == 'C04':
+            from .current_auditor_case import prepare_current_auditor_case
+            return prepare_current_auditor_case(source_root=source,company_id=company_id)
+        if metric_id == 'B06':
+            from .current_b06_case import prepare_current_b06_case
+            return prepare_current_b06_case(source_root=source,company_id=company_id)
         if metric_id in SAVED_MODEL_METRIC_IDS:
-            from .current_d04_result import prepare_current_d04_case
-            return prepare_current_d04_case(source_root=source,company_id=company_id)
+            from .ordinary_d04_saved_route import prepare_case
+            return prepare_case(source_root=source,company_id=company_id,metric_id=metric_id)
         if metric_id in LODGING_METRIC_IDS:
             from .normal_lodging_results import prepare_ordinary_lodging_case
             return prepare_ordinary_lodging_case(repo_root=source,company_id=company_id,metric_id=metric_id,
@@ -184,6 +209,8 @@ def _save_case(*, source_root, output_root, company_id, metric_id, factory, calc
                 'compiled_specs': case['compiled_specs'],
                 'calculation_performed_by_writer': calculation_performed,
                 'new_calls': {'provider': 0, 'paid': 0, 'sec': 0}, 'production_authorized': False}
+            if metric_id == 'E01' and case['spec_paths'][metric_id] == CURRENT_E01_SPEC_PATH:
+                manifest['selected_spec_path'] = CURRENT_E01_SPEC_PATH
             from .ordinary_projection import render_ordinary_records
             rendered = render_ordinary_records(data_root=source_root, manifest=manifest,
                 records=records, case=case, receipt_status='CALCULATED_SAVED_SOURCE' if calculation_performed else 'SAVED_PRECALCULATED_CASE',

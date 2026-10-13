@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-company-event-source-preflight/SEC_metrics/docs/evidence/issue28_company_event_source_preflight_20261013/verify_sources_entry.py", line 78, in <module>
+    run()
+    ~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-company-event-source-preflight/SEC_metrics/docs/evidence/issue28_company_event_source_preflight_20261013/verify_sources_entry.py", line 52, in run
+    return_code = main(command)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-company-event-source-preflight/SEC_metrics/tools/vnext_company.py", line 168, in main
+    result = discover_selected_source_requirements(repo_root=args.source_root,
+        company_id=args.company, report_end=args.report_end, metric_ids=args.metric)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-company-event-source-preflight/SEC_metrics/scripts/vnext/selected_source_requirements.py", line 227, in discover_selected_source_requirements
+    return _discover_selected_event_requirements(repo_root=repo_root,company_id=company_id,
+        report_end=report_end,metric_ids=metric_ids)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-company-event-source-preflight/SEC_metrics/scripts/vnext/selected_source_requirements.py", line 274, in _discover_selected_event_requirements
+    _need(prior['saved_status']==row['saved_status']
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          and _same_source_observation(prior.get('proof',{}),row.get('proof',{})),
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'COMPONENT_SOURCE_OBSERVATION_CHANGED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-company-event-source-preflight/SEC_metrics/scripts/vnext/selected_source_requirements.py", line 26, in _need
+    raise ValueError('SELECTED_SOURCE_' + reason)
+ValueError: SELECTED_SOURCE_COMPONENT_SOURCE_OBSERVATION_CHANGED

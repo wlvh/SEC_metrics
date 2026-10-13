@@ -1,0 +1,33 @@
+{
+  "elapsed_seconds": 0.07243204199767206,
+  "record_type": "ORDINARY_COMPANY_RESULT_VIEW_V1",
+  "company_id": "macys",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "metrics": [
+    {
+      "metric_id": "B06",
+      "result_id": "sha256:4bdb9b24989e48efd58b5a51da4359c6ed7a3e4334c712d7f6646641755ae9cb",
+      "period_start": "2025-02-01",
+      "period_end": "2025-02-01",
+      "fiscal_year": 2024,
+      "value": null,
+      "unit": null,
+      "publication": "WITHHELD",
+      "quality": "NONE",
+      "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "defect_holds": [],
+      "latest_observation": "PREVIOUS_INPUT_WITHHELD",
+      "requested_in_latest_execution": true,
+      "record_root": "/private/tmp/issue28-financing-notes-company-20261013/state/updates/B06/periods/FY2024/results/12da532686a34f08b3883f27873d5b2e"
+    }
+  ],
+  "source_freshness": "NOT_CHECKED_BY_SAVED_READER",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false,
+  "output_root": "/private/tmp/issue28-financing-notes-company-20261013/read-verified"
+}

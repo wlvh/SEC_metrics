@@ -1,0 +1,106 @@
+{
+  "execution_commit": "fcc9a4d1",
+  "phases": {
+    "processing": {
+      "seconds": 7.808667916004197,
+      "exit": 0,
+      "arguments": [
+        "run",
+        "--company",
+        "enphase_energy",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2021",
+        "--fiscal-year-end",
+        "2021",
+        "--metric",
+        "D01",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/d01-namespace-20261012-47/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/d01-namespace-20261012-47/enphase_energy-after/runs"
+      ]
+    },
+    "repeat": {
+      "seconds": 0.7288700830104062,
+      "exit": 0,
+      "arguments": [
+        "run",
+        "--company",
+        "enphase_energy",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2021",
+        "--fiscal-year-end",
+        "2021",
+        "--metric",
+        "D01",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/d01-namespace-20261012-47/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/d01-namespace-20261012-47/enphase_energy-after/runs"
+      ]
+    },
+    "read": {
+      "seconds": 0.3269682500103954,
+      "exit": 0,
+      "arguments": [
+        "results",
+        "--company",
+        "enphase_energy",
+        "--state-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/d01-namespace-20261012-47/state",
+        "--output-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/d01-namespace-20261012-47/enphase_energy-after/read"
+      ]
+    }
+  },
+  "row": {
+    "company": "Enphase Energy",
+    "cik": "1463101",
+    "metric_id": "D01",
+    "metric_name": "Risk factors summary",
+    "value": "Risks Related to our Business, Operations and Our Industry\nThe reduction, elimination or expiration of government subsidies and economic incentives for on-grid solar electricity applications could reduce demand for solar PV systems and harm our business.\nIf demand for solar energy solutions does not grow or grows at a slower rate than we anticipate, including as a result of the ongoing COVID-19 pandemic, our business will suffer.\nThe rapidly changing solar industry makes it difficult to evaluate our current business and future prospects.\nWe depend on limited-source suppliers for key components and products. If we are unable to source these components and products on a timely basis, we will not be able to deliver our products to our customers.\nOur business has been affected by, is currently being adversely affected and could be materially and adversely affected in the future by the current impacts and evolving effects of the ongoing COVID-19 pandemic. The COVID-19 pandemic may continue to, and other actual or threatened epidemics, pandemics, outbreaks, or public health crises may in the future, adversely affect our and our customers\u2019 results of operations and financial condition, our supply chain and our business.\nWe depend upon a small number of outside contract manufacturers, and our business and operations could be disrupted if we encounter problems with these contract manufacturers.\nIf we or our contract manufacturers are unable to obtain raw materials in a timely manner or if the price of raw materials increases significantly, production time and product costs could increase, which may adversely affect our business.\nManufacturing problems could result in delays in product shipments, which would adversely affect our revenue, competitive position and reputation.\nWe rely primarily on distributors, installers and providers of solar financing to assist in selling our products to customers, and the failure of these customers to perform at the expected level, or at all, would have an adverse effect on our business, financial condition and results of our operations.\nThe solar industry is highly competitive, and we expect to face increased competition as new and existing competitors introduce products or develop alternative technologies, which could negatively impact our business, financial condition and results of operations.\nThe loss of, or events affecting, one of our major customers could reduce our sales and have an adverse effect on our business, financial condition and results of operations.\nOur energy systems, including our storage solution, integrated AC Module, IQ8TM solar microinverters and Ensemble technology, may not achieve broader market acceptance, which would prevent us from increasing our revenue and market share.\nOur success in marketing and selling \u201cAC module\u201d versions of our microinverter system depends in part upon our ability to continue to work closely with leading solar module manufacturers.\nOur recent and planned expansion into existing and new markets could subject us to additional business, financial and competitive risks.\nWe may fail to capture customers in the new product and geographic markets that we are pursuing.\nIf we fail to retain our key personnel or if we fail to attract additional qualified personnel, we may not be able to achieve our anticipated level of growth and our business could suffer.\nAny failure by management to properly manage growth could have a material adverse effect on our business, operating results, and financial condition.\nIf we are unsuccessful in continuing to expand our direct-to-consumer sales channel by driving purchases through our website, our business and results of operation could be harmed.\nRisks Related to our Intellectual Property and Technology\nWe are dependent on information technology systems, infrastructure and data. We could be subject to breaches of our information technology systems caused by system security risks, failure of our data protection, cyber-attacks, and erroneous or non-malicious actions or failures to act by our employees or others with authorized access to our networks, which could cause significant reputational, legal and financial damages.\nThe software we use in providing system configuration recommendations or potential energy savings estimates to customers relies in part on third party information that may not be accurate or up-to-date; this may therefore generate inaccurate recommendations or estimates, resulting in a loss of reputation and customer confidence.\nWe are subject to stringent privacy laws, information security policies and contractual obligations governing the use, processing and transfer of personal information and any unauthorized access to, or disclosure or theft of personal information we gather, store or use could harm our reputation and subject us to claims or litigation.\nIf we fail to protect, or incur significant costs in defending, our intellectual property and other proprietary rights, our business and results of operations could be materially harmed.\nWe may be subject to disruptions or failures in information technology systems and network infrastructures that could have a material adverse effect on our business and financial condition.\nThird parties may assert that we are infringing upon their intellectual property rights, which could divert management\u2019s attention, cause us to incur significant costs and prevent us from selling or using the technology to which such rights relate.\nOur failure to obtain the right to use necessary third-party intellectual property rights on reasonable terms, or our failure to maintain, and comply with the terms and conditions applicable to these rights, could harm our business and prospects.\nWe may not be able to protect and enforce our trademarks and trade names, or build name recognition in our markets of interest thereby harming our competitive position.\nObtaining and maintaining our patent protection depends on compliance with various required procedures, document submissions, fee payments and other requirements imposed by governmental patent agencies, and our patent protection could be reduced or eliminated for non-compliance with these requirements.\nPatent terms may be inadequate to protect our competitive position on our products for an adequate amount of time.\nRisks related to Legal Proceedings and Regulations\nChanges in current laws or regulations or the imposition of new laws or regulations, or new interpretations thereof, in the solar energy sector or international trade, by federal or state agencies in the United States or foreign jurisdictions could impair our ability to compete, and could materially harm our business, financial condition and results of operations.\nChanges in the U.S. trade environment, including the recent imposition of import tariffs, could adversely affect the amount or timing of our revenues, results of operations or cash flows.\nOur significant international operations subject us to additional risks that could adversely affect our business, results of operations and financial condition.\nWe could be adversely affected by any violations of the FCPA, the U.K. Bribery Act, and other foreign anti-bribery laws.\nFrom time to time we are involved in a number of legal proceedings and, while we cannot predict the outcomes of such proceedings and other contingencies with certainty, some of these outcomes could adversely affect our business and financial condition.\nRisks Related to Our Financial Condition and Liquidity\nOur gross profit may fluctuate over time, which could impair our ability to achieve or maintain profitability.\nWe are under continuous pressure to reduce the prices of our products, which has adversely affected, and may continue to adversely affect, our gross margins.\nA drop in the retail price of electricity derived from the utility grid or from alternative energy sources, or a change in utility pricing structures, may harm our business, financial condition and results of operations.\nIf we do not forecast demand for our products accurately, we may experience product shortages, delays in product shipment, excess product inventory, difficulties in planning expenses or disputes with suppliers, any of which will adversely affect our business and financial condition.\nOur focus on a limited number of specific markets increases risks associated with the modification, elimination or expiration of governmental subsidies and economic incentives for on-grid solar electricity applications.\nOur portfolio of marketable securities is subject to market, interest and credit risk that may reduce its value.\nRisks Related to our Acquisition Activity\nWe may fail to realize some or all of the anticipated benefits of the SunPower transaction which may result in conflicts between us and SunPower.\nAs part of growing our business, we have made and expect to continue to make acquisitions. If we fail to successfully select, execute or integrate our acquisitions, then our business and operating results could be harmed and our stock price could decline.\nWe invest in companies for both strategic and financial reasons but may not realize a return on our investments.\nAn impairment in the carrying value of goodwill or other intangible and long-lived assets could negatively affect our operating results.\nRisks Related to our Debt and Equity Securities\nConversion of our Convertible Notes may dilute the ownership interest of existing stockholders or may otherwise depress the price of our common stock, adversely affect our financial condition and operating results.\nServicing our debts requires a significant amount of cash, and we may not have sufficient cash flow from our business to pay our debts.\nWe may not have the ability to raise the funds necessary to settle conversions of the Convertible Notes or repurchase the Convertible Note upon a fundamental change, and our future debt may contain limitations on our ability to pay cash upon conversion or repurchase of the Convertible Notes.\nThe convertible note hedge and warrant transactions and/or their early termination may affect the value of our common stock.\nChanges in current accounting methods, standards, or regulations applicable to the Convertible Notes due 2028, Notes due 2026 and Notes due 2025 could have a material impact on our reported financial results, future financial results, future cash flows, and/or our stock price.\nThe market price of our common stock may be volatile or may decline regardless of our operating performance.\nOur financial results may vary significantly from quarter to quarter due to a number of factors, which may lead to volatility in our stock price.\nIf research analysts do not publish research about our business or if they issue unfavorable commentary or downgrade our common stock, our stock price and trading volume could decline.\nWe may not be able to raise additional capital to execute on our current or future business opportunities on favorable terms, if at all, or without dilution to our stockholders.\nSales of a substantial number of shares of our common stock in the public market by our existing stockholders could cause our stock price to fall.\nManipulative techniques employed by short sellers may drive down the market price of our common stock.\nWe currently do not intend to pay dividends on our common stock and, consequently, your only opportunity to achieve a return on your investment is if the price of our common stock appreciates.\nOur charter documents and Delaware law could prevent a takeover that stockholders consider favorable and could also reduce the market price of our stock.\nGeneral Risks Related to our Business\nNatural disasters, public health events, significant disruptions of information technology systems, data security breaches, or other catastrophic events could adversely affect our operations.\nThe threat of global economic, capital markets and credit disruptions, including sovereign debt issues, pose risks to our business.\nIf we fail to maintain an effective system of internal controls or are unable to remediate any deficiencies in our internal controls, we might not be able to report our financial results accurately or prevent fraud; in that case, our stockholders could lose confidence in our financial reporting, which would harm our business and could negatively impact the price of our stock.\nOur business is subject to potential tax liabilities.\nOur business has been and could continue to be affected by seasonal trends and construction cycles",
+    "unit": "text",
+    "status": "TEXT_QUAL",
+    "source_class": "MDA",
+    "formula": "verbatim Item 1A headings",
+    "period_start": "2021-01-01",
+    "period_end": "2021-12-31",
+    "fiscal_year": "2021",
+    "fiscal_period": "FY",
+    "accession": "0001463101-22-000016",
+    "form": "10-K",
+    "filed_date": "2022-02-11",
+    "concept_or_section": "Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A+Item 1A",
+    "context_or_dimension": "registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures;registrant risk disclosures",
+    "confidence": "",
+    "notes": "Verbatim headings from the original annual filing. Disclosures do not assert that risks occurred.",
+    "company_id": "enphase_energy",
+    "result_id": "sha256:e3dd15bbe689462ab075d5f24ac0d88f03b9037f9cb86f747e40e568ede99b0c",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/d01-namespace-20261012-47/state/updates/D01/periods/FY2021/results/67321f4cb16241ec9254478996f1c5f8",
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+    "period_role": "REQUESTED_RESULT",
+    "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+    "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+    "defect_holds": "[]",
+    "requested_in_latest_execution": "True"
+  },
+  "heading_count": 68,
+  "original_reference_value_sha256": "8b66471154344b88f8a7e94a0184d90f284e65850c089f0abcbfe8f49909a483",
+  "old_reference_result_id": "sha256:53085d271061f0c013b9b4b1c53c35766d0acc2e429d81bf194556f8418d7989",
+  "old_reference_text_identical": true,
+  "verification_failure": "Final harness expected OK but D01 uses TEXT_QUAL; phases were not replayed",
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

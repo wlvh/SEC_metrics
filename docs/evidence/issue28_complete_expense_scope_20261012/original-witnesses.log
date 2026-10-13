@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-complete-expense-combination/SEC_metrics/docs/evidence/issue28_complete_expense_scope_20261012/verify_originals.py", line 23, in <module>
+    assert fact['concept']==witness['concept'] and fact['context_ref']==witness['context_ref']
+           ~~~~^^^^^^^^^^^
+KeyError: 'concept'

@@ -1,0 +1,187 @@
+test_equal_amount_in_a_note_or_limited_statement_does_not_prove_scope (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_equal_amount_in_a_note_or_limited_statement_does_not_prove_scope) ... 
+  test_equal_amount_in_a_note_or_limited_statement_does_not_prove_scope (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_equal_amount_in_a_note_or_limited_statement_does_not_prove_scope) (new=b'Revenue note') ... ERROR
+  test_equal_amount_in_a_note_or_limited_statement_does_not_prove_scope (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_equal_amount_in_a_note_or_limited_statement_does_not_prove_scope) (new=b'Net revenues (Europe)</td>') ... ERROR
+  test_equal_amount_in_a_note_or_limited_statement_does_not_prove_scope (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_equal_amount_in_a_note_or_limited_statement_does_not_prove_scope) (new=b'<table><caption>Segment only; excludes other operations</caption>') ... ERROR
+test_explicit_single_segment_revenue_keeps_original_dimension_and_default (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_explicit_single_segment_revenue_keeps_original_dimension_and_default) ... ERROR
+test_geography_product_and_arbitrary_members_are_not_company_totals (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_geography_product_and_arbitrary_members_are_not_company_totals) ... 
+  test_geography_product_and_arbitrary_members_are_not_company_totals (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_geography_product_and_arbitrary_members_are_not_company_totals) (after=b'StatementGeographicalAxis') ... ERROR
+  test_geography_product_and_arbitrary_members_are_not_company_totals (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_geography_product_and_arbitrary_members_are_not_company_totals) (after=b'UnitedStatesMember') ... ERROR
+  test_geography_product_and_arbitrary_members_are_not_company_totals (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_geography_product_and_arbitrary_members_are_not_company_totals) (after=b'ProductAlphaMember') ... ERROR
+test_missing_ambiguous_or_multiple_segment_counts_do_not_prove_scope (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_missing_ambiguous_or_multiple_segment_counts_do_not_prove_scope) ... 
+  test_missing_ambiguous_or_multiple_segment_counts_do_not_prove_scope (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_missing_ambiguous_or_multiple_segment_counts_do_not_prove_scope) (operating='2', reportable='1') ... ERROR
+  test_missing_ambiguous_or_multiple_segment_counts_do_not_prove_scope (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_missing_ambiguous_or_multiple_segment_counts_do_not_prove_scope) (operating='1', reportable='2') ... ERROR
+  test_missing_ambiguous_or_multiple_segment_counts_do_not_prove_scope (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_missing_ambiguous_or_multiple_segment_counts_do_not_prove_scope) (operating='1', reportable='0') ... ERROR
+test_missing_ambiguous_or_multiple_segment_counts_do_not_prove_scope (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_missing_ambiguous_or_multiple_segment_counts_do_not_prove_scope) ... ERROR
+test_option_is_not_a_general_dimension_or_xml_bypass (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_option_is_not_a_general_dimension_or_xml_bypass) ... ERROR
+test_xml_count_or_amount_conflict_remains_rejected (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_xml_count_or_amount_conflict_remains_rejected) ... 
+  test_xml_count_or_amount_conflict_remains_rejected (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_xml_count_or_amount_conflict_remains_rejected) (new=b'decimals="INF">2</us-gaap:NumberOfOperatingSegments>') ... ERROR
+  test_xml_count_or_amount_conflict_remains_rejected (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_xml_count_or_amount_conflict_remains_rejected) (new=b'>58495</ix:nonFraction>') ... ERROR
+
+======================================================================
+ERROR: test_equal_amount_in_a_note_or_limited_statement_does_not_prove_scope (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_equal_amount_in_a_note_or_limited_statement_does_not_prove_scope) (new=b'Revenue note')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/tests/vnext/test_single_segment_revenue.py", line 70, in test_equal_amount_in_a_note_or_limited_statement_does_not_prove_scope
+    try:result=self.scope(altered,annual)
+               ~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/tests/vnext/test_single_segment_revenue.py", line 29, in scope
+    return reported_revenue_scope(primary=source,xml=source,annual=annual,
+        approved_concepts=APPROVED,allow_single_segment_revenue=True,**kwargs)
+TypeError: reported_revenue_scope() got an unexpected keyword argument 'allow_single_segment_revenue'
+
+======================================================================
+ERROR: test_equal_amount_in_a_note_or_limited_statement_does_not_prove_scope (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_equal_amount_in_a_note_or_limited_statement_does_not_prove_scope) (new=b'Net revenues (Europe)</td>')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/tests/vnext/test_single_segment_revenue.py", line 70, in test_equal_amount_in_a_note_or_limited_statement_does_not_prove_scope
+    try:result=self.scope(altered,annual)
+               ~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/tests/vnext/test_single_segment_revenue.py", line 29, in scope
+    return reported_revenue_scope(primary=source,xml=source,annual=annual,
+        approved_concepts=APPROVED,allow_single_segment_revenue=True,**kwargs)
+TypeError: reported_revenue_scope() got an unexpected keyword argument 'allow_single_segment_revenue'
+
+======================================================================
+ERROR: test_equal_amount_in_a_note_or_limited_statement_does_not_prove_scope (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_equal_amount_in_a_note_or_limited_statement_does_not_prove_scope) (new=b'<table><caption>Segment only; excludes other operations</caption>')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/tests/vnext/test_single_segment_revenue.py", line 70, in test_equal_amount_in_a_note_or_limited_statement_does_not_prove_scope
+    try:result=self.scope(altered,annual)
+               ~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/tests/vnext/test_single_segment_revenue.py", line 29, in scope
+    return reported_revenue_scope(primary=source,xml=source,annual=annual,
+        approved_concepts=APPROVED,allow_single_segment_revenue=True,**kwargs)
+TypeError: reported_revenue_scope() got an unexpected keyword argument 'allow_single_segment_revenue'
+
+======================================================================
+ERROR: test_explicit_single_segment_revenue_keeps_original_dimension_and_default (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_explicit_single_segment_revenue_keeps_original_dimension_and_default)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/tests/vnext/test_single_segment_revenue.py", line 38, in test_explicit_single_segment_revenue_keeps_original_dimension_and_default
+    result=self.scope(source,annual)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/tests/vnext/test_single_segment_revenue.py", line 29, in scope
+    return reported_revenue_scope(primary=source,xml=source,annual=annual,
+        approved_concepts=APPROVED,allow_single_segment_revenue=True,**kwargs)
+TypeError: reported_revenue_scope() got an unexpected keyword argument 'allow_single_segment_revenue'
+
+======================================================================
+ERROR: test_geography_product_and_arbitrary_members_are_not_company_totals (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_geography_product_and_arbitrary_members_are_not_company_totals) (after=b'StatementGeographicalAxis')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/tests/vnext/test_single_segment_revenue.py", line 61, in test_geography_product_and_arbitrary_members_are_not_company_totals
+    self.assertFalse(self.scope(changed(source,source['raw_bytes'].replace(before,after)),annual)['complete_scope_proven'])
+                     ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/tests/vnext/test_single_segment_revenue.py", line 29, in scope
+    return reported_revenue_scope(primary=source,xml=source,annual=annual,
+        approved_concepts=APPROVED,allow_single_segment_revenue=True,**kwargs)
+TypeError: reported_revenue_scope() got an unexpected keyword argument 'allow_single_segment_revenue'
+
+======================================================================
+ERROR: test_geography_product_and_arbitrary_members_are_not_company_totals (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_geography_product_and_arbitrary_members_are_not_company_totals) (after=b'UnitedStatesMember')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/tests/vnext/test_single_segment_revenue.py", line 61, in test_geography_product_and_arbitrary_members_are_not_company_totals
+    self.assertFalse(self.scope(changed(source,source['raw_bytes'].replace(before,after)),annual)['complete_scope_proven'])
+                     ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/tests/vnext/test_single_segment_revenue.py", line 29, in scope
+    return reported_revenue_scope(primary=source,xml=source,annual=annual,
+        approved_concepts=APPROVED,allow_single_segment_revenue=True,**kwargs)
+TypeError: reported_revenue_scope() got an unexpected keyword argument 'allow_single_segment_revenue'
+
+======================================================================
+ERROR: test_geography_product_and_arbitrary_members_are_not_company_totals (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_geography_product_and_arbitrary_members_are_not_company_totals) (after=b'ProductAlphaMember')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/tests/vnext/test_single_segment_revenue.py", line 61, in test_geography_product_and_arbitrary_members_are_not_company_totals
+    self.assertFalse(self.scope(changed(source,source['raw_bytes'].replace(before,after)),annual)['complete_scope_proven'])
+                     ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/tests/vnext/test_single_segment_revenue.py", line 29, in scope
+    return reported_revenue_scope(primary=source,xml=source,annual=annual,
+        approved_concepts=APPROVED,allow_single_segment_revenue=True,**kwargs)
+TypeError: reported_revenue_scope() got an unexpected keyword argument 'allow_single_segment_revenue'
+
+======================================================================
+ERROR: test_missing_ambiguous_or_multiple_segment_counts_do_not_prove_scope (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_missing_ambiguous_or_multiple_segment_counts_do_not_prove_scope) (operating='2', reportable='1')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/tests/vnext/test_single_segment_revenue.py", line 50, in test_missing_ambiguous_or_multiple_segment_counts_do_not_prove_scope
+    self.assertFalse(self.scope(source,annual)['complete_scope_proven'])
+                     ~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/tests/vnext/test_single_segment_revenue.py", line 29, in scope
+    return reported_revenue_scope(primary=source,xml=source,annual=annual,
+        approved_concepts=APPROVED,allow_single_segment_revenue=True,**kwargs)
+TypeError: reported_revenue_scope() got an unexpected keyword argument 'allow_single_segment_revenue'
+
+======================================================================
+ERROR: test_missing_ambiguous_or_multiple_segment_counts_do_not_prove_scope (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_missing_ambiguous_or_multiple_segment_counts_do_not_prove_scope) (operating='1', reportable='2')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/tests/vnext/test_single_segment_revenue.py", line 50, in test_missing_ambiguous_or_multiple_segment_counts_do_not_prove_scope
+    self.assertFalse(self.scope(source,annual)['complete_scope_proven'])
+                     ~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/tests/vnext/test_single_segment_revenue.py", line 29, in scope
+    return reported_revenue_scope(primary=source,xml=source,annual=annual,
+        approved_concepts=APPROVED,allow_single_segment_revenue=True,**kwargs)
+TypeError: reported_revenue_scope() got an unexpected keyword argument 'allow_single_segment_revenue'
+
+======================================================================
+ERROR: test_missing_ambiguous_or_multiple_segment_counts_do_not_prove_scope (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_missing_ambiguous_or_multiple_segment_counts_do_not_prove_scope) (operating='1', reportable='0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/tests/vnext/test_single_segment_revenue.py", line 50, in test_missing_ambiguous_or_multiple_segment_counts_do_not_prove_scope
+    self.assertFalse(self.scope(source,annual)['complete_scope_proven'])
+                     ~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/tests/vnext/test_single_segment_revenue.py", line 29, in scope
+    return reported_revenue_scope(primary=source,xml=source,annual=annual,
+        approved_concepts=APPROVED,allow_single_segment_revenue=True,**kwargs)
+TypeError: reported_revenue_scope() got an unexpected keyword argument 'allow_single_segment_revenue'
+
+======================================================================
+ERROR: test_missing_ambiguous_or_multiple_segment_counts_do_not_prove_scope (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_missing_ambiguous_or_multiple_segment_counts_do_not_prove_scope)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/tests/vnext/test_single_segment_revenue.py", line 53, in test_missing_ambiguous_or_multiple_segment_counts_do_not_prove_scope
+    self.assertFalse(self.scope(changed(source,raw),annual)['complete_scope_proven'])
+                     ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/tests/vnext/test_single_segment_revenue.py", line 29, in scope
+    return reported_revenue_scope(primary=source,xml=source,annual=annual,
+        approved_concepts=APPROVED,allow_single_segment_revenue=True,**kwargs)
+TypeError: reported_revenue_scope() got an unexpected keyword argument 'allow_single_segment_revenue'
+
+======================================================================
+ERROR: test_option_is_not_a_general_dimension_or_xml_bypass (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_option_is_not_a_general_dimension_or_xml_bypass)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/tests/vnext/test_single_segment_revenue.py", line 87, in test_option_is_not_a_general_dimension_or_xml_bypass
+    self.assertFalse(reported_revenue_scope(primary=source,annual=annual,
+                     ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        approved_concepts=APPROVED,allow_single_segment_revenue=True)['complete_scope_proven'])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: reported_revenue_scope() got an unexpected keyword argument 'allow_single_segment_revenue'
+
+======================================================================
+ERROR: test_xml_count_or_amount_conflict_remains_rejected (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_xml_count_or_amount_conflict_remains_rejected) (new=b'decimals="INF">2</us-gaap:NumberOfOperatingSegments>')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/tests/vnext/test_single_segment_revenue.py", line 80, in test_xml_count_or_amount_conflict_remains_rejected
+    try:result=reported_revenue_scope(primary=source,xml=xml,annual=annual,
+               ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        approved_concepts=APPROVED,allow_single_segment_revenue=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: reported_revenue_scope() got an unexpected keyword argument 'allow_single_segment_revenue'
+
+======================================================================
+ERROR: test_xml_count_or_amount_conflict_remains_rejected (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_xml_count_or_amount_conflict_remains_rejected) (new=b'>58495</ix:nonFraction>')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/tests/vnext/test_single_segment_revenue.py", line 80, in test_xml_count_or_amount_conflict_remains_rejected
+    try:result=reported_revenue_scope(primary=source,xml=xml,annual=annual,
+               ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        approved_concepts=APPROVED,allow_single_segment_revenue=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: reported_revenue_scope() got an unexpected keyword argument 'allow_single_segment_revenue'
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.035s
+
+FAILED (errors=14)

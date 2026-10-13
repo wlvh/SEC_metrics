@@ -1,0 +1,15 @@
+test_inspected_statement_dispatch_addition_preserves_e01_only (tests.vnext.test_ordinary_current_update.CurrentProcessingConfigurationTest.test_inspected_statement_dispatch_addition_preserves_e01_only) ... FAIL
+
+======================================================================
+FAIL: test_inspected_statement_dispatch_addition_preserves_e01_only (tests.vnext.test_ordinary_current_update.CurrentProcessingConfigurationTest.test_inspected_statement_dispatch_addition_preserves_e01_only)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/ci-guide/SEC_metrics/tests/vnext/test_ordinary_current_update.py", line 196, in test_inspected_statement_dispatch_addition_preserves_e01_only
+    self.assertTrue(compatible_configuration(previous,current))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 1 test in 0.004s
+
+FAILED (failures=1)

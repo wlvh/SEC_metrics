@@ -1,0 +1,8 @@
+after-processing 19.101 2
+repeat-forbidden 0.987 2
+independent-read 0.327 0
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/work/marriott-b02-company/after/verify_after.py", line 91, in <module>
+    assert Decimal(row['value']) == (Decimal(current)-Decimal(prior))/Decimal(prior), row
+           ~~~~~~~^^^^^^^^^^^^^^
+decimal.InvalidOperation: [<class 'decimal.ConversionSyntax'>]

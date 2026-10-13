@@ -1,0 +1,74 @@
+test_real_configuration_parser_or_pairing_change_processes_once (tests.vnext.test_processing_dependency_checks.ProcessingChangeReentryTest.test_real_configuration_parser_or_pairing_change_processes_once) ... ok
+test_shared_scope_presentation_and_locator_changes_process_once (tests.vnext.test_processing_dependency_checks.ProcessingChangeReentryTest.test_shared_scope_presentation_and_locator_changes_process_once) ... 
+  test_shared_scope_presentation_and_locator_changes_process_once (tests.vnext.test_processing_dependency_checks.ProcessingChangeReentryTest.test_shared_scope_presentation_and_locator_changes_process_once) (relative='scripts/vnext/normal_numeric_projection.py') ... FAIL
+  test_shared_scope_presentation_and_locator_changes_process_once (tests.vnext.test_processing_dependency_checks.ProcessingChangeReentryTest.test_shared_scope_presentation_and_locator_changes_process_once) (relative='scripts/vnext/scope_contract.py') ... FAIL
+  test_shared_scope_presentation_and_locator_changes_process_once (tests.vnext.test_processing_dependency_checks.ProcessingChangeReentryTest.test_shared_scope_presentation_and_locator_changes_process_once) (relative='scripts/sec_urls.py') ... FAIL
+test_actual_called_parser_and_comparability_modules_are_fingerprinted (tests.vnext.test_processing_dependency_checks.ProcessingDependencyCheckTest.test_actual_called_parser_and_comparability_modules_are_fingerprinted) ... ok
+test_current_d01_real_candidate_and_evidence_calls_use_declared_consumer_paths (tests.vnext.test_processing_dependency_checks.ProcessingDependencyCheckTest.test_current_d01_real_candidate_and_evidence_calls_use_declared_consumer_paths) ... ok
+test_explicit_consumer_paths_count_but_unknown_files_are_not_exempt (tests.vnext.test_processing_dependency_checks.ProcessingDependencyCheckTest.test_explicit_consumer_paths_count_but_unknown_files_are_not_exempt) ... ok
+test_guard_observes_top_level_source_locator_module (tests.vnext.test_processing_dependency_checks.ProcessingDependencyCheckTest.test_guard_observes_top_level_source_locator_module) ... FAIL
+test_mechanical_guard_fails_when_a_used_file_is_removed (tests.vnext.test_processing_dependency_checks.ProcessingDependencyCheckTest.test_mechanical_guard_fails_when_a_used_file_is_removed) ... ok
+test_period_presentation_is_covered_beyond_candidate_preparation (tests.vnext.test_processing_dependency_checks.ProcessingDependencyCheckTest.test_period_presentation_is_covered_beyond_candidate_preparation) ... FAIL
+test_profile_restores_after_failure_and_nested_observation (tests.vnext.test_processing_dependency_checks.ProcessingDependencyCheckTest.test_profile_restores_after_failure_and_nested_observation) ... ok
+
+======================================================================
+FAIL: test_shared_scope_presentation_and_locator_changes_process_once (tests.vnext.test_processing_dependency_checks.ProcessingChangeReentryTest.test_shared_scope_presentation_and_locator_changes_process_once) (relative='scripts/vnext/normal_numeric_projection.py')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-result-projection-dependencies/SEC_metrics/tests/vnext/test_processing_dependency_checks.py", line 115, in test_shared_scope_presentation_and_locator_changes_process_once
+    self.assertEqual(result['status'],'CANDIDATE_READY')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'NO_SOURCE_CONTENT_CHANGE' != 'CANDIDATE_READY'
+- NO_SOURCE_CONTENT_CHANGE
++ CANDIDATE_READY
+
+
+======================================================================
+FAIL: test_shared_scope_presentation_and_locator_changes_process_once (tests.vnext.test_processing_dependency_checks.ProcessingChangeReentryTest.test_shared_scope_presentation_and_locator_changes_process_once) (relative='scripts/vnext/scope_contract.py')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-result-projection-dependencies/SEC_metrics/tests/vnext/test_processing_dependency_checks.py", line 115, in test_shared_scope_presentation_and_locator_changes_process_once
+    self.assertEqual(result['status'],'CANDIDATE_READY')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'NO_SOURCE_CONTENT_CHANGE' != 'CANDIDATE_READY'
+- NO_SOURCE_CONTENT_CHANGE
++ CANDIDATE_READY
+
+
+======================================================================
+FAIL: test_shared_scope_presentation_and_locator_changes_process_once (tests.vnext.test_processing_dependency_checks.ProcessingChangeReentryTest.test_shared_scope_presentation_and_locator_changes_process_once) (relative='scripts/sec_urls.py')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-result-projection-dependencies/SEC_metrics/tests/vnext/test_processing_dependency_checks.py", line 115, in test_shared_scope_presentation_and_locator_changes_process_once
+    self.assertEqual(result['status'],'CANDIDATE_READY')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'NO_SOURCE_CONTENT_CHANGE' != 'CANDIDATE_READY'
+- NO_SOURCE_CONTENT_CHANGE
++ CANDIDATE_READY
+
+
+======================================================================
+FAIL: test_guard_observes_top_level_source_locator_module (tests.vnext.test_processing_dependency_checks.ProcessingDependencyCheckTest.test_guard_observes_top_level_source_locator_module)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-result-projection-dependencies/SEC_metrics/tests/vnext/test_processing_dependency_checks.py", line 35, in test_guard_observes_top_level_source_locator_module
+    self.assertIn('scripts/sec_urls.py',observed)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'scripts/sec_urls.py' not found in {}
+
+======================================================================
+FAIL: test_period_presentation_is_covered_beyond_candidate_preparation (tests.vnext.test_processing_dependency_checks.ProcessingDependencyCheckTest.test_period_presentation_is_covered_beyond_candidate_preparation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-result-projection-dependencies/SEC_metrics/tests/vnext/test_processing_dependency_checks.py", line 27, in test_period_presentation_is_covered_beyond_candidate_preparation
+    assert_processing_calls(observed,configuration)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-result-projection-dependencies/SEC_metrics/tests/vnext/processing_dependency_checks.py", line 46, in assert_processing_calls
+    raise AssertionError('PROCESSING_DEPENDENCY_UNDECLARED: '+detail)
+AssertionError: PROCESSING_DEPENDENCY_UNDECLARED: scripts/vnext/normal_numeric_projection.py:_period_label
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.199s
+
+FAILED (failures=5)
+{"allowed_skips": 0, "errors": 0, "failures": 5, "run": 9, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_processing_dependency_checks"]}

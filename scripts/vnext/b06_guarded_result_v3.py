@@ -18,6 +18,7 @@ from .normal_annual_input import annual_period, _registry_rows
 from .normal_candidates import _prepare_b06
 from .normal_source_authority import ROOT, verify_saved_source_proofs
 from .observations import scope_key, structured_observation
+from .xbrl_namespace_policy import YEAR_ONLY, is_fasb_namespace
 from .r5_b06_scope import precision_choice
 from .sources import companyfacts_structured_facts, resolve_repository_file
 from .specs import compile_spec_file
@@ -67,9 +68,11 @@ def _installed_spec(repo_root):
     return spec, hashes
 
 
-def _source_equity(*, raw, kind, target, period, filing):
+def _source_equity(*, raw, kind, target, period, filing, dei_release="YEAR_ONLY", namespace_policy=YEAR_ONLY):
     """Rebuild all eligible reports, with native identity and visible cells."""
-    _need(annual_period(raw=raw, cik=target["entity"], filing=filing) == period,
+    is_fasb_namespace("",namespace_policy=namespace_policy)  # Validate the finite option even with no matching fact.
+    period_options={} if dei_release == "YEAR_ONLY" else {"dei_release":dei_release}
+    _need(annual_period(raw=raw, cik=target["entity"], filing=filing, **period_options) == period,
           "B06_GUARD_ANNUAL_SOURCE_IDENTITY_CONFLICT")
     parsed = parse_accession_xbrl_source(raw_bytes=raw)
     metadata = _FactAttributes()
@@ -82,7 +85,7 @@ def _source_equity(*, raw, kind, target, period, filing):
         namespace, name = item["concept"]
         if name.casefold() != "stockholdersequity":
             continue
-        _need(re.fullmatch(r"https?://fasb\.org/us-gaap/[0-9]{4}", namespace) is not None,
+        _need(is_fasb_namespace(namespace,namespace_policy=namespace_policy),
               "B06_GUARD_EQUITY_NAMESPACE_CONFLICT")
         context = parsed.contexts[fact["context_ref"]]
         scope = {**dict(context), "dimensions": dict(context["dimensions"])}
@@ -127,9 +130,11 @@ def _source_equity(*, raw, kind, target, period, filing):
             "reports": reports, "chosen": selected, "equity_census": census}
 
 
-def _rebuild_equity(*, primary, xml, facts_raw, facts_source, target, period, filing):
-    primary_evidence = _source_equity(raw=primary, kind="primary_inline", target=target, period=period, filing=filing)
-    xml_evidence = _source_equity(raw=xml, kind="accession_xml", target=target, period=period, filing=filing)
+def _rebuild_equity(*, primary, xml, facts_raw, facts_source, target, period, filing,
+                    dei_release="YEAR_ONLY", namespace_policy=YEAR_ONLY):
+    options={} if dei_release == "YEAR_ONLY" and namespace_policy == YEAR_ONLY else {"dei_release":dei_release,"namespace_policy":namespace_policy}
+    primary_evidence = _source_equity(raw=primary, kind="primary_inline", target=target, period=period, filing=filing,**options)
+    xml_evidence = _source_equity(raw=xml, kind="accession_xml", target=target, period=period, filing=filing,**options)
     chosen = precision_choice(primary_evidence["reports"] + xml_evidence["reports"])
     facts = companyfacts_structured_facts(raw_bytes=facts_raw, source_reference=facts_source,
         approved_concepts=[EQUITY_CONCEPT], allowed_ciks=[target["entity"]], include_instant=True)

@@ -275,7 +275,8 @@ def load_history_for_period(*, repo_root: Path, company_id: str, report_end: str
 
     for shard in shards:
         prior_end = cutoff()
-        if prior_end is not None and shard["filingTo"] < prior_end and shard["filingTo"] < report_end:
+        last_day = last_days[shard["name"]]
+        if prior_end is not None and last_day < prior_end and last_day < report_end:
             break
         considered.append(shard["name"])
         url = submissions_file_url(file_name=shard["name"])
@@ -310,7 +311,7 @@ def load_history_for_period(*, repo_root: Path, company_id: str, report_end: str
     annual = sorted((row for row in rows if row["form"] in ANNUAL_FORMS),
                     key=lambda row: (row["reportDate"], row["filingDate"], row["accessionNumber"]))
     unloaded = sorted(shard["name"] for shard in shards
-                      if shard["name"] not in names and shard["filingTo"] >= report_end)
+                      if shard["name"] not in names and last_days[shard["name"]] >= report_end)
     return {"company_id": company_id, "primary_cik": company["primary_cik"],
             "reporting_cik": cik, "registrant_role": role, "reader": reader,
             "inventory": inventory, "declared_shards": shards, "loaded_inventories": names,

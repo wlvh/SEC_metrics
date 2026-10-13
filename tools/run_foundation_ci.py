@@ -31,9 +31,16 @@ def partition():
                    if s == v2.REPLACED
                    or any(s.startswith(prefix) for prefix in (*v2.SOURCE_PREFIXES, *MATERIAL_PREFIXES)))
     fast = tuple(s for s in active if s not in source)
+    # The workflow calls this entry, rather than v2.main(). Consume the same
+    # already validated additive declarations here; keep each declared tier.
+    features = v2._FEATURE_SELECTORS
+    fast += features['fast']
+    source += features['source-material']
+    declared = (*original, *features['fast'], *features['source-material'])
     if (len(set(original)) != len(original) or set(fast) & set(source)
-            or set(fast) | set(source) | set(retired) != set(original)
-            or len(fast) + len(source) + len(retired) != len(original)):
+            or len(set(declared)) != len(declared)
+            or set(fast) | set(source) | set(retired) != set(declared)
+            or len(fast) + len(source) + len(retired) != len(declared)):
         raise inherited.FastTestError('FOUNDATION_CI_SELECTOR_COVERAGE_CHANGED')
     return {'fast':fast, 'source-material':source, 'retired':retired}
 
@@ -48,7 +55,7 @@ def run_fast_suite(selected):
     stream = io.StringIO(); start = time.monotonic()
     with redirect_stdout(stream), redirect_stderr(stream):
         result = unittest.TextTestRunner(stream=stream, verbosity=1).run(suite)
-    return {'return_code': 0 if result.wasSuccessful() else 1,
+    return {'return_code': 0 if result.wasSuccessful() and result.testsRun > 0 and not result.skipped else 1,
             'duration_seconds': time.monotonic()-start,
             'test_count': result.testsRun,
             'failures': [{'test': str(t), 'traceback': error} for t,error in result.failures],
@@ -67,7 +74,7 @@ def run_fast_suite(selected):
     stream = io.StringIO(); start = time.monotonic()
     with redirect_stdout(stream), redirect_stderr(stream):
         result = unittest.TextTestRunner(stream=stream, verbosity=1).run(suite)
-    return {'return_code': 0 if result.wasSuccessful() else 1,
+    return {'return_code': 0 if result.wasSuccessful() and result.testsRun > 0 and not result.skipped else 1,
             'duration_seconds': time.monotonic()-start,
             'test_count': result.testsRun,
             'failures': [{'test': str(t), 'traceback': error} for t,error in result.failures],
@@ -86,7 +93,7 @@ def run_fast_suite(selected):
     stream = io.StringIO(); start = time.monotonic()
     with redirect_stdout(stream), redirect_stderr(stream):
         result = unittest.TextTestRunner(stream=stream, verbosity=1).run(suite)
-    return {'return_code': 0 if result.wasSuccessful() else 1,
+    return {'return_code': 0 if result.wasSuccessful() and result.testsRun > 0 and not result.skipped else 1,
             'duration_seconds': time.monotonic()-start,
             'test_count': result.testsRun,
             'failures': [{'test': str(t), 'traceback': error} for t,error in result.failures],
@@ -106,7 +113,8 @@ def main():
     if args.list:
         print(json.dumps({'suite':args.suite, 'selectors':selected,
                           'retired_selectors':suites['retired'],
-                          'total_inherited':len(inherited.FAST_TESTS)}, indent=2))
+                          'total_inherited':len(inherited.FAST_TESTS),
+                          'total_feature_selectors':sum(len(v) for v in v2._FEATURE_SELECTORS.values())}, indent=2))
         return 0
     if not 1 <= args.jobs <= len(selected):
         raise inherited.FastTestError('FAST_TEST_JOBS_INVALID')
@@ -121,7 +129,9 @@ def main():
         'duration_seconds':time.monotonic()-start,
         'jobs':1 if args.suite == 'fast' else args.jobs, 'selected_selectors': selected,
         'retired_selectors':suites.get('retired',()),
-        'total_inherited':len(inherited.FAST_TESTS), 'tests':results}, sort_keys=True))
+        'total_inherited':len(inherited.FAST_TESTS),
+        'total_feature_selectors':sum(len(v) for v in v2._FEATURE_SELECTORS.values()),
+        'tests':results}, sort_keys=True))
     return 0 if status == 'PASSED' else 1
 
 

@@ -1,0 +1,32 @@
+{
+  ".github/workflows/company-current-records.yml": {
+    "main_paths_preserved": 85,
+    "added_paths": [
+      "tests/vnext/test_text_item_capacity.py",
+      "tests/vnext/test_d01_explicit_running_headers.py",
+      "tests/vnext/test_historical_risk_heading_case.py"
+    ],
+    "main_jobs_preserved": [
+      "company-records",
+      "company-source",
+      "company-financial",
+      "company-history",
+      "source-contracts",
+      "company-current"
+    ]
+  },
+  ".github/workflows/vnext-fast.yml": {
+    "main_paths_preserved": 0,
+    "added_paths": [],
+    "main_jobs_preserved": [
+      "fast",
+      "inherited-source-material",
+      "main-foundation",
+      "company-source-core",
+      "company-c04-source-install",
+      "company-update-history",
+      "company-partial-update"
+    ]
+  },
+  "public_writer_only_adds_D01": true
+}

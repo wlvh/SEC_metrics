@@ -1,0 +1,148 @@
+{
+  "selection_seconds": 1.3478088330011815,
+  "assessment_seconds": 1.7905193749902537,
+  "actual_task_input": {
+    "method": "ORDINARY_D04_COMPLETE_TASK_INPUT_V1",
+    "company_id": "southwest_airlines",
+    "entity": "92380",
+    "subject_policy": {
+      "mode": "CONTINUOUS_PRIMARY",
+      "selected_cik": "92380",
+      "cross_entity_combination_authorized": false
+    },
+    "target_period": {
+      "fiscal_year": 2025,
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31"
+    },
+    "documents": [
+      {
+        "filing": {
+          "accessionNumber": "0000092380-26-000004",
+          "form": "10-K",
+          "reportDate": "2025-12-31",
+          "filingDate": "2026-02-05",
+          "primaryDocument": "luv-20251231.htm"
+        },
+        "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231.htm",
+        "parsed_input_sha256": "6b082a8b1d38219762fc895a200a8c0faf7d46e90a9dbeaf9e23ad24853afd3d"
+      },
+      {
+        "filing": {
+          "accessionNumber": "0000092380-26-000006",
+          "form": "10-K/A",
+          "reportDate": "2025-12-31",
+          "filingDate": "2026-02-06",
+          "primaryDocument": "luv-20251231.htm"
+        },
+        "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238026000006/luv-20251231.htm",
+        "parsed_input_sha256": "bdcad62a68c8fd855d50ebcfc8bd87486ff54ca845f3492c9cc385fa8ec5768b"
+      }
+    ],
+    "other_source_content": [
+      {
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000092380.json",
+        "accession": "0000092380-26-000004",
+        "document_name": "CIK0000092380.json",
+        "content_sha256": "7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b"
+      }
+    ],
+    "task_input_id": "sha256:a6a4a14bd86ff534f58fe2c3231f8216f1fdfcec587d246a0558ba2c7083297d",
+    "source_proofs": [
+      {
+        "source_url": "https://data.sec.gov/submissions/CIK0000092380.json",
+        "accession": "",
+        "document_name": "CIK0000092380.json",
+        "content_sha256": "bfa6b3c7f37e36bab0fb0890d6ba7521bf30fd1a257eb4584418653a798d4600",
+        "request_body_sha256": "bfa6b3c7f37e36bab0fb0890d6ba7521bf30fd1a257eb4584418653a798d4600",
+        "request_body_size": 170561,
+        "request_headers_repo_relative_path": "evidence/request_attempts/bf/bfa6b3c7f37e36bab0fb0890d6ba7521bf30fd1a257eb4584418653a798d4600/CIK0000092380.json.37b6a51350d60378021bb4461ca933511c30abfd1ca81924d6c7524a05b1fe7c.headers.json",
+        "request_headers_sha256": "37b6a51350d60378021bb4461ca933511c30abfd1ca81924d6c7524a05b1fe7c",
+        "request_headers_size": 736,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/bf/bfa6b3c7f37e36bab0fb0890d6ba7521bf30fd1a257eb4584418653a798d4600/CIK0000092380.json",
+        "request_attempt_id": "request:attempt:705c80a391f7b18422317a4d785c80c125369031f4690d63e5d687b02f3bfe31"
+      },
+      {
+        "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231.htm",
+        "accession": "0000092380-26-000004",
+        "document_name": "luv-20251231.htm",
+        "content_sha256": "4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e",
+        "request_body_sha256": "4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e",
+        "request_body_size": 2847406,
+        "request_headers_repo_relative_path": "evidence/request_attempts/4f/4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e/luv-20251231.htm.7082b4b1d25426f203fae411c8591e300eea33f015f02ec4330d669bbbe75ed2.headers.json",
+        "request_headers_sha256": "7082b4b1d25426f203fae411c8591e300eea33f015f02ec4330d669bbbe75ed2",
+        "request_headers_size": 1065,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/4f/4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e/luv-20251231.htm",
+        "request_attempt_id": "request:attempt:d9d2e6d68aa68e8685206ed468dd9bb74fbc9e8c8e78a8e811bd3627316f0092"
+      },
+      {
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000092380.json",
+        "accession": "0000092380-26-000004",
+        "document_name": "CIK0000092380.json",
+        "content_sha256": "7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b",
+        "request_body_sha256": "7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b",
+        "request_body_size": 4083360,
+        "request_headers_repo_relative_path": "evidence/request_attempts/7c/7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b/CIK0000092380.json.92d35af40edd49202ceb83cecab13d623d37e6cf101a4863c39ea8a44862e1b8.headers.json",
+        "request_headers_sha256": "92d35af40edd49202ceb83cecab13d623d37e6cf101a4863c39ea8a44862e1b8",
+        "request_headers_size": 707,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/7c/7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b/CIK0000092380.json",
+        "request_attempt_id": "request:attempt:92a12e6bec8c92d1adb5f23a3addc2c50f3fd446de9e25d7bd1686971e04037e"
+      },
+      {
+        "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238026000006/luv-20251231.htm",
+        "accession": "0000092380-26-000006",
+        "document_name": "luv-20251231.htm",
+        "content_sha256": "17bc6e90390a57cc5b2c27b4566565e18018138781c9ad11318f30f00cf5f279",
+        "request_body_sha256": "17bc6e90390a57cc5b2c27b4566565e18018138781c9ad11318f30f00cf5f279",
+        "request_body_size": 131726,
+        "request_headers_repo_relative_path": "evidence/request_attempts/17/17bc6e90390a57cc5b2c27b4566565e18018138781c9ad11318f30f00cf5f279/luv-20251231.htm.e422b72b44340606e67f5fc5a7acecd19522db669edf8fca9f0982e55d0647e4.headers.json",
+        "request_headers_sha256": "e422b72b44340606e67f5fc5a7acecd19522db669edf8fca9f0982e55d0647e4",
+        "request_headers_size": 1084,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/17/17bc6e90390a57cc5b2c27b4566565e18018138781c9ad11318f30f00cf5f279/luv-20251231.htm",
+        "request_attempt_id": "request:attempt:834e3634154259e02a013dc1b813372f2a23bab0018dc04ec3aa59dba2d36aa1"
+      }
+    ],
+    "source_admission_or_result_credit": false
+  },
+  "variant_controls": {
+    "empty_external_script": {
+      "same_parsed_input": true,
+      "original_reference_spans_checked": 169,
+      "raw_bytes_changed": true,
+      "registered_actual_source": false,
+      "source_admission_or_result_credit": false
+    },
+    "visible_disclosure": {
+      "same_parsed_input": false,
+      "original_reference_spans_checked": 170,
+      "raw_bytes_changed": true,
+      "registered_actual_source": false,
+      "source_admission_or_result_credit": false
+    }
+  },
+  "variant_seconds": 0.23869070800719783,
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-d04-amendment-input/SEC_metrics",
+  "base_commit": "f767dac2efb90a0c97e195a933cd743f38f414be",
+  "working_tree_code": {
+    "scripts/vnext/ordinary_d04_task_input.py": "b272f4ab0ebd4d84c93a3e4c83a94b10902dc28773b0bea84a197712964eb210",
+    "scripts/vnext/ordinary_task_input.py": "549b3dcd99de866cd315572dcfc2356aaabcfaac18c7ab90ed8e1028b566d991",
+    "tests/vnext/test_current_d04_company.py": "f6799c3edd11762e06d74e8c37ff1389ddf2cff24ca12c4c6d233c2141e500dd",
+    "tests/vnext/test_ordinary_task_input.py": "6867e2f9e927865798c116f7e4ae8e2267cd9159ae5401becbc753e8b1fd96b8"
+  },
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+  "ledger_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13",
+  "protected_original_files": 127,
+  "originals_unchanged": true,
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "company_result_created": false,
+  "model_accuracy_verified": false,
+  "production_adopted": false
+}

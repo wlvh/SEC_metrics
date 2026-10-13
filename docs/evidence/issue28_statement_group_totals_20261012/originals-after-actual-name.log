@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/docs/evidence/issue28_statement_group_totals_20261012/verify_originals.py", line 19, in <module>
+    scope=reported_revenue_scope(primary=primary,xml=xml,annual=annual,approved_concepts=['us-gaap:Revenues'],annual_period_reader=annual_period,namespace_policy=YEAR_OR_DATE_RELEASE,allow_statement_group_totals=True)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 160, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+    ...<2 lines>...
+            r'fiscal years '+str(column_year)+r', '+str(column_year-1)+
+            r', and '+str(column_year-2))} if group_total else {}))
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 169, in _statement_scope
+    _need(all(company_key(b['visible_text']) in issuer_lines
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              or adjacent_heading and any(re.fullmatch(p,b['visible_text'].strip(),re.I) for p in unit_headers)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              for b in after_title),
+              ^^^^^^^^^^^^^^^^^^^^^^
+          'STATEMENT_INTRODUCTION_SCOPE_UNRESOLVED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_INTRODUCTION_SCOPE_UNRESOLVED

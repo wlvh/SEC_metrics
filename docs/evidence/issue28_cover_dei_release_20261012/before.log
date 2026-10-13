@@ -1,0 +1,98 @@
+test_cover_conflict_does_not_become_an_alias (tests.vnext.test_cover_dei_release.CoverDeiReleaseTest.test_cover_conflict_does_not_become_an_alias) ... ERROR
+test_current_subject_and_period_cannot_be_changed_by_option (tests.vnext.test_cover_dei_release.CoverDeiReleaseTest.test_current_subject_and_period_cannot_be_changed_by_option) ... 
+  test_current_subject_and_period_cannot_be_changed_by_option (tests.vnext.test_cover_dei_release.CoverDeiReleaseTest.test_current_subject_and_period_cannot_be_changed_by_option) (name='entity') ... ERROR
+  test_current_subject_and_period_cannot_be_changed_by_option (tests.vnext.test_cover_dei_release.CoverDeiReleaseTest.test_current_subject_and_period_cannot_be_changed_by_option) (name='filing') ... ERROR
+test_explicit_quarter_cover_is_bound_to_same_source_and_registrant (tests.vnext.test_cover_dei_release.CoverDeiReleaseTest.test_explicit_quarter_cover_is_bound_to_same_source_and_registrant) ... ERROR
+test_fasb_policy_or_unknown_value_is_not_a_sec_release (tests.vnext.test_cover_dei_release.CoverDeiReleaseTest.test_fasb_policy_or_unknown_value_is_not_a_sec_release) ... 
+  test_fasb_policy_or_unknown_value_is_not_a_sec_release (tests.vnext.test_cover_dei_release.CoverDeiReleaseTest.test_fasb_policy_or_unknown_value_is_not_a_sec_release) (option='YEAR_OR_DATE_RELEASE') ... ERROR
+  test_fasb_policy_or_unknown_value_is_not_a_sec_release (tests.vnext.test_cover_dei_release.CoverDeiReleaseTest.test_fasb_policy_or_unknown_value_is_not_a_sec_release) (option='ALL') ... ERROR
+  test_fasb_policy_or_unknown_value_is_not_a_sec_release (tests.vnext.test_cover_dei_release.CoverDeiReleaseTest.test_fasb_policy_or_unknown_value_is_not_a_sec_release) (option=True) ... ERROR
+  test_fasb_policy_or_unknown_value_is_not_a_sec_release (tests.vnext.test_cover_dei_release.CoverDeiReleaseTest.test_fasb_policy_or_unknown_value_is_not_a_sec_release) (option=None) ... ERROR
+test_quarter_is_still_refused_without_explicit_release (tests.vnext.test_cover_dei_release.CoverDeiReleaseTest.test_quarter_is_still_refused_without_explicit_release) ... ok
+test_year_default_is_identical_to_explicit_year_option (tests.vnext.test_cover_dei_release.CoverDeiReleaseTest.test_year_default_is_identical_to_explicit_year_option) ... ERROR
+
+======================================================================
+ERROR: test_cover_conflict_does_not_become_an_alias (tests.vnext.test_cover_dei_release.CoverDeiReleaseTest.test_cover_conflict_does_not_become_an_alias)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-cover-dei-release/SEC_metrics/tests/vnext/test_cover_dei_release.py", line 57, in test_cover_conflict_does_not_become_an_alias
+    _defined_income_headers(primary,parsed,selected,include_cover=True,dei_release=YEAR_QUARTER_OR_DATE)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: _defined_income_headers() got an unexpected keyword argument 'dei_release'
+
+======================================================================
+ERROR: test_current_subject_and_period_cannot_be_changed_by_option (tests.vnext.test_cover_dei_release.CoverDeiReleaseTest.test_current_subject_and_period_cannot_be_changed_by_option) (name='entity')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-cover-dei-release/SEC_metrics/tests/vnext/test_cover_dei_release.py", line 63, in test_current_subject_and_period_cannot_be_changed_by_option
+    _defined_income_headers(primary,parsed,{**selected,name:value},include_cover=True,dei_release=YEAR_QUARTER_OR_DATE)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: _defined_income_headers() got an unexpected keyword argument 'dei_release'
+
+======================================================================
+ERROR: test_current_subject_and_period_cannot_be_changed_by_option (tests.vnext.test_cover_dei_release.CoverDeiReleaseTest.test_current_subject_and_period_cannot_be_changed_by_option) (name='filing')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-cover-dei-release/SEC_metrics/tests/vnext/test_cover_dei_release.py", line 63, in test_current_subject_and_period_cannot_be_changed_by_option
+    _defined_income_headers(primary,parsed,{**selected,name:value},include_cover=True,dei_release=YEAR_QUARTER_OR_DATE)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: _defined_income_headers() got an unexpected keyword argument 'dei_release'
+
+======================================================================
+ERROR: test_explicit_quarter_cover_is_bound_to_same_source_and_registrant (tests.vnext.test_cover_dei_release.CoverDeiReleaseTest.test_explicit_quarter_cover_is_bound_to_same_source_and_registrant)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-cover-dei-release/SEC_metrics/tests/vnext/test_cover_dei_release.py", line 28, in test_explicit_quarter_cover_is_bound_to_same_source_and_registrant
+    headers=_defined_income_headers(primary,parsed,selected,include_cover=True,dei_release=YEAR_QUARTER_OR_DATE)
+TypeError: _defined_income_headers() got an unexpected keyword argument 'dei_release'
+
+======================================================================
+ERROR: test_fasb_policy_or_unknown_value_is_not_a_sec_release (tests.vnext.test_cover_dei_release.CoverDeiReleaseTest.test_fasb_policy_or_unknown_value_is_not_a_sec_release) (option='YEAR_OR_DATE_RELEASE')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-cover-dei-release/SEC_metrics/tests/vnext/test_cover_dei_release.py", line 52, in test_fasb_policy_or_unknown_value_is_not_a_sec_release
+    _defined_income_headers(primary,parsed,selected,include_cover=True,dei_release=option)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: _defined_income_headers() got an unexpected keyword argument 'dei_release'
+
+======================================================================
+ERROR: test_fasb_policy_or_unknown_value_is_not_a_sec_release (tests.vnext.test_cover_dei_release.CoverDeiReleaseTest.test_fasb_policy_or_unknown_value_is_not_a_sec_release) (option='ALL')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-cover-dei-release/SEC_metrics/tests/vnext/test_cover_dei_release.py", line 52, in test_fasb_policy_or_unknown_value_is_not_a_sec_release
+    _defined_income_headers(primary,parsed,selected,include_cover=True,dei_release=option)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: _defined_income_headers() got an unexpected keyword argument 'dei_release'
+
+======================================================================
+ERROR: test_fasb_policy_or_unknown_value_is_not_a_sec_release (tests.vnext.test_cover_dei_release.CoverDeiReleaseTest.test_fasb_policy_or_unknown_value_is_not_a_sec_release) (option=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-cover-dei-release/SEC_metrics/tests/vnext/test_cover_dei_release.py", line 52, in test_fasb_policy_or_unknown_value_is_not_a_sec_release
+    _defined_income_headers(primary,parsed,selected,include_cover=True,dei_release=option)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: _defined_income_headers() got an unexpected keyword argument 'dei_release'
+
+======================================================================
+ERROR: test_fasb_policy_or_unknown_value_is_not_a_sec_release (tests.vnext.test_cover_dei_release.CoverDeiReleaseTest.test_fasb_policy_or_unknown_value_is_not_a_sec_release) (option=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-cover-dei-release/SEC_metrics/tests/vnext/test_cover_dei_release.py", line 52, in test_fasb_policy_or_unknown_value_is_not_a_sec_release
+    _defined_income_headers(primary,parsed,selected,include_cover=True,dei_release=option)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: _defined_income_headers() got an unexpected keyword argument 'dei_release'
+
+======================================================================
+ERROR: test_year_default_is_identical_to_explicit_year_option (tests.vnext.test_cover_dei_release.CoverDeiReleaseTest.test_year_default_is_identical_to_explicit_year_option)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-cover-dei-release/SEC_metrics/tests/vnext/test_cover_dei_release.py", line 37, in test_year_default_is_identical_to_explicit_year_option
+    _defined_income_headers(primary,parsed,selected,include_cover=True,dei_release=YEAR_ONLY))
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: _defined_income_headers() got an unexpected keyword argument 'dei_release'
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.010s
+
+FAILED (errors=9)
+{"allowed_skips": 0, "errors": 9, "failures": 0, "run": 6, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_cover_dei_release"]}

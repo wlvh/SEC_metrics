@@ -21,6 +21,34 @@ A05_FORMULA_TEXT = ("Selected net income / ((current period-end total assets + "
                     "prior period-end total assets) / 2)")
 
 
+def _selected_proxy_display(*, case, annual, evidence):
+    """Display the explicit C03 source even when its amount is withheld.
+
+    The producer owns proxy selection and validates its metadata/source
+    proofs. This check connects that selected filing to the same input
+    binding, reporter and actual primary reference used by the saved case.
+    """
+    selected=case.get('selected_proxy')
+    if selected is None:
+        return None
+    from sec_urls import accession_document_url
+    _need(case['primary_metric_id']=='C03' and type(selected) is dict
+          and {'accessionNumber','primaryDocument','form','filingDate'}<=set(selected)
+          and selected['form']=='DEF 14A', 'ORDINARY_SELECTED_PROXY_DISPLAY_INVALID')
+    identity={k:selected[k] for k in ('accessionNumber','form','filingDate')}
+    _need(_filings(case['input_binding']).get(selected['accessionNumber'])==identity,
+          'ORDINARY_SELECTED_PROXY_METADATA_NOT_BOUND')
+    url=accession_document_url(cik=int(annual['entity']),accession=selected['accessionNumber'],
+                              document_name=selected['primaryDocument'])
+    matching=[r for r in case['references'] if r.get('company_id')==annual['company_id']
+              and r.get('accession')==selected['accessionNumber']
+              and r.get('document_name')==selected['primaryDocument']
+              and r.get('source_url')==url and r.get('source_role')=='governance_proxy']
+    _need(len(matching)==1 and all(e['accession']==selected['accessionNumber'] for e in evidence),
+          'ORDINARY_SELECTED_PROXY_SOURCE_NOT_BOUND')
+    return identity
+
+
 def _need(condition, reason):
     if not condition:raise ValueError(reason)
 
@@ -469,13 +497,34 @@ def render_ordinary_records(*, data_root, manifest, records, case,
     elif result['text_payload'] is not None:
         _need(len(evidence)==len(result["text_payload"]["items"]),"ORDINARY_TEXT_EVIDENCE_SET_CHANGED")
     elif metric in {'B13', 'D04'}:
+        media_hold = (metric == 'D04'
+            and result['reason_code'] == 'D04_SAVED_FILING_MEDIA_COVERAGE_NOT_VERIFIED'
+            and result['publication'] == 'WITHHELD' and result['value'] is None
+            and case['selection'].get('source_replay_only') is True
+            and case['input_binding'].get('filing_media_coverage_verified') is False)
         structural = case['selection']['status'] == 'N_A_STRUCTURAL'
-        _need((structural and result['applicability'] == 'N_A_STRUCTURAL' and not evidence)
+        _need(media_hold or (structural and result['applicability'] == 'N_A_STRUCTURAL' and not evidence)
               or (case['selection']['status'] == ('NOT_AVAILABLE_SEC' if metric == 'B13' else 'TEXT_QUAL')
                   and result['reason_code'] in {'B13_DEFINED_SCOPE_NO_RELEVANT_DISCLOSURE',
                                                 'D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE'}
                   and len(evidence) == len(case['text_arguments']['source']['documents'])),
               'B13_NULL_TEXT_PROJECTION_CHANGED')
+        if media_hold:
+            row['notes'] = '原保存的完整模型文字请求已重读；申报图片等媒体尚未验证，不能据此认定未披露持续经营疑虑。'
+            row['context_or_dimension'] = json.dumps({'reason': result['reason_code'],
+                'source_id': case['input_binding']['source_id'],
+                'original_call_ordinals': case['input_binding']['original_call_ordinals'],
+                'filing_media_coverage_verified': False}, ensure_ascii=False, sort_keys=True)
+            for document in case['input_binding']['original_documents']:
+                ref, blob = document['source_reference'], document['raw_blob']
+                item = {key: '' for key in csv_output.EVIDENCE_FIELDS}
+                item.update(company=company['display_name'], cik=company['primary_cik'], metric_id=metric,
+                    source_url=ref['source_url'], repo_relative_path=blob['storage_uri'],
+                    content_sha256=ref['raw_asset_id'][7:], accession=ref['accession'],
+                    document_name=ref['document_name'], period_start=result['period_start'],
+                    period_end=result['period_end'], concept_or_section='Saved text input; media unverified',
+                    context_or_dimension=row['context_or_dimension'], unit='text')
+                evidence.append(item)
         if structural:
             row['notes'] = 'Outside the approved B13 company scope. No disclosure-absence or utilization claim is made.'
     else:
@@ -486,6 +535,10 @@ def render_ordinary_records(*, data_root, manifest, records, case,
     row.update(accession=";".join(accessions),confidence="")
     if known:
         row.update(form=";".join(dict.fromkeys(f["form"] for f in known)),filed_date=";".join(dict.fromkeys(f["filingDate"] for f in known)))
+    selected_proxy=_selected_proxy_display(case=case,annual=annual,evidence=evidence)
+    if selected_proxy is not None:
+        row.update(form=selected_proxy['form'],filed_date=selected_proxy['filingDate'],
+                   accession=selected_proxy['accessionNumber'])
     if metric=="C02":row["source_class"]="PROXY" if known and all(f["form"]=="DEF 14A" for f in known) else "TEXT"
     if annual["fiscal_year_label_resolution"]["metadata_conflict_retained"]:
         row["notes"]+=" Fiscal label follows the explicit issuer definition; original DEI/Company Facts labels remain in the source binding."

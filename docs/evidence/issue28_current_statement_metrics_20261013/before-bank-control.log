@@ -1,0 +1,34 @@
+test_structural_applicability_never_requires_a_historical_catalog (tests.vnext.test_current_statement_metric_case.CurrentStatementMetricCaseTest.test_structural_applicability_never_requires_a_historical_catalog) ... 
+  test_structural_applicability_never_requires_a_historical_catalog (tests.vnext.test_current_statement_metric_case.CurrentStatementMetricCaseTest.test_structural_applicability_never_requires_a_historical_catalog) (metric='B04') ... ERROR
+test_structural_applicability_never_requires_a_historical_catalog (tests.vnext.test_current_statement_metric_case.CurrentStatementMetricCaseTest.test_structural_applicability_never_requires_a_historical_catalog) ... ERROR
+
+======================================================================
+ERROR: test_structural_applicability_never_requires_a_historical_catalog (tests.vnext.test_current_statement_metric_case.CurrentStatementMetricCaseTest.test_structural_applicability_never_requires_a_historical_catalog) (metric='B04')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-statement-metrics/SEC_metrics/tests/vnext/test_current_statement_metric_case.py", line 51, in test_structural_applicability_never_requires_a_historical_catalog
+    patch.object(current,'repository_company_traits',return_value={'is_bank':True}), \
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1510, in __enter__
+    original, local = self.get_original()
+                      ~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1480, in get_original
+    raise AttributeError(
+        "%s does not have the attribute %r" % (target, name)
+    )
+AttributeError: <module 'vnext.current_statement_metric_case' from '/Users/lyuhongwang/.codex/worktrees/issue28-current-statement-metrics/SEC_metrics/scripts/vnext/current_statement_metric_case.py'> does not have the attribute 'repository_company_traits'
+
+======================================================================
+ERROR: test_structural_applicability_never_requires_a_historical_catalog (tests.vnext.test_current_statement_metric_case.CurrentStatementMetricCaseTest.test_structural_applicability_never_requires_a_historical_catalog)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-statement-metrics/SEC_metrics/tests/vnext/test_current_statement_metric_case.py", line 57, in test_structural_applicability_never_requires_a_historical_catalog
+    ordinary.assert_called_once_with(Path('/saved'),'jpmorgan_chase',metric)
+    ^^^^^^^^
+UnboundLocalError: cannot access local variable 'ordinary' where it is not associated with a value
+
+----------------------------------------------------------------------
+Ran 1 test in 0.005s
+
+FAILED (errors=2)
+{"allowed_skips": 0, "errors": 2, "failures": 0, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_current_statement_metric_case.CurrentStatementMetricCaseTest.test_structural_applicability_never_requires_a_historical_catalog"]}

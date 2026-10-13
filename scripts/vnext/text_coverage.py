@@ -20,6 +20,7 @@ from .deterministic_router import parse_accession_xbrl_source
 from .records import validate_record
 from .resource_limits import RESOURCE_LIMITS
 from .sources import validate_public_sec_filing_identity
+from .xbrl_namespace_policy import YEAR_ONLY, is_sec_namespace
 
 
 TEXT_TRANSFORM_VERSION = "1"
@@ -219,13 +220,15 @@ def _byte_offsets(text, positions):
 
 def build_text_document(*, raw_bytes: bytes, raw_blob: Mapping,
                         source_reference: Mapping, expected_company_id: str,
-                        expected_cik: str, expected_period_end: str) -> dict:
+                        expected_cik: str, expected_period_end: str,
+                        namespace_policy=YEAR_ONLY) -> dict:
     """Derive annual HTML blocks and closed item boundaries from exact bytes.
 
     The existing acquisition/Run layer still owns ledger authenticity and the
     complete amendment/source set. A 10-K/A remains explicitly incomplete for
     whole-report coverage, even when its HTML is well formed.
     """
+    is_sec_namespace('', taxonomy='dei', namespace_policy=namespace_policy)
     _need(type(raw_bytes) is bytes and 0 < len(raw_bytes) <= RESOURCE_LIMITS.max_html_bytes,
           "TEXT_SOURCE_SIZE_LIMIT")
     blob, ref = validate_record(record=dict(raw_blob)), validate_record(record=dict(source_reference))
@@ -255,7 +258,7 @@ def build_text_document(*, raw_bytes: bytes, raw_blob: Mapping,
     identities, periods, forms, names = set(), set(), set(), set()
     for fact in parsed.facts:
         namespace, name = metadata.facts[fact["ordinal"]]["concept"]
-        if not re.fullmatch(r"https?://xbrl\.sec\.gov/dei/\d{4}", namespace):
+        if not is_sec_namespace(namespace, taxonomy='dei', namespace_policy=namespace_policy):
             continue
         name = name.casefold()
         context = parsed.contexts.get(fact["context_ref"], {})
@@ -327,6 +330,7 @@ def build_text_document(*, raw_bytes: bytes, raw_blob: Mapping,
            "source_state": "INCOMPLETE" if reasons else "COMPLETE_LOCAL_DOCUMENT",
            "source_reasons": sorted(set(reasons)), "blocks": blocks, "sections": sections,
            "semantic_disclosure_verified": False, "publication_credit": False}
+    if namespace_policy!=YEAR_ONLY:doc['namespace_policy']=namespace_policy
     doc["text_document_id"] = content_hash(value=doc)
     return doc
 
@@ -375,10 +379,12 @@ def inspect_text_scope(*, document: Mapping, required_sections: Sequence[str],
 
 def verify_text_document(*, document: Mapping, raw_bytes: bytes, raw_blob: Mapping,
                          source_reference: Mapping, expected_company_id: str,
-                         expected_cik: str, expected_period_end: str) -> dict:
+                         expected_cik: str, expected_period_end: str,
+                         namespace_policy=YEAR_ONLY) -> dict:
     """Replay source bytes, so a self-consistent modified range is insufficient."""
     rebuilt = build_text_document(raw_bytes=raw_bytes, raw_blob=raw_blob,
         source_reference=source_reference, expected_company_id=expected_company_id,
-        expected_cik=expected_cik, expected_period_end=expected_period_end)
+        expected_cik=expected_cik, expected_period_end=expected_period_end,
+        **({} if namespace_policy==YEAR_ONLY else {'namespace_policy':namespace_policy}))
     _need(rebuilt == document, "TEXT_DOCUMENT_REPLAY_MISMATCH")
     return rebuilt

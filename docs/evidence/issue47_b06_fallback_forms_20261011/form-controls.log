@@ -1,0 +1,56 @@
+test_custom_pension_name_cannot_borrow_the_standard_exclusion (tests.vnext.test_b06_fallback_source_forms.FallbackSourceFormsTest.test_custom_pension_name_cannot_borrow_the_standard_exclusion) ... ok
+test_negated_certificates_are_not_debt_members (tests.vnext.test_b06_fallback_source_forms.FallbackSourceFormsTest.test_negated_certificates_are_not_debt_members) ... 
+  test_negated_certificates_are_not_debt_members (tests.vnext.test_b06_fallback_source_forms.FallbackSourceFormsTest.test_negated_certificates_are_not_debt_members) (label='Certificates not included in debt') ... FAIL
+  test_negated_certificates_are_not_debt_members (tests.vnext.test_b06_fallback_source_forms.FallbackSourceFormsTest.test_negated_certificates_are_not_debt_members) (label='Excluded certificates') ... FAIL
+test_reported_certificates_reconcile_inside_the_same_debt_total (tests.vnext.test_b06_fallback_source_forms.FallbackSourceFormsTest.test_reported_certificates_reconcile_inside_the_same_debt_total) ... ERROR
+test_standard_pension_obligation_keeps_its_different_business_nature (tests.vnext.test_b06_fallback_source_forms.FallbackSourceFormsTest.test_standard_pension_obligation_keeps_its_different_business_nature) ... ok
+
+======================================================================
+ERROR: test_reported_certificates_reconcile_inside_the_same_debt_total (tests.vnext.test_b06_fallback_source_forms.FallbackSourceFormsTest.test_reported_certificates_reconcile_inside_the_same_debt_total)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-guide-received-main-20261011/SEC_metrics/tests/vnext/test_b06_fallback_source_forms.py", line 41, in test_reported_certificates_reconcile_inside_the_same_debt_total
+    proof = verify(self.certificate())
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-guide-received-main-20261011/SEC_metrics/tests/vnext/test_b06_disclosure_v2.py", line 66, in verify
+    return module.verify(**args, proposal=proposal)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-guide-received-main-20261011/SEC_metrics/scripts/vnext/b06_disclosure_v2.py", line 329, in verify
+    proof = prior.verify(raw=raw, primary=primary, source=source, spec=spec,
+                         target=target, filed=filed, data_root=data_root, proposal=proposal)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-guide-received-main-20261011/SEC_metrics/scripts/vnext/b06_disclosure.py", line 325, in verify
+    need(len(matches)==1 and compact(text(f['text']))==compact(scope['inline'].value(matches[0])),'PRIMARY_NOTE_SOURCE_CONFLICT_OR_MISSING')
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-guide-received-main-20261011/SEC_metrics/scripts/vnext/r5_b06_structured.py", line 22, in need
+    raise ValueError(reason)
+ValueError: PRIMARY_NOTE_SOURCE_CONFLICT_OR_MISSING
+
+======================================================================
+FAIL: test_negated_certificates_are_not_debt_members (tests.vnext.test_b06_fallback_source_forms.FallbackSourceFormsTest.test_negated_certificates_are_not_debt_members) (label='Certificates not included in debt')
+----------------------------------------------------------------------
+ValueError: FINANCE_LEASE_RELATIONSHIP_CONFLICT
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-guide-received-main-20261011/SEC_metrics/tests/vnext/test_b06_fallback_source_forms.py", line 50, in test_negated_certificates_are_not_debt_members
+    with self.assertRaisesRegex(ValueError, 'DEBT_MEMBERSHIP_NEGATED'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "DEBT_MEMBERSHIP_NEGATED" does not match "FINANCE_LEASE_RELATIONSHIP_CONFLICT"
+
+======================================================================
+FAIL: test_negated_certificates_are_not_debt_members (tests.vnext.test_b06_fallback_source_forms.FallbackSourceFormsTest.test_negated_certificates_are_not_debt_members) (label='Excluded certificates')
+----------------------------------------------------------------------
+ValueError: FINANCE_LEASE_RELATIONSHIP_CONFLICT
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-guide-received-main-20261011/SEC_metrics/tests/vnext/test_b06_fallback_source_forms.py", line 50, in test_negated_certificates_are_not_debt_members
+    with self.assertRaisesRegex(ValueError, 'DEBT_MEMBERSHIP_NEGATED'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "DEBT_MEMBERSHIP_NEGATED" does not match "FINANCE_LEASE_RELATIONSHIP_CONFLICT"
+
+----------------------------------------------------------------------
+Ran 4 tests in 9.956s
+
+FAILED (failures=2, errors=1)

@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-known-history-partial/SEC_metrics/docs/evidence/issue28_known_history_partial_20261013/verify_company.py", line 88, in <module>
+    if __name__=='__main__':run()
+                            ^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-known-history-partial/SEC_metrics/docs/evidence/issue28_known_history_partial_20261013/verify_company.py", line 52, in run
+    assert metrics['B04']['status']==('CANDIDATE_READY' if phase=='first' else 'NO_SOURCE_CONTENT_CHANGE')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

@@ -377,4 +377,6 @@ B06新来源判断会在筛选前拒绝未知年报/修订日期及申报身份�
 
 B06候选revision3将报表已确认借款、债券和融资租赁按不重叠集合计入，保留经营租赁排除及银行/工业范围限制。完整性未证明时即使借款子集合可以计算也不公开完整比值，`proven_debt_subtotal`和完整`debt`分别展示。生产权限仍不存在。
 
+现行附注来源后继的空容量字段只表示 `NOT_REPORTED_IN_SELECTED_DEBT_NOTE`，不能读成全年报未披露。满足既有同期/主体/完整范围与两组关系对账时，保存评估中的 `supplementary_capacity_context` 单独展示 MD&A 容量/可用额度及原文出处，既不填造附注原字段，也不增加债务余额。找不到唯一合格原文，或存在错期、错范围、引文、重复和矛盾时，相关来源判断仍拒绝。Macy’s FY2024 当前完整B06仍为扣留/null：CSV显示通用 `B06_SOURCE_RELATIONSHIP_UNRESOLVED`，保存评估保留精确 `B06_REPORTED_INTEREST_DEBT_SCOPE_UNRESOLVED`；这不是借款子集合已证明就完成了完整比值，旧结果身份不因新增评估说明被改写。
+
 <!-- capability-anchor: CAPABILITY.company_result_period_and_validity -->

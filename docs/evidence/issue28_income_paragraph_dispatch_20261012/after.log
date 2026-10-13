@@ -1,0 +1,16 @@
+test_default_legacy_scope_still_uses_the_same_helper (tests.vnext.test_income_amendment_paragraph_dispatch.IncomeParagraphDispatchTest.test_default_legacy_scope_still_uses_the_same_helper) ... ok
+test_explicit_existing_paragraph_property_is_used (tests.vnext.test_income_amendment_paragraph_dispatch.IncomeParagraphDispatchTest.test_explicit_existing_paragraph_property_is_used) ... ok
+test_inline_income_correction_and_unknown_layout_do_not_gain_credit (tests.vnext.test_income_amendment_paragraph_dispatch.IncomeParagraphDispatchTest.test_inline_income_correction_and_unknown_layout_do_not_gain_credit) ... ok
+test_real_correction_flag_and_quoted_note_stay_refused (tests.vnext.test_income_amendment_paragraph_dispatch.IncomeParagraphDispatchTest.test_real_correction_flag_and_quoted_note_stay_refused) ... ok
+test_clean_small_complete_filing_can_complete (tests.vnext.test_instant_amendment_paragraph_api.InstantParagraphApiTest.test_clean_small_complete_filing_can_complete) ... ok
+test_current_correction_plain_and_inline_split_have_same_refusal (tests.vnext.test_instant_amendment_paragraph_api.InstantParagraphApiTest.test_current_correction_plain_and_inline_split_have_same_refusal) ... ok
+test_default_successor_entry_preserves_legacy_saved_object (tests.vnext.test_instant_amendment_paragraph_api.InstantParagraphApiTest.test_default_successor_entry_preserves_legacy_saved_object) ... ok
+test_hidden_inline_gap_does_not_break_visible_correction (tests.vnext.test_instant_amendment_paragraph_api.InstantParagraphApiTest.test_hidden_inline_gap_does_not_break_visible_correction) ... ok
+test_new_balance_disclosure_cannot_hide_in_inline_words (tests.vnext.test_instant_amendment_paragraph_api.InstantParagraphApiTest.test_new_balance_disclosure_cannot_hide_in_inline_words) ... ok
+test_quoted_word_fragment_cannot_erase_conditional_review (tests.vnext.test_instant_amendment_paragraph_api.InstantParagraphApiTest.test_quoted_word_fragment_cannot_erase_conditional_review) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.141s
+
+OK
+{"allowed_skips": 0, "errors": 0, "failures": 0, "run": 10, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_income_amendment_paragraph_dispatch", "tests.vnext.test_instant_amendment_paragraph_api"]}

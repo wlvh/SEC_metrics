@@ -1,0 +1,25 @@
+test_broken_inline_and_non_context_errors_do_not_enter_sct (tests.vnext.test_historical_compensation_case.HistoricalCompensationAdapterTest.test_broken_inline_and_non_context_errors_do_not_enter_sct) ... ok
+test_history_dispatch_preserves_existing_factories_and_dependencies (tests.vnext.test_historical_compensation_case.HistoricalCompensationAdapterTest.test_history_dispatch_preserves_existing_factories_and_dependencies) ... FAIL
+test_selected_proxy_and_annual_identity_remain_distinct (tests.vnext.test_historical_compensation_case.HistoricalCompensationAdapterTest.test_selected_proxy_and_annual_identity_remain_distinct) ... ok
+test_source_preparer_retains_annual_primary_for_reporter_and_distinct_proxy (tests.vnext.test_historical_compensation_case.HistoricalCompensationAdapterTest.test_source_preparer_retains_annual_primary_for_reporter_and_distinct_proxy) ... ok
+test_untagged_proxy_uses_shared_sct_and_retains_derived_asset (tests.vnext.test_historical_compensation_case.HistoricalCompensationAdapterTest.test_untagged_proxy_uses_shared_sct_and_retains_derived_asset) ... ok
+test_wrong_metric_rejects_before_proxy_read (tests.vnext.test_historical_compensation_case.HistoricalCompensationAdapterTest.test_wrong_metric_rejects_before_proxy_read) ... ok
+test_amendment_belongs_only_before_the_next_proxy (tests.vnext.test_historical_compensation_case.HistoricalCompensationSelectionTest.test_amendment_belongs_only_before_the_next_proxy) ... ok
+test_first_reported_proxy_is_not_replaced_by_later_compensation (tests.vnext.test_historical_compensation_case.HistoricalCompensationSelectionTest.test_first_reported_proxy_is_not_replaced_by_later_compensation) ... ok
+test_no_proxy_does_not_become_zero_or_structural_na (tests.vnext.test_historical_compensation_case.HistoricalCompensationSelectionTest.test_no_proxy_does_not_become_zero_or_structural_na) ... ok
+test_same_day_requires_acceptance_time_not_accession_rank (tests.vnext.test_historical_compensation_case.HistoricalCompensationSelectionTest.test_same_day_requires_acceptance_time_not_accession_rank) ... ok
+test_unproven_history_foreign_reporter_and_different_annual_refuse (tests.vnext.test_historical_compensation_case.HistoricalCompensationSelectionTest.test_unproven_history_foreign_reporter_and_different_annual_refuse) ... ok
+
+======================================================================
+FAIL: test_history_dispatch_preserves_existing_factories_and_dependencies (tests.vnext.test_historical_compensation_case.HistoricalCompensationAdapterTest.test_history_dispatch_preserves_existing_factories_and_dependencies)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-guide-received-main-20261011/SEC_metrics/tests/vnext/test_historical_compensation_case.py", line 143, in test_history_dispatch_preserves_existing_factories_and_dependencies
+    self.assertIs(prepare_historical_statement_year_case,args['case_factories']['B01'])
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: <function prepare_historical_statement_year_case at 0x11330c040> is not <function prepared_fiscal_range_B01 at 0x1134b03b0>
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.272s
+
+FAILED (failures=1)

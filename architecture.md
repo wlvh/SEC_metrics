@@ -800,3 +800,5 @@ B06 carrying-v2补充了受控来源判断：discover先验证全部相关年度
 ### B06 financing set revision 3
 
 New financing-set source judgments prove disjoint reported borrowings, bonds and finance lease liabilities; source precision and component reconciliation are read from the native XBRL parser. `r5_b06_scope.py` composes existing Calculator expressions; a thin Spec compiler extension permits named nested add/sub expressions already supported by Calculator/Trace. No new calculator or publisher. Incomplete scope is an independent hard gate, even if a reason list is accidentally empty. Historical v1/v2 packages retain their frozen Spec behavior.
+
+main 已接收的 `b06_bond_leases` 来源后继允许债务附注只披露备用信用证金额、未披露可借额度；附注字段保留 null，并标明 `NOT_REPORTED_IN_SELECTED_DEBT_NOTE`。完整来源组件随后从同一年报 MD&A 的 Liquidity and Capital Resources 区域读取唯一、非引述、同期同范围的额度说明，核对“设施总额减备用信用证等于容量、容量减限制额等于可用额度”两组关系，并与附注金额对账，保存原文位置/哈希及 `supplementary_capacity_context`。错期、错区域/范围、引文、重复或矛盾不能取得该补充证明。这些额度是未使用融资能力，不能作为已借余额计入债务；来源组件通过仍不解除工业权益、租赁完整性或利息归属等独立B06限制。

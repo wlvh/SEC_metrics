@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-single-revenue-line/SEC_metrics/docs/evidence/issue28_single_revenue_line_20261010/verify_pfizer_original.py", line 33, in <module>
+    result=reported_revenue_scope(**args,allow_single_revenue_line=True)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-single-revenue-line/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 69, in reported_revenue_scope
+    _single_revenue_line(index,parsed,table,cell,row,column,same)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-single-revenue-line/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 147, in _single_revenue_line
+    _need(visible==native,'SINGLE_REVENUE_SELECTED_CELL_TEXT_CONFLICT')
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-single-revenue-line/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 18, in _need
+    if not condition:raise IncomeSourceError('SELECTED_REPORTED_REVENUE_'+reason)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REPORTED_REVENUE_SINGLE_REVENUE_SELECTED_CELL_TEXT_CONFLICT

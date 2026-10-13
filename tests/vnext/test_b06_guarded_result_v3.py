@@ -75,6 +75,19 @@ class B06GuardSourceTest(unittest.TestCase):
                 self.assertFalse(trace['steps'][0]['numerator_evaluated'])
                 for record in [result,trace,*observations]:validate_record(record=record)
 
+    def test_selected_release_forms_need_explicit_options_and_keep_the_default(self):
+        args,_=synthetic()
+        dated={**args,'primary':args['primary'].replace(b'xbrl.sec.gov/dei/2025',b'xbrl.sec.gov/dei/2025q4').replace(b'fasb.org/us-gaap/2025',b'fasb.org/us-gaap/2025-01-31'),
+            'xml':args['xml'].replace(b'xbrl.sec.gov/dei/2025',b'xbrl.sec.gov/dei/2025q4').replace(b'fasb.org/us-gaap/2025',b'fasb.org/us-gaap/2025-01-31')}
+        with self.assertRaises(ValueError):guard._rebuild_equity(**dated)
+        proof=guard._rebuild_equity(**dated,dei_release='YEAR_QUARTER_OR_DATE',namespace_policy='YEAR_OR_DATE_RELEASE')
+        self.assertEqual('-10000000',proof['value'])
+        self.assertEqual(guard._rebuild_equity(**args),guard._rebuild_equity(**args,dei_release='YEAR_ONLY',namespace_policy='YEAR_ONLY'))
+        for uri in (b'http://example.test/us-gaap/2025-01-31',b'http://fasb.org/us-gaap/2025q4'):
+            changed={**dated,'xml':dated['xml'].replace(b'http://fasb.org/us-gaap/2025-01-31',uri)}
+            with self.assertRaisesRegex(ValueError,'NAMESPACE_CONFLICT'):
+                guard._rebuild_equity(**changed,dei_release='YEAR_QUARTER_OR_DATE',namespace_policy='YEAR_OR_DATE_RELEASE')
+
     def test_positive_and_boolean_cannot_trigger_nonpositive_record(self):
         args,ref=synthetic(10000000);proof=guard._rebuild_equity(**args)
         spec=compile_spec_file(path=ROOT/guard.SPEC_PATH,dependency_specs={})

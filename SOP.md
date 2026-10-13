@@ -11,9 +11,11 @@
 
 每一步只包含动作、权威引用和验收。SOP 不复制会变化的脚本清单、测试命令或指标规范；发生冲突时，以代码、测试、能力契约和被引用的专项文档为准。`config/validation_source_policy.json` 必须把每个权威引用分类为运行/验收 source、snapshot artifact 或非批次治理角色；解释性非权威文档不能作为本表的运行权威。
 
-## Issue #15 D-26 测试执行边界
+## 当前快测与历史D-26入口
 
-`requirements/issue_15_v1/decision_register.json` 的 historical D-26 保留 `python3 tools/run_fast_tests.py --jobs 4` 与 fast/local 证据层级；该集合现在以successor smoke同时加载`issue_28_v1`和exact `issue_15_v1` parent。它继续排除全仓/双解释器、隔离 repository/worktree 和长串行套件，并保留single-flight、HTTP 402停批、UNKNOWN no-retry、零网络replay/rollback/restore等短小确定性测试。`.github/workflows/vnext-fast.yml` 在 PR 上运行同一命令；本地receipt与CI fast check都不是live、full acceptance或active Cutover。
+当前main与 `.github/workflows/vnext-fast.yml` 的快测命令是 `python3 tools/run_foundation_ci.py --suite fast --jobs 4`；按实际差异再运行受影响公司/来源检查，见 `TESTING.md`。
+
+`requirements/issue_15_v1/decision_register.json` 的historical D-26保留旧 `python3 tools/run_fast_tests.py --jobs 4`、successor/parent smoke及当时证据层级，只用于对应保存版本。旧入口在当前开发树失败不能用来判断当前main的CI终态。来源、公司、期间、单位、计数、失败和恢复检查继续按当前路径保留；快测通过不代表真实调用、完整业务验收或active切换。
 
 ## Issue #28 successor Requirement transition
 

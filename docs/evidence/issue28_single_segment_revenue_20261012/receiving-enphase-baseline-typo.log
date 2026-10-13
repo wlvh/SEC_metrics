@@ -1,0 +1,17 @@
+fatal: invalid object name '8030f851e467c456bb9c926728e1442ecd1c41'.
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/docs/evidence/issue28_single_segment_revenue_20261012/verify_original.py", line 88, in <module>
+    main()
+    ~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/docs/evidence/issue28_single_segment_revenue_20261012/verify_original.py", line 26, in main
+    exec(subprocess.check_output(['git','show',args.baseline+':scripts/vnext/selected_reported_revenue_v2.py'],text=True),old)
+         ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 473, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+               **kwargs).stdout
+               ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['git', 'show', '8030f851e467c456bb9c926728e1442ecd1c41:scripts/vnext/selected_reported_revenue_v2.py']' returned non-zero exit status 128.

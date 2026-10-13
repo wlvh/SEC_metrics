@@ -1,0 +1,3096 @@
+{
+  "code_commit": "c99b19dd9f5fb7af2afba9ec1526b03efc955efd",
+  "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state",
+  "records": [
+    {
+      "name": "necessary-fixed-2021-2021",
+      "seconds": 19.8168679169994,
+      "exit": 0,
+      "arguments": [
+        "run",
+        "--company",
+        "lumen_technologies",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2021",
+        "--fiscal-year-end",
+        "2021",
+        "--metric",
+        "B01",
+        "--metric",
+        "B02",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-remaining-fixed-xdvz8_y0/runs"
+      ],
+      "stdout": "{\n  \"elapsed_seconds\": 19.752356166998652,\n  \"record_type\": \"ORDINARY_COMPANY_EXECUTION_V1\",\n  \"company_id\": \"lumen_technologies\",\n  \"run_id\": \"20261011T074256Z-3de0c565\",\n  \"status\": \"FLOW_COMPLETED\",\n  \"selected_metrics\": [\n    \"B01\",\n    \"B02\"\n  ],\n  \"metrics\": [\n    {\n      \"metric_id\": \"B01\",\n      \"status\": \"CANDIDATE_READY\",\n      \"attempt_id\": \"8877e331e91947ca908f14e888a77f60\",\n      \"version\": \"add5f198d6ae428db89da7f5d13cd596\",\n      \"result_id\": \"sha256:66aa415282cd280924076789aed3b614aafc49aec1c85b33ea7e9a3861de1901\",\n      \"result_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B01/periods/FY2021/results/add5f198d6ae428db89da7f5d13cd596\",\n      \"calculation_performed\": true,\n      \"new_candidate_created\": true,\n      \"result_reason_code\": \"PASS\",\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"requested_fiscal_year\": 2021,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:66aa415282cd280924076789aed3b614aafc49aec1c85b33ea7e9a3861de1901\",\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B01/periods/FY2021/results/add5f198d6ae428db89da7f5d13cd596\",\n      \"program_version\": {\n        \"commit\": \"c99b19dd9f5fb7af2afba9ec1526b03efc955efd\",\n        \"has_uncommitted_changes\": true\n      }\n    },\n    {\n      \"metric_id\": \"B02\",\n      \"status\": \"CANDIDATE_READY\",\n      \"attempt_id\": \"07c996004f7f4fe7b795ed1a24385440\",\n      \"version\": \"9887a0362f654295bc23ffd2b87bbb30\",\n      \"result_id\": \"sha256:9291eb5302107ad06485e2677d393b467ec30652e2aa9777e22c7b4fc622018b\",\n      \"result_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B02/periods/FY2021/results/9887a0362f654295bc23ffd2b87bbb30\",\n      \"calculation_performed\": true,\n      \"new_candidate_created\": true,\n      \"result_reason_code\": \"PASS\",\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"requested_fiscal_year\": 2021,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:9291eb5302107ad06485e2677d393b467ec30652e2aa9777e22c7b4fc622018b\",\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B02/periods/FY2021/results/9887a0362f654295bc23ffd2b87bbb30\",\n      \"program_version\": {\n        \"commit\": \"c99b19dd9f5fb7af2afba9ec1526b03efc955efd\",\n        \"has_uncommitted_changes\": true\n      }\n    }\n  ],\n  \"source_root\": \"/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs\",\n  \"program_root\": \"/Users/lyuhongwang/.codex/worktrees/issue47-guide-received-main-20261011/SEC_metrics\",\n  \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state\",\n  \"output_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-remaining-fixed-xdvz8_y0/runs/20261011T074256Z-3de0c565\",\n  \"source_mode\": \"SAVED_ONLY_NO_ONLINE_DISCOVERY\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false,\n  \"selected_fiscal_years\": [\n    2021\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "name": "forbidden-repeat-2021-2021",
+      "seconds": 1.9002406249983324,
+      "exit": 0,
+      "arguments": [
+        "run",
+        "--company",
+        "lumen_technologies",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2021",
+        "--fiscal-year-end",
+        "2021",
+        "--metric",
+        "B01",
+        "--metric",
+        "B02",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-remaining-fixed-xdvz8_y0/runs"
+      ],
+      "stdout": "{\n  \"elapsed_seconds\": 1.438072208999074,\n  \"record_type\": \"ORDINARY_COMPANY_EXECUTION_V1\",\n  \"company_id\": \"lumen_technologies\",\n  \"run_id\": \"20261011T074316Z-b896007d\",\n  \"status\": \"FLOW_COMPLETED\",\n  \"selected_metrics\": [\n    \"B01\",\n    \"B02\"\n  ],\n  \"metrics\": [\n    {\n      \"metric_id\": \"B01\",\n      \"status\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"attempt_id\": \"4dbd7f689fb745a197aa9f7ed29dbb3b\",\n      \"version\": \"add5f198d6ae428db89da7f5d13cd596\",\n      \"result_id\": \"sha256:66aa415282cd280924076789aed3b614aafc49aec1c85b33ea7e9a3861de1901\",\n      \"result_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B01/periods/FY2021/results/add5f198d6ae428db89da7f5d13cd596\",\n      \"result_reason_code\": \"PASS\",\n      \"raw_input_unchanged\": true,\n      \"calculation_performed\": false,\n      \"new_candidate_created\": false,\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"requested_fiscal_year\": 2021,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:66aa415282cd280924076789aed3b614aafc49aec1c85b33ea7e9a3861de1901\",\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B01/periods/FY2021/results/add5f198d6ae428db89da7f5d13cd596\",\n      \"program_version\": {\n        \"commit\": \"c99b19dd9f5fb7af2afba9ec1526b03efc955efd\",\n        \"has_uncommitted_changes\": true\n      }\n    },\n    {\n      \"metric_id\": \"B02\",\n      \"status\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"attempt_id\": \"b7d5cebdfdea40c6abca5ec8df542fa1\",\n      \"version\": \"9887a0362f654295bc23ffd2b87bbb30\",\n      \"result_id\": \"sha256:9291eb5302107ad06485e2677d393b467ec30652e2aa9777e22c7b4fc622018b\",\n      \"result_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B02/periods/FY2021/results/9887a0362f654295bc23ffd2b87bbb30\",\n      \"result_reason_code\": \"PASS\",\n      \"raw_input_unchanged\": true,\n      \"calculation_performed\": false,\n      \"new_candidate_created\": false,\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"requested_fiscal_year\": 2021,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:9291eb5302107ad06485e2677d393b467ec30652e2aa9777e22c7b4fc622018b\",\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B02/periods/FY2021/results/9887a0362f654295bc23ffd2b87bbb30\",\n      \"program_version\": {\n        \"commit\": \"c99b19dd9f5fb7af2afba9ec1526b03efc955efd\",\n        \"has_uncommitted_changes\": true\n      }\n    }\n  ],\n  \"source_root\": \"/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs\",\n  \"program_root\": \"/Users/lyuhongwang/.codex/worktrees/issue47-guide-received-main-20261011/SEC_metrics\",\n  \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state\",\n  \"output_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-remaining-fixed-xdvz8_y0/runs/20261011T074316Z-b896007d\",\n  \"source_mode\": \"SAVED_ONLY_NO_ONLINE_DISCOVERY\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false,\n  \"selected_fiscal_years\": [\n    2021\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "name": "necessary-fixed-2023-2025",
+      "seconds": 41.41959175000011,
+      "exit": 0,
+      "arguments": [
+        "run",
+        "--company",
+        "lumen_technologies",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2023",
+        "--fiscal-year-end",
+        "2025",
+        "--metric",
+        "B01",
+        "--metric",
+        "B02",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-remaining-fixed-xdvz8_y0/runs"
+      ],
+      "stdout": "{\n  \"elapsed_seconds\": 41.35534587499933,\n  \"record_type\": \"ORDINARY_COMPANY_EXECUTION_V1\",\n  \"company_id\": \"lumen_technologies\",\n  \"run_id\": \"20261011T074319Z-a7375942\",\n  \"status\": \"FLOW_COMPLETED\",\n  \"selected_metrics\": [\n    \"B01\",\n    \"B02\"\n  ],\n  \"metrics\": [\n    {\n      \"metric_id\": \"B01\",\n      \"status\": \"CANDIDATE_READY\",\n      \"attempt_id\": \"3cc0d6ecc3244df5ac1e8f354cba9137\",\n      \"version\": \"dd2661acd44742289ff69dcf7482fd6b\",\n      \"result_id\": \"sha256:a5f65cd7e743648df76126fc2a743c2b9c164c397c27f78bc83b697b56a29f95\",\n      \"result_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B01/periods/FY2023/results/dd2661acd44742289ff69dcf7482fd6b\",\n      \"calculation_performed\": true,\n      \"new_candidate_created\": true,\n      \"result_reason_code\": \"PASS\",\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"requested_fiscal_year\": 2023,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:a5f65cd7e743648df76126fc2a743c2b9c164c397c27f78bc83b697b56a29f95\",\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B01/periods/FY2023/results/dd2661acd44742289ff69dcf7482fd6b\",\n      \"program_version\": {\n        \"commit\": \"c99b19dd9f5fb7af2afba9ec1526b03efc955efd\",\n        \"has_uncommitted_changes\": true\n      }\n    },\n    {\n      \"metric_id\": \"B02\",\n      \"status\": \"CANDIDATE_READY\",\n      \"attempt_id\": \"82ffc4d0f2424731a4dfa5e5b5b7ab28\",\n      \"version\": \"ff7b96b30f3b41ab99ac5d8de10c1378\",\n      \"result_id\": \"sha256:81b3c8d4b98c8fdc09241a6f12c0f18298023ec0192522505b6dcc26476ba6f6\",\n      \"result_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B02/periods/FY2023/results/ff7b96b30f3b41ab99ac5d8de10c1378\",\n      \"calculation_performed\": true,\n      \"new_candidate_created\": true,\n      \"result_reason_code\": \"PASS\",\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"requested_fiscal_year\": 2023,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:81b3c8d4b98c8fdc09241a6f12c0f18298023ec0192522505b6dcc26476ba6f6\",\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B02/periods/FY2023/results/ff7b96b30f3b41ab99ac5d8de10c1378\",\n      \"program_version\": {\n        \"commit\": \"c99b19dd9f5fb7af2afba9ec1526b03efc955efd\",\n        \"has_uncommitted_changes\": true\n      }\n    },\n    {\n      \"metric_id\": \"B01\",\n      \"status\": \"CANDIDATE_READY\",\n      \"attempt_id\": \"d576dfd0b6eb45129a865533acbdabc5\",\n      \"version\": \"01ade172a32945aca7f41524f608937b\",\n      \"result_id\": \"sha256:551d671bbab69da3f2dca2aa130414bc6fba46e2c63f6a3f2b7e1c58bbefa03b\",\n      \"result_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B01/periods/FY2024/results/01ade172a32945aca7f41524f608937b\",\n      \"calculation_performed\": true,\n      \"new_candidate_created\": true,\n      \"result_reason_code\": \"PASS\",\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"requested_fiscal_year\": 2024,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:551d671bbab69da3f2dca2aa130414bc6fba46e2c63f6a3f2b7e1c58bbefa03b\",\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B01/periods/FY2024/results/01ade172a32945aca7f41524f608937b\",\n      \"program_version\": {\n        \"commit\": \"c99b19dd9f5fb7af2afba9ec1526b03efc955efd\",\n        \"has_uncommitted_changes\": true\n      }\n    },\n    {\n      \"metric_id\": \"B02\",\n      \"status\": \"CANDIDATE_READY\",\n      \"attempt_id\": \"e06770f7b48b4422b54d8258f0640043\",\n      \"version\": \"a83ec63fce624e5c959cd6f1cbb5720e\",\n      \"result_id\": \"sha256:9a9cf5966b1675d0bac4e6908893f3567078894611cf479b2462d23428aa28c2\",\n      \"result_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B02/periods/FY2024/results/a83ec63fce624e5c959cd6f1cbb5720e\",\n      \"calculation_performed\": true,\n      \"new_candidate_created\": true,\n      \"result_reason_code\": \"PASS\",\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"requested_fiscal_year\": 2024,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:9a9cf5966b1675d0bac4e6908893f3567078894611cf479b2462d23428aa28c2\",\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B02/periods/FY2024/results/a83ec63fce624e5c959cd6f1cbb5720e\",\n      \"program_version\": {\n        \"commit\": \"c99b19dd9f5fb7af2afba9ec1526b03efc955efd\",\n        \"has_uncommitted_changes\": true\n      }\n    },\n    {\n      \"metric_id\": \"B01\",\n      \"status\": \"CANDIDATE_READY\",\n      \"attempt_id\": \"fb8c2e2cb9194c93ae4ef7e616254cf6\",\n      \"version\": \"4ffa3fb74c2d4fdf9b6e869bbaabebf3\",\n      \"result_id\": \"sha256:f2d5abfbdfa8c9a0642c240d2fb5688f15ce7f49f632b96a182f04710199da6c\",\n      \"result_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B01/periods/FY2025/results/4ffa3fb74c2d4fdf9b6e869bbaabebf3\",\n      \"calculation_performed\": true,\n      \"new_candidate_created\": true,\n      \"result_reason_code\": \"PASS\",\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"requested_fiscal_year\": 2025,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:f2d5abfbdfa8c9a0642c240d2fb5688f15ce7f49f632b96a182f04710199da6c\",\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B01/periods/FY2025/results/4ffa3fb74c2d4fdf9b6e869bbaabebf3\",\n      \"program_version\": {\n        \"commit\": \"c99b19dd9f5fb7af2afba9ec1526b03efc955efd\",\n        \"has_uncommitted_changes\": true\n      }\n    },\n    {\n      \"metric_id\": \"B02\",\n      \"status\": \"CANDIDATE_READY\",\n      \"attempt_id\": \"193a838af89f45a58cda2f6b99d10336\",\n      \"version\": \"317f462681914c64873ae8fc84ad961e\",\n      \"result_id\": \"sha256:c8e5ebc71c56c0c510385ca4a6c7414bf0e44c833dd421c039025d91c94dd48c\",\n      \"result_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B02/periods/FY2025/results/317f462681914c64873ae8fc84ad961e\",\n      \"calculation_performed\": true,\n      \"new_candidate_created\": true,\n      \"result_reason_code\": \"PASS\",\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"requested_fiscal_year\": 2025,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:c8e5ebc71c56c0c510385ca4a6c7414bf0e44c833dd421c039025d91c94dd48c\",\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B02/periods/FY2025/results/317f462681914c64873ae8fc84ad961e\",\n      \"program_version\": {\n        \"commit\": \"c99b19dd9f5fb7af2afba9ec1526b03efc955efd\",\n        \"has_uncommitted_changes\": true\n      }\n    }\n  ],\n  \"source_root\": \"/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs\",\n  \"program_root\": \"/Users/lyuhongwang/.codex/worktrees/issue47-guide-received-main-20261011/SEC_metrics\",\n  \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state\",\n  \"output_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-remaining-fixed-xdvz8_y0/runs/20261011T074319Z-a7375942\",\n  \"source_mode\": \"SAVED_ONLY_NO_ONLINE_DISCOVERY\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false,\n  \"selected_fiscal_years\": [\n    2023,\n    2024,\n    2025\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "name": "forbidden-repeat-2023-2025",
+      "seconds": 4.59390245800023,
+      "exit": 0,
+      "arguments": [
+        "run",
+        "--company",
+        "lumen_technologies",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2023",
+        "--fiscal-year-end",
+        "2025",
+        "--metric",
+        "B01",
+        "--metric",
+        "B02",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-remaining-fixed-xdvz8_y0/runs"
+      ],
+      "stdout": "{\n  \"elapsed_seconds\": 4.1238181669996266,\n  \"record_type\": \"ORDINARY_COMPANY_EXECUTION_V1\",\n  \"company_id\": \"lumen_technologies\",\n  \"run_id\": \"20261011T074400Z-86b83cdf\",\n  \"status\": \"FLOW_COMPLETED\",\n  \"selected_metrics\": [\n    \"B01\",\n    \"B02\"\n  ],\n  \"metrics\": [\n    {\n      \"metric_id\": \"B01\",\n      \"status\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"attempt_id\": \"685860d671874bd1a77b40c8135ef341\",\n      \"version\": \"dd2661acd44742289ff69dcf7482fd6b\",\n      \"result_id\": \"sha256:a5f65cd7e743648df76126fc2a743c2b9c164c397c27f78bc83b697b56a29f95\",\n      \"result_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B01/periods/FY2023/results/dd2661acd44742289ff69dcf7482fd6b\",\n      \"result_reason_code\": \"PASS\",\n      \"raw_input_unchanged\": true,\n      \"calculation_performed\": false,\n      \"new_candidate_created\": false,\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"requested_fiscal_year\": 2023,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:a5f65cd7e743648df76126fc2a743c2b9c164c397c27f78bc83b697b56a29f95\",\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B01/periods/FY2023/results/dd2661acd44742289ff69dcf7482fd6b\",\n      \"program_version\": {\n        \"commit\": \"c99b19dd9f5fb7af2afba9ec1526b03efc955efd\",\n        \"has_uncommitted_changes\": true\n      }\n    },\n    {\n      \"metric_id\": \"B02\",\n      \"status\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"attempt_id\": \"ba7491a972a04ffcbce196334a645a0a\",\n      \"version\": \"ff7b96b30f3b41ab99ac5d8de10c1378\",\n      \"result_id\": \"sha256:81b3c8d4b98c8fdc09241a6f12c0f18298023ec0192522505b6dcc26476ba6f6\",\n      \"result_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B02/periods/FY2023/results/ff7b96b30f3b41ab99ac5d8de10c1378\",\n      \"result_reason_code\": \"PASS\",\n      \"raw_input_unchanged\": true,\n      \"calculation_performed\": false,\n      \"new_candidate_created\": false,\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"requested_fiscal_year\": 2023,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:81b3c8d4b98c8fdc09241a6f12c0f18298023ec0192522505b6dcc26476ba6f6\",\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B02/periods/FY2023/results/ff7b96b30f3b41ab99ac5d8de10c1378\",\n      \"program_version\": {\n        \"commit\": \"c99b19dd9f5fb7af2afba9ec1526b03efc955efd\",\n        \"has_uncommitted_changes\": true\n      }\n    },\n    {\n      \"metric_id\": \"B01\",\n      \"status\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"attempt_id\": \"1b4fcc781e564f21b3fe33b299650344\",\n      \"version\": \"01ade172a32945aca7f41524f608937b\",\n      \"result_id\": \"sha256:551d671bbab69da3f2dca2aa130414bc6fba46e2c63f6a3f2b7e1c58bbefa03b\",\n      \"result_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B01/periods/FY2024/results/01ade172a32945aca7f41524f608937b\",\n      \"result_reason_code\": \"PASS\",\n      \"raw_input_unchanged\": true,\n      \"calculation_performed\": false,\n      \"new_candidate_created\": false,\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"requested_fiscal_year\": 2024,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:551d671bbab69da3f2dca2aa130414bc6fba46e2c63f6a3f2b7e1c58bbefa03b\",\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B01/periods/FY2024/results/01ade172a32945aca7f41524f608937b\",\n      \"program_version\": {\n        \"commit\": \"c99b19dd9f5fb7af2afba9ec1526b03efc955efd\",\n        \"has_uncommitted_changes\": true\n      }\n    },\n    {\n      \"metric_id\": \"B02\",\n      \"status\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"attempt_id\": \"2c955f1acad24608b6ea5681602066be\",\n      \"version\": \"a83ec63fce624e5c959cd6f1cbb5720e\",\n      \"result_id\": \"sha256:9a9cf5966b1675d0bac4e6908893f3567078894611cf479b2462d23428aa28c2\",\n      \"result_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B02/periods/FY2024/results/a83ec63fce624e5c959cd6f1cbb5720e\",\n      \"result_reason_code\": \"PASS\",\n      \"raw_input_unchanged\": true,\n      \"calculation_performed\": false,\n      \"new_candidate_created\": false,\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"requested_fiscal_year\": 2024,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:9a9cf5966b1675d0bac4e6908893f3567078894611cf479b2462d23428aa28c2\",\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B02/periods/FY2024/results/a83ec63fce624e5c959cd6f1cbb5720e\",\n      \"program_version\": {\n        \"commit\": \"c99b19dd9f5fb7af2afba9ec1526b03efc955efd\",\n        \"has_uncommitted_changes\": true\n      }\n    },\n    {\n      \"metric_id\": \"B01\",\n      \"status\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"attempt_id\": \"c24bbfa1f7534da2aba1dba537c80ee6\",\n      \"version\": \"4ffa3fb74c2d4fdf9b6e869bbaabebf3\",\n      \"result_id\": \"sha256:f2d5abfbdfa8c9a0642c240d2fb5688f15ce7f49f632b96a182f04710199da6c\",\n      \"result_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B01/periods/FY2025/results/4ffa3fb74c2d4fdf9b6e869bbaabebf3\",\n      \"result_reason_code\": \"PASS\",\n      \"raw_input_unchanged\": true,\n      \"calculation_performed\": false,\n      \"new_candidate_created\": false,\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"requested_fiscal_year\": 2025,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:f2d5abfbdfa8c9a0642c240d2fb5688f15ce7f49f632b96a182f04710199da6c\",\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B01/periods/FY2025/results/4ffa3fb74c2d4fdf9b6e869bbaabebf3\",\n      \"program_version\": {\n        \"commit\": \"c99b19dd9f5fb7af2afba9ec1526b03efc955efd\",\n        \"has_uncommitted_changes\": true\n      }\n    },\n    {\n      \"metric_id\": \"B02\",\n      \"status\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"attempt_id\": \"0a7ab07638c7480f9351ce4fc97d0825\",\n      \"version\": \"317f462681914c64873ae8fc84ad961e\",\n      \"result_id\": \"sha256:c8e5ebc71c56c0c510385ca4a6c7414bf0e44c833dd421c039025d91c94dd48c\",\n      \"result_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B02/periods/FY2025/results/317f462681914c64873ae8fc84ad961e\",\n      \"result_reason_code\": \"PASS\",\n      \"raw_input_unchanged\": true,\n      \"calculation_performed\": false,\n      \"new_candidate_created\": false,\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"requested_fiscal_year\": 2025,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:c8e5ebc71c56c0c510385ca4a6c7414bf0e44c833dd421c039025d91c94dd48c\",\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B02/periods/FY2025/results/317f462681914c64873ae8fc84ad961e\",\n      \"program_version\": {\n        \"commit\": \"c99b19dd9f5fb7af2afba9ec1526b03efc955efd\",\n        \"has_uncommitted_changes\": true\n      }\n    }\n  ],\n  \"source_root\": \"/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs\",\n  \"program_root\": \"/Users/lyuhongwang/.codex/worktrees/issue47-guide-received-main-20261011/SEC_metrics\",\n  \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state\",\n  \"output_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-remaining-fixed-xdvz8_y0/runs/20261011T074400Z-86b83cdf\",\n  \"source_mode\": \"SAVED_ONLY_NO_ONLINE_DISCOVERY\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false,\n  \"selected_fiscal_years\": [\n    2023,\n    2024,\n    2025\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "name": "independent-five-year-read",
+      "seconds": 0.8274672919997101,
+      "exit": 0,
+      "arguments": [
+        "results",
+        "--company",
+        "lumen_technologies",
+        "--state-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state",
+        "--output-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-remaining-fixed-xdvz8_y0/read"
+      ],
+      "stdout": "{\n  \"elapsed_seconds\": 0.36272016700058884,\n  \"record_type\": \"ORDINARY_COMPANY_RESULT_VIEW_V1\",\n  \"company_id\": \"lumen_technologies\",\n  \"source_root\": \"/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs\",\n  \"metrics\": [\n    {\n      \"metric_id\": \"B01\",\n      \"result_id\": \"sha256:a5f65cd7e743648df76126fc2a743c2b9c164c397c27f78bc83b697b56a29f95\",\n      \"period_start\": \"2023-01-01\",\n      \"period_end\": \"2023-12-31\",\n      \"fiscal_year\": 2023,\n      \"value\": \"14557000000\",\n      \"unit\": \"USD\",\n      \"publication\": \"PUBLISHED\",\n      \"quality\": \"EXACT\",\n      \"reason_code\": \"PASS\",\n      \"result_validity\": \"SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED\",\n      \"defect_holds\": [],\n      \"latest_observation\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"requested_in_latest_execution\": true,\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B01/periods/FY2023/results/dd2661acd44742289ff69dcf7482fd6b\"\n    },\n    {\n      \"metric_id\": \"B02\",\n      \"result_id\": \"sha256:81b3c8d4b98c8fdc09241a6f12c0f18298023ec0192522505b6dcc26476ba6f6\",\n      \"period_start\": \"2023-01-01\",\n      \"period_end\": \"2023-12-31\",\n      \"fiscal_year\": 2023,\n      \"value\": \"-0.1671243849410687721707289164\",\n      \"unit\": \"ratio\",\n      \"publication\": \"PUBLISHED\",\n      \"quality\": \"EXACT\",\n      \"reason_code\": \"PASS\",\n      \"result_validity\": \"SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED\",\n      \"defect_holds\": [],\n      \"latest_observation\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"requested_in_latest_execution\": true,\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B02/periods/FY2023/results/ff7b96b30f3b41ab99ac5d8de10c1378\"\n    },\n    {\n      \"metric_id\": \"B01\",\n      \"result_id\": \"sha256:551d671bbab69da3f2dca2aa130414bc6fba46e2c63f6a3f2b7e1c58bbefa03b\",\n      \"period_start\": \"2024-01-01\",\n      \"period_end\": \"2024-12-31\",\n      \"fiscal_year\": 2024,\n      \"value\": \"13108000000\",\n      \"unit\": \"USD\",\n      \"publication\": \"PUBLISHED\",\n      \"quality\": \"EXACT\",\n      \"reason_code\": \"PASS\",\n      \"result_validity\": \"SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED\",\n      \"defect_holds\": [],\n      \"latest_observation\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"requested_in_latest_execution\": true,\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B01/periods/FY2024/results/01ade172a32945aca7f41524f608937b\"\n    },\n    {\n      \"metric_id\": \"B02\",\n      \"result_id\": \"sha256:9a9cf5966b1675d0bac4e6908893f3567078894611cf479b2462d23428aa28c2\",\n      \"period_start\": \"2024-01-01\",\n      \"period_end\": \"2024-12-31\",\n      \"fiscal_year\": 2024,\n      \"value\": \"-0.09953974033111217970735728515\",\n      \"unit\": \"ratio\",\n      \"publication\": \"PUBLISHED\",\n      \"quality\": \"EXACT\",\n      \"reason_code\": \"PASS\",\n      \"result_validity\": \"SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED\",\n      \"defect_holds\": [],\n      \"latest_observation\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"requested_in_latest_execution\": true,\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B02/periods/FY2024/results/a83ec63fce624e5c959cd6f1cbb5720e\"\n    },\n    {\n      \"metric_id\": \"B01\",\n      \"result_id\": \"sha256:f2d5abfbdfa8c9a0642c240d2fb5688f15ce7f49f632b96a182f04710199da6c\",\n      \"period_start\": \"2025-01-01\",\n      \"period_end\": \"2025-12-31\",\n      \"fiscal_year\": 2025,\n      \"value\": \"12402000000\",\n      \"unit\": \"USD\",\n      \"publication\": \"PUBLISHED\",\n      \"quality\": \"EXACT\",\n      \"reason_code\": \"PASS\",\n      \"result_validity\": \"SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED\",\n      \"defect_holds\": [],\n      \"latest_observation\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"requested_in_latest_execution\": true,\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B01/periods/FY2025/results/4ffa3fb74c2d4fdf9b6e869bbaabebf3\"\n    },\n    {\n      \"metric_id\": \"B02\",\n      \"result_id\": \"sha256:c8e5ebc71c56c0c510385ca4a6c7414bf0e44c833dd421c039025d91c94dd48c\",\n      \"period_start\": \"2025-01-01\",\n      \"period_end\": \"2025-12-31\",\n      \"fiscal_year\": 2025,\n      \"value\": \"-0.05386023802258162953921269454\",\n      \"unit\": \"ratio\",\n      \"publication\": \"PUBLISHED\",\n      \"quality\": \"EXACT\",\n      \"reason_code\": \"PASS\",\n      \"result_validity\": \"SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED\",\n      \"defect_holds\": [],\n      \"latest_observation\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"requested_in_latest_execution\": true,\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B02/periods/FY2025/results/317f462681914c64873ae8fc84ad961e\"\n    },\n    {\n      \"metric_id\": \"B01\",\n      \"result_id\": \"sha256:66aa415282cd280924076789aed3b614aafc49aec1c85b33ea7e9a3861de1901\",\n      \"period_start\": \"2021-01-01\",\n      \"period_end\": \"2021-12-31\",\n      \"fiscal_year\": 2021,\n      \"value\": \"19687000000\",\n      \"unit\": \"USD\",\n      \"publication\": \"PUBLISHED\",\n      \"quality\": \"EXACT\",\n      \"reason_code\": \"PASS\",\n      \"result_validity\": \"SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED\",\n      \"defect_holds\": [],\n      \"latest_observation\": \"NOT_REQUESTED_IN_LATEST_EXECUTION\",\n      \"requested_in_latest_execution\": false,\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B01/periods/FY2021/results/add5f198d6ae428db89da7f5d13cd596\"\n    },\n    {\n      \"metric_id\": \"B01\",\n      \"result_id\": \"sha256:8d8e3e6ad3815a9478a33c1a3727dfb217997adc132ff47e47ec96769886e0db\",\n      \"period_start\": \"2022-01-01\",\n      \"period_end\": \"2022-12-31\",\n      \"fiscal_year\": 2022,\n      \"value\": \"17478000000\",\n      \"unit\": \"USD\",\n      \"publication\": \"PUBLISHED\",\n      \"quality\": \"EXACT\",\n      \"reason_code\": \"PASS\",\n      \"result_validity\": \"SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED\",\n      \"defect_holds\": [],\n      \"latest_observation\": \"NOT_REQUESTED_IN_LATEST_EXECUTION\",\n      \"requested_in_latest_execution\": false,\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B01/periods/FY2022/results/3503eaf997d54a1d9554bfa25167d57c\"\n    },\n    {\n      \"metric_id\": \"B02\",\n      \"result_id\": \"sha256:9291eb5302107ad06485e2677d393b467ec30652e2aa9777e22c7b4fc622018b\",\n      \"period_start\": \"2021-01-01\",\n      \"period_end\": \"2021-12-31\",\n      \"fiscal_year\": 2021,\n      \"value\": \"-0.0494882193897257628427964465\",\n      \"unit\": \"ratio\",\n      \"publication\": \"PUBLISHED\",\n      \"quality\": \"EXACT\",\n      \"reason_code\": \"PASS\",\n      \"result_validity\": \"SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED\",\n      \"defect_holds\": [],\n      \"latest_observation\": \"NOT_REQUESTED_IN_LATEST_EXECUTION\",\n      \"requested_in_latest_execution\": false,\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B02/periods/FY2021/results/9887a0362f654295bc23ffd2b87bbb30\"\n    },\n    {\n      \"metric_id\": \"B02\",\n      \"result_id\": \"sha256:a526ff2381e16e1b0089ba7c706087d1ddde4553a1f7ca6e18b689c24bc21de6\",\n      \"period_start\": \"2022-01-01\",\n      \"period_end\": \"2022-12-31\",\n      \"fiscal_year\": 2022,\n      \"value\": \"-0.1122060242799817138213033982\",\n      \"unit\": \"ratio\",\n      \"publication\": \"PUBLISHED\",\n      \"quality\": \"EXACT\",\n      \"reason_code\": \"PASS\",\n      \"result_validity\": \"SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED\",\n      \"defect_holds\": [],\n      \"latest_observation\": \"NOT_REQUESTED_IN_LATEST_EXECUTION\",\n      \"requested_in_latest_execution\": false,\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B02/periods/FY2022/results/8ded5feb26e1468fa95c01e38f338c7a\"\n    }\n  ],\n  \"source_freshness\": \"NOT_CHECKED_BY_SAVED_READER\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false,\n  \"output_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-remaining-fixed-xdvz8_y0/read\"\n}\n",
+      "stderr": ""
+    }
+  ],
+  "rows": [
+    {
+      "company": "Lumen Technologies",
+      "cik": "18926",
+      "metric_id": "B01",
+      "metric_name": "Revenue",
+      "value": "14557000000",
+      "unit": "USD",
+      "status": "OK",
+      "source_class": "STD_XBRL",
+      "formula": "direct",
+      "period_start": "2023-01-01",
+      "period_end": "2023-12-31",
+      "fiscal_year": "2023",
+      "fiscal_period": "ANNUAL",
+      "accession": "0000018926-24-000016",
+      "form": "10-K",
+      "filed_date": "2024-02-22",
+      "concept_or_section": "Revenues",
+      "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2023, \"period_end\": \"2023-12-31\", \"period_start\": \"2023-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"entity_scope\": \"registrant\", \"period_basis\": \"source_annual_duration\"}, \"selection\": {\"income_observation_checks\": [{\"observation_id\": \"sha256:589836a9d22d082c3b4686dbd503159f30a6555ca93ca7c6e6326921e7ee26af\", \"source_roles\": [\"primary\", \"xml\"]}], \"selected_revenue_scope\": {\"complete_scope_proven\": true, \"scope_id\": \"sha256:228c4b5a3abd08525483f331c79e7ef9b684bbaa6732a186b9549103f3f83bee\", \"status\": \"REPORTED_CONSOLIDATED_TOTAL\"}}, \"source_reference_ids\": [\"sha256:8daae18007567b32df57dfbf2f36af2471a927c13846b99a4869f84b9921dd58\", \"sha256:b4e4067bc0670fe6e348da70f6e1ceb3749deda5c938434cb1c09a0318ace8aa\", \"sha256:fd70e81407665f4ef977d9032575996f2e75a830b345bea241044b1d801c4aea\", \"sha256:ca48103263d349b2deb616ca6c61810bb845ad1e5689b8a5812c3a9d17b25be8\", \"sha256:6633f31f94c7e5a6e149ad2d76a0c601e0ad9a1780b84acb95a690d1d97519e7\"]}",
+      "confidence": "",
+      "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+      "company_id": "lumen_technologies",
+      "result_id": "sha256:a5f65cd7e743648df76126fc2a743c2b9c164c397c27f78bc83b697b56a29f95",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B01/periods/FY2023/results/dd2661acd44742289ff69dcf7482fd6b",
+      "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+      "period_role": "REQUESTED_RESULT",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+      "defect_holds": "[]",
+      "requested_in_latest_execution": "True"
+    },
+    {
+      "company": "Lumen Technologies",
+      "cik": "18926",
+      "metric_id": "B02",
+      "metric_name": "Revenue YoY growth",
+      "value": "-0.1671243849410687721707289164",
+      "unit": "ratio",
+      "status": "OK",
+      "source_class": "DERIVED",
+      "formula": "",
+      "period_start": "2023-01-01",
+      "period_end": "2023-12-31",
+      "fiscal_year": "2023",
+      "fiscal_period": "ANNUAL",
+      "accession": "0000018926-24-000016;0000018926-23-000013",
+      "form": "10-K",
+      "filed_date": "2024-02-22;2023-02-23",
+      "concept_or_section": "Revenue YoY growth",
+      "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2023, \"period_end\": \"2023-12-31\", \"period_start\": \"2023-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"coverage\": \"deterministic_source_set\", \"fiscal_year\": 2023}, \"selection\": {\"paired_revenue_scopes\": {\"current\": {\"complete_scope_proven\": true, \"scope_id\": \"sha256:8f8cc0eb322aae488a42933f8604844b728243d1e8f915015f2d945d0d45f53f\", \"status\": \"REPORTED_CONSOLIDATED_TOTAL\"}, \"prior\": {\"complete_scope_proven\": true, \"scope_id\": \"sha256:9fa1a04bc6c9d74bd697bc220c6dece3817dba770080c50e3c444f27c74b726e\", \"status\": \"REPORTED_CONSOLIDATED_TOTAL\"}}}, \"source_reference_ids\": [\"sha256:8daae18007567b32df57dfbf2f36af2471a927c13846b99a4869f84b9921dd58\", \"sha256:b4e4067bc0670fe6e348da70f6e1ceb3749deda5c938434cb1c09a0318ace8aa\", \"sha256:fd70e81407665f4ef977d9032575996f2e75a830b345bea241044b1d801c4aea\", \"sha256:7c6e04141f4a3f66882e891cfae9ac06214ca9e2fdceac4a8e29cfee8ae0e2f9\", \"sha256:6adf06f3f314dc364b40a4ba4c435c35bce235165b0a1292d7fc2cf3d0012401\", \"sha256:ca48103263d349b2deb616ca6c61810bb845ad1e5689b8a5812c3a9d17b25be8\", \"sha256:6633f31f94c7e5a6e149ad2d76a0c601e0ad9a1780b84acb95a690d1d97519e7\", \"sha256:039568eb75f503436e2b8630b715109d10e750b6feae1628c3777c372e9d3254\", \"sha256:85c0287f448f142e933393895181edc38209169c37e871485d0eac808f29a7bd\"]}",
+      "confidence": "",
+      "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+      "company_id": "lumen_technologies",
+      "result_id": "sha256:81b3c8d4b98c8fdc09241a6f12c0f18298023ec0192522505b6dcc26476ba6f6",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B02/periods/FY2023/results/ff7b96b30f3b41ab99ac5d8de10c1378",
+      "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+      "period_role": "REQUESTED_RESULT",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+      "defect_holds": "[]",
+      "requested_in_latest_execution": "True"
+    },
+    {
+      "company": "Lumen Technologies",
+      "cik": "18926",
+      "metric_id": "B01",
+      "metric_name": "Revenue",
+      "value": "13108000000",
+      "unit": "USD",
+      "status": "OK",
+      "source_class": "STD_XBRL",
+      "formula": "direct",
+      "period_start": "2024-01-01",
+      "period_end": "2024-12-31",
+      "fiscal_year": "2024",
+      "fiscal_period": "ANNUAL",
+      "accession": "0000018926-25-000010",
+      "form": "10-K",
+      "filed_date": "2025-02-20",
+      "concept_or_section": "Revenues",
+      "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2024, \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"entity_scope\": \"registrant\", \"period_basis\": \"source_annual_duration\"}, \"selection\": {\"income_observation_checks\": [{\"observation_id\": \"sha256:9da9c29fa65fa3e2c6b753ec26c320bcdab17895918d32dae019f1ff4d51ef3e\", \"source_roles\": [\"primary\", \"xml\"]}], \"selected_revenue_scope\": {\"complete_scope_proven\": true, \"scope_id\": \"sha256:9d3c76750e825c6f4592c10ff4e1d60b5553b2fc1af2960f2f8edaddbc5b9283\", \"status\": \"REPORTED_CONSOLIDATED_TOTAL\"}}, \"source_reference_ids\": [\"sha256:8daae18007567b32df57dfbf2f36af2471a927c13846b99a4869f84b9921dd58\", \"sha256:328dafc031a5f3ecddcb9e58064634d9139c1b463c2d61c2a427e65514641077\", \"sha256:6d45d808071b41cc6bdc83f1c20749c7fc7ad1aae26e138a907df8b2f98fc65f\", \"sha256:dc8a0705b882e3088c531d325991ad89b6f99e42832af7c497b7a8cd8a7ca676\", \"sha256:df1734bc1e2c78ba48ee1e6f67c45e727000cde3274acc77daa71fc43b2cffe8\"]}",
+      "confidence": "",
+      "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+      "company_id": "lumen_technologies",
+      "result_id": "sha256:551d671bbab69da3f2dca2aa130414bc6fba46e2c63f6a3f2b7e1c58bbefa03b",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B01/periods/FY2024/results/01ade172a32945aca7f41524f608937b",
+      "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+      "period_role": "REQUESTED_RESULT",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+      "defect_holds": "[]",
+      "requested_in_latest_execution": "True"
+    },
+    {
+      "company": "Lumen Technologies",
+      "cik": "18926",
+      "metric_id": "B02",
+      "metric_name": "Revenue YoY growth",
+      "value": "-0.09953974033111217970735728515",
+      "unit": "ratio",
+      "status": "OK",
+      "source_class": "DERIVED",
+      "formula": "",
+      "period_start": "2024-01-01",
+      "period_end": "2024-12-31",
+      "fiscal_year": "2024",
+      "fiscal_period": "ANNUAL",
+      "accession": "0000018926-25-000010;0000018926-24-000016",
+      "form": "10-K",
+      "filed_date": "2025-02-20;2024-02-22",
+      "concept_or_section": "Revenue YoY growth",
+      "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2024, \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"coverage\": \"deterministic_source_set\", \"fiscal_year\": 2024}, \"selection\": {\"paired_revenue_scopes\": {\"current\": {\"complete_scope_proven\": true, \"scope_id\": \"sha256:5675b03376bd57bd0a1a325c643782b141199efa485578f8f0d9d30192117cab\", \"status\": \"REPORTED_CONSOLIDATED_TOTAL\"}, \"prior\": {\"complete_scope_proven\": true, \"scope_id\": \"sha256:c7a102b91b012cef8580bcd65772e48d6be0e15ddc57a179364158d8c142b66d\", \"status\": \"REPORTED_CONSOLIDATED_TOTAL\"}}}, \"source_reference_ids\": [\"sha256:8daae18007567b32df57dfbf2f36af2471a927c13846b99a4869f84b9921dd58\", \"sha256:328dafc031a5f3ecddcb9e58064634d9139c1b463c2d61c2a427e65514641077\", \"sha256:6d45d808071b41cc6bdc83f1c20749c7fc7ad1aae26e138a907df8b2f98fc65f\", \"sha256:b4e4067bc0670fe6e348da70f6e1ceb3749deda5c938434cb1c09a0318ace8aa\", \"sha256:fd70e81407665f4ef977d9032575996f2e75a830b345bea241044b1d801c4aea\", \"sha256:dc8a0705b882e3088c531d325991ad89b6f99e42832af7c497b7a8cd8a7ca676\", \"sha256:df1734bc1e2c78ba48ee1e6f67c45e727000cde3274acc77daa71fc43b2cffe8\", \"sha256:ca48103263d349b2deb616ca6c61810bb845ad1e5689b8a5812c3a9d17b25be8\", \"sha256:6633f31f94c7e5a6e149ad2d76a0c601e0ad9a1780b84acb95a690d1d97519e7\"]}",
+      "confidence": "",
+      "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+      "company_id": "lumen_technologies",
+      "result_id": "sha256:9a9cf5966b1675d0bac4e6908893f3567078894611cf479b2462d23428aa28c2",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B02/periods/FY2024/results/a83ec63fce624e5c959cd6f1cbb5720e",
+      "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+      "period_role": "REQUESTED_RESULT",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+      "defect_holds": "[]",
+      "requested_in_latest_execution": "True"
+    },
+    {
+      "company": "Lumen Technologies",
+      "cik": "18926",
+      "metric_id": "B01",
+      "metric_name": "Revenue",
+      "value": "12402000000",
+      "unit": "USD",
+      "status": "OK",
+      "source_class": "STD_XBRL",
+      "formula": "direct",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "fiscal_year": "2025",
+      "fiscal_period": "ANNUAL",
+      "accession": "0000018926-26-000014",
+      "form": "10-K",
+      "filed_date": "2026-02-20",
+      "concept_or_section": "Revenues",
+      "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2025, \"period_end\": \"2025-12-31\", \"period_start\": \"2025-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"entity_scope\": \"registrant\", \"period_basis\": \"source_annual_duration\"}, \"selection\": {\"income_observation_checks\": [{\"observation_id\": \"sha256:e63389f67d2c9ab4c6c76a6171e147548a302f4203d23595191d7209e49873bc\", \"source_roles\": [\"primary\", \"xml\"]}], \"selected_revenue_scope\": {\"complete_scope_proven\": true, \"scope_id\": \"sha256:4aafff6acd1b672894b4a5df11b43bf41adf148fc85625e522820e975c242a8e\", \"status\": \"REPORTED_CONSOLIDATED_TOTAL\"}}, \"source_reference_ids\": [\"sha256:8daae18007567b32df57dfbf2f36af2471a927c13846b99a4869f84b9921dd58\", \"sha256:671a0aa3b034186748b33f6df246360d4a92b37912e089cdac7222f84f2ef892\", \"sha256:071bdc91f92a80a2a0796b194d6773c40be4b7cb12ffb8136006191b7d37be21\", \"sha256:7cbdc0db8aab88a3b567ba5f735a82f4f1192e4550cbf243f002ab1f9e5eceb7\", \"sha256:787bd8a1629605f44a4be5f393f44e7b086ee659f3b007951003f08a525c6a0b\"]}",
+      "confidence": "",
+      "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+      "company_id": "lumen_technologies",
+      "result_id": "sha256:f2d5abfbdfa8c9a0642c240d2fb5688f15ce7f49f632b96a182f04710199da6c",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B01/periods/FY2025/results/4ffa3fb74c2d4fdf9b6e869bbaabebf3",
+      "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+      "period_role": "REQUESTED_RESULT",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+      "defect_holds": "[]",
+      "requested_in_latest_execution": "True"
+    },
+    {
+      "company": "Lumen Technologies",
+      "cik": "18926",
+      "metric_id": "B02",
+      "metric_name": "Revenue YoY growth",
+      "value": "-0.05386023802258162953921269454",
+      "unit": "ratio",
+      "status": "OK",
+      "source_class": "DERIVED",
+      "formula": "",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "fiscal_year": "2025",
+      "fiscal_period": "ANNUAL",
+      "accession": "0000018926-26-000014;0000018926-25-000010",
+      "form": "10-K",
+      "filed_date": "2026-02-20;2025-02-20",
+      "concept_or_section": "Revenue YoY growth",
+      "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2025, \"period_end\": \"2025-12-31\", \"period_start\": \"2025-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"coverage\": \"deterministic_source_set\", \"fiscal_year\": 2025}, \"selection\": {\"paired_revenue_scopes\": {\"current\": {\"complete_scope_proven\": true, \"scope_id\": \"sha256:7a18b9778e2b064c87f0fbcfbbea094bd5187d718f3a10957f5bdc3932010d3d\", \"status\": \"REPORTED_CONSOLIDATED_TOTAL\"}, \"prior\": {\"complete_scope_proven\": true, \"scope_id\": \"sha256:7cdab3443e8fce0d4f74f22742579e5f66c1687ba2667f9f59d207c785229dc5\", \"status\": \"REPORTED_CONSOLIDATED_TOTAL\"}}}, \"source_reference_ids\": [\"sha256:8daae18007567b32df57dfbf2f36af2471a927c13846b99a4869f84b9921dd58\", \"sha256:671a0aa3b034186748b33f6df246360d4a92b37912e089cdac7222f84f2ef892\", \"sha256:071bdc91f92a80a2a0796b194d6773c40be4b7cb12ffb8136006191b7d37be21\", \"sha256:328dafc031a5f3ecddcb9e58064634d9139c1b463c2d61c2a427e65514641077\", \"sha256:6d45d808071b41cc6bdc83f1c20749c7fc7ad1aae26e138a907df8b2f98fc65f\", \"sha256:7cbdc0db8aab88a3b567ba5f735a82f4f1192e4550cbf243f002ab1f9e5eceb7\", \"sha256:787bd8a1629605f44a4be5f393f44e7b086ee659f3b007951003f08a525c6a0b\", \"sha256:dc8a0705b882e3088c531d325991ad89b6f99e42832af7c497b7a8cd8a7ca676\", \"sha256:df1734bc1e2c78ba48ee1e6f67c45e727000cde3274acc77daa71fc43b2cffe8\"]}",
+      "confidence": "",
+      "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+      "company_id": "lumen_technologies",
+      "result_id": "sha256:c8e5ebc71c56c0c510385ca4a6c7414bf0e44c833dd421c039025d91c94dd48c",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B02/periods/FY2025/results/317f462681914c64873ae8fc84ad961e",
+      "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+      "period_role": "REQUESTED_RESULT",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+      "defect_holds": "[]",
+      "requested_in_latest_execution": "True"
+    },
+    {
+      "company": "Lumen Technologies",
+      "cik": "18926",
+      "metric_id": "B01",
+      "metric_name": "Revenue",
+      "value": "19687000000",
+      "unit": "USD",
+      "status": "OK",
+      "source_class": "STD_XBRL",
+      "formula": "direct",
+      "period_start": "2021-01-01",
+      "period_end": "2021-12-31",
+      "fiscal_year": "2021",
+      "fiscal_period": "ANNUAL",
+      "accession": "0000018926-22-000007",
+      "form": "10-K",
+      "filed_date": "2022-02-24",
+      "concept_or_section": "Revenues",
+      "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2021, \"period_end\": \"2021-12-31\", \"period_start\": \"2021-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"entity_scope\": \"registrant\", \"period_basis\": \"source_annual_duration\"}, \"selection\": {\"income_observation_checks\": [{\"observation_id\": \"sha256:1b843b0b1cf955d1281e37e5a9060c2480dcb89e63f76784727335ab9ee6ff7b\", \"source_roles\": [\"primary\", \"xml\"]}], \"selected_revenue_scope\": {\"complete_scope_proven\": true, \"scope_id\": \"sha256:eb2f4a030f6157ff84b923d93c906b107a9e21b9b4fe211ebf417af85747a055\", \"status\": \"REPORTED_CONSOLIDATED_TOTAL\"}}, \"source_reference_ids\": [\"sha256:8daae18007567b32df57dfbf2f36af2471a927c13846b99a4869f84b9921dd58\", \"sha256:d626b0f1499ffac5781242462a1f5a490d64a1f31ebd15508c5b9c123310e02c\", \"sha256:075207a964e118c36ddc6f32d0feea7bcb8598d29ce923c5c1df697411382412\", \"sha256:e86e84e640c7b5d151cf62f73ac3e1d53edfaa7601b154b9e8cae082d8aae40e\", \"sha256:a142977f6b116401863423cc0c9969e535fe39b2287baeedb5d546a5216e6a41\"]}",
+      "confidence": "",
+      "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+      "company_id": "lumen_technologies",
+      "result_id": "sha256:66aa415282cd280924076789aed3b614aafc49aec1c85b33ea7e9a3861de1901",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B01/periods/FY2021/results/add5f198d6ae428db89da7f5d13cd596",
+      "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "local_metric_status": "NOT_REQUESTED_IN_LATEST_EXECUTION",
+      "period_role": "SAVED_RESULT_NOT_REQUESTED",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+      "defect_holds": "[]",
+      "requested_in_latest_execution": "False"
+    },
+    {
+      "company": "Lumen Technologies",
+      "cik": "18926",
+      "metric_id": "B01",
+      "metric_name": "Revenue",
+      "value": "17478000000",
+      "unit": "USD",
+      "status": "OK",
+      "source_class": "STD_XBRL",
+      "formula": "direct",
+      "period_start": "2022-01-01",
+      "period_end": "2022-12-31",
+      "fiscal_year": "2022",
+      "fiscal_period": "ANNUAL",
+      "accession": "0000018926-23-000013",
+      "form": "10-K",
+      "filed_date": "2023-02-23",
+      "concept_or_section": "Revenues",
+      "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2022, \"period_end\": \"2022-12-31\", \"period_start\": \"2022-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"entity_scope\": \"registrant\", \"period_basis\": \"source_annual_duration\"}, \"selection\": {\"income_observation_checks\": [{\"observation_id\": \"sha256:682ce0adb5fa3a4a3a4664d3d05e5d579fc024feae0912ae931a1fcfdd80e63c\", \"source_roles\": [\"primary\", \"xml\"]}], \"selected_revenue_scope\": {\"complete_scope_proven\": true, \"scope_id\": \"sha256:20320a0403a6b7d0cf74bf0b17e1c348fa24c3a8f854f2b03ccfdb756c236b8e\", \"status\": \"REPORTED_CONSOLIDATED_TOTAL\"}}, \"source_reference_ids\": [\"sha256:8daae18007567b32df57dfbf2f36af2471a927c13846b99a4869f84b9921dd58\", \"sha256:7c6e04141f4a3f66882e891cfae9ac06214ca9e2fdceac4a8e29cfee8ae0e2f9\", \"sha256:6adf06f3f314dc364b40a4ba4c435c35bce235165b0a1292d7fc2cf3d0012401\", \"sha256:039568eb75f503436e2b8630b715109d10e750b6feae1628c3777c372e9d3254\", \"sha256:85c0287f448f142e933393895181edc38209169c37e871485d0eac808f29a7bd\"]}",
+      "confidence": "",
+      "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+      "company_id": "lumen_technologies",
+      "result_id": "sha256:8d8e3e6ad3815a9478a33c1a3727dfb217997adc132ff47e47ec96769886e0db",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B01/periods/FY2022/results/3503eaf997d54a1d9554bfa25167d57c",
+      "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "local_metric_status": "NOT_REQUESTED_IN_LATEST_EXECUTION",
+      "period_role": "SAVED_RESULT_NOT_REQUESTED",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+      "defect_holds": "[]",
+      "requested_in_latest_execution": "False"
+    },
+    {
+      "company": "Lumen Technologies",
+      "cik": "18926",
+      "metric_id": "B02",
+      "metric_name": "Revenue YoY growth",
+      "value": "-0.0494882193897257628427964465",
+      "unit": "ratio",
+      "status": "OK",
+      "source_class": "DERIVED",
+      "formula": "",
+      "period_start": "2021-01-01",
+      "period_end": "2021-12-31",
+      "fiscal_year": "2021",
+      "fiscal_period": "ANNUAL",
+      "accession": "0000018926-22-000007;0000018926-21-000017",
+      "form": "10-K",
+      "filed_date": "2022-02-24;2021-02-25",
+      "concept_or_section": "Revenue YoY growth",
+      "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2021, \"period_end\": \"2021-12-31\", \"period_start\": \"2021-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"coverage\": \"deterministic_source_set\", \"fiscal_year\": 2021}, \"selection\": {\"paired_revenue_scopes\": {\"current\": {\"complete_scope_proven\": true, \"scope_id\": \"sha256:614afdee0b6a35ca2041a9e9e97f352d10760bb36b88afa2e52048b0ac1f71a7\", \"status\": \"REPORTED_CONSOLIDATED_TOTAL\"}, \"prior\": {\"complete_scope_proven\": true, \"scope_id\": \"sha256:b7889a6a0ac3a43856e5350ce319089c0c55df6a088dd9b5c15b18dd8ac757a5\", \"status\": \"REPORTED_CONSOLIDATED_TOTAL\"}}}, \"source_reference_ids\": [\"sha256:8daae18007567b32df57dfbf2f36af2471a927c13846b99a4869f84b9921dd58\", \"sha256:d626b0f1499ffac5781242462a1f5a490d64a1f31ebd15508c5b9c123310e02c\", \"sha256:075207a964e118c36ddc6f32d0feea7bcb8598d29ce923c5c1df697411382412\", \"sha256:0e5e033248946b7d9926e770f8b657c584141f115fc237881781c5547a037b17\", \"sha256:55b9afa4ff30debd5832d7a8aa872451267ed99fa4a37c2286537890bd0666ea\", \"sha256:e86e84e640c7b5d151cf62f73ac3e1d53edfaa7601b154b9e8cae082d8aae40e\", \"sha256:a142977f6b116401863423cc0c9969e535fe39b2287baeedb5d546a5216e6a41\", \"sha256:df197122890df4b822fd7bf2df344218d88c59093e10739430a523f9d67badce\", \"sha256:08403c0ce83a686ce2f508677967bed1f1f6fa0c3372c030c8c737acc6f6a601\"]}",
+      "confidence": "",
+      "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+      "company_id": "lumen_technologies",
+      "result_id": "sha256:9291eb5302107ad06485e2677d393b467ec30652e2aa9777e22c7b4fc622018b",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B02/periods/FY2021/results/9887a0362f654295bc23ffd2b87bbb30",
+      "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "local_metric_status": "NOT_REQUESTED_IN_LATEST_EXECUTION",
+      "period_role": "SAVED_RESULT_NOT_REQUESTED",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+      "defect_holds": "[]",
+      "requested_in_latest_execution": "False"
+    },
+    {
+      "company": "Lumen Technologies",
+      "cik": "18926",
+      "metric_id": "B02",
+      "metric_name": "Revenue YoY growth",
+      "value": "-0.1122060242799817138213033982",
+      "unit": "ratio",
+      "status": "OK",
+      "source_class": "DERIVED",
+      "formula": "",
+      "period_start": "2022-01-01",
+      "period_end": "2022-12-31",
+      "fiscal_year": "2022",
+      "fiscal_period": "ANNUAL",
+      "accession": "0000018926-23-000013;0000018926-22-000007",
+      "form": "10-K",
+      "filed_date": "2023-02-23;2022-02-24",
+      "concept_or_section": "Revenue YoY growth",
+      "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2022, \"period_end\": \"2022-12-31\", \"period_start\": \"2022-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"coverage\": \"deterministic_source_set\", \"fiscal_year\": 2022}, \"selection\": {\"paired_revenue_scopes\": {\"current\": {\"complete_scope_proven\": true, \"scope_id\": \"sha256:b1a8d7c26da57ce597d5ce25df9b63921c5d61b235ad57882d673e22567ece2a\", \"status\": \"REPORTED_CONSOLIDATED_TOTAL\"}, \"prior\": {\"complete_scope_proven\": true, \"scope_id\": \"sha256:2cd91f32a436cf265bc03301935c975cb4dad0310af767172595d4493f392768\", \"status\": \"REPORTED_CONSOLIDATED_TOTAL\"}}}, \"source_reference_ids\": [\"sha256:8daae18007567b32df57dfbf2f36af2471a927c13846b99a4869f84b9921dd58\", \"sha256:7c6e04141f4a3f66882e891cfae9ac06214ca9e2fdceac4a8e29cfee8ae0e2f9\", \"sha256:6adf06f3f314dc364b40a4ba4c435c35bce235165b0a1292d7fc2cf3d0012401\", \"sha256:d626b0f1499ffac5781242462a1f5a490d64a1f31ebd15508c5b9c123310e02c\", \"sha256:075207a964e118c36ddc6f32d0feea7bcb8598d29ce923c5c1df697411382412\", \"sha256:039568eb75f503436e2b8630b715109d10e750b6feae1628c3777c372e9d3254\", \"sha256:85c0287f448f142e933393895181edc38209169c37e871485d0eac808f29a7bd\", \"sha256:e86e84e640c7b5d151cf62f73ac3e1d53edfaa7601b154b9e8cae082d8aae40e\", \"sha256:a142977f6b116401863423cc0c9969e535fe39b2287baeedb5d546a5216e6a41\"]}",
+      "confidence": "",
+      "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+      "company_id": "lumen_technologies",
+      "result_id": "sha256:a526ff2381e16e1b0089ba7c706087d1ddde4553a1f7ca6e18b689c24bc21de6",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-complete-income-20261011-47/state/updates/B02/periods/FY2022/results/8ded5feb26e1468fa95c01e38f338c7a",
+      "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "local_metric_status": "NOT_REQUESTED_IN_LATEST_EXECUTION",
+      "period_role": "SAVED_RESULT_NOT_REQUESTED",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+      "defect_holds": "[]",
+      "requested_in_latest_execution": "False"
+    }
+  ],
+  "old_result_files_preserved": 49,
+  "unrequested_FY2022_files_preserved": 42,
+  "read_state_files_unchanged": 250,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "scope_checks": [
+    {
+      "metric": "B01",
+      "fiscal_year": "2023",
+      "result_id": "sha256:a5f65cd7e743648df76126fc2a743c2b9c164c397c27f78bc83b697b56a29f95",
+      "assessment_sha256": "7f1789c170a743b0a87c13d131a301bb5d79ebb513370002a8cbf8a82dfad985",
+      "scopes": {
+        "current": {
+          "scope_id": "sha256:228c4b5a3abd08525483f331c79e7ef9b684bbaa6732a186b9549103f3f83bee",
+          "status": "REPORTED_CONSOLIDATED_TOTAL",
+          "complete_scope_proven": true,
+          "source_annual": {
+            "amendments": [],
+            "company_id": "lumen_technologies",
+            "companyfacts_input": {
+              "accession": "0000018926-24-000016",
+              "company_id": "lumen_technologies",
+              "document_name": "CIK0000018926.json",
+              "request_attempt_id": "request:attempt:175e53e7f02e1e467346622c08e88b79d39d2f81f6e05ec50dc1b7fe24c0e48b",
+              "source_repo_relative_path": "evidence/request_attempts/25/256ae4e2b32df840833d7cac21b3c9b12fe4fe850259b93f76970c2b9136a7ca/CIK0000018926.json",
+              "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000018926.json",
+              "target_period": {
+                "fiscal_year": 2023,
+                "period_end": "2023-12-31",
+                "period_start": "2023-01-01"
+              }
+            },
+            "current_latest_verified": false,
+            "entity": "18926",
+            "execution": "NOT_EXECUTED",
+            "filing": {
+              "accessionNumber": "0000018926-24-000016",
+              "filingDate": "2024-02-22",
+              "form": "10-K",
+              "primaryDocument": "lumn-20231231.htm",
+              "reportDate": "2023-12-31"
+            },
+            "input_id": "sha256:00e1a7032989a2ac9e17ebdf3208a101e574cc0a8854c81cc85d84a8b486e1d1",
+            "period_selection": {
+              "amendment_policy_id": "AMENDMENTS_RETAINED_AS_SEPARATE_INPUTS_NOT_SUBSTITUTED",
+              "caller_supplied_selection_trusted": false,
+              "company_id": "lumen_technologies",
+              "current_amendments": [],
+              "current_filing": {
+                "accessionNumber": "0000018926-24-000016",
+                "filingDate": "2024-02-22",
+                "form": "10-K",
+                "primaryDocument": "lumn-20231231.htm",
+                "reportDate": "2023-12-31"
+              },
+              "dependency_filing_roles": {
+                "prior_amendment_primary": [],
+                "prior_annual_primary": "0000018926-23-000013",
+                "target_amendment_primary": [],
+                "target_primary": "0000018926-24-000016"
+              },
+              "filing_selection_policy_id": "PINNED_ANNUAL_REPORT_END_IN_COMPLETE_SAVED_SUBMISSIONS",
+              "latest_restated_values_used": false,
+              "loaded_inventories": [
+                "CIK0000018926.json"
+              ],
+              "policy_id": "ordinary_period_selection_v1",
+              "policy_sha256": "6fd86440f7b62680e7ce2fa66de9f79b900f6a2b53fc8300aee590834967ab72",
+              "prior_amendments": [],
+              "prior_filing": {
+                "accessionNumber": "0000018926-23-000013",
+                "filingDate": "2023-02-23",
+                "form": "10-K",
+                "primaryDocument": "lumn-20221231.htm",
+                "reportDate": "2022-12-31"
+              },
+              "prior_report_end": "2022-12-31",
+              "prior_status": "SAME_CIK_PRIOR_DISCOVERED",
+              "production_authorized": false,
+              "record_type": "ORDINARY_HISTORICAL_PERIOD_SELECTION",
+              "reporting_cik": "18926",
+              "requested_fiscal_year": 2023,
+              "schema_version": 1,
+              "selection_id": "sha256:f08f9bd86cfa413dd441d2e64bb338b16ce36b1fbe12e1e16016e34fa43cc826",
+              "source_set_identity": "sha256:f750f27a24d2ab96ffde52af1e8458a00e5c02b8a717cda9288c8359979cd16e",
+              "subject_policy": {
+                "cross_entity_combination_authorized": false,
+                "mode": "CONTINUOUS_PRIMARY",
+                "selected_cik": "18926"
+              },
+              "target_report_end": "2023-12-31",
+              "value_selection_policy_id": "CURRENT_AND_PRIOR_EACH_FROM_ITS_OWN_SELECTED_FILING_FIRST_REPORT"
+            },
+            "prior_period_amendments": [],
+            "production_authorized": false,
+            "selection_rule": "PINNED_ORDINARY_PERIOD_IN_COMPLETE_SAVED_SUBMISSIONS",
+            "source_evidence": "LEDGER_BOUND_SAVED_BYTES",
+            "source_proofs": [
+              {
+                "accession": "",
+                "content_sha256": "4a4759ce43286c10a8d620b980f85f88044645829b52317d78aef433789a3520",
+                "document_name": "CIK0000018926.json",
+                "request_attempt_id": "request:attempt:d57b50c6024d6fbe290daded3ec75b2369480525f55e46c05d94bb28dc9f4ecb",
+                "request_body_sha256": "4a4759ce43286c10a8d620b980f85f88044645829b52317d78aef433789a3520",
+                "request_body_size": 161786,
+                "request_headers_repo_relative_path": "evidence/request_attempts/4a/4a4759ce43286c10a8d620b980f85f88044645829b52317d78aef433789a3520/CIK0000018926.json.fb690791772e1ce9d9a187e26289468167ce76e8d5a3c08189ceed236bfc2610.headers.json",
+                "request_headers_sha256": "fb690791772e1ce9d9a187e26289468167ce76e8d5a3c08189ceed236bfc2610",
+                "request_headers_size": 736,
+                "request_locator_kind": "IMMUTABLE_ATTEMPT",
+                "request_repo_relative_path": "evidence/request_attempts/4a/4a4759ce43286c10a8d620b980f85f88044645829b52317d78aef433789a3520/CIK0000018926.json",
+                "source_url": "https://data.sec.gov/submissions/CIK0000018926.json"
+              },
+              {
+                "accession": "0000018926-24-000016",
+                "content_sha256": "57782a31cafe37915ffb44e2204a3a0ffa6c11674dac7c0e16baf77bbf8af7ac",
+                "document_name": "lumn-20231231.htm",
+                "request_attempt_id": "request:attempt:c434dbfe584da9403107e275179dd6cf7ef5d0b7568c2b7f55bdd72b40f8fc29",
+                "request_body_sha256": "57782a31cafe37915ffb44e2204a3a0ffa6c11674dac7c0e16baf77bbf8af7ac",
+                "request_body_size": 3292075,
+                "request_headers_repo_relative_path": "evidence/request_attempts/57/57782a31cafe37915ffb44e2204a3a0ffa6c11674dac7c0e16baf77bbf8af7ac/lumn-20231231.htm.82be36c41221646808af523135442f81ae80c182a122fd5556a4cb98abf0208f.headers.json",
+                "request_headers_sha256": "82be36c41221646808af523135442f81ae80c182a122fd5556a4cb98abf0208f",
+                "request_headers_size": 1684,
+                "request_locator_kind": "IMMUTABLE_ATTEMPT",
+                "request_repo_relative_path": "evidence/request_attempts/57/57782a31cafe37915ffb44e2204a3a0ffa6c11674dac7c0e16baf77bbf8af7ac/lumn-20231231.htm",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892624000016/lumn-20231231.htm"
+              },
+              {
+                "accession": "0000018926-24-000016",
+                "content_sha256": "256ae4e2b32df840833d7cac21b3c9b12fe4fe850259b93f76970c2b9136a7ca",
+                "document_name": "CIK0000018926.json",
+                "request_attempt_id": "request:attempt:175e53e7f02e1e467346622c08e88b79d39d2f81f6e05ec50dc1b7fe24c0e48b",
+                "request_body_sha256": "256ae4e2b32df840833d7cac21b3c9b12fe4fe850259b93f76970c2b9136a7ca",
+                "request_body_size": 3782932,
+                "request_headers_repo_relative_path": "evidence/request_attempts/25/256ae4e2b32df840833d7cac21b3c9b12fe4fe850259b93f76970c2b9136a7ca/CIK0000018926.json.2ed83a0f120f938310314243f59a628293e5c2d33e9057ad407622030cf0725e.headers.json",
+                "request_headers_sha256": "2ed83a0f120f938310314243f59a628293e5c2d33e9057ad407622030cf0725e",
+                "request_headers_size": 707,
+                "request_locator_kind": "IMMUTABLE_ATTEMPT",
+                "request_repo_relative_path": "evidence/request_attempts/25/256ae4e2b32df840833d7cac21b3c9b12fe4fe850259b93f76970c2b9136a7ca/CIK0000018926.json",
+                "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000018926.json"
+              }
+            ],
+            "subject_policy": {
+              "cross_entity_combination_authorized": false,
+              "mode": "CONTINUOUS_PRIMARY",
+              "selected_cik": "18926"
+            },
+            "table_input": {
+              "accession": "0000018926-24-000016",
+              "company_id": "lumen_technologies",
+              "document_name": "lumn-20231231.htm",
+              "request_attempt_id": "request:attempt:c434dbfe584da9403107e275179dd6cf7ef5d0b7568c2b7f55bdd72b40f8fc29",
+              "source_media_type": "text/html",
+              "source_repo_relative_path": "evidence/request_attempts/57/57782a31cafe37915ffb44e2204a3a0ffa6c11674dac7c0e16baf77bbf8af7ac/lumn-20231231.htm",
+              "source_role": "target_primary",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892624000016/lumn-20231231.htm",
+              "target_period": {
+                "fiscal_year": 2023,
+                "period_end": "2023-12-31",
+                "period_start": "2023-01-01"
+              }
+            },
+            "update_status": "ORIGINAL_INPUT_READY"
+          },
+          "totals": [
+            {
+              "fact": {
+                "concept": "us-gaap:Revenues",
+                "context": {
+                  "context_ref": "c-1",
+                  "dimensions": {},
+                  "entity_identifier": "0000018926",
+                  "period_end": "2023-12-31",
+                  "period_start": "2023-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "c-1",
+                  "dimensions": [],
+                  "identifiers": [
+                    {
+                      "scheme": "http://www.sec.gov/CIK",
+                      "value": "0000018926"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2023-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2023-12-31"
+                    }
+                  ],
+                  "typed_dimension_count": 0
+                },
+                "context_ref": "c-1",
+                "decimals": "-6",
+                "ordinal": 64,
+                "period_end": "2023-12-31",
+                "period_start": "2023-01-01",
+                "source_reference": {
+                  "accession": "0000018926-24-000016",
+                  "company_id": "lumen_technologies",
+                  "document_name": "lumn-20231231.htm",
+                  "raw_asset_id": "sha256:57782a31cafe37915ffb44e2204a3a0ffa6c11674dac7c0e16baf77bbf8af7ac",
+                  "record_type": "SOURCE_REFERENCE",
+                  "request_attempt_id": "request:attempt:c434dbfe584da9403107e275179dd6cf7ef5d0b7568c2b7f55bdd72b40f8fc29",
+                  "source_reference_id": "sha256:b4e4067bc0670fe6e348da70f6e1ceb3749deda5c938434cb1c09a0318ace8aa",
+                  "source_role": "target_primary",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892624000016/lumn-20231231.htm"
+                },
+                "unit": "USD",
+                "value": "14557000000"
+              },
+              "cell": {
+                "colspan": 1,
+                "column_index": 4,
+                "grid_sha256": "sha256:26beaefb36dba1403918b0fd7f4093477651e3ace29c108db8ef14145517b4aa",
+                "origin_column_index": 4,
+                "origin_row_index": 4,
+                "raw_text": "14,557&#160;",
+                "row_index": 4,
+                "rowspan": 1,
+                "table_id": "table_000030",
+                "text": "14,557"
+              },
+              "xml_check": "MATCH",
+              "unit_sources": [
+                {
+                  "kind": "visible_cell",
+                  "proof": {
+                    "colspan": 15,
+                    "column_index": 3,
+                    "grid_sha256": "sha256:26beaefb36dba1403918b0fd7f4093477651e3ace29c108db8ef14145517b4aa",
+                    "origin_column_index": 3,
+                    "origin_row_index": 3,
+                    "raw_text": "(Dollars in millions, except per share\namounts, and shares in thousands)",
+                    "row_index": 3,
+                    "rowspan": 1,
+                    "table_id": "table_000030",
+                    "text": "(Dollars in millions, except per share amounts, and shares in thousands)"
+                  },
+                  "text": "(Dollars in millions, except per share amounts, and shares in thousands)"
+                }
+              ],
+              "year_headers": [
+                {
+                  "colspan": 3,
+                  "column_index": 3,
+                  "grid_sha256": "sha256:26beaefb36dba1403918b0fd7f4093477651e3ace29c108db8ef14145517b4aa",
+                  "origin_column_index": 3,
+                  "origin_row_index": 2,
+                  "raw_text": "2023",
+                  "row_index": 2,
+                  "rowspan": 1,
+                  "table_id": "table_000030",
+                  "text": "2023"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "metric": "B02",
+      "fiscal_year": "2023",
+      "result_id": "sha256:81b3c8d4b98c8fdc09241a6f12c0f18298023ec0192522505b6dcc26476ba6f6",
+      "assessment_sha256": "50fd48f83c00b9e356653a17c51b02856a892926898cd35baadf583592950505",
+      "scopes": {
+        "current": {
+          "scope_id": "sha256:8f8cc0eb322aae488a42933f8604844b728243d1e8f915015f2d945d0d45f53f",
+          "status": "REPORTED_CONSOLIDATED_TOTAL",
+          "complete_scope_proven": true,
+          "source_annual": {
+            "company_id": "lumen_technologies",
+            "entity": "18926",
+            "filing": {
+              "accessionNumber": "0000018926-24-000016",
+              "filingDate": "2024-02-22",
+              "form": "10-K",
+              "primaryDocument": "lumn-20231231.htm",
+              "reportDate": "2023-12-31"
+            },
+            "table_input": {
+              "target_period": {
+                "fiscal_year": 2023,
+                "period_end": "2023-12-31",
+                "period_start": "2023-01-01"
+              }
+            }
+          },
+          "totals": [
+            {
+              "fact": {
+                "concept": "us-gaap:Revenues",
+                "context": {
+                  "context_ref": "c-1",
+                  "dimensions": {},
+                  "entity_identifier": "0000018926",
+                  "period_end": "2023-12-31",
+                  "period_start": "2023-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "c-1",
+                  "dimensions": [],
+                  "identifiers": [
+                    {
+                      "scheme": "http://www.sec.gov/CIK",
+                      "value": "0000018926"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2023-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2023-12-31"
+                    }
+                  ],
+                  "typed_dimension_count": 0
+                },
+                "context_ref": "c-1",
+                "decimals": "-6",
+                "ordinal": 64,
+                "period_end": "2023-12-31",
+                "period_start": "2023-01-01",
+                "source_reference": {
+                  "accession": "0000018926-24-000016",
+                  "company_id": "lumen_technologies",
+                  "document_name": "lumn-20231231.htm",
+                  "raw_asset_id": "sha256:57782a31cafe37915ffb44e2204a3a0ffa6c11674dac7c0e16baf77bbf8af7ac",
+                  "record_type": "SOURCE_REFERENCE",
+                  "request_attempt_id": "request:attempt:c434dbfe584da9403107e275179dd6cf7ef5d0b7568c2b7f55bdd72b40f8fc29",
+                  "source_reference_id": "sha256:b4e4067bc0670fe6e348da70f6e1ceb3749deda5c938434cb1c09a0318ace8aa",
+                  "source_role": "target_primary",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892624000016/lumn-20231231.htm"
+                },
+                "unit": "USD",
+                "value": "14557000000"
+              },
+              "cell": {
+                "colspan": 1,
+                "column_index": 4,
+                "grid_sha256": "sha256:26beaefb36dba1403918b0fd7f4093477651e3ace29c108db8ef14145517b4aa",
+                "origin_column_index": 4,
+                "origin_row_index": 4,
+                "raw_text": "14,557&#160;",
+                "row_index": 4,
+                "rowspan": 1,
+                "table_id": "table_000030",
+                "text": "14,557"
+              },
+              "xml_check": "MATCH",
+              "unit_sources": [
+                {
+                  "kind": "visible_cell",
+                  "proof": {
+                    "colspan": 15,
+                    "column_index": 3,
+                    "grid_sha256": "sha256:26beaefb36dba1403918b0fd7f4093477651e3ace29c108db8ef14145517b4aa",
+                    "origin_column_index": 3,
+                    "origin_row_index": 3,
+                    "raw_text": "(Dollars in millions, except per share\namounts, and shares in thousands)",
+                    "row_index": 3,
+                    "rowspan": 1,
+                    "table_id": "table_000030",
+                    "text": "(Dollars in millions, except per share amounts, and shares in thousands)"
+                  },
+                  "text": "(Dollars in millions, except per share amounts, and shares in thousands)"
+                }
+              ],
+              "year_headers": [
+                {
+                  "colspan": 3,
+                  "column_index": 3,
+                  "grid_sha256": "sha256:26beaefb36dba1403918b0fd7f4093477651e3ace29c108db8ef14145517b4aa",
+                  "origin_column_index": 3,
+                  "origin_row_index": 2,
+                  "raw_text": "2023",
+                  "row_index": 2,
+                  "rowspan": 1,
+                  "table_id": "table_000030",
+                  "text": "2023"
+                }
+              ]
+            }
+          ]
+        },
+        "prior": {
+          "scope_id": "sha256:9fa1a04bc6c9d74bd697bc220c6dece3817dba770080c50e3c444f27c74b726e",
+          "status": "REPORTED_CONSOLIDATED_TOTAL",
+          "complete_scope_proven": true,
+          "source_annual": {
+            "company_id": "lumen_technologies",
+            "entity": "18926",
+            "filing": {
+              "acceptanceDateTime": "2023-02-23T21:25:57.000Z",
+              "accessionNumber": "0000018926-23-000013",
+              "act": "34",
+              "core_type": "XBRL",
+              "fileNumber": "001-07784",
+              "filingDate": "2023-02-23",
+              "filmNumber": "23660043",
+              "form": "10-K",
+              "isInlineXBRL": 1,
+              "isXBRL": 1,
+              "isXBRLNumeric": null,
+              "items": "",
+              "metadata_origin": {
+                "inventory_name": "CIK0000018926.json",
+                "row_index": 267
+              },
+              "primaryDocDescription": "10-K",
+              "primaryDocument": "lumn-20221231.htm",
+              "reportDate": "2022-12-31",
+              "size": 23867774
+            },
+            "table_input": {
+              "target_period": {
+                "fiscal_year": 2022,
+                "period_end": "2022-12-31",
+                "period_start": "2022-01-01"
+              }
+            }
+          },
+          "totals": [
+            {
+              "fact": {
+                "concept": "us-gaap:Revenues",
+                "context": {
+                  "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+                  "dimensions": {},
+                  "entity_identifier": "0000018926",
+                  "period_end": "2022-12-31",
+                  "period_start": "2022-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+                  "dimensions": [],
+                  "identifiers": [
+                    {
+                      "scheme": "http://www.sec.gov/CIK",
+                      "value": "0000018926"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2022-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2022-12-31"
+                    }
+                  ],
+                  "typed_dimension_count": 0
+                },
+                "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+                "decimals": "-6",
+                "ordinal": 61,
+                "period_end": "2022-12-31",
+                "period_start": "2022-01-01",
+                "source_reference": {
+                  "accession": "0000018926-23-000013",
+                  "company_id": "lumen_technologies",
+                  "document_name": "lumn-20221231.htm",
+                  "raw_asset_id": "sha256:d7361b93bb6e1e2af07df2313f5b71f5b71b8a7074854c961772345ffb1f0dd7",
+                  "record_type": "SOURCE_REFERENCE",
+                  "request_attempt_id": "request:attempt:4f96adcc75725e203c4b12c221099db22ce722dbcb4e34a059e60c16acd2bba4",
+                  "source_reference_id": "sha256:7c6e04141f4a3f66882e891cfae9ac06214ca9e2fdceac4a8e29cfee8ae0e2f9",
+                  "source_role": "target_primary",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892623000013/lumn-20221231.htm"
+                },
+                "unit": "USD",
+                "value": "17478000000"
+              },
+              "cell": {
+                "colspan": 1,
+                "column_index": 4,
+                "grid_sha256": "sha256:f4c917425481547cbdfd3fcc9558c3c2f3b3d0f71b6eb3dbfa581a96429e3fec",
+                "origin_column_index": 4,
+                "origin_row_index": 4,
+                "raw_text": "17,478&#160;",
+                "row_index": 4,
+                "rowspan": 1,
+                "table_id": "table_000031",
+                "text": "17,478"
+              },
+              "xml_check": "MATCH",
+              "unit_sources": [
+                {
+                  "kind": "visible_cell",
+                  "proof": {
+                    "colspan": 15,
+                    "column_index": 3,
+                    "grid_sha256": "sha256:f4c917425481547cbdfd3fcc9558c3c2f3b3d0f71b6eb3dbfa581a96429e3fec",
+                    "origin_column_index": 3,
+                    "origin_row_index": 3,
+                    "raw_text": "(Dollars in millions, except per share\namounts, and shares in thousands)",
+                    "row_index": 3,
+                    "rowspan": 1,
+                    "table_id": "table_000031",
+                    "text": "(Dollars in millions, except per share amounts, and shares in thousands)"
+                  },
+                  "text": "(Dollars in millions, except per share amounts, and shares in thousands)"
+                }
+              ],
+              "year_headers": [
+                {
+                  "colspan": 3,
+                  "column_index": 3,
+                  "grid_sha256": "sha256:f4c917425481547cbdfd3fcc9558c3c2f3b3d0f71b6eb3dbfa581a96429e3fec",
+                  "origin_column_index": 3,
+                  "origin_row_index": 2,
+                  "raw_text": "2022",
+                  "row_index": 2,
+                  "rowspan": 1,
+                  "table_id": "table_000031",
+                  "text": "2022"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "metric": "B01",
+      "fiscal_year": "2024",
+      "result_id": "sha256:551d671bbab69da3f2dca2aa130414bc6fba46e2c63f6a3f2b7e1c58bbefa03b",
+      "assessment_sha256": "a370aba127416173776d1ba342f210bc9582db105050ecb6938ad79634363153",
+      "scopes": {
+        "current": {
+          "scope_id": "sha256:9d3c76750e825c6f4592c10ff4e1d60b5553b2fc1af2960f2f8edaddbc5b9283",
+          "status": "REPORTED_CONSOLIDATED_TOTAL",
+          "complete_scope_proven": true,
+          "source_annual": {
+            "amendments": [],
+            "company_id": "lumen_technologies",
+            "companyfacts_input": {
+              "accession": "0000018926-25-000010",
+              "company_id": "lumen_technologies",
+              "document_name": "CIK0000018926.json",
+              "request_attempt_id": "request:attempt:175e53e7f02e1e467346622c08e88b79d39d2f81f6e05ec50dc1b7fe24c0e48b",
+              "source_repo_relative_path": "evidence/request_attempts/25/256ae4e2b32df840833d7cac21b3c9b12fe4fe850259b93f76970c2b9136a7ca/CIK0000018926.json",
+              "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000018926.json",
+              "target_period": {
+                "fiscal_year": 2024,
+                "period_end": "2024-12-31",
+                "period_start": "2024-01-01"
+              }
+            },
+            "current_latest_verified": false,
+            "entity": "18926",
+            "execution": "NOT_EXECUTED",
+            "filing": {
+              "accessionNumber": "0000018926-25-000010",
+              "filingDate": "2025-02-20",
+              "form": "10-K",
+              "primaryDocument": "lumn-20241231.htm",
+              "reportDate": "2024-12-31"
+            },
+            "input_id": "sha256:927c75bcbafb7da2806f5fba8108a542ad8155f7a5f0d6148fb4a46c1e8acfd6",
+            "period_selection": {
+              "amendment_policy_id": "AMENDMENTS_RETAINED_AS_SEPARATE_INPUTS_NOT_SUBSTITUTED",
+              "caller_supplied_selection_trusted": false,
+              "company_id": "lumen_technologies",
+              "current_amendments": [],
+              "current_filing": {
+                "accessionNumber": "0000018926-25-000010",
+                "filingDate": "2025-02-20",
+                "form": "10-K",
+                "primaryDocument": "lumn-20241231.htm",
+                "reportDate": "2024-12-31"
+              },
+              "dependency_filing_roles": {
+                "prior_amendment_primary": [],
+                "prior_annual_primary": "0000018926-24-000016",
+                "target_amendment_primary": [],
+                "target_primary": "0000018926-25-000010"
+              },
+              "filing_selection_policy_id": "PINNED_ANNUAL_REPORT_END_IN_COMPLETE_SAVED_SUBMISSIONS",
+              "latest_restated_values_used": false,
+              "loaded_inventories": [
+                "CIK0000018926.json"
+              ],
+              "policy_id": "ordinary_period_selection_v1",
+              "policy_sha256": "6fd86440f7b62680e7ce2fa66de9f79b900f6a2b53fc8300aee590834967ab72",
+              "prior_amendments": [],
+              "prior_filing": {
+                "accessionNumber": "0000018926-24-000016",
+                "filingDate": "2024-02-22",
+                "form": "10-K",
+                "primaryDocument": "lumn-20231231.htm",
+                "reportDate": "2023-12-31"
+              },
+              "prior_report_end": "2023-12-31",
+              "prior_status": "SAME_CIK_PRIOR_DISCOVERED",
+              "production_authorized": false,
+              "record_type": "ORDINARY_HISTORICAL_PERIOD_SELECTION",
+              "reporting_cik": "18926",
+              "requested_fiscal_year": 2024,
+              "schema_version": 1,
+              "selection_id": "sha256:0c4bf27a2729ed07a9e359523b800ad18a039dfd22ada36c2518b19b040bb4d5",
+              "source_set_identity": "sha256:f750f27a24d2ab96ffde52af1e8458a00e5c02b8a717cda9288c8359979cd16e",
+              "subject_policy": {
+                "cross_entity_combination_authorized": false,
+                "mode": "CONTINUOUS_PRIMARY",
+                "selected_cik": "18926"
+              },
+              "target_report_end": "2024-12-31",
+              "value_selection_policy_id": "CURRENT_AND_PRIOR_EACH_FROM_ITS_OWN_SELECTED_FILING_FIRST_REPORT"
+            },
+            "prior_period_amendments": [],
+            "production_authorized": false,
+            "selection_rule": "PINNED_ORDINARY_PERIOD_IN_COMPLETE_SAVED_SUBMISSIONS",
+            "source_evidence": "LEDGER_BOUND_SAVED_BYTES",
+            "source_proofs": [
+              {
+                "accession": "",
+                "content_sha256": "4a4759ce43286c10a8d620b980f85f88044645829b52317d78aef433789a3520",
+                "document_name": "CIK0000018926.json",
+                "request_attempt_id": "request:attempt:d57b50c6024d6fbe290daded3ec75b2369480525f55e46c05d94bb28dc9f4ecb",
+                "request_body_sha256": "4a4759ce43286c10a8d620b980f85f88044645829b52317d78aef433789a3520",
+                "request_body_size": 161786,
+                "request_headers_repo_relative_path": "evidence/request_attempts/4a/4a4759ce43286c10a8d620b980f85f88044645829b52317d78aef433789a3520/CIK0000018926.json.fb690791772e1ce9d9a187e26289468167ce76e8d5a3c08189ceed236bfc2610.headers.json",
+                "request_headers_sha256": "fb690791772e1ce9d9a187e26289468167ce76e8d5a3c08189ceed236bfc2610",
+                "request_headers_size": 736,
+                "request_locator_kind": "IMMUTABLE_ATTEMPT",
+                "request_repo_relative_path": "evidence/request_attempts/4a/4a4759ce43286c10a8d620b980f85f88044645829b52317d78aef433789a3520/CIK0000018926.json",
+                "source_url": "https://data.sec.gov/submissions/CIK0000018926.json"
+              },
+              {
+                "accession": "0000018926-25-000010",
+                "content_sha256": "f49ba30f8fa1f0502dcbd84793679e66b0ca29dd4e7dc7378e236f54a1ea5297",
+                "document_name": "lumn-20241231.htm",
+                "request_attempt_id": "request:attempt:b8ea38e1a1a43e9a5e1f4ab37e2c05dd934a9c1ffb6db84abcbc290a69cd33fd",
+                "request_body_sha256": "f49ba30f8fa1f0502dcbd84793679e66b0ca29dd4e7dc7378e236f54a1ea5297",
+                "request_body_size": 3604549,
+                "request_headers_repo_relative_path": "evidence/request_attempts/f4/f49ba30f8fa1f0502dcbd84793679e66b0ca29dd4e7dc7378e236f54a1ea5297/lumn-20241231.htm.89f686a966ba68c597274f58ad8e37063f4f24583c9438fbfda392e4b028d353.headers.json",
+                "request_headers_sha256": "89f686a966ba68c597274f58ad8e37063f4f24583c9438fbfda392e4b028d353",
+                "request_headers_size": 1684,
+                "request_locator_kind": "IMMUTABLE_ATTEMPT",
+                "request_repo_relative_path": "evidence/request_attempts/f4/f49ba30f8fa1f0502dcbd84793679e66b0ca29dd4e7dc7378e236f54a1ea5297/lumn-20241231.htm",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892625000010/lumn-20241231.htm"
+              },
+              {
+                "accession": "0000018926-25-000010",
+                "content_sha256": "256ae4e2b32df840833d7cac21b3c9b12fe4fe850259b93f76970c2b9136a7ca",
+                "document_name": "CIK0000018926.json",
+                "request_attempt_id": "request:attempt:175e53e7f02e1e467346622c08e88b79d39d2f81f6e05ec50dc1b7fe24c0e48b",
+                "request_body_sha256": "256ae4e2b32df840833d7cac21b3c9b12fe4fe850259b93f76970c2b9136a7ca",
+                "request_body_size": 3782932,
+                "request_headers_repo_relative_path": "evidence/request_attempts/25/256ae4e2b32df840833d7cac21b3c9b12fe4fe850259b93f76970c2b9136a7ca/CIK0000018926.json.2ed83a0f120f938310314243f59a628293e5c2d33e9057ad407622030cf0725e.headers.json",
+                "request_headers_sha256": "2ed83a0f120f938310314243f59a628293e5c2d33e9057ad407622030cf0725e",
+                "request_headers_size": 707,
+                "request_locator_kind": "IMMUTABLE_ATTEMPT",
+                "request_repo_relative_path": "evidence/request_attempts/25/256ae4e2b32df840833d7cac21b3c9b12fe4fe850259b93f76970c2b9136a7ca/CIK0000018926.json",
+                "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000018926.json"
+              }
+            ],
+            "subject_policy": {
+              "cross_entity_combination_authorized": false,
+              "mode": "CONTINUOUS_PRIMARY",
+              "selected_cik": "18926"
+            },
+            "table_input": {
+              "accession": "0000018926-25-000010",
+              "company_id": "lumen_technologies",
+              "document_name": "lumn-20241231.htm",
+              "request_attempt_id": "request:attempt:b8ea38e1a1a43e9a5e1f4ab37e2c05dd934a9c1ffb6db84abcbc290a69cd33fd",
+              "source_media_type": "text/html",
+              "source_repo_relative_path": "evidence/request_attempts/f4/f49ba30f8fa1f0502dcbd84793679e66b0ca29dd4e7dc7378e236f54a1ea5297/lumn-20241231.htm",
+              "source_role": "target_primary",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892625000010/lumn-20241231.htm",
+              "target_period": {
+                "fiscal_year": 2024,
+                "period_end": "2024-12-31",
+                "period_start": "2024-01-01"
+              }
+            },
+            "update_status": "ORIGINAL_INPUT_READY"
+          },
+          "totals": [
+            {
+              "fact": {
+                "concept": "us-gaap:Revenues",
+                "context": {
+                  "context_ref": "c-1",
+                  "dimensions": {},
+                  "entity_identifier": "0000018926",
+                  "period_end": "2024-12-31",
+                  "period_start": "2024-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "c-1",
+                  "dimensions": [],
+                  "identifiers": [
+                    {
+                      "scheme": "http://www.sec.gov/CIK",
+                      "value": "0000018926"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2024-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2024-12-31"
+                    }
+                  ],
+                  "typed_dimension_count": 0
+                },
+                "context_ref": "c-1",
+                "decimals": "-6",
+                "ordinal": 83,
+                "period_end": "2024-12-31",
+                "period_start": "2024-01-01",
+                "source_reference": {
+                  "accession": "0000018926-25-000010",
+                  "company_id": "lumen_technologies",
+                  "document_name": "lumn-20241231.htm",
+                  "raw_asset_id": "sha256:f49ba30f8fa1f0502dcbd84793679e66b0ca29dd4e7dc7378e236f54a1ea5297",
+                  "record_type": "SOURCE_REFERENCE",
+                  "request_attempt_id": "request:attempt:b8ea38e1a1a43e9a5e1f4ab37e2c05dd934a9c1ffb6db84abcbc290a69cd33fd",
+                  "source_reference_id": "sha256:328dafc031a5f3ecddcb9e58064634d9139c1b463c2d61c2a427e65514641077",
+                  "source_role": "target_primary",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892625000010/lumn-20241231.htm"
+                },
+                "unit": "USD",
+                "value": "13108000000"
+              },
+              "cell": {
+                "colspan": 1,
+                "column_index": 4,
+                "grid_sha256": "sha256:12c2d9bb70a888dec0fcf82fc06f46cd348e43ba2a3cf14613d7e9fb8f3ce4d2",
+                "origin_column_index": 4,
+                "origin_row_index": 4,
+                "raw_text": "13,108&#160;",
+                "row_index": 4,
+                "rowspan": 1,
+                "table_id": "table_000030",
+                "text": "13,108"
+              },
+              "xml_check": "MATCH",
+              "unit_sources": [
+                {
+                  "kind": "visible_cell",
+                  "proof": {
+                    "colspan": 15,
+                    "column_index": 3,
+                    "grid_sha256": "sha256:12c2d9bb70a888dec0fcf82fc06f46cd348e43ba2a3cf14613d7e9fb8f3ce4d2",
+                    "origin_column_index": 3,
+                    "origin_row_index": 3,
+                    "raw_text": "(Dollars in millions, except per share\namounts, and shares in thousands)",
+                    "row_index": 3,
+                    "rowspan": 1,
+                    "table_id": "table_000030",
+                    "text": "(Dollars in millions, except per share amounts, and shares in thousands)"
+                  },
+                  "text": "(Dollars in millions, except per share amounts, and shares in thousands)"
+                }
+              ],
+              "year_headers": [
+                {
+                  "colspan": 3,
+                  "column_index": 3,
+                  "grid_sha256": "sha256:12c2d9bb70a888dec0fcf82fc06f46cd348e43ba2a3cf14613d7e9fb8f3ce4d2",
+                  "origin_column_index": 3,
+                  "origin_row_index": 2,
+                  "raw_text": "2024",
+                  "row_index": 2,
+                  "rowspan": 1,
+                  "table_id": "table_000030",
+                  "text": "2024"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "metric": "B02",
+      "fiscal_year": "2024",
+      "result_id": "sha256:9a9cf5966b1675d0bac4e6908893f3567078894611cf479b2462d23428aa28c2",
+      "assessment_sha256": "13b73737d4d0cdba64f3ea800c24eb0312493203f33fb2ae36295d12cf13b3c7",
+      "scopes": {
+        "current": {
+          "scope_id": "sha256:5675b03376bd57bd0a1a325c643782b141199efa485578f8f0d9d30192117cab",
+          "status": "REPORTED_CONSOLIDATED_TOTAL",
+          "complete_scope_proven": true,
+          "source_annual": {
+            "company_id": "lumen_technologies",
+            "entity": "18926",
+            "filing": {
+              "accessionNumber": "0000018926-25-000010",
+              "filingDate": "2025-02-20",
+              "form": "10-K",
+              "primaryDocument": "lumn-20241231.htm",
+              "reportDate": "2024-12-31"
+            },
+            "table_input": {
+              "target_period": {
+                "fiscal_year": 2024,
+                "period_end": "2024-12-31",
+                "period_start": "2024-01-01"
+              }
+            }
+          },
+          "totals": [
+            {
+              "fact": {
+                "concept": "us-gaap:Revenues",
+                "context": {
+                  "context_ref": "c-1",
+                  "dimensions": {},
+                  "entity_identifier": "0000018926",
+                  "period_end": "2024-12-31",
+                  "period_start": "2024-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "c-1",
+                  "dimensions": [],
+                  "identifiers": [
+                    {
+                      "scheme": "http://www.sec.gov/CIK",
+                      "value": "0000018926"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2024-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2024-12-31"
+                    }
+                  ],
+                  "typed_dimension_count": 0
+                },
+                "context_ref": "c-1",
+                "decimals": "-6",
+                "ordinal": 83,
+                "period_end": "2024-12-31",
+                "period_start": "2024-01-01",
+                "source_reference": {
+                  "accession": "0000018926-25-000010",
+                  "company_id": "lumen_technologies",
+                  "document_name": "lumn-20241231.htm",
+                  "raw_asset_id": "sha256:f49ba30f8fa1f0502dcbd84793679e66b0ca29dd4e7dc7378e236f54a1ea5297",
+                  "record_type": "SOURCE_REFERENCE",
+                  "request_attempt_id": "request:attempt:b8ea38e1a1a43e9a5e1f4ab37e2c05dd934a9c1ffb6db84abcbc290a69cd33fd",
+                  "source_reference_id": "sha256:328dafc031a5f3ecddcb9e58064634d9139c1b463c2d61c2a427e65514641077",
+                  "source_role": "target_primary",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892625000010/lumn-20241231.htm"
+                },
+                "unit": "USD",
+                "value": "13108000000"
+              },
+              "cell": {
+                "colspan": 1,
+                "column_index": 4,
+                "grid_sha256": "sha256:12c2d9bb70a888dec0fcf82fc06f46cd348e43ba2a3cf14613d7e9fb8f3ce4d2",
+                "origin_column_index": 4,
+                "origin_row_index": 4,
+                "raw_text": "13,108&#160;",
+                "row_index": 4,
+                "rowspan": 1,
+                "table_id": "table_000030",
+                "text": "13,108"
+              },
+              "xml_check": "MATCH",
+              "unit_sources": [
+                {
+                  "kind": "visible_cell",
+                  "proof": {
+                    "colspan": 15,
+                    "column_index": 3,
+                    "grid_sha256": "sha256:12c2d9bb70a888dec0fcf82fc06f46cd348e43ba2a3cf14613d7e9fb8f3ce4d2",
+                    "origin_column_index": 3,
+                    "origin_row_index": 3,
+                    "raw_text": "(Dollars in millions, except per share\namounts, and shares in thousands)",
+                    "row_index": 3,
+                    "rowspan": 1,
+                    "table_id": "table_000030",
+                    "text": "(Dollars in millions, except per share amounts, and shares in thousands)"
+                  },
+                  "text": "(Dollars in millions, except per share amounts, and shares in thousands)"
+                }
+              ],
+              "year_headers": [
+                {
+                  "colspan": 3,
+                  "column_index": 3,
+                  "grid_sha256": "sha256:12c2d9bb70a888dec0fcf82fc06f46cd348e43ba2a3cf14613d7e9fb8f3ce4d2",
+                  "origin_column_index": 3,
+                  "origin_row_index": 2,
+                  "raw_text": "2024",
+                  "row_index": 2,
+                  "rowspan": 1,
+                  "table_id": "table_000030",
+                  "text": "2024"
+                }
+              ]
+            }
+          ]
+        },
+        "prior": {
+          "scope_id": "sha256:c7a102b91b012cef8580bcd65772e48d6be0e15ddc57a179364158d8c142b66d",
+          "status": "REPORTED_CONSOLIDATED_TOTAL",
+          "complete_scope_proven": true,
+          "source_annual": {
+            "company_id": "lumen_technologies",
+            "entity": "18926",
+            "filing": {
+              "acceptanceDateTime": "2024-02-22T21:07:31.000Z",
+              "accessionNumber": "0000018926-24-000016",
+              "act": "34",
+              "core_type": "XBRL",
+              "fileNumber": "001-07784",
+              "filingDate": "2024-02-22",
+              "filmNumber": "24664741",
+              "form": "10-K",
+              "isInlineXBRL": 1,
+              "isXBRL": 1,
+              "isXBRLNumeric": null,
+              "items": "",
+              "metadata_origin": {
+                "inventory_name": "CIK0000018926.json",
+                "row_index": 199
+              },
+              "primaryDocDescription": "10-K",
+              "primaryDocument": "lumn-20231231.htm",
+              "reportDate": "2023-12-31",
+              "size": 20460706
+            },
+            "table_input": {
+              "target_period": {
+                "fiscal_year": 2023,
+                "period_end": "2023-12-31",
+                "period_start": "2023-01-01"
+              }
+            }
+          },
+          "totals": [
+            {
+              "fact": {
+                "concept": "us-gaap:Revenues",
+                "context": {
+                  "context_ref": "c-1",
+                  "dimensions": {},
+                  "entity_identifier": "0000018926",
+                  "period_end": "2023-12-31",
+                  "period_start": "2023-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "c-1",
+                  "dimensions": [],
+                  "identifiers": [
+                    {
+                      "scheme": "http://www.sec.gov/CIK",
+                      "value": "0000018926"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2023-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2023-12-31"
+                    }
+                  ],
+                  "typed_dimension_count": 0
+                },
+                "context_ref": "c-1",
+                "decimals": "-6",
+                "ordinal": 64,
+                "period_end": "2023-12-31",
+                "period_start": "2023-01-01",
+                "source_reference": {
+                  "accession": "0000018926-24-000016",
+                  "company_id": "lumen_technologies",
+                  "document_name": "lumn-20231231.htm",
+                  "raw_asset_id": "sha256:57782a31cafe37915ffb44e2204a3a0ffa6c11674dac7c0e16baf77bbf8af7ac",
+                  "record_type": "SOURCE_REFERENCE",
+                  "request_attempt_id": "request:attempt:c434dbfe584da9403107e275179dd6cf7ef5d0b7568c2b7f55bdd72b40f8fc29",
+                  "source_reference_id": "sha256:b4e4067bc0670fe6e348da70f6e1ceb3749deda5c938434cb1c09a0318ace8aa",
+                  "source_role": "target_primary",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892624000016/lumn-20231231.htm"
+                },
+                "unit": "USD",
+                "value": "14557000000"
+              },
+              "cell": {
+                "colspan": 1,
+                "column_index": 4,
+                "grid_sha256": "sha256:26beaefb36dba1403918b0fd7f4093477651e3ace29c108db8ef14145517b4aa",
+                "origin_column_index": 4,
+                "origin_row_index": 4,
+                "raw_text": "14,557&#160;",
+                "row_index": 4,
+                "rowspan": 1,
+                "table_id": "table_000030",
+                "text": "14,557"
+              },
+              "xml_check": "MATCH",
+              "unit_sources": [
+                {
+                  "kind": "visible_cell",
+                  "proof": {
+                    "colspan": 15,
+                    "column_index": 3,
+                    "grid_sha256": "sha256:26beaefb36dba1403918b0fd7f4093477651e3ace29c108db8ef14145517b4aa",
+                    "origin_column_index": 3,
+                    "origin_row_index": 3,
+                    "raw_text": "(Dollars in millions, except per share\namounts, and shares in thousands)",
+                    "row_index": 3,
+                    "rowspan": 1,
+                    "table_id": "table_000030",
+                    "text": "(Dollars in millions, except per share amounts, and shares in thousands)"
+                  },
+                  "text": "(Dollars in millions, except per share amounts, and shares in thousands)"
+                }
+              ],
+              "year_headers": [
+                {
+                  "colspan": 3,
+                  "column_index": 3,
+                  "grid_sha256": "sha256:26beaefb36dba1403918b0fd7f4093477651e3ace29c108db8ef14145517b4aa",
+                  "origin_column_index": 3,
+                  "origin_row_index": 2,
+                  "raw_text": "2023",
+                  "row_index": 2,
+                  "rowspan": 1,
+                  "table_id": "table_000030",
+                  "text": "2023"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "metric": "B01",
+      "fiscal_year": "2025",
+      "result_id": "sha256:f2d5abfbdfa8c9a0642c240d2fb5688f15ce7f49f632b96a182f04710199da6c",
+      "assessment_sha256": "ee74b8af63b5aba41113e7f19cd592f248073b5f049184a8d53218fc66ccc4ba",
+      "scopes": {
+        "current": {
+          "scope_id": "sha256:4aafff6acd1b672894b4a5df11b43bf41adf148fc85625e522820e975c242a8e",
+          "status": "REPORTED_CONSOLIDATED_TOTAL",
+          "complete_scope_proven": true,
+          "source_annual": {
+            "amendments": [],
+            "company_id": "lumen_technologies",
+            "companyfacts_input": {
+              "accession": "0000018926-26-000014",
+              "company_id": "lumen_technologies",
+              "document_name": "CIK0000018926.json",
+              "request_attempt_id": "request:attempt:175e53e7f02e1e467346622c08e88b79d39d2f81f6e05ec50dc1b7fe24c0e48b",
+              "source_repo_relative_path": "evidence/request_attempts/25/256ae4e2b32df840833d7cac21b3c9b12fe4fe850259b93f76970c2b9136a7ca/CIK0000018926.json",
+              "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000018926.json",
+              "target_period": {
+                "fiscal_year": 2025,
+                "period_end": "2025-12-31",
+                "period_start": "2025-01-01"
+              }
+            },
+            "current_latest_verified": false,
+            "entity": "18926",
+            "execution": "NOT_EXECUTED",
+            "filing": {
+              "accessionNumber": "0000018926-26-000014",
+              "filingDate": "2026-02-20",
+              "form": "10-K",
+              "primaryDocument": "lumn-20251231.htm",
+              "reportDate": "2025-12-31"
+            },
+            "input_id": "sha256:7224373e408d1cb0feffb690f2e82749d7f29732e2debbccd32d43c98d81f4e2",
+            "period_selection": {
+              "amendment_policy_id": "AMENDMENTS_RETAINED_AS_SEPARATE_INPUTS_NOT_SUBSTITUTED",
+              "caller_supplied_selection_trusted": false,
+              "company_id": "lumen_technologies",
+              "current_amendments": [],
+              "current_filing": {
+                "accessionNumber": "0000018926-26-000014",
+                "filingDate": "2026-02-20",
+                "form": "10-K",
+                "primaryDocument": "lumn-20251231.htm",
+                "reportDate": "2025-12-31"
+              },
+              "dependency_filing_roles": {
+                "prior_amendment_primary": [],
+                "prior_annual_primary": "0000018926-25-000010",
+                "target_amendment_primary": [],
+                "target_primary": "0000018926-26-000014"
+              },
+              "filing_selection_policy_id": "PINNED_ANNUAL_REPORT_END_IN_COMPLETE_SAVED_SUBMISSIONS",
+              "latest_restated_values_used": false,
+              "loaded_inventories": [
+                "CIK0000018926.json"
+              ],
+              "policy_id": "ordinary_period_selection_v1",
+              "policy_sha256": "6fd86440f7b62680e7ce2fa66de9f79b900f6a2b53fc8300aee590834967ab72",
+              "prior_amendments": [],
+              "prior_filing": {
+                "accessionNumber": "0000018926-25-000010",
+                "filingDate": "2025-02-20",
+                "form": "10-K",
+                "primaryDocument": "lumn-20241231.htm",
+                "reportDate": "2024-12-31"
+              },
+              "prior_report_end": "2024-12-31",
+              "prior_status": "SAME_CIK_PRIOR_DISCOVERED",
+              "production_authorized": false,
+              "record_type": "ORDINARY_HISTORICAL_PERIOD_SELECTION",
+              "reporting_cik": "18926",
+              "requested_fiscal_year": 2025,
+              "schema_version": 1,
+              "selection_id": "sha256:9249ee2e614016e5c0562be6a37b2f4878718f976ae9df40e3ee142fcb6df2da",
+              "source_set_identity": "sha256:f750f27a24d2ab96ffde52af1e8458a00e5c02b8a717cda9288c8359979cd16e",
+              "subject_policy": {
+                "cross_entity_combination_authorized": false,
+                "mode": "CONTINUOUS_PRIMARY",
+                "selected_cik": "18926"
+              },
+              "target_report_end": "2025-12-31",
+              "value_selection_policy_id": "CURRENT_AND_PRIOR_EACH_FROM_ITS_OWN_SELECTED_FILING_FIRST_REPORT"
+            },
+            "prior_period_amendments": [],
+            "production_authorized": false,
+            "selection_rule": "PINNED_ORDINARY_PERIOD_IN_COMPLETE_SAVED_SUBMISSIONS",
+            "source_evidence": "LEDGER_BOUND_SAVED_BYTES",
+            "source_proofs": [
+              {
+                "accession": "",
+                "content_sha256": "4a4759ce43286c10a8d620b980f85f88044645829b52317d78aef433789a3520",
+                "document_name": "CIK0000018926.json",
+                "request_attempt_id": "request:attempt:d57b50c6024d6fbe290daded3ec75b2369480525f55e46c05d94bb28dc9f4ecb",
+                "request_body_sha256": "4a4759ce43286c10a8d620b980f85f88044645829b52317d78aef433789a3520",
+                "request_body_size": 161786,
+                "request_headers_repo_relative_path": "evidence/request_attempts/4a/4a4759ce43286c10a8d620b980f85f88044645829b52317d78aef433789a3520/CIK0000018926.json.fb690791772e1ce9d9a187e26289468167ce76e8d5a3c08189ceed236bfc2610.headers.json",
+                "request_headers_sha256": "fb690791772e1ce9d9a187e26289468167ce76e8d5a3c08189ceed236bfc2610",
+                "request_headers_size": 736,
+                "request_locator_kind": "IMMUTABLE_ATTEMPT",
+                "request_repo_relative_path": "evidence/request_attempts/4a/4a4759ce43286c10a8d620b980f85f88044645829b52317d78aef433789a3520/CIK0000018926.json",
+                "source_url": "https://data.sec.gov/submissions/CIK0000018926.json"
+              },
+              {
+                "accession": "0000018926-26-000014",
+                "content_sha256": "87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429",
+                "document_name": "lumn-20251231.htm",
+                "request_attempt_id": "request:attempt:f0226bcec5dfff818b5a2b35e88fb0c84529e04c6b3b42b220e7ff712bcabe9b",
+                "request_body_sha256": "87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429",
+                "request_body_size": 3689841,
+                "request_headers_repo_relative_path": "evidence/request_attempts/87/87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429/lumn-20251231.htm.27539e42d0c9cc659813632f8751f9ca07acf517fbfe5ae9862a91db471f74ca.headers.json",
+                "request_headers_sha256": "27539e42d0c9cc659813632f8751f9ca07acf517fbfe5ae9862a91db471f74ca",
+                "request_headers_size": 1086,
+                "request_locator_kind": "IMMUTABLE_ATTEMPT",
+                "request_repo_relative_path": "evidence/request_attempts/87/87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429/lumn-20251231.htm",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892626000014/lumn-20251231.htm"
+              },
+              {
+                "accession": "0000018926-26-000014",
+                "content_sha256": "256ae4e2b32df840833d7cac21b3c9b12fe4fe850259b93f76970c2b9136a7ca",
+                "document_name": "CIK0000018926.json",
+                "request_attempt_id": "request:attempt:175e53e7f02e1e467346622c08e88b79d39d2f81f6e05ec50dc1b7fe24c0e48b",
+                "request_body_sha256": "256ae4e2b32df840833d7cac21b3c9b12fe4fe850259b93f76970c2b9136a7ca",
+                "request_body_size": 3782932,
+                "request_headers_repo_relative_path": "evidence/request_attempts/25/256ae4e2b32df840833d7cac21b3c9b12fe4fe850259b93f76970c2b9136a7ca/CIK0000018926.json.2ed83a0f120f938310314243f59a628293e5c2d33e9057ad407622030cf0725e.headers.json",
+                "request_headers_sha256": "2ed83a0f120f938310314243f59a628293e5c2d33e9057ad407622030cf0725e",
+                "request_headers_size": 707,
+                "request_locator_kind": "IMMUTABLE_ATTEMPT",
+                "request_repo_relative_path": "evidence/request_attempts/25/256ae4e2b32df840833d7cac21b3c9b12fe4fe850259b93f76970c2b9136a7ca/CIK0000018926.json",
+                "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000018926.json"
+              }
+            ],
+            "subject_policy": {
+              "cross_entity_combination_authorized": false,
+              "mode": "CONTINUOUS_PRIMARY",
+              "selected_cik": "18926"
+            },
+            "table_input": {
+              "accession": "0000018926-26-000014",
+              "company_id": "lumen_technologies",
+              "document_name": "lumn-20251231.htm",
+              "request_attempt_id": "request:attempt:f0226bcec5dfff818b5a2b35e88fb0c84529e04c6b3b42b220e7ff712bcabe9b",
+              "source_media_type": "text/html",
+              "source_repo_relative_path": "evidence/request_attempts/87/87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429/lumn-20251231.htm",
+              "source_role": "target_primary",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892626000014/lumn-20251231.htm",
+              "target_period": {
+                "fiscal_year": 2025,
+                "period_end": "2025-12-31",
+                "period_start": "2025-01-01"
+              }
+            },
+            "update_status": "ORIGINAL_INPUT_READY"
+          },
+          "totals": [
+            {
+              "fact": {
+                "concept": "us-gaap:Revenues",
+                "context": {
+                  "context_ref": "c-1",
+                  "dimensions": {},
+                  "entity_identifier": "0000018926",
+                  "period_end": "2025-12-31",
+                  "period_start": "2025-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "c-1",
+                  "dimensions": [],
+                  "identifiers": [
+                    {
+                      "scheme": "http://www.sec.gov/CIK",
+                      "value": "0000018926"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2025-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2025-12-31"
+                    }
+                  ],
+                  "typed_dimension_count": 0
+                },
+                "context_ref": "c-1",
+                "decimals": "-6",
+                "ordinal": 81,
+                "period_end": "2025-12-31",
+                "period_start": "2025-01-01",
+                "source_reference": {
+                  "accession": "0000018926-26-000014",
+                  "company_id": "lumen_technologies",
+                  "document_name": "lumn-20251231.htm",
+                  "raw_asset_id": "sha256:87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429",
+                  "record_type": "SOURCE_REFERENCE",
+                  "request_attempt_id": "request:attempt:f0226bcec5dfff818b5a2b35e88fb0c84529e04c6b3b42b220e7ff712bcabe9b",
+                  "source_reference_id": "sha256:671a0aa3b034186748b33f6df246360d4a92b37912e089cdac7222f84f2ef892",
+                  "source_role": "target_primary",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892626000014/lumn-20251231.htm"
+                },
+                "unit": "USD",
+                "value": "12402000000"
+              },
+              "cell": {
+                "colspan": 1,
+                "column_index": 4,
+                "grid_sha256": "sha256:2c0dd463480858407a394018c3c0ce25e8e0b60954f14a7889e028a9f09afff4",
+                "origin_column_index": 4,
+                "origin_row_index": 4,
+                "raw_text": "12,402&#160;",
+                "row_index": 4,
+                "rowspan": 1,
+                "table_id": "table_000028",
+                "text": "12,402"
+              },
+              "xml_check": "MATCH",
+              "unit_sources": [
+                {
+                  "kind": "visible_cell",
+                  "proof": {
+                    "colspan": 15,
+                    "column_index": 3,
+                    "grid_sha256": "sha256:2c0dd463480858407a394018c3c0ce25e8e0b60954f14a7889e028a9f09afff4",
+                    "origin_column_index": 3,
+                    "origin_row_index": 3,
+                    "raw_text": "(Dollars in millions, except per share\namounts, and shares in thousands)",
+                    "row_index": 3,
+                    "rowspan": 1,
+                    "table_id": "table_000028",
+                    "text": "(Dollars in millions, except per share amounts, and shares in thousands)"
+                  },
+                  "text": "(Dollars in millions, except per share amounts, and shares in thousands)"
+                }
+              ],
+              "year_headers": [
+                {
+                  "colspan": 3,
+                  "column_index": 3,
+                  "grid_sha256": "sha256:2c0dd463480858407a394018c3c0ce25e8e0b60954f14a7889e028a9f09afff4",
+                  "origin_column_index": 3,
+                  "origin_row_index": 2,
+                  "raw_text": "2025",
+                  "row_index": 2,
+                  "rowspan": 1,
+                  "table_id": "table_000028",
+                  "text": "2025"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "metric": "B02",
+      "fiscal_year": "2025",
+      "result_id": "sha256:c8e5ebc71c56c0c510385ca4a6c7414bf0e44c833dd421c039025d91c94dd48c",
+      "assessment_sha256": "211fcedcfe9412b90548e04af8da5d68ce5a252fbb329c377ca645cb63d1e2ca",
+      "scopes": {
+        "current": {
+          "scope_id": "sha256:7a18b9778e2b064c87f0fbcfbbea094bd5187d718f3a10957f5bdc3932010d3d",
+          "status": "REPORTED_CONSOLIDATED_TOTAL",
+          "complete_scope_proven": true,
+          "source_annual": {
+            "company_id": "lumen_technologies",
+            "entity": "18926",
+            "filing": {
+              "accessionNumber": "0000018926-26-000014",
+              "filingDate": "2026-02-20",
+              "form": "10-K",
+              "primaryDocument": "lumn-20251231.htm",
+              "reportDate": "2025-12-31"
+            },
+            "table_input": {
+              "target_period": {
+                "fiscal_year": 2025,
+                "period_end": "2025-12-31",
+                "period_start": "2025-01-01"
+              }
+            }
+          },
+          "totals": [
+            {
+              "fact": {
+                "concept": "us-gaap:Revenues",
+                "context": {
+                  "context_ref": "c-1",
+                  "dimensions": {},
+                  "entity_identifier": "0000018926",
+                  "period_end": "2025-12-31",
+                  "period_start": "2025-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "c-1",
+                  "dimensions": [],
+                  "identifiers": [
+                    {
+                      "scheme": "http://www.sec.gov/CIK",
+                      "value": "0000018926"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2025-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2025-12-31"
+                    }
+                  ],
+                  "typed_dimension_count": 0
+                },
+                "context_ref": "c-1",
+                "decimals": "-6",
+                "ordinal": 81,
+                "period_end": "2025-12-31",
+                "period_start": "2025-01-01",
+                "source_reference": {
+                  "accession": "0000018926-26-000014",
+                  "company_id": "lumen_technologies",
+                  "document_name": "lumn-20251231.htm",
+                  "raw_asset_id": "sha256:87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429",
+                  "record_type": "SOURCE_REFERENCE",
+                  "request_attempt_id": "request:attempt:f0226bcec5dfff818b5a2b35e88fb0c84529e04c6b3b42b220e7ff712bcabe9b",
+                  "source_reference_id": "sha256:671a0aa3b034186748b33f6df246360d4a92b37912e089cdac7222f84f2ef892",
+                  "source_role": "target_primary",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892626000014/lumn-20251231.htm"
+                },
+                "unit": "USD",
+                "value": "12402000000"
+              },
+              "cell": {
+                "colspan": 1,
+                "column_index": 4,
+                "grid_sha256": "sha256:2c0dd463480858407a394018c3c0ce25e8e0b60954f14a7889e028a9f09afff4",
+                "origin_column_index": 4,
+                "origin_row_index": 4,
+                "raw_text": "12,402&#160;",
+                "row_index": 4,
+                "rowspan": 1,
+                "table_id": "table_000028",
+                "text": "12,402"
+              },
+              "xml_check": "MATCH",
+              "unit_sources": [
+                {
+                  "kind": "visible_cell",
+                  "proof": {
+                    "colspan": 15,
+                    "column_index": 3,
+                    "grid_sha256": "sha256:2c0dd463480858407a394018c3c0ce25e8e0b60954f14a7889e028a9f09afff4",
+                    "origin_column_index": 3,
+                    "origin_row_index": 3,
+                    "raw_text": "(Dollars in millions, except per share\namounts, and shares in thousands)",
+                    "row_index": 3,
+                    "rowspan": 1,
+                    "table_id": "table_000028",
+                    "text": "(Dollars in millions, except per share amounts, and shares in thousands)"
+                  },
+                  "text": "(Dollars in millions, except per share amounts, and shares in thousands)"
+                }
+              ],
+              "year_headers": [
+                {
+                  "colspan": 3,
+                  "column_index": 3,
+                  "grid_sha256": "sha256:2c0dd463480858407a394018c3c0ce25e8e0b60954f14a7889e028a9f09afff4",
+                  "origin_column_index": 3,
+                  "origin_row_index": 2,
+                  "raw_text": "2025",
+                  "row_index": 2,
+                  "rowspan": 1,
+                  "table_id": "table_000028",
+                  "text": "2025"
+                }
+              ]
+            }
+          ]
+        },
+        "prior": {
+          "scope_id": "sha256:7cdab3443e8fce0d4f74f22742579e5f66c1687ba2667f9f59d207c785229dc5",
+          "status": "REPORTED_CONSOLIDATED_TOTAL",
+          "complete_scope_proven": true,
+          "source_annual": {
+            "company_id": "lumen_technologies",
+            "entity": "18926",
+            "filing": {
+              "acceptanceDateTime": "2025-02-20T21:17:27.000Z",
+              "accessionNumber": "0000018926-25-000010",
+              "act": "34",
+              "core_type": "XBRL",
+              "fileNumber": "001-07784",
+              "filingDate": "2025-02-20",
+              "filmNumber": "25645638",
+              "form": "10-K",
+              "isInlineXBRL": 1,
+              "isXBRL": 1,
+              "isXBRLNumeric": null,
+              "items": "",
+              "metadata_origin": {
+                "inventory_name": "CIK0000018926.json",
+                "row_index": 132
+              },
+              "primaryDocDescription": "10-K",
+              "primaryDocument": "lumn-20241231.htm",
+              "reportDate": "2024-12-31",
+              "size": 22348984
+            },
+            "table_input": {
+              "target_period": {
+                "fiscal_year": 2024,
+                "period_end": "2024-12-31",
+                "period_start": "2024-01-01"
+              }
+            }
+          },
+          "totals": [
+            {
+              "fact": {
+                "concept": "us-gaap:Revenues",
+                "context": {
+                  "context_ref": "c-1",
+                  "dimensions": {},
+                  "entity_identifier": "0000018926",
+                  "period_end": "2024-12-31",
+                  "period_start": "2024-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "c-1",
+                  "dimensions": [],
+                  "identifiers": [
+                    {
+                      "scheme": "http://www.sec.gov/CIK",
+                      "value": "0000018926"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2024-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2024-12-31"
+                    }
+                  ],
+                  "typed_dimension_count": 0
+                },
+                "context_ref": "c-1",
+                "decimals": "-6",
+                "ordinal": 83,
+                "period_end": "2024-12-31",
+                "period_start": "2024-01-01",
+                "source_reference": {
+                  "accession": "0000018926-25-000010",
+                  "company_id": "lumen_technologies",
+                  "document_name": "lumn-20241231.htm",
+                  "raw_asset_id": "sha256:f49ba30f8fa1f0502dcbd84793679e66b0ca29dd4e7dc7378e236f54a1ea5297",
+                  "record_type": "SOURCE_REFERENCE",
+                  "request_attempt_id": "request:attempt:b8ea38e1a1a43e9a5e1f4ab37e2c05dd934a9c1ffb6db84abcbc290a69cd33fd",
+                  "source_reference_id": "sha256:328dafc031a5f3ecddcb9e58064634d9139c1b463c2d61c2a427e65514641077",
+                  "source_role": "target_primary",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892625000010/lumn-20241231.htm"
+                },
+                "unit": "USD",
+                "value": "13108000000"
+              },
+              "cell": {
+                "colspan": 1,
+                "column_index": 4,
+                "grid_sha256": "sha256:12c2d9bb70a888dec0fcf82fc06f46cd348e43ba2a3cf14613d7e9fb8f3ce4d2",
+                "origin_column_index": 4,
+                "origin_row_index": 4,
+                "raw_text": "13,108&#160;",
+                "row_index": 4,
+                "rowspan": 1,
+                "table_id": "table_000030",
+                "text": "13,108"
+              },
+              "xml_check": "MATCH",
+              "unit_sources": [
+                {
+                  "kind": "visible_cell",
+                  "proof": {
+                    "colspan": 15,
+                    "column_index": 3,
+                    "grid_sha256": "sha256:12c2d9bb70a888dec0fcf82fc06f46cd348e43ba2a3cf14613d7e9fb8f3ce4d2",
+                    "origin_column_index": 3,
+                    "origin_row_index": 3,
+                    "raw_text": "(Dollars in millions, except per share\namounts, and shares in thousands)",
+                    "row_index": 3,
+                    "rowspan": 1,
+                    "table_id": "table_000030",
+                    "text": "(Dollars in millions, except per share amounts, and shares in thousands)"
+                  },
+                  "text": "(Dollars in millions, except per share amounts, and shares in thousands)"
+                }
+              ],
+              "year_headers": [
+                {
+                  "colspan": 3,
+                  "column_index": 3,
+                  "grid_sha256": "sha256:12c2d9bb70a888dec0fcf82fc06f46cd348e43ba2a3cf14613d7e9fb8f3ce4d2",
+                  "origin_column_index": 3,
+                  "origin_row_index": 2,
+                  "raw_text": "2024",
+                  "row_index": 2,
+                  "rowspan": 1,
+                  "table_id": "table_000030",
+                  "text": "2024"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "metric": "B01",
+      "fiscal_year": "2021",
+      "result_id": "sha256:66aa415282cd280924076789aed3b614aafc49aec1c85b33ea7e9a3861de1901",
+      "assessment_sha256": "5d104e0ebb62096ff91bb7735a205020e2a4dbbc42a2c06939cc2ab00ba831a1",
+      "scopes": {
+        "current": {
+          "scope_id": "sha256:eb2f4a030f6157ff84b923d93c906b107a9e21b9b4fe211ebf417af85747a055",
+          "status": "REPORTED_CONSOLIDATED_TOTAL",
+          "complete_scope_proven": true,
+          "source_annual": {
+            "amendments": [],
+            "company_id": "lumen_technologies",
+            "companyfacts_input": {
+              "accession": "0000018926-22-000007",
+              "company_id": "lumen_technologies",
+              "document_name": "CIK0000018926.json",
+              "request_attempt_id": "request:attempt:175e53e7f02e1e467346622c08e88b79d39d2f81f6e05ec50dc1b7fe24c0e48b",
+              "source_repo_relative_path": "evidence/request_attempts/25/256ae4e2b32df840833d7cac21b3c9b12fe4fe850259b93f76970c2b9136a7ca/CIK0000018926.json",
+              "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000018926.json",
+              "target_period": {
+                "fiscal_year": 2021,
+                "period_end": "2021-12-31",
+                "period_start": "2021-01-01"
+              }
+            },
+            "current_latest_verified": false,
+            "entity": "18926",
+            "execution": "NOT_EXECUTED",
+            "filing": {
+              "accessionNumber": "0000018926-22-000007",
+              "filingDate": "2022-02-24",
+              "form": "10-K",
+              "primaryDocument": "lumn-20211231.htm",
+              "reportDate": "2021-12-31"
+            },
+            "input_id": "sha256:74944bf87dbc497c647d655efcddb5067ced76cee397d9722bdfc119542de21e",
+            "period_selection": {
+              "amendment_policy_id": "AMENDMENTS_RETAINED_AS_SEPARATE_INPUTS_NOT_SUBSTITUTED",
+              "caller_supplied_selection_trusted": false,
+              "company_id": "lumen_technologies",
+              "current_amendments": [],
+              "current_filing": {
+                "accessionNumber": "0000018926-22-000007",
+                "filingDate": "2022-02-24",
+                "form": "10-K",
+                "primaryDocument": "lumn-20211231.htm",
+                "reportDate": "2021-12-31"
+              },
+              "dependency_filing_roles": {
+                "prior_amendment_primary": [],
+                "prior_annual_primary": "0000018926-21-000017",
+                "target_amendment_primary": [],
+                "target_primary": "0000018926-22-000007"
+              },
+              "filing_selection_policy_id": "PINNED_ANNUAL_REPORT_END_IN_COMPLETE_SAVED_SUBMISSIONS",
+              "latest_restated_values_used": false,
+              "loaded_inventories": [
+                "CIK0000018926.json"
+              ],
+              "policy_id": "ordinary_period_selection_v1",
+              "policy_sha256": "6fd86440f7b62680e7ce2fa66de9f79b900f6a2b53fc8300aee590834967ab72",
+              "prior_amendments": [],
+              "prior_filing": {
+                "accessionNumber": "0000018926-21-000017",
+                "filingDate": "2021-02-25",
+                "form": "10-K",
+                "primaryDocument": "ctl-20201231.htm",
+                "reportDate": "2020-12-31"
+              },
+              "prior_report_end": "2020-12-31",
+              "prior_status": "SAME_CIK_PRIOR_DISCOVERED",
+              "production_authorized": false,
+              "record_type": "ORDINARY_HISTORICAL_PERIOD_SELECTION",
+              "reporting_cik": "18926",
+              "requested_fiscal_year": 2021,
+              "schema_version": 1,
+              "selection_id": "sha256:4052f0c4ab70667aa9751b9af4d719bf14364ee3cf9a753fb9cb7f298008d03d",
+              "source_set_identity": "sha256:f750f27a24d2ab96ffde52af1e8458a00e5c02b8a717cda9288c8359979cd16e",
+              "subject_policy": {
+                "cross_entity_combination_authorized": false,
+                "mode": "CONTINUOUS_PRIMARY",
+                "selected_cik": "18926"
+              },
+              "target_report_end": "2021-12-31",
+              "value_selection_policy_id": "CURRENT_AND_PRIOR_EACH_FROM_ITS_OWN_SELECTED_FILING_FIRST_REPORT"
+            },
+            "prior_period_amendments": [],
+            "production_authorized": false,
+            "selection_rule": "PINNED_ORDINARY_PERIOD_IN_COMPLETE_SAVED_SUBMISSIONS",
+            "source_evidence": "LEDGER_BOUND_SAVED_BYTES",
+            "source_proofs": [
+              {
+                "accession": "",
+                "content_sha256": "4a4759ce43286c10a8d620b980f85f88044645829b52317d78aef433789a3520",
+                "document_name": "CIK0000018926.json",
+                "request_attempt_id": "request:attempt:d57b50c6024d6fbe290daded3ec75b2369480525f55e46c05d94bb28dc9f4ecb",
+                "request_body_sha256": "4a4759ce43286c10a8d620b980f85f88044645829b52317d78aef433789a3520",
+                "request_body_size": 161786,
+                "request_headers_repo_relative_path": "evidence/request_attempts/4a/4a4759ce43286c10a8d620b980f85f88044645829b52317d78aef433789a3520/CIK0000018926.json.fb690791772e1ce9d9a187e26289468167ce76e8d5a3c08189ceed236bfc2610.headers.json",
+                "request_headers_sha256": "fb690791772e1ce9d9a187e26289468167ce76e8d5a3c08189ceed236bfc2610",
+                "request_headers_size": 736,
+                "request_locator_kind": "IMMUTABLE_ATTEMPT",
+                "request_repo_relative_path": "evidence/request_attempts/4a/4a4759ce43286c10a8d620b980f85f88044645829b52317d78aef433789a3520/CIK0000018926.json",
+                "source_url": "https://data.sec.gov/submissions/CIK0000018926.json"
+              },
+              {
+                "accession": "0000018926-22-000007",
+                "content_sha256": "d71a12108032256fd7ee6b95bd70b4cb4fb24e6652a57b3e8b8852651c81b7d4",
+                "document_name": "lumn-20211231.htm",
+                "request_attempt_id": "request:attempt:ab14cac209cf1887bf1985d25179ed7f315d8201914b6779396b410c2f161eb3",
+                "request_body_sha256": "d71a12108032256fd7ee6b95bd70b4cb4fb24e6652a57b3e8b8852651c81b7d4",
+                "request_body_size": 4305142,
+                "request_headers_repo_relative_path": "evidence/request_attempts/d7/d71a12108032256fd7ee6b95bd70b4cb4fb24e6652a57b3e8b8852651c81b7d4/lumn-20211231.htm.73bbe6911a7dc41a2a1d727175611dca49eccb23e9e321858672bc4b1078b2f6.headers.json",
+                "request_headers_sha256": "73bbe6911a7dc41a2a1d727175611dca49eccb23e9e321858672bc4b1078b2f6",
+                "request_headers_size": 1638,
+                "request_locator_kind": "IMMUTABLE_ATTEMPT",
+                "request_repo_relative_path": "evidence/request_attempts/d7/d71a12108032256fd7ee6b95bd70b4cb4fb24e6652a57b3e8b8852651c81b7d4/lumn-20211231.htm",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892622000007/lumn-20211231.htm"
+              },
+              {
+                "accession": "0000018926-22-000007",
+                "content_sha256": "256ae4e2b32df840833d7cac21b3c9b12fe4fe850259b93f76970c2b9136a7ca",
+                "document_name": "CIK0000018926.json",
+                "request_attempt_id": "request:attempt:175e53e7f02e1e467346622c08e88b79d39d2f81f6e05ec50dc1b7fe24c0e48b",
+                "request_body_sha256": "256ae4e2b32df840833d7cac21b3c9b12fe4fe850259b93f76970c2b9136a7ca",
+                "request_body_size": 3782932,
+                "request_headers_repo_relative_path": "evidence/request_attempts/25/256ae4e2b32df840833d7cac21b3c9b12fe4fe850259b93f76970c2b9136a7ca/CIK0000018926.json.2ed83a0f120f938310314243f59a628293e5c2d33e9057ad407622030cf0725e.headers.json",
+                "request_headers_sha256": "2ed83a0f120f938310314243f59a628293e5c2d33e9057ad407622030cf0725e",
+                "request_headers_size": 707,
+                "request_locator_kind": "IMMUTABLE_ATTEMPT",
+                "request_repo_relative_path": "evidence/request_attempts/25/256ae4e2b32df840833d7cac21b3c9b12fe4fe850259b93f76970c2b9136a7ca/CIK0000018926.json",
+                "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000018926.json"
+              }
+            ],
+            "subject_policy": {
+              "cross_entity_combination_authorized": false,
+              "mode": "CONTINUOUS_PRIMARY",
+              "selected_cik": "18926"
+            },
+            "table_input": {
+              "accession": "0000018926-22-000007",
+              "company_id": "lumen_technologies",
+              "document_name": "lumn-20211231.htm",
+              "request_attempt_id": "request:attempt:ab14cac209cf1887bf1985d25179ed7f315d8201914b6779396b410c2f161eb3",
+              "source_media_type": "text/html",
+              "source_repo_relative_path": "evidence/request_attempts/d7/d71a12108032256fd7ee6b95bd70b4cb4fb24e6652a57b3e8b8852651c81b7d4/lumn-20211231.htm",
+              "source_role": "target_primary",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892622000007/lumn-20211231.htm",
+              "target_period": {
+                "fiscal_year": 2021,
+                "period_end": "2021-12-31",
+                "period_start": "2021-01-01"
+              }
+            },
+            "update_status": "ORIGINAL_INPUT_READY"
+          },
+          "totals": [
+            {
+              "fact": {
+                "concept": "us-gaap:Revenues",
+                "context": {
+                  "context_ref": "ic50fbde4268849aa8e8a9f3c8700ed51_D20210101-20211231",
+                  "dimensions": {},
+                  "entity_identifier": "0000018926",
+                  "period_end": "2021-12-31",
+                  "period_start": "2021-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "ic50fbde4268849aa8e8a9f3c8700ed51_D20210101-20211231",
+                  "dimensions": [],
+                  "identifiers": [
+                    {
+                      "scheme": "http://www.sec.gov/CIK",
+                      "value": "0000018926"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2021-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2021-12-31"
+                    }
+                  ],
+                  "typed_dimension_count": 0
+                },
+                "context_ref": "ic50fbde4268849aa8e8a9f3c8700ed51_D20210101-20211231",
+                "decimals": "-6",
+                "ordinal": 59,
+                "period_end": "2021-12-31",
+                "period_start": "2021-01-01",
+                "source_reference": {
+                  "accession": "0000018926-22-000007",
+                  "company_id": "lumen_technologies",
+                  "document_name": "lumn-20211231.htm",
+                  "raw_asset_id": "sha256:d71a12108032256fd7ee6b95bd70b4cb4fb24e6652a57b3e8b8852651c81b7d4",
+                  "record_type": "SOURCE_REFERENCE",
+                  "request_attempt_id": "request:attempt:ab14cac209cf1887bf1985d25179ed7f315d8201914b6779396b410c2f161eb3",
+                  "source_reference_id": "sha256:d626b0f1499ffac5781242462a1f5a490d64a1f31ebd15508c5b9c123310e02c",
+                  "source_role": "target_primary",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892622000007/lumn-20211231.htm"
+                },
+                "unit": "USD",
+                "value": "19687000000"
+              },
+              "cell": {
+                "colspan": 1,
+                "column_index": 4,
+                "grid_sha256": "sha256:5f8d3340efff7d074a4cf3fdf189b452223ba90dd2bf87489fdc2b3ce6164981",
+                "origin_column_index": 4,
+                "origin_row_index": 4,
+                "raw_text": "19,687&#160;",
+                "row_index": 4,
+                "rowspan": 1,
+                "table_id": "table_000030",
+                "text": "19,687"
+              },
+              "xml_check": "MATCH",
+              "unit_sources": [
+                {
+                  "kind": "visible_cell",
+                  "proof": {
+                    "colspan": 15,
+                    "column_index": 3,
+                    "grid_sha256": "sha256:5f8d3340efff7d074a4cf3fdf189b452223ba90dd2bf87489fdc2b3ce6164981",
+                    "origin_column_index": 3,
+                    "origin_row_index": 3,
+                    "raw_text": "(Dollars in millions, except per share\namounts, and shares in thousands)",
+                    "row_index": 3,
+                    "rowspan": 1,
+                    "table_id": "table_000030",
+                    "text": "(Dollars in millions, except per share amounts, and shares in thousands)"
+                  },
+                  "text": "(Dollars in millions, except per share amounts, and shares in thousands)"
+                }
+              ],
+              "year_headers": [
+                {
+                  "colspan": 3,
+                  "column_index": 3,
+                  "grid_sha256": "sha256:5f8d3340efff7d074a4cf3fdf189b452223ba90dd2bf87489fdc2b3ce6164981",
+                  "origin_column_index": 3,
+                  "origin_row_index": 2,
+                  "raw_text": "2021",
+                  "row_index": 2,
+                  "rowspan": 1,
+                  "table_id": "table_000030",
+                  "text": "2021"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "metric": "B01",
+      "fiscal_year": "2022",
+      "result_id": "sha256:8d8e3e6ad3815a9478a33c1a3727dfb217997adc132ff47e47ec96769886e0db",
+      "assessment_sha256": "748ac607281a936088a66aa4161e36d9bcaa85ea9dc65fb2d60bfb9ab4bc72d8",
+      "scopes": {
+        "current": {
+          "scope_id": "sha256:20320a0403a6b7d0cf74bf0b17e1c348fa24c3a8f854f2b03ccfdb756c236b8e",
+          "status": "REPORTED_CONSOLIDATED_TOTAL",
+          "complete_scope_proven": true,
+          "source_annual": {
+            "amendments": [],
+            "company_id": "lumen_technologies",
+            "companyfacts_input": {
+              "accession": "0000018926-23-000013",
+              "company_id": "lumen_technologies",
+              "document_name": "CIK0000018926.json",
+              "request_attempt_id": "request:attempt:175e53e7f02e1e467346622c08e88b79d39d2f81f6e05ec50dc1b7fe24c0e48b",
+              "source_repo_relative_path": "evidence/request_attempts/25/256ae4e2b32df840833d7cac21b3c9b12fe4fe850259b93f76970c2b9136a7ca/CIK0000018926.json",
+              "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000018926.json",
+              "target_period": {
+                "fiscal_year": 2022,
+                "period_end": "2022-12-31",
+                "period_start": "2022-01-01"
+              }
+            },
+            "current_latest_verified": false,
+            "entity": "18926",
+            "execution": "NOT_EXECUTED",
+            "filing": {
+              "accessionNumber": "0000018926-23-000013",
+              "filingDate": "2023-02-23",
+              "form": "10-K",
+              "primaryDocument": "lumn-20221231.htm",
+              "reportDate": "2022-12-31"
+            },
+            "input_id": "sha256:fac8ba8b7eda2e371db6a41e2951409ea881bfc67f6986363031ca1b62c5065c",
+            "period_selection": {
+              "amendment_policy_id": "AMENDMENTS_RETAINED_AS_SEPARATE_INPUTS_NOT_SUBSTITUTED",
+              "caller_supplied_selection_trusted": false,
+              "company_id": "lumen_technologies",
+              "current_amendments": [],
+              "current_filing": {
+                "accessionNumber": "0000018926-23-000013",
+                "filingDate": "2023-02-23",
+                "form": "10-K",
+                "primaryDocument": "lumn-20221231.htm",
+                "reportDate": "2022-12-31"
+              },
+              "dependency_filing_roles": {
+                "prior_amendment_primary": [],
+                "prior_annual_primary": "0000018926-22-000007",
+                "target_amendment_primary": [],
+                "target_primary": "0000018926-23-000013"
+              },
+              "filing_selection_policy_id": "PINNED_ANNUAL_REPORT_END_IN_COMPLETE_SAVED_SUBMISSIONS",
+              "latest_restated_values_used": false,
+              "loaded_inventories": [
+                "CIK0000018926.json"
+              ],
+              "policy_id": "ordinary_period_selection_v1",
+              "policy_sha256": "6fd86440f7b62680e7ce2fa66de9f79b900f6a2b53fc8300aee590834967ab72",
+              "prior_amendments": [],
+              "prior_filing": {
+                "accessionNumber": "0000018926-22-000007",
+                "filingDate": "2022-02-24",
+                "form": "10-K",
+                "primaryDocument": "lumn-20211231.htm",
+                "reportDate": "2021-12-31"
+              },
+              "prior_report_end": "2021-12-31",
+              "prior_status": "SAME_CIK_PRIOR_DISCOVERED",
+              "production_authorized": false,
+              "record_type": "ORDINARY_HISTORICAL_PERIOD_SELECTION",
+              "reporting_cik": "18926",
+              "requested_fiscal_year": 2022,
+              "schema_version": 1,
+              "selection_id": "sha256:12ac22838d3ac7f25b069ddf1d3f04ce23a8ac7ae6cc56b007d4e9ca1b9b2cff",
+              "source_set_identity": "sha256:f750f27a24d2ab96ffde52af1e8458a00e5c02b8a717cda9288c8359979cd16e",
+              "subject_policy": {
+                "cross_entity_combination_authorized": false,
+                "mode": "CONTINUOUS_PRIMARY",
+                "selected_cik": "18926"
+              },
+              "target_report_end": "2022-12-31",
+              "value_selection_policy_id": "CURRENT_AND_PRIOR_EACH_FROM_ITS_OWN_SELECTED_FILING_FIRST_REPORT"
+            },
+            "prior_period_amendments": [],
+            "production_authorized": false,
+            "selection_rule": "PINNED_ORDINARY_PERIOD_IN_COMPLETE_SAVED_SUBMISSIONS",
+            "source_evidence": "LEDGER_BOUND_SAVED_BYTES",
+            "source_proofs": [
+              {
+                "accession": "",
+                "content_sha256": "4a4759ce43286c10a8d620b980f85f88044645829b52317d78aef433789a3520",
+                "document_name": "CIK0000018926.json",
+                "request_attempt_id": "request:attempt:d57b50c6024d6fbe290daded3ec75b2369480525f55e46c05d94bb28dc9f4ecb",
+                "request_body_sha256": "4a4759ce43286c10a8d620b980f85f88044645829b52317d78aef433789a3520",
+                "request_body_size": 161786,
+                "request_headers_repo_relative_path": "evidence/request_attempts/4a/4a4759ce43286c10a8d620b980f85f88044645829b52317d78aef433789a3520/CIK0000018926.json.fb690791772e1ce9d9a187e26289468167ce76e8d5a3c08189ceed236bfc2610.headers.json",
+                "request_headers_sha256": "fb690791772e1ce9d9a187e26289468167ce76e8d5a3c08189ceed236bfc2610",
+                "request_headers_size": 736,
+                "request_locator_kind": "IMMUTABLE_ATTEMPT",
+                "request_repo_relative_path": "evidence/request_attempts/4a/4a4759ce43286c10a8d620b980f85f88044645829b52317d78aef433789a3520/CIK0000018926.json",
+                "source_url": "https://data.sec.gov/submissions/CIK0000018926.json"
+              },
+              {
+                "accession": "0000018926-23-000013",
+                "content_sha256": "d7361b93bb6e1e2af07df2313f5b71f5b71b8a7074854c961772345ffb1f0dd7",
+                "document_name": "lumn-20221231.htm",
+                "request_attempt_id": "request:attempt:4f96adcc75725e203c4b12c221099db22ce722dbcb4e34a059e60c16acd2bba4",
+                "request_body_sha256": "d7361b93bb6e1e2af07df2313f5b71f5b71b8a7074854c961772345ffb1f0dd7",
+                "request_body_size": 4368143,
+                "request_headers_repo_relative_path": "evidence/request_attempts/d7/d7361b93bb6e1e2af07df2313f5b71f5b71b8a7074854c961772345ffb1f0dd7/lumn-20221231.htm.9089a0b996c8378cbfca97f8453c682fd48c3d127c5134a15fbd5a1bb9fbb5ee.headers.json",
+                "request_headers_sha256": "9089a0b996c8378cbfca97f8453c682fd48c3d127c5134a15fbd5a1bb9fbb5ee",
+                "request_headers_size": 1704,
+                "request_locator_kind": "IMMUTABLE_ATTEMPT",
+                "request_repo_relative_path": "evidence/request_attempts/d7/d7361b93bb6e1e2af07df2313f5b71f5b71b8a7074854c961772345ffb1f0dd7/lumn-20221231.htm",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892623000013/lumn-20221231.htm"
+              },
+              {
+                "accession": "0000018926-23-000013",
+                "content_sha256": "256ae4e2b32df840833d7cac21b3c9b12fe4fe850259b93f76970c2b9136a7ca",
+                "document_name": "CIK0000018926.json",
+                "request_attempt_id": "request:attempt:175e53e7f02e1e467346622c08e88b79d39d2f81f6e05ec50dc1b7fe24c0e48b",
+                "request_body_sha256": "256ae4e2b32df840833d7cac21b3c9b12fe4fe850259b93f76970c2b9136a7ca",
+                "request_body_size": 3782932,
+                "request_headers_repo_relative_path": "evidence/request_attempts/25/256ae4e2b32df840833d7cac21b3c9b12fe4fe850259b93f76970c2b9136a7ca/CIK0000018926.json.2ed83a0f120f938310314243f59a628293e5c2d33e9057ad407622030cf0725e.headers.json",
+                "request_headers_sha256": "2ed83a0f120f938310314243f59a628293e5c2d33e9057ad407622030cf0725e",
+                "request_headers_size": 707,
+                "request_locator_kind": "IMMUTABLE_ATTEMPT",
+                "request_repo_relative_path": "evidence/request_attempts/25/256ae4e2b32df840833d7cac21b3c9b12fe4fe850259b93f76970c2b9136a7ca/CIK0000018926.json",
+                "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000018926.json"
+              }
+            ],
+            "subject_policy": {
+              "cross_entity_combination_authorized": false,
+              "mode": "CONTINUOUS_PRIMARY",
+              "selected_cik": "18926"
+            },
+            "table_input": {
+              "accession": "0000018926-23-000013",
+              "company_id": "lumen_technologies",
+              "document_name": "lumn-20221231.htm",
+              "request_attempt_id": "request:attempt:4f96adcc75725e203c4b12c221099db22ce722dbcb4e34a059e60c16acd2bba4",
+              "source_media_type": "text/html",
+              "source_repo_relative_path": "evidence/request_attempts/d7/d7361b93bb6e1e2af07df2313f5b71f5b71b8a7074854c961772345ffb1f0dd7/lumn-20221231.htm",
+              "source_role": "target_primary",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892623000013/lumn-20221231.htm",
+              "target_period": {
+                "fiscal_year": 2022,
+                "period_end": "2022-12-31",
+                "period_start": "2022-01-01"
+              }
+            },
+            "update_status": "ORIGINAL_INPUT_READY"
+          },
+          "totals": [
+            {
+              "fact": {
+                "concept": "us-gaap:Revenues",
+                "context": {
+                  "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+                  "dimensions": {},
+                  "entity_identifier": "0000018926",
+                  "period_end": "2022-12-31",
+                  "period_start": "2022-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+                  "dimensions": [],
+                  "identifiers": [
+                    {
+                      "scheme": "http://www.sec.gov/CIK",
+                      "value": "0000018926"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2022-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2022-12-31"
+                    }
+                  ],
+                  "typed_dimension_count": 0
+                },
+                "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+                "decimals": "-6",
+                "ordinal": 61,
+                "period_end": "2022-12-31",
+                "period_start": "2022-01-01",
+                "source_reference": {
+                  "accession": "0000018926-23-000013",
+                  "company_id": "lumen_technologies",
+                  "document_name": "lumn-20221231.htm",
+                  "raw_asset_id": "sha256:d7361b93bb6e1e2af07df2313f5b71f5b71b8a7074854c961772345ffb1f0dd7",
+                  "record_type": "SOURCE_REFERENCE",
+                  "request_attempt_id": "request:attempt:4f96adcc75725e203c4b12c221099db22ce722dbcb4e34a059e60c16acd2bba4",
+                  "source_reference_id": "sha256:7c6e04141f4a3f66882e891cfae9ac06214ca9e2fdceac4a8e29cfee8ae0e2f9",
+                  "source_role": "target_primary",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892623000013/lumn-20221231.htm"
+                },
+                "unit": "USD",
+                "value": "17478000000"
+              },
+              "cell": {
+                "colspan": 1,
+                "column_index": 4,
+                "grid_sha256": "sha256:f4c917425481547cbdfd3fcc9558c3c2f3b3d0f71b6eb3dbfa581a96429e3fec",
+                "origin_column_index": 4,
+                "origin_row_index": 4,
+                "raw_text": "17,478&#160;",
+                "row_index": 4,
+                "rowspan": 1,
+                "table_id": "table_000031",
+                "text": "17,478"
+              },
+              "xml_check": "MATCH",
+              "unit_sources": [
+                {
+                  "kind": "visible_cell",
+                  "proof": {
+                    "colspan": 15,
+                    "column_index": 3,
+                    "grid_sha256": "sha256:f4c917425481547cbdfd3fcc9558c3c2f3b3d0f71b6eb3dbfa581a96429e3fec",
+                    "origin_column_index": 3,
+                    "origin_row_index": 3,
+                    "raw_text": "(Dollars in millions, except per share\namounts, and shares in thousands)",
+                    "row_index": 3,
+                    "rowspan": 1,
+                    "table_id": "table_000031",
+                    "text": "(Dollars in millions, except per share amounts, and shares in thousands)"
+                  },
+                  "text": "(Dollars in millions, except per share amounts, and shares in thousands)"
+                }
+              ],
+              "year_headers": [
+                {
+                  "colspan": 3,
+                  "column_index": 3,
+                  "grid_sha256": "sha256:f4c917425481547cbdfd3fcc9558c3c2f3b3d0f71b6eb3dbfa581a96429e3fec",
+                  "origin_column_index": 3,
+                  "origin_row_index": 2,
+                  "raw_text": "2022",
+                  "row_index": 2,
+                  "rowspan": 1,
+                  "table_id": "table_000031",
+                  "text": "2022"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "metric": "B02",
+      "fiscal_year": "2021",
+      "result_id": "sha256:9291eb5302107ad06485e2677d393b467ec30652e2aa9777e22c7b4fc622018b",
+      "assessment_sha256": "82e53c386d387aeccd656120797627f287413823c466ace54e458b6cdc989331",
+      "scopes": {
+        "current": {
+          "scope_id": "sha256:614afdee0b6a35ca2041a9e9e97f352d10760bb36b88afa2e52048b0ac1f71a7",
+          "status": "REPORTED_CONSOLIDATED_TOTAL",
+          "complete_scope_proven": true,
+          "source_annual": {
+            "company_id": "lumen_technologies",
+            "entity": "18926",
+            "filing": {
+              "accessionNumber": "0000018926-22-000007",
+              "filingDate": "2022-02-24",
+              "form": "10-K",
+              "primaryDocument": "lumn-20211231.htm",
+              "reportDate": "2021-12-31"
+            },
+            "table_input": {
+              "target_period": {
+                "fiscal_year": 2021,
+                "period_end": "2021-12-31",
+                "period_start": "2021-01-01"
+              }
+            }
+          },
+          "totals": [
+            {
+              "fact": {
+                "concept": "us-gaap:Revenues",
+                "context": {
+                  "context_ref": "ic50fbde4268849aa8e8a9f3c8700ed51_D20210101-20211231",
+                  "dimensions": {},
+                  "entity_identifier": "0000018926",
+                  "period_end": "2021-12-31",
+                  "period_start": "2021-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "ic50fbde4268849aa8e8a9f3c8700ed51_D20210101-20211231",
+                  "dimensions": [],
+                  "identifiers": [
+                    {
+                      "scheme": "http://www.sec.gov/CIK",
+                      "value": "0000018926"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2021-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2021-12-31"
+                    }
+                  ],
+                  "typed_dimension_count": 0
+                },
+                "context_ref": "ic50fbde4268849aa8e8a9f3c8700ed51_D20210101-20211231",
+                "decimals": "-6",
+                "ordinal": 59,
+                "period_end": "2021-12-31",
+                "period_start": "2021-01-01",
+                "source_reference": {
+                  "accession": "0000018926-22-000007",
+                  "company_id": "lumen_technologies",
+                  "document_name": "lumn-20211231.htm",
+                  "raw_asset_id": "sha256:d71a12108032256fd7ee6b95bd70b4cb4fb24e6652a57b3e8b8852651c81b7d4",
+                  "record_type": "SOURCE_REFERENCE",
+                  "request_attempt_id": "request:attempt:ab14cac209cf1887bf1985d25179ed7f315d8201914b6779396b410c2f161eb3",
+                  "source_reference_id": "sha256:d626b0f1499ffac5781242462a1f5a490d64a1f31ebd15508c5b9c123310e02c",
+                  "source_role": "target_primary",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892622000007/lumn-20211231.htm"
+                },
+                "unit": "USD",
+                "value": "19687000000"
+              },
+              "cell": {
+                "colspan": 1,
+                "column_index": 4,
+                "grid_sha256": "sha256:5f8d3340efff7d074a4cf3fdf189b452223ba90dd2bf87489fdc2b3ce6164981",
+                "origin_column_index": 4,
+                "origin_row_index": 4,
+                "raw_text": "19,687&#160;",
+                "row_index": 4,
+                "rowspan": 1,
+                "table_id": "table_000030",
+                "text": "19,687"
+              },
+              "xml_check": "MATCH",
+              "unit_sources": [
+                {
+                  "kind": "visible_cell",
+                  "proof": {
+                    "colspan": 15,
+                    "column_index": 3,
+                    "grid_sha256": "sha256:5f8d3340efff7d074a4cf3fdf189b452223ba90dd2bf87489fdc2b3ce6164981",
+                    "origin_column_index": 3,
+                    "origin_row_index": 3,
+                    "raw_text": "(Dollars in millions, except per share\namounts, and shares in thousands)",
+                    "row_index": 3,
+                    "rowspan": 1,
+                    "table_id": "table_000030",
+                    "text": "(Dollars in millions, except per share amounts, and shares in thousands)"
+                  },
+                  "text": "(Dollars in millions, except per share amounts, and shares in thousands)"
+                }
+              ],
+              "year_headers": [
+                {
+                  "colspan": 3,
+                  "column_index": 3,
+                  "grid_sha256": "sha256:5f8d3340efff7d074a4cf3fdf189b452223ba90dd2bf87489fdc2b3ce6164981",
+                  "origin_column_index": 3,
+                  "origin_row_index": 2,
+                  "raw_text": "2021",
+                  "row_index": 2,
+                  "rowspan": 1,
+                  "table_id": "table_000030",
+                  "text": "2021"
+                }
+              ]
+            }
+          ]
+        },
+        "prior": {
+          "scope_id": "sha256:b7889a6a0ac3a43856e5350ce319089c0c55df6a088dd9b5c15b18dd8ac757a5",
+          "status": "REPORTED_CONSOLIDATED_TOTAL",
+          "complete_scope_proven": true,
+          "source_annual": {
+            "company_id": "lumen_technologies",
+            "entity": "18926",
+            "filing": {
+              "acceptanceDateTime": "2021-02-25T21:42:05.000Z",
+              "accessionNumber": "0000018926-21-000017",
+              "act": "34",
+              "core_type": "XBRL",
+              "fileNumber": "001-07784",
+              "filingDate": "2021-02-25",
+              "filmNumber": "21681042",
+              "form": "10-K",
+              "isInlineXBRL": 1,
+              "isXBRL": 1,
+              "isXBRLNumeric": null,
+              "items": "",
+              "metadata_origin": {
+                "inventory_name": "CIK0000018926.json",
+                "row_index": 405
+              },
+              "primaryDocDescription": "10-K",
+              "primaryDocument": "ctl-20201231.htm",
+              "reportDate": "2020-12-31",
+              "size": 23444397
+            },
+            "table_input": {
+              "target_period": {
+                "fiscal_year": 2020,
+                "period_end": "2020-12-31",
+                "period_start": "2020-01-01"
+              }
+            }
+          },
+          "totals": [
+            {
+              "fact": {
+                "concept": "us-gaap:Revenues",
+                "context": {
+                  "context_ref": "i99cc6df7d7634d968535637fc3551cf4_D20200101-20201231",
+                  "dimensions": {},
+                  "entity_identifier": "0000018926",
+                  "period_end": "2020-12-31",
+                  "period_start": "2020-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "i99cc6df7d7634d968535637fc3551cf4_D20200101-20201231",
+                  "dimensions": [],
+                  "identifiers": [
+                    {
+                      "scheme": "http://www.sec.gov/CIK",
+                      "value": "0000018926"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2020-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2020-12-31"
+                    }
+                  ],
+                  "typed_dimension_count": 0
+                },
+                "context_ref": "i99cc6df7d7634d968535637fc3551cf4_D20200101-20201231",
+                "decimals": "-6",
+                "ordinal": 57,
+                "period_end": "2020-12-31",
+                "period_start": "2020-01-01",
+                "source_reference": {
+                  "accession": "0000018926-21-000017",
+                  "company_id": "lumen_technologies",
+                  "document_name": "ctl-20201231.htm",
+                  "raw_asset_id": "sha256:6be5695ca6b9e5267bd04dc5565eb047f873fbeac4c24baa27a00e2c72d662f9",
+                  "record_type": "SOURCE_REFERENCE",
+                  "request_attempt_id": "request:attempt:1a84e595108c3f8fa1dc2516e335a8af714cf438e201488b5cb5bec8b286ae44",
+                  "source_reference_id": "sha256:0e5e033248946b7d9926e770f8b657c584141f115fc237881781c5547a037b17",
+                  "source_role": "target_primary",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892621000017/ctl-20201231.htm"
+                },
+                "unit": "USD",
+                "value": "20712000000"
+              },
+              "cell": {
+                "colspan": 1,
+                "column_index": 4,
+                "grid_sha256": "sha256:7ff64bf9d1db361e7b1e74377dc9f88e4050888ecd6185a986a06161f819c035",
+                "origin_column_index": 4,
+                "origin_row_index": 4,
+                "raw_text": "20,712&#160;",
+                "row_index": 4,
+                "rowspan": 1,
+                "table_id": "table_000035",
+                "text": "20,712"
+              },
+              "xml_check": "MATCH",
+              "unit_sources": [
+                {
+                  "kind": "visible_cell",
+                  "proof": {
+                    "colspan": 15,
+                    "column_index": 3,
+                    "grid_sha256": "sha256:7ff64bf9d1db361e7b1e74377dc9f88e4050888ecd6185a986a06161f819c035",
+                    "origin_column_index": 3,
+                    "origin_row_index": 3,
+                    "raw_text": "(Dollars in millions, except per share\namounts, and shares in thousands)",
+                    "row_index": 3,
+                    "rowspan": 1,
+                    "table_id": "table_000035",
+                    "text": "(Dollars in millions, except per share amounts, and shares in thousands)"
+                  },
+                  "text": "(Dollars in millions, except per share amounts, and shares in thousands)"
+                }
+              ],
+              "year_headers": [
+                {
+                  "colspan": 3,
+                  "column_index": 3,
+                  "grid_sha256": "sha256:7ff64bf9d1db361e7b1e74377dc9f88e4050888ecd6185a986a06161f819c035",
+                  "origin_column_index": 3,
+                  "origin_row_index": 2,
+                  "raw_text": "2020",
+                  "row_index": 2,
+                  "rowspan": 1,
+                  "table_id": "table_000035",
+                  "text": "2020"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "metric": "B02",
+      "fiscal_year": "2022",
+      "result_id": "sha256:a526ff2381e16e1b0089ba7c706087d1ddde4553a1f7ca6e18b689c24bc21de6",
+      "assessment_sha256": "9c21c7955180206668bf8717d200b897b30b4d458306dfbf8269519fcdcbf42e",
+      "scopes": {
+        "current": {
+          "scope_id": "sha256:b1a8d7c26da57ce597d5ce25df9b63921c5d61b235ad57882d673e22567ece2a",
+          "status": "REPORTED_CONSOLIDATED_TOTAL",
+          "complete_scope_proven": true,
+          "source_annual": {
+            "company_id": "lumen_technologies",
+            "entity": "18926",
+            "filing": {
+              "accessionNumber": "0000018926-23-000013",
+              "filingDate": "2023-02-23",
+              "form": "10-K",
+              "primaryDocument": "lumn-20221231.htm",
+              "reportDate": "2022-12-31"
+            },
+            "table_input": {
+              "target_period": {
+                "fiscal_year": 2022,
+                "period_end": "2022-12-31",
+                "period_start": "2022-01-01"
+              }
+            }
+          },
+          "totals": [
+            {
+              "fact": {
+                "concept": "us-gaap:Revenues",
+                "context": {
+                  "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+                  "dimensions": {},
+                  "entity_identifier": "0000018926",
+                  "period_end": "2022-12-31",
+                  "period_start": "2022-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+                  "dimensions": [],
+                  "identifiers": [
+                    {
+                      "scheme": "http://www.sec.gov/CIK",
+                      "value": "0000018926"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2022-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2022-12-31"
+                    }
+                  ],
+                  "typed_dimension_count": 0
+                },
+                "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+                "decimals": "-6",
+                "ordinal": 61,
+                "period_end": "2022-12-31",
+                "period_start": "2022-01-01",
+                "source_reference": {
+                  "accession": "0000018926-23-000013",
+                  "company_id": "lumen_technologies",
+                  "document_name": "lumn-20221231.htm",
+                  "raw_asset_id": "sha256:d7361b93bb6e1e2af07df2313f5b71f5b71b8a7074854c961772345ffb1f0dd7",
+                  "record_type": "SOURCE_REFERENCE",
+                  "request_attempt_id": "request:attempt:4f96adcc75725e203c4b12c221099db22ce722dbcb4e34a059e60c16acd2bba4",
+                  "source_reference_id": "sha256:7c6e04141f4a3f66882e891cfae9ac06214ca9e2fdceac4a8e29cfee8ae0e2f9",
+                  "source_role": "target_primary",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892623000013/lumn-20221231.htm"
+                },
+                "unit": "USD",
+                "value": "17478000000"
+              },
+              "cell": {
+                "colspan": 1,
+                "column_index": 4,
+                "grid_sha256": "sha256:f4c917425481547cbdfd3fcc9558c3c2f3b3d0f71b6eb3dbfa581a96429e3fec",
+                "origin_column_index": 4,
+                "origin_row_index": 4,
+                "raw_text": "17,478&#160;",
+                "row_index": 4,
+                "rowspan": 1,
+                "table_id": "table_000031",
+                "text": "17,478"
+              },
+              "xml_check": "MATCH",
+              "unit_sources": [
+                {
+                  "kind": "visible_cell",
+                  "proof": {
+                    "colspan": 15,
+                    "column_index": 3,
+                    "grid_sha256": "sha256:f4c917425481547cbdfd3fcc9558c3c2f3b3d0f71b6eb3dbfa581a96429e3fec",
+                    "origin_column_index": 3,
+                    "origin_row_index": 3,
+                    "raw_text": "(Dollars in millions, except per share\namounts, and shares in thousands)",
+                    "row_index": 3,
+                    "rowspan": 1,
+                    "table_id": "table_000031",
+                    "text": "(Dollars in millions, except per share amounts, and shares in thousands)"
+                  },
+                  "text": "(Dollars in millions, except per share amounts, and shares in thousands)"
+                }
+              ],
+              "year_headers": [
+                {
+                  "colspan": 3,
+                  "column_index": 3,
+                  "grid_sha256": "sha256:f4c917425481547cbdfd3fcc9558c3c2f3b3d0f71b6eb3dbfa581a96429e3fec",
+                  "origin_column_index": 3,
+                  "origin_row_index": 2,
+                  "raw_text": "2022",
+                  "row_index": 2,
+                  "rowspan": 1,
+                  "table_id": "table_000031",
+                  "text": "2022"
+                }
+              ]
+            }
+          ]
+        },
+        "prior": {
+          "scope_id": "sha256:2cd91f32a436cf265bc03301935c975cb4dad0310af767172595d4493f392768",
+          "status": "REPORTED_CONSOLIDATED_TOTAL",
+          "complete_scope_proven": true,
+          "source_annual": {
+            "company_id": "lumen_technologies",
+            "entity": "18926",
+            "filing": {
+              "acceptanceDateTime": "2022-02-24T21:36:27.000Z",
+              "accessionNumber": "0000018926-22-000007",
+              "act": "34",
+              "core_type": "XBRL",
+              "fileNumber": "001-07784",
+              "filingDate": "2022-02-24",
+              "filmNumber": "22671730",
+              "form": "10-K",
+              "isInlineXBRL": 1,
+              "isXBRL": 1,
+              "isXBRLNumeric": null,
+              "items": "",
+              "metadata_origin": {
+                "inventory_name": "CIK0000018926.json",
+                "row_index": 342
+              },
+              "primaryDocDescription": "10-K",
+              "primaryDocument": "lumn-20211231.htm",
+              "reportDate": "2021-12-31",
+              "size": 23383113
+            },
+            "table_input": {
+              "target_period": {
+                "fiscal_year": 2021,
+                "period_end": "2021-12-31",
+                "period_start": "2021-01-01"
+              }
+            }
+          },
+          "totals": [
+            {
+              "fact": {
+                "concept": "us-gaap:Revenues",
+                "context": {
+                  "context_ref": "ic50fbde4268849aa8e8a9f3c8700ed51_D20210101-20211231",
+                  "dimensions": {},
+                  "entity_identifier": "0000018926",
+                  "period_end": "2021-12-31",
+                  "period_start": "2021-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "ic50fbde4268849aa8e8a9f3c8700ed51_D20210101-20211231",
+                  "dimensions": [],
+                  "identifiers": [
+                    {
+                      "scheme": "http://www.sec.gov/CIK",
+                      "value": "0000018926"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2021-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2021-12-31"
+                    }
+                  ],
+                  "typed_dimension_count": 0
+                },
+                "context_ref": "ic50fbde4268849aa8e8a9f3c8700ed51_D20210101-20211231",
+                "decimals": "-6",
+                "ordinal": 59,
+                "period_end": "2021-12-31",
+                "period_start": "2021-01-01",
+                "source_reference": {
+                  "accession": "0000018926-22-000007",
+                  "company_id": "lumen_technologies",
+                  "document_name": "lumn-20211231.htm",
+                  "raw_asset_id": "sha256:d71a12108032256fd7ee6b95bd70b4cb4fb24e6652a57b3e8b8852651c81b7d4",
+                  "record_type": "SOURCE_REFERENCE",
+                  "request_attempt_id": "request:attempt:ab14cac209cf1887bf1985d25179ed7f315d8201914b6779396b410c2f161eb3",
+                  "source_reference_id": "sha256:d626b0f1499ffac5781242462a1f5a490d64a1f31ebd15508c5b9c123310e02c",
+                  "source_role": "target_primary",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892622000007/lumn-20211231.htm"
+                },
+                "unit": "USD",
+                "value": "19687000000"
+              },
+              "cell": {
+                "colspan": 1,
+                "column_index": 4,
+                "grid_sha256": "sha256:5f8d3340efff7d074a4cf3fdf189b452223ba90dd2bf87489fdc2b3ce6164981",
+                "origin_column_index": 4,
+                "origin_row_index": 4,
+                "raw_text": "19,687&#160;",
+                "row_index": 4,
+                "rowspan": 1,
+                "table_id": "table_000030",
+                "text": "19,687"
+              },
+              "xml_check": "MATCH",
+              "unit_sources": [
+                {
+                  "kind": "visible_cell",
+                  "proof": {
+                    "colspan": 15,
+                    "column_index": 3,
+                    "grid_sha256": "sha256:5f8d3340efff7d074a4cf3fdf189b452223ba90dd2bf87489fdc2b3ce6164981",
+                    "origin_column_index": 3,
+                    "origin_row_index": 3,
+                    "raw_text": "(Dollars in millions, except per share\namounts, and shares in thousands)",
+                    "row_index": 3,
+                    "rowspan": 1,
+                    "table_id": "table_000030",
+                    "text": "(Dollars in millions, except per share amounts, and shares in thousands)"
+                  },
+                  "text": "(Dollars in millions, except per share amounts, and shares in thousands)"
+                }
+              ],
+              "year_headers": [
+                {
+                  "colspan": 3,
+                  "column_index": 3,
+                  "grid_sha256": "sha256:5f8d3340efff7d074a4cf3fdf189b452223ba90dd2bf87489fdc2b3ce6164981",
+                  "origin_column_index": 3,
+                  "origin_row_index": 2,
+                  "raw_text": "2021",
+                  "row_index": 2,
+                  "rowspan": 1,
+                  "table_id": "table_000030",
+                  "text": "2021"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
