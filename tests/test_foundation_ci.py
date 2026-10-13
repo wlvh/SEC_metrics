@@ -5,6 +5,7 @@ from contextlib import redirect_stdout
 from pathlib import Path
 import sys
 import types
+import tempfile
 import unittest
 from unittest.mock import patch
 
@@ -14,6 +15,55 @@ import run_foundation_ci as ci
 
 
 class FoundationCiPartitionTest(unittest.TestCase):
+    def test_material_worker_rejects_skipped_or_empty_required_coverage(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root=Path(temporary);(root/'tests').mkdir()
+            (root/'tests/required_unittests.py').write_bytes((ROOT/'tests/required_unittests.py').read_bytes())
+            (root/'fixture_material.py').write_text('import unittest\n'
+                'class Passed(unittest.TestCase):\n'
+                ' def test_unit(self):self.assertEqual("USD","USD")\n'
+                'class Skipped(unittest.TestCase):\n'
+                ' @unittest.skip("constructed missing source")\n'
+                ' def test_required(self):pass\n'
+                'class Mixed(Passed,Skipped):pass\n'
+                'class Empty(unittest.TestCase):pass\n'
+                'class Failed(unittest.TestCase):\n'
+                ' def test_unit(self):self.assertEqual("shares","USD")\n')
+            with patch.object(ci.v2.inherited,'REPO_ROOT',root):
+                passed=ci.v2._run_source_case('fixture_material.Passed')
+                skipped=ci.v2._run_source_case('fixture_material.Skipped')
+                empty=ci.v2._run_source_case('fixture_material.Empty')
+                mixed=ci.v2._run_source_case('fixture_material.Mixed')
+                failed=ci.v2._run_source_case('fixture_material.Failed')
+            self.assertEqual(0,passed['return_code'])
+            self.assertNotEqual(0,skipped['return_code'])
+            self.assertNotEqual(0,empty['return_code'])
+            self.assertNotEqual(0,mixed['return_code'])
+            self.assertNotEqual(0,failed['return_code'])
+            self.assertIn('constructed missing source',skipped['stdout_tail']+skipped['stderr_tail'])
+            self.assertEqual(ci.v2.SOURCE_TIMEOUT_SECONDS,skipped['timeout_seconds'])
+            out=io.StringIO()
+            with patch.object(ci.v2.inherited,'REPO_ROOT',root), \
+                 patch.object(ci,'partition',return_value={'fast':(),
+                     'source-material':('fixture_material.Mixed',),'retired':()}), \
+                 patch.object(sys,'argv',['ci','--suite','source-material','--jobs','1']), \
+                 redirect_stdout(out):
+                self.assertEqual(1,ci.main())
+            report=json.loads(out.getvalue())
+            self.assertEqual('FAILED',report['status'])
+            self.assertEqual(1,report['tests'][0]['return_code'])
+
+    def test_material_timeout_still_retains_124_and_original_limit(self):
+        import subprocess
+        failure=subprocess.TimeoutExpired(['required-unittest'],ci.v2.SOURCE_TIMEOUT_SECONDS,
+            output=b'partial source output',stderr=b'partial diagnostic')
+        with patch.object(ci.v2.subprocess,'run',side_effect=failure):
+            result=ci.v2._run_source_case('constructed.source')
+        self.assertEqual(124,result['return_code'])
+        self.assertEqual(ci.v2.SOURCE_TIMEOUT_SECONDS,result['timeout_seconds'])
+        self.assertIn('partial source output',result['stdout_tail'])
+        self.assertIn('SOURCE_MATERIAL_TIMEOUT_SECONDS=',result['stderr_tail'])
+
     def test_material_and_old_object_readers_fetch_only_needed_versions(self):
         body=(ROOT/'.github/workflows/vnext-fast.yml').read_text()
         material=body.split('  inherited-source-material:',1)[1].split('  main-foundation:',1)[0]
