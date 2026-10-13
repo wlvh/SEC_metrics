@@ -137,7 +137,7 @@ class ClassificationTest(unittest.TestCase):
             'selection': {'accession': 'a'}, 'admission': {}, 'capability': ['READY', 'g'],
             'source_references_digest': 'r', 'sources': {},
             'requests': [{'request_id': 'r1', 'source_id': 's1', 'pool': ['b1', 'b2'], 'must_decide': ['b1'],
-                          'texts_digest': 't', 'instructions_digest': 'i'}]}}
+                          'texts_digest': 't', 'fields_digest': 'i'}], 'result_parts': {}}}
 
     def error(self, reason):
         return {'outcome': 'ERROR', 'error': {'type': 'ValueError', 'module': 'm', 'reason': reason, 'category': None}}
@@ -163,7 +163,8 @@ class ClassificationTest(unittest.TestCase):
     def test_document_level_changes_are_reported(self):
         source = {'coverage': ['LOCAL_REQUESTED_RANGES_SCANNED', []], 'coverage_record_digest': 'c1',
                   'note_references': [], 'checked_ranges': [['ITEM_8', 0, 9]], 'd02_candidates': [],
-                  'd02_texts_digest': 'x', 'd02_finding_status': 'F', 'furniture_removed': [3],
+                  'd02_records_digest': 'x', 'proposal_ids': ['x', 'd'], 'd02_finding_status': 'F',
+                  'furniture_removed': [3],
                   'd03_digest': 'd', 'other_fields': [], 'other_digest': 'o', 'policy_hash': 'p'}
         base = {'outcome': 'OK', 'fingerprint': {**self.ok['fingerprint'], 'sources': {'s1': source}}}
         cand = {'outcome': 'OK', 'fingerprint': {**base['fingerprint'], 'sources': {'s1': {
@@ -178,6 +179,56 @@ class ClassificationTest(unittest.TestCase):
         self.assertEqual(report['counts']['SAME_OK'], 1)
         self.assertEqual(report['unexpected_results'], ['extra:2024'])
         self.assertFalse(report['all_samples_compared'])
+
+
+def sample_result():
+    candidate = {'source_reference_id': 's1', 'raw_asset_id': 'sha256:r', 'document_id': 'd', 'section_id': 'ITEM_3',
+                 'labels': ['L'], 'block_index': 4, 'raw_start_byte': 100, 'raw_end_byte': 160,
+                 'raw_span_sha256': 'h', 'text': 'Legal proceedings.'}
+    proposal = {'coverage_status': 'LOCAL_REQUESTED_RANGES_SCANNED', 'coverage_reasons': [], 'note_references': [],
+                'checked_ranges': [], 'D02': {'finding_status': 'SOURCE_EXCERPTS_FOUND', 'candidates': [candidate]},
+                'D03': {}, 'policy_hash': 'p', 'proposal_id': 'x', 'document_id': 'd', 'source_reference_id': 's1'}
+    target = {'company_id': 'alpha', 'entity': '1', 'accession': 'a', 'period_start': '2024-01-01',
+              'period_end': '2024-12-31', 'scope': {'entity_scope': 'registrant'}, 'scope_key': 'k1'}
+    return {'source_arguments': {'target': target, 'raw_blobs': {'sha256:r': {}},
+                                 'raw_bytes_by_id': {'sha256:r': b'<html>'}},
+            'prepared': {'capability_status': 'READY', 'capability_gaps': [], 'proposals': {'s1': proposal}},
+            'requests': [], 'admission': {'record_type': 'VERIFIED'}, 'period_selection': {'policy_id': 'p1'}}
+
+
+class FingerprintTest(unittest.TestCase):
+    def classify(self, mutate):
+        base, cand = sample_result(), sample_result()
+        mutate(cand)
+        category, changes = tool.classify({'outcome': 'OK', 'fingerprint': tool.fingerprint(base)},
+                                          {'outcome': 'OK', 'fingerprint': tool.fingerprint(cand)})
+        return category, {c['field']: c for c in changes}
+
+    def test_scope_locators_identities_and_unnamed_parts_are_compared(self):
+        def candidate(result):
+            return result['prepared']['proposals']['s1']['D02']['candidates'][0]
+        self.assertEqual(self.classify(lambda result: None), ('SAME_OK', {}))
+        # (mutation, named field that must report it, result part that must report it)
+        cases = {
+            'D02 scope': (lambda r: r['source_arguments']['target']['scope'].update(entity_scope='consolidated'),
+                          'selection', 'source_arguments.target'),
+            'candidate byte span': (lambda r: candidate(r).update(raw_start_byte=101),
+                                    'd02_records_digest', 'prepared.proposals'),
+            'proposal id': (lambda r: r['prepared']['proposals']['s1'].update(proposal_id='y'),
+                            'proposal_ids', 'prepared.proposals'),
+            'raw bytes': (lambda r: r['source_arguments']['raw_bytes_by_id'].update({'sha256:r': b'<html> '}),
+                          None, 'source_arguments.raw_bytes_by_id'),
+            'unnamed field': (lambda r: r['period_selection'].update(policy_id='p2'),
+                              None, 'period_selection.policy_id'),
+        }
+        for name, (mutate, field, part) in cases.items():
+            with self.subTest(name):
+                category, fields = self.classify(mutate)
+                self.assertEqual(category, 'CHANGED_OK')
+                self.assertEqual(fields['result_parts']['parts'], [part])
+                self.assertTrue(tool._describe(fields['result_parts']).startswith('result parts changed: '))
+                if field:
+                    self.assertIn(field, fields)
 
 
 class SourceDigestTest(unittest.TestCase):

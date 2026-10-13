@@ -56,6 +56,33 @@ def _digest(value):
     return 'sha256:' + hashlib.sha256(text.encode('utf-8')).hexdigest()
 
 
+def _jsonable(value):
+    """Replace raw bytes by their SHA-256 and length so a whole result can be digested."""
+    if isinstance(value, (bytes, bytearray)):
+        return {'sha256': hashlib.sha256(value).hexdigest(), 'bytes': len(value)}
+    if isinstance(value, dict):
+        return {str(key): _jsonable(inner) for key, inner in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [_jsonable(inner) for inner in value]
+    return value
+
+
+def result_parts(result):
+    """Digest every top-level part of a result, and every key of a part that is a mapping.
+
+    This is the safety net behind the named fields below: a change in any field
+    the fingerprint does not name still shows up, with the part it is in.
+    """
+    parts = {}
+    for key, value in result.items():
+        if isinstance(value, dict):
+            for inner_key, inner in value.items():
+                parts[f'{key}.{inner_key}'] = _digest(_jsonable(inner))
+        else:
+            parts[str(key)] = _digest(_jsonable(value))
+    return parts
+
+
 def _file_sha256(path):
     digest = hashlib.sha256()
     with open(path, 'rb') as handle:
@@ -92,7 +119,11 @@ def tree_digest(root):
 
 
 def fingerprint(result):
-    """Reduce one production result to the parts D02 depends on, in a stable form."""
+    """Reduce one production result to the parts D02 depends on, in a stable form.
+
+    The named fields give a readable account of what changed; ``result_parts``
+    covers everything else in the result, so no difference is reported as same.
+    """
     arguments, prepared = result['source_arguments'], result['prepared']
     target = arguments['target']
     sources = {}
@@ -111,7 +142,9 @@ def fingerprint(result):
                 for r in proposal.get('checked_ranges') or []),
             'd02_candidates': sorted(
                 [c.get('section_id'), c.get('block_index'), sorted(c.get('labels') or [])] for c in candidates),
-            'd02_texts_digest': _digest(sorted([c.get('block_index'), c.get('text')] for c in candidates)),
+            # Whole candidate records: text and source locators (byte span, span hash, asset, document).
+            'd02_records_digest': _digest(sorted(candidates, key=lambda c: json.dumps(c, sort_keys=True))),
+            'proposal_ids': [proposal.get('proposal_id'), proposal.get('document_id')],
             'd02_finding_status': d02.get('finding_status'),
             'furniture_removed': sorted(
                 r.get('block_index') for r in (proposal.get('d02_page_furniture') or {}).get('removed_blocks') or []),
@@ -124,18 +157,17 @@ def fingerprint(result):
     requests = []
     for request in result['requests']:
         blocks = request.get('blocks') or []
-        instructions = {k: request.get(k) for k in (
-            'record_type', 'contract', 'metric_id', 'definition', 'system_prompt', 'response_protocol')}
         requests.append({
             'request_id': request.get('request_id'), 'source_id': request.get('source_id'),
             'pool': [b.get('block_id') for b in blocks], 'must_decide': list(request.get('must_decide') or []),
             'texts_digest': _digest([[b.get('block_id'), b.get('text')] for b in blocks]),
-            'instructions_digest': _digest(instructions)})
+            # Every other request field: instructions, protocol, filing, company and target identity.
+            'fields_digest': _digest({k: v for k, v in request.items() if k != 'blocks'})})
     requests.sort(key=lambda r: (str(r['source_id']), str(r['request_id'])))
     admission = result.get('admission') or {}
     return {
-        'selection': {k: target.get(k) for k in ('accession', 'entity', 'period_start', 'period_end')}
-                     | {'raw_asset_ids': sorted(arguments.get('raw_blobs') or {})},
+        # The whole target, including the D02 scope and scope_key the calculation uses.
+        'selection': {k: target[k] for k in sorted(target)} | {'raw_asset_ids': sorted(arguments.get('raw_blobs') or {})},
         'admission': {'record_type': admission.get('record_type'),
                       'source_manifest_sha256': admission.get('source_manifest_sha256'),
                       'request_attempts': len(admission.get('request_attempt_ids') or []),
@@ -144,6 +176,7 @@ def fingerprint(result):
         'source_references_digest': _digest(prepared.get('source_references')),
         'sources': sources,
         'requests': requests,
+        'result_parts': result_parts(result),
     }
 
 
@@ -308,8 +341,8 @@ def compare_fingerprints(base, cand):
                         'after': sorted(cand['sources'])})
     for sid in sorted(set(base['sources']) & set(cand['sources'])):
         old, new = base['sources'][sid], cand['sources'][sid]
-        for field in ('coverage', 'coverage_record_digest', 'd02_finding_status', 'd02_texts_digest',
-                      'policy_hash', 'd03_digest', 'other_fields', 'other_digest'):
+        for field in ('coverage', 'coverage_record_digest', 'd02_finding_status', 'd02_records_digest',
+                      'proposal_ids', 'policy_hash', 'd03_digest', 'other_fields', 'other_digest'):
             if old[field] != new[field]:
                 changes.append({'field': field, 'before': old[field], 'after': new[field]})
         for field in ('note_references', 'checked_ranges', 'd02_candidates', 'furniture_removed'):
@@ -324,9 +357,13 @@ def compare_fingerprints(base, cand):
         for field in ('pool', 'must_decide'):
             if old[field] != new[field]:
                 changes.append(_set_change(field, old[field], new[field]))
-        for field in ('texts_digest', 'instructions_digest', 'source_id'):
+        for field in ('texts_digest', 'fields_digest', 'source_id'):
             if old[field] != new[field]:
                 changes.append({'field': field, 'before': old[field], 'after': new[field]})
+    old_parts, new_parts = base['result_parts'], cand['result_parts']
+    differing = sorted(name for name in set(old_parts) | set(new_parts) if old_parts.get(name) != new_parts.get(name))
+    if differing:
+        changes.append({'field': 'result_parts', 'parts': differing})
     return changes
 
 
@@ -377,6 +414,8 @@ def _describe(change):
         return f"{change['field']} +{change['added']} -{change['removed']}"
     if change['field'] == 'request_id':
         return 'request_id changed (saved model answers for the old request no longer apply)'
+    if change['field'] == 'result_parts':
+        return 'result parts changed: ' + ', '.join(change['parts'])
     before, after = change['before'], change['after']
     if isinstance(before, (dict, list)) or isinstance(after, (dict, list)):
         return f"{change['field']} changed"
