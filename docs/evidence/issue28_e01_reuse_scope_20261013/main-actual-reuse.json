@@ -1,0 +1,135 @@
+{
+  "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/e01-reuse-main-e16-20261013/state",
+  "original_state": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/e01-item-conflict-state-20261013/state",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "commit": "7a8354b0fad689d90b37ff33b81e72744a8655a7",
+  "uncommitted_paths": [
+    " M scripts/vnext/ordinary_update_compatibility.py",
+    " M tests/vnext/test_ordinary_current_update.py",
+    "?? docs/evidence/issue28_e01_reuse_scope_20261013/main-actual-reuse.log",
+    "?? docs/evidence/issue28_e01_reuse_scope_20261013/main-combined-controls.log"
+  ],
+  "phases": {
+    "first-reuse": {
+      "seconds": 0.6259097090223804,
+      "exit_code": 2
+    },
+    "second-reuse": {
+      "seconds": 0.6224911250174046,
+      "exit_code": 2
+    },
+    "read": {
+      "seconds": 0.24221220798790455,
+      "exit_code": 0
+    }
+  },
+  "first_metric": {
+    "metric_id": "E01",
+    "status": "PREVIOUS_INPUT_WITHHELD",
+    "attempt_id": "73499561551a42d5a78188394589697b",
+    "version": "473596ed52d44412ad5b6b1502d354e2",
+    "result_id": "sha256:cd0f882fecd887de87c48ebe35c6020bbdf8a6ace404aba18c4334bff9207553",
+    "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/e01-reuse-main-e16-20261013/state/updates/E01/periods/FY2023/results/473596ed52d44412ad5b6b1502d354e2",
+    "result_reason_code": "E01_ITEM_METADATA_BODY_CONFLICT",
+    "raw_input_unchanged": true,
+    "calculation_performed": false,
+    "new_candidate_created": false,
+    "source_check_versions": {
+      "scripts/vnext/ordinary_current_update.py": "0cd7177f95a0f866006506813260732976a00327234fbb83752ffbd07fd61a6b",
+      "scripts/vnext/request_bindings.py": "d0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee"
+    },
+    "source_observation_errors": [],
+    "new_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false,
+    "requested_fiscal_year": 2023,
+    "configuration_compatibility": "FINITE_INSPECTED_E01_DISPATCH_ONLY",
+    "defect_holds": [],
+    "read_result_id": "sha256:cd0f882fecd887de87c48ebe35c6020bbdf8a6ace404aba18c4334bff9207553",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/e01-reuse-main-e16-20261013/state/updates/E01/periods/FY2023/results/473596ed52d44412ad5b6b1502d354e2",
+    "program_version": {
+      "commit": "293e495f74ed111b9c0e3365b9f4d35f977949ce",
+      "has_uncommitted_changes": true
+    }
+  },
+  "second_metric": {
+    "metric_id": "E01",
+    "status": "PREVIOUS_INPUT_WITHHELD",
+    "attempt_id": "2c9cb44d0f9f4d01abada89a84409753",
+    "version": "473596ed52d44412ad5b6b1502d354e2",
+    "result_id": "sha256:cd0f882fecd887de87c48ebe35c6020bbdf8a6ace404aba18c4334bff9207553",
+    "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/e01-reuse-main-e16-20261013/state/updates/E01/periods/FY2023/results/473596ed52d44412ad5b6b1502d354e2",
+    "result_reason_code": "E01_ITEM_METADATA_BODY_CONFLICT",
+    "raw_input_unchanged": true,
+    "calculation_performed": false,
+    "new_candidate_created": false,
+    "source_check_versions": {
+      "scripts/vnext/ordinary_current_update.py": "0cd7177f95a0f866006506813260732976a00327234fbb83752ffbd07fd61a6b",
+      "scripts/vnext/request_bindings.py": "d0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee"
+    },
+    "source_observation_errors": [],
+    "new_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false,
+    "requested_fiscal_year": 2023,
+    "defect_holds": [],
+    "read_result_id": "sha256:cd0f882fecd887de87c48ebe35c6020bbdf8a6ace404aba18c4334bff9207553",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/e01-reuse-main-e16-20261013/state/updates/E01/periods/FY2023/results/473596ed52d44412ad5b6b1502d354e2",
+    "program_version": {
+      "commit": "293e495f74ed111b9c0e3365b9f4d35f977949ce",
+      "has_uncommitted_changes": true
+    }
+  },
+  "csv_row": {
+    "company": "Pfizer",
+    "cik": "78003",
+    "metric_id": "E01",
+    "metric_name": "M&A announcements (content-confirmed)",
+    "value": "",
+    "unit": "count",
+    "status": "WITHHELD",
+    "source_class": "8K_ITEM",
+    "formula": "",
+    "period_start": "2023-01-01",
+    "period_end": "2023-12-31",
+    "fiscal_year": "2023",
+    "fiscal_period": "TARGET_PERIOD",
+    "accession": "",
+    "form": "10-K",
+    "filed_date": "2024-02-22",
+    "concept_or_section": "",
+    "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2023, \"period_end\": \"2023-12-31\", \"period_start\": \"2023-01-01\"}, \"measurement_kind\": \"TARGET_PERIOD\", \"scope\": {\"coverage\": \"fiscal_year_source_set\", \"fiscal_year\": 2023, \"shared_claim_group_id\": \"merger_acquisition_items\"}, \"selection\": {\"e01_content\": {\"annual_amendment_checks\": [], \"attachment_dependencies\": [], \"candidate_item_ids\": [], \"complete_annual_count\": null, \"item_source_conflict\": {\"category\": \"IMPLEMENTATION_GAP\", \"reason\": \"EVENT_ITEM_HEADED_BUT_NOT_LISTED:0001193125-23-294930:2.01\", \"status\": \"SOURCE_CONTENT_CONFLICT\"}, \"matching_response_available\": false, \"new_calls\": [0, 0, 0], \"old_answer_reused\": false, \"partial_count_exported\": false, \"reason_code\": \"E01_ITEM_METADATA_BODY_CONFLICT\", \"request_contract\": null, \"request_id\": null, \"status\": \"WITHHELD\", \"target_model_execution_authorized\": false}}, \"source_reference_ids\": [\"sha256:a38f993e4b99318705b78e21e71cf479002cbbee64e48403e9a71d7e5d3a0b4a\", \"sha256:87f7d0ca6dc65fc172a1378d692d4b20b313de0f1ec445011a0685d562d836aa\", \"sha256:6cb114a6f1679d148d69318e51ee1aba2f4ed7295c067e273df5a9780541aa8e\", \"sha256:ac0ed71f9bdabd3f92a91bfb9b5e12c391d230d4df6e2ce345988c5141f2463e\", \"sha256:a1ad536ea77df1ac47bb38c36312364f95fa095ce8a55fdf04300b2680aed562\", \"sha256:66f5ed43e154a4a62e35b85b18712812afd9d02045192f2d5d9cc7c6d648f3d4\", \"sha256:6f082f9e6b9202b427f508e6855bf521f6521c845d514f74712c407acbad6077\", \"sha256:4e6f81cc39343e79d0f9b75f05ba6519d048b4e346234a0e0573c34f54322e75\", \"sha256:018bcae2bda98568c3ecd40a9e59d0d2652be57191cf2a78908104b98e23b642\", \"sha256:67024743c45ebec0af0c66205a4b7074bf01c44ee7d93c9ac8b8bdeb64bb7185\", \"sha256:c59958f7f4811b381dd34acd2c0fb611d00a5777c36a1fc0269e2200f71f2df2\", \"sha256:d441a17f06c132c729ece286148f73e18539c9e1769d686dd552b4a42148974a\", \"sha256:38146282c941ad0cc3112e35f54ebdfaae03155c63c922f6072958fbc5a743d2\", \"sha256:7ba74def0dcb8f97abb4aee4878b1d1d15b39b3b4b5e60c103f17b93063bd300\", \"sha256:d010bf9b68f3ab1329353e90c40ed8437e5d004a780d68e2fb06654d6f33a495\", \"sha256:9148b2d958a091673b73b638467cc9fb54dc56ad3a6d230d6a02394b401317c8\", \"sha256:2123448926b96052824d87c683f16ac00df260e498f11f53889dab704b3130c3\", \"sha256:b9b92f2e6109a88106c4d4670784a255128f373715bd401dc926446779006605\", \"sha256:23689071d7c769c6053f780ea9fd325c8e371f67449d4bfbe3628ac058920a01\", \"sha256:b07d49dc08969e2254416a8dc4be19790975c5c620088bba5a58e582c494ce00\", \"sha256:e017479170900e1bf76e870bf0595523710888f8990881f98b3274418776fb10\", \"sha256:a18cee2d700354f340269e8921b272269a778b87c92fb5ae7d1cb23c1364f189\", \"sha256:47f32d9464d169a80ea0705c8f8101f66326c11ff6b415e028b332175345f7cc\", \"sha256:2ff0a6f0120e0f12033eefc4def410ceb6e3c64b1e741575725d8c50d792213e\", \"sha256:c9248b8c1dc17195509510ffd117042d7b6dac5ff37093c20a8e842861184900\", \"sha256:d70eaf27c17a2b39c6f31bfc4adf8f76161f49dce4fc377ec7e215c6a97d6390\", \"sha256:b8ef9bc7376544cfc20301b56a321b2c85c02c6600da5003e54f614960ac9f35\", \"sha256:0bfc625c46f7f790a58b1448ed79fc881eb98cd0b6309ee69c3ea61d95e35fe8\", \"sha256:08700e7d61cba7cd6406dee9c0cde38bbafc6c120256c89514b535c3a2838a36\", \"sha256:94758c7efc72f865690e9db23a7778ebb6257ea21e70eef78149a0ac451d686d\", \"sha256:fba1e3b53663679b039b19adb33e62eb1419fb066c81bf7d99bfd158fbe8351e\", \"sha256:c37d051ddbf0f2d2556ebf4f9c3238cd82698f8f52b4c8dff669c5880d7307d9\"]}",
+    "confidence": "",
+    "notes": "Content-confirmed M&A announcements under the selected successor contract. Filing item codes or financing keywords alone do not establish an announcement; missing matching semantic responses remain withheld. No accepted value is asserted for this target period. Native state: WITHHELD; reason: E01_ITEM_METADATA_BODY_CONFLICT.",
+    "company_id": "pfizer",
+    "result_id": "sha256:cd0f882fecd887de87c48ebe35c6020bbdf8a6ace404aba18c4334bff9207553",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/e01-reuse-main-e16-20261013/state/updates/E01/periods/FY2023/results/473596ed52d44412ad5b6b1502d354e2",
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "local_metric_status": "PREVIOUS_INPUT_WITHHELD",
+    "period_role": "REQUESTED_RESULT",
+    "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+    "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+    "defect_holds": "[]",
+    "requested_in_latest_execution": "True"
+  },
+  "original_task_files_unchanged": 19,
+  "saved_result_files_unchanged": 7,
+  "source_metadata_unchanged": {
+    "config/company_registry.csv": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+    "evidence/requests_log.csv": "61252ac5844ad1c5917040f753c04a7ed4f6e1d75e2fb0803804773fd6c0eef9",
+    "evidence/requests_log_manifest.json": "e91193401733b86ddc28c69cbae0debd74eeb899a328e60fcfb32532ed6a85ab"
+  },
+  "reader_state_files_unchanged": 23,
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "complete_annual_ma_count_proven": false
+}
