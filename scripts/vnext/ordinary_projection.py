@@ -306,6 +306,21 @@ def _claims(case):
     return result
 
 
+def _b04_profitloss_note(result, ordered, claims):
+    """Describe only the reported concept actually used by this numeric result."""
+    if (result.get('metric_id') != 'B04' or result.get('publication') != 'PUBLISHED'
+            or result.get('value') is None):
+        return ''
+    for observation in ordered:
+        binding = observation['source_binding']
+        for identity in binding.get('verified_claim_ids', binding.get('matched_verified_claim_ids', [])):
+            claim = claims[identity]
+            if (claim.get('claim_kind') == 'COMPANYFACTS_NUMERIC_FACT'
+                    and claim.get('locator', {}).get('concept') == 'ProfitLoss'):
+                return 'ProfitLoss may include non-controlling interest.'
+    return ''
+
+
 def _claim_evidence(claim, observation, result, company, projection, indexes, fiscal_year):
     entry = projector._evidence_row(observation=observation,result=result,company=company,projection=projection,
         source_index=indexes["sources"],raw_index=indexes["raw"],fiscal_year=fiscal_year)
@@ -489,6 +504,9 @@ def render_ordinary_records(*, data_root, manifest, records, case,
                         extraction_method='source_verified_annual_production_quantity',
                         context_or_dimension=json.dumps(binding, ensure_ascii=False, sort_keys=True))
                 evidence.append(entry)
+        scope_note = _b04_profitloss_note(result, ordered, claims)
+        if scope_note and scope_note not in row.get('notes', ''):
+            row['notes'] = ' '.join(filter(None, (row.get('notes', ''), scope_note)))
         label,note=_period_label(result,period);row["fiscal_period"]=label
         row["notes"]=" ".join([row.get("notes",""),note,"Native state: "+result["publication"]+"; reason: "+result["reason_code"]+"."])
         row["context_or_dimension"]=json.dumps({"scope":trace["calculation_target"]["scope"],"measurement_kind":label,
