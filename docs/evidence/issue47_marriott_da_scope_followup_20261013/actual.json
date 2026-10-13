@@ -1,0 +1,176 @@
+{
+  "source_reference": {
+    "record_type": "SOURCE_REFERENCE",
+    "source_reference_id": "sha256:d0c992921c09a5397ceb543f3ceadb77c0de62273773b81ceec4836d559e37b0",
+    "raw_asset_id": "sha256:54effe78b84966cd0793dcb23b8db4ad30b0614ea3d42074f3ece89adebe8bf5",
+    "company_id": "marriott_international",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828022002666/mar-20211231.htm",
+    "accession": "0001628280-22-002666",
+    "document_name": "mar-20211231.htm",
+    "source_role": "target_primary",
+    "request_attempt_id": "request:attempt:36f896c0fded2624677e9814f876621965fe1f061b3e483c1e706c578c541637"
+  },
+  "actual_period": {
+    "fiscal_year": 2021,
+    "period_start": "2021-01-01",
+    "period_end": "2021-12-31"
+  },
+  "contract_cost_facts": [
+    {
+      "ordinal": 67,
+      "context_ref": "i922278aaa1eb496b90dffcdf511f95b2_D20210101-20211231",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+      },
+      "resolved_dimensions": {
+        "srt:ProductOrServiceAxis": "{http://www.marriott.com/20211231}FeeServiceMember"
+      },
+      "value_usd": "75000000"
+    },
+    {
+      "ordinal": 1058,
+      "context_ref": "i5a34f19ff9704101852377178e48bcc7_D20210101-20211231",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "mar:USAndCanadaSegmentMember",
+        "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+      },
+      "resolved_dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "{http://www.marriott.com/20211231}USAndCanadaSegmentMember",
+        "srt:ProductOrServiceAxis": "{http://www.marriott.com/20211231}FeeServiceMember"
+      },
+      "value_usd": "55000000"
+    },
+    {
+      "ordinal": 1059,
+      "context_ref": "i7a9de73cd0fc47b6b7079e789395df94_D20210101-20211231",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "mar:InternationalSegmentMember",
+        "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+      },
+      "resolved_dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "{http://www.marriott.com/20211231}InternationalSegmentMember",
+        "srt:ProductOrServiceAxis": "{http://www.marriott.com/20211231}FeeServiceMember"
+      },
+      "value_usd": "20000000"
+    },
+    {
+      "ordinal": 1060,
+      "context_ref": "id5e2ea49078642f096588354be364512_D20210101-20211231",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+      },
+      "resolved_dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "srt:ProductOrServiceAxis": "{http://www.marriott.com/20211231}FeeServiceMember"
+      },
+      "value_usd": "75000000"
+    }
+  ],
+  "existing_shared_deduction_proofs": [
+    {
+      "fact_ordinal": 67,
+      "relation_class": "CONSOLIDATED_REVENUE_DEDUCTION",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+      },
+      "table_id": "table_000028",
+      "table_grid_sha256": "sha256:e8a64a23efe65f8ca0b09b91d475fe943e8d8146421c960673c188e1f8cdc015",
+      "gross_row": 6,
+      "deduction_row": 7,
+      "net_row": 8,
+      "reported_labels": [
+        "Gross fee revenues",
+        "Contract investment amortization",
+        "Net fee revenues"
+      ],
+      "displayed_amounts": [
+        "2694",
+        "-75",
+        "2619"
+      ]
+    },
+    {
+      "fact_ordinal": 1058,
+      "relation_class": "OPERATING_SEGMENT_REVENUE_DEDUCTION",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "mar:USAndCanadaSegmentMember",
+        "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+      },
+      "table_id": "table_000055",
+      "table_grid_sha256": "sha256:ec9e49d63a7295ee5e199ae3fcee3bedc98e61af227bd67e2783e0b74ae803c6",
+      "gross_row": 3,
+      "deduction_row": 4,
+      "net_row": 5,
+      "reported_labels": [
+        "Gross fee revenues",
+        "Contract investment amortization",
+        "Net fee revenues"
+      ],
+      "displayed_amounts": [
+        "1580",
+        "-55",
+        "1525"
+      ]
+    },
+    {
+      "fact_ordinal": 1059,
+      "relation_class": "OPERATING_SEGMENT_REVENUE_DEDUCTION",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "mar:InternationalSegmentMember",
+        "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+      },
+      "table_id": "table_000055",
+      "table_grid_sha256": "sha256:ec9e49d63a7295ee5e199ae3fcee3bedc98e61af227bd67e2783e0b74ae803c6",
+      "gross_row": 3,
+      "deduction_row": 4,
+      "net_row": 5,
+      "reported_labels": [
+        "Gross fee revenues",
+        "Contract investment amortization",
+        "Net fee revenues"
+      ],
+      "displayed_amounts": [
+        "568",
+        "-20",
+        "548"
+      ]
+    },
+    {
+      "fact_ordinal": 1060,
+      "relation_class": "OPERATING_SEGMENTS_TOTAL_REVENUE_DEDUCTION",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+      },
+      "table_id": "table_000055",
+      "table_grid_sha256": "sha256:ec9e49d63a7295ee5e199ae3fcee3bedc98e61af227bd67e2783e0b74ae803c6",
+      "gross_row": 3,
+      "deduction_row": 4,
+      "net_row": 5,
+      "reported_labels": [
+        "Gross fee revenues",
+        "Contract investment amortization",
+        "Net fee revenues"
+      ],
+      "displayed_amounts": [
+        "2148",
+        "-75",
+        "2073"
+      ]
+    }
+  ],
+  "full_da_scope_established": false,
+  "metric_result_created": false,
+  "calls": {
+    "sec": 0,
+    "provider": 0
+  },
+  "elapsed_seconds": 0.34280129200487863
+}
