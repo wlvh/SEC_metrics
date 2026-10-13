@@ -1,0 +1,146 @@
+{
+  "first": {
+    "argv": [
+      "run",
+      "--company",
+      "marriott_international",
+      "--period",
+      "fiscal-years",
+      "--fiscal-year-start",
+      "2024",
+      "--fiscal-year-end",
+      "2024",
+      "--metric",
+      "D02",
+      "--source-root",
+      "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "--saved-legal-reviews",
+      "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/work/marriott2024-d02-caption-answers",
+      "--work-dir",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/marriott2024-d02-note-ownership-20261013/state",
+      "--output-dir",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/marriott2024-d02-note-ownership-20261013/runs"
+    ],
+    "seconds": 13.806588791980175,
+    "exit_code": 2,
+    "report": {
+      "elapsed_seconds": 13.803809250006452,
+      "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+      "company_id": "marriott_international",
+      "run_id": "20261013T150030Z-02dcd360",
+      "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+      "selected_metrics": [
+        "D02"
+      ],
+      "metrics": [
+        {
+          "metric_id": "D02",
+          "status": "INPUT_OR_EXECUTION_FAILED",
+          "attempt_id": "3a862ab3321a4cd29a8cddacda8035b9",
+          "error_type": "ReviewedLegalSourceError",
+          "reason": "D02_COMPLETE_SAVED_REVIEW_SET_MISSING:sha256:cf2e9ded867a651f0da50da53a4ce0d5b1f5f14405d8fb057090f641bedc5996",
+          "previous_result": null,
+          "new_calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "requested_fiscal_year": 2024,
+          "error_category": "MODEL_RESPONSE_REQUIRED"
+        }
+      ],
+      "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "program_root": "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/marriott2024-d02-note-ownership-20261013/state",
+      "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/marriott2024-d02-note-ownership-20261013/runs/20261013T150030Z-02dcd360",
+      "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+      "calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "selected_fiscal_years": [
+        2024
+      ]
+    },
+    "new_calls": [
+      0,
+      0,
+      0
+    ]
+  },
+  "read": {
+    "seconds": 0.08325833300477825,
+    "exit_code": 0,
+    "state_files_unchanged": 7,
+    "report": {
+      "elapsed_seconds": 0.08010099999955855,
+      "record_type": "ORDINARY_COMPANY_RESULT_VIEW_V1",
+      "company_id": "marriott_international",
+      "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "metrics": [
+        {
+          "metric_id": "D02",
+          "value": null,
+          "result_validity": "NO_CURRENT_RESULT",
+          "latest_observation": "INPUT_OR_EXECUTION_FAILED",
+          "fiscal_year": 2024,
+          "requested_in_latest_execution": true,
+          "reason": "D02_COMPLETE_SAVED_REVIEW_SET_MISSING:sha256:cf2e9ded867a651f0da50da53a4ce0d5b1f5f14405d8fb057090f641bedc5996",
+          "error_type": "ReviewedLegalSourceError",
+          "error_category": "MODEL_RESPONSE_REQUIRED"
+        }
+      ],
+      "source_freshness": "NOT_CHECKED_BY_SAVED_READER",
+      "calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/marriott2024-d02-note-ownership-20261013/read"
+    },
+    "csv_row": {
+      "company": "",
+      "cik": "",
+      "metric_id": "D02",
+      "metric_name": "",
+      "value": "",
+      "unit": "",
+      "status": "INPUT_OR_EXECUTION_FAILED",
+      "source_class": "",
+      "formula": "",
+      "period_start": "",
+      "period_end": "",
+      "fiscal_year": "2024",
+      "fiscal_period": "",
+      "accession": "",
+      "form": "",
+      "filed_date": "",
+      "concept_or_section": "",
+      "context_or_dimension": "",
+      "confidence": "",
+      "notes": "reason: D02_COMPLETE_SAVED_REVIEW_SET_MISSING:sha256:cf2e9ded867a651f0da50da53a4ce0d5b1f5f14405d8fb057090f641bedc5996; error_type: ReviewedLegalSourceError; error_category: MODEL_RESPONSE_REQUIRED",
+      "company_id": "marriott_international",
+      "result_id": "",
+      "record_root": "",
+      "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "local_metric_status": "INPUT_OR_EXECUTION_FAILED",
+      "period_role": "REQUESTED_WITHOUT_RESULT",
+      "result_validity": "NO_CURRENT_RESULT",
+      "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+      "defect_holds": "",
+      "requested_in_latest_execution": "True"
+    }
+  },
+  "original_model_files_seven": true,
+  "calculation_forbidden_before_missing_answer": true,
+  "no_result_created": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

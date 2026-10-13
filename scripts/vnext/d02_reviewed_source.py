@@ -117,9 +117,15 @@ def item8_requests(*, prepared, target):
             for note in reference['range_candidates']:
                 if (scope['start_block']<=note['start_block']
                         and note['end_block_exclusive']<=scope['end_block_exclusive']):
+                    selection=proposal.get('d02_incorporated_note_scopes', {})
+                    declared=note in selection.get('containers', [])
+                    scoped=[r for r in selection.get('disclosure_scopes', [])
+                            if r['requested_reference']==note['requested_reference']
+                            and note['start_block']<=r['start_block']<r['end_block_exclusive']<=note['end_block_exclusive']]
                     _need(any(r['section_id'].startswith('NOTE_')
                               and r['start_block']==note['start_block']
-                              and r['end_block_exclusive']==note['end_block_exclusive'] for r in ranges),
+                              and r['end_block_exclusive']==note['end_block_exclusive'] for r in ranges)
+                          or declared and scoped and all(r in ranges for r in scoped),
                           'D02_REFERENCED_NOTE_OWNERSHIP_NOT_MIGRATED','IMPLEMENTATION_REQUIRED')
         reports=going_concern_candidates(document=document)['auditor_report_ranges']
         relevant=[r for r in reports if scope['start_block']<=r['start_block']<scope['end_block_exclusive']]
