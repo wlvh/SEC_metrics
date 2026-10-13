@@ -18,7 +18,7 @@ from .canonical import canonical_json_bytes, content_hash, sha256_bytes, strict_
 from .records import validate_record
 from .text_business_candidates import (
     governance_source_document, board_composition_candidates, legal_risk_candidates,
-    reported_legal_fact_candidates,
+    reported_legal_fact_candidates, select_d02_page_furniture,
 )
 from .text_coverage import build_text_document
 from .text_results import text_policy as _text_policy
@@ -246,7 +246,7 @@ def _annual_document(*, source, blob, raw, target, filing):
 
 def prepare_business_text_sources(*, metric_id, target, source_references, raw_blobs,
                                   raw_bytes_by_id, source_filings,
-                                  d02_category_policy=None):
+                                  d02_category_policy=None, d02_page_furniture=False):
     """Rebuild an ordinary annual anchor and all supported disclosure excerpts.
 
     Input discovery and request-proof admission belong to the existing normal
@@ -254,6 +254,8 @@ def prepare_business_text_sources(*, metric_id, target, source_references, raw_b
     the exact identity and period expected by that trusted boundary.
     """
     _target(metric_id, target)
+    _need(type(d02_page_furniture) is bool and (not d02_page_furniture or metric_id=='D02'),
+          'TEXT_V2_D02_PAGE_FURNITURE_SCOPE_INVALID')
     d02_select = None
     if d02_category_policy is not None:
         from .ordinary_d02_item8_v1 import POLICY as D02_V1_POLICY
@@ -326,6 +328,8 @@ def prepare_business_text_sources(*, metric_id, target, source_references, raw_b
         coverage["coverage_hash"] = content_hash(value=coverage); coverages[governance_id] = coverage
     else:
         proposal = legal_risk_candidates(document=annual)
+        if d02_page_furniture:
+            proposal = select_d02_page_furniture(proposal=proposal, document=annual)
         if d02_select is not None:
             proposal = d02_select(proposal=proposal)
         _need(proposal["coverage_status"] == "LOCAL_REQUESTED_RANGES_SCANNED",
@@ -352,6 +356,9 @@ def prepare_business_text_sources(*, metric_id, target, source_references, raw_b
                     "capability_policy_hash": _CAPABILITY_POLICY_HASH,
                     "fact_periods_and_dimensions_preserved": True, "current_liability_or_accrual_asserted": False,
                     "scope": "LEGAL_DISCLOSURE_SOURCE_TEXT_NOT_TOTAL_CASE_OR_LIABILITY_MEASUREMENT"}
+        if d02_page_furniture:
+            coverage['d02_page_furniture'] = proposal.get('d02_page_furniture', {
+                'policy':'D02_PAGE_NUMBER_CONTEXT_V1','removed_blocks':[]})
         coverage["coverage_hash"] = content_hash(value=coverage); coverages[annual_id] = coverage
     return {"metric_id": metric_id, "documents": documents, "coverages": coverages,
             "proposals": proposals, "source_references": sources,

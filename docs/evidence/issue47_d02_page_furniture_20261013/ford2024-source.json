@@ -1,0 +1,82 @@
+{
+  "source_only": true,
+  "company_id": "ford_motor_company",
+  "fiscal_year": 2024,
+  "source_binding": {
+    "source_reference_id": "sha256:5ebe46904e53123b73181862a7369a98c633603a88b8d4cab4d9142a422ee9ae",
+    "raw_asset_id": "sha256:9b0f2f56372c6889c2b4c7a669ed898ffedac97c9a43f28bd4bd5988e71d75da",
+    "proof": {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000013/f-20241231.htm",
+      "accession": "0000037996-25-000013",
+      "document_name": "f-20241231.htm",
+      "content_sha256": "9b0f2f56372c6889c2b4c7a669ed898ffedac97c9a43f28bd4bd5988e71d75da",
+      "request_body_sha256": "9b0f2f56372c6889c2b4c7a669ed898ffedac97c9a43f28bd4bd5988e71d75da",
+      "request_body_size": 5505900,
+      "request_headers_repo_relative_path": "evidence/request_attempts/9b/9b0f2f56372c6889c2b4c7a669ed898ffedac97c9a43f28bd4bd5988e71d75da/f-20241231.htm.3ea65b29d0a836ba7e08fae5015548ba9190b0210372e9faf5b6720fdf1cfce3.headers.json",
+      "request_headers_sha256": "3ea65b29d0a836ba7e08fae5015548ba9190b0210372e9faf5b6720fdf1cfce3",
+      "request_headers_size": 1681,
+      "request_locator_kind": "IMMUTABLE_ATTEMPT",
+      "request_repo_relative_path": "evidence/request_attempts/9b/9b0f2f56372c6889c2b4c7a669ed898ffedac97c9a43f28bd4bd5988e71d75da/f-20241231.htm",
+      "request_attempt_id": "request:attempt:d3e116f6c707b86aef5d71cb4c1f7a08169eaca2a320c33f69490e1416aaa474"
+    },
+    "saved_at_utc": "2026-09-29T08:56:24.050995+00:00"
+  },
+  "before": 56,
+  "after": 48,
+  "before_seconds": 2.675968499999726,
+  "after_seconds": 2.694820625009015,
+  "removed": {
+    "policy": "D02_PAGE_NUMBER_CONTEXT_V1",
+    "removed_blocks": [
+      {
+        "block_index": 3982,
+        "source_reference_id": "sha256:5ebe46904e53123b73181862a7369a98c633603a88b8d4cab4d9142a422ee9ae",
+        "raw_span_sha256": "dadb3cc8b73d86becf335549a92693c08b563e6fbbb8841ec7536bf08023e808"
+      },
+      {
+        "block_index": 3983,
+        "source_reference_id": "sha256:5ebe46904e53123b73181862a7369a98c633603a88b8d4cab4d9142a422ee9ae",
+        "raw_span_sha256": "b05e6c0c91cff2c276d7b0362dafdfc0fd9632c139be06cbb12280b18b2c69fd"
+      },
+      {
+        "block_index": 3984,
+        "source_reference_id": "sha256:5ebe46904e53123b73181862a7369a98c633603a88b8d4cab4d9142a422ee9ae",
+        "raw_span_sha256": "e839cecfa58ff32966dfe3841b61df31e41fee4d7f8aff9391ccb912739e581d"
+      },
+      {
+        "block_index": 3993,
+        "source_reference_id": "sha256:5ebe46904e53123b73181862a7369a98c633603a88b8d4cab4d9142a422ee9ae",
+        "raw_span_sha256": "dadb3cc8b73d86becf335549a92693c08b563e6fbbb8841ec7536bf08023e808"
+      },
+      {
+        "block_index": 3994,
+        "source_reference_id": "sha256:5ebe46904e53123b73181862a7369a98c633603a88b8d4cab4d9142a422ee9ae",
+        "raw_span_sha256": "b05e6c0c91cff2c276d7b0362dafdfc0fd9632c139be06cbb12280b18b2c69fd"
+      },
+      {
+        "block_index": 3995,
+        "source_reference_id": "sha256:5ebe46904e53123b73181862a7369a98c633603a88b8d4cab4d9142a422ee9ae",
+        "raw_span_sha256": "e839cecfa58ff32966dfe3841b61df31e41fee4d7f8aff9391ccb912739e581d"
+      },
+      {
+        "block_index": 4009,
+        "source_reference_id": "sha256:5ebe46904e53123b73181862a7369a98c633603a88b8d4cab4d9142a422ee9ae",
+        "raw_span_sha256": "dadb3cc8b73d86becf335549a92693c08b563e6fbbb8841ec7536bf08023e808"
+      },
+      {
+        "block_index": 4010,
+        "source_reference_id": "sha256:5ebe46904e53123b73181862a7369a98c633603a88b8d4cab4d9142a422ee9ae",
+        "raw_span_sha256": "b05e6c0c91cff2c276d7b0362dafdfc0fd9632c139be06cbb12280b18b2c69fd"
+      }
+    ]
+  },
+  "documents_unchanged": true,
+  "D03_unchanged": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "model_answer_not_loaded": true,
+  "new_metric_result_or_run_created": false
+}

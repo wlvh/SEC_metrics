@@ -10,6 +10,7 @@ separate from this deterministic source preparation.
 from __future__ import annotations
 
 import re
+from collections import Counter
 from pathlib import Path
 
 from .canonical import content_hash, sha256_bytes, strict_json_file
@@ -249,6 +250,119 @@ def legal_risk_candidates(*, document):
                     "semantic_review_required": True, "actual_investigation_asserted": False},
             "not_disclosed_confirmed": False, "native_result_created": False, "publication_credit": False}
     return {**body, "policy_hash": _POLICY_HASH, "proposal_id": content_hash(value={**body, "policy_hash": _POLICY_HASH})}
+
+
+def _page_structure_furniture(blocks):
+    """Read repeating page-number neighbours, never repetition alone.
+
+    This is the retained historical page layout rule: same-side adjacent
+    page numbers or a five-page facing run establish the page number; a
+    header then repeats at the same offset on at least three pages.
+    """
+    texts = [" ".join(b['text'].split()).casefold() for b in blocks]
+    repeated = Counter(texts)
+    bare = {i:int(b['text'].strip()) for i,b in enumerate(blocks)
+            if re.fullmatch(r'\d{1,4}', b['text'].strip())}
+    beside = {}
+    for i,number in bare.items():
+        for side in (-1,1):
+            if 0 <= i+side < len(blocks):
+                beside.setdefault((side,texts[i+side]),set()).add(number)
+    pages = set()
+    for i,number in bare.items():
+        for side in (-1,1):
+            if not 0 <= i+side < len(blocks):
+                continue
+            neighbour = texts[i+side]
+            if repeated[neighbour] < 3:
+                continue
+            same_side = beside[(side,neighbour)]
+            both_sides = beside.get((-1,neighbour),set()) | beside.get((1,neighbour),set())
+            low = high = number
+            while low-1 in both_sides: low -= 1
+            while high+1 in both_sides: high += 1
+            if same_side & {number-1,number+1} or (
+                    re.search(r'[a-z]',neighbour) and high-low+1 >= 5):
+                pages.add(i)
+    seen = Counter()
+    for page in pages:
+        for step in (-1,1):
+            for offset in range(1,5):
+                i = page+step*offset
+                if not 0 <= i < len(blocks) or i in pages:
+                    break
+                seen[(step*offset,texts[i])] += 1
+    furniture = set()
+    for page in pages:
+        for step in (-1,1):
+            for offset in range(1,5):
+                i = page+step*offset
+                if (not 0 <= i < len(blocks) or i in pages or not texts[i]
+                        or seen[(step*offset,texts[i])] < 3):
+                    break
+                furniture.add(i)
+    return furniture
+
+
+def select_d02_page_furniture(*, proposal, document):
+    """Remove only page furniture from D02, preserving the original D03.
+
+    A header run must immediately precede the located note's original title
+    or its continued caption. Repeated matter titles or body paragraphs at
+    the top of a page are not sufficient evidence of page furniture.
+    """
+    _check_document(document)
+    _need(proposal.get('record_type')=='LEGAL_REGULATORY_SOURCE_CANDIDATES'
+          and proposal.get('document_id')==document['text_document_id']
+          and proposal.get('source_reference_id')==document['source_reference_id']
+          and proposal.get('proposal_id')==content_hash(value={
+              k:v for k,v in proposal.items() if k!='proposal_id'}),
+          'D02_PAGE_FURNITURE_PROPOSAL_CHANGED')
+    blocks = document['blocks']
+    page_layout = _page_structure_furniture(blocks)
+    note_titles = {" ".join(h['text'].split()).casefold()
+                   for ref in proposal['note_references']
+                   for h in ref['heading_candidates']}
+    furniture = set()
+    for i,block in enumerate(blocks):
+        text = " ".join(block['text'].split()).casefold()
+        continued = re.fullmatch(r'(.+?)\s*\(continued\)',text)
+        ordinary_note = block.get('emphasized') and _NOTE_HEADING.match(text)
+        if (text not in note_titles and not ordinary_note
+                and not (continued and continued[1].rstrip() in note_titles)):
+            continue
+        header = []
+        for distance in range(1,5):
+            neighbour = i-distance
+            if neighbour not in page_layout:
+                break
+            header.append(neighbour)
+        furniture.update(header)
+        if header and continued:
+            furniture.add(i)
+    selected = []
+    for candidate in proposal['D02']['candidates']:
+        i = candidate['block_index']
+        _need(type(i) is int and 0 <= i < len(blocks)
+              and candidate['source_reference_id']==document['source_reference_id']
+              and candidate['document_id']==document['text_document_id']
+              and all(candidate[k]==blocks[i][k] for k in (
+                  'text','raw_start_byte','raw_end_byte','raw_span_sha256')),
+              'D02_PAGE_FURNITURE_BLOCK_CHANGED')
+        if i in furniture:
+            selected.append(candidate)
+    if not selected:
+        return proposal
+    removed = {c['block_index'] for c in selected}
+    kept = [c for c in proposal['D02']['candidates'] if c['block_index'] not in removed]
+    body = {k:v for k,v in proposal.items() if k!='proposal_id'}
+    body['D02'] = {**proposal['D02'], 'candidates':kept,
+        'finding_status':'SOURCE_EXCERPTS_FOUND' if kept else 'NO_SUPPORTED_SOURCE_LANGUAGE'}
+    body['d02_page_furniture'] = {'policy':'D02_PAGE_NUMBER_CONTEXT_V1',
+        'removed_blocks':[{'block_index':c['block_index'],
+            'source_reference_id':c['source_reference_id'],
+            'raw_span_sha256':c['raw_span_sha256']} for c in selected]}
+    return {**body,'proposal_id':content_hash(value=body)}
 
 
 def going_concern_candidates(*, document):
