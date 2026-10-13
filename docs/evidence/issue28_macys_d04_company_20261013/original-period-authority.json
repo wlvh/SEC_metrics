@@ -1,0 +1,424 @@
+{
+  "source_id": "sha256:e614739d86464a55adc2b2411b400c44790a15a890a31401ee8570ba94780683",
+  "filing": {
+    "acceptanceDateTime": "2026-03-27T20:06:03.000Z",
+    "accessionNumber": "0001628280-26-021721",
+    "act": "34",
+    "core_type": "XBRL",
+    "fileNumber": "001-13536",
+    "filingDate": "2026-03-27",
+    "filmNumber": "26807292",
+    "form": "10-K",
+    "isInlineXBRL": 1,
+    "isXBRL": 1,
+    "isXBRLNumeric": null,
+    "items": "",
+    "primaryDocDescription": "10-K",
+    "primaryDocument": "m-20260131.htm",
+    "reportDate": "2026-01-31",
+    "size": 12958386
+  },
+  "label_resolution": {
+    "actual_dates_changed": false,
+    "basis": "EXPLICIT_SOURCE_ISSUER_DEFINITION",
+    "historical_input_or_run_changed": false,
+    "metadata_conflict_retained": false,
+    "original_companyfacts_fiscal_year_values": [
+      2025
+    ],
+    "original_dei_fiscal_year": 2025,
+    "policy_id": "ordinary_fiscal_year_labels_v1",
+    "policy_sha256": "fde417632520d90046818fd31046615b6ea3b3df9cfdf5a1a527e38deea7bd87",
+    "record_type": "ORDINARY_FISCAL_YEAR_LABEL_RESOLUTION",
+    "selected_fiscal_year": 2025,
+    "source_inspection": {
+      "accession": "0001628280-26-021721",
+      "actual_period": {
+        "period_end": "2026-01-31",
+        "period_start": "2025-02-02"
+      },
+      "analysis_group_year": null,
+      "analysis_group_year_policy": "NOT_DEFINED_BY_THIS_COMPONENT_OR_EXISTING_NORMAL_INPUT",
+      "companyfacts_fiscal_year_values": [
+        2025
+      ],
+      "companyfacts_fy_interpretation": "FILING_METADATA_LABEL_NOT_EACH_FACT_MEASUREMENT_YEAR",
+      "companyfacts_same_accession_row_count": 638,
+      "companyfacts_sha256": "fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55",
+      "current_definition_labels": [
+        2025
+      ],
+      "dei_facts": [
+        {
+          "concept": "EntityCentralIndexKey",
+          "concept_namespace": "http://xbrl.sec.gov/dei/2025",
+          "context": {
+            "context_ref": "c-1",
+            "dimensions": {},
+            "entity_identifier": "0000794367",
+            "period_end": "2026-01-31",
+            "period_start": "2025-02-02",
+            "typed_dimension_count": 0
+          },
+          "context_locator": {
+            "raw_end_byte": 6110,
+            "raw_span_sha256": "1bd0d34114c6bf2336e46f9d6ba0176c5ca7af71e5e73364dbe264b40b67b66a",
+            "raw_start_byte": 5847
+          },
+          "ordinal": 1,
+          "raw_end_byte": 1354,
+          "raw_span_sha256": "c6f739df28dd2fc640b44e3e1245f95e93c2d9784d46d4cdc655050f8bf9a444",
+          "raw_start_byte": 1253,
+          "value_raw": "0000794367",
+          "verified_context": {
+            "context_ref": "c-1",
+            "dimensions": [],
+            "identifiers": [
+              {
+                "scheme": "http://www.sec.gov/CIK",
+                "value": "0000794367"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2025-02-02"
+              },
+              {
+                "kind": "enddate",
+                "value": "2026-01-31"
+              }
+            ],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "concept": "DocumentFiscalYearFocus",
+          "concept_namespace": "http://xbrl.sec.gov/dei/2025",
+          "context": {
+            "context_ref": "c-1",
+            "dimensions": {},
+            "entity_identifier": "0000794367",
+            "period_end": "2026-01-31",
+            "period_start": "2025-02-02",
+            "typed_dimension_count": 0
+          },
+          "context_locator": {
+            "raw_end_byte": 6110,
+            "raw_span_sha256": "1bd0d34114c6bf2336e46f9d6ba0176c5ca7af71e5e73364dbe264b40b67b66a",
+            "raw_start_byte": 5847
+          },
+          "ordinal": 2,
+          "raw_end_byte": 1451,
+          "raw_span_sha256": "d8f340ddbc49dbf318236d0dc5a7fb79895ec502e7bde469ec536f9fff90d40b",
+          "raw_start_byte": 1354,
+          "value_raw": "2025",
+          "verified_context": {
+            "context_ref": "c-1",
+            "dimensions": [],
+            "identifiers": [
+              {
+                "scheme": "http://www.sec.gov/CIK",
+                "value": "0000794367"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2025-02-02"
+              },
+              {
+                "kind": "enddate",
+                "value": "2026-01-31"
+              }
+            ],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "concept": "DocumentFiscalPeriodFocus",
+          "concept_namespace": "http://xbrl.sec.gov/dei/2025",
+          "context": {
+            "context_ref": "c-1",
+            "dimensions": {},
+            "entity_identifier": "0000794367",
+            "period_end": "2026-01-31",
+            "period_start": "2025-02-02",
+            "typed_dimension_count": 0
+          },
+          "context_locator": {
+            "raw_end_byte": 6110,
+            "raw_span_sha256": "1bd0d34114c6bf2336e46f9d6ba0176c5ca7af71e5e73364dbe264b40b67b66a",
+            "raw_start_byte": 5847
+          },
+          "ordinal": 3,
+          "raw_end_byte": 1548,
+          "raw_span_sha256": "0277a0ee60a4bbdbe129925cb2eabd384faeb2474b5fbe310f5f095f0c208f4b",
+          "raw_start_byte": 1451,
+          "value_raw": "FY",
+          "verified_context": {
+            "context_ref": "c-1",
+            "dimensions": [],
+            "identifiers": [
+              {
+                "scheme": "http://www.sec.gov/CIK",
+                "value": "0000794367"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2025-02-02"
+              },
+              {
+                "kind": "enddate",
+                "value": "2026-01-31"
+              }
+            ],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "concept": "DocumentType",
+          "concept_namespace": "http://xbrl.sec.gov/dei/2025",
+          "context": {
+            "context_ref": "c-1",
+            "dimensions": {},
+            "entity_identifier": "0000794367",
+            "period_end": "2026-01-31",
+            "period_start": "2025-02-02",
+            "typed_dimension_count": 0
+          },
+          "context_locator": {
+            "raw_end_byte": 6110,
+            "raw_span_sha256": "1bd0d34114c6bf2336e46f9d6ba0176c5ca7af71e5e73364dbe264b40b67b66a",
+            "raw_start_byte": 5847
+          },
+          "ordinal": 24,
+          "raw_end_byte": 161155,
+          "raw_span_sha256": "a497a5afe03c1a2f433ac77ecadae22a7fb59c710f42c1a785a9a88565bf35e3",
+          "raw_start_byte": 161070,
+          "value_raw": "10-K",
+          "verified_context": {
+            "context_ref": "c-1",
+            "dimensions": [],
+            "identifiers": [
+              {
+                "scheme": "http://www.sec.gov/CIK",
+                "value": "0000794367"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2025-02-02"
+              },
+              {
+                "kind": "enddate",
+                "value": "2026-01-31"
+              }
+            ],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "concept": "DocumentPeriodEndDate",
+          "concept_namespace": "http://xbrl.sec.gov/dei/2025",
+          "context": {
+            "context_ref": "c-1",
+            "dimensions": {},
+            "entity_identifier": "0000794367",
+            "period_end": "2026-01-31",
+            "period_start": "2025-02-02",
+            "typed_dimension_count": 0
+          },
+          "context_locator": {
+            "raw_end_byte": 6110,
+            "raw_span_sha256": "1bd0d34114c6bf2336e46f9d6ba0176c5ca7af71e5e73364dbe264b40b67b66a",
+            "raw_start_byte": 5847
+          },
+          "ordinal": 26,
+          "raw_end_byte": 162510,
+          "raw_span_sha256": "1e23055686d1a49f2a3775c750d16d1225e65432eb33444608006ad2d742a570",
+          "raw_start_byte": 162236,
+          "value_raw": "January 31, 2026",
+          "verified_context": {
+            "context_ref": "c-1",
+            "dimensions": [],
+            "identifiers": [
+              {
+                "scheme": "http://www.sec.gov/CIK",
+                "value": "0000794367"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2025-02-02"
+              },
+              {
+                "kind": "enddate",
+                "value": "2026-01-31"
+              }
+            ],
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "concept": "EntityRegistrantName",
+          "concept_namespace": "http://xbrl.sec.gov/dei/2025",
+          "context": {
+            "context_ref": "c-1",
+            "dimensions": {},
+            "entity_identifier": "0000794367",
+            "period_end": "2026-01-31",
+            "period_start": "2025-02-02",
+            "typed_dimension_count": 0
+          },
+          "context_locator": {
+            "raw_end_byte": 6110,
+            "raw_span_sha256": "1bd0d34114c6bf2336e46f9d6ba0176c5ca7af71e5e73364dbe264b40b67b66a",
+            "raw_start_byte": 5847
+          },
+          "ordinal": 30,
+          "raw_end_byte": 164567,
+          "raw_span_sha256": "28648aff793895625f62f5262ebb1df35bdbdb17e1439fc31c888c3fe041c3b4",
+          "raw_start_byte": 164466,
+          "value_raw": "Macy's, Inc.",
+          "verified_context": {
+            "context_ref": "c-1",
+            "dimensions": [],
+            "identifiers": [
+              {
+                "scheme": "http://www.sec.gov/CIK",
+                "value": "0000794367"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2025-02-02"
+              },
+              {
+                "kind": "enddate",
+                "value": "2026-01-31"
+              }
+            ],
+            "typed_dimension_count": 0
+          }
+        }
+      ],
+      "dei_fiscal_year": 2025,
+      "entity": "794367",
+      "existing_input_or_Run_changed": false,
+      "inspection_id": "sha256:d4cf86d4e654f045487163f497dcc47650a10536dd622200453cef50997d7a6e",
+      "invalid_companyfacts_fy_rows": [],
+      "new_rule_label_proposal": 2025,
+      "primary_sha256": "47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7",
+      "production_authorized": false,
+      "record_type": "FISCAL_YEAR_LABEL_SOURCE_INSPECTION",
+      "registrant_names": [
+        "Macy's, Inc."
+      ],
+      "schema_version": 1,
+      "source_defined_fiscal_year": 2025,
+      "source_definitions": [
+        {
+          "block_index": 104,
+          "current_period_labels": [
+            2025
+          ],
+          "kind": "EXPLICIT_REFERENCE_YEARS",
+          "mapping": [
+            {
+              "fiscal_year": 2025,
+              "period_end": "2026-01-31"
+            },
+            {
+              "fiscal_year": 2024,
+              "period_end": "2025-02-01"
+            },
+            {
+              "fiscal_year": 2023,
+              "period_end": "2024-02-03"
+            }
+          ],
+          "raw_end_byte": 218969,
+          "raw_span_sha256": "94e2cd52a3633901cb10c3295c1d212839018271163548857ec9ece6b79a4166",
+          "raw_start_byte": 218507,
+          "text": "Unless the context requires otherwise, references to “Macy's, Inc.” or the “Company” are references to Macy's and its subsidiaries and references to “2025,” “2024,” and “2023” are references to the Company's fiscal years ended January 31, 2026, February 1, 2025 and February 3, 2024, respectively. Fiscal years 2025 and 2024 each included 52 weeks and fiscal year 2023 included 53 weeks."
+        },
+        {
+          "block_index": 999,
+          "current_period_labels": [
+            2025
+          ],
+          "kind": "EXPLICIT_ORDERED_YEARS",
+          "mapping": [
+            {
+              "fiscal_year": 2025,
+              "period_end": "2026-01-31"
+            },
+            {
+              "fiscal_year": 2024,
+              "period_end": "2025-02-01"
+            },
+            {
+              "fiscal_year": 2023,
+              "period_end": "2024-02-03"
+            }
+          ],
+          "raw_end_byte": 1011369,
+          "raw_span_sha256": "a40f957ac150bfdc0ecf1eb5488b6f4f5890ac734b99719a1d59a6d632f0b16b",
+          "raw_start_byte": 1010975,
+          "text": "The Company's fiscal year ends on the Saturday closest to January 31. Fiscal years 2025, 2024 and 2023 ended on January 31, 2026, February 1, 2025 and February 3, 2024, respectively. Fiscal years 2025 and 2024 included 52 weeks and fiscal year 2023 included 53 weeks. References to years in the Consolidated Financial Statements relate to fiscal years rather than calendar years."
+        }
+      ],
+      "source_validation": "HASH_BOUND_BYTES_ONLY",
+      "status": "SOURCE_LABELS_CONSISTENT",
+      "unsupported_definition_leads": [],
+      "companyfacts_rows_retained_in_private_execution_record": {
+        "count": 638,
+        "original_full_receipt_sha256": "a67c26febdff99d3300e155f6e02741bc331089c1d45515701eb005426130357",
+        "source_locator": "Original source.json fiscal_year_label_resolution.source_inspection.companyfacts_rows"
+      }
+    },
+    "source_inspection_status": "SOURCE_LABELS_CONSISTENT"
+  },
+  "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2026-01-31",
+    "period_start": "2025-02-02"
+  },
+  "machine_year_focus": 2025,
+  "original_document_sha256": "sha256:47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7",
+  "result_id": "sha256:a2a0bb5fe143c07d445284f9b0d3def00f887440032ac1031a3e31bfc3aa2069",
+  "original_accepted_groups": [
+    {
+      "ordinal": 165,
+      "findings": 0,
+      "candidate_present": true
+    },
+    {
+      "ordinal": 166,
+      "findings": 0,
+      "candidate_present": true
+    },
+    {
+      "ordinal": 167,
+      "findings": 0,
+      "candidate_present": true
+    },
+    {
+      "ordinal": 168,
+      "findings": 0,
+      "candidate_present": true
+    },
+    {
+      "ordinal": 169,
+      "findings": 0,
+      "candidate_present": true
+    }
+  ],
+  "result_scope": "未披露持续经营疑虑：已检查保存的完整年报及本期修订、原生事实和续接对象；这不表示对未来财务状况作保证。"
+}

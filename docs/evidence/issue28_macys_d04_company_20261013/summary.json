@@ -1,0 +1,74 @@
+{
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/macys-d04/SEC_metrics",
+  "head": "e16ca31653886aecb1a254696f84849b3e8f03c5",
+  "uncommitted_paths": [
+    "?? docs/evidence/issue28_macys_d04_company_20261013/"
+  ],
+  "original_ordinals": [
+    165,
+    166,
+    167,
+    168,
+    169
+  ],
+  "original_required_units": 22,
+  "protected_originals": 100,
+  "protected_unchanged": true,
+  "phase_seconds": {
+    "first": 78.86299349999172,
+    "repeat": 0.12135970799135976
+  },
+  "reader_seconds": 0.4417304590169806,
+  "result_files_unchanged": 7,
+  "reader_state_files_unchanged": 17,
+  "result_id": "sha256:a2a0bb5fe143c07d445284f9b0d3def00f887440032ac1031a3e31bfc3aa2069",
+  "period": {
+    "fiscal_year": 2025,
+    "period_start": "2025-02-02",
+    "period_end": "2026-01-31"
+  },
+  "csv_row": {
+    "company": "Macy's",
+    "cik": "794367",
+    "metric_id": "D04",
+    "metric_name": "Going concern source statements and defined-scope assessment",
+    "value": "",
+    "unit": "text",
+    "status": "TEXT_QUAL",
+    "source_class": "10-K",
+    "formula": "source-reported going concern statements",
+    "period_start": "2025-02-02",
+    "period_end": "2026-01-31",
+    "fiscal_year": "2025",
+    "fiscal_period": "",
+    "accession": "0001628280-26-021721",
+    "form": "10-K",
+    "filed_date": "2026-03-27",
+    "concept_or_section": "",
+    "context_or_dimension": "",
+    "confidence": "",
+    "notes": "\u672a\u62ab\u9732\u6301\u7eed\u7ecf\u8425\u7591\u8651\uff1a\u5df2\u68c0\u67e5\u4fdd\u5b58\u7684\u5b8c\u6574\u5e74\u62a5\u53ca\u672c\u671f\u4fee\u8ba2\u3001\u539f\u751f\u4e8b\u5b9e\u548c\u7eed\u63a5\u5bf9\u8c61\uff1b\u8fd9\u4e0d\u8868\u793a\u5bf9\u672a\u6765\u8d22\u52a1\u72b6\u51b5\u4f5c\u4fdd\u8bc1\u3002",
+    "company_id": "macys",
+    "result_id": "sha256:a2a0bb5fe143c07d445284f9b0d3def00f887440032ac1031a3e31bfc3aa2069",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/macys-d04-company-20261013/state/updates/D04/results/8ae5778e13d44a0bb213499a4fffc2ee",
+    "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+    "local_metric_status": "PREVIOUS_INPUT_WITHHELD",
+    "period_role": "REQUESTED_RESULT",
+    "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+    "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+    "defect_holds": "[]",
+    "requested_in_latest_execution": "True"
+  },
+  "forbidden_processing_calls": {
+    "prepare_current_d04_case": 0,
+    "calculate_text_metric": 0
+  },
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "defined_source_scope_only": true,
+  "model_omission_not_independently_certified": true,
+  "production_authorized": false
+}
