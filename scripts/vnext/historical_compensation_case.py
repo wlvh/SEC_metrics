@@ -5,6 +5,7 @@ resolver, ordinary writer and renderer own value/record handling; this module
 does not provide a second compensation parser or result store.
 """
 from pathlib import Path
+from html.parser import HTMLParser
 
 from .canonical import content_hash, strict_json_loads
 from .historical_annual_input import prepare_historical_annual_input
@@ -12,7 +13,7 @@ from .normal_governance_input import _Sources, _order
 from .normal_history_catalog import load_history_for_period
 from .normal_period_selection import resolve_period_selection
 from .normal_source_authority import ROOT
-from .governance_signals import C03_SPEC_PATH, resolve_c03, _FactAttributes, _qname
+from .governance_signals import C03_SPEC_PATH, resolve_c03, _qname, _VOID
 from .observations import scope_key
 from .ordinary_source_authority import verify_ordinary_source_proofs
 from .specs import compile_spec_file
@@ -41,24 +42,49 @@ def _need(condition, reason, category='SOURCE_INTEGRITY_ERROR'):
         raise HistoricalCompensationInputError(reason, category)
 
 
-class _ProxyStructuredMarkup(_FactAttributes):
-    """Recognize the existing reader's structured markup across XML prefixes.
+class _ProxyStructuredMarkup(HTMLParser):
+    """Recognize markup without validating facts, amounts or XBRL units.
 
     This only selects the path after the native reader rejected missing
     contexts. It does not interpret a person, amount or table.
     """
     def __init__(self):
-        super().__init__()
+        super().__init__(convert_charrefs=True)
         self.structured = False
+        self.stack = []
 
     def handle_starttag(self, tag, attrs):
-        super().handle_starttag(tag, attrs)
+        if self.structured:
+            return
+        attrs = dict(attrs)
         namespaces = self.stack[-1][1] if self.stack else {}
+        declarations = {k[6:]:v for k,v in attrs.items() if k.startswith('xmlns:')}
+        if 'xmlns' in attrs:
+            declarations[''] = attrs['xmlns']
+        if declarations:
+            namespaces = {**namespaces, **declarations}
         uri, _ = _qname(tag, namespaces)
-        if self.ordinal or tag.startswith('ix:') or uri in {
+        if 'contextref' in attrs or tag.startswith('ix:') or uri in {
                 'http://www.xbrl.org/2008/inlineXBRL',
                 'http://www.xbrl.org/2013/inlineXBRL'}:
             self.structured = True
+        elif tag not in _VOID:
+            # Frames without namespace changes share the same mapping. This
+            # guard does not build the full reader's per-fact/unit inventory.
+            self.stack.append((tag, namespaces))
+
+    def handle_startendtag(self, tag, attrs):
+        self.handle_starttag(tag, attrs)
+        if tag not in _VOID:
+            self.handle_endtag(tag)
+
+    def handle_endtag(self, tag):
+        if self.structured:
+            return
+        for index in range(len(self.stack)-1, -1, -1):
+            if self.stack[index][0] == tag:
+                del self.stack[index:]
+                break
 
 
 def _proxy_has_structured_markup(raw):
