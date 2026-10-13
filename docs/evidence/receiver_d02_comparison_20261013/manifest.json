@@ -1,0 +1,124 @@
+{
+ "record_type": "D02_PREPARATION_COMPARISON",
+ "tool_sha256": "c6b8225e86dda2bd41c4065f25de61af55efaea5fb701d699b8d51845c47d82e",
+ "entry": "vnext.d02_reviewed_source.prepare_historical_legal_sources",
+ "versions": {
+  "baseline": {
+   "ref": "4d639bada06d78af858f54a7fa1c301ce3a32918",
+   "commit": "4d639bada06d78af858f54a7fa1c301ce3a32918",
+   "tree": "6e9b33e45e1dc626ec744a754e47e3b38a31ac5e"
+  },
+  "candidate": {
+   "ref": "751027f4c22e3aeec5080bad69bbe668edd0bb25",
+   "commit": "751027f4c22e3aeec5080bad69bbe668edd0bb25",
+   "tree": "ff2033be34c5e436c8b50a74d801651521278366"
+  }
+ },
+ "inputs": {
+  "source_root": "/home/user/acc/hist-src/source-inputs",
+  "source_root_before": {
+   "digest": "sha256:a1975d771d350efb537f036dd0d24c19b86d475a3594520d38db7bd9e4ce2fb7",
+   "files": 4505,
+   "symlinks": 0,
+   "bytes": 1148630267
+  },
+  "source_root_after": {
+   "digest": "sha256:a1975d771d350efb537f036dd0d24c19b86d475a3594520d38db7bd9e4ce2fb7",
+   "files": 4505,
+   "symlinks": 0,
+   "bytes": 1148630267
+  },
+  "unchanged_during_run": true
+ },
+ "scope": {
+  "companies": [
+   "marriott_international",
+   "southwest_airlines",
+   "ford_motor_company",
+   "pfizer",
+   "jpmorgan_chase",
+   "salesforce",
+   "lumen_technologies",
+   "macys",
+   "paramount_skydance_paramount_global",
+   "enphase_energy"
+  ],
+  "fiscal_years": [
+   2021,
+   2022,
+   2023,
+   2024,
+   2025
+  ],
+  "subset_of_registry": false,
+  "registry_baseline": [
+   "marriott_international",
+   "southwest_airlines",
+   "ford_motor_company",
+   "pfizer",
+   "jpmorgan_chase",
+   "salesforce",
+   "lumen_technologies",
+   "macys",
+   "paramount_skydance_paramount_global",
+   "enphase_energy"
+  ],
+  "registry_candidate": [
+   "marriott_international",
+   "southwest_airlines",
+   "ford_motor_company",
+   "pfizer",
+   "jpmorgan_chase",
+   "salesforce",
+   "lumen_technologies",
+   "macys",
+   "paramount_skydance_paramount_global",
+   "enphase_energy"
+  ]
+ },
+ "environment": {
+  "python": "3.13.16",
+  "implementation": "CPython",
+  "platform": "Linux-6.18.44-fc-v114-x86_64-with-glibc2.39",
+  "git": "git version 2.43.0",
+  "network": "socket connect/create_connection/getaddrinfo refused in workers",
+  "workers": 4,
+  "timeout_per_sample_seconds": 600
+ },
+ "workers": [
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": 25,
+   "seconds": 783.8
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": 25,
+   "seconds": 742.0
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": 25,
+   "seconds": 777.9
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": 25,
+   "seconds": 729.4
+  }
+ ],
+ "problems": [],
+ "complete": true
+}
