@@ -39,7 +39,7 @@ python3 tools/compare_d02_preparation.py --baseline origin/main --candidate "$C"
 输出目录下有三个文件：
 - `summary.md`：结论和逐样本变化。
 - `comparison.json`：逐样本明细。
-- `manifest.json`：两个提交及其树哈希、来源根在运行前后的哈希、样本范围、Python 与平台信息、每个工作进程的退出情况。
+- `manifest.json`：两个提交及其树哈希、工具文件的 SHA-256（`tool_sha256`）、来源根在运行前后的文件摘要与目录摘要、样本范围、Python 与平台信息、每个工作进程的退出情况。
 
 | 类别 | 含义 |
 |---|---|
@@ -52,7 +52,7 @@ python3 tools/compare_d02_preparation.py --baseline origin/main --candidate "$C"
 以下任一情形都会让结论标为 INCOMPLETE（退出码 2）：
 - 有样本没有比到；
 - 工作进程失败或超时；
-- 来源根在运行中发生变化；
+- 来源根在运行中发生变化，包括文件内容改动、新增或删除文件和目录；
 - 代码工作树被改动，或其中出现任何新文件（包括未跟踪或被忽略的文件；工作进程不写字节码文件）。
 
 结论完整时退出码为 0；完整但出现 `--fail-on` 中列出的类别时，退出码为 1。
