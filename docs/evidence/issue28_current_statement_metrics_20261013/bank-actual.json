@@ -1,0 +1,68 @@
+{
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-current-statement-metrics/SEC_metrics",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/issue28-current-statement-metrics/SEC_metrics",
+  "base_commit": "11512ea74c5d16ac0c4304844d39a14899ca1349",
+  "working_tree_test": true,
+  "rows": [
+    {
+      "metric": "B04",
+      "seconds": 8.773727583000436,
+      "result": {
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:8c66ba702c8c2c418b194830d21e423c41424746567e9d1e068b0247483546ab",
+        "company_id": "jpmorgan_chase",
+        "metric_id": "B04",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+        "spec_closure_hash": "sha256:22b0fe3ad2841f90450d503cd628fe65207ae1777968156abc13c4ee28ffb3e2",
+        "applicability": "N_A_STRUCTURAL",
+        "quality": "NONE",
+        "publication": "PUBLISHED",
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "value": null,
+        "unit": null,
+        "trace_id": "sha256:2a72458c6a128855d83375315860e80303770291c5c2682a4ac8f382d918cffb"
+      },
+      "same_baseline_result": true,
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      }
+    },
+    {
+      "metric": "B07",
+      "seconds": 4.843808458012063,
+      "result": {
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:3cb5450a371a5e7d02dc5dfc2737f87e99b2a3977d105eb25a868c725e37bdab",
+        "company_id": "jpmorgan_chase",
+        "metric_id": "B07",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+        "spec_closure_hash": "sha256:0eb533e576d3bbcb418812e362d9e377373f83c76dd9bfa62ecb41d49475bb78",
+        "applicability": "N_A_STRUCTURAL",
+        "quality": "NONE",
+        "publication": "PUBLISHED",
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "value": null,
+        "unit": null,
+        "trace_id": "sha256:95f28e2fa57ee221dc9c519517406a6bd2f2fa9358791e070a4411e24f193416"
+      },
+      "same_baseline_result": true,
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      }
+    }
+  ],
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "scope": "ACTUAL_SAVED_BANK_CASE_NOT_COMPANY_PERSISTENCE"
+}

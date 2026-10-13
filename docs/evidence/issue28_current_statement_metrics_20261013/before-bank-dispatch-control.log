@@ -1,0 +1,53 @@
+test_structural_applicability_never_requires_a_historical_catalog (tests.vnext.test_current_statement_metric_case.CurrentStatementMetricCaseTest.test_structural_applicability_never_requires_a_historical_catalog) ... 
+  test_structural_applicability_never_requires_a_historical_catalog (tests.vnext.test_current_statement_metric_case.CurrentStatementMetricCaseTest.test_structural_applicability_never_requires_a_historical_catalog) (metric='B04') ... FAIL
+  test_structural_applicability_never_requires_a_historical_catalog (tests.vnext.test_current_statement_metric_case.CurrentStatementMetricCaseTest.test_structural_applicability_never_requires_a_historical_catalog) (metric='B07') ... FAIL
+
+======================================================================
+FAIL: test_structural_applicability_never_requires_a_historical_catalog (tests.vnext.test_current_statement_metric_case.CurrentStatementMetricCaseTest.test_structural_applicability_never_requires_a_historical_catalog) (metric='B04')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-statement-metrics/SEC_metrics/tests/vnext/test_current_statement_metric_case.py", line 56, in test_structural_applicability_never_requires_a_historical_catalog
+    self.assertEqual(current.prepare_current_statement_metric_case(
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        source_root=Path('/saved'),company_id='jpmorgan_chase',metric_id=metric),expected)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-statement-metrics/SEC_metrics/scripts/vnext/current_statement_metric_case.py", line 28, in prepare_current_statement_metric_case
+    selection=resolve_period_selection(repo_root=source,company_id=company_id,
+        report_end=period['period_end'],rules_root=ROOT)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+AssertionError: IRRELEVANT_HISTORY
+
+======================================================================
+FAIL: test_structural_applicability_never_requires_a_historical_catalog (tests.vnext.test_current_statement_metric_case.CurrentStatementMetricCaseTest.test_structural_applicability_never_requires_a_historical_catalog) (metric='B07')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-statement-metrics/SEC_metrics/tests/vnext/test_current_statement_metric_case.py", line 56, in test_structural_applicability_never_requires_a_historical_catalog
+    self.assertEqual(current.prepare_current_statement_metric_case(
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        source_root=Path('/saved'),company_id='jpmorgan_chase',metric_id=metric),expected)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-statement-metrics/SEC_metrics/scripts/vnext/current_statement_metric_case.py", line 28, in prepare_current_statement_metric_case
+    selection=resolve_period_selection(repo_root=source,company_id=company_id,
+        report_end=period['period_end'],rules_root=ROOT)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+AssertionError: IRRELEVANT_HISTORY
+
+----------------------------------------------------------------------
+Ran 1 test in 0.006s
+
+FAILED (failures=2)
+{"allowed_skips": 0, "errors": 0, "failures": 2, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_current_statement_metric_case.CurrentStatementMetricCaseTest.test_structural_applicability_never_requires_a_historical_catalog"]}

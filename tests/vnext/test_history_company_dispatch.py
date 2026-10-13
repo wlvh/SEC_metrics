@@ -226,10 +226,11 @@ class HistoryCompanyDispatchTest(TestCase):
                 self.run_history(source_root=None)
 
     def test_unsupported_family_uses_no_fabricated_historical_case(self):
-        with patch('vnext.company_current_records.run_saved_company') as shared:
-            with self.assertRaisesRegex(ValueError, 'SAVED_FAMILY_NOT_IMPLEMENTED'):
-                self.run_history(metric_ids=['D03'])
-        shared.assert_not_called()
+        with patch('vnext.company_current_records.run_saved_company',return_value={}) as shared:
+            self.run_history(metric_ids=['D03'])
+        self.assertEqual(shared.call_args.kwargs['metric_ids'],['D03'])
+        self.assertEqual(shared.call_args.kwargs['case_factories'],{})
+        self.assertEqual(shared.call_args.kwargs['processing_files_by_metric'],{})
 
     def test_statement_pilot_uses_original_per_metric_factories_and_dependencies(self):
         from vnext.historical_statement_cases import (prepare_historical_statement_year_case,

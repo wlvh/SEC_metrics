@@ -59,6 +59,31 @@ class HistoricalCompensationSelectionTest(TestCase):
 
 
 class HistoricalCompensationAdapterTest(TestCase):
+    def test_plain_proxy_with_duplicate_units_still_reaches_shared_sct(self):
+        from vnext import historical_compensation_case as cases
+        from vnext.deterministic_router import parse_accession_xbrl_source
+        raw=(b'<html xmlns:xbrli="http://www.xbrl.org/2003/instance">'
+             b'<xbrli:unit id="unused"/><xbrli:unit id="unused"/>'
+             b'<table><tr><td>Summary compensation table</td></tr></table></html>')
+        annual={'entity':'1048286','table_input':{'target_period':{'fiscal_year':2021,
+                'period_start':'2021-01-01','period_end':'2021-12-31'}}}
+        selected={'accessionNumber':'proxy','form':'DEF 14A'}
+        source={'prepared_annual_input':annual,'proxy_source':{'raw_bytes':raw,
+                'raw_blob':{},'source_reference':{}},
+            'selection':{'selected_proxy':selected},'records':[],'source_proofs':[],
+            'proxy_inventory':{'name':'Example','formerNames':[]}}
+        resolution={'selection':{'reason_code':'PASS'},'derived_assets':[],
+            'observation':None,'trace':{},'result':{}}
+        with patch.object(cases,'prepare_historical_compensation_sources',return_value=source), \
+             patch.object(cases,'resolve_c03',side_effect=lambda **kw:
+                          parse_accession_xbrl_source(raw_bytes=kw['raw_bytes'])), \
+             patch.object(cases,'resolve_proxy_compensation_table',return_value=resolution) as table, \
+             patch.object(cases,'verify_ordinary_source_proofs',return_value={}):
+            case=cases.prepare_historical_compensation_year_case(repo_root=Path('/constructed'),
+                company_id='example',metric_id='C03',fiscal_year=2021)
+        self.assertEqual(raw,table.call_args.kwargs['raw_bytes'])
+        self.assertTrue(case['input_assessments']['C03']['proxy_sct_route_used'])
+
     def test_untagged_proxy_uses_shared_sct_and_retains_derived_asset(self):
         from vnext import historical_compensation_case as cases
         from vnext.deterministic_router import DeterministicRouterError
@@ -142,6 +167,25 @@ class HistoricalCompensationAdapterTest(TestCase):
                 b'<html><!-- <ix:nonFraction> --><script>"<ix:nonNumeric>"</script><p>&lt;ix:nonFraction&gt;</p></html>'):
             with self.subTest(raw=raw):
                 self.assertFalse(cases._proxy_has_structured_markup(raw))
+
+    def test_markup_guard_tracks_namespace_scope_without_fact_or_unit_validation(self):
+        from vnext import historical_compensation_case as cases
+        inline=b'http://www.xbrl.org/2013/inlineXBRL'
+        ordinary=b'<html>'+b'<div>'*600+b'<p>Plain compensation table</p>'+b'</div>'*600+b'</html>'
+        self.assertFalse(cases._proxy_has_structured_markup(ordinary))
+        shadow=(b'<html xmlns:a="'+inline+b'"><div xmlns:a="urn:plain">'
+                b'<a:label>Not a fact</a:label></div></html>')
+        self.assertFalse(cases._proxy_has_structured_markup(shadow))
+        restored=shadow.replace(b'</div></html>',b'</div><a:nonFraction>100</a:nonFraction></html>')
+        self.assertTrue(cases._proxy_has_structured_markup(restored))
+        closed=(b'<html><div xmlns:a="'+inline+b'"></div>'
+                b'<a:label>Outside the declaration</a:label></html>')
+        self.assertFalse(cases._proxy_has_structured_markup(closed))
+        # Unrelated duplicate units cannot hide an actual broken inline fact.
+        broken=(b'<html xmlns:x="http://www.xbrl.org/2003/instance" xmlns:a="'+inline+b'">'
+                b'<x:unit id="u"/><x:unit id="u"/><a:nonFraction contextRef="missing">'
+                b'100</a:nonFraction></html>')
+        self.assertTrue(cases._proxy_has_structured_markup(broken))
 
     def test_source_preparer_retains_annual_primary_for_reporter_and_distinct_proxy(self):
         from vnext import historical_compensation_case as cases

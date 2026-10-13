@@ -2,9 +2,11 @@
 from pathlib import Path
 
 from .normal_annual_input_v2 import prepare_saved_annual_input
-from .normal_period_selection import resolve_period_selection
 from .normal_source_authority import ROOT
 from .canonical import strict_json_file
+from .calculator import metric_is_applicable
+from .traits import repository_company_traits
+from .normal_run_specs import installed_ordinary_spec_documents
 from .historical_statement_cases import (_prepare_historical_statement_case,
     processing_files_for_statement_metric)
 
@@ -23,12 +25,18 @@ def prepare_current_statement_metric_case(*,source_root,company_id,metric_id):
                 for branch in route['branches'] for c in branch['components'])):
         raise ValueError('CURRENT_STATEMENT_SOURCE_ROLE_CHANGED')
     source=Path(source_root)
+    spec=installed_ordinary_spec_documents()[metric_id]['compiled_spec']
+    traits=repository_company_traits(repo_root=ROOT,company_id=company_id)
+    if not metric_is_applicable(applicability=spec['compiled']['applicability'],traits=traits):
+        # The retained current factory already verifies its actual filing and
+        # emits the approved structural outcome. An unrelated historical shard
+        # is not a prerequisite for this current-only, nonnumeric conclusion.
+        from .ordinary_saved_result import _ordinary_case
+        return _ordinary_case(source,company_id,metric_id)
     current=prepare_saved_annual_input(repo_root=source,company_id=company_id,ordinary_registered=True)
     period=current['table_input']['target_period']
-    selection=resolve_period_selection(repo_root=source,company_id=company_id,
-        report_end=period['period_end'],rules_root=ROOT)
     case=_prepare_historical_statement_case(repo_root=source,company_id=company_id,
-        metric_id=metric_id,fiscal_year=period['fiscal_year'],period_selection=selection,
+        metric_id=metric_id,fiscal_year=period['fiscal_year'],prepared_current_annual=current,
         withhold_known_source_errors=True)
     filing_fields=('accessionNumber','form','reportDate','filingDate','primaryDocument')
     if (case['primary_metric_id']!=metric_id or case['target_period']!=period

@@ -20,8 +20,10 @@ class CurrentStatementMetricCaseTest(unittest.TestCase):
             'target_period':deepcopy(self.annual['table_input']['target_period']),
             'input_binding':{'input_id':'unchanged-selected-case'},'input_assessments':{'existing':True}}
         case=transform(case)
-        with patch.object(current,'prepare_saved_annual_input',return_value=self.annual) as annual, \
-             patch.object(current,'resolve_period_selection',return_value={'selection_id':'actual-period'}) as select, \
+        with patch.object(current,'repository_company_traits',return_value={'constructed_applicable':True}), \
+             patch.object(current,'metric_is_applicable',return_value=True), \
+             patch.object(current,'prepare_saved_annual_input',return_value=self.annual) as annual, \
+             patch.object(current,'resolve_period_selection',side_effect=AssertionError('NO_HISTORY'),create=True) as select, \
              patch.object(current,'_prepare_historical_statement_case',return_value=case) as shared:
             result=current.prepare_current_statement_metric_case(source_root=Path('/saved'),
                 company_id='sample',metric_id=metric)
@@ -29,9 +31,10 @@ class CurrentStatementMetricCaseTest(unittest.TestCase):
 
     def test_source_issuer_year_and_exact_current_report_end_reach_the_same_core(self):
         result,annual,selection,shared=self.run_case()
-        self.assertEqual(selection.call_args.kwargs['report_end'],'2026-01-31')
+        selection.assert_not_called()
         self.assertEqual(shared.call_args.kwargs['fiscal_year'],2026)
-        self.assertEqual(shared.call_args.kwargs['period_selection'],{'selection_id':'actual-period'})
+        self.assertIs(shared.call_args.kwargs['prepared_current_annual'],self.annual)
+        self.assertNotIn('period_selection',shared.call_args.kwargs)
         self.assertTrue(shared.call_args.kwargs['withhold_known_source_errors'])
         self.assertEqual(result['input_binding'],{'input_id':'unchanged-selected-case'})
         self.assertTrue(result['input_assessments']['existing'])
@@ -42,6 +45,20 @@ class CurrentStatementMetricCaseTest(unittest.TestCase):
         for metric in ('B01','B05','B06','B08'):
             with self.assertRaisesRegex(ValueError,'METRIC_NOT_SUPPORTED'):
                 self.run_case(metric)
+
+    def test_structural_applicability_never_requires_a_historical_catalog(self):
+        from vnext import ordinary_saved_result as saved
+        for metric in ('B04','B07'):
+            expected={'primary_metric_id':metric,'results':{metric:{'applicability':'N_A_STRUCTURAL'}}}
+            with self.subTest(metric=metric), \
+                 patch.object(current,'repository_company_traits',return_value={'is_bank':True},create=True), \
+                 patch.object(current,'metric_is_applicable',return_value=False,create=True), \
+                 patch.object(current,'prepare_saved_annual_input',return_value=self.annual), \
+                 patch.object(current,'resolve_period_selection',side_effect=AssertionError('IRRELEVANT_HISTORY'),create=True), \
+                 patch.object(saved,'_ordinary_case',return_value=expected) as ordinary:
+                self.assertEqual(current.prepare_current_statement_metric_case(
+                    source_root=Path('/saved'),company_id='jpmorgan_chase',metric_id=metric),expected)
+                ordinary.assert_called_once_with(Path('/saved'),'jpmorgan_chase',metric)
 
     def test_changed_period_entity_or_filing_cannot_replace_current_selection(self):
         def change_period(value):value['target_period']['fiscal_year']=2025;return value
