@@ -54,3 +54,16 @@ quietly add B04 there. Historical online discovery, additional online metrics,
 model permissions and all390 business acceptance remain incomplete.
 
 First-head company-history CI failure was read and reproduced: the B03 source-preflight control still equated the entire online set with the former defaults. It now checks old B01/B02 defaults separately from explicit B04 admission and still forbids B03 online acquisition; the original no-fetch/no-execution B03 assertions remain. The same five affected modules were rerun; exact result is in ci-scope-regression-after.log. No business value/period/unit/subject or failure assertion was deleted.
+
+Review4262030893: the context is intentionally editable operational scope,
+not immutable per-metric approval. This fact is confirmed. Owner5651558538
+covers the Issue's limited remaining verification and permits SEC allocation
+without per-company/per-metric approval; owner October6 trusted-internal rule
+retires approval anti-forgery/independent trust enforcement. B04 current source
+acquisition is the existing B01 submissions/CF/primary/index/instance set.
+No new use is granted by editing JSON; root/purpose/mode/limits, source identity,
+counts/unknown/stop/no retry checks remain. The immutable-approval suggestion
+is not adopted because it restores the explicitly retired threat model.
+Source/entity/use beyond an actual valid allowance must still be rejected by
+its applicable boundary; no real call was made to test this interpretation.
+The review reply includes the precise owner references for receiver resolution.
