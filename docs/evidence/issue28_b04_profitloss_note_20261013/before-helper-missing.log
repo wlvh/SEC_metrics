@@ -1,0 +1,138 @@
+test_actual_selected_profitloss_gets_the_approved_scope_note (tests.vnext.test_b04_profitloss_note.ProfitLossNoteTest.test_actual_selected_profitloss_gets_the_approved_scope_note) ... ERROR
+test_matched_verified_ids_remain_supported_without_scanning_all_claims (tests.vnext.test_b04_profitloss_note.ProfitLossNoteTest.test_matched_verified_ids_remain_supported_without_scanning_all_claims) ... ERROR
+test_missing_or_different_kind_and_prefixed_custom_concept_are_not_profitloss (tests.vnext.test_b04_profitloss_note.ProfitLossNoteTest.test_missing_or_different_kind_and_prefixed_custom_concept_are_not_profitloss) ... 
+  test_missing_or_different_kind_and_prefixed_custom_concept_are_not_profitloss (tests.vnext.test_b04_profitloss_note.ProfitLossNoteTest.test_missing_or_different_kind_and_prefixed_custom_concept_are_not_profitloss) (locator={}, kind='COMPANYFACTS_NUMERIC_FACT') ... ERROR
+  test_missing_or_different_kind_and_prefixed_custom_concept_are_not_profitloss (tests.vnext.test_b04_profitloss_note.ProfitLossNoteTest.test_missing_or_different_kind_and_prefixed_custom_concept_are_not_profitloss) (locator={'concept': 'company:ProfitLoss'}, kind='COMPANYFACTS_NUMERIC_FACT') ... ERROR
+  test_missing_or_different_kind_and_prefixed_custom_concept_are_not_profitloss (tests.vnext.test_b04_profitloss_note.ProfitLossNoteTest.test_missing_or_different_kind_and_prefixed_custom_concept_are_not_profitloss) (locator={'concept': 'ProfitLoss'}, kind='OTHER_REPORTED_TEXT') ... ERROR
+test_missing_or_different_kind_and_prefixed_custom_concept_are_not_profitloss (tests.vnext.test_b04_profitloss_note.ProfitLossNoteTest.test_missing_or_different_kind_and_prefixed_custom_concept_are_not_profitloss) ... ERROR
+test_unselected_profitloss_does_not_annotate_another_selected_fact (tests.vnext.test_b04_profitloss_note.ProfitLossNoteTest.test_unselected_profitloss_does_not_annotate_another_selected_fact) ... ERROR
+test_withheld_null_structural_and_other_metrics_do_not_get_a_fake_scope_note (tests.vnext.test_b04_profitloss_note.ProfitLossNoteTest.test_withheld_null_structural_and_other_metrics_do_not_get_a_fake_scope_note) ... 
+  test_withheld_null_structural_and_other_metrics_do_not_get_a_fake_scope_note (tests.vnext.test_b04_profitloss_note.ProfitLossNoteTest.test_withheld_null_structural_and_other_metrics_do_not_get_a_fake_scope_note) (change={'publication': 'WITHHELD'}) ... ERROR
+  test_withheld_null_structural_and_other_metrics_do_not_get_a_fake_scope_note (tests.vnext.test_b04_profitloss_note.ProfitLossNoteTest.test_withheld_null_structural_and_other_metrics_do_not_get_a_fake_scope_note) (change={'value': None}) ... ERROR
+  test_withheld_null_structural_and_other_metrics_do_not_get_a_fake_scope_note (tests.vnext.test_b04_profitloss_note.ProfitLossNoteTest.test_withheld_null_structural_and_other_metrics_do_not_get_a_fake_scope_note) (change={'metric_id': 'B07'}) ... ERROR
+
+======================================================================
+ERROR: test_actual_selected_profitloss_gets_the_approved_scope_note (tests.vnext.test_b04_profitloss_note.ProfitLossNoteTest.test_actual_selected_profitloss_gets_the_approved_scope_note)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/profitloss-note/SEC_metrics/tests/vnext/test_b04_profitloss_note.py", line 18, in test_actual_selected_profitloss_gets_the_approved_scope_note
+    self.assertEqual('ProfitLoss may include non-controlling interest.',self.note())
+                                                                        ~~~~~~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/profitloss-note/SEC_metrics/tests/vnext/test_b04_profitloss_note.py", line 14, in note
+    def note(self):return projection._b04_profitloss_note(self.result,self.ordered,self.claims)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'vnext.ordinary_projection' has no attribute '_b04_profitloss_note'
+
+======================================================================
+ERROR: test_matched_verified_ids_remain_supported_without_scanning_all_claims (tests.vnext.test_b04_profitloss_note.ProfitLossNoteTest.test_matched_verified_ids_remain_supported_without_scanning_all_claims)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/profitloss-note/SEC_metrics/tests/vnext/test_b04_profitloss_note.py", line 44, in test_matched_verified_ids_remain_supported_without_scanning_all_claims
+    self.assertTrue(self.note())
+                    ~~~~~~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/profitloss-note/SEC_metrics/tests/vnext/test_b04_profitloss_note.py", line 14, in note
+    def note(self):return projection._b04_profitloss_note(self.result,self.ordered,self.claims)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'vnext.ordinary_projection' has no attribute '_b04_profitloss_note'
+
+======================================================================
+ERROR: test_missing_or_different_kind_and_prefixed_custom_concept_are_not_profitloss (tests.vnext.test_b04_profitloss_note.ProfitLossNoteTest.test_missing_or_different_kind_and_prefixed_custom_concept_are_not_profitloss) (locator={}, kind='COMPANYFACTS_NUMERIC_FACT')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/profitloss-note/SEC_metrics/tests/vnext/test_b04_profitloss_note.py", line 39, in test_missing_or_different_kind_and_prefixed_custom_concept_are_not_profitloss
+    self.assertEqual('',self.note())
+                        ~~~~~~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/profitloss-note/SEC_metrics/tests/vnext/test_b04_profitloss_note.py", line 14, in note
+    def note(self):return projection._b04_profitloss_note(self.result,self.ordered,self.claims)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'vnext.ordinary_projection' has no attribute '_b04_profitloss_note'
+
+======================================================================
+ERROR: test_missing_or_different_kind_and_prefixed_custom_concept_are_not_profitloss (tests.vnext.test_b04_profitloss_note.ProfitLossNoteTest.test_missing_or_different_kind_and_prefixed_custom_concept_are_not_profitloss) (locator={'concept': 'company:ProfitLoss'}, kind='COMPANYFACTS_NUMERIC_FACT')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/profitloss-note/SEC_metrics/tests/vnext/test_b04_profitloss_note.py", line 39, in test_missing_or_different_kind_and_prefixed_custom_concept_are_not_profitloss
+    self.assertEqual('',self.note())
+                        ~~~~~~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/profitloss-note/SEC_metrics/tests/vnext/test_b04_profitloss_note.py", line 14, in note
+    def note(self):return projection._b04_profitloss_note(self.result,self.ordered,self.claims)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'vnext.ordinary_projection' has no attribute '_b04_profitloss_note'
+
+======================================================================
+ERROR: test_missing_or_different_kind_and_prefixed_custom_concept_are_not_profitloss (tests.vnext.test_b04_profitloss_note.ProfitLossNoteTest.test_missing_or_different_kind_and_prefixed_custom_concept_are_not_profitloss) (locator={'concept': 'ProfitLoss'}, kind='OTHER_REPORTED_TEXT')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/profitloss-note/SEC_metrics/tests/vnext/test_b04_profitloss_note.py", line 39, in test_missing_or_different_kind_and_prefixed_custom_concept_are_not_profitloss
+    self.assertEqual('',self.note())
+                        ~~~~~~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/profitloss-note/SEC_metrics/tests/vnext/test_b04_profitloss_note.py", line 14, in note
+    def note(self):return projection._b04_profitloss_note(self.result,self.ordered,self.claims)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'vnext.ordinary_projection' has no attribute '_b04_profitloss_note'
+
+======================================================================
+ERROR: test_missing_or_different_kind_and_prefixed_custom_concept_are_not_profitloss (tests.vnext.test_b04_profitloss_note.ProfitLossNoteTest.test_missing_or_different_kind_and_prefixed_custom_concept_are_not_profitloss)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/profitloss-note/SEC_metrics/tests/vnext/test_b04_profitloss_note.py", line 40, in test_missing_or_different_kind_and_prefixed_custom_concept_are_not_profitloss
+    self.ordered=[];self.assertEqual('',self.note())
+                                        ~~~~~~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/profitloss-note/SEC_metrics/tests/vnext/test_b04_profitloss_note.py", line 14, in note
+    def note(self):return projection._b04_profitloss_note(self.result,self.ordered,self.claims)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'vnext.ordinary_projection' has no attribute '_b04_profitloss_note'
+
+======================================================================
+ERROR: test_unselected_profitloss_does_not_annotate_another_selected_fact (tests.vnext.test_b04_profitloss_note.ProfitLossNoteTest.test_unselected_profitloss_does_not_annotate_another_selected_fact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/profitloss-note/SEC_metrics/tests/vnext/test_b04_profitloss_note.py", line 23, in test_unselected_profitloss_does_not_annotate_another_selected_fact
+    self.assertEqual('',self.note())
+                        ~~~~~~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/profitloss-note/SEC_metrics/tests/vnext/test_b04_profitloss_note.py", line 14, in note
+    def note(self):return projection._b04_profitloss_note(self.result,self.ordered,self.claims)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'vnext.ordinary_projection' has no attribute '_b04_profitloss_note'
+
+======================================================================
+ERROR: test_withheld_null_structural_and_other_metrics_do_not_get_a_fake_scope_note (tests.vnext.test_b04_profitloss_note.ProfitLossNoteTest.test_withheld_null_structural_and_other_metrics_do_not_get_a_fake_scope_note) (change={'publication': 'WITHHELD'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/profitloss-note/SEC_metrics/tests/vnext/test_b04_profitloss_note.py", line 31, in test_withheld_null_structural_and_other_metrics_do_not_get_a_fake_scope_note
+    self.assertEqual('',self.note());self.result=original
+                        ~~~~~~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/profitloss-note/SEC_metrics/tests/vnext/test_b04_profitloss_note.py", line 14, in note
+    def note(self):return projection._b04_profitloss_note(self.result,self.ordered,self.claims)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'vnext.ordinary_projection' has no attribute '_b04_profitloss_note'
+
+======================================================================
+ERROR: test_withheld_null_structural_and_other_metrics_do_not_get_a_fake_scope_note (tests.vnext.test_b04_profitloss_note.ProfitLossNoteTest.test_withheld_null_structural_and_other_metrics_do_not_get_a_fake_scope_note) (change={'value': None})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/profitloss-note/SEC_metrics/tests/vnext/test_b04_profitloss_note.py", line 31, in test_withheld_null_structural_and_other_metrics_do_not_get_a_fake_scope_note
+    self.assertEqual('',self.note());self.result=original
+                        ~~~~~~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/profitloss-note/SEC_metrics/tests/vnext/test_b04_profitloss_note.py", line 14, in note
+    def note(self):return projection._b04_profitloss_note(self.result,self.ordered,self.claims)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'vnext.ordinary_projection' has no attribute '_b04_profitloss_note'
+
+======================================================================
+ERROR: test_withheld_null_structural_and_other_metrics_do_not_get_a_fake_scope_note (tests.vnext.test_b04_profitloss_note.ProfitLossNoteTest.test_withheld_null_structural_and_other_metrics_do_not_get_a_fake_scope_note) (change={'metric_id': 'B07'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/profitloss-note/SEC_metrics/tests/vnext/test_b04_profitloss_note.py", line 31, in test_withheld_null_structural_and_other_metrics_do_not_get_a_fake_scope_note
+    self.assertEqual('',self.note());self.result=original
+                        ~~~~~~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/profitloss-note/SEC_metrics/tests/vnext/test_b04_profitloss_note.py", line 14, in note
+    def note(self):return projection._b04_profitloss_note(self.result,self.ordered,self.claims)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'vnext.ordinary_projection' has no attribute '_b04_profitloss_note'
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.001s
+
+FAILED (errors=10)
+{"allowed_skips": 0, "errors": 10, "failures": 0, "run": 5, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_b04_profitloss_note"]}

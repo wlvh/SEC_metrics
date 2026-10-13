@@ -28,3 +28,13 @@ python3 tools/vnext_company.py results --company marriott_international \
 ```
 
 Use the existing source restore and seven-member answer restore methods; call0013 is from the same retained35-call archive, not a new invocation. A matching complete successor response is still required for the new request. No new model authorization is inferred. The full five-year target and other source/method gaps continue.
+
+## Receiver form-reference title and main reception
+
+Responds to [6149540382](https://github.com/wlvh/SEC_metrics/pull/259#issuecomment-6149540382). An Item15 title quoted in a cross-reference is not an internal note caption. The new exact fixture is red before the correction (`form-reference-before.log`). The pure reader now recognizes a quote immediately following an explicit Part/Item numbered reference and leaves it out of the internal-caption lookup. Genuine named captions that are absent still refuse; whole-note and note-title cases stay distinct. No company/title/year special case or generalized quote omission.
+
+Actual mainc25872ee (received249 and256/257) is normally merged. Only the Source-test class insertion conflicted; both method groups are retained and AST inspection rejects duplicate methods. The production raw-byte navigation interface is preserved.81 combined source/public caller/H1/company controls/.684s/zero errors/skips (`form-reference-main-controls.log`). No public controller/store/IO/runner or extra model trial.
+
+Existing old qualification material forHyatt FY2025 is already in the historical source root's original ledger877/878, accession0001468174-26-000007, h-20251231.htm, rawSHAd7988e8c...5a9. There is no company registry addition or new collection/goal company. Exact Source read1.395329s: complete proposal, page selection and complete single-block requestbebc1e46... match actualmain's outputs. The initial registry search found noHyatt entry but that did not mean no material; precise existing ledger lookup found and verified it. Source references and raw identity are inhyatt-existing-source-control.json. No new company case/model/result or whole45-source census is run.
+
+The already prepared Marriott2024 source bundle is reused only through changed functions, .080799s: entire proposal, D03 and complete616-block requestcf2e9ded remain exactly identical. The existing13.807s company missing-answer/read record therefore retains its scope; no financial/source first stage or old answer is repeated. Receiver's14 newly preparable/20 unchanged/9 pre-existing failure survey is reused as the reception baseline, not claimed re-executed here. New-head CI and receiver's actual combined census remain separate; model-response requirements and full historical business completion are not waived.

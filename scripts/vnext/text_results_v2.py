@@ -308,7 +308,7 @@ def prepare_business_text_sources(*, metric_id, target, source_references, raw_b
                     "scope": "COMPLETE_LOCAL_GOVERNANCE_DOCUMENT_SUPPORTED_STATEMENTS"}
         coverage["coverage_hash"] = content_hash(value=coverage); coverages[governance_id] = coverage
     else:
-        proposal = legal_risk_candidates(document=annual)
+        proposal = legal_risk_candidates(document=annual, raw_bytes=raw)
         _need(proposal["coverage_status"] == "LOCAL_REQUESTED_RANGES_SCANNED",
               "TEXT_V2_LEGAL_SOURCE_NAVIGATION_INCOMPLETE")
         _need(proposal["D02"]["candidates"], "TEXT_V2_LEGAL_DISCLOSURE_TEXT_UNSUPPORTED")

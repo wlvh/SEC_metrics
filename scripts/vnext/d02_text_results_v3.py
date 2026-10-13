@@ -265,6 +265,7 @@ _INCORPORATED_CAPTION = re.compile(r'["\u201c\u2018\']([^"\u201c\u201d\u2018\u20
 _NOTE_TITLE_PREFIX = re.compile(r'^(?:note\s+)?\(?\d{1,3}[a-z]?\)?\s*[.:\u2014\u2013-]?\s*', re.I)
 _CAPTION_SPAN = re.compile(rb'<span([^<>]*)>\s*$')
 _CAPTION_STYLE = re.compile(rb'style="([^"]*)"')
+_QUOTED_FORM_REFERENCE = re.compile(r'\b(?:part\s+[ivx]+\s*,?\s*)?item\s+\d{1,2}[a-z]?\s*[,.:\u2014\u2013-]?\s*$', re.I)
 
 
 def _caption_text(text):
@@ -311,7 +312,8 @@ def select_d02_incorporated_notes(*, proposal, document, raw_bytes):
                      'D02_REFERENCED_LETTERED_SUBNOTE_NOT_MIGRATED')
         start, stop = note['start_block'], note['end_block_exclusive']
         quoted = {_caption_text(m.group(1)) for occurrence in reference['source_occurrences']
-                  for m in _INCORPORATED_CAPTION.finditer(occurrence['text'])}
+                  for m in _INCORPORATED_CAPTION.finditer(occurrence['text'])
+                  if not _QUOTED_FORM_REFERENCE.search(occurrence['text'][:m.start()])}
         title = _caption_text(blocks[start]['text'])
         quoted.difference_update({title, _NOTE_TITLE_PREFIX.sub('', title, count=1)})
         quoted = {text for text in quoted if not re.match(r'^(?:part\s+[ivx]+\W+)?item\s+\d{1,2}[a-z]?\b', text)}
@@ -385,6 +387,7 @@ def select_d02_page_furniture(*, proposal, document):
     page_layout = _page_structure_furniture(blocks)
     note_titles = {" ".join(h['text'].split()).casefold()
                    for ref in proposal['note_references']
+                   if ref['status']=='LOCATED_NOTE_RANGE'
                    for h in ref['heading_candidates']}
     note_ends = {r['end_block_exclusive'] for ref in proposal['note_references']
                  if ref['status']=='LOCATED_NOTE_RANGE'
@@ -395,9 +398,10 @@ def select_d02_page_furniture(*, proposal, document):
         continued = re.fullmatch(r'(.+?)\s*\(continued\)',text)
         # A following note can close an already located reference range.
         # The generic numbered-heading pattern also accepts ordinary legal
-        # subsections; they are not evidence of a financial-note boundary.
+        # subsections. Only the already located range's actual end is an
+        # anchor; its accepted title format need not spell out "Note".
         ordinary_note = (i in note_ends and block.get('emphasized')
-                         and re.match(r'^note\s+',text) and _NOTE_HEADING.match(text))
+                         and _NOTE_HEADING.match(text))
         if (text not in note_titles and not ordinary_note
                 and not (continued and continued[1].rstrip() in note_titles)):
             continue
@@ -560,7 +564,7 @@ def prepare_business_text_sources(*, metric_id, target, source_references, raw_b
                     "scope": "COMPLETE_LOCAL_GOVERNANCE_DOCUMENT_SUPPORTED_STATEMENTS"}
         coverage["coverage_hash"] = content_hash(value=coverage); coverages[governance_id] = coverage
     else:
-        proposal = legal_risk_candidates(document=annual)
+        proposal = legal_risk_candidates(document=annual, raw_bytes=raw)
         if d02_page_furniture:
             proposal = select_d02_incorporated_notes(proposal=proposal, document=annual, raw_bytes=raw)
             proposal = select_d02_page_furniture(proposal=proposal, document=annual)
