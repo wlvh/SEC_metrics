@@ -1,0 +1,25 @@
+test_corrupt_d02_answer_members_do_not_abort_a_mixed_company_batch (tests.vnext.test_company_current_records.CurrentCompanyTest.test_corrupt_d02_answer_members_do_not_abort_a_mixed_company_batch) ... ok
+test_answer_set_indexes_exact_requests_and_binds_all_seven_original_members (tests.vnext.test_d02_company_saved.D02SavedCompanyTest.test_answer_set_indexes_exact_requests_and_binds_all_seven_original_members) ... ok
+test_cli_does_not_silently_turn_saved_answers_into_online_or_current_mode (tests.vnext.test_d02_company_saved.D02SavedCompanyTest.test_cli_does_not_silently_turn_saved_answers_into_online_or_current_mode) ... usage: required_unittests.py [-h]
+                             {run,acquire,sources,export,export-processing,install-runtime,install,compute,export-results,results} ...
+required_unittests.py: error: --saved-legal-reviews requires --source-root, --period fiscal-years and explicit --metric D02
+usage: required_unittests.py [-h]
+                             {run,acquire,sources,export,export-processing,install-runtime,install,compute,export-results,results} ...
+required_unittests.py: error: --saved-legal-reviews requires --source-root, --period fiscal-years and explicit --metric D02
+usage: required_unittests.py [-h]
+                             {run,acquire,sources,export,export-processing,install-runtime,install,compute,export-results,results} ...
+required_unittests.py: error: --saved-legal-reviews requires --source-root, --period fiscal-years and explicit --metric D02
+ok
+test_factory_uses_complete_source_requests_and_existing_business_case (tests.vnext.test_d02_company_saved.D02SavedCompanyTest.test_factory_uses_complete_source_requests_and_existing_business_case) ... ok
+test_missing_set_does_not_create_partial_case_or_call_reader (tests.vnext.test_d02_company_saved.D02SavedCompanyTest.test_missing_set_does_not_create_partial_case_or_call_reader) ... ok
+test_other_company_or_multiple_periods_are_not_one_calculation_answer_set (tests.vnext.test_d02_company_saved.D02SavedCompanyTest.test_other_company_or_multiple_periods_are_not_one_calculation_answer_set) ... ok
+test_public_history_dispatch_retains_neighbours_and_answer_file_binding (tests.vnext.test_d02_company_saved.D02SavedCompanyTest.test_public_history_dispatch_retains_neighbours_and_answer_file_binding) ... ok
+test_recorded_or_unknown_usage_answer_has_no_business_case_credit (tests.vnext.test_d02_company_saved.D02SavedCompanyTest.test_recorded_or_unknown_usage_answer_has_no_business_case_credit) ... ok
+test_source_and_answer_roots_cannot_hide_model_answers_inside_source_input (tests.vnext.test_d02_company_saved.D02SavedCompanyTest.test_source_and_answer_roots_cannot_hide_model_answers_inside_source_input) ... ok
+test_unsettled_answer_cannot_reach_native_result_or_calculator (tests.vnext.test_d02_company_saved.D02SavedCompanyTest.test_unsettled_answer_cannot_reach_native_result_or_calculator) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.099s
+
+OK
+{"allowed_skips": 0, "errors": 0, "failures": 0, "run": 10, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_company_current_records.CurrentCompanyTest.test_corrupt_d02_answer_members_do_not_abort_a_mixed_company_batch", "tests.vnext.test_d02_company_saved"]}
