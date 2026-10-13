@@ -148,12 +148,13 @@ def _configuration(source, company, metric):
 def _same_processing_configuration(previous, current):
     """Source checking/control versions are recorded, not extraction inputs.
 
-    These two modules do not select, interpret or calculate a metric. Their
-    source checks run again before every reuse. Producer/parser/Spec/prompt,
+    These control/checking modules do not select, interpret or calculate a
+    metric. Source checks run again before every reuse. Producer/parser/Spec/prompt,
     registry and actual source differences remain part of the comparison.
     """
     checking = {'scripts/vnext/ordinary_current_update.py',
-                'scripts/vnext/request_bindings.py'}
+                'scripts/vnext/request_bindings.py',
+                'scripts/vnext/ordinary_update_compatibility.py'}
     def business(config):
         return {**config,'processing_files':{path:digest for path,digest in config.get('processing_files',{}).items()
                                             if path not in checking}}
@@ -368,7 +369,8 @@ def run_once(*, state_root, source_root, company_id, metric_id, shared_input_roo
                         'result_reason_code':saved['result'].get('reason_code'),
                         'raw_input_unchanged':True,'calculation_performed':False,'new_candidate_created':False,
                         'source_check_versions':{path:configuration.get('processing_files',{}).get(path)
-                            for path in ('scripts/vnext/ordinary_current_update.py','scripts/vnext/request_bindings.py')},
+                            for path in ('scripts/vnext/ordinary_current_update.py','scripts/vnext/request_bindings.py',
+                                         'scripts/vnext/ordinary_update_compatibility.py')},
                         'source_observation_errors':source_errors,
                         'new_calls':{'provider':0,'paid':0,'sec':0},'production_authorized':False}
                     if fiscal_year is not None:report['requested_fiscal_year']=fiscal_year

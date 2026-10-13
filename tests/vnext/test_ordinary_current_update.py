@@ -53,6 +53,22 @@ class CurrentUpdateTest(unittest.TestCase):
         self.assertEqual(again['result_id'],first['result_id']);source_check.assert_called_once()
         self.assertEqual(again['source_check_versions']['scripts/vnext/request_bindings.py'],'new-check')
         self.assertEqual((self.root/'completed-check.json').read_bytes(),old_configuration)
+
+    def test_comparison_control_version_alone_does_not_recalculate(self):
+        self.config['processing_files']={'scripts/vnext/ordinary_current_update.py':'controller',
+            'scripts/vnext/ordinary_update_compatibility.py':'old-comparison',
+            'scripts/vnext/calculator.py':'same-business'}
+        first=self.run_update()
+        self.config['processing_files']['scripts/vnext/ordinary_update_compatibility.py']='new-comparison'
+        with patch.object(update,'create_saved_result',side_effect=AssertionError('No repeated calculation')), \
+             patch.object(update,'_current_sources',return_value=[dict(self.proof)]) as source_check:
+            again=self.run_update()
+        self.assertEqual('NO_SOURCE_CONTENT_CHANGE',again['status'])
+        self.assertEqual(first['result_id'],again['result_id']);source_check.assert_called_once()
+        self.assertEqual('new-comparison',again['source_check_versions']['scripts/vnext/ordinary_update_compatibility.py'])
+        self.config['processing_files']['scripts/vnext/calculator.py']='changed-business'
+        self.assertEqual('CANDIDATE_READY',self.run_update()['status'])
+        self.assertEqual(2,self.calculations)
         self.config['processing_files']['scripts/vnext/calculator.py']='changed-formula'
         self.assertTrue(self.run_update()['calculation_performed'])
 
