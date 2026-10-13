@@ -9,23 +9,30 @@
 
 ## 命令
 
-对照 main 与“main + PR”的合并结果：
+PR 的 head 已经包含当前 main 时，直接对照 main 与 PR head；两个提交都在仓库里，别人可以复查或重跑：
 
 ```text
 git fetch origin main pull/<N>/head:pr-<N>
+python3 tools/compare_d02_preparation.py --baseline origin/main --candidate pr-<N> \
+  --source-root <保存来源根> --output-dir <尚不存在的新目录> --fail-on OK_TO_FAIL
+```
+
+PR 还没接入当前 main 时，先在本地合成“main + PR”。这个合成提交只在本机，`manifest.json` 会记下它的两个父提交和树哈希，别人可以用 `git merge-tree --write-tree <父1> <父2>` 重建同一棵树并核对哈希：
+
+```text
 T=$(git merge-tree --write-tree origin/main pr-<N>)     # 有冲突时退出非零，需先解决冲突
 C=$(git commit-tree -p origin/main -p pr-<N> -m "local combination" "$T")
-python3 tools/compare_d02_preparation.py --baseline origin/main --candidate "$C" \
-  --source-root <保存来源根> --output-dir <尚不存在的新目录> --fail-on OK_TO_FAIL
+python3 tools/compare_d02_preparation.py --baseline origin/main --candidate "$C" ...
 ```
 
 其他参数：
 - `--companies`：默认是对照版本注册表里的全部公司；只给一部分时，结果会标明“部分范围”。
 - `--fiscal-years`：默认 `2021-2025`。
-- `--jobs`：默认 4，是两个版本合计的工作进程数。
+- `--jobs`：默认 4，是两个版本合计同时运行的工作进程数。每个样本单独一个进程，一个样本崩溃或卡住只影响它自己。
+- `--timeout-per-sample`：默认 600 秒，限制单个样本；超时的样本记为未比到。
 - `--keep-code`：保留两个临时工作树。
 
-单个样本约 15–30 秒；10 家公司 × 5 年，4 个进程大约 10 分钟。
+单个样本多数在 30 秒内，最慢的 JPMorgan 约 1.5–3 分钟；10 家公司 × 5 年，4 个进程大约 13 分钟。
 
 ## 输出
 
@@ -46,7 +53,7 @@ python3 tools/compare_d02_preparation.py --baseline origin/main --candidate "$C"
 - 有样本没有比到；
 - 工作进程失败或超时；
 - 来源根在运行中发生变化；
-- 代码工作树被改动。
+- 代码工作树被改动，或其中出现任何新文件（包括未跟踪或被忽略的文件；工作进程不写字节码文件）。
 
 结论完整时退出码为 0；完整但出现 `--fail-on` 中列出的类别时，退出码为 1。
 

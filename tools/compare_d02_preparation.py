@@ -6,12 +6,15 @@ For every requested company and fiscal year, this runs the production entry
 the baseline commit and once with the candidate commit. Both runs use the same
 saved source root, run offline, and report what changed in status and content.
 
-The comparison is incomplete, and the exit code is 2, when any of these holds:
+Each sample runs in its own worker process with its own time limit, so a
+crash or hang affects only that sample. The comparison is incomplete, and the
+exit code is 2, when any of these holds:
 - a requested sample has no result;
-- a worker fails or times out;
+- a worker fails or exceeds ``--timeout-per-sample``;
 - the tool fails outside the production call;
 - the source root changes during the run;
-- a code worktree changes during the run.
+- a code worktree changes during the run, including any new untracked or
+  ignored file (workers do not write bytecode).
 A sample that fails the same way on both sides is listed as unverified, not as
 unchanged.
 
@@ -217,22 +220,26 @@ def parse_years(text):
 
 
 def run_workers(tasks, jobs, timeout_per_sample):
-    """Run worker processes; every task reports its exit, timeout and stderr tail."""
+    """Run one worker process per task; each reports its exit, timeout and stderr tail.
+
+    ``-I`` isolates the worker from the caller's environment and ``-B`` keeps it
+    from writing bytecode, so any file left in a code worktree is a real change.
+    """
     tool = str(Path(__file__).resolve())
 
     def run(task):
-        command = [sys.executable, '-I', tool, '--child', '--code-root', task['code_root'],
+        command = [sys.executable, '-I', '-B', tool, '--child', '--code-root', task['code_root'],
                    '--source-root', task['source_root'], '--samples-file', task['samples_file'],
                    '--out', task['out']]
         started = time.monotonic()
         try:
             done = subprocess.run(command, cwd=task['code_root'], capture_output=True, text=True,
-                                  timeout=timeout_per_sample * len(task['samples']) + 60)
+                                  timeout=timeout_per_sample * len(task['samples']))
             status = {'returncode': done.returncode, 'timeout': False, 'stderr_tail': done.stderr[-3000:]}
         except subprocess.TimeoutExpired as exc:
             stderr = exc.stderr.decode('utf-8', 'replace') if isinstance(exc.stderr, bytes) else (exc.stderr or '')
             status = {'returncode': None, 'timeout': True, 'stderr_tail': stderr[-3000:]}
-        status.update(label=task['label'], samples=len(task['samples']),
+        status.update(label=task['label'], samples=[f'{c}:{y}' for c, y in task['samples']],
                       seconds=round(time.monotonic() - started, 1))
         return status
 
@@ -240,18 +247,16 @@ def run_workers(tasks, jobs, timeout_per_sample):
         return list(pool.map(run, tasks))
 
 
-def run_version(*, label, code_root, source_root, samples, chunks, work_dir):
-    """Write one samples file per chunk and return the worker tasks for one code root."""
+def run_version(*, label, code_root, source_root, samples, work_dir):
+    """Return one worker task per sample for one code root."""
     tasks = []
-    for index in range(chunks):
-        part = [s for i, s in enumerate(samples) if i % chunks == index]
-        if not part:
-            continue
-        samples_file = Path(work_dir) / f'{label}-{index}.samples.json'
+    for index, sample in enumerate(samples):
+        part = [sample]
+        samples_file = Path(work_dir) / f'{label}-{index:03d}.samples.json'
         samples_file.write_text(json.dumps(part), encoding='utf-8')
         tasks.append({'label': label, 'code_root': str(code_root), 'source_root': str(source_root),
                       'samples': part, 'samples_file': str(samples_file),
-                      'out': str(Path(work_dir) / f'{label}-{index}.jsonl')})
+                      'out': str(Path(work_dir) / f'{label}-{index:03d}.jsonl')})
     return tasks
 
 
@@ -433,7 +438,8 @@ def parse_args(argv):
     parser.add_argument('--companies', help='comma-separated company ids; default: whole baseline registry')
     parser.add_argument('--fiscal-years', default='2021-2025', help='e.g. 2021-2025 or 2024,2025')
     parser.add_argument('--jobs', type=int, default=4, help='worker processes across both versions')
-    parser.add_argument('--timeout-per-sample', type=int, default=600)
+    parser.add_argument('--timeout-per-sample', type=int, default=600,
+                        help='seconds allowed for each sample, which runs in its own worker process')
     parser.add_argument('--fail-on', default='', help='comma-separated categories that make the exit code 1')
     parser.add_argument('--keep-code', action='store_true', help='keep the two worktrees after the run')
     parser.add_argument('--repo', help='git repository holding both commits; default: this checkout')
@@ -467,7 +473,9 @@ def main(argv=None):
     versions = {}
     for label, ref in (('baseline', args.baseline), ('candidate', args.candidate)):
         commit = _git(repo, 'rev-parse', '--verify', ref + '^{commit}')
-        versions[label] = {'ref': ref, 'commit': commit, 'tree': _git(repo, 'rev-parse', commit + '^{tree}')}
+        # Parents let a reader rebuild a local combination commit from reachable commits.
+        versions[label] = {'ref': ref, 'commit': commit, 'tree': _git(repo, 'rev-parse', commit + '^{tree}'),
+                           'parents': _git(repo, 'rev-list', '--parents', '-n', '1', commit).split()[1:]}
     code, work = out / 'code', out / 'work'
     code.mkdir()
     work.mkdir()
@@ -484,11 +492,10 @@ def main(argv=None):
         samples = [f'{company}:{year}' for company in companies for year in years]
         pairs = [[company, year] for company in companies for year in years]
         before = tree_digest(source_root)
-        chunks = max(1, args.jobs // 2)
         tasks = []
         for label in versions:
             tasks += run_version(label=label, code_root=code / label, source_root=source_root,
-                                 samples=pairs, chunks=chunks, work_dir=work)
+                                 samples=pairs, work_dir=work)
         workers = run_workers(tasks, args.jobs, args.timeout_per_sample)
         after = tree_digest(source_root)
         results, problems = {}, []
@@ -497,12 +504,12 @@ def main(argv=None):
             problems += [f'{label}: {p}' for p in unreadable]
         for status in workers:
             if status['timeout'] or status['returncode'] != 0:
-                problems.append(f"{status['label']} worker for {status['samples']} samples: "
+                problems.append(f"{status['label']} worker for {', '.join(status['samples'])}: "
                                 f"returncode {status['returncode']}, timeout {status['timeout']}")
         for label in versions:
-            dirty = _git(code / label, 'status', '--porcelain', '--untracked-files=no')
-            if dirty:
-                problems.append(f'{label} code worktree changed during the run')
+            changed = _git(code / label, 'status', '--porcelain', '--untracked-files=all', '--ignored').splitlines()
+            if changed:
+                problems.append(f'{label} code worktree changed during the run: {changed[:5]}')
         if before != after:
             problems.append('source root changed during the run')
         report = compare(samples, results['baseline'], results['candidate'])

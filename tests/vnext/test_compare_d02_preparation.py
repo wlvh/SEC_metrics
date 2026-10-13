@@ -2,6 +2,7 @@
 import contextlib
 import importlib.util
 import io
+import json
 import subprocess
 import tempfile
 import unittest
@@ -11,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[2]
 TOOL = ROOT / 'tools' / 'compare_d02_preparation.py'
 
 STUB = '''
-import os, socket
+import os, socket, time
 def prepare_historical_legal_sources(*, repo_root, company_id, fiscal_year):
     if company_id == 'refused' and REFUSE:
         raise ValueError('EXAMPLE_REFUSAL')
@@ -19,6 +20,11 @@ def prepare_historical_legal_sources(*, repo_root, company_id, fiscal_year):
         socket.create_connection(('example.invalid', 80))
     if company_id == 'crash':
         os._exit(3)
+    if company_id == 'hang':
+        time.sleep(60)
+    if company_id == 'litter':
+        with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'generated.cfg'), 'w') as handle:
+            handle.write('left behind by the producer')
     text = open(os.path.join(repo_root, company_id + '.txt'), encoding='utf-8').read()
     request = {'request_id': 'sha256:' + str(len(text)), 'source_id': 's1',
                'blocks': [{'block_id': 'b1', 'text': text}], 'must_decide': ['b1'],
@@ -74,24 +80,41 @@ class WorkerAccountingTest(unittest.TestCase):
             work.mkdir()
             samples = [['alpha', 2024], ['crash', 2024], ['refused', 2024], ['beta', 2024], ['network', 2024]]
             tasks = tool.run_version(label='baseline', code_root=code, source_root=sources,
-                                     samples=samples, chunks=2, work_dir=work)
+                                     samples=samples, work_dir=work)
             workers = tool.run_workers(tasks, 2, 60)
             results, problems = tool.load_results(tasks)
         self.assertEqual(problems, [])
-        self.assertEqual(sorted(w['returncode'] for w in workers), [0, 3])
+        self.assertEqual({w['samples'][0]: w['returncode'] for w in workers},
+                         {'alpha:2024': 0, 'crash:2024': 3, 'refused:2024': 0, 'beta:2024': 0, 'network:2024': 0})
         self.assertEqual(results['alpha:2024']['outcome'], 'OK')
         self.assertEqual(results['refused:2024']['error']['reason'], 'EXAMPLE_REFUSAL')
         self.assertEqual(results['network:2024']['error']['reason'], tool.NETWORK_REFUSAL)
-        # The crashing worker owned crash and beta: neither may look unchanged.
+        # Each sample has its own process: the crash loses only its own result.
         self.assertNotIn('crash:2024', results)
-        self.assertNotIn('beta:2024', results)
+        self.assertEqual(results['beta:2024']['outcome'], 'OK')
         keys = [f'{c}:{y}' for c, y in samples]
         report = tool.compare(keys, results, results)
         categories = {e['sample']: e['category'] for e in report['entries']}
         self.assertEqual(categories, {'alpha:2024': 'SAME_OK', 'crash:2024': 'NOT_COMPARED',
-                                      'refused:2024': 'SAME_FAIL', 'beta:2024': 'NOT_COMPARED',
+                                      'refused:2024': 'SAME_FAIL', 'beta:2024': 'SAME_OK',
                                       'network:2024': 'SAME_FAIL'})
         self.assertFalse(report['all_samples_compared'])
+
+    def test_time_limit_applies_to_each_sample(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            code, sources, work = Path(tmp, 'code'), Path(tmp, 'sources'), Path(tmp, 'work')
+            write_code_root(code)
+            write_sources(sources, ['alpha'])
+            work.mkdir()
+            tasks = tool.run_version(label='candidate', code_root=code, source_root=sources,
+                                     samples=[['hang', 2024], ['alpha', 2024]], work_dir=work)
+            workers = tool.run_workers(tasks, 2, 3)
+            results, _ = tool.load_results(tasks)
+        timed_out = {w['samples'][0]: w['timeout'] for w in workers}
+        self.assertEqual(timed_out, {'hang:2024': True, 'alpha:2024': False})
+        self.assertEqual(set(results), {'alpha:2024'})
+        report = tool.compare(['hang:2024', 'alpha:2024'], results, results)
+        self.assertEqual(report['counts']['NOT_COMPARED'], 1)
 
     def test_unimportable_entry_is_a_harness_error_for_every_sample(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -100,7 +123,7 @@ class WorkerAccountingTest(unittest.TestCase):
             (code / 'scripts' / 'vnext' / '__init__.py').write_text('')
             work.mkdir()
             tasks = tool.run_version(label='candidate', code_root=code, source_root=tmp,
-                                     samples=[['alpha', 2024], ['beta', 2025]], chunks=1, work_dir=work)
+                                     samples=[['alpha', 2024], ['beta', 2025]], work_dir=work)
             tool.run_workers(tasks, 1, 60)
             results, _ = tool.load_results(tasks)
         self.assertEqual({r['outcome'] for r in results.values()}, {'HARNESS_ERROR'})
@@ -193,12 +216,19 @@ class PinnedCommitRunTest(unittest.TestCase):
             with contextlib.redirect_stdout(io.StringIO()):
                 code = tool.main(common + ['--output-dir', str(Path(tmp, 'out1')), '--fail-on', 'OK_TO_FAIL'])
                 flagged = tool.main(common + ['--output-dir', str(Path(tmp, 'out2')), '--fail-on', 'FAIL_TO_OK'])
+                littered = tool.main(common + ['--output-dir', str(Path(tmp, 'out3')), '--companies', 'litter'])
             summary = Path(tmp, 'out1', 'summary.md').read_text()
+            manifest = json.loads(Path(tmp, 'out1', 'manifest.json').read_text())
+            littered_summary = Path(tmp, 'out3', 'summary.md').read_text()
             worktrees = self.git(repo, 'worktree', 'list')
-        self.assertEqual((code, flagged), (tool.EXIT_COMPLETE, tool.EXIT_FAIL_ON))
+        self.assertEqual((code, flagged, littered), (tool.EXIT_COMPLETE, tool.EXIT_FAIL_ON, tool.EXIT_INCOMPLETE))
         self.assertIn('result: COMPLETE', summary)
         self.assertIn('`refused:2024`', summary)
         self.assertIn(candidate, summary)
+        self.assertEqual(manifest['versions']['candidate']['parents'], [baseline])
+        # A file the producer leaves in its code worktree, even untracked, makes the run incomplete.
+        self.assertIn('result: INCOMPLETE', littered_summary)
+        self.assertIn('generated.cfg', littered_summary)
         self.assertEqual(len(worktrees.splitlines()), 1)
 
 

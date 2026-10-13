@@ -1,7 +1,7 @@
 # D02 preparation comparison
 
-- baseline: `4d639bada06d78af858f54a7fa1c301ce3a32918` = `4d639bada06d78af858f54a7fa1c301ce3a32918`
-- candidate: `751027f4c22e3aeec5080bad69bbe668edd0bb25` = `751027f4c22e3aeec5080bad69bbe668edd0bb25`
+- baseline: `c25872ee388c933b697d9d3a9764e5eb7d1859e3` = `c25872ee388c933b697d9d3a9764e5eb7d1859e3`
+- candidate: `9934615fdb92025288fb07567077ef995d58467c` = `9934615fdb92025288fb07567077ef995d58467c`
 - source root: `/home/user/acc/hist-src/source-inputs`: 4505 files, 1148630267 bytes, `sha256:a1975d771d350efb537f036dd0d24c19b86d475a3594520d38db7bd9e4ce2fb7`; unchanged during run: True
 - scope: 10 companies x fiscal years 2021-2025 = 50 samples (whole baseline registry)
 - environment: Python 3.13.16, Linux-6.18.44-fc-v114-x86_64-with-glibc2.39, network blocked in workers, 4 workers
