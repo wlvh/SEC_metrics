@@ -27,10 +27,12 @@ class FoundationCiPartitionTest(unittest.TestCase):
 
     def test_all_inherited_selectors_are_active_or_explicitly_retired_once(self):
         result=ci.partition()
-        self.assertEqual(set(ci.inherited.FAST_TESTS),
+        declared=(*ci.inherited.FAST_TESTS,*ci.v2._FEATURE_SELECTORS['fast'],
+                  *ci.v2._FEATURE_SELECTORS['source-material'])
+        self.assertEqual(set(declared),
                          set(result['fast']) | set(result['source-material']) | set(result['retired']))
         self.assertFalse(set(result['fast']) & set(result['source-material']))
-        self.assertEqual(len(ci.inherited.FAST_TESTS),
+        self.assertEqual(len(declared),
                          len(result['fast'])+len(result['source-material'])+len(result['retired']))
         self.assertEqual(result['retired'],('tests.vnext.test_normal_candidate_authority',))
         self.assertIn('tests.vnext.test_financial_duration',result['source-material'])
@@ -46,6 +48,40 @@ class FoundationCiPartitionTest(unittest.TestCase):
         with patch.object(ci.inherited,'FAST_TESTS',(*original,original[0])):
             with self.assertRaisesRegex(ValueError,'SELECTOR_COVERAGE_CHANGED'):
                 ci.partition()
+
+    def test_additive_feature_selectors_reach_their_declared_ci_tiers(self):
+        features={'fast':('tests.feature.fast',),'source-material':('tests.feature.original',)}
+        with patch.object(ci.v2,'_FEATURE_SELECTORS',features):
+            result=ci.partition()
+        self.assertIn('tests.feature.fast',result['fast'])
+        self.assertNotIn('tests.feature.fast',result['source-material'])
+        self.assertIn('tests.feature.original',result['source-material'])
+        self.assertNotIn('tests.feature.original',result['fast'])
+
+    def test_duplicate_feature_or_inherited_overlap_is_rejected(self):
+        for features in ({'fast':(ci.inherited.FAST_TESTS[0],),'source-material':()},
+                         {'fast':('tests.feature.same',),'source-material':('tests.feature.same',)}):
+            with self.subTest(features=features),patch.object(ci.v2,'_FEATURE_SELECTORS',features):
+                with self.assertRaisesRegex(ValueError,'SELECTOR_COVERAGE_CHANGED'):
+                    ci.partition()
+
+    def test_feature_declared_test_really_executes_through_the_workflow_cli(self):
+        events=[]
+        class Base(unittest.TestCase):
+            def test_unit(self):events.append('baseline')
+        class Feature(unittest.TestCase):
+            def test_period(self):events.append('feature');self.assertLess('2025-01-01','2025-12-31')
+        module=types.ModuleType('_ci_declared_feature');module.Base=Base;module.Feature=Feature
+        out=io.StringIO()
+        with patch.dict(sys.modules,{'_ci_declared_feature':module}), \
+             patch.object(ci.inherited,'FAST_TESTS',('_ci_declared_feature.Base',)), \
+             patch.object(ci.v2,'_FEATURE_SELECTORS',{'fast':('_ci_declared_feature.Feature',),'source-material':()}), \
+             patch.object(sys,'argv',['ci','--suite','fast']),redirect_stdout(out):
+            self.assertEqual(ci.main(),0)
+        report=json.loads(out.getvalue())
+        self.assertEqual(events,['baseline','feature'])
+        self.assertEqual(report['tests'][0]['test_count'],2)
+        self.assertEqual(report['total_feature_selectors'],1)
 
     def test_cli_preserves_fast_or_material_failure(self):
         for suite in ('fast','source-material'):
