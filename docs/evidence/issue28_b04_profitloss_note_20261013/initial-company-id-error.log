@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "<stdin>", line 7, in <module>
+  File "/Users/lyuhongwang/.codex/worktrees/profitloss-note/SEC_metrics/scripts/vnext/current_statement_metric_case.py", line 29, in prepare_current_statement_metric_case
+    traits=repository_company_traits(repo_root=ROOT,company_id=company_id)
+  File "/Users/lyuhongwang/.codex/worktrees/profitloss-note/SEC_metrics/scripts/vnext/traits.py", line 212, in repository_company_traits
+    raise TraitError("Company is absent from the canonical registry")
+vnext.traits.TraitError: Company is absent from the canonical registry

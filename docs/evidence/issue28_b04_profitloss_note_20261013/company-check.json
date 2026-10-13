@@ -1,0 +1,160 @@
+{
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/profitloss-note/SEC_metrics",
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+  "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/profitloss-note-20261013/state",
+  "tested_state": "mainffd plus named uncommitted renderer/test diff",
+  "baseline_row": {
+    "company": "Ford Motor Company",
+    "cik": "37996",
+    "metric_id": "B04",
+    "metric_name": "Net income",
+    "value": "-8162000000",
+    "unit": "USD",
+    "status": "OK",
+    "source_class": "STD_XBRL",
+    "formula": "",
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31",
+    "fiscal_year": "2025",
+    "fiscal_period": "ANNUAL",
+    "accession": "0000037996-26-000015",
+    "form": "10-K",
+    "filed_date": "2026-02-11",
+    "concept_or_section": "Net income",
+    "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2025, \"period_end\": \"2025-12-31\", \"period_start\": \"2025-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"coverage\": \"deterministic_source_set\", \"fiscal_year\": 2025}, \"selection\": null, \"source_reference_ids\": [\"sha256:9fc7f567ee31f33b929df0694303cc3e5522c88e7afb25640fe347d2250c80d6\", \"sha256:4fe37d81a86951f5d28883627e2c475f7ec5085ba2deb3a165ecd3b6d1bbb3f2\", \"sha256:5a7fd6bdf110f3429e0cee5ebf349b6e59d8e3789cbb05a52827afc195d02ec4\"]}",
+    "confidence": "",
+    "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS."
+  },
+  "new_row": {
+    "company": "Ford Motor Company",
+    "cik": "37996",
+    "metric_id": "B04",
+    "metric_name": "Net income",
+    "value": "-8162000000",
+    "unit": "USD",
+    "status": "OK",
+    "source_class": "STD_XBRL",
+    "formula": "",
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31",
+    "fiscal_year": "2025",
+    "fiscal_period": "ANNUAL",
+    "accession": "0000037996-26-000015",
+    "form": "10-K",
+    "filed_date": "2026-02-11",
+    "concept_or_section": "Net income",
+    "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2025, \"period_end\": \"2025-12-31\", \"period_start\": \"2025-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"coverage\": \"deterministic_source_set\", \"fiscal_year\": 2025}, \"selection\": null, \"source_reference_ids\": [\"sha256:9fc7f567ee31f33b929df0694303cc3e5522c88e7afb25640fe347d2250c80d6\", \"sha256:4fe37d81a86951f5d28883627e2c475f7ec5085ba2deb3a165ecd3b6d1bbb3f2\", \"sha256:5a7fd6bdf110f3429e0cee5ebf349b6e59d8e3789cbb05a52827afc195d02ec4\"]}",
+    "confidence": "",
+    "notes": "Source-rebuilt native result; exact measurement dates are retained. ProfitLoss may include non-controlling interest. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS."
+  },
+  "evidence_csv_bytes_unchanged": true,
+  "operations": [
+    {
+      "name": "first",
+      "seconds": 2.334721457998967,
+      "exit_code": 0,
+      "metric": {
+        "metric_id": "B04",
+        "status": "CANDIDATE_READY",
+        "attempt_id": "d105c74ef7fe4b1ca740b9acd86fe19d",
+        "version": "6a2db7a33fd34949a47538166743fa33",
+        "result_id": "sha256:89f9cc9df7dc78e52fcd0a97eb580afa3d793c787e65cc6500529f8a2d4662e7",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/profitloss-note-20261013/state/updates/B04/results/6a2db7a33fd34949a47538166743fa33",
+        "calculation_performed": true,
+        "new_candidate_created": true,
+        "result_reason_code": "PASS",
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "defect_holds": [],
+        "read_result_id": "sha256:89f9cc9df7dc78e52fcd0a97eb580afa3d793c787e65cc6500529f8a2d4662e7",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/profitloss-note-20261013/state/updates/B04/results/6a2db7a33fd34949a47538166743fa33",
+        "program_version": {
+          "commit": "ffd0765a3f88b0539b41edff17677c9381dc99a2",
+          "has_uncommitted_changes": true
+        }
+      }
+    },
+    {
+      "name": "repeat",
+      "seconds": 0.06571495800744742,
+      "exit_code": 0,
+      "metric": {
+        "metric_id": "B04",
+        "status": "NO_SOURCE_CONTENT_CHANGE",
+        "attempt_id": "2bafc469749b4a82a69c1ebac9346b36",
+        "version": "6a2db7a33fd34949a47538166743fa33",
+        "result_id": "sha256:89f9cc9df7dc78e52fcd0a97eb580afa3d793c787e65cc6500529f8a2d4662e7",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/profitloss-note-20261013/state/updates/B04/results/6a2db7a33fd34949a47538166743fa33",
+        "result_reason_code": "PASS",
+        "raw_input_unchanged": true,
+        "calculation_performed": false,
+        "new_candidate_created": false,
+        "source_check_versions": {
+          "scripts/vnext/ordinary_current_update.py": "bb740670d048c72f4cbc08305fb857521f5dd29e9973d4fb41e9cebce8c94c52",
+          "scripts/vnext/request_bindings.py": "d0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee",
+          "scripts/vnext/ordinary_update_compatibility.py": "a0202e8ca4a25b1f467ddf812c9268a00ab7c258988ccd82e4e0f4152ddb607b"
+        },
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "defect_holds": [],
+        "read_result_id": "sha256:89f9cc9df7dc78e52fcd0a97eb580afa3d793c787e65cc6500529f8a2d4662e7",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/profitloss-note-20261013/state/updates/B04/results/6a2db7a33fd34949a47538166743fa33",
+        "program_version": {
+          "commit": "ffd0765a3f88b0539b41edff17677c9381dc99a2",
+          "has_uncommitted_changes": true
+        }
+      }
+    }
+  ],
+  "independent_read_seconds": 0.45058354100910947,
+  "read_row": {
+    "company": "Ford Motor Company",
+    "cik": "37996",
+    "metric_id": "B04",
+    "metric_name": "Net income",
+    "value": "-8162000000",
+    "unit": "USD",
+    "status": "OK",
+    "source_class": "STD_XBRL",
+    "formula": "",
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31",
+    "fiscal_year": "2025",
+    "fiscal_period": "ANNUAL",
+    "accession": "0000037996-26-000015",
+    "form": "10-K",
+    "filed_date": "2026-02-11",
+    "concept_or_section": "Net income",
+    "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2025, \"period_end\": \"2025-12-31\", \"period_start\": \"2025-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"coverage\": \"deterministic_source_set\", \"fiscal_year\": 2025}, \"selection\": null, \"source_reference_ids\": [\"sha256:9fc7f567ee31f33b929df0694303cc3e5522c88e7afb25640fe347d2250c80d6\", \"sha256:4fe37d81a86951f5d28883627e2c475f7ec5085ba2deb3a165ecd3b6d1bbb3f2\", \"sha256:5a7fd6bdf110f3429e0cee5ebf349b6e59d8e3789cbb05a52827afc195d02ec4\"]}",
+    "confidence": "",
+    "notes": "Source-rebuilt native result; exact measurement dates are retained. ProfitLoss may include non-controlling interest. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+    "company_id": "ford_motor_company",
+    "result_id": "sha256:89f9cc9df7dc78e52fcd0a97eb580afa3d793c787e65cc6500529f8a2d4662e7",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/profitloss-note-20261013/state/updates/B04/results/6a2db7a33fd34949a47538166743fa33",
+    "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+    "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+    "period_role": "REQUESTED_RESULT",
+    "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+    "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+    "defect_holds": "[]",
+    "requested_in_latest_execution": "True"
+  },
+  "result_files_unchanged": 7,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "reference_comment": 6144895876,
+  "business_value_not_changed": true
+}
