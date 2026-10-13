@@ -1,0 +1,55 @@
+test_actual_runner_keeps_all_prior_selectors_order_and_material_shards (tests.test_selector_registry.SelectorRegistryTest.test_actual_runner_keeps_all_prior_selectors_order_and_material_shards) ... ok
+test_duplicate_of_existing_selector_is_rejected (tests.test_selector_registry.SelectorRegistryTest.test_duplicate_of_existing_selector_is_rejected) ... ERROR
+test_duplicates_across_feature_files_or_suites_are_rejected (tests.test_selector_registry.SelectorRegistryTest.test_duplicates_across_feature_files_or_suites_are_rejected) ... ERROR
+test_missing_or_malformed_declaration_cannot_look_like_no_tests (tests.test_selector_registry.SelectorRegistryTest.test_missing_or_malformed_declaration_cannot_look_like_no_tests) ... ERROR
+test_two_independent_feature_files_are_both_consumed_in_stable_order (tests.test_selector_registry.SelectorRegistryTest.test_two_independent_feature_files_are_both_consumed_in_stable_order) ... ERROR
+
+======================================================================
+ERROR: test_duplicate_of_existing_selector_is_rejected (tests.test_selector_registry.SelectorRegistryTest.test_duplicate_of_existing_selector_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-feature-test-registration/SEC_metrics/tests/test_selector_registry.py", line 47, in test_duplicate_of_existing_selector_is_rejected
+    with self.assertRaises(ValueError):self.load(directory,existing_fast=('tests.one',))
+                                       ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-feature-test-registration/SEC_metrics/tests/test_selector_registry.py", line 14, in load
+    from test_selector_registry import load_feature_selectors
+ModuleNotFoundError: No module named 'test_selector_registry'
+
+======================================================================
+ERROR: test_duplicates_across_feature_files_or_suites_are_rejected (tests.test_selector_registry.SelectorRegistryTest.test_duplicates_across_feature_files_or_suites_are_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-feature-test-registration/SEC_metrics/tests/test_selector_registry.py", line 41, in test_duplicates_across_feature_files_or_suites_are_rejected
+    with self.assertRaises(ValueError):self.load(directory)
+                                       ~~~~~~~~~^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-feature-test-registration/SEC_metrics/tests/test_selector_registry.py", line 14, in load
+    from test_selector_registry import load_feature_selectors
+ModuleNotFoundError: No module named 'test_selector_registry'
+
+======================================================================
+ERROR: test_missing_or_malformed_declaration_cannot_look_like_no_tests (tests.test_selector_registry.SelectorRegistryTest.test_missing_or_malformed_declaration_cannot_look_like_no_tests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-feature-test-registration/SEC_metrics/tests/test_selector_registry.py", line 28, in test_missing_or_malformed_declaration_cannot_look_like_no_tests
+    with self.assertRaises(ValueError):self.load(directory/'missing')
+                                       ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-feature-test-registration/SEC_metrics/tests/test_selector_registry.py", line 14, in load
+    from test_selector_registry import load_feature_selectors
+ModuleNotFoundError: No module named 'test_selector_registry'
+
+======================================================================
+ERROR: test_two_independent_feature_files_are_both_consumed_in_stable_order (tests.test_selector_registry.SelectorRegistryTest.test_two_independent_feature_files_are_both_consumed_in_stable_order)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-feature-test-registration/SEC_metrics/tests/test_selector_registry.py", line 22, in test_two_independent_feature_files_are_both_consumed_in_stable_order
+    self.assertEqual(self.load(directory),{'fast':('tests.one','tests.two'),
+                     ~~~~~~~~~^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-feature-test-registration/SEC_metrics/tests/test_selector_registry.py", line 14, in load
+    from test_selector_registry import load_feature_selectors
+ModuleNotFoundError: No module named 'test_selector_registry'
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.009s
+
+FAILED (errors=4)
+{"allowed_skips": 0, "errors": 4, "failures": 0, "run": 5, "skip_reasons": [], "skipped": 0, "tests": ["tests.test_selector_registry"]}

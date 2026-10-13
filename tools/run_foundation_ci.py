@@ -48,7 +48,7 @@ def run_fast_suite(selected):
     stream = io.StringIO(); start = time.monotonic()
     with redirect_stdout(stream), redirect_stderr(stream):
         result = unittest.TextTestRunner(stream=stream, verbosity=1).run(suite)
-    return {'return_code': 0 if result.wasSuccessful() else 1,
+    return {'return_code': 0 if result.wasSuccessful() and result.testsRun > 0 and not result.skipped else 1,
             'duration_seconds': time.monotonic()-start,
             'test_count': result.testsRun,
             'failures': [{'test': str(t), 'traceback': error} for t,error in result.failures],
@@ -67,7 +67,7 @@ def run_fast_suite(selected):
     stream = io.StringIO(); start = time.monotonic()
     with redirect_stdout(stream), redirect_stderr(stream):
         result = unittest.TextTestRunner(stream=stream, verbosity=1).run(suite)
-    return {'return_code': 0 if result.wasSuccessful() else 1,
+    return {'return_code': 0 if result.wasSuccessful() and result.testsRun > 0 and not result.skipped else 1,
             'duration_seconds': time.monotonic()-start,
             'test_count': result.testsRun,
             'failures': [{'test': str(t), 'traceback': error} for t,error in result.failures],
@@ -86,7 +86,7 @@ def run_fast_suite(selected):
     stream = io.StringIO(); start = time.monotonic()
     with redirect_stdout(stream), redirect_stderr(stream):
         result = unittest.TextTestRunner(stream=stream, verbosity=1).run(suite)
-    return {'return_code': 0 if result.wasSuccessful() else 1,
+    return {'return_code': 0 if result.wasSuccessful() and result.testsRun > 0 and not result.skipped else 1,
             'duration_seconds': time.monotonic()-start,
             'test_count': result.testsRun,
             'failures': [{'test': str(t), 'traceback': error} for t,error in result.failures],
