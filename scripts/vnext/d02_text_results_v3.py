@@ -280,11 +280,18 @@ def select_d02_page_furniture(*, proposal, document):
     note_titles = {" ".join(h['text'].split()).casefold()
                    for ref in proposal['note_references']
                    for h in ref['heading_candidates']}
+    note_ends = {r['end_block_exclusive'] for ref in proposal['note_references']
+                 if ref['status']=='LOCATED_NOTE_RANGE'
+                 for r in ref['range_candidates']}
     furniture = set()
     for i,block in enumerate(blocks):
         text = " ".join(block['text'].split()).casefold()
         continued = re.fullmatch(r'(.+?)\s*\(continued\)',text)
-        ordinary_note = block.get('emphasized') and _NOTE_HEADING.match(text)
+        # A following note can close an already located reference range.
+        # The generic numbered-heading pattern also accepts ordinary legal
+        # subsections; they are not evidence of a financial-note boundary.
+        ordinary_note = (i in note_ends and block.get('emphasized')
+                         and re.match(r'^note\s+',text) and _NOTE_HEADING.match(text))
         if (text not in note_titles and not ordinary_note
                 and not (continued and continued[1].rstrip() in note_titles)):
             continue
@@ -363,7 +370,8 @@ def _annual_document(*, source, blob, raw, target, filing):
 
 def prepare_business_text_sources(*, metric_id, target, source_references, raw_blobs,
                                   raw_bytes_by_id, source_filings,
-                                  d02_category_policy=None, d02_page_furniture=False):
+                                  d02_category_policy=None, d02_page_furniture=False,
+                                  d02_saved_reviews=None):
     """Rebuild an ordinary annual anchor and all supported disclosure excerpts.
 
     Input discovery and request-proof admission belong to the existing normal
@@ -373,6 +381,8 @@ def prepare_business_text_sources(*, metric_id, target, source_references, raw_b
     _target(metric_id, target)
     _need(type(d02_page_furniture) is bool and (not d02_page_furniture or metric_id=='D02'),
           'TEXT_V2_D02_PAGE_FURNITURE_SCOPE_INVALID')
+    _need(d02_saved_reviews is None or metric_id=='D02',
+          'TEXT_V2_D02_SAVED_REVIEW_SCOPE_INVALID')
     d02_select = None
     if d02_category_policy is not None:
         from .ordinary_d02_item8_v1 import POLICY as D02_V1_POLICY
@@ -477,9 +487,13 @@ def prepare_business_text_sources(*, metric_id, target, source_references, raw_b
             coverage['d02_page_furniture'] = proposal.get('d02_page_furniture', {
                 'policy':'D02_PAGE_NUMBER_CONTEXT_V1','removed_blocks':[]})
         coverage["coverage_hash"] = content_hash(value=coverage); coverages[annual_id] = coverage
-    return {"metric_id": metric_id, "documents": documents, "coverages": coverages,
+    prepared = {"metric_id": metric_id, "documents": documents, "coverages": coverages,
             "proposals": proposals, "source_references": sources,
             "capability_status": "SOURCE_TEXT_READY", "capability_gaps": []}
+    if d02_saved_reviews is not None:
+        from .d02_reviewed_source import apply_saved_reviews
+        return apply_saved_reviews(prepared=prepared,target=target,reviews=d02_saved_reviews)
+    return prepared
 
 
 def validate_deterministic_candidate_shape(*, candidate):

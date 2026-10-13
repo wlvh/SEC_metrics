@@ -166,16 +166,20 @@ def _export_current(program, work, output, company, key, environment, processing
 
 def run_local(*, company_id, work_dir, output_dir, period='latest-complete-fy',
               metric_ids=None, max_sec_requests=120, sec_allowance=120, source_root=None,
-              fiscal_year_start=None, fiscal_year_end=None, saved_call_package=None):
+              fiscal_year_start=None, fiscal_year_end=None, saved_call_package=None,
+              saved_legal_reviews=None):
     """One finite invocation, not a scheduler or authorization to publish."""
     need(saved_call_package is None or period == 'fiscal-years' and source_root is not None
          and metric_ids is not None and 'D04' in metric_ids,
          'LOCAL_SAVED_CALL_PACKAGE_REQUIRES_EXPLICIT_HISTORY_D04')
+    need(saved_legal_reviews is None or period=='fiscal-years' and source_root is not None
+         and metric_ids is not None and 'D02' in metric_ids,
+         'LOCAL_SAVED_LEGAL_REVIEWS_REQUIRES_EXPLICIT_HISTORY_D02')
     if period == 'fiscal-years':
         return _run_saved_history(company_id=company_id, source_root=source_root,
             work_dir=work_dir, output_dir=output_dir, metric_ids=metric_ids,
             fiscal_year_start=fiscal_year_start, fiscal_year_end=fiscal_year_end,
-            saved_call_package=saved_call_package)
+            saved_call_package=saved_call_package,saved_legal_reviews=saved_legal_reviews)
     need(period == 'latest-complete-fy', 'LOCAL_PERIOD_NOT_IMPLEMENTED')
     need(fiscal_year_start is None and fiscal_year_end is None,
          'LOCAL_HISTORY_ARGUMENTS_REQUIRE_FISCAL_YEARS')
@@ -347,7 +351,8 @@ def run_local(*, company_id, work_dir, output_dir, period='latest-complete-fy',
 
 
 def _run_saved_history(*, company_id, source_root, work_dir, output_dir, metric_ids,
-                       fiscal_year_start, fiscal_year_end, saved_call_package=None):
+                       fiscal_year_start, fiscal_year_end, saved_call_package=None,
+                       saved_legal_reviews=None):
     """Select saved issuer years; the shared company controller owns processing.
 
     Historical acquisition and unsupported families retain their existing
@@ -404,6 +409,13 @@ def _run_saved_history(*, company_id, source_root, work_dir, output_dir, metric_
     need('D04' not in selected or saved_call_package is not None,
          'LOCAL_HISTORY_D04_SAVED_PACKAGE_REQUIRED')
     d04_factory = historical_d04_factory(saved_call_package=saved_call_package) if 'D04' in selected else None
+    d02_factory=None;d02_files=();d02_inputs=()
+    if saved_legal_reviews is not None:
+        from .historical_d02_case import historical_d02_factory,PROCESSING_FILES as d02_files,saved_review_input_paths
+        need(fiscal_year_start==fiscal_year_end,'LOCAL_D02_SAVED_REVIEWS_REQUIRE_ONE_PERIOD')
+        d02_factory=historical_d02_factory(saved_review_root=saved_legal_reviews)
+        d02_inputs=saved_review_input_paths(saved_review_root=saved_legal_reviews,company_id=company_id)
+        received.add('D02')
     from .company_current_records import run_saved_company
     range_factories = {}
     range_files = ()
@@ -418,7 +430,8 @@ def _run_saved_history(*, company_id, source_root, work_dir, output_dir, metric_
         return run_saved_company(company_id=company_id, source_root=source_root,
             work_dir=work_dir, output_dir=output_dir, metric_ids=selected,
             fiscal_years=list(range(fiscal_year_start, fiscal_year_end+1)),
-            case_factories={m: (d04_factory if m == 'D04' else
+            case_factories={m: (d02_factory if m=='D02' else
+                               d04_factory if m == 'D04' else
                                prepare_historical_e01_year_case if m in e01_metrics else
                                prepare_historical_auditor_year_case if m in auditor_metrics else
                                range_factories[m] if m in range_factories else
@@ -437,7 +450,8 @@ def _run_saved_history(*, company_id, source_root, work_dir, output_dir, metric_
                                prepare_historical_liquidity_year_case if m in liquidity_metrics else
                                prepare_historical_lodging_year_case if m in SUPPORTED_METRICS
                                else prepare_historical_statement_year_case) for m in selected if m in received},
-            processing_files_by_metric={m: (d04_files if m == 'D04' else
+            processing_files_by_metric={m: (d02_files if m=='D02' else
+                                            d04_files if m == 'D04' else
                                             e01_files if m in e01_metrics else
                                             auditor_files if m in auditor_metrics else
                                             tuple(dict.fromkeys((*paired_revenue_files,*range_files))) if m == 'B02' else
@@ -457,8 +471,9 @@ def _run_saved_history(*, company_id, source_root, work_dir, output_dir, metric_
                                             liquidity_files if m in liquidity_metrics else
                                             HISTORICAL_LODGING_PROCESSING_FILES if m in SUPPORTED_METRICS
                                             else processing_files_for_statement_metric(m)) for m in selected if m in received},
-            processing_inputs_by_metric=({'D04': (Path(saved_call_package).expanduser().resolve(),)}
-                                        if 'D04' in selected else None))
+            processing_inputs_by_metric=({**({'D04': (Path(saved_call_package).expanduser().resolve(),)}
+                                        if 'D04' in selected else {}),
+                                        **({'D02':d02_inputs} if d02_factory is not None else {})} or None))
     return run_saved_company(company_id=company_id, source_root=source_root,
         work_dir=work_dir, output_dir=output_dir, metric_ids=selected,
         fiscal_years=list(range(fiscal_year_start, fiscal_year_end+1)),
