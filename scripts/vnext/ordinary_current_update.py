@@ -97,6 +97,9 @@ def _configuration(source, company, metric):
     if metric == 'A13':
         from .current_geography_case import PROCESSING_FILES
         paths.update(PROCESSING_FILES)
+    if metric in {'B04','B07'}:
+        from .current_statement_metric_case import PROCESSING_FILES
+        paths.update(PROCESSING_FILES)
     if metric == 'C04':
         from .current_auditor_case import PROCESSING_FILES
         paths.update(PROCESSING_FILES)

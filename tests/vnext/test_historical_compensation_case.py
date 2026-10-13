@@ -106,6 +106,43 @@ class HistoricalCompensationAdapterTest(TestCase):
                 self.assertIs(error,caught.exception)
                 table.assert_not_called()
 
+    def test_alternative_inline_prefix_and_native_fact_without_context_do_not_enter_sct(self):
+        from vnext import historical_compensation_case as cases
+        from vnext.deterministic_router import DeterministicRouterError, parse_accession_xbrl_source
+        annual = {'entity':'1048286','table_input':{'target_period':{'fiscal_year':2021,
+            'period_start':'2021-01-01','period_end':'2021-12-31'}}}
+        originals = (
+            b'<html xmlns:alt="http://www.xbrl.org/2013/inlineXBRL"><body><alt:nonFraction name="ecd:PeoTotalCompAmt" contextRef="missing">100</alt:nonFraction></body></html>',
+            b'<html xmlns:i="http://www.xbrl.org/2008/inlineXBRL"><body><i:nonNumeric name="ecd:PeoName" contextRef="missing">Person</i:nonNumeric></body></html>',
+            b'<html xmlns:alt="http://www.xbrl.org/2013/inlineXBRL"><body><alt:nonFraction>100</alt:nonFraction></body></html>',
+            b'<nonFraction xmlns="http://www.xbrl.org/2013/inlineXBRL">100</nonFraction>',
+            b'<xbrli:xbrl><ecd:PeoTotalCompAmt contextRef="missing">100</ecd:PeoTotalCompAmt></xbrli:xbrl>',
+        )
+        for raw in originals:
+            with self.subTest(raw=raw):
+                with self.assertRaisesRegex(DeterministicRouterError, 'no contexts') as parsed:
+                    parse_accession_xbrl_source(raw_bytes=raw)
+                source = {'prepared_annual_input':annual,'proxy_source':{'raw_bytes':raw,
+                    'raw_blob':{},'source_reference':{}},'selection':{'selected_proxy':{}},
+                    'proxy_inventory':{}}
+                with patch.object(cases,'prepare_historical_compensation_sources',return_value=source), \
+                     patch.object(cases,'resolve_c03',side_effect=parsed.exception), \
+                     patch.object(cases,'resolve_proxy_compensation_table',
+                         side_effect=AssertionError('SCT_FALLBACK_MUST_NOT_RUN')) as table:
+                    with self.assertRaises(DeterministicRouterError) as rejected:
+                        cases.prepare_historical_compensation_year_case(repo_root=Path('/constructed'),
+                            company_id='marriott_international',metric_id='C03',fiscal_year=2021)
+                self.assertIs(parsed.exception, rejected.exception)
+                table.assert_not_called()
+
+    def test_markup_guard_does_not_treat_namespace_declarations_or_quoted_examples_as_facts(self):
+        from vnext import historical_compensation_case as cases
+        for raw in (
+                b'<html xmlns:alt="http://www.xbrl.org/2013/inlineXBRL"><body><table><tr><td>Total</td></tr></table></body></html>',
+                b'<html><!-- <ix:nonFraction> --><script>"<ix:nonNumeric>"</script><p>&lt;ix:nonFraction&gt;</p></html>'):
+            with self.subTest(raw=raw):
+                self.assertFalse(cases._proxy_has_structured_markup(raw))
+
     def test_source_preparer_retains_annual_primary_for_reporter_and_distinct_proxy(self):
         from vnext import historical_compensation_case as cases
         from unittest.mock import Mock

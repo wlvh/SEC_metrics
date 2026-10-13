@@ -1,0 +1,155 @@
+{
+  "company": "marriott_international",
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-current-statement-metrics/SEC_metrics",
+  "base_commit": "a8941ea87aa56e68706a32103fbf6fa23ca67339",
+  "results": {
+    "B04": {
+      "seconds": 1.7550056249892805,
+      "baseline_result": {
+        "company_id": "marriott_international",
+        "metric_id": "B04",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+        "spec_closure_hash": "sha256:22b0fe3ad2841f90450d503cd628fe65207ae1777968156abc13c4ee28ffb3e2",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "2601000000",
+        "unit": "USD",
+        "trace_id": "sha256:ae6f93e021ab74804830421ed23a6d2a1fd171321d8e4ae6a5c9f7681a7c4ee0",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:93e0d562375105fa889e094c463667054e32eb24406d7ea01333cc8dc6fba0ea"
+      },
+      "current_result": {
+        "company_id": "marriott_international",
+        "metric_id": "B04",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+        "spec_closure_hash": "sha256:22b0fe3ad2841f90450d503cd628fe65207ae1777968156abc13c4ee28ffb3e2",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "2601000000",
+        "unit": "USD",
+        "trace_id": "sha256:ae6f93e021ab74804830421ed23a6d2a1fd171321d8e4ae6a5c9f7681a7c4ee0",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:93e0d562375105fa889e094c463667054e32eb24406d7ea01333cc8dc6fba0ea"
+      },
+      "same_public_business_fields": true,
+      "same_result_id": true,
+      "actual_current_selection": {
+        "company_id": "marriott_international",
+        "metric_id": "B04",
+        "selection_rule": "LATEST_ORDINARY_PERIOD_IN_SAVED_SUBMISSIONS",
+        "filing": {
+          "accessionNumber": "0001048286-26-000007",
+          "filingDate": "2026-02-10",
+          "reportDate": "2025-12-31",
+          "acceptanceDateTime": "2026-02-10T18:35:55.000Z",
+          "act": "34",
+          "form": "10-K",
+          "fileNumber": "001-13881",
+          "filmNumber": "26614897",
+          "items": "",
+          "core_type": "XBRL",
+          "size": 12393244,
+          "isXBRL": 1,
+          "isInlineXBRL": 1,
+          "isXBRLNumeric": null,
+          "primaryDocument": "mar-20251231.htm",
+          "primaryDocDescription": "10-K"
+        },
+        "entity": "1048286",
+        "target_period": {
+          "fiscal_year": 2025,
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31"
+        },
+        "ordinary_annual_input_id": "sha256:e63fb12b2d32a09d3a5fe306655e1710ebd6dd898d51dd3f97e90c6504b5ddc0",
+        "current_sec_freshness_verified": false
+      }
+    },
+    "B07": {
+      "seconds": 1.7575115409999853,
+      "baseline_result": {
+        "company_id": "marriott_international",
+        "metric_id": "B07",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+        "spec_closure_hash": "sha256:0eb533e576d3bbcb418812e362d9e377373f83c76dd9bfa62ecb41d49475bb78",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "5.118665018541409147095179234",
+        "unit": "ratio",
+        "trace_id": "sha256:ba03c213d59e8fdfe5aa3d47c7956f7c20fc02ad63c3f418a88178c661c08a5b",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:5d4dc57653daa9ed6668fd22695030c33d7670c61c9681d3ec3e06f8bcc130da"
+      },
+      "current_result": {
+        "company_id": "marriott_international",
+        "metric_id": "B07",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+        "spec_closure_hash": "sha256:0eb533e576d3bbcb418812e362d9e377373f83c76dd9bfa62ecb41d49475bb78",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "5.118665018541409147095179234",
+        "unit": "ratio",
+        "trace_id": "sha256:ba03c213d59e8fdfe5aa3d47c7956f7c20fc02ad63c3f418a88178c661c08a5b",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:5d4dc57653daa9ed6668fd22695030c33d7670c61c9681d3ec3e06f8bcc130da"
+      },
+      "same_public_business_fields": true,
+      "same_result_id": true,
+      "actual_current_selection": {
+        "company_id": "marriott_international",
+        "metric_id": "B07",
+        "selection_rule": "LATEST_ORDINARY_PERIOD_IN_SAVED_SUBMISSIONS",
+        "filing": {
+          "accessionNumber": "0001048286-26-000007",
+          "filingDate": "2026-02-10",
+          "reportDate": "2025-12-31",
+          "acceptanceDateTime": "2026-02-10T18:35:55.000Z",
+          "act": "34",
+          "form": "10-K",
+          "fileNumber": "001-13881",
+          "filmNumber": "26614897",
+          "items": "",
+          "core_type": "XBRL",
+          "size": 12393244,
+          "isXBRL": 1,
+          "isInlineXBRL": 1,
+          "isXBRLNumeric": null,
+          "primaryDocument": "mar-20251231.htm",
+          "primaryDocDescription": "10-K"
+        },
+        "entity": "1048286",
+        "target_period": {
+          "fiscal_year": 2025,
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31"
+        },
+        "ordinary_annual_input_id": "sha256:e63fb12b2d32a09d3a5fe306655e1710ebd6dd898d51dd3f97e90c6504b5ddc0",
+        "current_sec_freshness_verified": false
+      }
+    }
+  },
+  "seconds": 5.2286796669941396,
+  "calls": [
+    0,
+    0,
+    0
+  ],
+  "verification": "actual saved-source cases, no persistence or formal company entry yet"
+}
