@@ -1,0 +1,104 @@
+test_prefixless_note_leading_whitespace_does_not_hide_subsection_style (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_prefixless_note_leading_whitespace_does_not_hide_subsection_style) ... 
+  test_prefixless_note_leading_whitespace_does_not_hide_subsection_style (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_prefixless_note_leading_whitespace_does_not_hide_subsection_style) (whitespace='\n') ... FAIL
+  test_prefixless_note_leading_whitespace_does_not_hide_subsection_style (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_prefixless_note_leading_whitespace_does_not_hide_subsection_style) (whitespace='\n  ') ... FAIL
+  test_prefixless_note_leading_whitespace_does_not_hide_subsection_style (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_prefixless_note_leading_whitespace_does_not_hide_subsection_style) (whitespace='&#160;') ... FAIL
+test_prefixless_real_note_boundaries_allow_independent_leading_whitespace (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_prefixless_real_note_boundaries_allow_independent_leading_whitespace) ... 
+  test_prefixless_real_note_boundaries_allow_independent_leading_whitespace (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_prefixless_real_note_boundaries_allow_independent_leading_whitespace) (first='\n', next_note='') ... FAIL
+  test_prefixless_real_note_boundaries_allow_independent_leading_whitespace (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_prefixless_real_note_boundaries_allow_independent_leading_whitespace) (first='', next_note='\n') ... FAIL
+  test_prefixless_real_note_boundaries_allow_independent_leading_whitespace (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_prefixless_real_note_boundaries_allow_independent_leading_whitespace) (first='&#160;', next_note='') ... FAIL
+  test_prefixless_real_note_boundaries_allow_independent_leading_whitespace (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_prefixless_real_note_boundaries_allow_independent_leading_whitespace) (first='', next_note='&#160;') ... FAIL
+
+======================================================================
+FAIL: test_prefixless_note_leading_whitespace_does_not_hide_subsection_style (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_prefixless_note_leading_whitespace_does_not_hide_subsection_style) (whitespace='\n')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_text_results_v2.py", line 80, in test_prefixless_note_leading_whitespace_does_not_hide_subsection_style
+    self.assertEqual('REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE',
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     proposal['note_references'][0]['status'])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE' != 'LOCATED_NOTE_RANGE'
+- REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE
++ LOCATED_NOTE_RANGE
+
+
+======================================================================
+FAIL: test_prefixless_note_leading_whitespace_does_not_hide_subsection_style (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_prefixless_note_leading_whitespace_does_not_hide_subsection_style) (whitespace='\n  ')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_text_results_v2.py", line 80, in test_prefixless_note_leading_whitespace_does_not_hide_subsection_style
+    self.assertEqual('REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE',
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     proposal['note_references'][0]['status'])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE' != 'LOCATED_NOTE_RANGE'
+- REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE
++ LOCATED_NOTE_RANGE
+
+
+======================================================================
+FAIL: test_prefixless_note_leading_whitespace_does_not_hide_subsection_style (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_prefixless_note_leading_whitespace_does_not_hide_subsection_style) (whitespace='&#160;')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_text_results_v2.py", line 80, in test_prefixless_note_leading_whitespace_does_not_hide_subsection_style
+    self.assertEqual('REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE',
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     proposal['note_references'][0]['status'])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE' != 'LOCATED_NOTE_RANGE'
+- REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE
++ LOCATED_NOTE_RANGE
+
+
+======================================================================
+FAIL: test_prefixless_real_note_boundaries_allow_independent_leading_whitespace (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_prefixless_real_note_boundaries_allow_independent_leading_whitespace) (first='\n', next_note='')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_text_results_v2.py", line 101, in test_prefixless_real_note_boundaries_allow_independent_leading_whitespace
+    self.assertEqual('LOCATED_NOTE_RANGE', proposal['note_references'][0]['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'LOCATED_NOTE_RANGE' != 'REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE'
+- LOCATED_NOTE_RANGE
++ REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE
+
+
+======================================================================
+FAIL: test_prefixless_real_note_boundaries_allow_independent_leading_whitespace (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_prefixless_real_note_boundaries_allow_independent_leading_whitespace) (first='', next_note='\n')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_text_results_v2.py", line 101, in test_prefixless_real_note_boundaries_allow_independent_leading_whitespace
+    self.assertEqual('LOCATED_NOTE_RANGE', proposal['note_references'][0]['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'LOCATED_NOTE_RANGE' != 'REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE'
+- LOCATED_NOTE_RANGE
++ REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE
+
+
+======================================================================
+FAIL: test_prefixless_real_note_boundaries_allow_independent_leading_whitespace (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_prefixless_real_note_boundaries_allow_independent_leading_whitespace) (first='&#160;', next_note='')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_text_results_v2.py", line 101, in test_prefixless_real_note_boundaries_allow_independent_leading_whitespace
+    self.assertEqual('LOCATED_NOTE_RANGE', proposal['note_references'][0]['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'LOCATED_NOTE_RANGE' != 'REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE'
+- LOCATED_NOTE_RANGE
++ REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE
+
+
+======================================================================
+FAIL: test_prefixless_real_note_boundaries_allow_independent_leading_whitespace (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_prefixless_real_note_boundaries_allow_independent_leading_whitespace) (first='', next_note='&#160;')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_text_results_v2.py", line 101, in test_prefixless_real_note_boundaries_allow_independent_leading_whitespace
+    self.assertEqual('LOCATED_NOTE_RANGE', proposal['note_references'][0]['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'LOCATED_NOTE_RANGE' != 'REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE'
+- LOCATED_NOTE_RANGE
++ REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE
+
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.023s
+
+FAILED (failures=7)

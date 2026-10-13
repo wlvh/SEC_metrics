@@ -1,0 +1,219 @@
+{
+  "elapsed_seconds": 5.313155916985124,
+  "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+  "company_id": "salesforce",
+  "run_id": "20261013T171428Z-876c4831",
+  "status": "FLOW_COMPLETED",
+  "selected_metrics": [
+    "B04"
+  ],
+  "metrics": [
+    {
+      "metric_id": "B04",
+      "status": "CANDIDATE_READY",
+      "attempt_id": "d42c5ea41fb5477caf0b3121c77e97be",
+      "version": "85c0ef06b8ff4bbd878aaf2823174dfd",
+      "result_id": "sha256:765d46c26c4f18020494fa8d185cdf8318a6af76babfa0b45dfd297c41768eac",
+      "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b04-salesforce-20261014/task/company-state/updates/B04/results/85c0ef06b8ff4bbd878aaf2823174dfd",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "result_reason_code": "PASS",
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "defect_holds": [],
+      "read_result_id": "sha256:765d46c26c4f18020494fa8d185cdf8318a6af76babfa0b45dfd297c41768eac",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b04-salesforce-20261014/task/company-state/updates/B04/results/85c0ef06b8ff4bbd878aaf2823174dfd",
+      "program_version": {
+        "commit": "c25872ee388c933b697d9d3a9764e5eb7d1859e3",
+        "has_uncommitted_changes": true
+      }
+    }
+  ],
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b04-salesforce-20261014/task/sources",
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics",
+  "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b04-salesforce-20261014/task/company-state",
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b04-salesforce-20261014/output/20261013T171428Z-876c4831",
+  "source_mode": "ONLINE_DISCOVERY_WITH_ORDINARY_RECORDS",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false,
+  "discovery": {
+    "status": "SOURCES_READY_FOR_SELECTED_METRICS",
+    "filing": {
+      "accessionNumber": "0001108524-26-000060",
+      "filingDate": "2026-03-02",
+      "reportDate": "2026-01-31",
+      "acceptanceDateTime": "2026-03-02T21:24:59.000Z",
+      "act": "34",
+      "form": "10-K",
+      "fileNumber": "001-32224",
+      "filmNumber": "26708076",
+      "items": "",
+      "core_type": "XBRL",
+      "size": 14681239,
+      "isXBRL": 1,
+      "isInlineXBRL": 1,
+      "isXBRLNumeric": null,
+      "primaryDocument": "crm-20260131.htm",
+      "primaryDocDescription": "10-K"
+    },
+    "metric_ids": [
+      "B04"
+    ],
+    "metric_limitations": [],
+    "all_39_sources_proven": false
+  },
+  "simulated_sec_claims": 5,
+  "execution_mode": "RECORDED_TEST_ONLY",
+  "unknown_capture_ordinal": null,
+  "source_capture_receipts": [
+    {
+      "record_type": "ORDINARY_COMPANY_SEC_RECEIPT",
+      "intent_id": "sha256:b884d1f916ba05898dbc814c557d20f66f9e26d1764815598f035e69d52b77ce",
+      "execution_mode": "RECORDED_TEST_ONLY",
+      "actual_sec_egress_count": 0,
+      "automatic_retry_count": 0,
+      "status": "SUCCEEDED",
+      "stop_reason": "",
+      "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b04-salesforce-20261014/task/sources",
+      "ledger_row_index": 0,
+      "ledger_row": {
+        "timestamp_utc": "2026-10-13T17:14:24.793870+00:00",
+        "method": "GET",
+        "source_url": "https://data.sec.gov/submissions/CIK0001108524.json",
+        "status_code": "200",
+        "purpose": "RECORDED_TEST_ONLY_ORDINARY_COMPANY",
+        "repo_relative_path": "evidence/request_attempts/fe/fec572bf941ad9aa543f5aa82c563227a0409486a12f0e1fad9a6e7fde59a911/CIK0001108524.json",
+        "headers_repo_relative_path": "evidence/request_attempts/fe/fec572bf941ad9aa543f5aa82c563227a0409486a12f0e1fad9a6e7fde59a911/CIK0001108524.json.ee80c01a8f04e37b0682e450022caf640208ac14992a7f87161bceb0fc85dc41.headers.json",
+        "content_length": "156365",
+        "content_sha256": "fec572bf941ad9aa543f5aa82c563227a0409486a12f0e1fad9a6e7fde59a911",
+        "accession": "",
+        "document_name": "CIK0001108524.json",
+        "user_agent": "axaxl 12@qq.com",
+        "retry_attempt": "0",
+        "error": ""
+      },
+      "receipt_id": "sha256:0bd712fed41ad02e44276f6dd538e4c5c8c672915487968c65bfa402a9d47dc7"
+    },
+    {
+      "record_type": "ORDINARY_COMPANY_SEC_RECEIPT",
+      "intent_id": "sha256:1c49d4762e4906c4733a6d209f2f9e05af9d1991677876cd509c0c1d894fae3c",
+      "execution_mode": "RECORDED_TEST_ONLY",
+      "actual_sec_egress_count": 0,
+      "automatic_retry_count": 0,
+      "status": "SUCCEEDED",
+      "stop_reason": "",
+      "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b04-salesforce-20261014/task/sources",
+      "ledger_row_index": 1,
+      "ledger_row": {
+        "timestamp_utc": "2026-10-13T17:14:25.822425+00:00",
+        "method": "GET",
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001108524.json",
+        "status_code": "200",
+        "purpose": "RECORDED_TEST_ONLY_ORDINARY_COMPANY",
+        "repo_relative_path": "evidence/request_attempts/07/07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82/CIK0001108524.json",
+        "headers_repo_relative_path": "evidence/request_attempts/07/07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82/CIK0001108524.json.f486c10d7e854fafc446c566537c6cf068f42daed807536721c6a1263d6cf511.headers.json",
+        "content_length": "4664726",
+        "content_sha256": "07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+        "accession": "",
+        "document_name": "CIK0001108524.json",
+        "user_agent": "axaxl 12@qq.com",
+        "retry_attempt": "0",
+        "error": ""
+      },
+      "receipt_id": "sha256:62797cce6dd9d2b4c70b8d19fc62790a16401e2f445ef300589d0e3336b1c151"
+    },
+    {
+      "record_type": "ORDINARY_COMPANY_SEC_RECEIPT",
+      "intent_id": "sha256:763e71665e48d8d45f47fa5c6e0c31886decf9dcb4ad2898d052487efe9cd5a6",
+      "execution_mode": "RECORDED_TEST_ONLY",
+      "actual_sec_egress_count": 0,
+      "automatic_retry_count": 0,
+      "status": "SUCCEEDED",
+      "stop_reason": "",
+      "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b04-salesforce-20261014/task/sources",
+      "ledger_row_index": 2,
+      "ledger_row": {
+        "timestamp_utc": "2026-10-13T17:14:26.830636+00:00",
+        "method": "GET",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm",
+        "status_code": "200",
+        "purpose": "RECORDED_TEST_ONLY_ORDINARY_COMPANY",
+        "repo_relative_path": "evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm",
+        "headers_repo_relative_path": "evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm.87b90591f417bb4719e0f1a1904a4207642f2c2ad24a25994bbed18fa94e3f7a.headers.json",
+        "content_length": "2570278",
+        "content_sha256": "d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+        "accession": "0001108524-26-000060",
+        "document_name": "crm-20260131.htm",
+        "user_agent": "axaxl 12@qq.com",
+        "retry_attempt": "0",
+        "error": ""
+      },
+      "receipt_id": "sha256:340e065c6707c838fbf32439bec37733edbb7bb376f9f8702949a3c36f95f257"
+    },
+    {
+      "record_type": "ORDINARY_COMPANY_SEC_RECEIPT",
+      "intent_id": "sha256:baef3ec0f0dd4b9355304d9301c05fdd10d98abdc05c6dad379c5f43064555a7",
+      "execution_mode": "RECORDED_TEST_ONLY",
+      "actual_sec_egress_count": 0,
+      "automatic_retry_count": 0,
+      "status": "SUCCEEDED",
+      "stop_reason": "",
+      "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b04-salesforce-20261014/task/sources",
+      "ledger_row_index": 3,
+      "ledger_row": {
+        "timestamp_utc": "2026-10-13T17:14:27.833157+00:00",
+        "method": "GET",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/index.json",
+        "status_code": "200",
+        "purpose": "RECORDED_TEST_ONLY_ORDINARY_COMPANY",
+        "repo_relative_path": "evidence/request_attempts/32/3247fcbfa4c72cd5ee810c5375242ad5acdfbfeb57fed9ce9d9fa4456f468a78/index.json",
+        "headers_repo_relative_path": "evidence/request_attempts/32/3247fcbfa4c72cd5ee810c5375242ad5acdfbfeb57fed9ce9d9fa4456f468a78/index.json.75ff062bd085028220c2127ed42d4e7628d69b8c17e12b1bc1675a5aeba52144.headers.json",
+        "content_length": "10559",
+        "content_sha256": "3247fcbfa4c72cd5ee810c5375242ad5acdfbfeb57fed9ce9d9fa4456f468a78",
+        "accession": "0001108524-26-000060",
+        "document_name": "index.json",
+        "user_agent": "axaxl 12@qq.com",
+        "retry_attempt": "0",
+        "error": ""
+      },
+      "receipt_id": "sha256:8bc3b4447b97059457025683d3c40bedf2a9238b6185ada6e2421bdfecdff0c3"
+    },
+    {
+      "record_type": "ORDINARY_COMPANY_SEC_RECEIPT",
+      "intent_id": "sha256:30787fa6f4e57655ce7249e0460517b98cf47a7f1ff5933b7848c62bcd52431e",
+      "execution_mode": "RECORDED_TEST_ONLY",
+      "actual_sec_egress_count": 0,
+      "automatic_retry_count": 0,
+      "status": "SUCCEEDED",
+      "stop_reason": "",
+      "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b04-salesforce-20261014/task/sources",
+      "ledger_row_index": 4,
+      "ledger_row": {
+        "timestamp_utc": "2026-10-13T17:14:28.841914+00:00",
+        "method": "GET",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131_htm.xml",
+        "status_code": "200",
+        "purpose": "RECORDED_TEST_ONLY_ORDINARY_COMPANY",
+        "repo_relative_path": "evidence/request_attempts/ad/ad3ca1752bb082f9d6f8f4bad260a0c377b66bf1c13edafc08070933524e3d24/crm-20260131_htm.xml",
+        "headers_repo_relative_path": "evidence/request_attempts/ad/ad3ca1752bb082f9d6f8f4bad260a0c377b66bf1c13edafc08070933524e3d24/crm-20260131_htm.xml.11dc9a0da4d71dae2e8db5c015a51bb55fe2cf4df7013469af9e1c9650143a93.headers.json",
+        "content_length": "2292241",
+        "content_sha256": "ad3ca1752bb082f9d6f8f4bad260a0c377b66bf1c13edafc08070933524e3d24",
+        "accession": "0001108524-26-000060",
+        "document_name": "crm-20260131_htm.xml",
+        "user_agent": "axaxl 12@qq.com",
+        "retry_attempt": "0",
+        "error": ""
+      },
+      "receipt_id": "sha256:9c22e29d7da60541fce2fcdf5d27135d5403bfb8db356e412e70ddfab52f9234"
+    }
+  ]
+}

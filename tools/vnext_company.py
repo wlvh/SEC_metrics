@@ -22,10 +22,10 @@ def main(argv=None):
     run.add_argument('--fiscal-year-end', type=int)
     run.add_argument('--work-dir', required=True, type=Path)
     run.add_argument('--output-dir', required=True, type=Path)
-    run.add_argument('--metric', action='append', help='Select metrics; online call-context supports B01/B02, retained native summary lists configured statuses')
+    run.add_argument('--metric', action='append', help='Select metrics; online call-context supports B01/B02 and explicit B04, retained native summary lists configured statuses')
     run.add_argument('--source-root', type=Path,
                      help='Use saved sources and ordinary records; no online discovery, capture or AI calls')
-    run.add_argument('--call-context', type=Path, help='Existing scoped SEC ledger context for the lightweight online B01/B02 path; no new allowance')
+    run.add_argument('--call-context', type=Path, help='Existing scoped SEC ledger context for the lightweight online B01/B02/B04 path; no new allowance')
     run.add_argument('--saved-call-package', type=Path,
                      help='Original read-only D04 answer archive; requires saved-source historical mode and explicit D04')
     run.add_argument('--saved-legal-reviews',type=Path,
@@ -35,8 +35,8 @@ def main(argv=None):
     acquire = sub.add_parser('acquire', help='Only discover/capture sources; never calculate or call AI')
     acquire.add_argument('--company', required=True)
     acquire.add_argument('--work-dir', required=True, type=Path)
-    acquire.add_argument('--call-context', type=Path, help='Existing scoped ledger for ordinary B01/B02 acquisition only')
-    acquire.add_argument('--metric', action='append', help='Online source scope, B01/B02 only')
+    acquire.add_argument('--call-context', type=Path, help='Existing scoped ledger for ordinary B01/B02 or explicit B04 acquisition only')
+    acquire.add_argument('--metric', action='append', help='Online source scope: B01/B02 defaults, explicit B04')
     acquire.add_argument('--max-sec-requests', type=int, default=120)
     acquire.add_argument('--sec-allowance', type=int, default=120)
     sources = sub.add_parser('sources', help='Read-only selected annual B01/B02/B03 or E01 source preflight; no fetching or calculation')

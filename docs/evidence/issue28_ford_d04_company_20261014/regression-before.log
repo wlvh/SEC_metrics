@@ -1,0 +1,39 @@
+test_failed_only_required_group_is_still_incomplete (tests.vnext.test_current_d04_company.CurrentD04SavedRequestSelectionTest.test_failed_only_required_group_is_still_incomplete) ... ok
+test_historical_failed_overlap_does_not_join_complete_successful_partition (tests.vnext.test_current_d04_company.CurrentD04SavedRequestSelectionTest.test_historical_failed_overlap_does_not_join_complete_successful_partition) ... ERROR
+
+======================================================================
+ERROR: test_historical_failed_overlap_does_not_join_complete_successful_partition (tests.vnext.test_current_d04_company.CurrentD04SavedRequestSelectionTest.test_historical_failed_overlap_does_not_join_complete_successful_partition)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/profitloss-note/SEC_metrics/tests/vnext/test_current_d04_company.py", line 322, in test_historical_failed_overlap_does_not_join_complete_successful_partition
+    self.assertEqual(['one','two'],self.select())
+                                   ~~~~~~~~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/profitloss-note/SEC_metrics/tests/vnext/test_current_d04_company.py", line 317, in select
+    try:current.prepare_current_d04_case(source_root=root,company_id='sample',ledger=ledger)
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/profitloss-note/SEC_metrics/scripts/vnext/current_d04_result.py", line 74, in prepare_current_d04_case
+    validate_request_partition(source,ordered)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1247, in _execute_mock_call
+    result = effect(*args, **kwargs)
+  File "/Users/lyuhongwang/.codex/worktrees/profitloss-note/SEC_metrics/tests/vnext/test_current_d04_company.py", line 311, in inspect
+    validate(source,actual)
+    ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/profitloss-note/SEC_metrics/scripts/vnext/native_unit_index.py", line 131, in validate_request_partition
+    need(type(actual_requests) is list and len(actual_requests)==len(base), 'NATIVE_REQUEST_PARTITION_INCOMPLETE')
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/profitloss-note/SEC_metrics/scripts/vnext/native_unit_index.py", line 26, in need
+    raise ValueError(reason)
+ValueError: NATIVE_REQUEST_PARTITION_INCOMPLETE
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.182s
+
+FAILED (errors=1)
+{"allowed_skips": 0, "errors": 1, "failures": 0, "run": 2, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_current_d04_company.CurrentD04SavedRequestSelectionTest"]}

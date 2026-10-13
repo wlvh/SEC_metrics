@@ -280,3 +280,47 @@ class D04SavedResponseOnlyBoundaryTest(unittest.TestCase):
         from vnext import continuous_semantic_calls as calls
         request=calls.SemanticRequest(calls._FACTORY,b'{}',b'{}',b'{}',b'{}',{}, {})
         self.assertFalse(request.d04_saved_response_only)
+
+
+class CurrentD04SavedRequestSelectionTest(unittest.TestCase):
+    def select(self, *, second_succeeded=True):
+        import json
+        from contextlib import nullcontext
+        from types import SimpleNamespace
+        from vnext import current_d04_result as current, continuous_semantic_calls as calls
+        from vnext import native_unit_index as index
+        source={'semantic_source_id':'source','required_unit_ids':['a','b']}
+        requests=[{'source_id':'source','request_id':'failed-old','units':[{'unit_id':'a'}]},
+                  {'source_id':'source','request_id':'one','units':[{'unit_id':'a'}]},
+                  {'source_id':'source','request_id':'two','units':[{'unit_id':'b'}]}]
+        statuses=['FAILED_TERMINAL','SUCCEEDED','SUCCEEDED' if second_succeeded else 'FAILED_TERMINAL']
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder);rows=[]
+            for ordinal,(request,status) in enumerate(zip(requests,statuses),1):
+                path=root/'calls'/('%04d'%ordinal);path.mkdir(parents=True)
+                (path/'semantic-request.json').write_text(json.dumps(request))
+                (path/'source.json').write_text(json.dumps(dict(source,company_id='sample',metric_id='D04')))
+                rows.append({'ordinal':ordinal,'channel':'PROVIDER','status':status})
+            ledger=SimpleNamespace(root=root,locked=lambda:nullcontext(),snapshot=lambda:{'rows':rows})
+            template=SimpleNamespace(source_bytes=json.dumps(source).encode())
+            selected=[]
+            class StopAtPartition(Exception):pass
+            validate=index.validate_request_partition
+            def inspect(source, actual):
+                selected.extend(r['request_id'] for r in actual)
+                validate(source,actual)
+                raise StopAtPartition()
+            with patch.object(calls,'prepare_requests',return_value=[template]), \
+                 patch('vnext.capacity_update_input.source_equivalence',return_value={'same':True}), \
+                 patch.object(index,'reconstruct_requests',return_value=requests[1:]), \
+                 patch.object(index,'validate_request_partition',side_effect=inspect):
+                try:current.prepare_current_d04_case(source_root=root,company_id='sample',ledger=ledger)
+                except StopAtPartition:pass
+            return selected
+
+    def test_historical_failed_overlap_does_not_join_complete_successful_partition(self):
+        self.assertEqual(['one','two'],self.select())
+
+    def test_failed_only_required_group_is_still_incomplete(self):
+        with self.assertRaisesRegex(ValueError,'NATIVE_REQUEST_PARTITION_INCOMPLETE'):
+            self.select(second_succeeded=False)

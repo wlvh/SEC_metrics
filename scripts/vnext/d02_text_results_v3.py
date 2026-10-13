@@ -263,7 +263,7 @@ def _page_structure_furniture(blocks):
 
 _INCORPORATED_CAPTION = re.compile(r'["\u201c\u2018\']([^"\u201c\u201d\u2018\u2019\']{4,120})["\u201d\u2019\']')
 _NOTE_TITLE_PREFIX = re.compile(r'^(?:note\s+)?\(?\d{1,3}[a-z]?\)?\s*[.:\u2014\u2013-]?\s*', re.I)
-_CAPTION_SPAN = re.compile(rb'<span([^<>]*)>\s*$')
+_CAPTION_SPAN = re.compile(rb'<(?:span|p|div)([^<>]*)>\s*$')
 _CAPTION_STYLE = re.compile(rb'style="([^"]*)"')
 _QUOTED_FORM_REFERENCE = re.compile(r'\b(?:part\s+[ivx]+\s*,?\s*)?item\s+\d{1,2}[a-z]?\s*[,.:\u2014\u2013-]?\s*$', re.I)
 
@@ -323,14 +323,12 @@ def select_d02_incorporated_notes(*, proposal, document, raw_bytes):
                      'D02_INCORPORATED_CAPTION_NOT_FOUND')
         scopes = []
         repeated = Counter(_caption_text(blocks[i]['text']) for i in range(start, stop))
-        for position, begin in enumerate(headings):
-            if position + 1 < len(headings):
-                end = headings[position + 1]
-            else:
-                style = _caption_style(raw_bytes, blocks[begin])
-                end = next((i for i in range(begin + 1, stop)
-                            if _caption_like(document, blocks[i]) and repeated[_caption_text(blocks[i]['text'])] == 1
-                            and (style is None or _caption_style(raw_bytes, blocks[i]) == style)), stop)
+        for begin in headings:
+            style = _caption_style(raw_bytes, blocks[begin])
+            _source_need(bool(style), 'D02_INCORPORATED_CAPTION_FORMAT_NOT_PROVEN')
+            end = next((i for i in range(begin + 1, stop)
+                        if _caption_like(document, blocks[i]) and repeated[_caption_text(blocks[i]['text'])] == 1
+                        and _caption_style(raw_bytes, blocks[i]) == style), stop)
             scopes.append({**note, 'section_id': note['section_id'] + '_CAPTION_' + str(begin),
                            'start_block': begin, 'end_block_exclusive': end,
                            'scope_relation': 'INCORPORATED_CAPTION', 'caption_text': blocks[begin]['text']})

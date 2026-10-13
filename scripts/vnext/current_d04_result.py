@@ -64,7 +64,10 @@ def prepare_current_d04_case(*, source_root, company_id, ledger=None):
     source,equivalence=next(iter(sources.values()))
     requests={}
     for row in rows:
-        if row['channel']!='PROVIDER':continue
+        # Failed older request variants remain history, not members of a
+        # saved-response partition. Missing successful coverage still fails
+        # validate_request_partition and the complete-assessment gate below.
+        if row['channel']!='PROVIDER' or row['status']!='SUCCEEDED':continue
         path=ledger.root/'calls'/('%04d'%row['ordinal'])
         if not (path/'semantic-request.json').exists():continue
         request=strict_json_file(path=path/'semantic-request.json')

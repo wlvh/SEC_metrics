@@ -21,7 +21,9 @@ from .normal_annual_input import _registry_rows, select_filing
 from .normal_governance_input import _filings, _history_index, history_body_alignment
 from .normal_source_requirements import _instance_names
 
-ONLINE_METRICS = frozenset({'B01', 'B02'})
+ONLINE_METRICS = frozenset({'B01', 'B02', 'B04'})
+# Preserve existing no-metric invocations; B04 requires explicit selection.
+DEFAULT_ONLINE_METRICS = frozenset({'B01', 'B02'})
 
 
 def _need(condition, reason):
@@ -224,7 +226,7 @@ def acquire_financial(capture, company, metrics):
 
 def run_online_company(*, company_id, work_dir, output_dir, call_context, metric_ids=None,max_sec_requests=20, calculate=True):
     from .company_current_records import run_saved_company
-    metrics=list(metric_ids or sorted(ONLINE_METRICS))
+    metrics=list(metric_ids or sorted(DEFAULT_ONLINE_METRICS))
     _need(metrics and len(metrics)==len(set(metrics)) and set(metrics)<=ONLINE_METRICS,'METRIC_NOT_CONNECTED')
     _need(type(max_sec_requests)is int and 0<=max_sec_requests<=120,'INVOCATION_LIMIT_INVALID')
     work,outputs=absolute(work_dir),absolute(output_dir)
