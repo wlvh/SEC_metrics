@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "<stdin>", line 11, in <module>
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-nim/SEC_metrics/tools/vnext_company.py", line 103, in main
+    result = run_local(company_id=args.company, work_dir=args.work_dir, output_dir=args.output_dir,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-nim/SEC_metrics/scripts/vnext/company_local.py", line 180, in run_local
+    return run_saved_company(company_id=company_id, source_root=source_root,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-nim/SEC_metrics/scripts/vnext/company_current_records.py", line 186, in run_saved_company
+    temporary.write_bytes(raw)
+  File "/opt/homebrew/Cellar/python@3.12/3.12.10/Frameworks/Python.framework/Versions/3.12/lib/python3.12/pathlib.py", line 1036, in write_bytes
+    with self.open(mode='wb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.10/Frameworks/Python.framework/Versions/3.12/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-nim/SEC_metrics/tests/vnext/test_financial_candidates.py", line 33, in opening
+    raise AssertionError("Answer/fixture read: " + text)
+AssertionError: Answer/fixture read: /private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-nim-e00ixjm7/output/20261009T172839Z-c8cb56f1/.metrics_matrix.csv

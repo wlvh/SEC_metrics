@@ -57,6 +57,18 @@ def _need(condition, reason, category="SOURCE_INTEGRITY_ERROR"):
         raise FinancialResultError(reason, category)
 
 
+def _current_company_registration(*, data_root, company_id):
+    """Source selection and installed applicability must name the same company."""
+    from .company_registry import _registry_rows
+    selected = [r for r in _registry_rows(repo_root=Path(data_root)) if r['company_id']==company_id]
+    installed = [r for r in _registry_rows(repo_root=ROOT) if r['company_id']==company_id]
+    _need(len(selected)==len(installed)==1,'NORMAL_FINANCIAL_COMPANY_REGISTRATION_MISSING')
+    # Business registration fields, not full file bytes or cosmetic names.
+    fields=('primary_cik','related_ciks','roles','industry_profile','entity_continuity_status')
+    _need(all(selected[0].get(k)==installed[0].get(k) for k in fields),
+          'NORMAL_FINANCIAL_COMPANY_REGISTRATION_DIFFERS')
+
+
 def _installed_rule(*, repo_root, metric_id):
     _need(metric_id in SPEC_PATHS, "FINANCIAL_METRIC_UNSUPPORTED", "IMPLEMENTATION_GAP")
     path = SPEC_PATHS[metric_id]
@@ -88,9 +100,13 @@ def _installed_rule(*, repo_root, metric_id):
     return path, spec, trait_hashes
 
 
-def _ordinary_sources(*, repo_root, company_id):
+def _ordinary_sources(*, repo_root, company_id, ordinary_records=False):
     try:
-        prepared = prepare_saved_annual_input(repo_root=repo_root, company_id=company_id)
+        if ordinary_records:
+            from .normal_annual_input_v2 import prepare_saved_annual_input as current_input
+            prepared = current_input(repo_root=repo_root,company_id=company_id,ordinary_registered=True)
+        else:
+            prepared = prepare_saved_annual_input(repo_root=repo_root, company_id=company_id)
     except BatchWorkflowError as error:
         raise FinancialResultError("NORMAL_FINANCIAL_SOURCE_PROVENANCE_FAILED:" + str(error)) from error
     except (AnnualInputError, AnnualUpdateError) as error:
@@ -100,7 +116,11 @@ def _ordinary_sources(*, repo_root, company_id):
         raise FinancialResultError(reason, category) from error
     _need(len(prepared["source_proofs"]) == 3, "NORMAL_FINANCIAL_SOURCE_SET_INCOMPLETE")
     try:
-        admission = verify_saved_source_proofs(data_root=repo_root, proofs=prepared["source_proofs"])
+        if ordinary_records:
+            from .saved_source_checks import verify_saved_inputs
+            admission = verify_saved_inputs(data_root=repo_root,proofs=prepared['source_proofs'])
+        else:
+            admission = verify_saved_source_proofs(data_root=repo_root, proofs=prepared["source_proofs"])
     except NormalSourceAuthorityError as error:
         raise FinancialResultError("NORMAL_FINANCIAL_SOURCE_ADMISSION_FAILED:" + str(error)) from error
     records, references, raw = [], [], []
@@ -191,16 +211,24 @@ def _failure_classification(fact):
     return "IMPLEMENTATION_GAP"
 
 
-def resolve_ordinary_financial_metric(*, repo_root: Path, company_id: str, metric_id: str) -> dict:
+def resolve_ordinary_financial_metric(*, repo_root: Path, company_id: str, metric_id: str,
+                                    ordinary_records=False) -> dict:
     """Create native records from current saved inputs with no Run or writes.
 
     A PUBLISHED field on the Calculator's metric record is its native result
     state. It does not mean the result has entered a publication or active Run.
     The returned filing period is a separate reporting group from actual
     quarter/instant measurement targets.
+    ordinary_records explicitly uses installed program rules and current
+    fiscal-label/source checks for an external data-only input root. The old
+    default source admission and return encoding remain unchanged.
     """
-    path, spec, trait_hashes = _installed_rule(repo_root=repo_root, metric_id=metric_id)
-    prepared, admission, source_records, references, bundle = _ordinary_sources(repo_root=repo_root, company_id=company_id)
+    _need(type(ordinary_records) is bool, 'NORMAL_FINANCIAL_RECORD_MODE_INVALID')
+    if ordinary_records:
+        _current_company_registration(data_root=repo_root,company_id=company_id)
+    path, spec, trait_hashes = _installed_rule(repo_root=ROOT if ordinary_records else repo_root, metric_id=metric_id)
+    prepared, admission, source_records, references, bundle = _ordinary_sources(
+        repo_root=repo_root,company_id=company_id,ordinary_records=ordinary_records)
     traits = repository_company_traits(repo_root=ROOT, company_id=company_id)
     applicable = metric_is_applicable(applicability=spec["compiled"]["applicability"], traits=traits)
     fact, passed, value, reason = None, False, None, "TRAIT_NOT_APPLICABLE"
@@ -220,7 +248,7 @@ def resolve_ordinary_financial_metric(*, repo_root: Path, company_id: str, metri
         "source_admission": admission, "source_set_manifest": bundle["source_set_manifest"],
         "source_reference_ids": [r["source_reference_id"] for r in references], "trait_authority_sha256": trait_hashes,
         "company_traits": traits, "spec_path": path, "spec_closure_hash": spec["spec_closure_hash"],
-        "spec_file_sha256": sha256_file(path=repo_root / path), "filing_period": annual,
+        "spec_file_sha256": sha256_file(path=(ROOT if ordinary_records else repo_root) / path), "filing_period": annual,
         "actual_target": target, "actual_target_period": actual, "measurement_time_basis": time_basis,
         "source_fact_hash": content_hash(value=fact) if fact is not None else None,
         "source_semantics_passed": passed, "reason_code": reason, "production_authorized": False}

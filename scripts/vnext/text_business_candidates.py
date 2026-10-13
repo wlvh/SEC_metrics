@@ -160,7 +160,65 @@ def _ranges(document, required):
     return ranges, sorted(set(reasons))
 
 
-def _note_references(document, ranges):
+class _NoteHeadingFormats(_Blocks):
+    """Observe heading structure in the same source without changing text IDs."""
+
+    def __init__(self, text):
+        super().__init__(text)
+        self.formats = {}
+        self.format_stack = []
+        self.part_format = None
+
+    def handle_starttag(self, tag, attrs):
+        depth = len(self.stack)
+        super().handle_starttag(tag, attrs)
+        if len(self.stack) > depth:
+            values = dict(attrs)
+            self.format_stack.append((tag, " ".join(values.get("class", "").split()),
+                                      " ".join(values.get("style", "").casefold().split())))
+
+    def handle_endtag(self, tag):
+        super().handle_endtag(tag)
+        del self.format_stack[len(self.stack):]
+
+    def _part(self, raw):
+        first = not self.parts
+        super()._part(raw)
+        if first and self.parts:
+            levels = [entry[0] for entry in self.format_stack if entry[0] in
+                      {"h1", "h2", "h3", "h4", "h5", "h6"}]
+            if levels:
+                self.part_format = ("heading", levels[-1])
+            else:
+                starts = [i for i, entry in enumerate(self.format_stack)
+                          if entry[0] in {"p", "div", "td", "th", "li"}]
+                self.part_format = tuple(self.format_stack[starts[-1]:]) if starts else None
+
+    def _flush(self):
+        count = len(self.blocks)
+        super()._flush()
+        if len(self.blocks) > count:
+            block = self.blocks[-1]
+            if _NOTE_HEADING.match(block["text"]) or _PATTERNS["note_identifier"].fullmatch(block["text"]):
+                self.formats[block["start"]] = self.part_format
+        self.part_format = None
+
+
+def _note_heading_formats(document, raw_bytes):
+    if raw_bytes is None:
+        return {}
+    _need(type(raw_bytes) is bytes and len(raw_bytes) == document["byte_length"]
+          and "sha256:" + sha256_bytes(content=raw_bytes) == document["raw_asset_id"],
+          "TEXT_BUSINESS_HEADING_SOURCE_IDENTITY_CONFLICT")
+    text = raw_bytes.decode("utf-8-sig")
+    parser = _NoteHeadingFormats(text)
+    parser.feed(text); parser.close(); parser._flush()
+    offsets = _byte_offsets(text, parser.formats)
+    bom = 3 if raw_bytes.startswith(b"\xef\xbb\xbf") else 0
+    return {offsets[start] + bom: form for start, form in parser.formats.items()}
+
+
+def _note_references(document, ranges, raw_bytes=None):
     item3 = [r for r in ranges if r["section_id"] == "ITEM_3"]
     references = {}
     for scope in item3:
@@ -185,6 +243,7 @@ def _note_references(document, ranges):
             headings.append({"number": match.group(1).upper(), "start": i, "heading_end": end_index,
                              "explicit_prefix": bool(_PATTERNS["explicit_note_prefix"].match(block["text"]))})
     result = []
+    formats = None
     for number, reference_blocks in sorted(references.items()):
         exact = [h for h in headings if h["number"] == number]
         parent = re.sub(r"[A-Z]+$", "", number)
@@ -200,6 +259,15 @@ def _note_references(document, ranges):
             # Do not silently choose the earlier one and truncate disclosure.
             if not h["explicit_prefix"] and len(possible) > 1:
                 continue
+            if not h["explicit_prefix"] and possible:
+                following = next(other for other in headings if other["start"] == possible[0])
+                if not following["explicit_prefix"]:
+                    if formats is None:
+                        formats = _note_heading_formats(document, raw_bytes)
+                    current_format = formats.get(blocks[h["start"]]["raw_start_byte"])
+                    next_format = formats.get(blocks[following["start"]]["raw_start_byte"])
+                    if current_format is None or current_format != next_format:
+                        continue
             possible.extend(r["end_block_exclusive"] for r in ranges if r["section_id"] == "ITEM_8"
                             and r["start_block"] <= h["start"] < r["end_block_exclusive"])
             end = min(possible) if possible else None
@@ -215,11 +283,11 @@ def _note_references(document, ranges):
     return result
 
 
-def legal_risk_candidates(*, document):
+def legal_risk_candidates(*, document, raw_bytes=None):
     """Scan complete local legal/risk ranges; preserve ambiguity in interpretation."""
     _check_document(document)
     ranges, reasons = _ranges(document, ["ITEM_1A", "ITEM_3", "ITEM_8"])
-    references = _note_references(document, ranges)
+    references = _note_references(document, ranges, raw_bytes)
     for reference in references:
         if reference["status"] == "LOCATED_NOTE_RANGE":
             note = reference["range_candidates"][0]
@@ -338,7 +406,7 @@ def prepare_business_candidates(*, raw_bytes, raw_blob, source_reference, compan
     if filing["form"] in {"10-K", "10-K/A"}:
         annual = build_text_document(raw_bytes=raw_bytes, raw_blob=raw_blob, source_reference=source_reference,
             expected_company_id=company_id, expected_cik=cik, expected_period_end=filing["reportDate"])
-        proposals["legal_regulatory"] = legal_risk_candidates(document=annual)
+        proposals["legal_regulatory"] = legal_risk_candidates(document=annual, raw_bytes=raw_bytes)
         proposals["D04"] = going_concern_candidates(document=annual)
         proposals["reported_facts"] = reported_legal_fact_candidates(**common)
     body = {"record_type": "TEXT_BUSINESS_CANDIDATE_BUNDLE", "company_id": company_id,

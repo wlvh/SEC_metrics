@@ -36,6 +36,8 @@ EXTRACTED_BRIDGE = 'bf0f171024b086f4f85b6c8d81b31255c652fc76d70b51a92e929b971aa1
 # Neither change alters E01's historical case, record writer or renderer.
 E01_BEFORE_STORE = 'f7229fa090da9558f8fbbe759491671bc0adbf668e193e303fbbc42206947681'
 E01_AFTER_STORES = frozenset({
+    # main d661 plus A04-only NIM dispatch; E01 writer/case/renderer unchanged.
+    '72dcb1c08eef4cd28e82344188505577b524dae0ae65d4e02febc2f6f9a63d6b',
     'd2cee7e3527cd99eb15a653b6d9778357acced0345af172a64a3c37a96f74ae2',
     '9f7de93d41929669c7f08f394425c1e3ad181896bdde3fa6d079ca3924272d21',
 })

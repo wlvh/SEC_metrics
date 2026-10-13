@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-nim/SEC_metrics/docs/evidence/issue28_current_nim_20261010/verify_main_receiving.py", line 22, in <module>
+    'seconds':prior['elapsed_seconds'], 'time_scope':'CLI internally recorded elapsed_seconds; outer timing unavailable',
+              ~~~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'elapsed_seconds'

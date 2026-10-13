@@ -1,0 +1,176 @@
+{
+  "code_commit": "a541a5b606379a478198a4d41190fd5088db52f9",
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-current-nim/SEC_metrics",
+  "state_root": "/private/tmp/issue28-current-nim-complete-ee8p63he/state",
+  "source_root": "/private/tmp/issue28-current-nim-complete-ee8p63he/source",
+  "operations": [
+    {
+      "name": "final-revalidation",
+      "seconds": 8.794317374937236,
+      "exit_code": 2,
+      "report": {
+        "elapsed_seconds": 8.524800957879052,
+        "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+        "company_id": "jpmorgan_chase",
+        "run_id": "20261009T201448Z-046b47b2",
+        "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+        "selected_metrics": [
+          "A04"
+        ],
+        "metrics": [
+          {
+            "metric_id": "A04",
+            "status": "CANDIDATE_READY",
+            "attempt_id": "b55fcc32109e4efd9e6647daa755da8e",
+            "version": "d60ae48de99f45b5bdea6bb57beea3eb",
+            "result_id": "sha256:b0cc257695b62ebdca2e14b9f733040499b171e2b6598253a161bce9d5d2db64",
+            "result_root": "/private/tmp/issue28-current-nim-complete-ee8p63he/state/updates/A04/results/d60ae48de99f45b5bdea6bb57beea3eb",
+            "calculation_performed": true,
+            "new_candidate_created": true,
+            "result_reason_code": "PASS",
+            "source_observation_errors": [
+              {
+                "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000001961725000332/0000019617-25-000332.hdr.sgml",
+                "status_code": "0",
+                "error": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)>",
+                "content_sha256": "",
+                "document_name": "0000019617-25-000332.hdr.sgml"
+              }
+            ],
+            "new_calls": {
+              "provider": 0,
+              "paid": 0,
+              "sec": 0
+            },
+            "production_authorized": false,
+            "defect_holds": [],
+            "read_result_id": "sha256:b0cc257695b62ebdca2e14b9f733040499b171e2b6598253a161bce9d5d2db64",
+            "record_root": "/private/tmp/issue28-current-nim-complete-ee8p63he/state/updates/A04/results/d60ae48de99f45b5bdea6bb57beea3eb",
+            "program_version": {
+              "commit": "a541a5b606379a478198a4d41190fd5088db52f9",
+              "has_uncommitted_changes": false
+            }
+          }
+        ],
+        "source_root": "/private/tmp/issue28-current-nim-complete-ee8p63he/source",
+        "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-current-nim/SEC_metrics",
+        "record_root": "/private/tmp/issue28-current-nim-complete-ee8p63he/state",
+        "output_root": "/private/tmp/issue28-current-nim-complete-ee8p63he/final-outputs/20261009T201448Z-046b47b2",
+        "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false
+      }
+    },
+    {
+      "name": "final-forbidden-repeat",
+      "seconds": 0.22086966689676046,
+      "exit_code": 2,
+      "report": {
+        "elapsed_seconds": 0.09852862497791648,
+        "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+        "company_id": "jpmorgan_chase",
+        "run_id": "20261009T201457Z-d68fdd0f",
+        "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+        "selected_metrics": [
+          "A04"
+        ],
+        "metrics": [
+          {
+            "metric_id": "A04",
+            "status": "NO_SOURCE_CONTENT_CHANGE",
+            "attempt_id": "d7373c3a036c44a28d6f9ea092a8239f",
+            "version": "d60ae48de99f45b5bdea6bb57beea3eb",
+            "result_id": "sha256:b0cc257695b62ebdca2e14b9f733040499b171e2b6598253a161bce9d5d2db64",
+            "result_root": "/private/tmp/issue28-current-nim-complete-ee8p63he/state/updates/A04/results/d60ae48de99f45b5bdea6bb57beea3eb",
+            "result_reason_code": "PASS",
+            "raw_input_unchanged": true,
+            "calculation_performed": false,
+            "new_candidate_created": false,
+            "source_observation_errors": [
+              {
+                "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000001961725000332/0000019617-25-000332.hdr.sgml",
+                "status_code": "0",
+                "error": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)>",
+                "content_sha256": "",
+                "document_name": "0000019617-25-000332.hdr.sgml"
+              }
+            ],
+            "new_calls": {
+              "provider": 0,
+              "paid": 0,
+              "sec": 0
+            },
+            "production_authorized": false,
+            "defect_holds": [],
+            "read_result_id": "sha256:b0cc257695b62ebdca2e14b9f733040499b171e2b6598253a161bce9d5d2db64",
+            "record_root": "/private/tmp/issue28-current-nim-complete-ee8p63he/state/updates/A04/results/d60ae48de99f45b5bdea6bb57beea3eb",
+            "program_version": {
+              "commit": "a541a5b606379a478198a4d41190fd5088db52f9",
+              "has_uncommitted_changes": false
+            }
+          }
+        ],
+        "source_root": "/private/tmp/issue28-current-nim-complete-ee8p63he/source",
+        "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-current-nim/SEC_metrics",
+        "record_root": "/private/tmp/issue28-current-nim-complete-ee8p63he/state",
+        "output_root": "/private/tmp/issue28-current-nim-complete-ee8p63he/final-outputs/20261009T201457Z-d68fdd0f",
+        "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false
+      }
+    },
+    {
+      "name": "independent-results",
+      "seconds": 0.11988358292728662,
+      "exit_code": 0,
+      "report": {
+        "elapsed_seconds": 0.005705167073756456,
+        "record_type": "ORDINARY_COMPANY_RESULT_VIEW_V1",
+        "company_id": "jpmorgan_chase",
+        "source_root": "/private/tmp/issue28-current-nim-complete-ee8p63he/source",
+        "metrics": [
+          {
+            "metric_id": "A04",
+            "result_id": "sha256:b0cc257695b62ebdca2e14b9f733040499b171e2b6598253a161bce9d5d2db64",
+            "period_start": "2025-01-01",
+            "period_end": "2025-12-31",
+            "fiscal_year": 2025,
+            "value": "0.025",
+            "unit": "ratio",
+            "publication": "PUBLISHED",
+            "quality": "EXACT",
+            "reason_code": "PASS",
+            "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+            "defect_holds": [],
+            "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+            "requested_in_latest_execution": true,
+            "record_root": "/private/tmp/issue28-current-nim-complete-ee8p63he/state/updates/A04/results/d60ae48de99f45b5bdea6bb57beea3eb"
+          }
+        ],
+        "source_freshness": "NOT_CHECKED_BY_SAVED_READER",
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "output_root": "/private/tmp/issue28-current-nim-complete-ee8p63he/final-reader"
+      }
+    }
+  ],
+  "old_result_files": 6,
+  "old_result_files_unchanged": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

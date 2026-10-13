@@ -104,7 +104,7 @@ class BankScopeDeiReleaseTest(unittest.TestCase):
         fallback.assert_not_called()
 
     def test_selected_case_set_does_not_expand_default_or_bypass_factory(self):
-        for metric in ('A04', 'A09', 'A11'):
+        for metric in ('A09', 'A11'):
             self.assertIn(metric, EXPLICIT_CASE_METRICS)
             self.assertNotIn(metric, CURRENT_METRICS)
             with tempfile.TemporaryDirectory() as tmp, self.subTest(metric=metric):
@@ -112,6 +112,14 @@ class BankScopeDeiReleaseTest(unittest.TestCase):
                     update.run_once(state_root=Path(tmp)/'state', source_root=Path(tmp)/'source',
                         company_id='constructed', metric_id=metric, fiscal_year=2021)
                 self.assertFalse((Path(tmp)/'state').exists())
+
+    def test_received_current_nim_still_requires_factory_for_selected_year(self):
+        self.assertIn('A04',CURRENT_METRICS)
+        with tempfile.TemporaryDirectory() as tmp:
+            with self.assertRaisesRegex(ValueError,'SELECTED_PERIOD_REQUIRES_CASE_FACTORY'):
+                update.run_once(state_root=Path(tmp)/'state',source_root=Path(tmp)/'source',
+                    company_id='constructed',metric_id='A04',fiscal_year=2021)
+            self.assertFalse((Path(tmp)/'state').exists())
 
 
 if __name__ == '__main__':

@@ -15,7 +15,8 @@ from .annual_sources import _rows
 from .canonical import content_hash, sha256_file, strict_json_file
 from .normal_source_authority import ROOT
 from .ordinary_saved_result import (METRIC_IDS, SAVED_METRIC_IDS, EXPLICIT_CASE_METRICS,
-    CURRENT_E01_SPEC_PATH, current_e01_scope, create_saved_result, read_saved_result, save_calculated_case)
+    CURRENT_FINANCIAL_METRICS, CURRENT_E01_SPEC_PATH, current_e01_scope,
+    create_saved_result, read_saved_result, save_calculated_case)
 from .traits import repository_company_ciks
 
 
@@ -43,8 +44,9 @@ def _configuration(source, company, metric):
     # These files belong solely to the lodging producer. The zero-AI Spec
     # set never prepares a lodging case; unrelated edits must not recalculate
     # B01/B02 or their other supported deterministic neighbours.
-    if metric in METRIC_IDS:
-        paths.add('scripts/vnext/zero_ai_r2.py')
+    if metric in METRIC_IDS or metric in CURRENT_FINANCIAL_METRICS:
+        if metric in METRIC_IDS:
+            paths.add('scripts/vnext/zero_ai_r2.py')
         paths.difference_update({'scripts/vnext/normal_lodging_results.py',
             'scripts/vnext/lodging_table_source.py', 'config/ordinary_lodging_table_v1.json',
             'catalog/ordinary_lodging/B10.md', 'catalog/ordinary_lodging/B11.md'})
@@ -126,6 +128,21 @@ def _configuration(source, company, metric):
         paths.update('scripts/vnext/'+name+'.py' for name in (
             'ordinary_da_scope_v1','ordinary_b03_input_scope','xbrl_namespace_policy','b03_depreciation_scope',
             'b03_contract_amortization_scope','financial_structured','text_results_v2','reported_monetary_literal'))
+    if metric in CURRENT_FINANCIAL_METRICS:
+        paths.update('scripts/vnext/'+name+'.py' for name in (
+            'financial_results','financial_relationships','financial_duration',
+            'composite_scope','constraints','r4_task_contracts','table_task_contracts',
+            'annual_update','normal_annual_input_v2','fiscal_year_labels',
+            'ordinary_source_authority','text_results_v2','text_coverage'))
+        paths.update({'catalog/r4_normal/A04_net_interest_margin.md',
+            'catalog/r4_v2/A04_net_interest_margin.md','catalog/table_task_contracts.json',
+            'config/r4_task_contracts_v2.json','docs/evidence/issue_28_prb_policy_revision.json',
+            'config/normal_fiscal_year_labels_v1.json','catalog/r6/text_results_v2_policy.json'})
+        # The existing task-catalog inspector actually compiles all six
+        # retained task Specs before selecting NIM; no authority recursion.
+        paths.update('catalog/r4_v2/'+name+'.md' for name in (
+            'A03_liquidity_coverage_ratio','A09_nonperforming_loan_ratio',
+            'A11_assets_under_management','A12_trading_exposure','A13_geographic_exposure'))
     if metric == 'D04':
         from .ordinary_d04_saved_route import processing_paths
         paths.update(processing_paths())
@@ -148,12 +165,13 @@ def _configuration(source, company, metric):
 def _same_processing_configuration(previous, current):
     """Source checking/control versions are recorded, not extraction inputs.
 
-    These two modules do not select, interpret or calculate a metric. Their
-    source checks run again before every reuse. Producer/parser/Spec/prompt,
+    These control/checking modules do not select, interpret or calculate a
+    metric. Source checks run again before every reuse. Producer/parser/Spec/prompt,
     registry and actual source differences remain part of the comparison.
     """
     checking = {'scripts/vnext/ordinary_current_update.py',
-                'scripts/vnext/request_bindings.py'}
+                'scripts/vnext/request_bindings.py',
+                'scripts/vnext/ordinary_update_compatibility.py'}
     def business(config):
         return {**config,'processing_files':{path:digest for path,digest in config.get('processing_files',{}).items()
                                             if path not in checking}}
@@ -368,7 +386,8 @@ def run_once(*, state_root, source_root, company_id, metric_id, shared_input_roo
                         'result_reason_code':saved['result'].get('reason_code'),
                         'raw_input_unchanged':True,'calculation_performed':False,'new_candidate_created':False,
                         'source_check_versions':{path:configuration.get('processing_files',{}).get(path)
-                            for path in ('scripts/vnext/ordinary_current_update.py','scripts/vnext/request_bindings.py')},
+                            for path in ('scripts/vnext/ordinary_current_update.py','scripts/vnext/request_bindings.py',
+                                         'scripts/vnext/ordinary_update_compatibility.py')},
                         'source_observation_errors':source_errors,
                         'new_calls':{'provider':0,'paid':0,'sec':0},'production_authorized':False}
                     if fiscal_year is not None:report['requested_fiscal_year']=fiscal_year
