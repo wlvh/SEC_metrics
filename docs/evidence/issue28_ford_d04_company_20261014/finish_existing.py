@@ -1,0 +1,16 @@
+import ast,csv,hashlib,json,socket,subprocess,sys,time
+from pathlib import Path
+ROOT=Path(sys.argv[1]);OUT=Path(__file__).resolve().parent
+source=ast.parse((OUT/'run.py').read_text());runner=next(ast.literal_eval(n.value) for n in source.body if isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id=='runner' for t in n.targets))
+def hashes(folder):return {str(p.relative_to(folder)):hashlib.sha256(p.read_bytes()).hexdigest() for p in folder.rglob('*') if p.is_file()}
+before=hashes(OUT/'state');start=time.perf_counter()
+read=subprocess.run([sys.executable,'-c',runner,str(ROOT),'results','--company','ford_motor_company','--state-root',str(OUT/'state'),'--output-root',str(OUT/'independent-results-confirmed')],capture_output=True,text=True,cwd='/private/tmp')
+seconds=time.perf_counter()-start;(OUT/'read-confirmed.json').write_text(read.stdout);(OUT/'read-confirmed.stderr').write_text(read.stderr)
+assert read.returncode==0,(read.returncode,read.stderr);assert before==hashes(OUT/'state')
+first=json.loads((OUT/'first.json').read_text());repeat=json.loads((OUT/'repeat-forbidden-factory.json').read_text());m=first['metrics'][0];saved=Path(m['result_root'])
+manifest=json.loads((saved/'manifest.json').read_text());records=[json.loads(s) for s in (saved/'records.jsonl').read_text().splitlines()];result=next(r for r in records if r.get('record_type')=='METRIC_RESULT')
+assert result['result_id']==m['result_id']==repeat['metrics'][0]['result_id'];assert not repeat['metrics'][0]['calculation_performed'] and not repeat['metrics'][0]['new_candidate_created']
+rows=list(csv.DictReader((OUT/'independent-results-confirmed/metrics_matrix.csv').open()));assert len(rows)==1 and rows[0]['result_id']==m['result_id']
+files=[p for p in saved.rglob('*') if p.is_file()]
+summary={'code_root':str(ROOT),'base_main':'c25872ee388c933b697d9d3a9764e5eb7d1859e3','code_state':'named uncommitted current_d04_result status filter and two regression tests','code_files':{p:hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in ['scripts/vnext/current_d04_result.py','tests/vnext/test_current_d04_company.py']},'source_root':first['source_root'],'state_root':str(OUT/'state'),'first_seconds':first['elapsed_seconds'],'repeat_seconds':repeat['elapsed_seconds'],'read_wall_seconds':seconds,'reader_reported_seconds':json.loads(read.stdout)['elapsed_seconds'],'result_files':len(files),'result_bytes':sum(p.stat().st_size for p in files),'state_files_preserved':len(before),'result':result,'rows':rows,'manifest_period':manifest['target_period'],'response_group_ordinals':[70,*range(72,82)],'required_units':52,'initial_failures_kept':['TOKENIZER_DEPENDENCY_UNAVAILABLE','NATIVE_REQUEST_PARTITION_INCOMPLETE'],'first_driver_original_source_and_call_hash_assertions':'executed successfully before reporting-only METRIC_RESULT typo; original log retained','summary_recovery':'reads existing records only; did not invoke producer or repeat first calculation','calls':[0,0,0],'production_authorized':False}
+(OUT/'summary.json').write_text(json.dumps(summary,indent=2)+'\n');print(json.dumps({k:summary[k] for k in ['first_seconds','repeat_seconds','read_wall_seconds','result_files','result_bytes','manifest_period','calls']}))
