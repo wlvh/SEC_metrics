@@ -1,0 +1,99 @@
+{
+  "head": "2b7db30c3af7848dc62dc277ecc63ff1a01a3c34",
+  "python": "3.14.7 (main, Aug  5 2026, 10:29:49) [Clang 21.0.0 (clang-2100.1.1.101)]",
+  "repeat": {
+    "seconds": 0.6854686250153463,
+    "exit": 2
+  },
+  "repeat_met_expected_reuse": false,
+  "controlled_failure_not_financial_conclusion": true,
+  "configuration_deltas": [
+    {
+      "field": "processing_files",
+      "path": "scripts/vnext/ordinary_current_update.py",
+      "old": "c964e04f8f2b8f66bd7417df8b0e833e3f954d0c5347e98af84cd33b631e7142",
+      "current": "47fd733a1f87b9ed03ce3db6c4fbac796468c3f714e48e07381769ef286118f3"
+    },
+    {
+      "field": "processing_files",
+      "path": "scripts/vnext/ordinary_projection.py",
+      "old": "927124bb6c9b5ac9488291701dff60cf06ce6e451ec744fce3e0497e92ffca38",
+      "current": "110a8e8857203b499d3474e639aed734d2669fd947a25b9df0cf86d55c5e4f22"
+    },
+    {
+      "field": "processing_files",
+      "path": "scripts/vnext/ordinary_result_registration.py",
+      "old": "d40366a4460f7048a7a339ee288e8489a6ed9f2d856b47d916410344c6765b91",
+      "current": "8196ae9c38813ee77ee33e39a7ecb57c0fcea27855d1c34d038860d5b748a068"
+    },
+    {
+      "field": "processing_files",
+      "path": "scripts/vnext/text_results_v2.py",
+      "old": "26a0fe518cdbb76377d6afcfde82e0a886eb7e9fc730254abd875012ecf1cc93",
+      "current": "e72c1ace454ece8797731a4d06f74f2b9555cfaa28ac70494731c674761a6491"
+    },
+    {
+      "field": "declared_processing_files",
+      "path": "scripts/vnext/text_results_v2.py",
+      "old": "26a0fe518cdbb76377d6afcfde82e0a886eb7e9fc730254abd875012ecf1cc93",
+      "current": "e72c1ace454ece8797731a4d06f74f2b9555cfaa28ac70494731c674761a6491"
+    }
+  ],
+  "in_memory_only_restoration_sensitivity": {
+    "none": false,
+    "scripts/vnext/ordinary_projection.py": false,
+    "scripts/vnext/text_results_v2.py": false,
+    "scripts/vnext/ordinary_projection.py,scripts/vnext/text_results_v2.py": true
+  },
+  "read": {
+    "seconds": 0.14468900000792928,
+    "exit": 0
+  },
+  "read_preserves_state": true,
+  "result_layer_files_preserved": {
+    "updates/E01/periods/FY2023/results/473596ed52d44412ad5b6b1502d354e2/metrics_matrix.csv": "f89271e15cb5c85a015c709cbbd49a7f63098b8a8a9ea93eaef629ca44247c25",
+    "updates/E01/periods/FY2023/results/473596ed52d44412ad5b6b1502d354e2/metric_evidence.csv": "d5890c5affa63b84603efcee20665991218b44b094e60f3abba99eb96e0341c8",
+    "updates/E01/periods/FY2023/results/473596ed52d44412ad5b6b1502d354e2/records.jsonl": "f1b3d8873cfdcbcdc5ea9964b933f843bdf90f73c591ab01f2a191fd9c9a2482",
+    "updates/E01/periods/FY2023/results/473596ed52d44412ad5b6b1502d354e2/input-assessments.json": "fccace59cb7504215217d68fc6c0edc208aa9e8c66132cbeaef15f93f1c431f5",
+    "updates/E01/periods/FY2023/results/473596ed52d44412ad5b6b1502d354e2/manifest.json": "61e5d33d0c184c0ed5edb7c4d3fd11ad691c90951a440cfff2781c5172a929f5",
+    "updates/E01/periods/FY2023/results/473596ed52d44412ad5b6b1502d354e2/write.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "updates/E01/periods/FY2023/results/473596ed52d44412ad5b6b1502d354e2/receipt.json": "e2a88c8eacc091129e00b44b12c31f0e6c92fa6fc8cfbd37652dd45280f61ac6"
+  },
+  "csv_row": {
+    "company": "",
+    "cik": "",
+    "metric_id": "E01",
+    "metric_name": "",
+    "value": "",
+    "unit": "",
+    "status": "INPUT_OR_EXECUTION_FAILED",
+    "source_class": "",
+    "formula": "",
+    "period_start": "",
+    "period_end": "",
+    "fiscal_year": "2023",
+    "fiscal_period": "",
+    "accession": "",
+    "form": "",
+    "filed_date": "",
+    "concept_or_section": "",
+    "context_or_dimension": "",
+    "confidence": "",
+    "notes": "reason: FACTORY_OR_CALCULATOR_FORBIDDEN_FOR_SAVED_INPUT_REUSE:prepare_historical_e01_year_case; error_type: AssertionError",
+    "company_id": "pfizer",
+    "result_id": "",
+    "record_root": "",
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "local_metric_status": "INPUT_OR_EXECUTION_FAILED",
+    "period_role": "REQUESTED_WITHOUT_RESULT",
+    "result_validity": "NO_CURRENT_RESULT",
+    "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+    "defect_holds": "",
+    "requested_in_latest_execution": "True"
+  },
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
