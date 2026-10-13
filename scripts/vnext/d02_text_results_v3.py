@@ -19,7 +19,7 @@ from .canonical import canonical_json_bytes, content_hash, sha256_bytes, strict_
 from .records import validate_record
 from .text_business_candidates import (
     governance_source_document, board_composition_candidates, legal_risk_candidates, going_concern_candidates,
-    reported_legal_fact_candidates, _NOTE_HEADING, _check_document,
+    reported_legal_fact_candidates, _NOTE_HEADING, _FINANCIAL_HEADING, _AUDIT_HEADING, _check_document,
     _need as _source_need, _excerpt, _substantive,
 )
 from .text_coverage import build_text_document
@@ -308,6 +308,7 @@ def _lettered_note_range(document, raw_bytes, parent):
     _source_need(len(starts) == 1 and bool(starts[0][2]), reason)
     style = starts[0][2]
     siblings = [h for h in headings if h[2] == style]
+    _source_need(len(siblings) == len(headings), reason)
     letters = [h[0] for h in siblings]
     _source_need(len(siblings) >= 2 and letters ==
                  [chr(ord('A') + i) for i in range(len(siblings))], reason)
@@ -415,6 +416,12 @@ def _select_d02_auditor_reports(*, proposal, document):
                if r['status'] == 'LOCAL_REPORT_RANGE_LOCATED' and any(
                    scope['start_block'] <= r['start_block'] < r['end_block_exclusive'] <= scope['end_block_exclusive']
                    for scope in item8)]
+    # A form-item fallback can span the registrant's financial statements and
+    # notes when their captions are not emphasized. It cannot justify deleting
+    # litigation admissions as auditor text, even with a LOCATED status.
+    _source_need(all(_FINANCIAL_HEADING.match(r['closing_heading']['text'])
+                     or _AUDIT_HEADING.fullmatch(r['closing_heading']['text']) for r in reports),
+                 'D02_AUDITOR_REPORT_CLOSING_SCOPE_NOT_PROVEN')
     indexes = {i for r in reports for i in range(r['start_block'], r['end_block_exclusive'])}
     removed = [c for c in proposal['D02']['candidates']
                if c['section_id'] == 'ITEM_8' and c['block_index'] in indexes]

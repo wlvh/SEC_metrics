@@ -57,3 +57,20 @@ PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts:tools:. python3 tools/vnext_company
 ```
 
 Original wrong tax selections, overlong quotes, failed responses and spent call ownership remain. A complete matching response and legal-content review are still needed before business delivery. New SEC/provider/model0/0/0; no Ready/merge/adoption/deployment/active. Receiver combination/source recheck and new-head CI remain separate. Progress on #47.
+
+## Self-review: located report status was insufficient (2026-10-14)
+
+The first589b3f88 audit-admission change was not safe on all known sources. It treated the shared LOCAL_REPORT_RANGE_LOCATED status as sufficient proof of report ownership. Two real Lumen sources expose why this is false: the report parser skips financial captions that are not emphasized and closes the second report at Item9, beyond the statements and registrant's legal Note18. Applying the first change would remove actual litigation admissions and yield an empty remaining request pool. That intermediate output is preserved in lumen-unsafe-boundary-before.json, including the full falsely removed text. It is a program failure, not an applicable zero or business acceptance. The original589 CI remains its historical execution result and cannot establish this behavior's correctness.
+
+| FY / raw SHA | Wrong second report range | Actual next financial caption |
+| --- | --- | --- |
+| 2023 /57782a31cafe37915ffb44e2204a3a0ffa6c11674dac7c0e16baf77bbf8af7ac |980..2807 (Item9) |996, CONSOLIDATED STATEMENTS OF OPERATIONS |
+| 2024 /f49ba30f8fa1f0502dcbd84793679e66b0ca29dd4e7dc7378e236f54a1ea5297 |1064..3132 (Item9) |1081, CONSOLIDATED STATEMENTS OF OPERATIONS |
+
+FY2023 subsequent financial captions1029/1059/1114 and FY2024 captions1115/1142/1196 also have document.emphasizedFalse. FY2023 real legal blocks2613/2614/2619/2625/2626/2633/2634/2642/2643/2648, and FY2024 general legal blocks2942/2943 plus incorporated captions2947..2987/2987..2995, lie inside the wrongly wide range. First audit reports953..980 and1041..1064 end at the next report title. Original accessions are0000018926-24-000016 and0000018926-25-000010. These are the exact saved originals read,0.851879/0.959824s for the source-only inspection, not a new model or company run.
+
+The D02 admission step now refuses a report ending at a form-item fallback. Its end must be the next identified auditor or financial-statement heading before the range can exclude a candidate. Lumen's real parsed sources now return D02_AUDITOR_REPORT_CLOSING_SCOPE_NOT_PROVEN, with all document/legal text retained (changed-function checks0.032481/0.035847s). This prevents false completeness but does not finish Lumen's source processing: the public owner has confirmed responsibility for inspecting the shared report locator; no competing parser is added here. It is an implementation gap despite saved originals being available. D04 itself scans its full language source, so this D02 exclusion failure is not used to revoke unrelated original D04 records or assert a complete D04 defect.
+
+A separate unit counterexample also showed that a differently formatted final C heading could be ignored while B was incorrectly extended to the parent end. Every candidate lettered sibling must now have the same proved format, rather than silently dropping one. The terminal-style case and real fallback problem both fail before the correction. The stable fallback test explicitly supplies a constructed wrong-reader range modeled on Lumen, so it does not require the future public parser to keep failing on an unbold financial caption.
+
+Five affected modules now pass81tests/0.678s/zero skips. Pfizer's captured actual company bundle is rechecked with only these changed functions: complete proposal/request remains identical, includingd9f0139e/1605blocks,0.231133s. No company/source/factory reparse or model execution is repeated; original first-run21.562/read.135 proof keeps its named working-version scope. New Source/Model/SEC calls0/0/0. The current returned head and receiver's combined-source recheck/CI must be verified independently; the first589 green is not moved to it.

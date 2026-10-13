@@ -108,6 +108,25 @@ class TextResultV2SourceTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'D02_REVIEW_AUDITOR_BOUNDARY_NOT_PROVEN'):
                 item8_requests(prepared=prepared, target=args['target'])
 
+    def test_d02_auditor_form_end_does_not_swallow_unemphasized_financial_statements(self):
+        """Constructed bad-reader boundary based on the real Lumen failure."""
+        from unittest.mock import patch
+        from tests.vnext.test_text_business_candidates import document
+        from vnext import d02_text_results_v3 as current_core
+        closing = '<h2>Item 9. Changes in and Disagreements with Accountants</h2><p>None.</p>'
+        raw = (BODY.replace(closing, '') + closing).replace('<h2>Consolidated Balance Sheets</h2>',
+            '<p>CONSOLIDATED BALANCE SHEETS</p>')
+        args = inputs('D02', annual_body=raw)
+        doc = document(raw)
+        end = doc['sections']['ITEM_8']['candidates'][0]['end_block_exclusive']
+        start = next(b['block_index'] for b in doc['blocks']
+                     if b['text'] == 'Report of Independent Registered Public Accounting Firm')
+        wrong_reader = {'auditor_report_ranges': [{'start_block': start, 'end_block_exclusive': end,
+            'status': 'LOCAL_REPORT_RANGE_LOCATED', 'closing_heading': {'text': doc['blocks'][end]['text']}}]}
+        with patch.object(current_core, 'going_concern_candidates', return_value=wrong_reader):
+            with self.assertRaisesRegex(ValueError, 'D02_AUDITOR_REPORT_CLOSING_SCOPE_NOT_PROVEN'):
+                current_core.prepare_business_text_sources(metric_id='D02', d02_page_furniture=True, **args)
+
     def test_d02_lettered_note_keeps_nested_numbered_sections_and_full_item8_pool(self):
         from tests.vnext.test_text_business_candidates import document
         from vnext.d02_text_results_v3 import select_d02_incorporated_notes
@@ -173,6 +192,8 @@ class TextResultV2SourceTest(unittest.TestCase):
             'missing': raw.replace(heading('A. Legal Proceedings'), ''),
             'gap': raw.replace(heading('B. Guarantees'), ''),
             'different_style': raw.replace(heading('B. Guarantees'), heading('B. Guarantees', 'font-weight:bold')),
+            'different_terminal_style': raw.replace('Note 2A.', 'Note 2B.').replace(
+                heading('C. Commitments'), heading('C. Commitments', 'font-weight:bold')),
             'no_format': raw.replace(style, ''),
             'unproved': raw.replace(heading('B. Guarantees'), '').replace(heading('C. Commitments'), ''),
         }

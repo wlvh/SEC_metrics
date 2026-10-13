@@ -1,0 +1,16 @@
+test_d02_lettered_note_refuses_ambiguous_missing_and_different_style_siblings (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_d02_lettered_note_refuses_ambiguous_missing_and_different_style_siblings) ... 
+  test_d02_lettered_note_refuses_ambiguous_missing_and_different_style_siblings (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_d02_lettered_note_refuses_ambiguous_missing_and_different_style_siblings) (kind='different_terminal_style') ... FAIL
+
+======================================================================
+FAIL: test_d02_lettered_note_refuses_ambiguous_missing_and_different_style_siblings (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_d02_lettered_note_refuses_ambiguous_missing_and_different_style_siblings) (kind='different_terminal_style')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_text_results_v2.py", line 184, in test_d02_lettered_note_refuses_ambiguous_missing_and_different_style_siblings
+    with self.assertRaisesRegex(ValueError, 'D02_REFERENCED_LETTERED_SUBNOTE_NOT_MIGRATED'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.018s
+
+FAILED (failures=1)
