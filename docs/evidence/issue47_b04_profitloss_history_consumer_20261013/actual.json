@@ -1,0 +1,141 @@
+{
+  "head": "45aeab7c64ede5eb032492a0ae4cbda725b7aef1",
+  "phases": {
+    "read-before": {
+      "seconds": 0.4981798329972662,
+      "exit_code": 0
+    },
+    "first": {
+      "seconds": 15.634798875020351,
+      "exit_code": 0
+    },
+    "repeat": {
+      "seconds": 0.6726294579857495,
+      "exit_code": 0
+    },
+    "read": {
+      "seconds": 0.5073294169851579,
+      "exit_code": 0
+    }
+  },
+  "first_metric": {
+    "metric_id": "B04",
+    "status": "CANDIDATE_READY",
+    "attempt_id": "2f80df54a96d42b3b93d7d7cb1489ae6",
+    "version": "946345a518c54fdabaf66f3151fc5ae6",
+    "result_id": "sha256:89f9cc9df7dc78e52fcd0a97eb580afa3d793c787e65cc6500529f8a2d4662e7",
+    "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/statement-pilot-ford-20261009/state/updates/B04/periods/FY2025/results/946345a518c54fdabaf66f3151fc5ae6",
+    "calculation_performed": true,
+    "new_candidate_created": true,
+    "result_reason_code": "PASS",
+    "source_observation_errors": [],
+    "new_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false,
+    "requested_fiscal_year": 2025,
+    "defect_holds": [],
+    "read_result_id": "sha256:89f9cc9df7dc78e52fcd0a97eb580afa3d793c787e65cc6500529f8a2d4662e7",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/statement-pilot-ford-20261009/state/updates/B04/periods/FY2025/results/946345a518c54fdabaf66f3151fc5ae6",
+    "program_version": {
+      "commit": "45aeab7c64ede5eb032492a0ae4cbda725b7aef1",
+      "has_uncommitted_changes": true
+    }
+  },
+  "repeat_metric": {
+    "metric_id": "B04",
+    "status": "NO_SOURCE_CONTENT_CHANGE",
+    "attempt_id": "e90ab6b1915244f69462cd17f8d33f7f",
+    "version": "946345a518c54fdabaf66f3151fc5ae6",
+    "result_id": "sha256:89f9cc9df7dc78e52fcd0a97eb580afa3d793c787e65cc6500529f8a2d4662e7",
+    "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/statement-pilot-ford-20261009/state/updates/B04/periods/FY2025/results/946345a518c54fdabaf66f3151fc5ae6",
+    "result_reason_code": "PASS",
+    "raw_input_unchanged": true,
+    "calculation_performed": false,
+    "new_candidate_created": false,
+    "source_check_versions": {
+      "scripts/vnext/ordinary_current_update.py": "92b1a74127eb0a5855c174bae3896aa4487e702d49fcc6416a1a5e2ffc074caa",
+      "scripts/vnext/request_bindings.py": "d0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee",
+      "scripts/vnext/ordinary_update_compatibility.py": "dcd5f7fad86dd36fec7ffc1ce15cb274cd3670dba213777b6cdaa4a4090d80b9"
+    },
+    "source_observation_errors": [],
+    "new_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false,
+    "requested_fiscal_year": 2025,
+    "defect_holds": [],
+    "read_result_id": "sha256:89f9cc9df7dc78e52fcd0a97eb580afa3d793c787e65cc6500529f8a2d4662e7",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/statement-pilot-ford-20261009/state/updates/B04/periods/FY2025/results/946345a518c54fdabaf66f3151fc5ae6",
+    "program_version": {
+      "commit": "45aeab7c64ede5eb032492a0ae4cbda725b7aef1",
+      "has_uncommitted_changes": true
+    }
+  },
+  "first_calls": {
+    "statement": 1,
+    "calculate_metric": 0,
+    "calculate_observation_metric": 1,
+    "calculate_text_metric": 0,
+    "legal_source": 0,
+    "legal_finish": 0
+  },
+  "repeat_calls": {
+    "statement": 0,
+    "calculate_metric": 0,
+    "calculate_observation_metric": 0,
+    "calculate_text_metric": 0,
+    "legal_source": 0,
+    "legal_finish": 0
+  },
+  "csv_row": {
+    "company": "Ford Motor Company",
+    "cik": "37996",
+    "metric_id": "B04",
+    "metric_name": "Net income",
+    "value": "-8162000000",
+    "unit": "USD",
+    "status": "OK",
+    "source_class": "STD_XBRL",
+    "formula": "",
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31",
+    "fiscal_year": "2025",
+    "fiscal_period": "ANNUAL",
+    "accession": "0000037996-26-000015",
+    "form": "10-K",
+    "filed_date": "2026-02-11",
+    "concept_or_section": "Net income",
+    "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2025, \"period_end\": \"2025-12-31\", \"period_start\": \"2025-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"coverage\": \"deterministic_source_set\", \"fiscal_year\": 2025}, \"selection\": null, \"source_reference_ids\": [\"sha256:9fc7f567ee31f33b929df0694303cc3e5522c88e7afb25640fe347d2250c80d6\", \"sha256:4fe37d81a86951f5d28883627e2c475f7ec5085ba2deb3a165ecd3b6d1bbb3f2\", \"sha256:5a7fd6bdf110f3429e0cee5ebf349b6e59d8e3789cbb05a52827afc195d02ec4\"]}",
+    "confidence": "",
+    "notes": "Source-rebuilt native result; exact measurement dates are retained. ProfitLoss may include non-controlling interest. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+    "company_id": "ford_motor_company",
+    "result_id": "sha256:89f9cc9df7dc78e52fcd0a97eb580afa3d793c787e65cc6500529f8a2d4662e7",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/statement-pilot-ford-20261009/state/updates/B04/periods/FY2025/results/946345a518c54fdabaf66f3151fc5ae6",
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+    "period_role": "REQUESTED_RESULT",
+    "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+    "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+    "defect_holds": "[]",
+    "requested_in_latest_execution": "True"
+  },
+  "other_saved_rows_unchanged": 25,
+  "old_result_files_unchanged": 276,
+  "new_result_file_count": 282,
+  "reader_state_files_unchanged": 579,
+  "source_metadata_unchanged": {
+    "config/company_registry.csv": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+    "evidence/requests_log.csv": "61252ac5844ad1c5917040f753c04a7ed4f6e1d75e2fb0803804773fd6c0eef9",
+    "evidence/requests_log_manifest.json": "e91193401733b86ddc28c69cbae0debd74eeb899a328e60fcfb32532ed6a85ab"
+  },
+  "new_calls": {
+    "sec": 0,
+    "provider": 0,
+    "paid": 0
+  }
+}
