@@ -1,0 +1,21 @@
+test_d02_lone_prefixless_subsection_cannot_end_the_last_note (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_d02_lone_prefixless_subsection_cannot_end_the_last_note) ... ERROR
+
+======================================================================
+ERROR: test_d02_lone_prefixless_subsection_cannot_end_the_last_note (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_d02_lone_prefixless_subsection_cannot_end_the_last_note)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_text_results_v2.py", line 86, in test_d02_lone_prefixless_subsection_cannot_end_the_last_note
+    current_core.prepare_business_text_sources(metric_id='D02',
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+        d02_page_furniture=True, **inputs('D02', annual_body=raw))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/d02_text_results_v3.py", line 459, in prepare_business_text_sources
+    proposal = legal_risk_candidates(document=annual, raw_bytes=annual_raw)
+                                                                ^^^^^^^^^^
+NameError: name 'annual_raw' is not defined
+
+----------------------------------------------------------------------
+Ran 1 test in 0.008s
+
+FAILED (errors=1)
+{"allowed_skips": 0, "errors": 1, "failures": 0, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_d02_lone_prefixless_subsection_cannot_end_the_last_note"]}

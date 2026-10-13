@@ -92,3 +92,12 @@ above belongs to its recorded earlier code state and is reused only where the
 producer/writer/reader are unchanged; this increment is cross-version/controller
 validation, not another paid or company-content execution. Public CI must be
 read on the new returned head; no prior failure is overwritten.
+
+The returned increment was then normally combined with actual accepted main
+c25872ee (PR256 B04 note and PR249 D02/D03 source fixes). Merge-tree and the
+normal local merge produced the same tree 99bd3c44. Python 3.12 ran 138 affected
+registration/controller/company/B04/raw-source controls in 9.547s, zero skips.
+These are combination controls, not repeat of the receiver's 45-source review.
+The actual producer/writer remains selected by the registered entry. A change
+to a genuinely used renderer is still a processing change; this candidate does
+not claim all future shared renderer changes are irrelevant to all metrics.

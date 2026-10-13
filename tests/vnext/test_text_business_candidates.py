@@ -112,7 +112,7 @@ class TextBusinessCandidateTest(unittest.TestCase):
 
     def test_parenthesized_note_heading_is_navigable_without_claiming_semantic_completeness(self):
         body = BODY.replace("<h2>Note 2. Contingencies</h2>", "<h2>2) Contingencies</h2>").replace("<h2>Note 3. Income Taxes</h2>", "<h2>3) Income Taxes</h2>")
-        p = legal_risk_candidates(document=document(body))
+        p = legal_risk_candidates(document=document(body), raw_bytes=annual(body))
         self.assertEqual("LOCATED_NOTE_RANGE", p["note_references"][0]["status"])
         self.assertFalse(p["semantic_scope_completeness_asserted"])
 

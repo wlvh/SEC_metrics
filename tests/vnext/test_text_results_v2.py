@@ -63,6 +63,106 @@ def replace_accrual_raw(args, raw):
 
 
 class TextResultV2SourceTest(unittest.TestCase):
+    def test_prefixless_note_titles_ignore_outer_spacing_and_alignment(self):
+        from tests.vnext.test_text_business_candidates import document
+        from vnext.text_business_candidates import legal_risk_candidates
+        font = 'font-family:Arial;font-size:10pt;font-weight:700'
+        raw = BODY.replace('<h2>Note 2. Contingencies</h2>',
+            '<div style="margin-bottom:12pt;text-align:justify"><span style="' + font + '">2) Contingencies</span></div>')
+        raw = raw.replace('<h2>Note 3. Income Taxes</h2>',
+            '<div style="margin-bottom:8pt;margin-top:8pt"><span style="' + font + '">3) Income Taxes</span></div>')
+        proposal = legal_risk_candidates(document=document(raw), raw_bytes=annual(raw))
+        self.assertEqual('LOCATED_NOTE_RANGE', proposal['note_references'][0]['status'])
+
+    def test_prefixless_note_formats_use_the_same_original_bytes(self):
+        from tests.vnext.test_text_business_candidates import document
+        body = BODY.replace('<h2>Note 2. Contingencies</h2>',
+                            '<p style="font-weight:bold;font-size:12pt">2. Contingencies</p>')
+        body = body.replace('<h2>Note 3. Income Taxes</h2>',
+                            '<p style="font-weight:bold;font-size:12pt">3. Income Taxes</p>')
+        doc = document(body)
+        before = doc['text_document_id']
+        located = legal_risk_candidates(document=doc, raw_bytes=annual(body))
+        self.assertEqual('LOCATED_NOTE_RANGE', located['note_references'][0]['status'])
+        self.assertEqual(before, doc['text_document_id'])
+        self.assertEqual('REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE',
+            legal_risk_candidates(document=doc)['note_references'][0]['status'])
+        different = body.replace('font-size:12pt">3.', 'font-size:10pt">3.')
+        self.assertEqual('REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE',
+            legal_risk_candidates(document=document(different), raw_bytes=annual(different))
+                ['note_references'][0]['status'])
+        with self.assertRaisesRegex(ValueError, 'TEXT_BUSINESS_HEADING_SOURCE_IDENTITY_CONFLICT'):
+            legal_risk_candidates(document=doc, raw_bytes=annual(different))
+
+    def test_d02_lone_prefixless_subsection_cannot_end_the_last_note(self):
+        from tests.vnext.test_text_business_candidates import document
+        from vnext.text_business_candidates import legal_risk_candidates
+        from vnext.d02_text_results_v3 import select_d02_page_furniture
+        pages = ''.join('<p>' + str(page) + '</p>'
+            '<p>We remain subject to litigation concerning this agreement.</p>'
+            for page in (10, 11, 12))
+        raw = BODY.replace('Note 2. Contingencies', '2. Contingencies')
+        raw = raw.replace('<h2>Note 3. Income Taxes</h2><p>Taxes are reported in this section.</p>', '')
+        raw = raw.replace('<h3>1. Procedural matters</h3>',
+                          pages + '<h3>3. Procedural matters</h3>')
+        doc = document(raw)
+        proposal = legal_risk_candidates(document=doc, raw_bytes=annual(raw))
+        reference = proposal['note_references'][0]
+        self.assertEqual('REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE', reference['status'])
+        self.assertIn('UNRESOLVED_NOTE_2', proposal['coverage_reasons'])
+        self.assertFalse(reference['range_candidates'])
+        self.assertEqual(proposal, select_d02_page_furniture(proposal=proposal, document=doc))
+        from vnext import d02_text_results_v3 as current_core
+        with self.assertRaisesRegex(ValueError, 'TEXT_V2_LEGAL_SOURCE_NAVIGATION_INCOMPLETE'):
+            current_core.prepare_business_text_sources(metric_id='D02',
+                d02_page_furniture=True, **inputs('D02', annual_body=raw))
+
+    def test_d02_prefixless_sequential_subsections_make_note_end_unresolved(self):
+        from tests.vnext.test_text_business_candidates import document
+        from vnext.text_business_candidates import legal_risk_candidates
+        from vnext.d02_text_results_v3 import select_d02_page_furniture
+        pages=''.join('<p>'+str(page)+'</p>'
+            '<p>We remain subject to litigation concerning this agreement.</p>'
+            '<h3>'+str(section)+'. Procedural matters</h3>'
+            for page,section in zip((10,11,12),(3,4,5)))
+        raw=BODY.replace('Note 2. Contingencies','2. Contingencies')
+        raw=raw.replace('Note 3. Income Taxes','3. Income Taxes')
+        raw=raw.replace('<h3>1. Procedural matters</h3>',pages)
+        doc=document(raw);proposal=legal_risk_candidates(document=doc)
+        reference=proposal['note_references'][0]
+        self.assertEqual('REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE',reference['status'])
+        self.assertIn('UNRESOLVED_NOTE_2',proposal['coverage_reasons'])
+        self.assertFalse(reference['range_candidates'])
+        selected=select_d02_page_furniture(proposal=proposal,document=doc)
+        self.assertEqual(proposal,selected)
+        from vnext import d02_text_results_v3 as current_core
+        with self.assertRaisesRegex(ValueError,'TEXT_V2_LEGAL_SOURCE_NAVIGATION_INCOMPLETE'):
+            current_core.prepare_business_text_sources(metric_id='D02',
+                d02_page_furniture=True,**inputs('D02',annual_body=raw))
+
+    def test_d02_prefixless_next_note_boundary_keeps_supported_page_layout(self):
+        from tests.vnext.test_text_business_candidates import document
+        from vnext.text_business_candidates import legal_risk_candidates
+        from vnext.d02_text_results_v3 import select_d02_page_furniture
+        pages=''.join('<p>'+str(page)+'</p><p>Notes to the financial statements</p>'
+            '<p>Company litigation disclosures</p><h3>2. Contingencies (Continued)</h3>'
+            '<p>Unique case '+str(page)+' remains unresolved.</p>' for page in (10,11))
+        pages+='<p>12</p><p>Notes to the financial statements</p>'\
+               '<p>Company litigation disclosures</p>'
+        raw=BODY.replace('Note 2. Contingencies','2. Contingencies')
+        court='<p>The court has not resolved the matter described in the preceding paragraph.</p>'
+        raw=raw.replace('<h3>1. Procedural matters</h3>'+court,court+pages)
+        raw=raw.replace('Note 3. Income Taxes','3. Income Taxes')
+        doc=document(raw);proposal=legal_risk_candidates(document=doc, raw_bytes=annual(raw))
+        selected=select_d02_page_furniture(proposal=proposal,document=doc)
+        self.assertEqual('LOCATED_NOTE_RANGE',proposal['note_references'][0]['status'])
+        kept=[c['text'] for c in selected['D02']['candidates']]
+        self.assertNotIn('Company litigation disclosures',kept)
+        self.assertNotIn('Notes to the financial statements',kept)
+        self.assertIn('Unique case 10 remains unresolved.',kept)
+        self.assertIn('Unique case 11 remains unresolved.',kept)
+        self.assertEqual(proposal['D03'],selected['D03'])
+
     def test_d02_numbered_subsections_do_not_anchor_repeated_disclosure_removal(self):
         from tests.vnext.test_text_business_candidates import document
         from vnext.text_business_candidates import legal_risk_candidates
