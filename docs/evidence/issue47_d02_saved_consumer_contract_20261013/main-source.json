@@ -1,0 +1,121 @@
+{
+  "main_version": "731f8fd1720ec976fafc008c522cc4e044573c5d",
+  "metric_id": "D02",
+  "company_id": "ford_motor_company",
+  "target": {
+    "company_id": "ford_motor_company",
+    "entity": "37996",
+    "accession": "0000037996-26-000015",
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31",
+    "scope": {
+      "entity_scope": "registrant",
+      "disclosure_basis": "source_filing_text",
+      "period_basis": "annual_filing_disclosures",
+      "liability_measurement": "not_inferred"
+    },
+    "scope_key": "sha256:ccb765e51ba503e0bd709301dfab8bee2a0351e21083d18786fba3e18f1b5ddf"
+  },
+  "raw_sha256": "3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9",
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "source_only": true,
+  "old_business_values_used": false,
+  "status": "PREPARED",
+  "document_id": "sha256:cf486bd77edf58e86d6642743a8c0471495ffb331812ecf152f5e27bf81ca3b8",
+  "original_request_document_id": "sha256:cf486bd77edf58e86d6642743a8c0471495ffb331812ecf152f5e27bf81ca3b8",
+  "block_count": 4176,
+  "seconds": 2.569701083994005,
+  "original_candidate_count": 45,
+  "extra_vs_original": [
+    3963,
+    3964,
+    3965,
+    3974,
+    3975,
+    3976,
+    3990,
+    3991
+  ],
+  "missing_vs_original": [],
+  "original_source_excerpt_fields_preserved": true,
+  "extra_excerpt_differences": [
+    {
+      "block_index": 3963,
+      "section_id": "NOTE_24",
+      "text": "FORD MOTOR COMPANY AND SUBSIDIARIES",
+      "raw_start_byte": 4960882,
+      "raw_end_byte": 4960917,
+      "raw_span_sha256": "dadb3cc8b73d86becf335549a92693c08b563e6fbbb8841ec7536bf08023e808"
+    },
+    {
+      "block_index": 3964,
+      "section_id": "NOTE_24",
+      "text": "NOTES TO THE FINANCIAL STATEMENTS",
+      "raw_start_byte": 4961068,
+      "raw_end_byte": 4961101,
+      "raw_span_sha256": "b05e6c0c91cff2c276d7b0362dafdfc0fd9632c139be06cbb12280b18b2c69fd"
+    },
+    {
+      "block_index": 3965,
+      "section_id": "NOTE_24",
+      "text": "NOTE 24. COMMITMENTS AND CONTINGENCIES (Continued)",
+      "raw_start_byte": 4961286,
+      "raw_end_byte": 4961484,
+      "raw_span_sha256": "e839cecfa58ff32966dfe3841b61df31e41fee4d7f8aff9391ccb912739e581d"
+    },
+    {
+      "block_index": 3974,
+      "section_id": "NOTE_24",
+      "text": "FORD MOTOR COMPANY AND SUBSIDIARIES",
+      "raw_start_byte": 4966965,
+      "raw_end_byte": 4967000,
+      "raw_span_sha256": "dadb3cc8b73d86becf335549a92693c08b563e6fbbb8841ec7536bf08023e808"
+    },
+    {
+      "block_index": 3975,
+      "section_id": "NOTE_24",
+      "text": "NOTES TO THE FINANCIAL STATEMENTS",
+      "raw_start_byte": 4967151,
+      "raw_end_byte": 4967184,
+      "raw_span_sha256": "b05e6c0c91cff2c276d7b0362dafdfc0fd9632c139be06cbb12280b18b2c69fd"
+    },
+    {
+      "block_index": 3976,
+      "section_id": "NOTE_24",
+      "text": "NOTE 24. COMMITMENTS AND CONTINGENCIES (Continued)",
+      "raw_start_byte": 4967369,
+      "raw_end_byte": 4967567,
+      "raw_span_sha256": "e839cecfa58ff32966dfe3841b61df31e41fee4d7f8aff9391ccb912739e581d"
+    },
+    {
+      "block_index": 3990,
+      "section_id": "NOTE_24",
+      "text": "FORD MOTOR COMPANY AND SUBSIDIARIES",
+      "raw_start_byte": 4982062,
+      "raw_end_byte": 4982097,
+      "raw_span_sha256": "dadb3cc8b73d86becf335549a92693c08b563e6fbbb8841ec7536bf08023e808"
+    },
+    {
+      "block_index": 3991,
+      "section_id": "NOTE_24",
+      "text": "NOTES TO THE FINANCIAL STATEMENTS",
+      "raw_start_byte": 4982248,
+      "raw_end_byte": 4982281,
+      "raw_span_sha256": "b05e6c0c91cff2c276d7b0362dafdfc0fd9632c139be06cbb12280b18b2c69fd"
+    }
+  ],
+  "single_block_item8_request_rebuilt_from_main": true,
+  "request_id": "sha256:7f0d2be204ae60689397a55ac102ec07f3ad0923c57ab00db59060abd9fe8908",
+  "request_matches_original_exactly": true,
+  "provider_messages_match": true,
+  "item8_subreview": [
+    [],
+    null,
+    []
+  ],
+  "single_block_item8_scope_only_not_general_pool_implementation": true
+}

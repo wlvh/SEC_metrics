@@ -12,7 +12,7 @@ from .normal_governance_input import _Sources, _order
 from .normal_history_catalog import load_history_for_period
 from .normal_period_selection import resolve_period_selection
 from .normal_source_authority import ROOT
-from .governance_signals import C03_SPEC_PATH, resolve_c03
+from .governance_signals import C03_SPEC_PATH, resolve_c03, _FactAttributes, _qname
 from .observations import scope_key
 from .ordinary_source_authority import verify_ordinary_source_proofs
 from .specs import compile_spec_file
@@ -39,6 +39,33 @@ class HistoricalCompensationInputError(ValueError):
 def _need(condition, reason, category='SOURCE_INTEGRITY_ERROR'):
     if not condition:
         raise HistoricalCompensationInputError(reason, category)
+
+
+class _ProxyStructuredMarkup(_FactAttributes):
+    """Recognize the existing reader's structured markup across XML prefixes.
+
+    This only selects the path after the native reader rejected missing
+    contexts. It does not interpret a person, amount or table.
+    """
+    def __init__(self):
+        super().__init__()
+        self.structured = False
+
+    def handle_starttag(self, tag, attrs):
+        super().handle_starttag(tag, attrs)
+        namespaces = self.stack[-1][1] if self.stack else {}
+        uri, _ = _qname(tag, namespaces)
+        if self.ordinal or tag.startswith('ix:') or uri in {
+                'http://www.xbrl.org/2008/inlineXBRL',
+                'http://www.xbrl.org/2013/inlineXBRL'}:
+            self.structured = True
+
+
+def _proxy_has_structured_markup(raw):
+    parser = _ProxyStructuredMarkup()
+    parser.feed(raw.decode('utf-8-sig'))
+    parser.close()
+    return parser.structured
 
 
 def select_first_reported_proxy(*, prepared, history):
@@ -123,7 +150,7 @@ def prepare_historical_compensation_year_case(*, repo_root, company_id, metric_i
         # This is the existing historical route's narrow no-context rule.
         # Any broken inline document, wrong unit/person/period or other error
         # retains its original outcome rather than escaping into another table.
-        if str(error) != 'XBRL source contains no contexts' or b'<ix:' in args['raw_bytes'].lower():
+        if str(error) != 'XBRL source contains no contexts' or _proxy_has_structured_markup(args['raw_bytes']):
             raise
         spec_path, source_kind = PROXY_SCT_SPEC_PATH, 'FIRST_REPORTED_PROXY_SCT'
         spec = compile_spec_file(path=ROOT/spec_path, dependency_specs={})

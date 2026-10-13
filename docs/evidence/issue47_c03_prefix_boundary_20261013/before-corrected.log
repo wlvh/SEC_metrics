@@ -1,0 +1,182 @@
+test_alternative_inline_prefix_and_native_fact_without_context_do_not_enter_sct (tests.vnext.test_historical_compensation_case.HistoricalCompensationAdapterTest.test_alternative_inline_prefix_and_native_fact_without_context_do_not_enter_sct) ... 
+  test_alternative_inline_prefix_and_native_fact_without_context_do_not_enter_sct (tests.vnext.test_historical_compensation_case.HistoricalCompensationAdapterTest.test_alternative_inline_prefix_and_native_fact_without_context_do_not_enter_sct) (raw=b'<html xmlns:alt="http://www.xbrl.org/2013/inlineXBRL"><body><alt:nonFraction name="ecd:PeoTotalCompAmt" contextRef="missing">100</alt:nonFraction></body></html>') ... FAIL
+  test_alternative_inline_prefix_and_native_fact_without_context_do_not_enter_sct (tests.vnext.test_historical_compensation_case.HistoricalCompensationAdapterTest.test_alternative_inline_prefix_and_native_fact_without_context_do_not_enter_sct) (raw=b'<html xmlns:i="http://www.xbrl.org/2008/inlineXBRL"><body><i:nonNumeric name="ecd:PeoName" contextRef="missing">Person</i:nonNumeric></body></html>') ... FAIL
+  test_alternative_inline_prefix_and_native_fact_without_context_do_not_enter_sct (tests.vnext.test_historical_compensation_case.HistoricalCompensationAdapterTest.test_alternative_inline_prefix_and_native_fact_without_context_do_not_enter_sct) (raw=b'<html xmlns:alt="http://www.xbrl.org/2013/inlineXBRL"><body><alt:nonFraction>100</alt:nonFraction></body></html>') ... FAIL
+  test_alternative_inline_prefix_and_native_fact_without_context_do_not_enter_sct (tests.vnext.test_historical_compensation_case.HistoricalCompensationAdapterTest.test_alternative_inline_prefix_and_native_fact_without_context_do_not_enter_sct) (raw=b'<xbrli:xbrl><ecd:PeoTotalCompAmt contextRef="missing">100</ecd:PeoTotalCompAmt></xbrli:xbrl>') ... FAIL
+test_broken_inline_and_non_context_errors_do_not_enter_sct (tests.vnext.test_historical_compensation_case.HistoricalCompensationAdapterTest.test_broken_inline_and_non_context_errors_do_not_enter_sct) ... ok
+test_history_dispatch_preserves_existing_factories_and_dependencies (tests.vnext.test_historical_compensation_case.HistoricalCompensationAdapterTest.test_history_dispatch_preserves_existing_factories_and_dependencies) ... ok
+test_selected_proxy_and_annual_identity_remain_distinct (tests.vnext.test_historical_compensation_case.HistoricalCompensationAdapterTest.test_selected_proxy_and_annual_identity_remain_distinct) ... ok
+test_source_preparer_retains_annual_primary_for_reporter_and_distinct_proxy (tests.vnext.test_historical_compensation_case.HistoricalCompensationAdapterTest.test_source_preparer_retains_annual_primary_for_reporter_and_distinct_proxy) ... ok
+test_untagged_proxy_uses_shared_sct_and_retains_derived_asset (tests.vnext.test_historical_compensation_case.HistoricalCompensationAdapterTest.test_untagged_proxy_uses_shared_sct_and_retains_derived_asset) ... ok
+test_wrong_metric_rejects_before_proxy_read (tests.vnext.test_historical_compensation_case.HistoricalCompensationAdapterTest.test_wrong_metric_rejects_before_proxy_read) ... ok
+test_amendment_belongs_only_before_the_next_proxy (tests.vnext.test_historical_compensation_case.HistoricalCompensationSelectionTest.test_amendment_belongs_only_before_the_next_proxy) ... ok
+test_first_reported_proxy_is_not_replaced_by_later_compensation (tests.vnext.test_historical_compensation_case.HistoricalCompensationSelectionTest.test_first_reported_proxy_is_not_replaced_by_later_compensation) ... ok
+test_no_proxy_does_not_become_zero_or_structural_na (tests.vnext.test_historical_compensation_case.HistoricalCompensationSelectionTest.test_no_proxy_does_not_become_zero_or_structural_na) ... ok
+test_same_day_requires_acceptance_time_not_accession_rank (tests.vnext.test_historical_compensation_case.HistoricalCompensationSelectionTest.test_same_day_requires_acceptance_time_not_accession_rank) ... ok
+test_unproven_history_foreign_reporter_and_different_annual_refuse (tests.vnext.test_historical_compensation_case.HistoricalCompensationSelectionTest.test_unproven_history_foreign_reporter_and_different_annual_refuse) ... ok
+
+======================================================================
+FAIL: test_alternative_inline_prefix_and_native_fact_without_context_do_not_enter_sct (tests.vnext.test_historical_compensation_case.HistoricalCompensationAdapterTest.test_alternative_inline_prefix_and_native_fact_without_context_do_not_enter_sct) (raw=b'<html xmlns:alt="http://www.xbrl.org/2013/inlineXBRL"><body><alt:nonFraction name="ecd:PeoTotalCompAmt" contextRef="missing">100</alt:nonFraction></body></html>')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/historical_compensation_case.py", line 120, in prepare_historical_compensation_year_case
+    resolution = resolve_c03(**args, target=target, expected_cik=annual['entity'],
+        compiled_spec=spec, sec_namespace_release='YEAR_QUARTER_OR_DATE')
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+vnext.deterministic_router.DeterministicRouterError: XBRL source contains no contexts
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_historical_compensation_case.py", line 132, in test_alternative_inline_prefix_and_native_fact_without_context_do_not_enter_sct
+    cases.prepare_historical_compensation_year_case(repo_root=Path('/constructed'),
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        company_id='marriott_international',metric_id='C03',fiscal_year=2021)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/historical_compensation_case.py", line 130, in prepare_historical_compensation_year_case
+    resolution = resolve_proxy_compensation_table(**args,
+        filing=source['selection']['selected_proxy'], inventory=source['proxy_inventory'],
+        company_id=company_id, cik=annual['entity'], target=target,
+        fiscal_year=period['fiscal_year'], compiled_spec=spec)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+AssertionError: SCT_FALLBACK_MUST_NOT_RUN
+
+======================================================================
+FAIL: test_alternative_inline_prefix_and_native_fact_without_context_do_not_enter_sct (tests.vnext.test_historical_compensation_case.HistoricalCompensationAdapterTest.test_alternative_inline_prefix_and_native_fact_without_context_do_not_enter_sct) (raw=b'<html xmlns:i="http://www.xbrl.org/2008/inlineXBRL"><body><i:nonNumeric name="ecd:PeoName" contextRef="missing">Person</i:nonNumeric></body></html>')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/historical_compensation_case.py", line 120, in prepare_historical_compensation_year_case
+    resolution = resolve_c03(**args, target=target, expected_cik=annual['entity'],
+        compiled_spec=spec, sec_namespace_release='YEAR_QUARTER_OR_DATE')
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+vnext.deterministic_router.DeterministicRouterError: XBRL source contains no contexts
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_historical_compensation_case.py", line 132, in test_alternative_inline_prefix_and_native_fact_without_context_do_not_enter_sct
+    cases.prepare_historical_compensation_year_case(repo_root=Path('/constructed'),
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        company_id='marriott_international',metric_id='C03',fiscal_year=2021)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/historical_compensation_case.py", line 130, in prepare_historical_compensation_year_case
+    resolution = resolve_proxy_compensation_table(**args,
+        filing=source['selection']['selected_proxy'], inventory=source['proxy_inventory'],
+        company_id=company_id, cik=annual['entity'], target=target,
+        fiscal_year=period['fiscal_year'], compiled_spec=spec)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+AssertionError: SCT_FALLBACK_MUST_NOT_RUN
+
+======================================================================
+FAIL: test_alternative_inline_prefix_and_native_fact_without_context_do_not_enter_sct (tests.vnext.test_historical_compensation_case.HistoricalCompensationAdapterTest.test_alternative_inline_prefix_and_native_fact_without_context_do_not_enter_sct) (raw=b'<html xmlns:alt="http://www.xbrl.org/2013/inlineXBRL"><body><alt:nonFraction>100</alt:nonFraction></body></html>')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/historical_compensation_case.py", line 120, in prepare_historical_compensation_year_case
+    resolution = resolve_c03(**args, target=target, expected_cik=annual['entity'],
+        compiled_spec=spec, sec_namespace_release='YEAR_QUARTER_OR_DATE')
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+vnext.deterministic_router.DeterministicRouterError: XBRL source contains no contexts
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_historical_compensation_case.py", line 132, in test_alternative_inline_prefix_and_native_fact_without_context_do_not_enter_sct
+    cases.prepare_historical_compensation_year_case(repo_root=Path('/constructed'),
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        company_id='marriott_international',metric_id='C03',fiscal_year=2021)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/historical_compensation_case.py", line 130, in prepare_historical_compensation_year_case
+    resolution = resolve_proxy_compensation_table(**args,
+        filing=source['selection']['selected_proxy'], inventory=source['proxy_inventory'],
+        company_id=company_id, cik=annual['entity'], target=target,
+        fiscal_year=period['fiscal_year'], compiled_spec=spec)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+AssertionError: SCT_FALLBACK_MUST_NOT_RUN
+
+======================================================================
+FAIL: test_alternative_inline_prefix_and_native_fact_without_context_do_not_enter_sct (tests.vnext.test_historical_compensation_case.HistoricalCompensationAdapterTest.test_alternative_inline_prefix_and_native_fact_without_context_do_not_enter_sct) (raw=b'<xbrli:xbrl><ecd:PeoTotalCompAmt contextRef="missing">100</ecd:PeoTotalCompAmt></xbrli:xbrl>')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/historical_compensation_case.py", line 120, in prepare_historical_compensation_year_case
+    resolution = resolve_c03(**args, target=target, expected_cik=annual['entity'],
+        compiled_spec=spec, sec_namespace_release='YEAR_QUARTER_OR_DATE')
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+vnext.deterministic_router.DeterministicRouterError: XBRL source contains no contexts
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_historical_compensation_case.py", line 132, in test_alternative_inline_prefix_and_native_fact_without_context_do_not_enter_sct
+    cases.prepare_historical_compensation_year_case(repo_root=Path('/constructed'),
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        company_id='marriott_international',metric_id='C03',fiscal_year=2021)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/historical_compensation_case.py", line 130, in prepare_historical_compensation_year_case
+    resolution = resolve_proxy_compensation_table(**args,
+        filing=source['selection']['selected_proxy'], inventory=source['proxy_inventory'],
+        company_id=company_id, cik=annual['entity'], target=target,
+        fiscal_year=period['fiscal_year'], compiled_spec=spec)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+AssertionError: SCT_FALLBACK_MUST_NOT_RUN
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.194s
+
+FAILED (failures=4)
+{"allowed_skips": 0, "errors": 0, "failures": 4, "run": 12, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_historical_compensation_case"]}

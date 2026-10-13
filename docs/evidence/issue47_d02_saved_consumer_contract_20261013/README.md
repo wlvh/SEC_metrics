@@ -50,3 +50,52 @@ Ford 的原答是 `{"decisions":[],"also_in_scope":[]}`，原 must_decide 为空
 公共负责人维护同一保存回答解析/保存入口，本方维护历史选期、原件准备及既有纯后处理。当前 D04 保存回答路线及旧 native_assessment_replay 类型没有证明支持 D02，不能直接借用后声称公司链完成。下一消费者必须将完整请求、匹配原答、来源/期间和完整 D02 汇总一起接到公共入口，再验证新任务处理、同输入零计算、独立 results/CSV；本记录尚未完成这三项新公司验收。
 
 沿用已经 main 的 H1 正反材料：12原答4合同通过/8拒绝，14条真实过长引文仍是长度失败；合同通过也不保证法律语义正确。Marriott 两年旧格式通过但漏自保，Enphase旧位置仍有业务缺陷，不能把所有格式通过回答当正确参考。旧回答、失败、Run、35次真实批次和调用预算均保持；此交接不恢复失败机会或开启第三轮方法试验。
+
+## 主干真实原件准备增量
+
+在实际 main `731f8fd1` 的 `d02_text_results_v3.prepare_business_text_sources` 上，只取原 Run 的 SourceReference/RawBlob 元数据和已保存原件，不读旧业务值作为操作数。Ford FY2025 全文4176块准备2.570秒，文档身份与原请求相同。该原件的 Item8 范围是 `[1812,1813)`、一块；其完整原文及 must_decide 集重建出的请求与原 call0009 逐字段完全一致，provider_messages 也完全相同，当前 H1 可消费原答。见 [main-source.json](main-source.json)。这仅验证该单块实例，不提供通用 Item8 pool 实现，也不通过删块让新请求匹配旧回答。
+
+主干完整源候选有53块，原完整结果选择45块：所有原45块的文本、所属节、文档/来源身份与字节跨度均保持，没有缺失。多出的8块是已定位的重复公司名称、财务附注页眉及 Note24 Continued 标题，具体原文/跨度在JSON；它们不是8个新增诉讼事实。这是后继完整文本汇总要处理的真实展示范围差异，不用原答案手动裁剪来源或改签旧结果。只读原件准备不是新公司结果、首算/复跑/CSV验收。
+
+复现源准备：先按前文读取原call0009，恢复原件根，设 `SEC_HISTORY_SOURCE_ROOT` 为实际 `source-inputs`。以下命令不安装公司或访问网络；只用旧Run的来源元数据，不读其金额或文本结果作为处理输入：
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts:tools:. python3 - <<'PY_SOURCE'
+import hashlib,json,os,subprocess
+from pathlib import Path
+from vnext import d02_text_results_v3 as core
+from vnext.canonical import content_hash
+from vnext.legal_review_contract import review_request
+from vnext.text_business_candidates import _substantive
+old='bcc0c0bc0293ba6b6ffc58b1f4e9034dbb52a786'
+record='docs/evidence/issue47_history/model-live-round-9a368413/d02/ford_motor_company-d02-2025-12-31/run-ford_motor_company-d02-2025-12-31-D02/records.jsonl'
+rows=[json.loads(line) for line in subprocess.check_output(['git','show',old+':'+record]).splitlines()]
+ref=next(r for r in rows if r['record_type']=='SOURCE_REFERENCE' and r['source_role']=='target_primary')
+blob=next(r for r in rows if r['record_type']=='RAW_BLOB' and r['raw_asset_id']==ref['raw_asset_id'])
+root=Path(os.environ['SEC_HISTORY_SOURCE_ROOT'])
+sha=blob['raw_asset_id'].split(':')[1]
+raw=(root/'evidence/request_attempts'/sha[:2]/sha/ref['document_name']).read_bytes()
+assert 'sha256:'+hashlib.sha256(raw).hexdigest()==blob['raw_asset_id']
+inventory=json.loads((root/'evidence/request_attempts/2e/2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53/CIK0000037996.json').read_text())
+recent=inventory['filings']['recent'];index=recent['accessionNumber'].index(ref['accession'])
+filing={k:v[index] for k,v in recent.items()}
+target={'company_id':'ford_motor_company','entity':'37996','accession':ref['accession'],
+    'period_start':'2025-01-01','period_end':'2025-12-31','scope':core.SCOPES['D02']}
+target['scope_key']=content_hash(value=target['scope'])
+p=core.prepare_business_text_sources(metric_id='D02',target=target,source_references=[ref],
+    raw_blobs={blob['raw_asset_id']:blob},raw_bytes_by_id={blob['raw_asset_id']:raw},
+    source_filings={ref['source_reference_id']:filing})
+doc=p['documents'][ref['source_reference_id']];proposal=p['proposals'][ref['source_reference_id']]
+scope=next(s for s in proposal['checked_ranges'] if s['section_id']=='ITEM_8')
+assert scope['end_block_exclusive']-scope['start_block']==1
+pool=[i for i in range(scope['start_block'],scope['end_block_exclusive']) if _substantive(doc,doc['blocks'][i])]
+keyword=[r['block_index'] for r in proposal['D02']['candidates'] if r['section_id']=='ITEM_8']
+request=review_request(company_id=target['company_id'],target_cik=target['entity'],
+    period_end=target['period_end'],document=doc,pool=pool,keyword_admitted=keyword)
+assert request['request_id']=='sha256:7f0d2be204ae60689397a55ac102ec07f3ad0923c57ab00db59060abd9fe8908'
+print(json.dumps({'source_document':doc['text_document_id'],'request_id':request['request_id'],
+    'source_candidates':len(proposal['D02']['candidates']),'new_calls':[0,0,0]}))
+PY_SOURCE
+```
+
+源准备与完整原request/provider比对已分别实际运行；主干核心文件与main731相同。没有新模型试验、注册、旧Run修改或普通保存器。公共负责人按此实例接保存回答入口；其他多块原件仍按既有边界读取和未决分别推进。
