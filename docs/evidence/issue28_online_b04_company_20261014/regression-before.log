@@ -1,0 +1,23 @@
+test_explicit_b04_uses_existing_context_and_default_metrics_do_not_expand (tests.vnext.test_company_online.CompanyOnlineTest.test_explicit_b04_uses_existing_context_and_default_metrics_do_not_expand) ... ERROR
+
+======================================================================
+ERROR: test_explicit_b04_uses_existing_context_and_default_metrics_do_not_expand (tests.vnext.test_company_online.CompanyOnlineTest.test_explicit_b04_uses_existing_context_and_default_metrics_do_not_expand)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_company_online.py", line 34, in test_explicit_b04_uses_existing_context_and_default_metrics_do_not_expand
+    online.run_online_company(company_id='marriott_international',work_dir=self.root/'b04-task',
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        output_dir=self.root/'b04-out',call_context=path,metric_ids=['B04'])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/scripts/vnext/company_online.py", line 228, in run_online_company
+    _need(metrics and len(metrics)==len(set(metrics)) and set(metrics)<=ONLINE_METRICS,'METRIC_NOT_CONNECTED')
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/scripts/vnext/company_online.py", line 29, in _need
+    raise ValueError('COMPANY_ONLINE_' + reason)
+ValueError: COMPANY_ONLINE_METRIC_NOT_CONNECTED
+
+----------------------------------------------------------------------
+Ran 1 test in 0.062s
+
+FAILED (errors=1)
+{"allowed_skips": 0, "errors": 1, "failures": 0, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_company_online.CompanyOnlineTest.test_explicit_b04_uses_existing_context_and_default_metrics_do_not_expand"]}

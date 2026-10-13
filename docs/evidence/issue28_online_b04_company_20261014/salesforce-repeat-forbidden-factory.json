@@ -1,0 +1,141 @@
+{
+  "elapsed_seconds": 1.09926337498473,
+  "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+  "company_id": "salesforce",
+  "run_id": "20261013T171431Z-4eab8048",
+  "status": "FLOW_COMPLETED",
+  "selected_metrics": [
+    "B04"
+  ],
+  "metrics": [
+    {
+      "metric_id": "B04",
+      "status": "NO_SOURCE_CONTENT_CHANGE",
+      "attempt_id": "7e5b52089f2a47698e44ad06a30967aa",
+      "version": "85c0ef06b8ff4bbd878aaf2823174dfd",
+      "result_id": "sha256:765d46c26c4f18020494fa8d185cdf8318a6af76babfa0b45dfd297c41768eac",
+      "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b04-salesforce-20261014/task/company-state/updates/B04/results/85c0ef06b8ff4bbd878aaf2823174dfd",
+      "result_reason_code": "PASS",
+      "raw_input_unchanged": true,
+      "calculation_performed": false,
+      "new_candidate_created": false,
+      "source_check_versions": {
+        "scripts/vnext/ordinary_current_update.py": "92b1a74127eb0a5855c174bae3896aa4487e702d49fcc6416a1a5e2ffc074caa",
+        "scripts/vnext/request_bindings.py": "d0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee",
+        "scripts/vnext/ordinary_update_compatibility.py": "dcd5f7fad86dd36fec7ffc1ce15cb274cd3670dba213777b6cdaa4a4090d80b9"
+      },
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "defect_holds": [],
+      "read_result_id": "sha256:765d46c26c4f18020494fa8d185cdf8318a6af76babfa0b45dfd297c41768eac",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b04-salesforce-20261014/task/company-state/updates/B04/results/85c0ef06b8ff4bbd878aaf2823174dfd",
+      "program_version": {
+        "commit": "c25872ee388c933b697d9d3a9764e5eb7d1859e3",
+        "has_uncommitted_changes": true
+      }
+    }
+  ],
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b04-salesforce-20261014/task/sources",
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics",
+  "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b04-salesforce-20261014/task/company-state",
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b04-salesforce-20261014/output/20261013T171431Z-4eab8048",
+  "source_mode": "ONLINE_DISCOVERY_WITH_ORDINARY_RECORDS",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false,
+  "discovery": {
+    "status": "SOURCES_READY_FOR_SELECTED_METRICS",
+    "filing": {
+      "accessionNumber": "0001108524-26-000060",
+      "filingDate": "2026-03-02",
+      "reportDate": "2026-01-31",
+      "acceptanceDateTime": "2026-03-02T21:24:59.000Z",
+      "act": "34",
+      "form": "10-K",
+      "fileNumber": "001-32224",
+      "filmNumber": "26708076",
+      "items": "",
+      "core_type": "XBRL",
+      "size": 14681239,
+      "isXBRL": 1,
+      "isInlineXBRL": 1,
+      "isXBRLNumeric": null,
+      "primaryDocument": "crm-20260131.htm",
+      "primaryDocDescription": "10-K"
+    },
+    "metric_ids": [
+      "B04"
+    ],
+    "metric_limitations": [],
+    "all_39_sources_proven": false
+  },
+  "simulated_sec_claims": 2,
+  "execution_mode": "RECORDED_TEST_ONLY",
+  "unknown_capture_ordinal": null,
+  "source_capture_receipts": [
+    {
+      "record_type": "ORDINARY_COMPANY_SEC_RECEIPT",
+      "intent_id": "sha256:478c812a1d1f8b9c2b519235db4d93c7b40d8df1b4d1e0a0da879b5bed77d050",
+      "execution_mode": "RECORDED_TEST_ONLY",
+      "actual_sec_egress_count": 0,
+      "automatic_retry_count": 0,
+      "status": "SUCCEEDED",
+      "stop_reason": "",
+      "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b04-salesforce-20261014/task/sources",
+      "ledger_row_index": 5,
+      "ledger_row": {
+        "timestamp_utc": "2026-10-13T17:14:30.082593+00:00",
+        "method": "GET",
+        "source_url": "https://data.sec.gov/submissions/CIK0001108524.json",
+        "status_code": "200",
+        "purpose": "RECORDED_TEST_ONLY_ORDINARY_COMPANY",
+        "repo_relative_path": "evidence/request_attempts/fe/fec572bf941ad9aa543f5aa82c563227a0409486a12f0e1fad9a6e7fde59a911/CIK0001108524.json",
+        "headers_repo_relative_path": "evidence/request_attempts/fe/fec572bf941ad9aa543f5aa82c563227a0409486a12f0e1fad9a6e7fde59a911/CIK0001108524.json.711551315caaa11532d212b72f10e1cda6fe788618999fc7efde06858487255f.headers.json",
+        "content_length": "156365",
+        "content_sha256": "fec572bf941ad9aa543f5aa82c563227a0409486a12f0e1fad9a6e7fde59a911",
+        "accession": "",
+        "document_name": "CIK0001108524.json",
+        "user_agent": "axaxl 12@qq.com",
+        "retry_attempt": "0",
+        "error": ""
+      },
+      "receipt_id": "sha256:089ddb8d36977227863e9a21f498bed488636ab82dc9a33ba8b7a376c4d7b0c0"
+    },
+    {
+      "record_type": "ORDINARY_COMPANY_SEC_RECEIPT",
+      "intent_id": "sha256:a9b79ce84fd6ecaa422306ba769566e90733ca798b98e1a445e3e178d151658d",
+      "execution_mode": "RECORDED_TEST_ONLY",
+      "actual_sec_egress_count": 0,
+      "automatic_retry_count": 0,
+      "status": "SUCCEEDED",
+      "stop_reason": "",
+      "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b04-salesforce-20261014/task/sources",
+      "ledger_row_index": 6,
+      "ledger_row": {
+        "timestamp_utc": "2026-10-13T17:14:31.114220+00:00",
+        "method": "GET",
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001108524.json",
+        "status_code": "200",
+        "purpose": "RECORDED_TEST_ONLY_ORDINARY_COMPANY",
+        "repo_relative_path": "evidence/request_attempts/07/07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82/CIK0001108524.json",
+        "headers_repo_relative_path": "evidence/request_attempts/07/07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82/CIK0001108524.json.e9354c9a9f979f664453344188e119bc2eaf369576b4b26516cb72fd2d7c4cd5.headers.json",
+        "content_length": "4664726",
+        "content_sha256": "07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+        "accession": "",
+        "document_name": "CIK0001108524.json",
+        "user_agent": "axaxl 12@qq.com",
+        "retry_attempt": "0",
+        "error": ""
+      },
+      "receipt_id": "sha256:6bd3fb2c76b4275e260d738aa0fe4083cdbc5586f89b46e258812113ffb03dd2"
+    }
+  ]
+}

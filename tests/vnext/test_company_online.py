@@ -27,6 +27,23 @@ class CompanyOnlineTest(unittest.TestCase):
         self.url='https://data.sec.gov/submissions/CIK0001048286.json'
         self.capture=online.Capture(self.root/'source',self.ledger,self.context,5)
 
+    def test_explicit_b04_uses_existing_context_and_default_metrics_do_not_expand(self):
+        path=self.root/'b04-context.json';path.write_text(json.dumps({**self.context,'metric_ids':['B04']}))
+        with patch.object(online,'_ledger',side_effect=LookupError('Stop before source capture')) as ledger:
+            with self.assertRaises(LookupError):
+                online.run_online_company(company_id='marriott_international',work_dir=self.root/'b04-task',
+                    output_dir=self.root/'b04-out',call_context=path,metric_ids=['B04'])
+        self.assertEqual(['B04'],ledger.call_args.args[2])
+        path.write_text(json.dumps(self.context))
+        with patch.object(online,'_ledger',side_effect=LookupError('Stop before source capture')) as ledger:
+            with self.assertRaises(LookupError):
+                online.run_online_company(company_id='marriott_international',work_dir=self.root/'default-task',
+                    output_dir=self.root/'default-out',call_context=path)
+        self.assertEqual(['B01','B02'],ledger.call_args.args[2])
+        with self.assertRaisesRegex(ValueError,'PURPOSE_SCOPE_CHANGED'):
+            online._ledger(self.context,'marriott_international',['B04'])
+        with self.ledger.locked():self.assertEqual(self.ledger.snapshot()['counts'],[0,0,0])
+
     def edit_registry(self, company, **changes):
         path=self.capture.source/'config/company_registry.csv'
         with path.open(newline='') as stream:
