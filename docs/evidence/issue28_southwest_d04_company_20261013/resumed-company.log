@@ -1,0 +1,28 @@
+resumed-first 2 101.25384812500852
+resumed-repeat-forbidden 2 0.05567883398907725
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-southwest-d04-company/SEC_metrics/docs/evidence/issue28_southwest_d04_company_20261013/verify_company.py", line 96, in <module>
+    if __name__=='__main__':run()
+                            ^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-southwest-d04-company/SEC_metrics/docs/evidence/issue28_southwest_d04_company_20261013/verify_company.py", line 72, in run
+    assert completed.returncode==0,completed.stdout+completed.stderr
+           ^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-southwest-d04-company/SEC_metrics/tools/vnext_company.py", line 254, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-southwest-d04-company/SEC_metrics/tools/vnext_company.py", line 202, in main
+    result = read_company_results(state_root=args.state_root, company_id=args.company,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-southwest-d04-company/SEC_metrics/scripts/vnext/company_result_view.py", line 344, in read_company_results
+    return read_current_company(state_root=state_root, company_id=company_id,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-southwest-d04-company/SEC_metrics/scripts/vnext/company_current_records.py", line 225, in read_current_company
+    return _read_current_company(root, company_id, defects_file, output_root)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-southwest-d04-company/SEC_metrics/scripts/vnext/company_current_records.py", line 390, in _read_current_company
+    _need(not output.exists(), 'COMPANY_CURRENT_EXPORT_OUTPUT_EXISTS')
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-southwest-d04-company/SEC_metrics/scripts/vnext/company_current_records.py", line 34, in _need
+    raise ValueError(reason)
+ValueError: COMPANY_CURRENT_EXPORT_OUTPUT_EXISTS
+
