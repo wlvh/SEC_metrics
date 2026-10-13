@@ -104,6 +104,9 @@ def create_saved_result(*, source_root, output_root, company_id, metric_id, shar
     """Prepare through the existing Calculator and save its actual records."""
     _need(metric_id in SAVED_METRIC_IDS, 'SAVED_RESULT_ROUTE_NOT_IMPLEMENTED')
     def prepare(source):
+        if metric_id in {'B04','B07'}:
+            from .current_statement_metric_case import prepare_current_statement_metric_case
+            return prepare_current_statement_metric_case(source_root=source,company_id=company_id,metric_id=metric_id)
         if metric_id == 'A13':
             from .current_geography_case import prepare_current_geography_case
             return prepare_current_geography_case(source_root=source,company_id=company_id)

@@ -77,7 +77,8 @@ def inspect_statement_metric_amendment(scope,raw,*,metric_id):
             for row in table['rows']:
                 cells=[c for c in row['cells'] if c['is_origin']]
                 matched=[role for role in roles if any(re.fullmatch(
-                    _ROW_LABELS[role]+r'(?:\s*\([0-9]+\)|\s*\*)?',
+                    _ROW_LABELS[role]+r'(?:\s*,?\s+(?:attributable to|net of)\s+.+)?'
+                    +r'(?:\s*\([0-9]+\)|\s*\*)?',
                     ' '.join(c['text'].split()),re.I) for c in cells)]
                 numeric=[c for c in cells if re.fullmatch(
                     r'(?:USD\s*|[$€£]\s*)?[-(]?\s*\d[\d,.]*\s*\)?',c['text'].strip(),re.I)

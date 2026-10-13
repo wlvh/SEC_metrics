@@ -73,7 +73,9 @@ class StatementMetricAmendmentTest(unittest.TestCase):
 
     def test_unmarked_table_components_keep_their_row_relationship(self):
         for metric,label in [('B04','Net income'),('B07','Interest expense'),
-                             ('B07','Operating income (loss)')]:
+                             ('B07','Operating income (loss)'),
+                             ('B04','Net income attributable to common shareholders'),
+                             ('B07','Interest expense, net of interest income')]:
             extra='<table><tr><th>USD millions</th><th>2024</th></tr><tr><td>'+label+'</td><td>42</td></tr></table>'
             scope,raw=self.scope(extra)
             with self.subTest(metric=metric,label=label),self.assertRaisesRegex(

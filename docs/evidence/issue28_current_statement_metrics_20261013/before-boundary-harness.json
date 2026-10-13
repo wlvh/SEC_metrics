@@ -1,0 +1,65 @@
+{
+  "base_commit": "a8941ea87aa56e68706a32103fbf6fa23ca67339",
+  "working_tree_test": true,
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+  "results": [
+    {
+      "company": "salesforce",
+      "metric": "B04",
+      "current_error": {
+        "type": "KeyError",
+        "message": "'result'"
+      },
+      "current_seconds": 2.99006566600292,
+      "baseline_error": {
+        "type": "TypeError",
+        "message": "resolve_ordinary_companyfacts_metrics() got an unexpected keyword argument 'company_ids'"
+      }
+    },
+    {
+      "company": "salesforce",
+      "metric": "B07",
+      "current_error": {
+        "type": "KeyError",
+        "message": "'result'"
+      },
+      "current_seconds": 2.1241033330152277,
+      "baseline_error": {
+        "type": "TypeError",
+        "message": "resolve_ordinary_companyfacts_metrics() got an unexpected keyword argument 'company_ids'"
+      }
+    },
+    {
+      "company": "paramount_skydance_paramount_global",
+      "metric": "B04",
+      "current_error": {
+        "type": "KeyError",
+        "message": "'result'"
+      },
+      "current_seconds": 4.6647034590132535,
+      "baseline_error": {
+        "type": "TypeError",
+        "message": "resolve_ordinary_companyfacts_metrics() got an unexpected keyword argument 'company_ids'"
+      }
+    },
+    {
+      "company": "paramount_skydance_paramount_global",
+      "metric": "B07",
+      "current_error": {
+        "type": "KeyError",
+        "message": "'result'"
+      },
+      "current_seconds": 3.162662500020815,
+      "baseline_error": {
+        "type": "TypeError",
+        "message": "resolve_ordinary_companyfacts_metrics() got an unexpected keyword argument 'company_ids'"
+      }
+    }
+  ],
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "scope": "DIRECT_CASE_COMPARISON_NOT_COMPANY_PERSISTENCE"
+}
