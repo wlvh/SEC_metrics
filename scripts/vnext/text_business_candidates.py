@@ -190,9 +190,19 @@ class _NoteHeadingFormats(_Blocks):
             if levels:
                 self.part_format = ("heading", levels[-1])
             else:
-                starts = [i for i, entry in enumerate(self.format_stack)
-                          if entry[0] in {"p", "div", "td", "th", "li"}]
-                self.part_format = tuple(self.format_stack[starts[-1]:]) if starts else None
+                # Layout spacing/alignment does not change a heading's level.
+                # Compare the inherited declarations affecting its own text,
+                # with inner spans overriding containers in source order.
+                text_style = {}
+                for tag, _classes, style in self.format_stack:
+                    for declaration in style.split(';'):
+                        name, separator, value = declaration.partition(':')
+                        name = name.strip()
+                        if separator and name in {'font-family', 'font-size', 'font-style',
+                                                  'font-weight', 'text-decoration'}:
+                            text_style[name] = value.strip()
+                emphasized = self.stack[-1][3] if self.stack else False
+                self.part_format = ('text', emphasized, tuple(sorted(text_style.items())))
 
     def _flush(self):
         count = len(self.blocks)

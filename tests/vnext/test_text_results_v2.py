@@ -63,6 +63,17 @@ def replace_accrual_raw(args, raw):
 
 
 class TextResultV2SourceTest(unittest.TestCase):
+    def test_prefixless_note_titles_ignore_outer_spacing_and_alignment(self):
+        from tests.vnext.test_text_business_candidates import document
+        from vnext.text_business_candidates import legal_risk_candidates
+        font = 'font-family:Arial;font-size:10pt;font-weight:700'
+        raw = BODY.replace('<h2>Note 2. Contingencies</h2>',
+            '<div style="margin-bottom:12pt;text-align:justify"><span style="' + font + '">2) Contingencies</span></div>')
+        raw = raw.replace('<h2>Note 3. Income Taxes</h2>',
+            '<div style="margin-bottom:8pt;margin-top:8pt"><span style="' + font + '">3) Income Taxes</span></div>')
+        proposal = legal_risk_candidates(document=document(raw), raw_bytes=annual(raw))
+        self.assertEqual('LOCATED_NOTE_RANGE', proposal['note_references'][0]['status'])
+
     def test_prefixless_note_formats_use_the_same_original_bytes(self):
         from tests.vnext.test_text_business_candidates import document
         body = BODY.replace('<h2>Note 2. Contingencies</h2>',
