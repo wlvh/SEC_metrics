@@ -360,7 +360,7 @@ def _run_saved_history(*, company_id, source_root, work_dir, output_dir, metric_
     from .historical_lodging_results import (SUPPORTED_METRICS,
         prepare_historical_lodging_year_case, HISTORICAL_LODGING_PROCESSING_FILES)
     from .historical_statement_cases import (METRICS as statement_metrics,
-        prepare_historical_statement_year_case, PROCESSING_FILES as statement_files,
+        prepare_historical_statement_year_case, processing_files_for_statement_metric,
         INCOME_PROCESSING_FILES as income_files,
         PAIRED_REVENUE_PROCESSING_FILES as paired_revenue_files)
     from .historical_statement_cases import prepare_historical_current_annual_year_case
@@ -447,12 +447,12 @@ def _run_saved_history(*, company_id, source_root, work_dir, output_dir, metric_
                                             geography_files if m in geography_metrics else
                                             average_risk_files if m in average_risk_metrics else
                                             bank_scope_files if m in bank_scope_metrics else
-                                            statement_files if m == 'B07' else
+                                            processing_files_for_statement_metric(m) if m == 'B07' else
                                             bank_files if m in bank_metrics else
                                             capital_files if m in capital_metrics else
                                             liquidity_files if m in liquidity_metrics else
                                             HISTORICAL_LODGING_PROCESSING_FILES if m in SUPPORTED_METRICS
-                                            else statement_files) for m in selected},
+                                            else processing_files_for_statement_metric(m)) for m in selected},
             processing_inputs_by_metric=({'D04': (Path(saved_call_package).expanduser().resolve(),)}
                                         if 'D04' in selected else None))
     return run_saved_company(company_id=company_id, source_root=source_root,
