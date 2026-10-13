@@ -5,6 +5,8 @@ from pathlib import Path
 from .canonical import content_hash
 from . import legal_review_contract as contract
 from .text_business_candidates import _check_document, _excerpt, _substantive, going_concern_candidates
+from .governance_signals import _FactAttributes
+from .xbrl_namespace_policy import YEAR_ONLY, YEAR_QUARTER_OR_DATE, is_sec_namespace
 
 PROCESSING_FILES=(
     'scripts/vnext/d02_reviewed_source.py',
@@ -39,6 +41,19 @@ PROCESSING_FILES=(
 )
 
 
+def _source_sec_namespace_policy(raw_bytes):
+    """Select the existing finite policy from resolved original DEI facts.
+
+    Keep annual-only sources on their unchanged old document/request identity.
+    A foreign or malformed URI never opts a source into the expanded policy.
+    """
+    metadata = _FactAttributes(); metadata.feed(raw_bytes.decode('utf-8-sig')); metadata.close()
+    expanded = any(is_sec_namespace(fact['concept'][0], taxonomy='dei', namespace_policy=YEAR_QUARTER_OR_DATE)
+                   and not is_sec_namespace(fact['concept'][0], taxonomy='dei', namespace_policy=YEAR_ONLY)
+                   for fact in metadata.facts.values())
+    return YEAR_QUARTER_OR_DATE if expanded else YEAR_ONLY
+
+
 def prepare_historical_legal_sources(*, repo_root, company_id, fiscal_year):
     """Select one saved annual using the existing historical source boundary."""
     from .normal_source_authority import ROOT
@@ -65,6 +80,9 @@ def prepare_historical_legal_sources(*, repo_root, company_id, fiscal_year):
         'raw_blobs':{blob['raw_asset_id']:blob},
         'raw_bytes_by_id':{blob['raw_asset_id']:primary['raw_bytes']},
         'source_filings':{ref['source_reference_id']:annual['filing']},'d02_page_furniture':True}
+    namespace_policy = _source_sec_namespace_policy(primary['raw_bytes'])
+    if namespace_policy != YEAR_ONLY:
+        arguments['namespace_policy'] = namespace_policy
     prepared=core.prepare_business_text_sources(metric_id='D02',**arguments)
     proofs=list({content_hash(value=p):p for p in [*annual['source_proofs'],
         *[value['proof'] for value in reader.proofs.values()]]}.values())

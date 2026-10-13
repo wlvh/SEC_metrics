@@ -26,6 +26,7 @@ from .text_coverage import build_text_document
 from .text_results import text_policy as _text_policy
 from .text_results import text_claim_from_block, build_text_result_and_trace
 from .governance_signals import _FactAttributes, _qname, _source_value
+from .xbrl_namespace_policy import YEAR_ONLY, is_sec_namespace
 
 
 METHODS = {"C02": "BOARD_DISCLOSURE_EXCERPTS_V1", "D02": "LEGAL_DISCLOSURE_EXCERPTS_V1"}
@@ -462,15 +463,22 @@ def text_policy(compiled_spec):
     return policy
 
 
-def _annual_document(*, source, blob, raw, target, filing):
+def _annual_document(*, source, blob, raw, target, filing, namespace_policy=YEAR_ONLY):
     from .deterministic_router import parse_accession_xbrl_source
     _need(filing["form"] == "10-K" and filing["accessionNumber"] == target["accession"]
           and filing["reportDate"] == target["period_end"], "TEXT_V2_ORDINARY_ANNUAL_ANCHOR_REQUIRED")
     document = build_text_document(raw_bytes=raw, raw_blob=blob, source_reference=source,
-        expected_company_id=target["company_id"], expected_cik=target["entity"], expected_period_end=target["period_end"])
+        expected_company_id=target["company_id"], expected_cik=target["entity"], expected_period_end=target["period_end"],
+        **({} if namespace_policy == YEAR_ONLY else {'namespace_policy': namespace_policy}))
     parsed = parse_accession_xbrl_source(raw_bytes=raw)
+    facts = parsed.facts
+    if namespace_policy != YEAR_ONLY:
+        metadata = _FactAttributes(); metadata.feed(raw.decode('utf-8-sig')); metadata.close()
+        _need(metadata.ordinal == len(facts), 'TEXT_V2_DEI_ATTRIBUTE_STREAM_CHANGED')
+        facts = [f for f in facts if is_sec_namespace(metadata.facts[f['ordinal']]['concept'][0],
+                 taxonomy='dei', namespace_policy=namespace_policy)]
     periods = {(parsed.contexts[f["context_ref"]]["period_start"], parsed.contexts[f["context_ref"]]["period_end"])
-               for f in parsed.facts if f["qualified_name"].split(":")[-1].casefold() == "documentperiodenddate"}
+               for f in facts if f["qualified_name"].split(":")[-1].casefold() == "documentperiodenddate"}
     _need(periods == {(target["period_start"], target["period_end"])}, "TEXT_V2_ANNUAL_PERIOD_CHANGED")
     _need(document["source_state"] == "COMPLETE_LOCAL_DOCUMENT", "TEXT_V2_ANNUAL_DOCUMENT_INCOMPLETE")
     return document
@@ -479,7 +487,7 @@ def _annual_document(*, source, blob, raw, target, filing):
 def prepare_business_text_sources(*, metric_id, target, source_references, raw_blobs,
                                   raw_bytes_by_id, source_filings,
                                   d02_category_policy=None, d02_page_furniture=False,
-                                  d02_saved_reviews=None):
+                                  d02_saved_reviews=None, namespace_policy=YEAR_ONLY):
     """Rebuild an ordinary annual anchor and all supported disclosure excerpts.
 
     Input discovery and request-proof admission belong to the existing normal
@@ -487,6 +495,8 @@ def prepare_business_text_sources(*, metric_id, target, source_references, raw_b
     the exact identity and period expected by that trusted boundary.
     """
     _target(metric_id, target)
+    is_sec_namespace('', taxonomy='dei', namespace_policy=namespace_policy)
+    _need(namespace_policy == YEAR_ONLY or metric_id == 'D02', 'TEXT_V2_SEC_NAMESPACE_POLICY_SCOPE_INVALID')
     _need(type(d02_page_furniture) is bool and (not d02_page_furniture or metric_id=='D02'),
           'TEXT_V2_D02_PAGE_FURNITURE_SCOPE_INVALID')
     _need(d02_saved_reviews is None or metric_id=='D02',
@@ -525,7 +535,8 @@ def prepare_business_text_sources(*, metric_id, target, source_references, raw_b
     _need(len(annual_ids) == 1, "TEXT_V2_UNIQUE_ANNUAL_ANCHOR_REQUIRED")
     annual_id = annual_ids[0]
     source, filing, blob, raw = source_data[annual_id]
-    annual = _annual_document(source=source, blob=blob, raw=raw, target=target, filing=filing)
+    annual = _annual_document(source=source, blob=blob, raw=raw, target=target, filing=filing,
+                             namespace_policy=namespace_policy)
     documents[annual_id] = annual
     anchor = {"source_reference_id": annual_id, "document_id": annual["text_document_id"],
               "source_filing": dict(filing), "coordinate_period_start": target["period_start"],
@@ -572,7 +583,8 @@ def prepare_business_text_sources(*, metric_id, target, source_references, raw_b
               "TEXT_V2_LEGAL_SOURCE_NAVIGATION_INCOMPLETE")
         _need(proposal["D02"]["candidates"], "TEXT_V2_LEGAL_DISCLOSURE_TEXT_UNSUPPORTED")
         fact_candidates = reported_legal_fact_candidates(raw_bytes=raw, raw_blob=blob, source_reference=source,
-            company_id=target["company_id"], cik=target["entity"], filing=filing)
+            company_id=target["company_id"], cik=target["entity"], filing=filing,
+            **({} if namespace_policy == YEAR_ONLY else {'namespace_policy': namespace_policy}))
         facts = _verified_reported_facts(raw=raw,candidates=fact_candidates,cik=target["entity"])
         current_candidates = []
         for fact in facts["facts"]:
