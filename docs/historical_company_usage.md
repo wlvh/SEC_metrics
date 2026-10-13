@@ -1,6 +1,6 @@
 # 历史公司使用指南
 
-截至2026-10-13，本指南使用可取得的main版本 `3fec376b`。它包含原 `c6f5c90f` 的公司入口及后续接收增量。同一 `tools/vnext_company.py`、公共更新器、保存器和结果读口支持保存来源的历史 B10/B11，以及连续主体的 B01/B02/B03/B04/B05和所选CIK余额的B08/B09；修订和来源范围仍受各族的明确检查约束。酒店共用计算与四指标历史适配已 main；C03首次代理选择及ECD／适用普通表格读取已随PR148–151入main；PR58 合入的是机械 D02 引文检查，D02 公司模型链和完整五年业务验收仍未完成。
+截至2026-10-13，本指南使用可取得的main版本 `99249a45`。它包含原 `c6f5c90f` 的公司入口及后续接收增量。同一 `tools/vnext_company.py`、公共更新器、保存器和结果读口支持保存来源的历史 B10/B11，以及连续主体的 B01/B02/B03/B04/B05和所选CIK余额的B08/B09；修订和来源范围仍受各族的明确检查约束。酒店共用计算与四指标历史适配已 main；C03首次代理选择及ECD／适用普通表格读取已随PR148–151入main；PR58 合入的是机械 D02 引文检查，D02 公司模型链和完整五年业务验收仍未完成。
 
 A01/A02资本、A05/A06/A07/A08/A10银行指标和B07年度计算也已main。C01/E02–E05普通历史适配及公共事件源/宽窗接口已在main；[PR90](https://github.com/wlvh/SEC_metrics/pull/90)和[PR89](https://github.com/wlvh/SEC_metrics/pull/89)已由接收方合入；后续消费者记录继续按本记录的执行版本解释，不改旧运行记录。PR83 的普通在线接续不等于历史模式已能在线发现与补齐来源；本指南的 `fiscal-years` 仍需已保存来源根。代码合入不表示正式采纳、发布或 active 切换。
 
@@ -21,7 +21,7 @@ PR155按目标公司的登记行判断输入变化，并仍验证整个登记表
 ```bash
 git fetch origin main
 git worktree add -b review/issue47-hotel-history ../SEC_metrics-history-review \
-  3fec376b
+  99249a45
 cd ../SEC_metrics-history-review
 python3 tools/vnext_company.py run --help
 ```
@@ -32,7 +32,7 @@ python3 tools/vnext_company.py run --help
 
 ## 保存来源五年导出：已入main，仍是离线接续
 
-公共[PR208](https://github.com/wlvh/SEC_metrics/pull/208)已随本指南main3fec376b接收，同一公司入口的 `export --history-years 5` 生成普通保存来源包。当前仅支持显式B01／B02／B03，发行人最新完整财年的定义确定五年范围；完整保留混合请求账本、manifest、登记表及所选原件／HTTP headers的字节。包由同一 `run --source-root` 消费，不能交给旧native `install` 当成程序／信任包。缺件、失败或标签未决返回SOURCE_EXPORT_INCOMPLETE，不发布半包。
+公共[PR208](https://github.com/wlvh/SEC_metrics/pull/208)已在main3fec376b接收，当前版本包含，同一公司入口的 `export --history-years 5` 生成普通保存来源包。当前仅支持显式B01／B02／B03，发行人最新完整财年的定义确定五年范围；完整保留混合请求账本、manifest、登记表及所选原件／HTTP headers的字节。包由同一 `run --source-root` 消费，不能交给旧native `install` 当成程序／信任包。缺件、失败或标签未决返回SOURCE_EXPORT_INCOMPLETE，不发布半包。
 
 [接收者Marriott十五位置验证](https://github.com/wlvh/SEC_metrics/pull/208#issuecomment-6130848123)已经完成；[Salesforce非自然年消费及参数化命令](https://github.com/wlvh/SEC_metrics/blob/13fb333b4412cc9664d423403a5fdd538e1d3f95/docs/evidence/issue47_salesforce_export_consumer_20261013/README.md)证明FY2022–FY2026保存包和FY2026 B01的新任务／零算复跑／独立CSV，执行版本仍按该记录的5ea解释，不把旧执行改签成新main。这里的输出包可以直接供下方同一公司run使用：
 
@@ -42,7 +42,7 @@ python3 tools/vnext_company.py export --company salesforce --metric B01 \
   --output-root /your/new/salesforce-source-package
 ```
 
-导出和 `sources` 都使用已有保存材料，不执行历史在线发现或缺件补齐；尚未实现自动历史获取到完整五年业务CSV。缺失材料仍需由同一公司工作流继续接续，完整交付责任保留。本指南main已接收PR214以及PR213／215的有限期限分栏和MD&A来源关系；公共依赖／DEI／事件预检后继PR220／221／218及其消费者仍按各自实际候选版本使用，不能因名称相同推为本指南main已经包含。
+导出和 `sources` 都使用已有保存材料，不执行历史在线发现或缺件补齐；尚未实现自动历史获取到完整五年业务CSV。缺失材料仍需由同一公司工作流继续接续，完整交付责任保留。本指南main已接收PR214以及PR213／215的有限期限分栏和MD&A来源关系；公共依赖PR220及历史消费者PR219、测试清单PR224也已接收。DEI参数消费PR221／222及事件来源预检PR218／223也已进入本指南main。历史B01显式策略与事件预检接线按各自接收记录解释，来源预检完成仍不等于模型回答或指标业务完整性。
 
 ## 同一公司命令的历史模式
 
@@ -76,6 +76,35 @@ python3 tools/vnext_company.py results \
 上述保存输入的两年值为 B10 69.8% / 69.3%，B11 128.23 / 128.8 USD。内部 B10 计算值仍为 0.698 / 0.693 ratio，CSV 明确转换成 percent；不能把69.8当成原始比率。出处保留原申报、原表、原格文字及位置，不把展示值代替证据。
 
 `run` 的 JSON 指明本次 `output_root`，CSV 位于该根的 `metrics_matrix.csv` / `metric_evidence.csv`，不要到输出父目录或旧运行目录找本次文件。`results --state-root` 指向原 `work-dir`，无需附加 `historical-company-state`、`company-state` 或 trust；`--output-root` 必须是新的读取目录。两种命令都不修改原件，不执行在线发现、SEC获取或模型调用。
+
+## 酒店五年：一个公司任务处理、复跑与读取
+
+使用上节恢复得到的完整 `source-inputs` 根，可在本指南 main 中通过一条公司命令处理 Marriott FY2021–FY2025 的 B10/B11，不必先运行其他公司或逐年拼接结果：
+
+```bash
+python3 tools/vnext_company.py run --company marriott_international \
+  --period fiscal-years --fiscal-year-start 2021 --fiscal-year-end 2025 \
+  --metric B10 --metric B11 --source-root /your/restored/source-inputs \
+  --work-dir /your/new/marriott-five-year/state \
+  --output-dir /your/new/marriott-five-year/runs
+python3 tools/vnext_company.py results --company marriott_international \
+  --state-root /your/new/marriott-five-year/state \
+  --output-root /your/new/marriott-five-year/read-01
+```
+
+实测一个无旧缓存的新任务得到以下十个值；入住率的原生比率在 CSV 中转换为百分比，RevPAR 为每间可用客房收入，单位 USD：
+
+| 财年 | B10 入住率 | B11 RevPAR | 实际期间 |
+|---|---:|---:|---|
+| FY2021 | 51.3% | 74.66 | 2021-01-01 至 2021-12-31 |
+| FY2022 | 64.0% | 110.64 | 2022-01-01 至 2022-12-31 |
+| FY2023 | 69.2% | 124.70 | 2023-01-01 至 2023-12-31 |
+| FY2024 | 69.8% | 128.23 | 2024-01-01 至 2024-12-31 |
+| FY2025 | 69.3% | 128.80 | 2025-01-01 至 2025-12-31 |
+
+[主要消费者记录](evidence/issue47_lodging_five_year_consumer_20261013/README.md)分别证明：从头处理58.753秒；同输入复跑30.577秒，十项均零计算、无新 Result；另进程 `results`/CSV12.079秒，全部保存文件不变。只复跑 FY2023 后，独立读取仍保留全部十行，其余四年的结果不会被子集选择抹掉。原文阅读参考仅在计算后对照，十项数值、单位、日期及原结果身份均一致，没有把旧结果复制为新计算。
+
+来源根和任务身份必须对应。较早的两年任务若绑定的根缺 FY2021/FY2022 原件，会准确报告两个网址的缺件；完整恢复根中已经有材料时，不需要重新 GET。不要手改旧任务的来源身份或把两个来源根的 CSV 手工拼成五年成功。上述新普通任务使用完整根，旧任务、成功结果和失败记录保留。这里证明保存来源后的酒店五年入口，不代表历史在线发现／补齐或十家公司39指标完整验收已完成。
 
 ## 四指标五年模式
 
@@ -217,7 +246,7 @@ main已支持上述历史指标分派，并接收D01风险标题入口、B12与�
 
 ## D01：已入 main 的原文风险标题
 
-历史[PR133](https://github.com/wlvh/SEC_metrics/pull/133)已由接收方以main c7a8428b合入，含PR124／125及PR134的容量代码；本指南3fec376b包含同一公司历史分派。D01保留完整所选原年报Item 1A强调标题及出处，披露风险不表示风险已经发生或不存在其他风险。超过原64条时只在确切容量错误下选择128条／64000字符的显式后继，原64条默认值不改；来源、主体、期间、缺覆盖等错误不能借容量切换放行。
+历史[PR133](https://github.com/wlvh/SEC_metrics/pull/133)已由接收方以main c7a8428b合入，含PR124／125及PR134的容量代码；本指南版本包含同一公司历史分派。D01保留完整所选原年报Item 1A强调标题及出处，披露风险不表示风险已经发生或不存在其他风险。超过原64条时只在确切容量错误下选择128条／64000字符的显式后继，原64条默认值不改；来源、主体、期间、缺覆盖等错误不能借容量切换放行。
 
 从前述main检出直接运行，来源须为已恢复的只读根，状态和输出使用自己的未占用外部目录：
 
@@ -232,7 +261,7 @@ python3 tools/vnext_company.py results --company enphase_energy \
 
 Enphase FY2022输出62条标题，实际2022-01-01至2022-12-31；FY2023／FY2024／FY2025为61／60／60条。PR133当时的34个原文标题结果及11个季度DEI误报是旧阶段记录，见[PR133接收记录](https://github.com/wlvh/SEC_metrics/pull/133#issuecomment-6125200359)，不再作为当前错误状态。
 
-[PR200已合入main b0e71e22](https://github.com/wlvh/SEC_metrics/pull/200#issuecomment-6127504212)，本指南的3fec376b已包含其显式来源与重放政策。原11个季度DEI误报中，10个位置现在得到原文标题，包括Enphase FY2021的68条和Salesforce FY2022的46条；Salesforce FY2021改为准确的D01_MULTISPAN_HEADING_UNSUPPORTED。接收者已对十家公司FY2021–FY2025的同一组合核对，原39个结果的标题、说明及期间保持；显式政策使文档及下游结果ID变化，已有任务在相关程序输入变化后会正常重处理一次，随后相同输入应复用。旧结果仍按原身份读取，不重签。原[唯一主要记录](https://github.com/wlvh/SEC_metrics/blob/ed0a9d717ac5b154f1561483f4bbb09863fe0b0d/docs/evidence/issue47_d01_namespace_20261012/README.md)保留实际新任务、复跑和读取，标题提取通过不等于完整D01业务验收。
+[PR200已合入main b0e71e22](https://github.com/wlvh/SEC_metrics/pull/200#issuecomment-6127504212)，本指南版本已包含其显式来源与重放政策。原11个季度DEI误报中，10个位置现在得到原文标题，包括Enphase FY2021的68条和Salesforce FY2022的46条；Salesforce FY2021改为准确的D01_MULTISPAN_HEADING_UNSUPPORTED。接收者已对十家公司FY2021–FY2025的同一组合核对，原39个结果的标题、说明及期间保持；显式政策使文档及下游结果ID变化，已有任务在相关程序输入变化后会正常重处理一次，随后相同输入应复用。旧结果仍按原身份读取，不重签。原[唯一主要记录](https://github.com/wlvh/SEC_metrics/blob/ed0a9d717ac5b154f1561483f4bbb09863fe0b0d/docs/evidence/issue47_d01_namespace_20261012/README.md)保留实际新任务、复跑和读取，标题提取通过不等于完整D01业务验收。
 
 CSV状态为TEXT_QUAL、单位text，不是数值指标的OK或标题计数。完整标题和来源位置随保存记录读取；旧财务结果、旧失败不覆盖。相同输入完成检查后可复用，未完成的解析失败仍需修补。Salesforce FY2021、Southwest FY2022／FY2023的多段标题，部分修订件和继任范围、在线历史发现／补齐继续未完成。当期D01已随[PR135](https://github.com/wlvh/SEC_metrics/pull/135#issuecomment-6127698995)进入本指南main：使用同一run入口的最新完整财年模式，保存来源验证中8家公司有原文标题，Paramount／Southwest的修订或继任路径仍是明确实现缺口；已有当期／历史同份年报的标题及期间交叉核对直接复用。技术合入不代表正式采纳，也不改变调用许可。
 
@@ -254,7 +283,7 @@ python3 tools/vnext_company.py results --company paramount_skydance_paramount_gl
 
 ## 历史 C03 ECD：已入 main
 
-公共PR148与历史PR149已随C03组合进入main `07c181e4`，本指南 `3fec376b` 包含它们。它通过同一公司入口选择原年度结束后首份同主体代理，直接使用共享 ECD 原生事实解析、保存和出表，不改变当期默认规则。原 first-reported 决定继续：后来的修正值不替代首次报告值。代理的 accession、DEF 14A 类型和申报日期与年度容器分开保留。
+公共PR148与历史PR149已随C03组合进入main `07c181e4`，本指南版本包含它们。它通过同一公司入口选择原年度结束后首份同主体代理，直接使用共享 ECD 原生事实解析、保存和出表，不改变当期默认规则。原 first-reported 决定继续：后来的修正值不替代首次报告值。代理的 accession、DEF 14A 类型和申报日期与年度容器分开保留。
 
 在本指南的main检出中使用已有恢复根，外部状态／输出目录与只读输入分开。下面显式设置示例路径，替换为自己的保存根和未占用目录；无需再检出旧C03候选。
 
@@ -343,7 +372,7 @@ python3 tools/vnext_company.py results --company marriott_international \
 
 ## Lumen 五年 B01/B02：已入 main
 
-公共 [PR164](https://github.com/wlvh/SEC_metrics/pull/164) 的完整来源证明与历史 [PR165](https://github.com/wlvh/SEC_metrics/pull/165) 消费者已由接收方合入本指南此前的 main `c6f5c90f`；当前 `3fec376b` 继续包含这段能力。直接使用前述 main 检出运行本节命令，无需再检出旧候选或复制未提交文件。接收方已从全新状态和旧 main 状态分别验证五年十个值一致、复跑零计算及独立读取；旧任务在相关处理程序变更后会正常重处理一次。[实际接收记录](https://github.com/wlvh/SEC_metrics/pull/165#issuecomment-6106906906)保留验证范围。
+公共 [PR164](https://github.com/wlvh/SEC_metrics/pull/164) 的完整来源证明与历史 [PR165](https://github.com/wlvh/SEC_metrics/pull/165) 消费者已由接收方合入本指南此前的 main `c6f5c90f`；当前版本继续包含这段能力。直接使用前述 main 检出运行本节命令，无需再检出旧候选或复制未提交文件。接收方已从全新状态和旧 main 状态分别验证五年十个值一致、复跑零计算及独立读取；旧任务在相关处理程序变更后会正常重处理一次。[实际接收记录](https://github.com/wlvh/SEC_metrics/pull/165#issuecomment-6106906906)保留验证范围。
 
 本节保留实际 FY2021–2025 的全年日期和 CIK18926。B01 使用原损益表的完整收入，包含原件中的租赁部分；合同客户收入小计不能替代总收入。B02 的前期取前期原申报首次报告值，保留实际来源与可比性检查，不自动改用本年重列比较数。以下只需目标公司的已保存来源和自己的状态，不要求先跑其他公司或逐年拼接内部输出。
 
