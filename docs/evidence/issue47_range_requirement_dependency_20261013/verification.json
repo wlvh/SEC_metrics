@@ -1,0 +1,293 @@
+{
+  "base_main": "99249a4556fa544e31c7bcb5c9146b9d48021a9f",
+  "production_delta": "historical_statement_cases.INCOME_PROCESSING_FILES adds normal_source_requirements; B02 paired inherits",
+  "phases": [
+    {
+      "phase": "first",
+      "arguments": [
+        "run",
+        "--company",
+        "salesforce",
+        "--metric",
+        "B01",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2026",
+        "--fiscal-year-end",
+        "2026",
+        "--source-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/salesforce-history-export-consumer-20261013/package",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/salesforce-history-export-consumer-20261013/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/range-requirement-dependency-20261013/first/run"
+      ],
+      "exit_code": 0,
+      "seconds": 13.085618500001146,
+      "source_requirement_calls": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm",
+          "role": "fiscal_label_primary",
+          "accession": "0001108524-26-000060"
+        },
+        {
+          "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001108524.json",
+          "role": "fiscal_label_companyfacts",
+          "accession": ""
+        },
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/crm-20250131.htm",
+          "role": "fiscal_label_primary",
+          "accession": "0001108524-25-000006"
+        },
+        {
+          "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001108524.json",
+          "role": "fiscal_label_companyfacts",
+          "accession": ""
+        },
+        {
+          "url": "https://data.sec.gov/submissions/CIK0001108524.json",
+          "role": "selected_submissions_inventory",
+          "accession": "SUBMISSIONS-1108524"
+        },
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm",
+          "role": "target_annual_primary",
+          "accession": "0001108524-26-000060"
+        },
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/index.json",
+          "role": "target_annual_accession_index",
+          "accession": "0001108524-26-000060"
+        },
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131_htm.xml",
+          "role": "target_annual_instance",
+          "accession": "0001108524-26-000060"
+        },
+        {
+          "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001108524.json",
+          "role": "selected_companyfacts",
+          "accession": ""
+        }
+      ],
+      "old_results_preserved": true,
+      "result_files_before_after": [
+        14,
+        21
+      ],
+      "state_files_before_after": [
+        29,
+        38
+      ],
+      "results_unchanged": false,
+      "state_unchanged": false,
+      "source_registration_and_ledger_unchanged": true,
+      "new_calls": [
+        0,
+        0,
+        0
+      ],
+      "metrics": [
+        {
+          "metric_id": "B01",
+          "status": "CANDIDATE_READY",
+          "attempt_id": "94354db3af7f4f54a4a77f74f58a82f9",
+          "version": "cb59659461214074b055ea4a7fe43ce9",
+          "result_id": "sha256:8cecba16403adcd8197747cecd1bbb27cb8cb851b4eb236eed2ad74f895ff60d",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/salesforce-history-export-consumer-20261013/state/updates/B01/periods/FY2026/results/cb59659461214074b055ea4a7fe43ce9",
+          "calculation_performed": true,
+          "new_candidate_created": true,
+          "result_reason_code": "PASS",
+          "source_observation_errors": [],
+          "new_calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "requested_fiscal_year": 2026,
+          "defect_holds": [],
+          "read_result_id": "sha256:8cecba16403adcd8197747cecd1bbb27cb8cb851b4eb236eed2ad74f895ff60d",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/salesforce-history-export-consumer-20261013/state/updates/B01/periods/FY2026/results/cb59659461214074b055ea4a7fe43ce9",
+          "program_version": {
+            "commit": "99249a4556fa544e31c7bcb5c9146b9d48021a9f",
+            "has_uncommitted_changes": true
+          }
+        }
+      ]
+    },
+    {
+      "phase": "repeat",
+      "arguments": [
+        "run",
+        "--company",
+        "salesforce",
+        "--metric",
+        "B01",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2026",
+        "--fiscal-year-end",
+        "2026",
+        "--source-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/salesforce-history-export-consumer-20261013/package",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/salesforce-history-export-consumer-20261013/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/range-requirement-dependency-20261013/repeat/run"
+      ],
+      "exit_code": 0,
+      "seconds": 0.47379308300151024,
+      "source_requirement_calls": [],
+      "old_results_preserved": true,
+      "result_files_before_after": [
+        21,
+        21
+      ],
+      "state_files_before_after": [
+        38,
+        40
+      ],
+      "results_unchanged": true,
+      "state_unchanged": false,
+      "source_registration_and_ledger_unchanged": true,
+      "new_calls": [
+        0,
+        0,
+        0
+      ],
+      "metrics": [
+        {
+          "metric_id": "B01",
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "attempt_id": "221345e0f82f46b1a21539d852fe6cd9",
+          "version": "cb59659461214074b055ea4a7fe43ce9",
+          "result_id": "sha256:8cecba16403adcd8197747cecd1bbb27cb8cb851b4eb236eed2ad74f895ff60d",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/salesforce-history-export-consumer-20261013/state/updates/B01/periods/FY2026/results/cb59659461214074b055ea4a7fe43ce9",
+          "result_reason_code": "PASS",
+          "raw_input_unchanged": true,
+          "calculation_performed": false,
+          "new_candidate_created": false,
+          "source_check_versions": {
+            "scripts/vnext/ordinary_current_update.py": "010907fc9357bec243cf1f35e2915f27fe27e44b24d9410e19f954db8802917c",
+            "scripts/vnext/request_bindings.py": "d0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee"
+          },
+          "source_observation_errors": [],
+          "new_calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "requested_fiscal_year": 2026,
+          "defect_holds": [],
+          "read_result_id": "sha256:8cecba16403adcd8197747cecd1bbb27cb8cb851b4eb236eed2ad74f895ff60d",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/salesforce-history-export-consumer-20261013/state/updates/B01/periods/FY2026/results/cb59659461214074b055ea4a7fe43ce9",
+          "program_version": {
+            "commit": "99249a4556fa544e31c7bcb5c9146b9d48021a9f",
+            "has_uncommitted_changes": true
+          }
+        }
+      ]
+    },
+    {
+      "phase": "read",
+      "arguments": [
+        "results",
+        "--company",
+        "salesforce",
+        "--state-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/salesforce-history-export-consumer-20261013/state",
+        "--output-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/range-requirement-dependency-20261013/read/csv"
+      ],
+      "exit_code": 0,
+      "seconds": 0.062185375005356036,
+      "source_requirement_calls": [],
+      "old_results_preserved": true,
+      "result_files_before_after": [
+        21,
+        21
+      ],
+      "state_files_before_after": [
+        40,
+        40
+      ],
+      "results_unchanged": true,
+      "state_unchanged": true,
+      "source_registration_and_ledger_unchanged": true,
+      "new_calls": [
+        0,
+        0,
+        0
+      ],
+      "metrics": [
+        {
+          "metric_id": "B01",
+          "result_id": "sha256:8cecba16403adcd8197747cecd1bbb27cb8cb851b4eb236eed2ad74f895ff60d",
+          "period_start": "2025-02-01",
+          "period_end": "2026-01-31",
+          "fiscal_year": 2026,
+          "value": "41525000000",
+          "unit": "USD",
+          "publication": "PUBLISHED",
+          "quality": "EXACT",
+          "reason_code": "PASS",
+          "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+          "defect_holds": [],
+          "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+          "requested_in_latest_execution": true,
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/salesforce-history-export-consumer-20261013/state/updates/B01/periods/FY2026/results/cb59659461214074b055ea4a7fe43ce9"
+        }
+      ]
+    }
+  ],
+  "actual_csv": {
+    "company": "Salesforce",
+    "cik": "1108524",
+    "metric_id": "B01",
+    "metric_name": "Revenue",
+    "value": "41525000000",
+    "unit": "USD",
+    "status": "OK",
+    "source_class": "STD_XBRL",
+    "formula": "direct",
+    "period_start": "2025-02-01",
+    "period_end": "2026-01-31",
+    "fiscal_year": "2026",
+    "fiscal_period": "ANNUAL",
+    "accession": "0001108524-26-000060",
+    "form": "10-K",
+    "filed_date": "2026-03-02",
+    "concept_or_section": "RevenueFromContractWithCustomerExcludingAssessedTax",
+    "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2026, \"period_end\": \"2026-01-31\", \"period_start\": \"2025-02-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"entity_scope\": \"registrant\", \"period_basis\": \"source_annual_duration\"}, \"selection\": {\"income_observation_checks\": [{\"observation_id\": \"sha256:abe7e36b73f7f0d0f4269680e75b5147fb55e79a1f4019d01bb2591d3f16a9b0\", \"source_roles\": [\"primary\", \"xml\"]}], \"selected_revenue_scope\": {\"complete_scope_proven\": true, \"scope_id\": \"sha256:3c5c344b737625a3cdf3081016a736dc07c9ac969f822cece74824bc6ce1c8eb\", \"status\": \"REPORTED_CONSOLIDATED_TOTAL\"}}, \"source_reference_ids\": [\"sha256:fe3bf7cdab815fd58dc64b19aec533b5aa58e43211b3afe820441d2c9a6706f1\", \"sha256:92c50df49d0a3e20b61a31bddbf5d82ce8d61ed2e2f2752cb78fc6afffb4506c\", \"sha256:7e357b7e0f442af5ba845d6a7e47b6fe332ba51b2afb1b2e036f3daeb8fc9a1f\", \"sha256:77ca4d087014e5be9daf65b86a9ab73e2ddd5b3a9bea5b1e0855117434ef7536\", \"sha256:49f22a0447f7bbc7e9d2fa79e64642550f424d82bd3442741fd292341a84e4d3\"]}",
+    "confidence": "",
+    "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS. Fiscal label follows the explicit issuer definition; original DEI/Company Facts labels remain in the source binding.",
+    "company_id": "salesforce",
+    "result_id": "sha256:8cecba16403adcd8197747cecd1bbb27cb8cb851b4eb236eed2ad74f895ff60d",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/salesforce-history-export-consumer-20261013/state/updates/B01/periods/FY2026/results/cb59659461214074b055ea4a7fe43ce9",
+    "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/salesforce-history-export-consumer-20261013/package",
+    "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+    "period_role": "REQUESTED_RESULT",
+    "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+    "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+    "defect_holds": "[]",
+    "requested_in_latest_execution": "True"
+  },
+  "saved_dependency_sha256": "01ca6ccbfdb5dfbaa1bc1d4410fd00271aece87189c80bbd1351edca96f7528a",
+  "test_result": {
+    "run": 115,
+    "seconds": 2.709,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0
+  },
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

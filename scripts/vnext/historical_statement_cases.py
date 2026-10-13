@@ -59,6 +59,7 @@ PROCESSING_FILES = (
     'catalog/deterministic_metrics.json',
 )
 INCOME_PROCESSING_FILES = (*PROCESSING_FILES,
+    'scripts/vnext/normal_source_requirements.py',
     'scripts/vnext/selected_income_source_v1.py',
     'scripts/vnext/selected_revenue_scope_v1.py',
     'scripts/vnext/selected_reported_revenue_v2.py',
