@@ -58,6 +58,40 @@ class CurrentCompanyTest(unittest.TestCase):
         self.assertFalse((self.work/'programs').exists());self.assertFalse((self.work/'source').exists())
         self.assertTrue(all(row['source_root']==str(self.source) for row in self.rows(r)))
 
+    def test_corrupt_d02_answer_members_do_not_abort_a_mixed_company_batch(self):
+        from vnext import company_local,historical_d02_case
+        answers=self.root/'answers';call=answers/'call';call.mkdir(parents=True)
+        request={'record_type':'D02_ITEM_8_LEGAL_REVIEW_REQUEST','request_id':'request',
+            'company_id':'marriott_international','period_end':'2025-12-31'}
+        (call/'semantic-request.json').write_text(json.dumps(request))
+        old_update=current.run_once.side_effect
+        def processing(**kw):
+            if kw['metric_id']=='D02':
+                return kw['case_factory'](repo_root=kw['source_root'],company_id=kw['company_id'],
+                    metric_id='D02',fiscal_year=kw['fiscal_year'])
+            return old_update(**{**kw,'state_root':kw['state_root']/'periods'/'FY2025'})
+        for index,raw in enumerate((None,'{bad-json','{}')):
+            with self.subTest(terminal=raw):
+                terminal=call/'terminal.json'
+                if raw is None:
+                    if terminal.exists():terminal.unlink()
+                else:terminal.write_text(raw)
+                with patch.object(current,'run_once',side_effect=processing), \
+                     patch.object(historical_d02_case,'prepare_historical_legal_sources',
+                        side_effect=AssertionError('Invalid package must stop before source preparation')):
+                    report=company_local._run_saved_history(company_id='marriott_international',
+                        source_root=self.source,work_dir=self.root/('mixed-'+str(index)),
+                        output_dir=self.root/('mixed-out-'+str(index)),metric_ids=['D02','B04'],
+                        fiscal_year_start=2025,fiscal_year_end=2025,saved_legal_reviews=answers)
+                states={m['metric_id']:m['status'] for m in report['metrics']}
+                self.assertEqual({'D02':'INPUT_OR_EXECUTION_FAILED','B04':'CANDIDATE_READY'},states)
+                self.assertEqual('FLOW_COMPLETED_WITH_LIMITATIONS',report['status'])
+                self.assertTrue((Path(report['output_root'])/'company-results.json').is_file())
+                rows={r['metric_id']:r for r in self.rows(report)}
+                self.assertEqual('100',rows['B04']['value'])
+                self.assertEqual('',rows['D02']['value'])
+                self.assertEqual('NO_CURRENT_RESULT',rows['D02']['result_validity'])
+
     def restored_task(self):
         self.run_company(['B01'])
         restored=self.root/'restored';shutil.copytree(self.work,restored)

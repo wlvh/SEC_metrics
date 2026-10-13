@@ -1,0 +1,16 @@
+test_d02_prefixless_next_note_boundary_keeps_supported_page_layout (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_d02_prefixless_next_note_boundary_keeps_supported_page_layout) ... FAIL
+
+======================================================================
+FAIL: test_d02_prefixless_next_note_boundary_keeps_supported_page_layout (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_d02_prefixless_next_note_boundary_keeps_supported_page_layout)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_text_results_v2.py", line 82, in test_d02_prefixless_next_note_boundary_keeps_supported_page_layout
+    self.assertNotIn('Company litigation disclosures',kept)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'Company litigation disclosures' unexpectedly found in ['Refer to Note 2 for our legal proceedings and pending litigation.', '2. Contingencies', 'We are defendants in litigation concerning a product contract.', 'Unique case 10 remains unresolved.', 'Unique case 11 remains unresolved.', 'Notes to the financial statements', 'Company litigation disclosures', 'The court has not resolved the matter described in the preceding paragraph.']
+
+----------------------------------------------------------------------
+Ran 1 test in 0.007s
+
+FAILED (failures=1)
+{"allowed_skips": 0, "errors": 0, "failures": 1, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_d02_prefixless_next_note_boundary_keeps_supported_page_layout"]}

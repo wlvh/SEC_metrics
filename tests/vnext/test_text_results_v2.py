@@ -63,6 +63,29 @@ def replace_accrual_raw(args, raw):
 
 
 class TextResultV2SourceTest(unittest.TestCase):
+    def test_d02_prefixless_next_note_boundary_keeps_supported_page_layout(self):
+        from tests.vnext.test_text_business_candidates import document
+        from vnext.text_business_candidates import legal_risk_candidates
+        from vnext.d02_text_results_v3 import select_d02_page_furniture
+        pages=''.join('<p>'+str(page)+'</p><p>Notes to the financial statements</p>'
+            '<p>Company litigation disclosures</p><h3>2. Contingencies (Continued)</h3>'
+            '<p>Unique case '+str(page)+' remains unresolved.</p>' for page in (10,11))
+        pages+='<p>12</p><p>Notes to the financial statements</p>'\
+               '<p>Company litigation disclosures</p>'
+        raw=BODY.replace('Note 2. Contingencies','2. Contingencies')
+        court='<p>The court has not resolved the matter described in the preceding paragraph.</p>'
+        raw=raw.replace('<h3>1. Procedural matters</h3>'+court,court+pages)
+        raw=raw.replace('Note 3. Income Taxes','3. Income Taxes')
+        doc=document(raw);proposal=legal_risk_candidates(document=doc)
+        selected=select_d02_page_furniture(proposal=proposal,document=doc)
+        self.assertEqual('LOCATED_NOTE_RANGE',proposal['note_references'][0]['status'])
+        kept=[c['text'] for c in selected['D02']['candidates']]
+        self.assertNotIn('Company litigation disclosures',kept)
+        self.assertNotIn('Notes to the financial statements',kept)
+        self.assertIn('Unique case 10 remains unresolved.',kept)
+        self.assertIn('Unique case 11 remains unresolved.',kept)
+        self.assertEqual(proposal['D03'],selected['D03'])
+
     def test_d02_numbered_subsections_do_not_anchor_repeated_disclosure_removal(self):
         from tests.vnext.test_text_business_candidates import document
         from vnext.text_business_candidates import legal_risk_candidates
