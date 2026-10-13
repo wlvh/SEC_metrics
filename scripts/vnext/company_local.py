@@ -411,10 +411,16 @@ def _run_saved_history(*, company_id, source_root, work_dir, output_dir, metric_
     d04_factory = historical_d04_factory(saved_call_package=saved_call_package) if 'D04' in selected else None
     d02_factory=None;d02_files=();d02_inputs=()
     if saved_legal_reviews is not None:
-        from .historical_d02_case import historical_d02_factory,PROCESSING_FILES as d02_files,saved_review_input_paths
+        from .historical_d02_case import (historical_d02_factory,PROCESSING_FILES as d02_files,
+            saved_review_input_paths,invalid_saved_review_factory)
         need(fiscal_year_start==fiscal_year_end,'LOCAL_D02_SAVED_REVIEWS_REQUIRE_ONE_PERIOD')
         d02_factory=historical_d02_factory(saved_review_root=saved_legal_reviews)
-        d02_inputs=saved_review_input_paths(saved_review_root=saved_legal_reviews,company_id=company_id)
+        try:
+            d02_inputs=saved_review_input_paths(saved_review_root=saved_legal_reviews,company_id=company_id)
+        except Exception as error:
+            # Package errors belong to D02, not to unrelated selected metrics.
+            # The shared updater persists the failure and retains old results.
+            d02_factory=invalid_saved_review_factory(error=error)
         received.add('D02')
     from .company_current_records import run_saved_company
     range_factories = {}

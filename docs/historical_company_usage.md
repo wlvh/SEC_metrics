@@ -1,6 +1,6 @@
 # 历史公司使用指南
 
-截至2026-10-13，本指南使用可取得的main版本 `293e495f`。它包含原 `c6f5c90f` 的公司入口及后续接收增量。同一 `tools/vnext_company.py`、公共更新器、保存器和结果读口支持保存来源的历史 B10/B11，以及连续主体的 B01/B02/B03/B04/B05和所选CIK余额的B08/B09；修订和来源范围仍受各族的明确检查约束。酒店共用计算与四指标历史适配已 main；C03首次代理选择及ECD／适用普通表格读取已随PR148–151入main；PR58 合入的是机械 D02 引文检查，D02 公司模型链和完整五年业务验收仍未完成。
+截至2026-10-13，本指南使用可取得的main版本 `6efe086455693abbc0fc9d54cbe54b5286a84877`。它包含原 `c6f5c90f` 的公司入口及后续接收增量。同一 `tools/vnext_company.py`、公共更新器、保存器和结果读口支持保存来源的历史 B10/B11，以及连续主体的 B01/B02/B03/B04/B05和所选CIK余额的B08/B09；修订和来源范围仍受各族的明确检查约束。酒店共用计算与四指标历史适配已 main；C03首次代理选择及ECD／适用普通表格读取已随PR148–151入main；PR58 合入的是机械 D02 引文检查，D02 公司模型链和完整五年业务验收仍未完成。
 
 A01/A02资本、A05/A06/A07/A08/A10银行指标和B07年度计算也已main。C01/E02–E05普通历史适配及公共事件源/宽窗接口已在main；[PR90](https://github.com/wlvh/SEC_metrics/pull/90)和[PR89](https://github.com/wlvh/SEC_metrics/pull/89)已由接收方合入；后续消费者记录继续按本记录的执行版本解释，不改旧运行记录。PR83 的普通在线接续不等于历史模式已能在线发现与补齐来源；本指南的 `fiscal-years` 仍需已保存来源根。代码合入不表示正式采纳、发布或 active 切换。
 
@@ -21,7 +21,7 @@ PR155按目标公司的登记行判断输入变化，并仍验证整个登记表
 ```bash
 git fetch origin main
 git worktree add -b review/issue47-hotel-history ../SEC_metrics-history-review \
-  99249a45
+  6efe086455693abbc0fc9d54cbe54b5286a84877
 cd ../SEC_metrics-history-review
 python3 tools/vnext_company.py run --help
 ```
@@ -266,6 +266,8 @@ Enphase FY2022输出62条标题，实际2022-01-01至2022-12-31；FY2023／FY202
 CSV状态为TEXT_QUAL、单位text，不是数值指标的OK或标题计数。完整标题和来源位置随保存记录读取；旧财务结果、旧失败不覆盖。相同输入完成检查后可复用，未完成的解析失败仍需修补。Salesforce FY2021、Southwest FY2022／FY2023的多段标题，部分修订件和继任范围、在线历史发现／补齐继续未完成。当期D01已随[PR135](https://github.com/wlvh/SEC_metrics/pull/135#issuecomment-6127698995)进入本指南main：使用同一run入口的最新完整财年模式，保存来源验证中8家公司有原文标题，Paramount／Southwest的修订或继任路径仍是明确实现缺口；已有当期／历史同份年报的标题及期间交叉核对直接复用。技术合入不代表正式采纳，也不改变调用许可。
 
 ## E01：已入 main 的完整保存输入与未决结果
+
+本指南版本已接收[PR244](https://github.com/wlvh/SEC_metrics/pull/244)：Pfizer FY2023 的申报 header 列2.02，而可见正文标题为2.01；两份原件和冲突保留，不选择一方。现在同一公司入口保存 `E01_ITEM_METADATA_BODY_CONFLICT`／WITHHELD／null，已完成检查可按未变输入复用并独立导出；这不是零事件，也没有解决年度 M&A 计数。原件缺失（如Salesforce FY2021）仍与该内容冲突分开解释。[实际公司保存、复跑、读取及两原件](https://github.com/wlvh/SEC_metrics/blob/db403009be17f71fb5ca08c965e07d21e7363fe2/docs/evidence/issue47_e01_item_conflict_state_20261013/README.md)和[接收同main组合](https://github.com/wlvh/SEC_metrics/pull/244#issuecomment-6140456590)按各自范围复用；接收评论中反向的header/body描述已由原件更正。无关公共代码变动导致的额外处理仍有[已定位复用缺口](https://github.com/wlvh/SEC_metrics/blob/0d4713de6127785ea5f04130e65978b3726ff786/docs/evidence/issue47_e01_main6efe_receiving_20261013/README.md)，不把旧分支零计算记录当作所有后继组合已通过。
 
 历史 [PR114](https://github.com/wlvh/SEC_metrics/pull/114)与公共[PR113](https://github.com/wlvh/SEC_metrics/pull/113)已由接收者以main302074f4接收，收入／D04／事件报送主体接口并存；本指南main包含它们。后继[PR188](https://github.com/wlvh/SEC_metrics/pull/188)已接收，修复基础结束标题紧接不同字母分节时的唯一结束点读取；Southwest FY2024因此形成完整输入，但仍缺对应内容回答，不能输出年度计数。Paramount FY2024 的完整8项来源与已消费一次GET取得的EX-99可恢复，V2请求 `2aa878ef…` 已由同公司入口准备、保存、复跑和独立导出；缺少与该请求对应的目标模型回答，结果保持 `WITHHELD/null/E01_CONTENT_RESPONSE_NOT_AVAILABLE_FOR_REQUEST`。不能把旧V1回答或部分候选数补成年度计数。
 

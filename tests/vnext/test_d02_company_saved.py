@@ -39,6 +39,16 @@ class D02SavedCompanyTest(unittest.TestCase):
             factory(repo_root=self.root/'sources',company_id='ford_motor_company',metric_id='D02',fiscal_year=2025)
         read.assert_not_called();finish.assert_not_called()
 
+    def test_package_failure_producer_is_distinct_and_retains_original_error(self):
+        error=KeyError('evidence')
+        failure=public.invalid_saved_review_factory(error=error)
+        normal=public.historical_d02_factory(saved_review_root=self.answers)
+        self.assertNotEqual(normal.__qualname__,failure.__qualname__)
+        with patch.object(public,'prepare_historical_legal_sources') as prepare, \
+             self.assertRaises(KeyError) as raised:
+            failure(repo_root=self.root/'sources',company_id='ford_motor_company',metric_id='D02',fiscal_year=2025)
+        self.assertIs(error,raised.exception);prepare.assert_not_called()
+
     def test_recorded_or_unknown_usage_answer_has_no_business_case_credit(self):
         factory=public.historical_d02_factory(saved_review_root=self.answers)
         for review in ({'original_execution_mode':'RECORDED','usage_known':True},

@@ -195,6 +195,11 @@ def _note_references(document, ranges):
             possible = [other["start"] for other in headings if other["start"] > h["start"]
                         and int(re.match(r"\d+", other["number"])[0]) == base_number + 1
                         and (not h["explicit_prefix"] or other["explicit_prefix"])]
+            # Without an explicit Note prefix, a same-number subsection and
+            # the actual following note are indistinguishable in this view.
+            # Do not silently choose the earlier one and truncate disclosure.
+            if not h["explicit_prefix"] and len(possible) > 1:
+                continue
             possible.extend(r["end_block_exclusive"] for r in ranges if r["section_id"] == "ITEM_8"
                             and r["start_block"] <= h["start"] < r["end_block_exclusive"])
             end = min(possible) if possible else None

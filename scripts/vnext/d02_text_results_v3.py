@@ -279,6 +279,7 @@ def select_d02_page_furniture(*, proposal, document):
     page_layout = _page_structure_furniture(blocks)
     note_titles = {" ".join(h['text'].split()).casefold()
                    for ref in proposal['note_references']
+                   if ref['status']=='LOCATED_NOTE_RANGE'
                    for h in ref['heading_candidates']}
     note_ends = {r['end_block_exclusive'] for ref in proposal['note_references']
                  if ref['status']=='LOCATED_NOTE_RANGE'

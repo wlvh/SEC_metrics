@@ -1,0 +1,20 @@
+test_d02_prefixless_sequential_subsections_make_note_end_unresolved (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_d02_prefixless_sequential_subsections_make_note_end_unresolved) ... FAIL
+
+======================================================================
+FAIL: test_d02_prefixless_sequential_subsections_make_note_end_unresolved (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_d02_prefixless_sequential_subsections_make_note_end_unresolved)
+----------------------------------------------------------------------
+vnext.d02_text_results_v3.TextResultV2Error: TEXT_V2_LEGAL_SOURCE_NAVIGATION_INCOMPLETE
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_text_results_v2.py", line 85, in test_d02_prefixless_sequential_subsections_make_note_end_unresolved
+    with self.assertRaisesRegex(ValueError,'NOTE|RANGE|COVERAGE'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "NOTE|RANGE|COVERAGE" does not match "TEXT_V2_LEGAL_SOURCE_NAVIGATION_INCOMPLETE"
+
+----------------------------------------------------------------------
+Ran 1 test in 0.010s
+
+FAILED (failures=1)
+{"allowed_skips": 0, "errors": 0, "failures": 1, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_d02_prefixless_sequential_subsections_make_note_end_unresolved"]}

@@ -63,6 +63,29 @@ def replace_accrual_raw(args, raw):
 
 
 class TextResultV2SourceTest(unittest.TestCase):
+    def test_d02_prefixless_sequential_subsections_make_note_end_unresolved(self):
+        from tests.vnext.test_text_business_candidates import document
+        from vnext.text_business_candidates import legal_risk_candidates
+        from vnext.d02_text_results_v3 import select_d02_page_furniture
+        pages=''.join('<p>'+str(page)+'</p>'
+            '<p>We remain subject to litigation concerning this agreement.</p>'
+            '<h3>'+str(section)+'. Procedural matters</h3>'
+            for page,section in zip((10,11,12),(3,4,5)))
+        raw=BODY.replace('Note 2. Contingencies','2. Contingencies')
+        raw=raw.replace('Note 3. Income Taxes','3. Income Taxes')
+        raw=raw.replace('<h3>1. Procedural matters</h3>',pages)
+        doc=document(raw);proposal=legal_risk_candidates(document=doc)
+        reference=proposal['note_references'][0]
+        self.assertEqual('REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE',reference['status'])
+        self.assertIn('UNRESOLVED_NOTE_2',proposal['coverage_reasons'])
+        self.assertFalse(reference['range_candidates'])
+        selected=select_d02_page_furniture(proposal=proposal,document=doc)
+        self.assertEqual(proposal,selected)
+        from vnext import d02_text_results_v3 as current_core
+        with self.assertRaisesRegex(ValueError,'TEXT_V2_LEGAL_SOURCE_NAVIGATION_INCOMPLETE'):
+            current_core.prepare_business_text_sources(metric_id='D02',
+                d02_page_furniture=True,**inputs('D02',annual_body=raw))
+
     def test_d02_prefixless_next_note_boundary_keeps_supported_page_layout(self):
         from tests.vnext.test_text_business_candidates import document
         from vnext.text_business_candidates import legal_risk_candidates

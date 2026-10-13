@@ -1,0 +1,42 @@
+{
+  "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/e01-reuse-scope-20261013/state",
+  "original_state": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/e01-item-conflict-state-20261013/state",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "commit": "25b92f7e35abcdd958eb5bbac5dca110ab0916ea",
+  "uncommitted_paths": [
+    " M scripts/vnext/ordinary_update_compatibility.py",
+    " M tests/vnext/test_ordinary_current_update.py",
+    "?? docs/evidence/issue28_e01_reuse_scope_20261013/actual-reuse.log",
+    "?? docs/evidence/issue28_e01_reuse_scope_20261013/before-dispatch.log",
+    "?? docs/evidence/issue28_e01_reuse_scope_20261013/dispatch-controls.log",
+    "?? docs/evidence/issue28_e01_reuse_scope_20261013/verify_reuse.py"
+  ],
+  "phases": {
+    "first-reuse": {
+      "seconds": 0.5928170419938397,
+      "exit_code": 2
+    },
+    "second-reuse": {
+      "seconds": 0.5674687919963617,
+      "exit_code": 2
+    },
+    "read": {
+      "seconds": 0.22892295898054726,
+      "exit_code": 0
+    }
+  },
+  "original_task_files_unchanged": 19,
+  "saved_result_files_unchanged": 7,
+  "source_metadata_unchanged": {
+    "config/company_registry.csv": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+    "evidence/requests_log.csv": "61252ac5844ad1c5917040f753c04a7ed4f6e1d75e2fb0803804773fd6c0eef9",
+    "evidence/requests_log_manifest.json": "e91193401733b86ddc28c69cbae0debd74eeb899a328e60fcfb32532ed6a85ab"
+  },
+  "reader_state_files_unchanged": 23,
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "complete_annual_ma_count_proven": false
+}

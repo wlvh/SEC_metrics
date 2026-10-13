@@ -35,6 +35,11 @@ def _configuration(source, company, metric):
     # legacy RecordedSourceSession. Consumers that actually use that session
     # may still name it explicitly in run_once(processing_files=...).
     paths.discard('scripts/vnext/ordinary_source_session.py')
+    if metric == 'E01':
+        # Both event-item and content-confirmed E01 prepare annual/event
+        # sources; neither executes D02's legal-excerpt/page selection.
+        # Explicit D02 consumers still retain this processing dependency.
+        paths.discard('scripts/vnext/d02_text_results_v3.py')
     # These files belong solely to the lodging producer. The zero-AI Spec
     # set never prepares a lodging case; unrelated edits must not recalculate
     # B01/B02 or their other supported deterministic neighbours.
@@ -378,7 +383,9 @@ def run_once(*, state_root, source_root, company_id, metric_id, shared_input_roo
                     if compatible:
                         # A new check can recognize the same inputs; the old
                         # result, terminal and last success keep their identities.
-                        report['configuration_compatibility'] = 'FINITE_D04_DISPATCH_ONLY'
+                        report['configuration_compatibility'] = (
+                            'FINITE_INSPECTED_E01_DISPATCH_ONLY' if metric_id=='E01'
+                            else 'FINITE_D04_DISPATCH_ONLY')
                         report['completed_check'] = {**comparison, 'configuration':configuration,
                             'status':('CANDIDATE_WITHHELD' if status=='PREVIOUS_INPUT_WITHHELD'
                                       else 'CANDIDATE_READY')}

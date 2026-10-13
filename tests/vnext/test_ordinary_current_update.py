@@ -184,6 +184,56 @@ class CompletedWithheldUpdateTest(unittest.TestCase):
 
 
 class CurrentProcessingConfigurationTest(unittest.TestCase):
+    def test_inspected_statement_dispatch_addition_preserves_e01_only(self):
+        from copy import deepcopy
+        from scripts.vnext.ordinary_update_compatibility import compatible_configuration
+        current=update._configuration(ROOT,'pfizer','E01')
+        previous=deepcopy(current)
+        previous['processing_files']['scripts/vnext/ordinary_saved_result.py']='f7229fa090da9558f8fbbe759491671bc0adbf668e193e303fbbc42206947681'
+        previous['processing_files']['scripts/vnext/ordinary_current_update.py']='010907fc9357bec243cf1f35e2915f27fe27e44b24d9410e19f954db8802917c'
+        previous['processing_files']['scripts/vnext/d02_text_results_v3.py']='17e338951f441f4531a540212e48d1c2d69d23235267891130050435246e2e32'
+        previous['processing_files']['scripts/vnext/ordinary_update_compatibility.py']='14aba908024c3331d5f1e40301c5145ad294560d2dc267cf3bdce4e38f599950'
+        self.assertTrue(compatible_configuration(previous,current))
+        self.assertIn('scripts/vnext/d02_text_results_v3.py',previous['processing_files'])
+        self.assertEqual('f7229fa090da9558f8fbbe759491671bc0adbf668e193e303fbbc42206947681',
+                         previous['processing_files']['scripts/vnext/ordinary_saved_result.py'])
+        for relative in ('scripts/vnext/calculator.py','scripts/vnext/normal_annual_input.py',
+                         'catalog/r6/E01_content_confirmed_ma_v1.md'):
+            changed=deepcopy(current);changed['processing_files'][relative]='changed-used-rule'
+            self.assertFalse(compatible_configuration(previous,changed))
+        for field in ('company_registry_rows','metric_id'):
+            changed=deepcopy(current);changed[field]='changed-scope'
+            self.assertFalse(compatible_configuration(previous,changed))
+        changed=deepcopy(current);changed['processing_files']['scripts/vnext/ordinary_saved_result.py']='unknown-new-writer'
+        self.assertFalse(compatible_configuration(previous,changed))
+        changed=deepcopy(previous);changed['processing_files']['scripts/vnext/ordinary_update_compatibility.py']='unknown-old-comparison-policy'
+        self.assertFalse(compatible_configuration(changed,current))
+        changed_old=deepcopy(previous);changed_new=deepcopy(current)
+        changed_old['metric_id']=changed_new['metric_id']='B04'
+        self.assertFalse(compatible_configuration(changed_old,changed_new))
+        for field,value in (('case_producer',{'sha256':'changed-producer'}),
+                            ('saved_processing_inputs',{'request.json':'changed-request'})):
+            changed=deepcopy(current);changed[field]=value
+            self.assertFalse(compatible_configuration(previous,changed))
+        # The other inspected store only adds D02 registration. It must not
+        # open the same exception for an arbitrary future store version.
+        changed=deepcopy(current)
+        changed['processing_files']['scripts/vnext/ordinary_saved_result.py']='9f7de93d41929669c7f08f394425c1e3ad181896bdde3fa6d079ca3924272d21'
+        self.assertTrue(compatible_configuration(previous,changed))
+        intermediate=deepcopy(previous)
+        intermediate['processing_files']['scripts/vnext/ordinary_saved_result.py']='d2cee7e3527cd99eb15a653b6d9778357acced0345af172a64a3c37a96f74ae2'
+        self.assertTrue(compatible_configuration(intermediate,changed))
+
+    def test_e01_does_not_consume_d02_page_selection_but_d02_still_does(self):
+        original=update.sha256_file
+        selected=ROOT/'scripts/vnext/d02_text_results_v3.py'
+        before={metric:update._configuration(ROOT,'pfizer',metric) for metric in ('E01','D02')}
+        with patch.object(update,'sha256_file',side_effect=lambda *,path:
+                'changed-d02-only-page-selection' if path==selected else original(path=path)):
+            after={metric:update._configuration(ROOT,'pfizer',metric) for metric in before}
+        self.assertEqual(before['E01'],after['E01'])
+        self.assertNotEqual(before['D02'],after['D02'])
+
     def test_debt_note_change_does_not_invalidate_saved_d04_configuration(self):
         original=update.sha256_file
         before={metric:update._configuration(ROOT,'marriott_international',metric)
