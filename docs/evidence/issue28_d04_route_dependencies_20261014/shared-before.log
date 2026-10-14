@@ -1,0 +1,70 @@
+FFFFF
+======================================================================
+FAIL: test_actual_history_declaration_keeps_all_observed_shared_rules (tests.vnext.test_ordinary_current_update.D04SelectedProducerDependencyTest.test_actual_history_declaration_keeps_all_observed_shared_rules) (name='r6_semantic_review')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_ordinary_current_update.py", line 709, in test_actual_history_declaration_keeps_all_observed_shared_rules
+    self.exercise('historical','scripts/vnext/'+name+'.py',True,
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_ordinary_current_update.py", line 683, in exercise
+    self.assertEqual('CANDIDATE_WITHHELD' if expect_processing else
+AssertionError: 'CANDIDATE_WITHHELD' != 'PREVIOUS_INPUT_WITHHELD'
+- CANDIDATE_WITHHELD
++ PREVIOUS_INPUT_WITHHELD
+ : {'status': 'PREVIOUS_INPUT_WITHHELD', 'attempt_id': '19085b762f814cfca62d86e8c7f0625e', 'version': 'ee29d4880c9b4d68b726677ed14e7c49', 'result_id': 'constructed-0', 'result_root': '/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmp9so4ao00/state/periods/FY2024/results/ee29d4880c9b4d68b726677ed14e7c49', 'result_reason_code': 'CONSTRUCTED_MEDIA_REVIEW', 'raw_input_unchanged': True, 'calculation_performed': False, 'new_candidate_created': False, 'source_check_versions': {'scripts/vnext/ordinary_current_update.py': '4cb617aeed44fec775dd48787d0ebd662f2a899162ed3d44a76e1ff963cc6f5e', 'scripts/vnext/request_bindings.py': 'd0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee', 'scripts/vnext/ordinary_update_compatibility.py': 'dcd5f7fad86dd36fec7ffc1ce15cb274cd3670dba213777b6cdaa4a4090d80b9', 'scripts/vnext/ordinary_result_registration.py': 'edf88293f2c568efc113703211bf587d3b0fc065a59c90ddbfb302acd681daee'}, 'source_observation_errors': [], 'new_calls': {'provider': 0, 'paid': 0, 'sec': 0}, 'production_authorized': False, 'requested_fiscal_year': 2024}
+
+======================================================================
+FAIL: test_actual_history_declaration_keeps_all_observed_shared_rules (tests.vnext.test_ordinary_current_update.D04SelectedProducerDependencyTest.test_actual_history_declaration_keeps_all_observed_shared_rules) (name='text_results')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_ordinary_current_update.py", line 709, in test_actual_history_declaration_keeps_all_observed_shared_rules
+    self.exercise('historical','scripts/vnext/'+name+'.py',True,
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_ordinary_current_update.py", line 683, in exercise
+    self.assertEqual('CANDIDATE_WITHHELD' if expect_processing else
+AssertionError: 'CANDIDATE_WITHHELD' != 'PREVIOUS_INPUT_WITHHELD'
+- CANDIDATE_WITHHELD
++ PREVIOUS_INPUT_WITHHELD
+ : {'status': 'PREVIOUS_INPUT_WITHHELD', 'attempt_id': '1912180887dc4741a3045bbdc1b40e84', 'version': 'cc943aaa07a54e239ac7967c7c910221', 'result_id': 'constructed-0', 'result_root': '/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmp4t60e9h8/state/periods/FY2024/results/cc943aaa07a54e239ac7967c7c910221', 'result_reason_code': 'CONSTRUCTED_MEDIA_REVIEW', 'raw_input_unchanged': True, 'calculation_performed': False, 'new_candidate_created': False, 'source_check_versions': {'scripts/vnext/ordinary_current_update.py': '4cb617aeed44fec775dd48787d0ebd662f2a899162ed3d44a76e1ff963cc6f5e', 'scripts/vnext/request_bindings.py': 'd0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee', 'scripts/vnext/ordinary_update_compatibility.py': 'dcd5f7fad86dd36fec7ffc1ce15cb274cd3670dba213777b6cdaa4a4090d80b9', 'scripts/vnext/ordinary_result_registration.py': 'edf88293f2c568efc113703211bf587d3b0fc065a59c90ddbfb302acd681daee'}, 'source_observation_errors': [], 'new_calls': {'provider': 0, 'paid': 0, 'sec': 0}, 'production_authorized': False, 'requested_fiscal_year': 2024}
+
+======================================================================
+FAIL: test_actual_history_declaration_keeps_all_observed_shared_rules (tests.vnext.test_ordinary_current_update.D04SelectedProducerDependencyTest.test_actual_history_declaration_keeps_all_observed_shared_rules) (name='regulatory_investigation_candidates')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_ordinary_current_update.py", line 709, in test_actual_history_declaration_keeps_all_observed_shared_rules
+    self.exercise('historical','scripts/vnext/'+name+'.py',True,
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_ordinary_current_update.py", line 683, in exercise
+    self.assertEqual('CANDIDATE_WITHHELD' if expect_processing else
+AssertionError: 'CANDIDATE_WITHHELD' != 'PREVIOUS_INPUT_WITHHELD'
+- CANDIDATE_WITHHELD
++ PREVIOUS_INPUT_WITHHELD
+ : {'status': 'PREVIOUS_INPUT_WITHHELD', 'attempt_id': '7887731c2136453e9df6e80b7e5d1931', 'version': 'f372c77d78aa41fd99985c02695f6e0c', 'result_id': 'constructed-0', 'result_root': '/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmpmr9sjme4/state/periods/FY2024/results/f372c77d78aa41fd99985c02695f6e0c', 'result_reason_code': 'CONSTRUCTED_MEDIA_REVIEW', 'raw_input_unchanged': True, 'calculation_performed': False, 'new_candidate_created': False, 'source_check_versions': {'scripts/vnext/ordinary_current_update.py': '4cb617aeed44fec775dd48787d0ebd662f2a899162ed3d44a76e1ff963cc6f5e', 'scripts/vnext/request_bindings.py': 'd0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee', 'scripts/vnext/ordinary_update_compatibility.py': 'dcd5f7fad86dd36fec7ffc1ce15cb274cd3670dba213777b6cdaa4a4090d80b9', 'scripts/vnext/ordinary_result_registration.py': 'edf88293f2c568efc113703211bf587d3b0fc065a59c90ddbfb302acd681daee'}, 'source_observation_errors': [], 'new_calls': {'provider': 0, 'paid': 0, 'sec': 0}, 'production_authorized': False, 'requested_fiscal_year': 2024}
+
+======================================================================
+FAIL: test_actual_history_declaration_keeps_all_observed_shared_rules (tests.vnext.test_ordinary_current_update.D04SelectedProducerDependencyTest.test_actual_history_declaration_keeps_all_observed_shared_rules) (name='capacity_semantic_review')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_ordinary_current_update.py", line 709, in test_actual_history_declaration_keeps_all_observed_shared_rules
+    self.exercise('historical','scripts/vnext/'+name+'.py',True,
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_ordinary_current_update.py", line 683, in exercise
+    self.assertEqual('CANDIDATE_WITHHELD' if expect_processing else
+AssertionError: 'CANDIDATE_WITHHELD' != 'PREVIOUS_INPUT_WITHHELD'
+- CANDIDATE_WITHHELD
++ PREVIOUS_INPUT_WITHHELD
+ : {'status': 'PREVIOUS_INPUT_WITHHELD', 'attempt_id': '283a926ab6b94e39a9bb7034d54a1e51', 'version': '45c1abd5c82f425d9bfe500929a195d3', 'result_id': 'constructed-0', 'result_root': '/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmpvjy6brca/state/periods/FY2024/results/45c1abd5c82f425d9bfe500929a195d3', 'result_reason_code': 'CONSTRUCTED_MEDIA_REVIEW', 'raw_input_unchanged': True, 'calculation_performed': False, 'new_candidate_created': False, 'source_check_versions': {'scripts/vnext/ordinary_current_update.py': '4cb617aeed44fec775dd48787d0ebd662f2a899162ed3d44a76e1ff963cc6f5e', 'scripts/vnext/request_bindings.py': 'd0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee', 'scripts/vnext/ordinary_update_compatibility.py': 'dcd5f7fad86dd36fec7ffc1ce15cb274cd3670dba213777b6cdaa4a4090d80b9', 'scripts/vnext/ordinary_result_registration.py': 'edf88293f2c568efc113703211bf587d3b0fc065a59c90ddbfb302acd681daee'}, 'source_observation_errors': [], 'new_calls': {'provider': 0, 'paid': 0, 'sec': 0}, 'production_authorized': False, 'requested_fiscal_year': 2024}
+
+======================================================================
+FAIL: test_actual_history_declaration_keeps_all_observed_shared_rules (tests.vnext.test_ordinary_current_update.D04SelectedProducerDependencyTest.test_actual_history_declaration_keeps_all_observed_shared_rules) (name='request_limits')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_ordinary_current_update.py", line 709, in test_actual_history_declaration_keeps_all_observed_shared_rules
+    self.exercise('historical','scripts/vnext/'+name+'.py',True,
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_ordinary_current_update.py", line 683, in exercise
+    self.assertEqual('CANDIDATE_WITHHELD' if expect_processing else
+AssertionError: 'CANDIDATE_WITHHELD' != 'PREVIOUS_INPUT_WITHHELD'
+- CANDIDATE_WITHHELD
++ PREVIOUS_INPUT_WITHHELD
+ : {'status': 'PREVIOUS_INPUT_WITHHELD', 'attempt_id': 'a7862924b8ec416b899307097296433f', 'version': 'e5dc7d0bc0e442b892fb3575821db087', 'result_id': 'constructed-0', 'result_root': '/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmpygd475j8/state/periods/FY2024/results/e5dc7d0bc0e442b892fb3575821db087', 'result_reason_code': 'CONSTRUCTED_MEDIA_REVIEW', 'raw_input_unchanged': True, 'calculation_performed': False, 'new_candidate_created': False, 'source_check_versions': {'scripts/vnext/ordinary_current_update.py': '4cb617aeed44fec775dd48787d0ebd662f2a899162ed3d44a76e1ff963cc6f5e', 'scripts/vnext/request_bindings.py': 'd0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee', 'scripts/vnext/ordinary_update_compatibility.py': 'dcd5f7fad86dd36fec7ffc1ce15cb274cd3670dba213777b6cdaa4a4090d80b9', 'scripts/vnext/ordinary_result_registration.py': 'edf88293f2c568efc113703211bf587d3b0fc065a59c90ddbfb302acd681daee'}, 'source_observation_errors': [], 'new_calls': {'provider': 0, 'paid': 0, 'sec': 0}, 'production_authorized': False, 'requested_fiscal_year': 2024}
+
+----------------------------------------------------------------------
+Ran 1 test in 0.164s
+
+FAILED (failures=5)

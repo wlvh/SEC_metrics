@@ -57,6 +57,11 @@ def prepare_current_d04_case(*, source_root, company_id, ledger=None):
         if not (path/'source.json').exists():continue
         source=strict_json_file(path=path/'source.json')
         if source.get('company_id')!=company_id or source.get('metric_id')!='D04':continue
+        # Many successful groups save the same complete packet. Within this
+        # operation compare identical parsed content once, then still validate
+        # every original request and response in the complete partition.
+        known=sources.get(source['semantic_source_id'])
+        if known is not None and source==known[0]:continue
         try:equivalence=source_equivalence(current=current_source,original=source)
         except ValueError:continue
         sources.setdefault(source['semantic_source_id'],(source,equivalence))

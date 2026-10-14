@@ -66,6 +66,63 @@ class D03InterpretationSourceRootTest(unittest.TestCase):
             self.assertFalse(result['native_candidate_or_evidence_created'])
             self.assertFalse(result['native_result_or_run_created'])
 
+    def test_explicit_non_action_and_context_shorthand_have_same_review_requirement(self):
+        source,request,prepared=self.inputs()
+        for shorthand in (False,True):
+            finding={'kind':'OTHER_MEANING','subject':'UNRESOLVED','timing':'UNRESOLVED',
+                'reported_status':'NOT_AN_ACTION_STATEMENT','unit_id':'unit',
+                'evidence':[{'kind':'VISIBLE_BLOCK','source_index':7}]}
+            checked={'findings':[finding],'unresolved':[],
+                'provider_response':{'units':[{'unit_id':'unit',
+                    'context_only_source_indices':[7] if shorthand else []}]}}
+            with self.subTest(shorthand=shorthand), \
+                 patch.object(interpret,'prepare_native_input',return_value=prepared), \
+                 patch.object(interpret,'requests_from_source',return_value=[request]), \
+                 patch.object(interpret,'validate_response',return_value=checked):
+                result=interpret.validate_complete_interpretation(prepared_input=prepared,
+                    response_bytes_by_request={'original':b'constructed'})
+            self.assertEqual([],result['unresolved_group_indices'])
+            self.assertEqual('ABSENCE_RULE_NOT_APPROVED',result['proposed_branch'])
+            self.assertEqual([finding],result['group_rows'][0]['findings'])
+            self.assertFalse(result['native_result_or_run_created'])
+
+    def test_nonempty_current_proposal_is_not_blocked_by_valid_non_action_context(self):
+        source,request,prepared=self.inputs()
+        positive={'kind':'CURRENT_REGULATORY_ACTION','subject':'TARGET_REGISTRANT',
+            'timing':'CURRENT_REPORT','reported_status':'ONGOING_AS_REPORTED',
+            'unit_id':'unit','evidence':[{'kind':'VISIBLE_BLOCK','source_index':8}]}
+        background={'kind':'OTHER_MEANING','subject':'UNRESOLVED','timing':'UNRESOLVED',
+            'reported_status':'NOT_AN_ACTION_STATEMENT','unit_id':'unit',
+            'evidence':[{'kind':'VISIBLE_BLOCK','source_index':7}]}
+        with patch.object(interpret,'prepare_native_input',return_value=prepared), \
+             patch.object(interpret,'requests_from_source',return_value=[request]), \
+             patch.object(interpret,'validate_response',return_value={'findings':[positive,background],'unresolved':[]}):
+            result=interpret.validate_complete_interpretation(prepared_input=prepared,
+                response_bytes_by_request={'original':b'constructed'})
+        self.assertEqual([],result['unresolved_group_indices'])
+        self.assertEqual([positive],result['proposed_current_findings'])
+        self.assertEqual('CURRENT_DISCLOSURE_REQUIRES_NATIVE_REVIEW',result['proposed_branch'])
+        self.assertFalse(result['native_result_or_run_created'])
+
+    def test_real_uncertainty_is_not_cleared_as_non_action_context(self):
+        source,request,prepared=self.inputs()
+        cases=[({'kind':'UNRESOLVED','reported_status':'NOT_AN_ACTION_STATEMENT'},[]),
+               ({'kind':'OTHER_MEANING','reported_status':'UNRESOLVED'},[]),
+               ({'kind':'CURRENT_REGULATORY_ACTION','reported_status':'ONGOING_AS_REPORTED'},[]),
+               ({'kind':'OTHER_MEANING','reported_status':'NOT_AN_ACTION_STATEMENT'},['source ambiguity'])]
+        for overrides,unresolved in cases:
+            finding={'subject':'UNRESOLVED','timing':'UNRESOLVED','unit_id':'unit',
+                     'evidence':[{'kind':'VISIBLE_BLOCK','source_index':7}],**overrides}
+            with self.subTest(overrides=overrides,unresolved=unresolved), \
+                 patch.object(interpret,'prepare_native_input',return_value=prepared), \
+                 patch.object(interpret,'requests_from_source',return_value=[request]), \
+                 patch.object(interpret,'validate_response',return_value={'findings':[finding],'unresolved':unresolved}):
+                result=interpret.validate_complete_interpretation(prepared_input=prepared,
+                    response_bytes_by_request={'original':b'constructed'})
+            self.assertEqual([0],result['unresolved_group_indices'])
+            self.assertEqual('UNRESOLVED_REQUIRES_REVIEW',result['proposed_branch'])
+            self.assertFalse(result['native_result_or_run_created'])
+
     def test_anchor_request_and_response_use_external_root_without_fact_credit(self):
         source,original,_=self.inputs();data=Path('/external-registered-source')
         original['source_statement_facts']=[{'constructed_anchor':True}]

@@ -1,0 +1,22 @@
+F
+======================================================================
+FAIL: test_explicit_non_action_and_context_shorthand_have_same_review_requirement (tests.vnext.test_d03_interpretation_source_root.D03InterpretationSourceRootTest.test_explicit_non_action_and_context_shorthand_have_same_review_requirement)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_d03_interpretation_source_root.py", line 84, in test_explicit_non_action_and_context_shorthand_have_same_review_requirement
+    self.assertEqual([],result['unresolved_group_indices'])
+AssertionError: Lists differ: [] != [0]
+
+Second list contains 1 additional elements.
+First extra element 0:
+0
+
+- []
++ [0]
+?  +
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)

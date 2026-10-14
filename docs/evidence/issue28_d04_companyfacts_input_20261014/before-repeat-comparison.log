@@ -1,0 +1,13 @@
+F
+======================================================================
+FAIL: test_identical_original_source_is_compared_once_but_all_groups_still_checked (tests.vnext.test_current_d04_company.CurrentD04SavedRequestSelectionTest.test_identical_original_source_is_compared_once_but_all_groups_still_checked)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_current_d04_company.py", line 330, in test_identical_original_source_is_compared_once_but_all_groups_still_checked
+    self.assertEqual(len(comparisons),1)
+AssertionError: 2 != 1
+
+----------------------------------------------------------------------
+Ran 1 test in 0.027s
+
+FAILED (failures=1)
