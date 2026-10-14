@@ -1,0 +1,254 @@
+{
+  "record_type": "C02_BOUNDED_INITIAL_AND_ONE_REVISION_OUTCOME",
+  "initial_commit": "b4b8f06d",
+  "revision_input_commit": "d37fbec4",
+  "groups": [
+    {
+      "group": 1,
+      "facts": 42,
+      "unresolved": 8,
+      "answer_sha256": "ccc95f11d6273088b7f4a29912ce0d73adfa6f0d63870a9b70e97ae419f70d31",
+      "reference_output_tokens": 4565,
+      "source_blocks_programmatically_scanned": 5219,
+      "strings_scanned": 7458,
+      "directly_read_blocks": 1505,
+      "complete_assigned_layouts_read": 457,
+      "tool_calls": 32,
+      "messages": 3
+    },
+    {
+      "group": 2,
+      "facts": 0,
+      "unresolved": 1,
+      "answer_sha256": "5d3e864b10e84a140202ac9aba31dd910e5e0b496c7cdafc985d4ba6fe69e2ca",
+      "reference_output_tokens": 199,
+      "source_blocks_programmatically_scanned": 5219,
+      "strings_scanned": 7458,
+      "directly_read_blocks": 685,
+      "complete_assigned_layouts_read": 172,
+      "tool_calls": 32,
+      "messages": 3
+    }
+  ],
+  "forward_comparison": {
+    "facts": 42,
+    "source_supported_statements": 42,
+    "derived_current_board_count": "Fact1 combines explicitly Current Directors compensation-table label and director CEO; not a December31 census.",
+    "new_capacity_source_checks": [
+      "B721–728 Hanks former registrant roles",
+      "B841–843 Storey President/CEO2018-present and COO2017–2018",
+      "B982 executive sessions led by Chair"
+    ],
+    "actual_independence_standards_restored": true,
+    "nonemployee_statement_kept_separate": true
+  },
+  "reverse_named_composition_units": [
+    {
+      "reference_unit_id": "L21-20",
+      "answer_fact_numbers": [
+        3,
+        21,
+        24
+      ],
+      "required_relation_present": true
+    },
+    {
+      "reference_unit_id": "L21-21",
+      "answer_fact_numbers": [
+        4,
+        22,
+        23
+      ],
+      "required_relation_present": true
+    },
+    {
+      "reference_unit_id": "L21-22",
+      "answer_fact_numbers": [
+        5,
+        21,
+        24
+      ],
+      "required_relation_present": true
+    },
+    {
+      "reference_unit_id": "L21-23",
+      "answer_fact_numbers": [
+        6,
+        21,
+        24
+      ],
+      "required_relation_present": true
+    },
+    {
+      "reference_unit_id": "L21-24",
+      "answer_fact_numbers": [
+        7,
+        22,
+        23
+      ],
+      "required_relation_present": true
+    },
+    {
+      "reference_unit_id": "L21-25",
+      "answer_fact_numbers": [
+        8,
+        16,
+        22
+      ],
+      "required_relation_present": true
+    },
+    {
+      "reference_unit_id": "L21-26",
+      "answer_fact_numbers": [
+        9,
+        17,
+        21
+      ],
+      "required_relation_present": true
+    },
+    {
+      "reference_unit_id": "L21-27",
+      "answer_fact_numbers": [
+        10,
+        21,
+        24
+      ],
+      "required_relation_present": true
+    },
+    {
+      "reference_unit_id": "L21-28",
+      "answer_fact_numbers": [
+        11,
+        22,
+        23
+      ],
+      "required_relation_present": true
+    },
+    {
+      "reference_unit_id": "L21-29",
+      "answer_fact_numbers": [
+        12,
+        22,
+        23
+      ],
+      "required_relation_present": true
+    },
+    {
+      "reference_unit_id": "L21-30",
+      "answer_fact_numbers": [
+        13,
+        24
+      ],
+      "required_relation_present": true
+    },
+    {
+      "reference_unit_id": "L21-31",
+      "answer_fact_numbers": [
+        14,
+        15
+      ],
+      "required_relation_present": true
+    },
+    {
+      "reference_unit_id": "L21-32",
+      "answer_fact_numbers": [
+        16,
+        17
+      ],
+      "required_relation_present": true
+    },
+    {
+      "reference_unit_id": "L21-33",
+      "answer_fact_numbers": [
+        21
+      ],
+      "required_relation_present": true
+    },
+    {
+      "reference_unit_id": "L21-34",
+      "answer_fact_numbers": [
+        22
+      ],
+      "required_relation_present": true
+    },
+    {
+      "reference_unit_id": "L21-35",
+      "answer_fact_numbers": [
+        23
+      ],
+      "required_relation_present": true
+    },
+    {
+      "reference_unit_id": "L21-36",
+      "answer_fact_numbers": [
+        24
+      ],
+      "required_relation_present": true
+    },
+    {
+      "reference_unit_id": "L21-37",
+      "answer_fact_numbers": [
+        14,
+        24,
+        25,
+        26
+      ],
+      "required_relation_present": true
+    },
+    {
+      "reference_unit_id": "L21-38",
+      "answer_fact_numbers": [
+        20
+      ],
+      "required_relation_present": true
+    },
+    {
+      "reference_unit_id": "L21-39",
+      "answer_fact_numbers": [
+        39,
+        40,
+        41
+      ],
+      "required_relation_present": true
+    },
+    {
+      "reference_unit_id": "L21-40",
+      "answer_fact_numbers": [
+        22,
+        27
+      ],
+      "required_relation_present": true
+    },
+    {
+      "reference_unit_id": "L21-41",
+      "answer_fact_numbers": [
+        2
+      ],
+      "required_relation_present": true
+    }
+  ],
+  "named_relation_reference_comparison": "22/22 required named-relation units supported across facts; the 19 consolidated reading notes are not additional completed coordinates.",
+  "remaining": {
+    "full_visible_source_direct_reading": "Neither revision agent directly read every supplied block. Programmatic scans and complete table reading cannot prove absence of later facts.",
+    "media": "Skill/diversity matrix individual marks/images unresolved; sibling financial tables do not restore that geometry.",
+    "other_relations": "Lead independent title, subcommittee roster and unnamed chair/retirement changes unresolved; no invented yearend measurement.",
+    "role_policy": "Qualification/role evaluation still pending; prominent disclosed skill labels are not independent credential verification.",
+    "observed_alias": "AppendixB4730 Compensation Committee plan context still not returned as observed name; not a fifth standing committee."
+  },
+  "new_wire_parameters_consistent": {
+    "prompt_output": 8192,
+    "wire_output": 8192,
+    "context_ceiling": 200000
+  },
+  "initial_plus_one_substantive_revision_closed": true,
+  "third_attempt_authorized": false,
+  "method_readiness": "PARTIAL_EXTRACTION_NOT_READY_FOR_COMPLETE_METRIC",
+  "full_c02_accepted": false,
+  "native_runs": 0,
+  "new_acceptances": 0,
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  }
+}

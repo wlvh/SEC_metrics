@@ -1,0 +1,30 @@
+{
+  "source_reconstruction_equal": true,
+  "tables": 629,
+  "blocks_per_group": 5219,
+  "members": [
+    {
+      "path": "group-1/request-body.json",
+      "sha256": "8f0b5d1798442d09eae0b32cb2681f516d7ea4c8662a3dc161eb953695491929",
+      "bytes": 799173
+    },
+    {
+      "path": "group-2/request-body.json",
+      "sha256": "a8b86771150c0e666d21b5e22724d3b1c431e0a420589748220289130afdedcc",
+      "bytes": 770989
+    }
+  ],
+  "only_targeted_revision": 1,
+  "original_answers_preserved": true,
+  "initial_preparation_mistake": "Passing an already assigned group instead of the original full request was rejected by C02_GROUP_PROMPT_FORMAT_UNSUPPORTED before creating outputs; corrected input path, not relaxed guard.",
+  "tests": {
+    "count": 6,
+    "seconds": 0.141,
+    "result": "PASS"
+  },
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  }
+}

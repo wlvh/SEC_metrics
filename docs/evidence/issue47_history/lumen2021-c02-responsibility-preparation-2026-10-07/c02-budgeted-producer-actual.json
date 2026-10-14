@@ -1,0 +1,25 @@
+{
+  "record_type": "ACTUAL_HISTORICAL_C02_BUDGETED_SOURCE_PRODUCER",
+  "elapsed_seconds": 23.024415458086878,
+  "request_sha256": "e2a4156447fd24f0452c43d5d81cc4963b362767ef6b715dc3a3ac24d39cd3ae",
+  "request_identical_to_existing_independent_initial_input": true,
+  "blocks": 4413,
+  "whole_tables": 441,
+  "max_context": 200000,
+  "output_tokens": 8192,
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "same_source_request_produced_without_manual_edits": true,
+  "consumer": "tools.prepare_c02_table_context.prepare",
+  "metadata_request_limits": {
+    "output_tokens": 8192,
+    "max_context_tokens": 200000,
+    "max_payload_bytes": 8388608
+  },
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "new_independent_answer": false,
+  "full_metric_accepted": false
+}

@@ -1,0 +1,14 @@
+..F.
+======================================================================
+FAIL: test_unfit_common_frame_or_whole_table_stops_without_shrinking_source (tests.vnext.test_c02_responsibility_inputs.C02ResponsibilityInputTest.test_unfit_common_frame_or_whole_table_stops_without_shrinking_source)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006/tests/vnext/test_c02_responsibility_inputs.py", line 47, in test_unfit_common_frame_or_whole_table_stops_without_shrinking_source
+    with self.assertRaisesRegex(ValueError,'WHOLE_TABLE_EXCEEDS_LIMIT'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.174s
+
+FAILED (failures=1)

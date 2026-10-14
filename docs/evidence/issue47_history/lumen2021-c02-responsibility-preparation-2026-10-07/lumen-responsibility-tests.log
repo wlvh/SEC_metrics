@@ -1,0 +1,68 @@
+FFFE
+======================================================================
+ERROR: test_whole_tables_and_all_common_text_reconstruct_original_in_order (tests.vnext.test_c02_responsibility_inputs.C02ResponsibilityInputTest.test_whole_tables_and_all_common_text_reconstruct_original_in_order)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006/tests/vnext/test_c02_responsibility_inputs.py", line 24, in test_whole_tables_and_all_common_text_reconstruct_original_in_order
+    original=json.loads(json.loads(raw)['messages'][1]['content']);result=prepare_groups(raw,limits=limits)
+                                                                          ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006/tools/prepare_c02_responsibility_inputs.py", line 31, in prepare_groups
+    body=json.loads(with_request_limits(raw,limits=limits))
+                    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006/scripts/vnext/continuous_request_context.py", line 75, in with_request_limits
+    render_prompt(request_body,provider=provider,model=model,api=api,limits=old)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006/scripts/vnext/continuous_request_context.py", line 41, in render_prompt
+    _need(type(body) is dict and set(body) == {
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        'model', 'messages', 'response_format', 'temperature', 'max_tokens', 'stream', 'thinking'},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        'CONTINUOUS_CONTEXT_FORMAT_UNSUPPORTED')
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006/scripts/vnext/continuous_request_context.py", line 30, in _need
+    raise ValueError(reason)
+ValueError: CONTINUOUS_CONTEXT_FORMAT_UNSUPPORTED
+
+======================================================================
+FAIL: test_duplicate_table_identity_cannot_hide_missing_coverage (tests.vnext.test_c02_responsibility_inputs.C02ResponsibilityInputTest.test_duplicate_table_identity_cannot_hide_missing_coverage)
+----------------------------------------------------------------------
+ValueError: CONTINUOUS_CONTEXT_FORMAT_UNSUPPORTED
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006/tests/vnext/test_c02_responsibility_inputs.py", line 40, in test_duplicate_table_identity_cannot_hide_missing_coverage
+    with self.assertRaisesRegex(ValueError,'TABLE_IDS_MISSING_OR_DUPLICATE'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "TABLE_IDS_MISSING_OR_DUPLICATE" does not match "CONTINUOUS_CONTEXT_FORMAT_UNSUPPORTED"
+
+======================================================================
+FAIL: test_group_bound_stops_instead_of_unbounded_attempts (tests.vnext.test_c02_responsibility_inputs.C02ResponsibilityInputTest.test_group_bound_stops_instead_of_unbounded_attempts)
+----------------------------------------------------------------------
+ValueError: CONTINUOUS_CONTEXT_FORMAT_UNSUPPORTED
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006/tests/vnext/test_c02_responsibility_inputs.py", line 50, in test_group_bound_stops_instead_of_unbounded_attempts
+    with self.assertRaisesRegex(ValueError,'GROUP_COUNT_BOUND_EXCEEDED'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "GROUP_COUNT_BOUND_EXCEEDED" does not match "CONTINUOUS_CONTEXT_FORMAT_UNSUPPORTED"
+
+======================================================================
+FAIL: test_unfit_common_frame_or_whole_table_stops_without_shrinking_source (tests.vnext.test_c02_responsibility_inputs.C02ResponsibilityInputTest.test_unfit_common_frame_or_whole_table_stops_without_shrinking_source)
+----------------------------------------------------------------------
+ValueError: CONTINUOUS_CONTEXT_FORMAT_UNSUPPORTED
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006/tests/vnext/test_c02_responsibility_inputs.py", line 44, in test_unfit_common_frame_or_whole_table_stops_without_shrinking_source
+    with self.assertRaisesRegex(ValueError,'FULL_TEXT_FRAME_EXCEEDS_LIMIT'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "FULL_TEXT_FRAME_EXCEEDS_LIMIT" does not match "CONTINUOUS_CONTEXT_FORMAT_UNSUPPORTED"
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.004s
+
+FAILED (failures=3, errors=1)
