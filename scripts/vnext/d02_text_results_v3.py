@@ -263,7 +263,7 @@ def _page_structure_furniture(blocks):
 
 _INCORPORATED_CAPTION = re.compile(r'["\u201c\u2018\']([^"\u201c\u201d\u2018\u2019\']{4,120})["\u201d\u2019\']')
 _NOTE_TITLE_PREFIX = re.compile(r'^(?:note\s+)?\(?\d{1,3}[a-z]?\)?\s*[.:\u2014\u2013-]?\s*', re.I)
-_CAPTION_SPAN = re.compile(rb'<span([^<>]*)>\s*$')
+_CAPTION_SPAN = re.compile(rb'<(?:span|p|div)([^<>]*)>\s*$')
 _CAPTION_STYLE = re.compile(rb'style="([^"]*)"')
 _QUOTED_FORM_REFERENCE = re.compile(r'\b(?:part\s+[ivx]+\s*,?\s*)?item\s+\d{1,2}[a-z]?\s*[,.:\u2014\u2013-]?\s*$', re.I)
 _LETTERED_NOTE_TITLE = re.compile(r'^([A-Z])\.\s+\S')
@@ -359,14 +359,12 @@ def select_d02_incorporated_notes(*, proposal, document, raw_bytes):
                      'D02_INCORPORATED_CAPTION_NOT_FOUND')
         scopes = []
         repeated = Counter(_caption_text(blocks[i]['text']) for i in range(start, stop))
-        for position, begin in enumerate(headings):
-            if position + 1 < len(headings):
-                end = headings[position + 1]
-            else:
-                style = _caption_style(raw_bytes, blocks[begin])
-                end = next((i for i in range(begin + 1, stop)
-                            if _caption_like(document, blocks[i]) and repeated[_caption_text(blocks[i]['text'])] == 1
-                            and (style is None or _caption_style(raw_bytes, blocks[i]) == style)), stop)
+        for begin in headings:
+            style = _caption_style(raw_bytes, blocks[begin])
+            _source_need(bool(style), 'D02_INCORPORATED_CAPTION_FORMAT_NOT_PROVEN')
+            end = next((i for i in range(begin + 1, stop)
+                        if _caption_like(document, blocks[i]) and repeated[_caption_text(blocks[i]['text'])] == 1
+                        and _caption_style(raw_bytes, blocks[i]) == style), stop)
             scopes.append({**note, 'section_id': note['section_id'] + '_CAPTION_' + str(begin),
                            'start_block': begin, 'end_block_exclusive': end,
                            'scope_relation': 'INCORPORATED_CAPTION', 'caption_text': blocks[begin]['text']})
@@ -416,20 +414,21 @@ def _select_d02_auditor_reports(*, proposal, document):
                if r['status'] == 'LOCAL_REPORT_RANGE_LOCATED' and any(
                    scope['start_block'] <= r['start_block'] < r['end_block_exclusive'] <= scope['end_block_exclusive']
                    for scope in item8)]
+    removed = [c for c in proposal['D02']['candidates'] if c['section_id'] == 'ITEM_8'
+               and any(r['start_block'] <= c['block_index'] < r['end_block_exclusive'] for r in reports)]
+    if not removed:
+        return proposal  # Do not change an unused trailing report's old path.
+    used = [r for r in reports if any(r['start_block'] <= c['block_index'] < r['end_block_exclusive']
+                                    for c in removed)]
     # A form-item fallback can span the registrant's financial statements and
     # notes when their captions are not emphasized. It cannot justify deleting
     # litigation admissions as auditor text, even with a LOCATED status.
     _source_need(all(_FINANCIAL_HEADING.match(r['closing_heading']['text'])
-                     or _AUDIT_HEADING.fullmatch(r['closing_heading']['text']) for r in reports),
+                     or _AUDIT_HEADING.fullmatch(r['closing_heading']['text']) for r in used),
                  'D02_AUDITOR_REPORT_CLOSING_SCOPE_NOT_PROVEN')
-    indexes = {i for r in reports for i in range(r['start_block'], r['end_block_exclusive'])}
-    removed = [c for c in proposal['D02']['candidates']
-               if c['section_id'] == 'ITEM_8' and c['block_index'] in indexes]
-    if not removed:
-        return proposal
     body = {k: v for k, v in proposal.items() if k != 'proposal_id'}
     body['D02'] = {**proposal['D02'], 'candidates': [c for c in proposal['D02']['candidates'] if c not in removed]}
-    body['d02_auditor_report_exclusions'] = {'ranges': reports,
+    body['d02_auditor_report_exclusions'] = {'ranges': used,
         'candidate_block_indexes': [c['block_index'] for c in removed]}
     return {**body, 'proposal_id': content_hash(value=body)}
 

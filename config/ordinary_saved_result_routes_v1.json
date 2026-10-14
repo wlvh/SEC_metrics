@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "default": {
+    "module": "vnext.ordinary_saved_result",
+    "function": "_ordinary_case",
+    "call_style": "positional3",
+    "family": "ordinary"
+  },
+  "routes": {
+    "A04": {
+      "module": "vnext.ordinary_saved_result",
+      "function": "_current_financial_case",
+      "call_style": "positional3",
+      "family": "financial"
+    },
+    "B04": {
+      "module": "vnext.current_statement_metric_case",
+      "function": "prepare_current_statement_metric_case",
+      "call_style": "source_company_metric",
+      "family": "statement"
+    },
+    "B07": {
+      "module": "vnext.current_statement_metric_case",
+      "function": "prepare_current_statement_metric_case",
+      "call_style": "source_company_metric",
+      "family": "statement"
+    },
+    "A13": {
+      "module": "vnext.current_geography_case",
+      "function": "prepare_current_geography_case",
+      "call_style": "source_company",
+      "family": "geography"
+    },
+    "C04": {
+      "module": "vnext.current_auditor_case",
+      "function": "prepare_current_auditor_case",
+      "call_style": "source_company",
+      "family": "auditor"
+    },
+    "B06": {
+      "module": "vnext.current_b06_case",
+      "function": "prepare_current_b06_case",
+      "call_style": "source_company",
+      "family": "borrowings"
+    },
+    "D04": {
+      "module": "vnext.ordinary_d04_saved_route",
+      "function": "prepare_case",
+      "call_style": "source_company_metric",
+      "family": "saved_model"
+    },
+    "B10": {
+      "module": "vnext.normal_lodging_results",
+      "function": "prepare_ordinary_lodging_case",
+      "call_style": "repo_company_metric_rules",
+      "family": "lodging"
+    },
+    "B11": {
+      "module": "vnext.normal_lodging_results",
+      "function": "prepare_ordinary_lodging_case",
+      "call_style": "repo_company_metric_rules",
+      "family": "lodging"
+    }
+  },
+  "explicit_case_metrics": [
+    "A03",
+    "A04",
+    "A09",
+    "A11",
+    "A12",
+    "A13",
+    "C03",
+    "C04",
+    "D01",
+    "D02",
+    "E01"
+  ]
+}

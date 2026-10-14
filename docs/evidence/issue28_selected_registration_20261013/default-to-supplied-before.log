@@ -1,0 +1,85 @@
+test_old_default_to_supplied_case_reprocesses_instead_of_key_error (tests.vnext.test_saved_result_registration.LegacyStoreComponentTest.test_old_default_to_supplied_case_reprocesses_instead_of_key_error) ... 
+  test_old_default_to_supplied_case_reprocesses_instead_of_key_error (tests.vnext.test_saved_result_registration.LegacyStoreComponentTest.test_old_default_to_supplied_case_reprocesses_instead_of_key_error) (metric='E01') ... ERROR
+  test_old_default_to_supplied_case_reprocesses_instead_of_key_error (tests.vnext.test_saved_result_registration.LegacyStoreComponentTest.test_old_default_to_supplied_case_reprocesses_instead_of_key_error) (metric='A04') ... ERROR
+  test_old_default_to_supplied_case_reprocesses_instead_of_key_error (tests.vnext.test_saved_result_registration.LegacyStoreComponentTest.test_old_default_to_supplied_case_reprocesses_instead_of_key_error) (metric='A13') ... ERROR
+  test_old_default_to_supplied_case_reprocesses_instead_of_key_error (tests.vnext.test_saved_result_registration.LegacyStoreComponentTest.test_old_default_to_supplied_case_reprocesses_instead_of_key_error) (metric='C04') ... ERROR
+  test_old_default_to_supplied_case_reprocesses_instead_of_key_error (tests.vnext.test_saved_result_registration.LegacyStoreComponentTest.test_old_default_to_supplied_case_reprocesses_instead_of_key_error) (metric='B01') ... ERROR
+test_default_record_changed_to_current_factory_processes_once_then_reuses (tests.vnext.test_saved_result_registration.RegistrationUpdateBehaviorTest.test_default_record_changed_to_current_factory_processes_once_then_reuses) ... FAIL
+
+======================================================================
+ERROR: test_old_default_to_supplied_case_reprocesses_instead_of_key_error (tests.vnext.test_saved_result_registration.LegacyStoreComponentTest.test_old_default_to_supplied_case_reprocesses_instead_of_key_error) (metric='E01')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_saved_result_registration.py", line 123, in test_old_default_to_supplied_case_reprocesses_instead_of_key_error
+    self.assertFalse(registration.same_registered_processing(previous,current,{},ROOT))
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/scripts/vnext/ordinary_result_registration.py", line 153, in same_registered_processing
+    if route is None or route!={k:selected[k] for k in ('module','function','call_style')}:return False
+                                  ~~~~~~~~^^^
+KeyError: 'module'
+
+======================================================================
+ERROR: test_old_default_to_supplied_case_reprocesses_instead_of_key_error (tests.vnext.test_saved_result_registration.LegacyStoreComponentTest.test_old_default_to_supplied_case_reprocesses_instead_of_key_error) (metric='A04')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_saved_result_registration.py", line 123, in test_old_default_to_supplied_case_reprocesses_instead_of_key_error
+    self.assertFalse(registration.same_registered_processing(previous,current,{},ROOT))
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/scripts/vnext/ordinary_result_registration.py", line 153, in same_registered_processing
+    if route is None or route!={k:selected[k] for k in ('module','function','call_style')}:return False
+                                  ~~~~~~~~^^^
+KeyError: 'module'
+
+======================================================================
+ERROR: test_old_default_to_supplied_case_reprocesses_instead_of_key_error (tests.vnext.test_saved_result_registration.LegacyStoreComponentTest.test_old_default_to_supplied_case_reprocesses_instead_of_key_error) (metric='A13')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_saved_result_registration.py", line 123, in test_old_default_to_supplied_case_reprocesses_instead_of_key_error
+    self.assertFalse(registration.same_registered_processing(previous,current,{},ROOT))
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/scripts/vnext/ordinary_result_registration.py", line 153, in same_registered_processing
+    if route is None or route!={k:selected[k] for k in ('module','function','call_style')}:return False
+                                  ~~~~~~~~^^^
+KeyError: 'module'
+
+======================================================================
+ERROR: test_old_default_to_supplied_case_reprocesses_instead_of_key_error (tests.vnext.test_saved_result_registration.LegacyStoreComponentTest.test_old_default_to_supplied_case_reprocesses_instead_of_key_error) (metric='C04')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_saved_result_registration.py", line 123, in test_old_default_to_supplied_case_reprocesses_instead_of_key_error
+    self.assertFalse(registration.same_registered_processing(previous,current,{},ROOT))
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/scripts/vnext/ordinary_result_registration.py", line 153, in same_registered_processing
+    if route is None or route!={k:selected[k] for k in ('module','function','call_style')}:return False
+                                  ~~~~~~~~^^^
+KeyError: 'module'
+
+======================================================================
+ERROR: test_old_default_to_supplied_case_reprocesses_instead_of_key_error (tests.vnext.test_saved_result_registration.LegacyStoreComponentTest.test_old_default_to_supplied_case_reprocesses_instead_of_key_error) (metric='B01')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_saved_result_registration.py", line 123, in test_old_default_to_supplied_case_reprocesses_instead_of_key_error
+    self.assertFalse(registration.same_registered_processing(previous,current,{},ROOT))
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/scripts/vnext/ordinary_result_registration.py", line 153, in same_registered_processing
+    if route is None or route!={k:selected[k] for k in ('module','function','call_style')}:return False
+                                  ~~~~~~~~^^^
+KeyError: 'module'
+
+======================================================================
+FAIL: test_default_record_changed_to_current_factory_processes_once_then_reuses (tests.vnext.test_saved_result_registration.RegistrationUpdateBehaviorTest.test_default_record_changed_to_current_factory_processes_once_then_reuses)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_saved_result_registration.py", line 155, in test_default_record_changed_to_current_factory_processes_once_then_reuses
+    self.assertEqual('CANDIDATE_READY',changed['status']);self.assertEqual(2,case.calculations)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'CANDIDATE_READY' != 'INPUT_OR_EXECUTION_FAILED'
+- CANDIDATE_READY
++ INPUT_OR_EXECUTION_FAILED
+
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.304s
+
+FAILED (failures=1, errors=5)
+{"allowed_skips": 0, "errors": 5, "failures": 1, "run": 2, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_saved_result_registration.LegacyStoreComponentTest.test_old_default_to_supplied_case_reprocesses_instead_of_key_error", "tests.vnext.test_saved_result_registration.RegistrationUpdateBehaviorTest.test_default_record_changed_to_current_factory_processes_once_then_reuses"]}

@@ -1,0 +1,42 @@
+test_d02_each_named_caption_stops_at_its_first_unnamed_peer (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_d02_each_named_caption_stops_at_its_first_unnamed_peer) ... 
+  test_d02_each_named_caption_stops_at_its_first_unnamed_peer (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_d02_each_named_caption_stops_at_its_first_unnamed_peer) (inside_item8=False) ... FAIL
+  test_d02_each_named_caption_stops_at_its_first_unnamed_peer (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_d02_each_named_caption_stops_at_its_first_unnamed_peer) (inside_item8=True) ... FAIL
+test_d02_unknown_caption_format_cannot_end_at_short_body_text (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_d02_unknown_caption_format_cannot_end_at_short_body_text) ... FAIL
+
+======================================================================
+FAIL: test_d02_each_named_caption_stops_at_its_first_unnamed_peer (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_d02_each_named_caption_stops_at_its_first_unnamed_peer) (inside_item8=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_text_results_v2.py", line 87, in test_d02_each_named_caption_stops_at_its_first_unnamed_peer
+    self.assertEqual('Guarantee Details', doc['blocks'][scopes[0]['end_block_exclusive']]['text'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'Guarantee Details' != 'Government Investigations'
+- Guarantee Details
++ Government Investigations
+
+
+======================================================================
+FAIL: test_d02_each_named_caption_stops_at_its_first_unnamed_peer (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_d02_each_named_caption_stops_at_its_first_unnamed_peer) (inside_item8=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_text_results_v2.py", line 87, in test_d02_each_named_caption_stops_at_its_first_unnamed_peer
+    self.assertEqual('Guarantee Details', doc['blocks'][scopes[0]['end_block_exclusive']]['text'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'Guarantee Details' != 'Government Investigations'
+- Guarantee Details
++ Government Investigations
+
+
+======================================================================
+FAIL: test_d02_unknown_caption_format_cannot_end_at_short_body_text (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_d02_unknown_caption_format_cannot_end_at_short_body_text)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_text_results_v2.py", line 103, in test_d02_unknown_caption_format_cannot_end_at_short_body_text
+    with self.assertRaisesRegex(ValueError, 'D02_INCORPORATED_CAPTION_FORMAT_NOT_PROVEN'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.013s
+
+FAILED (failures=3)

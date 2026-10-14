@@ -110,6 +110,34 @@ class TextBusinessCandidateTest(unittest.TestCase):
         self.assertEqual("Consolidated Balance Sheets", report["closing_heading"]["text"])
         self.assertTrue(any("signature follow" in b["text"] for b in d["blocks"][report["start_block"]:report["end_block_exclusive"]]))
 
+    def test_plain_uppercase_financial_caption_closes_report_before_notes(self):
+        for caption in ('CONSOLIDATED STATEMENTS OF OPERATIONS',
+                        'CONSOLIDATED STATEMENTS OF COMPREHENSIVE INCOME',
+                        'CONSOLIDATED BALANCE SHEETS',
+                        'CONSOLIDATED STATEMENTS OF CASH FLOWS'):
+            with self.subTest(caption=caption):
+                body=BODY.replace('<h2>Consolidated Balance Sheets</h2>', '<p>'+caption+'</p>')
+                d=document(body)
+                block=next(b for b in d['blocks'] if b['text']==caption)
+                self.assertFalse(block['emphasized'])
+                report=going_concern_candidates(document=d)['auditor_report_ranges'][0]
+                self.assertEqual(caption,report['closing_heading']['text'])
+                self.assertTrue(all('defendants in litigation' not in b['text']
+                    for b in d['blocks'][report['start_block']:report['end_block_exclusive']]))
+
+    def test_uppercase_continuation_and_linked_caption_do_not_end_report(self):
+        for prior in ('<p>CONSOLIDATED FINANCIAL STATEMENTS, TAKEN AS A WHOLE, '
+                      'AND WE ARE NOT PROVIDING A SEPARATE OPINION.</p>',
+                      '<p><a href="#statement">CONSOLIDATED BALANCE SHEETS</a></p>'):
+            with self.subTest(prior=prior):
+                body=BODY.replace('<h2>Consolidated Balance Sheets</h2>',
+                    prior+'<p>Our signature and audit procedures remain in this report.</p>'
+                    '<h2>Consolidated Balance Sheets</h2>')
+                d=document(body);report=going_concern_candidates(document=d)['auditor_report_ranges'][0]
+                self.assertEqual('Consolidated Balance Sheets',report['closing_heading']['text'])
+                self.assertTrue(any('signature and audit procedures' in b['text']
+                    for b in d['blocks'][report['start_block']:report['end_block_exclusive']]))
+
     def test_parenthesized_note_heading_is_navigable_without_claiming_semantic_completeness(self):
         body = BODY.replace("<h2>Note 2. Contingencies</h2>", "<h2>2) Contingencies</h2>").replace("<h2>Note 3. Income Taxes</h2>", "<h2>3) Income Taxes</h2>")
         p = legal_risk_candidates(document=document(body), raw_bytes=annual(body))

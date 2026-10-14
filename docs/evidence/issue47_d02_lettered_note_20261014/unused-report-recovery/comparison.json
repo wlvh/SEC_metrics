@@ -1,0 +1,79 @@
+{
+ "requested": 3,
+ "counts": {
+  "SAME_OK": 3,
+  "CHANGED_OK": 0,
+  "FAIL_TO_OK": 0,
+  "OK_TO_FAIL": 0,
+  "SAME_FAIL": 0,
+  "CHANGED_FAIL": 0,
+  "NOT_COMPARED": 0
+ },
+ "unexpected_results": [],
+ "entries": [
+  {
+   "sample": "southwest_airlines:2022",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 8.048,
+    "requests": 1,
+    "request_ids": [
+     "sha256:7f5c8a0e45cc46207f616ffd7c0f0995d59a64584822a0c22cbc5135a49c58c3"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 8.067,
+    "requests": 1,
+    "request_ids": [
+     "sha256:7f5c8a0e45cc46207f616ffd7c0f0995d59a64584822a0c22cbc5135a49c58c3"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "southwest_airlines:2023",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 7.729,
+    "requests": 1,
+    "request_ids": [
+     "sha256:71f5e6544b1b7faa511c8adc39ea194de88468f3e73e0594f30ddd2c4312e403"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 7.741,
+    "requests": 1,
+    "request_ids": [
+     "sha256:71f5e6544b1b7faa511c8adc39ea194de88468f3e73e0594f30ddd2c4312e403"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "southwest_airlines:2024",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 7.994,
+    "requests": 1,
+    "request_ids": [
+     "sha256:86977e800088f6883f11b295ec4e34656f1955d448a74610ddef00d6fe8e4b7f"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 7.995,
+    "requests": 1,
+    "request_ids": [
+     "sha256:86977e800088f6883f11b295ec4e34656f1955d448a74610ddef00d6fe8e4b7f"
+    ]
+   },
+   "changes": []
+  }
+ ],
+ "all_samples_compared": true
+}

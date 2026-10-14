@@ -1,0 +1,1170 @@
+{
+ "requested": 50,
+ "counts": {
+  "SAME_OK": 19,
+  "CHANGED_OK": 0,
+  "FAIL_TO_OK": 10,
+  "OK_TO_FAIL": 0,
+  "SAME_FAIL": 17,
+  "CHANGED_FAIL": 4,
+  "NOT_COMPARED": 0
+ },
+ "unexpected_results": [],
+ "entries": [
+  {
+   "sample": "marriott_international:2021",
+   "category": "SAME_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 11.616,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 10.769,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "marriott_international:2022",
+   "category": "FAIL_TO_OK",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 13.428,
+    "error": {
+     "category": "IMPLEMENTATION_REQUIRED",
+     "module": "vnext.d02_reviewed_source",
+     "reason": "D02_REFERENCED_NOTE_OWNERSHIP_NOT_MIGRATED",
+     "type": "ReviewedLegalSourceError"
+    }
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 12.387,
+    "requests": 1,
+    "request_ids": [
+     "sha256:8bf580d1ce9afcfe415829631e4de55ae7476ef64c0d0e8960d4d90c6a0a7c0c"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "marriott_international:2023",
+   "category": "FAIL_TO_OK",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 13.248,
+    "error": {
+     "category": "IMPLEMENTATION_REQUIRED",
+     "module": "vnext.d02_reviewed_source",
+     "reason": "D02_REFERENCED_NOTE_OWNERSHIP_NOT_MIGRATED",
+     "type": "ReviewedLegalSourceError"
+    }
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 12.26,
+    "requests": 1,
+    "request_ids": [
+     "sha256:40cc95bddac752807e4bdd9caa8ee93b3c7db1452fe9baed3d7425052b2206c3"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "marriott_international:2024",
+   "category": "FAIL_TO_OK",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 13.484,
+    "error": {
+     "category": "IMPLEMENTATION_REQUIRED",
+     "module": "vnext.d02_reviewed_source",
+     "reason": "D02_REFERENCED_NOTE_OWNERSHIP_NOT_MIGRATED",
+     "type": "ReviewedLegalSourceError"
+    }
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 12.36,
+    "requests": 1,
+    "request_ids": [
+     "sha256:cf2e9ded867a651f0da50da53a4ce0d5b1f5f14405d8fb057090f641bedc5996"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "marriott_international:2025",
+   "category": "FAIL_TO_OK",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 9.458,
+    "error": {
+     "category": "IMPLEMENTATION_REQUIRED",
+     "module": "vnext.d02_reviewed_source",
+     "reason": "D02_REFERENCED_NOTE_OWNERSHIP_NOT_MIGRATED",
+     "type": "ReviewedLegalSourceError"
+    }
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 9.342,
+    "requests": 1,
+    "request_ids": [
+     "sha256:dba7b7e7c3448da3e47500acee94a555ba558d8da64d1e912bc66ae4eb20441e"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "southwest_airlines:2021",
+   "category": "SAME_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 14.372,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 15.164,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "southwest_airlines:2022",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 17.761,
+    "requests": 1,
+    "request_ids": [
+     "sha256:7f5c8a0e45cc46207f616ffd7c0f0995d59a64584822a0c22cbc5135a49c58c3"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 17.719,
+    "requests": 1,
+    "request_ids": [
+     "sha256:7f5c8a0e45cc46207f616ffd7c0f0995d59a64584822a0c22cbc5135a49c58c3"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "southwest_airlines:2023",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 17.336,
+    "requests": 1,
+    "request_ids": [
+     "sha256:71f5e6544b1b7faa511c8adc39ea194de88468f3e73e0594f30ddd2c4312e403"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 18.295,
+    "requests": 1,
+    "request_ids": [
+     "sha256:71f5e6544b1b7faa511c8adc39ea194de88468f3e73e0594f30ddd2c4312e403"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "southwest_airlines:2024",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 19.241,
+    "requests": 1,
+    "request_ids": [
+     "sha256:86977e800088f6883f11b295ec4e34656f1955d448a74610ddef00d6fe8e4b7f"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 17.857,
+    "requests": 1,
+    "request_ids": [
+     "sha256:86977e800088f6883f11b295ec4e34656f1955d448a74610ddef00d6fe8e4b7f"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "southwest_airlines:2025",
+   "category": "SAME_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 9.668,
+    "error": {
+     "category": "IMPLEMENTATION_REQUIRED",
+     "module": "vnext.d02_reviewed_source",
+     "reason": "D02_HISTORICAL_AMENDMENT_OR_SUCCESSOR_NOT_RECEIVED",
+     "type": "ReviewedLegalSourceError"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 8.894,
+    "error": {
+     "category": "IMPLEMENTATION_REQUIRED",
+     "module": "vnext.d02_reviewed_source",
+     "reason": "D02_HISTORICAL_AMENDMENT_OR_SUCCESSOR_NOT_RECEIVED",
+     "type": "ReviewedLegalSourceError"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "ford_motor_company:2021",
+   "category": "SAME_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 31.062,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 24.195,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "ford_motor_company:2022",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 38.091,
+    "requests": 1,
+    "request_ids": [
+     "sha256:2bb1130507b0dafc2e5dc6de01130fdcdd8aef7060257bfed0e21ccefb899b8e"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 28.788,
+    "requests": 1,
+    "request_ids": [
+     "sha256:2bb1130507b0dafc2e5dc6de01130fdcdd8aef7060257bfed0e21ccefb899b8e"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "ford_motor_company:2023",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 35.604,
+    "requests": 1,
+    "request_ids": [
+     "sha256:beef9fc88db78de11538c7821196666af89cb6c54795781f25a078e32e70d7cd"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 27.2,
+    "requests": 1,
+    "request_ids": [
+     "sha256:beef9fc88db78de11538c7821196666af89cb6c54795781f25a078e32e70d7cd"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "ford_motor_company:2024",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 39.246,
+    "requests": 1,
+    "request_ids": [
+     "sha256:0f8eb6545883ac4d11a3e9c43f34ea9610c1e29850eba7de585ec919415492f9"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 26.538,
+    "requests": 1,
+    "request_ids": [
+     "sha256:0f8eb6545883ac4d11a3e9c43f34ea9610c1e29850eba7de585ec919415492f9"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "ford_motor_company:2025",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 27.488,
+    "requests": 1,
+    "request_ids": [
+     "sha256:7f0d2be204ae60689397a55ac102ec07f3ad0923c57ab00db59060abd9fe8908"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 20.037,
+    "requests": 1,
+    "request_ids": [
+     "sha256:7f0d2be204ae60689397a55ac102ec07f3ad0923c57ab00db59060abd9fe8908"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "pfizer:2021",
+   "category": "SAME_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 34.966,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 24.538,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "pfizer:2022",
+   "category": "CHANGED_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 41.2,
+    "error": {
+     "category": "IMPLEMENTATION_REQUIRED",
+     "module": "vnext.d02_reviewed_source",
+     "reason": "D02_REFERENCED_NOTE_OWNERSHIP_NOT_MIGRATED",
+     "type": "ReviewedLegalSourceError"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 24.453,
+    "error": {
+     "category": null,
+     "module": "vnext.text_business_candidates",
+     "reason": "D02_REFERENCED_LETTERED_SUBNOTE_NOT_MIGRATED",
+     "type": "TextBusinessCandidateError"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "pfizer:2023",
+   "category": "CHANGED_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 39.905,
+    "error": {
+     "category": "IMPLEMENTATION_REQUIRED",
+     "module": "vnext.d02_reviewed_source",
+     "reason": "D02_REFERENCED_NOTE_OWNERSHIP_NOT_MIGRATED",
+     "type": "ReviewedLegalSourceError"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 23.893,
+    "error": {
+     "category": null,
+     "module": "vnext.text_business_candidates",
+     "reason": "D02_REFERENCED_LETTERED_SUBNOTE_NOT_MIGRATED",
+     "type": "TextBusinessCandidateError"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "pfizer:2024",
+   "category": "SAME_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 33.815,
+    "error": {
+     "category": null,
+     "module": "vnext.d02_text_results_v3",
+     "reason": "TEXT_V2_LEGAL_SOURCE_NAVIGATION_INCOMPLETE",
+     "type": "TextResultV2Error"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 23.582,
+    "error": {
+     "category": null,
+     "module": "vnext.d02_text_results_v3",
+     "reason": "TEXT_V2_LEGAL_SOURCE_NAVIGATION_INCOMPLETE",
+     "type": "TextResultV2Error"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "pfizer:2025",
+   "category": "CHANGED_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 27.562,
+    "error": {
+     "category": "IMPLEMENTATION_REQUIRED",
+     "module": "vnext.d02_reviewed_source",
+     "reason": "D02_REFERENCED_NOTE_OWNERSHIP_NOT_MIGRATED",
+     "type": "ReviewedLegalSourceError"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 16.592,
+    "error": {
+     "category": null,
+     "module": "vnext.text_business_candidates",
+     "reason": "D02_REFERENCED_LETTERED_SUBNOTE_NOT_MIGRATED",
+     "type": "TextBusinessCandidateError"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "jpmorgan_chase:2021",
+   "category": "SAME_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 134.009,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 103.077,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "jpmorgan_chase:2022",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 139.54,
+    "requests": 1,
+    "request_ids": [
+     "sha256:4048abedea1be4b6aee65735e1288aea0f4c266cdf422490c533b6e4d00ef7ca"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 108.235,
+    "requests": 1,
+    "request_ids": [
+     "sha256:4048abedea1be4b6aee65735e1288aea0f4c266cdf422490c533b6e4d00ef7ca"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "jpmorgan_chase:2023",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 126.355,
+    "requests": 1,
+    "request_ids": [
+     "sha256:f5183bfead81a90930e6fc0ab06e9ec6e10f595586dcdd31d4708569619595ee"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 96.803,
+    "requests": 1,
+    "request_ids": [
+     "sha256:f5183bfead81a90930e6fc0ab06e9ec6e10f595586dcdd31d4708569619595ee"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "jpmorgan_chase:2024",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 107.178,
+    "requests": 1,
+    "request_ids": [
+     "sha256:19f2af2ee951bde4c88c6767aa17114e79e7c98e273b292b7f959c33502a3ce9"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 84.206,
+    "requests": 1,
+    "request_ids": [
+     "sha256:19f2af2ee951bde4c88c6767aa17114e79e7c98e273b292b7f959c33502a3ce9"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "jpmorgan_chase:2025",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 59.008,
+    "requests": 1,
+    "request_ids": [
+     "sha256:bbd18a7f950b7ad585b0ebf3c0126216e36bf91b0725d1715f198721459d7aeb"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 54.055,
+    "requests": 1,
+    "request_ids": [
+     "sha256:bbd18a7f950b7ad585b0ebf3c0126216e36bf91b0725d1715f198721459d7aeb"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "salesforce:2021",
+   "category": "SAME_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 14.322,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 14.469,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "salesforce:2022",
+   "category": "SAME_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 14.656,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 13.79,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "salesforce:2023",
+   "category": "FAIL_TO_OK",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 17.577,
+    "error": {
+     "category": "IMPLEMENTATION_REQUIRED",
+     "module": "vnext.d02_reviewed_source",
+     "reason": "D02_REFERENCED_NOTE_OWNERSHIP_NOT_MIGRATED",
+     "type": "ReviewedLegalSourceError"
+    }
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 16.474,
+    "requests": 1,
+    "request_ids": [
+     "sha256:8bb4c7ddaa14dfb5a237bc2124b41791aa3103e2158af2d7a9f82abe3848da6c"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "salesforce:2024",
+   "category": "FAIL_TO_OK",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 17.133,
+    "error": {
+     "category": "IMPLEMENTATION_REQUIRED",
+     "module": "vnext.d02_reviewed_source",
+     "reason": "D02_REFERENCED_NOTE_OWNERSHIP_NOT_MIGRATED",
+     "type": "ReviewedLegalSourceError"
+    }
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 15.364,
+    "requests": 1,
+    "request_ids": [
+     "sha256:b39e956b39e7a5e893e243b05245cf5be4a0c68c6e4e9f877110bf6b0b93279d"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "salesforce:2025",
+   "category": "FAIL_TO_OK",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 16.191,
+    "error": {
+     "category": "IMPLEMENTATION_REQUIRED",
+     "module": "vnext.d02_reviewed_source",
+     "reason": "D02_REFERENCED_NOTE_OWNERSHIP_NOT_MIGRATED",
+     "type": "ReviewedLegalSourceError"
+    }
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 14.566,
+    "requests": 1,
+    "request_ids": [
+     "sha256:0f561c627611a5dfde3ef4bcda5b76bdccf8f4d8f1a879bb5f69e7e67063d342"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "lumen_technologies:2021",
+   "category": "SAME_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 16.049,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 15.688,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "lumen_technologies:2022",
+   "category": "SAME_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 16.794,
+    "error": {
+     "category": null,
+     "module": "vnext.d02_text_results_v3",
+     "reason": "TEXT_V2_LEGAL_SOURCE_NAVIGATION_INCOMPLETE",
+     "type": "TextResultV2Error"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 17.093,
+    "error": {
+     "category": null,
+     "module": "vnext.d02_text_results_v3",
+     "reason": "TEXT_V2_LEGAL_SOURCE_NAVIGATION_INCOMPLETE",
+     "type": "TextResultV2Error"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "lumen_technologies:2023",
+   "category": "SAME_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 17.634,
+    "error": {
+     "category": null,
+     "module": "vnext.d02_text_results_v3",
+     "reason": "TEXT_V2_LEGAL_SOURCE_NAVIGATION_INCOMPLETE",
+     "type": "TextResultV2Error"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 16.413,
+    "error": {
+     "category": null,
+     "module": "vnext.d02_text_results_v3",
+     "reason": "TEXT_V2_LEGAL_SOURCE_NAVIGATION_INCOMPLETE",
+     "type": "TextResultV2Error"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "lumen_technologies:2024",
+   "category": "CHANGED_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 20.8,
+    "error": {
+     "category": "IMPLEMENTATION_REQUIRED",
+     "module": "vnext.d02_reviewed_source",
+     "reason": "D02_REFERENCED_NOTE_OWNERSHIP_NOT_MIGRATED",
+     "type": "ReviewedLegalSourceError"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 19.6,
+    "error": {
+     "category": "IMPLEMENTATION_REQUIRED",
+     "module": "vnext.d02_reviewed_source",
+     "reason": "D02_REVIEW_CANDIDATES_OUTSIDE_ELIGIBLE_POOL",
+     "type": "ReviewedLegalSourceError"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "lumen_technologies:2025",
+   "category": "FAIL_TO_OK",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 15.824,
+    "error": {
+     "category": "IMPLEMENTATION_REQUIRED",
+     "module": "vnext.d02_reviewed_source",
+     "reason": "D02_REFERENCED_NOTE_OWNERSHIP_NOT_MIGRATED",
+     "type": "ReviewedLegalSourceError"
+    }
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 15.125,
+    "requests": 1,
+    "request_ids": [
+     "sha256:316e7b13b89e7b272983a7f7193d084ad2b331e6f68bdcdfb08f19fbbc0c95ce"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "macys:2021",
+   "category": "SAME_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 28.742,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 27.326,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "macys:2022",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 20.396,
+    "requests": 1,
+    "request_ids": [
+     "sha256:02a2701f516e9d3e32a71423582e32ed65752fed1e958ff509e0bc42e8a9cb43"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 19.249,
+    "requests": 1,
+    "request_ids": [
+     "sha256:02a2701f516e9d3e32a71423582e32ed65752fed1e958ff509e0bc42e8a9cb43"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "macys:2023",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 13.997,
+    "requests": 1,
+    "request_ids": [
+     "sha256:06dbd045fc38e924fd5a2a7abb8f6e4034e0ac6b6374f67deac6891d0fb58bae"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 13.755,
+    "requests": 1,
+    "request_ids": [
+     "sha256:06dbd045fc38e924fd5a2a7abb8f6e4034e0ac6b6374f67deac6891d0fb58bae"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "macys:2024",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 13.407,
+    "requests": 1,
+    "request_ids": [
+     "sha256:b53fa769bae0122b51bff273a7b5913bd93405f2bcf126b2f990ca58a2001876"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 13.619,
+    "requests": 1,
+    "request_ids": [
+     "sha256:b53fa769bae0122b51bff273a7b5913bd93405f2bcf126b2f990ca58a2001876"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "macys:2025",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 13.539,
+    "requests": 1,
+    "request_ids": [
+     "sha256:a602bbac95562c086ade4dd4477df84ae4513acb85e25af897911f8c488cd544"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 13.026,
+    "requests": 1,
+    "request_ids": [
+     "sha256:a602bbac95562c086ade4dd4477df84ae4513acb85e25af897911f8c488cd544"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "paramount_skydance_paramount_global:2021",
+   "category": "SAME_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 18.875,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 18.557,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "paramount_skydance_paramount_global:2022",
+   "category": "FAIL_TO_OK",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 22.87,
+    "error": {
+     "category": "IMPLEMENTATION_REQUIRED",
+     "module": "vnext.d02_reviewed_source",
+     "reason": "D02_REFERENCED_NOTE_OWNERSHIP_NOT_MIGRATED",
+     "type": "ReviewedLegalSourceError"
+    }
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 22.569,
+    "requests": 1,
+    "request_ids": [
+     "sha256:0db8067419780e5c49696a59350a4886f23e04ee9b3ff6d53472c371f657a3b4"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "paramount_skydance_paramount_global:2023",
+   "category": "FAIL_TO_OK",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 21.457,
+    "error": {
+     "category": "IMPLEMENTATION_REQUIRED",
+     "module": "vnext.d02_reviewed_source",
+     "reason": "D02_REFERENCED_NOTE_OWNERSHIP_NOT_MIGRATED",
+     "type": "ReviewedLegalSourceError"
+    }
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 21.049,
+    "requests": 1,
+    "request_ids": [
+     "sha256:74bd11ab191833c603e3a98e413dc38b3a02d34a019f42ef1bb203af207fe23e"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "paramount_skydance_paramount_global:2024",
+   "category": "SAME_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 18.16,
+    "error": {
+     "category": "IMPLEMENTATION_REQUIRED",
+     "module": "vnext.d02_reviewed_source",
+     "reason": "D02_HISTORICAL_AMENDMENT_OR_SUCCESSOR_NOT_RECEIVED",
+     "type": "ReviewedLegalSourceError"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 17.814,
+    "error": {
+     "category": "IMPLEMENTATION_REQUIRED",
+     "module": "vnext.d02_reviewed_source",
+     "reason": "D02_HISTORICAL_AMENDMENT_OR_SUCCESSOR_NOT_RECEIVED",
+     "type": "ReviewedLegalSourceError"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "paramount_skydance_paramount_global:2025",
+   "category": "SAME_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 13.261,
+    "error": {
+     "category": "IMPLEMENTATION_REQUIRED",
+     "module": "vnext.d02_reviewed_source",
+     "reason": "D02_HISTORICAL_AMENDMENT_OR_SUCCESSOR_NOT_RECEIVED",
+     "type": "ReviewedLegalSourceError"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 13.252,
+    "error": {
+     "category": "IMPLEMENTATION_REQUIRED",
+     "module": "vnext.d02_reviewed_source",
+     "reason": "D02_HISTORICAL_AMENDMENT_OR_SUCCESSOR_NOT_RECEIVED",
+     "type": "ReviewedLegalSourceError"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "enphase_energy:2021",
+   "category": "SAME_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 14.673,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 15.042,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "enphase_energy:2022",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 17.953,
+    "requests": 1,
+    "request_ids": [
+     "sha256:22137bbc9d31130f6e352d894b84488743dc1ed52675f0d3f5018b63a217bb09"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 17.714,
+    "requests": 1,
+    "request_ids": [
+     "sha256:22137bbc9d31130f6e352d894b84488743dc1ed52675f0d3f5018b63a217bb09"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "enphase_energy:2023",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 17.538,
+    "requests": 1,
+    "request_ids": [
+     "sha256:ca482aeb30f8e5376dc4670e5dd678d7645d39bb4323a2e4ca6975d26c4456ae"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 17.219,
+    "requests": 1,
+    "request_ids": [
+     "sha256:ca482aeb30f8e5376dc4670e5dd678d7645d39bb4323a2e4ca6975d26c4456ae"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "enphase_energy:2024",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 17.056,
+    "requests": 1,
+    "request_ids": [
+     "sha256:92120e5faedac32e73a21cc30de08e56f3f7c67f026bac8c7a0e09d4522c4781"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 16.605,
+    "requests": 1,
+    "request_ids": [
+     "sha256:92120e5faedac32e73a21cc30de08e56f3f7c67f026bac8c7a0e09d4522c4781"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "enphase_energy:2025",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 12.538,
+    "requests": 1,
+    "request_ids": [
+     "sha256:fb9809f83a5fe34edf74e17c9ea888487f6ce6c4a27b1201251ed767cca84cbe"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 12.44,
+    "requests": 1,
+    "request_ids": [
+     "sha256:fb9809f83a5fe34edf74e17c9ea888487f6ce6c4a27b1201251ed767cca84cbe"
+    ]
+   },
+   "changes": []
+  }
+ ],
+ "all_samples_compared": true
+}

@@ -172,8 +172,10 @@ class SelectedSourceRequirementsTest(unittest.TestCase):
         self.assertEqual(code,0)
         value=json.loads(output.getvalue());self.assertEqual(value['metric_ids'],['B03'])
         self.assertFalse(value['metric_executed']);self.assertFalse(value['fetch_authorized'])
-        from vnext.company_online import ONLINE_METRICS
-        self.assertEqual(ONLINE_METRICS,frozenset({'B01','B02'}))
+        from vnext.company_online import ONLINE_METRICS, DEFAULT_ONLINE_METRICS
+        self.assertEqual(DEFAULT_ONLINE_METRICS,frozenset({'B01','B02'}))
+        self.assertEqual(ONLINE_METRICS,frozenset({'B01','B02','B04'}))
+        self.assertNotIn('B03',ONLINE_METRICS)
 
     def test_missing_target_is_named_without_running_full_preparation(self):
         self.remove_get(self.urls[2025]);value=self.plan()

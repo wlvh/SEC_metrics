@@ -116,6 +116,9 @@ class TextResultV2SourceTest(unittest.TestCase):
         closing = '<h2>Item 9. Changes in and Disagreements with Accountants</h2><p>None.</p>'
         raw = (BODY.replace(closing, '') + closing).replace('<h2>Consolidated Balance Sheets</h2>',
             '<p>CONSOLIDATED BALANCE SHEETS</p>')
+        raw = raw.replace('<h2>Note 1. Accounting Policies</h2>',
+            '<p>A separate legal proceeding remains pending against the Company.</p>'
+            '<h2>Note 1. Accounting Policies</h2>')
         args = inputs('D02', annual_body=raw)
         doc = document(raw)
         end = doc['sections']['ITEM_8']['candidates'][0]['end_block_exclusive']
@@ -126,6 +129,26 @@ class TextResultV2SourceTest(unittest.TestCase):
         with patch.object(current_core, 'going_concern_candidates', return_value=wrong_reader):
             with self.assertRaisesRegex(ValueError, 'D02_AUDITOR_REPORT_CLOSING_SCOPE_NOT_PROVEN'):
                 current_core.prepare_business_text_sources(metric_id='D02', d02_page_furniture=True, **args)
+
+    def test_d02_unused_trailing_auditor_range_keeps_original_preparation(self):
+        """A trailing internal-control report needs no D02 admission removal."""
+        from tests.vnext.test_text_business_candidates import document
+        from vnext import d02_text_results_v3 as core
+        from unittest.mock import patch
+        close = '<h2>Item 9. Changes in and Disagreements with Accountants</h2><p>None.</p>'
+        report = ('<h2>Report of Independent Registered Public Accounting Firm</h2>'
+                  '<p>We audited internal controls and issued our opinion.</p>')
+        raw = BODY.replace(close, '') + report + close
+        doc = document(raw)
+        proposal = core.select_d02_incorporated_notes(
+            proposal=legal_risk_candidates(document=doc, raw_bytes=annual(raw)), document=doc, raw_bytes=annual(raw))
+        start = max(b['block_index'] for b in doc['blocks']
+                    if b['text'] == 'Report of Independent Registered Public Accounting Firm')
+        end = doc['sections']['ITEM_8']['candidates'][0]['end_block_exclusive']
+        unused = {'auditor_report_ranges': [{'start_block': start, 'end_block_exclusive': end,
+            'status': 'LOCAL_REPORT_RANGE_LOCATED', 'closing_heading': {'text': doc['blocks'][end]['text']}}]}
+        with patch.object(core, 'going_concern_candidates', return_value=unused):
+            self.assertEqual(proposal, core._select_d02_auditor_reports(proposal=proposal, document=doc))
 
     def test_d02_lettered_note_keeps_nested_numbered_sections_and_full_item8_pool(self):
         from tests.vnext.test_text_business_candidates import document
@@ -203,6 +226,47 @@ class TextResultV2SourceTest(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, 'D02_REFERENCED_LETTERED_SUBNOTE_NOT_MIGRATED'):
                     select_d02_incorporated_notes(proposal=legal_risk_candidates(document=doc, raw_bytes=annual(body)),
                                                  document=doc, raw_bytes=annual(body))
+    def test_d02_each_named_caption_stops_at_its_first_unnamed_peer(self):
+        from tests.vnext.test_text_business_candidates import document
+        from vnext.d02_text_results_v3 import select_d02_incorporated_notes
+        style = 'text-decoration:underline;font-weight:bold'
+        def caption(text):
+            return '<p><span style="' + style + '">' + text + '</span></p>'
+        for inside_item8 in (False, True):
+            with self.subTest(inside_item8=inside_item8):
+                raw = BODY.replace('Refer to Note 2 for our legal proceedings and pending litigation.',
+                    'See “Claims in Courts” and “Government Investigations” in Note 2.')
+                raw = raw.replace('<h3>1. Procedural matters</h3>',
+                    caption('Claims in Courts') + '<p>The court complaint remains unresolved.</p>'
+                    + caption('Guarantee Details') + '<p>Unrelated guarantees total 100 million.</p>'
+                    + caption('Government Investigations') + '<p>The government inquiry is pending.</p>')
+                if inside_item8:
+                    close = '<h2>Item 9. Changes in and Disagreements with Accountants</h2><p>None.</p>'
+                    raw = raw.replace(close, '') + close
+                doc = document(raw); original = copy.deepcopy(doc)
+                before = legal_risk_candidates(document=doc, raw_bytes=annual(raw))
+                selected = select_d02_incorporated_notes(proposal=before, document=doc, raw_bytes=annual(raw))
+                scopes = selected['d02_incorporated_note_scopes']['disclosure_scopes']
+                self.assertEqual('Guarantee Details', doc['blocks'][scopes[0]['end_block_exclusive']]['text'])
+                selected_text = [c['text'] for c in selected['D02']['candidates']]
+                self.assertNotIn('Unrelated guarantees total 100 million.', selected_text)
+                self.assertIn('The court complaint remains unresolved.', selected_text)
+                self.assertIn('The government inquiry is pending.', selected_text)
+                self.assertEqual(before['D03'], selected['D03'])
+                self.assertEqual(original, doc)
+
+    def test_d02_unknown_caption_format_cannot_end_at_short_body_text(self):
+        from tests.vnext.test_text_business_candidates import document
+        from vnext.d02_text_results_v3 import select_d02_incorporated_notes
+        raw = BODY.replace('Refer to Note 2 for our legal proceedings and pending litigation.',
+                           'See the “Claims in Courts” caption in Note 2.')
+        raw = raw.replace('<h3>1. Procedural matters</h3>',
+            '<p><b>Claims in Courts</b></p><p>Litigation remains pending</p>')
+        doc = document(raw); original = copy.deepcopy(doc)
+        with self.assertRaisesRegex(ValueError, 'D02_INCORPORATED_CAPTION_FORMAT_NOT_PROVEN'):
+            select_d02_incorporated_notes(proposal=legal_risk_candidates(document=doc, raw_bytes=annual(raw)),
+                                         document=doc, raw_bytes=annual(raw))
+        self.assertEqual(original, doc)
 
     def test_d02_quoted_form_item_title_is_not_a_note_caption(self):
         from tests.vnext.test_text_business_candidates import document
@@ -278,6 +342,52 @@ class TextResultV2SourceTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'D02_INCORPORATED_CAPTION_NOT_FOUND'):
             select_d02_incorporated_notes(proposal=legal_risk_candidates(document=document(missing)),
                 document=document(missing), raw_bytes=annual(missing))
+    def test_prefixless_note_leading_whitespace_does_not_hide_subsection_style(self):
+        from tests.vnext.test_text_business_candidates import document
+        from vnext import d02_text_results_v3 as current_core
+        for whitespace in ('', '\n', '\n  ', '&#160;'):
+            with self.subTest(whitespace=whitespace):
+                raw = BODY.replace('<h2>Note 2. Contingencies</h2>',
+                    '<p>' + whitespace + '<span style="font-weight:bold;font-size:12pt">'
+                    '2. Contingencies</span></p>')
+                raw = raw.replace('<h2>Note 3. Income Taxes</h2><p>Taxes are reported in this section.</p>', '')
+                raw = raw.replace('<h3>1. Procedural matters</h3>',
+                    '<p>' + whitespace + '<span style="font-weight:bold;font-size:10pt">'
+                    '3. Procedural matters</span></p>')
+                doc = document(raw); original = copy.deepcopy(doc)
+                proposal = legal_risk_candidates(document=doc, raw_bytes=annual(raw))
+                self.assertEqual('REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE',
+                                 proposal['note_references'][0]['status'])
+                self.assertFalse(proposal['note_references'][0]['range_candidates'])
+                self.assertEqual(original, doc)
+                with self.assertRaisesRegex(ValueError, 'TEXT_V2_LEGAL_SOURCE_NAVIGATION_INCOMPLETE'):
+                    current_core.prepare_business_text_sources(metric_id='D02',
+                        d02_page_furniture=True, **inputs('D02', annual_body=raw))
+
+    def test_prefixless_real_note_boundaries_allow_independent_leading_whitespace(self):
+        from tests.vnext.test_text_business_candidates import document
+        from vnext import d02_text_results_v3 as current_core
+        for first, next_note in (('\n', ''), ('', '\n'), ('&#160;', ''), ('', '&#160;')):
+            with self.subTest(first=first, next_note=next_note):
+                raw = BODY.replace('<h2>Note 2. Contingencies</h2>',
+                    '<p>' + first + '<span style="font-weight:bold;font-size:12pt">'
+                    '2. Contingencies</span></p>')
+                raw = raw.replace('<h2>Note 3. Income Taxes</h2>',
+                    '<p>' + next_note + '<span style="font-weight:bold;font-size:12pt">'
+                    '3. Income Taxes</span></p>')
+                doc = document(raw); original = copy.deepcopy(doc)
+                proposal = legal_risk_candidates(document=doc, raw_bytes=annual(raw))
+                self.assertEqual('LOCATED_NOTE_RANGE', proposal['note_references'][0]['status'])
+                self.assertEqual(original, doc)
+                prepared = current_core.prepare_business_text_sources(metric_id='D02',
+                    d02_page_furniture=True, **inputs('D02', annual_body=raw))
+                selected = next(iter(prepared['proposals'].values()))
+                self.assertEqual(proposal['note_references'][0]['status'],
+                                 selected['note_references'][0]['status'])
+                self.assertEqual(proposal['note_references'][0]['range_candidates'],
+                                 selected['note_references'][0]['range_candidates'])
+                self.assertIn('The court has not resolved the matter described in the preceding paragraph.',
+                              [c['text'] for c in selected['D02']['candidates']])
 
     def test_prefixless_note_titles_ignore_outer_spacing_and_alignment(self):
         from tests.vnext.test_text_business_candidates import document
