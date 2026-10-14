@@ -7,7 +7,7 @@ content. A request without its own validated semantic response remains null.
 from pathlib import Path
 from sec_urls import submissions_url, submissions_file_url
 from .calculator import calculate_observation_metric, withheld_metric_result
-from .canonical import content_hash, strict_json_file
+from .canonical import content_hash, sha256_bytes, strict_json_file
 from .deterministic_router import load_event_route_catalog, project_event_result
 from .historical_annual_input import prepare_historical_annual_input
 from .historical_event_cases import (check_historical_event_block, _event_amendment_checks,
@@ -16,7 +16,10 @@ from .historical_event_items import (content_confirmation_candidates, successor_
                                      EventItemTextError, HEADED_NOT_LISTED)
 from .historical_event_attachments import attachment_dependencies, POLICY_PATH
 from .historical_e01_incorporated_input import prepare_incorporated_e01_input
-from .historical_ma_confirmation import confirmation_request
+from .historical_ma_confirmation import (
+    confirmation_request, validate_answer, confirmed_count, CONTRACT as ITEM_CONTRACT)
+from .historical_e01_incorporated_input import (
+    summarize_incorporated_answer, CONTRACT as INCORPORATED_CONTRACT)
 from .normal_governance_input import _Sources
 from .normal_history_catalog import block_last_days
 from .normal_period_selection import resolve_period_selection
@@ -181,6 +184,42 @@ def prepare_historical_e01_year_case(*, repo_root, company_id, metric_id, fiscal
         raise ValueError('HISTORICAL_E01_FAMILY_NOT_RECEIVED')
     context = prepare_historical_e01_source_context(repo_root=repo_root,
         company_id=company_id,fiscal_year=fiscal_year)
+    return finish_historical_e01_case(context=context)
+
+
+def historical_e01_response_factory(*, response_reader):
+    """Adapt the public saved-response reader to the existing year factory.
+
+    response_reader(request=...) returns a verified original response read;
+    it never acquires a source or makes a model call. The public controller
+    receives its files separately as ordinary processing inputs.
+    """
+    if not callable(response_reader):
+        raise ValueError('E01_SAVED_RESPONSE_READER_REQUIRED')
+
+    def prepare(*, repo_root, company_id, metric_id, fiscal_year):
+        if metric_id != 'E01':
+            raise ValueError('HISTORICAL_E01_FAMILY_NOT_RECEIVED')
+        context = prepare_historical_e01_source_context(repo_root=repo_root,
+            company_id=company_id, fiscal_year=fiscal_year)
+        reply = None
+        if (context['source_graph_known'] and context['request'] is not None
+                and context['assessment']['reason_code'] == 'E01_CONTENT_RESPONSE_NOT_AVAILABLE_FOR_REQUEST'):
+            reply = response_reader(request=context['request'])
+        return finish_historical_e01_case(context=context, reviewed_response=reply)
+
+    return prepare
+
+
+def finish_historical_e01_case(*, context, reviewed_response=None):
+    """Finish one selected fiscal window from an exact saved-response read.
+
+    The public reader owns HTTP/terminal/request-file verification. This
+    consumer owns the existing item contract, complete-window rule and numeric
+    derivation. A valid response shape does not establish semantic correctness.
+    No provider, ledger, source acquisition or result writing occurs here.
+    """
+    company_id = context['company_id']
     period = context['target_period']
     annual = context['prepared_annual_input']
     selection = context['period_selection']
@@ -188,7 +227,74 @@ def prepare_historical_e01_year_case(*, repo_root, company_id, metric_id, fiscal
     reason = context['assessment']['reason_code']
     spec = compile_spec_file(path=ROOT/SPEC_PATH,dependency_specs={})
     observations = []
-    if reason == 'PASS':
+    response_summary = None
+    if (reviewed_response is not None and context['source_graph_known']
+            and reason == 'E01_CONTENT_RESPONSE_NOT_AVAILABLE_FOR_REQUEST'):
+        request = context['request']
+        if (request['request_id'] != content_hash(value={
+                k:v for k,v in request.items() if k != 'request_id'})
+                or request['company_id'] != company_id
+                or str(request['target_cik']) != str(annual['entity'])
+                or request['window'] != {k:period[k] for k in ('period_start', 'period_end')}):
+            raise ValueError('E01_SAVED_CURRENT_SOURCE_REQUEST_CHANGED')
+        if (reviewed_response.get('request_id') != request['request_id']
+                or reviewed_response.get('request') != request):
+            raise ValueError('E01_SAVED_RESPONSE_REQUEST_CHANGED')
+        if reviewed_response.get('original_execution_mode') != 'LIVE':
+            raise ValueError('E01_SAVED_LIVE_RESPONSE_REQUIRED')
+        usage = reviewed_response.get('usage') or {}
+        if (reviewed_response.get('usage_known') is not True
+                or any(type(usage.get(k)) is not int or usage[k] < 0
+                       for k in ('input_tokens', 'output_tokens'))):
+            raise ValueError('E01_SAVED_RESPONSE_USAGE_UNKNOWN')
+        raw = reviewed_response['raw_output']
+        if type(raw) is not bytes:
+            raise ValueError('E01_SAVED_RESPONSE_OUTPUT_BYTES_REQUIRED')
+        if request['contract'] == ITEM_CONTRACT:
+            decisions = validate_answer(request=request, raw_output=raw)
+            count, unresolved_reason, item_ids = confirmed_count(request=request, decisions=decisions)
+            response_summary = {'request_id': request['request_id'], 'decisions': decisions,
+                'proposed_count': count, 'reason': unresolved_reason,
+                'unresolved_item_ids': item_ids if unresolved_reason else [],
+                'confirmed_item_ids': [] if unresolved_reason else item_ids}
+        elif request['contract'] == INCORPORATED_CONTRACT:
+            response_summary = summarize_incorporated_answer(request=request, raw_output=raw)
+            # This is still a development contract. Reading its answer does
+            # not promote a successor input into the adopted item-only rule.
+            response_summary = {**response_summary,
+                'reason': response_summary['reason'] or 'E01_INCORPORATED_DEVELOPMENT_RESULT_NOT_ADOPTED'}
+        else:
+            raise ValueError('E01_SAVED_RESPONSE_CONTRACT_NOT_SUPPORTED')
+        response_summary = {**response_summary,
+            'raw_output_sha256': sha256_bytes(content=raw), 'usage': dict(usage),
+            'original_execution_id': reviewed_response['original_execution_id'],
+            'original_terminal_id': reviewed_response['original_terminal_id'],
+            'semantic_correctness_verified': False, 'new_calls': [0, 0, 0]}
+        reason = response_summary['reason'] or 'PASS'
+    if reason == 'PASS' and response_summary is not None:
+        reference = packet['inventory_source_reference']
+        source_binding = {'source_reference_id': reference['source_reference_id'],
+            'accession': reference['accession'], 'document_name': reference['document_name'],
+            'raw_asset_id': reference['raw_asset_id'], 'source_role': reference['source_role'],
+            'source_set_role': packet['source_set_manifests'][-1]['source_role'],
+            'derivation': 'MODEL_ITEM_DECISIONS_DERIVED_COUNT',
+            'request_id': response_summary['request_id'],
+            'response_sha256': response_summary['raw_output_sha256'],
+            'original_execution_id': response_summary['original_execution_id'],
+            'original_terminal_id': response_summary['original_terminal_id'],
+            'confirmed_item_ids': response_summary['confirmed_item_ids'],
+            'item_decisions': response_summary['decisions'],
+            'complete_candidate_count': len(context['request']['items']),
+            'semantic_correctness_verified': False}
+        observation = structured_observation(metric_id='E01', semantic_role='event_count',
+            company_id=company_id, period_start=period['period_start'], period_end=period['period_end'],
+            scope=target['scope'], value=str(response_summary['proposed_count']), unit='count',
+            quality='EXACT', source_binding=source_binding)
+        result, trace = calculate_observation_metric(compiled_spec=spec, target=target,
+            company_traits=repository_company_traits(repo_root=ROOT, company_id=company_id),
+            observation=observation)
+        observations = [observation]
+    elif reason == 'PASS':
         sets = packet['source_set_manifests']
         catalog = {'routes': {'E01': route}}
         graph = project_event_result(metric_id='E01',claims=packet['claims'],
@@ -210,7 +316,12 @@ def prepare_historical_e01_year_case(*, repo_root, company_id, metric_id, fiscal
     source_records = context['source_records']
     proofs, admission = context['source_proofs'], context['admission']
     current_request = context['request']
-    assessment = {**context['assessment'], 'complete_annual_count':'0' if reason=='PASS' else None}
+    assessment = {**context['assessment'], 'reason_code': reason,
+        'complete_annual_count': (str(response_summary['proposed_count'])
+            if reason == 'PASS' and response_summary is not None else '0' if reason == 'PASS' else None)}
+    if response_summary is not None:
+        assessment.update(matching_response_available=True, partial_count_exported=False,
+            semantic_correctness_verified=False, saved_response=response_summary)
     display_assessment = _display_assessment(assessment)
     binding={'record_type':'HISTORICAL_E01_COMPANY_SOURCE_INPUT','prepared_input':annual,
         'period_selection':selection,'source_proofs':proofs,'request':current_request,
@@ -220,7 +331,7 @@ def prepare_historical_e01_year_case(*, repo_root, company_id, metric_id, fiscal
         'spec_paths':{'E01':SPEC_PATH},'target_period':period,'prepared_annual_input':annual,
         'input_binding':binding,'expected_records':[*source_records,
             *([] if packet is None else packet['claims']), *observations,trace,result],
-        'results':{'E01':result},'traces':{'E01':trace},
+        'results':{'E01':result},'traces':{'E01':trace},'observations':observations,
         'references':[r for r in source_records if r['record_type']=='SOURCE_REFERENCE'],
         'source_proofs':proofs,'admission':admission,'rules_root':str(ROOT),
         'input_assessments':{'e01_content':assessment,'e01_request':current_request},

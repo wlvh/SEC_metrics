@@ -1,0 +1,137 @@
+test_complete_decisions_create_one_count_with_model_provenance (tests.vnext.test_historical_e01_company_case.HistoricalE01SavedResponseFinishTest.test_complete_decisions_create_one_count_with_model_provenance) ... ERROR
+test_missing_or_hallucinated_item_quote_is_rejected (tests.vnext.test_historical_e01_company_case.HistoricalE01SavedResponseFinishTest.test_missing_or_hallucinated_item_quote_is_rejected) ... 
+  test_missing_or_hallucinated_item_quote_is_rejected (tests.vnext.test_historical_e01_company_case.HistoricalE01SavedResponseFinishTest.test_missing_or_hallucinated_item_quote_is_rejected) (raw=b'{"item_decisions": [{"item_id": "0000000001-25-000001#1.01@0", "decision": "REPORTS_A_TRANSACTION", "quote": "ntry into a Material Definitive Agreement. On July 7, 2024, the Comp"}]}') ... ERROR
+  test_missing_or_hallucinated_item_quote_is_rejected (tests.vnext.test_historical_e01_company_case.HistoricalE01SavedResponseFinishTest.test_missing_or_hallucinated_item_quote_is_rejected) (raw=b'{"item_decisions": [{"item_id": "0000000001-25-000001#1.01@0", "decision": "REPORTS_A_TRANSACTION", "quote": "invented unsupported words here"}, {"item_id": "0000000001-25-000002#1.01@0", "decision": "DOES_NOT_REPORT_A_TRANSACTION", "quote": "ntry into a Material Definitive Agreement. On April 17, 2025, the Co"}]}') ... ERROR
+test_one_unresolved_item_withholds_the_whole_annual_count (tests.vnext.test_historical_e01_company_case.HistoricalE01SavedResponseFinishTest.test_one_unresolved_item_withholds_the_whole_annual_count) ... ERROR
+test_saved_answer_cannot_bypass_missing_source_or_body_conflict (tests.vnext.test_historical_e01_company_case.HistoricalE01SavedResponseFinishTest.test_saved_answer_cannot_bypass_missing_source_or_body_conflict) ... 
+  test_saved_answer_cannot_bypass_missing_source_or_body_conflict (tests.vnext.test_historical_e01_company_case.HistoricalE01SavedResponseFinishTest.test_saved_answer_cannot_bypass_missing_source_or_body_conflict) (reason='E01_REQUIRED_INCORPORATED_SOURCE_UNAVAILABLE') ... ERROR
+  test_saved_answer_cannot_bypass_missing_source_or_body_conflict (tests.vnext.test_historical_e01_company_case.HistoricalE01SavedResponseFinishTest.test_saved_answer_cannot_bypass_missing_source_or_body_conflict) (reason='E01_ITEM_METADATA_BODY_CONFLICT') ... ERROR
+  test_saved_answer_cannot_bypass_missing_source_or_body_conflict (tests.vnext.test_historical_e01_company_case.HistoricalE01SavedResponseFinishTest.test_saved_answer_cannot_bypass_missing_source_or_body_conflict) (reason='E01_SUCCESSOR_EVENT_WINDOW_NOT_RECEIVED') ... ERROR
+test_wrong_request_recorded_or_unknown_usage_stays_rejected (tests.vnext.test_historical_e01_company_case.HistoricalE01SavedResponseFinishTest.test_wrong_request_recorded_or_unknown_usage_stays_rejected) ... 
+  test_wrong_request_recorded_or_unknown_usage_stays_rejected (tests.vnext.test_historical_e01_company_case.HistoricalE01SavedResponseFinishTest.test_wrong_request_recorded_or_unknown_usage_stays_rejected) (change={'request_id': 'wrong'}) ... ERROR
+  test_wrong_request_recorded_or_unknown_usage_stays_rejected (tests.vnext.test_historical_e01_company_case.HistoricalE01SavedResponseFinishTest.test_wrong_request_recorded_or_unknown_usage_stays_rejected) (change={'original_execution_mode': 'RECORDED_TEST_ONLY'}) ... ERROR
+  test_wrong_request_recorded_or_unknown_usage_stays_rejected (tests.vnext.test_historical_e01_company_case.HistoricalE01SavedResponseFinishTest.test_wrong_request_recorded_or_unknown_usage_stays_rejected) (change={'usage_known': False}) ... ERROR
+
+======================================================================
+ERROR: test_complete_decisions_create_one_count_with_model_provenance (tests.vnext.test_historical_e01_company_case.HistoricalE01SavedResponseFinishTest.test_complete_decisions_create_one_count_with_model_provenance)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_historical_e01_company_case.py", line 422, in test_complete_decisions_create_one_count_with_model_provenance
+    case = self.finish(context, reply)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_historical_e01_company_case.py", line 415, in finish
+    return cases.finish_historical_e01_case(context=context, reviewed_response=reply)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'vnext.historical_e01_company_case' has no attribute 'finish_historical_e01_case'
+
+======================================================================
+ERROR: test_missing_or_hallucinated_item_quote_is_rejected (tests.vnext.test_historical_e01_company_case.HistoricalE01SavedResponseFinishTest.test_missing_or_hallucinated_item_quote_is_rejected) (raw=b'{"item_decisions": [{"item_id": "0000000001-25-000001#1.01@0", "decision": "REPORTS_A_TRANSACTION", "quote": "ntry into a Material Definitive Agreement. On July 7, 2024, the Comp"}]}')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_historical_e01_company_case.py", line 469, in test_missing_or_hallucinated_item_quote_is_rejected
+    self.finish(context, {**self.reply(context, [('REPORTS_A_TRANSACTION', None),
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        ('DOES_NOT_REPORT_A_TRANSACTION', None)]), 'raw_output': raw})
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_historical_e01_company_case.py", line 415, in finish
+    return cases.finish_historical_e01_case(context=context, reviewed_response=reply)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'vnext.historical_e01_company_case' has no attribute 'finish_historical_e01_case'
+
+======================================================================
+ERROR: test_missing_or_hallucinated_item_quote_is_rejected (tests.vnext.test_historical_e01_company_case.HistoricalE01SavedResponseFinishTest.test_missing_or_hallucinated_item_quote_is_rejected) (raw=b'{"item_decisions": [{"item_id": "0000000001-25-000001#1.01@0", "decision": "REPORTS_A_TRANSACTION", "quote": "invented unsupported words here"}, {"item_id": "0000000001-25-000002#1.01@0", "decision": "DOES_NOT_REPORT_A_TRANSACTION", "quote": "ntry into a Material Definitive Agreement. On April 17, 2025, the Co"}]}')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_historical_e01_company_case.py", line 469, in test_missing_or_hallucinated_item_quote_is_rejected
+    self.finish(context, {**self.reply(context, [('REPORTS_A_TRANSACTION', None),
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        ('DOES_NOT_REPORT_A_TRANSACTION', None)]), 'raw_output': raw})
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_historical_e01_company_case.py", line 415, in finish
+    return cases.finish_historical_e01_case(context=context, reviewed_response=reply)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'vnext.historical_e01_company_case' has no attribute 'finish_historical_e01_case'
+
+======================================================================
+ERROR: test_one_unresolved_item_withholds_the_whole_annual_count (tests.vnext.test_historical_e01_company_case.HistoricalE01SavedResponseFinishTest.test_one_unresolved_item_withholds_the_whole_annual_count)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_historical_e01_company_case.py", line 435, in test_one_unresolved_item_withholds_the_whole_annual_count
+    case = self.finish(context, reply)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_historical_e01_company_case.py", line 415, in finish
+    return cases.finish_historical_e01_case(context=context, reviewed_response=reply)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'vnext.historical_e01_company_case' has no attribute 'finish_historical_e01_case'
+
+======================================================================
+ERROR: test_saved_answer_cannot_bypass_missing_source_or_body_conflict (tests.vnext.test_historical_e01_company_case.HistoricalE01SavedResponseFinishTest.test_saved_answer_cannot_bypass_missing_source_or_body_conflict) (reason='E01_REQUIRED_INCORPORATED_SOURCE_UNAVAILABLE')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_historical_e01_company_case.py", line 458, in test_saved_answer_cannot_bypass_missing_source_or_body_conflict
+    case = self.finish(blocked, self.reply(context, [('REPORTS_A_TRANSACTION', None)]))
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_historical_e01_company_case.py", line 415, in finish
+    return cases.finish_historical_e01_case(context=context, reviewed_response=reply)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'vnext.historical_e01_company_case' has no attribute 'finish_historical_e01_case'
+
+======================================================================
+ERROR: test_saved_answer_cannot_bypass_missing_source_or_body_conflict (tests.vnext.test_historical_e01_company_case.HistoricalE01SavedResponseFinishTest.test_saved_answer_cannot_bypass_missing_source_or_body_conflict) (reason='E01_ITEM_METADATA_BODY_CONFLICT')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_historical_e01_company_case.py", line 458, in test_saved_answer_cannot_bypass_missing_source_or_body_conflict
+    case = self.finish(blocked, self.reply(context, [('REPORTS_A_TRANSACTION', None)]))
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_historical_e01_company_case.py", line 415, in finish
+    return cases.finish_historical_e01_case(context=context, reviewed_response=reply)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'vnext.historical_e01_company_case' has no attribute 'finish_historical_e01_case'
+
+======================================================================
+ERROR: test_saved_answer_cannot_bypass_missing_source_or_body_conflict (tests.vnext.test_historical_e01_company_case.HistoricalE01SavedResponseFinishTest.test_saved_answer_cannot_bypass_missing_source_or_body_conflict) (reason='E01_SUCCESSOR_EVENT_WINDOW_NOT_RECEIVED')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_historical_e01_company_case.py", line 458, in test_saved_answer_cannot_bypass_missing_source_or_body_conflict
+    case = self.finish(blocked, self.reply(context, [('REPORTS_A_TRANSACTION', None)]))
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_historical_e01_company_case.py", line 415, in finish
+    return cases.finish_historical_e01_case(context=context, reviewed_response=reply)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'vnext.historical_e01_company_case' has no attribute 'finish_historical_e01_case'
+
+======================================================================
+ERROR: test_wrong_request_recorded_or_unknown_usage_stays_rejected (tests.vnext.test_historical_e01_company_case.HistoricalE01SavedResponseFinishTest.test_wrong_request_recorded_or_unknown_usage_stays_rejected) (change={'request_id': 'wrong'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_historical_e01_company_case.py", line 448, in test_wrong_request_recorded_or_unknown_usage_stays_rejected
+    self.finish(context, {**self.reply(context, [('REPORTS_A_TRANSACTION', None)]), **change})
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_historical_e01_company_case.py", line 415, in finish
+    return cases.finish_historical_e01_case(context=context, reviewed_response=reply)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'vnext.historical_e01_company_case' has no attribute 'finish_historical_e01_case'
+
+======================================================================
+ERROR: test_wrong_request_recorded_or_unknown_usage_stays_rejected (tests.vnext.test_historical_e01_company_case.HistoricalE01SavedResponseFinishTest.test_wrong_request_recorded_or_unknown_usage_stays_rejected) (change={'original_execution_mode': 'RECORDED_TEST_ONLY'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_historical_e01_company_case.py", line 448, in test_wrong_request_recorded_or_unknown_usage_stays_rejected
+    self.finish(context, {**self.reply(context, [('REPORTS_A_TRANSACTION', None)]), **change})
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_historical_e01_company_case.py", line 415, in finish
+    return cases.finish_historical_e01_case(context=context, reviewed_response=reply)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'vnext.historical_e01_company_case' has no attribute 'finish_historical_e01_case'
+
+======================================================================
+ERROR: test_wrong_request_recorded_or_unknown_usage_stays_rejected (tests.vnext.test_historical_e01_company_case.HistoricalE01SavedResponseFinishTest.test_wrong_request_recorded_or_unknown_usage_stays_rejected) (change={'usage_known': False})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_historical_e01_company_case.py", line 448, in test_wrong_request_recorded_or_unknown_usage_stays_rejected
+    self.finish(context, {**self.reply(context, [('REPORTS_A_TRANSACTION', None)]), **change})
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_historical_e01_company_case.py", line 415, in finish
+    return cases.finish_historical_e01_case(context=context, reviewed_response=reply)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'vnext.historical_e01_company_case' has no attribute 'finish_historical_e01_case'
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.003s
+
+FAILED (errors=10)

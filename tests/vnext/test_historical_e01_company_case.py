@@ -1,11 +1,13 @@
 """Ordinary E01 consumer controls; constructed answers have no model credit."""
 from contextlib import ExitStack
 from pathlib import Path
+import json
+import copy
 from types import SimpleNamespace
 from unittest import TestCase
 from unittest.mock import Mock,patch
 from vnext import historical_e01_company_case as cases
-from tests.vnext.test_historical_ma_confirmation import candidate,POINTER
+from tests.vnext.test_historical_ma_confirmation import candidate,POINTER,MERGER,LOAN,request,answer
 from vnext import historical_event_items as items
 
 
@@ -372,3 +374,224 @@ class HistoricalE01ZeroCandidateTest(TestCase):
         self.assertEqual('0',result['results']['E01']['value'])
         self.assertEqual('NO_CANDIDATE_ITEM',result['input_assessments']['e01_content']['status'])
         self.assertIsNone(result['input_assessments']['e01_request'])
+
+
+class HistoricalE01SavedResponseFinishTest(TestCase):
+    """Constructed reply controls, not a real model or SEC business result."""
+
+    def context(self, *texts):
+        req = request(*texts)
+        period = {'fiscal_year': 2025, 'period_start': '2025-01-01', 'period_end': '2025-12-31'}
+        scope = {'coverage': 'fiscal_year_source_set', 'fiscal_year': 2025,
+                 'shared_claim_group_id': 'merger_acquisition_items'}
+        from vnext.observations import scope_key
+        return {'record_type': 'HISTORICAL_E01_SOURCE_CONTEXT_V1', 'company_id': 'example',
+            'fiscal_year': 2025, 'target_period': period,
+            'prepared_annual_input': {'company_id': 'example', 'entity': '1',
+                'table_input': {'target_period': period}},
+            'period_selection': {}, 'event_packet': {'claims': [], 'filings': [],
+                'inventory_source_reference': {'source_reference_id': 'constructed-inventory',
+                    'raw_asset_id': 'constructed-raw', 'source_role': 'sec_submissions_inventory',
+                    'accession': 'constructed-window', 'document_name': 'constructed-inventory.json'},
+                'source_set_manifests': [{'manifest_id': 'constructed-set', 'source_role': '8k-union'}]},
+            'event_route': {}, 'target': {'company_id': 'example', **{k:period[k] for k in
+                ('period_start','period_end')}, 'scope': scope, 'scope_key': scope_key(scope=scope)},
+            'source_records': [], 'source_proofs': [], 'admission': {}, 'request': req,
+            'predecessor_request_id': req['request_id'],
+            'assessment': {'reason_code': 'E01_CONTENT_RESPONSE_NOT_AVAILABLE_FOR_REQUEST',
+                'annual_amendment_checks': [], 'matching_response_available': False,
+                'partial_count_exported': False}, 'source_graph_known': True}
+
+    def reply(self, context, decisions):
+        req = context['request']
+        return {'request_id': req['request_id'], 'request': copy.deepcopy(req),
+            'original_execution_mode': 'LIVE', 'usage_known': True,
+            'usage': {'input_tokens': 100, 'output_tokens': 100},
+            'original_execution_id': 'constructed-control-execution',
+            'original_terminal_id': 'constructed-control-terminal',
+            'raw_output': answer(req, decisions)}
+
+    def finish(self, context, reply):
+        with patch.object(cases, 'repository_company_traits', return_value=['non_financial']):
+            return cases.finish_historical_e01_case(context=context, reviewed_response=reply)
+
+    def test_complete_decisions_create_one_count_with_model_provenance(self):
+        context = self.context(MERGER, LOAN)
+        original = copy.deepcopy(context)
+        reply = self.reply(context, [('REPORTS_A_TRANSACTION', None),
+                                     ('DOES_NOT_REPORT_A_TRANSACTION', None)])
+        case = self.finish(context, reply)
+        self.assertEqual('1', case['results']['E01']['value'])
+        self.assertEqual('count', case['results']['E01']['unit'])
+        self.assertEqual('PASS', case['results']['E01']['reason_code'])
+        self.assertEqual('MODEL_ITEM_DECISIONS_DERIVED_COUNT',
+                         case['observations'][0]['source_binding']['derivation'])
+        self.assertFalse(case['input_assessments']['e01_content']['semantic_correctness_verified'])
+        self.assertEqual(original, context)
+
+    def test_one_unresolved_item_withholds_the_whole_annual_count(self):
+        context = self.context(MERGER, POINTER)
+        reply = self.reply(context, [('REPORTS_A_TRANSACTION', None),
+                                     ('CANNOT_TELL_FROM_THE_ITEM_TEXT', None)])
+        case = self.finish(context, reply)
+        self.assertIsNone(case['results']['E01']['value'])
+        self.assertEqual('HISTORICAL_E01_ITEM_TEXT_DOES_NOT_SETTLE_IT',
+                         case['results']['E01']['reason_code'])
+        self.assertEqual([], case['observations'])
+        self.assertIsNone(case['input_assessments']['e01_content']['complete_annual_count'])
+
+    def test_wrong_request_recorded_or_unknown_usage_stays_rejected(self):
+        context = self.context(MERGER)
+        for change, reason in (({'request_id': 'wrong'}, 'RESPONSE_REQUEST_CHANGED'),
+                               ({'original_execution_mode': 'RECORDED_TEST_ONLY'}, 'LIVE_RESPONSE_REQUIRED'),
+                               ({'usage_known': False}, 'RESPONSE_USAGE_UNKNOWN')):
+            with self.subTest(change=change), self.assertRaisesRegex(ValueError, reason):
+                self.finish(context, {**self.reply(context, [('REPORTS_A_TRANSACTION', None)]), **change})
+
+    def test_saved_answer_cannot_bypass_missing_source_or_body_conflict(self):
+        context = self.context(MERGER)
+        for reason in ('E01_REQUIRED_INCORPORATED_SOURCE_UNAVAILABLE',
+                       'E01_ITEM_METADATA_BODY_CONFLICT', 'E01_SUCCESSOR_EVENT_WINDOW_NOT_RECEIVED'):
+            with self.subTest(reason=reason):
+                blocked = copy.deepcopy(context)
+                blocked['source_graph_known'] = False
+                blocked['assessment']['reason_code'] = reason
+                case = self.finish(blocked, self.reply(context, [('REPORTS_A_TRANSACTION', None)]))
+                self.assertEqual(reason, case['results']['E01']['reason_code'])
+                self.assertIsNone(case['results']['E01']['value'])
+                self.assertEqual([], case['observations'])
+
+    def test_incorporated_development_answer_does_not_promote_a_metric_value(self):
+        from tests.vnext.test_historical_e01_incorporated_input import IncorporatedE01InputTest
+        fixture = IncorporatedE01InputTest()
+        _, req = fixture.prepare()
+        context = self.context(MERGER, LOAN)
+        context['request'] = req
+        raw = json.dumps(fixture.answer(req)).encode()
+        reply = {'request_id': req['request_id'], 'request': copy.deepcopy(req),
+            'original_execution_mode': 'LIVE', 'usage_known': True,
+            'usage': {'input_tokens': 100, 'output_tokens': 100},
+            'original_execution_id': 'constructed-control-execution',
+            'original_terminal_id': 'constructed-control-terminal', 'raw_output': raw}
+        case = self.finish(context, reply)
+        self.assertEqual('E01_INCORPORATED_DEVELOPMENT_RESULT_NOT_ADOPTED',
+                         case['results']['E01']['reason_code'])
+        self.assertIsNone(case['results']['E01']['value'])
+        self.assertIsNone(case['input_assessments']['e01_content']['complete_annual_count'])
+
+    def test_missing_or_hallucinated_item_quote_is_rejected(self):
+        context = self.context(MERGER, LOAN)
+        for raw in (answer(context['request'], [('REPORTS_A_TRANSACTION', None)]),
+                    answer(context['request'], [('REPORTS_A_TRANSACTION', 'invented unsupported words here'),
+                                                ('DOES_NOT_REPORT_A_TRANSACTION', None)])):
+            with self.subTest(raw=raw), self.assertRaises(ValueError):
+                self.finish(context, {**self.reply(context, [('REPORTS_A_TRANSACTION', None),
+                    ('DOES_NOT_REPORT_A_TRANSACTION', None)]), 'raw_output': raw})
+
+
+class HistoricalE01ResponseFactoryTest(TestCase):
+    context = HistoricalE01SavedResponseFinishTest.context
+    reply = HistoricalE01SavedResponseFinishTest.reply
+    """The reply callback is constructed; no live API or saved-call credit."""
+
+    def test_factory_prepares_current_request_then_uses_the_one_reader(self):
+        context = self.context(MERGER, LOAN)
+        reply = self.reply(context, [('REPORTS_A_TRANSACTION', None),
+                                     ('DOES_NOT_REPORT_A_TRANSACTION', None)])
+        reader = Mock(return_value=reply)
+        factory = cases.historical_e01_response_factory(response_reader=reader)
+        with patch.object(cases, 'prepare_historical_e01_source_context', return_value=context) as source, \
+             patch.object(cases, 'repository_company_traits', return_value=['non_financial']):
+            case = factory(repo_root=Path('/constructed'), company_id='example',
+                           metric_id='E01', fiscal_year=2025)
+        source.assert_called_once_with(repo_root=Path('/constructed'),
+                                       company_id='example', fiscal_year=2025)
+        reader.assert_called_once_with(request=context['request'])
+        self.assertEqual('1', case['results']['E01']['value'])
+
+    def test_missing_source_and_wrong_metric_never_read_a_model_reply(self):
+        context = self.context(MERGER)
+        context['source_graph_known'] = False
+        context['assessment']['reason_code'] = 'E01_REQUIRED_INCORPORATED_SOURCE_UNAVAILABLE'
+        reader = Mock(side_effect=AssertionError('Source failure must not read a model reply'))
+        factory = cases.historical_e01_response_factory(response_reader=reader)
+        with patch.object(cases, 'prepare_historical_e01_source_context', return_value=context):
+            case = factory(repo_root=Path('/constructed'), company_id='example',
+                           metric_id='E01', fiscal_year=2025)
+        reader.assert_not_called()
+        self.assertEqual('E01_REQUIRED_INCORPORATED_SOURCE_UNAVAILABLE',
+                         case['results']['E01']['reason_code'])
+        with patch.object(cases, 'prepare_historical_e01_source_context',
+                          side_effect=AssertionError('Wrong metric must fail before sources')), \
+             self.assertRaisesRegex(ValueError, 'FAMILY_NOT_RECEIVED'):
+            factory(repo_root=Path('/constructed'), company_id='example', metric_id='D02', fiscal_year=2025)
+
+
+class HistoricalE01SharedControllerTest(TestCase):
+    """Actual public controller, constructed source/reply/write controls."""
+
+    def test_success_withheld_and_answer_change_use_the_one_controller(self):
+        import tempfile
+        from vnext import ordinary_current_update as update
+        support = HistoricalE01SavedResponseFinishTest()
+        context = support.context(MERGER, POINTER)
+        from vnext.canonical import content_hash
+        for value in (context, context['prepared_annual_input'], context['target'], context['request']):
+            value['company_id'] = 'marriott_international'
+        context['request']['request_id'] = content_hash(value={
+            k:v for k,v in context['request'].items() if k != 'request_id'})
+        source = Mock(return_value=context)
+        reads = []
+        records = {}
+        with tempfile.TemporaryDirectory() as folder:
+            state = Path(folder)/'state'
+            response_file = Path(folder)/'reply.bin'
+            good = answer(context['request'], [('REPORTS_A_TRANSACTION', None),
+                                              ('DOES_NOT_REPORT_A_TRANSACTION', None)])
+            uncertain = answer(context['request'], [('REPORTS_A_TRANSACTION', None),
+                                                   ('CANNOT_TELL_FROM_THE_ITEM_TEXT', None)])
+            response_file.write_bytes(good)
+            def reader(*, request):
+                reads.append(request['request_id'])
+                return {**support.reply(context, [('REPORTS_A_TRANSACTION', None),
+                    ('DOES_NOT_REPORT_A_TRANSACTION', None)]),
+                    'raw_output': response_file.read_bytes()}
+            factory = cases.historical_e01_response_factory(response_reader=reader)
+            def save(**kw):
+                output = kw['output_root'];output.mkdir(parents=True)
+                value = {'manifest': {'company_id':'marriott_international','metric_id':'E01','source_proofs':[],
+                    'compiled_specs':kw['case']['compiled_specs'], 'selected_spec_path':cases.SPEC_PATH},
+                         'result': kw['case']['results']['E01']}
+                records[str(output)] = value
+                return value
+            options = dict(state_root=state, source_root=cases.ROOT, company_id='marriott_international',
+                metric_id='E01', fiscal_year=2025, case_factory=factory,
+                processing_files=cases.PROCESSING_FILES, processing_inputs=[response_file])
+            with patch.object(cases, 'prepare_historical_e01_source_context', source), \
+                 patch.object(cases, 'repository_company_traits', return_value=['non_financial']), \
+                 patch.object(update, '_source_census', return_value=[]), \
+                 patch.object(update, '_current_sources', return_value=[]), \
+                 patch.object(update, 'save_calculated_case', side_effect=save), \
+                 patch.object(update, 'read_saved_result',
+                              side_effect=lambda **kw: records[str(kw['output_root'])]):
+                first = update.run_once(**options)
+                self.assertEqual('CANDIDATE_READY', first['status'], first)
+                old_roots = set(records)
+                with patch.object(update, 'save_calculated_case',
+                                  side_effect=AssertionError('No unchanged answer processing')):
+                    repeat = update.run_once(**options)
+                self.assertIn('calculation_performed', repeat, {k:v for k,v in repeat.items() if k != 'previous_result'})
+                self.assertFalse(repeat['calculation_performed'], repeat)
+                self.assertEqual(1, len(reads))
+
+                response_file.write_bytes(uncertain)
+                changed = update.run_once(**options)
+                self.assertEqual('CANDIDATE_WITHHELD', changed['status'])
+                self.assertEqual(2, len(reads))
+                self.assertNotEqual(first['version'], changed['version'])
+                with patch.object(update, 'save_calculated_case',
+                                  side_effect=AssertionError('No stable withholding processing')):
+                    repeated = update.run_once(**options)
+                self.assertEqual('PREVIOUS_INPUT_WITHHELD', repeated['status'])
+                self.assertFalse(repeated['new_candidate_created'])
+                self.assertTrue(all(Path(r).is_dir() for r in old_roots))
