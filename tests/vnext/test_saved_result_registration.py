@@ -73,6 +73,30 @@ class LegacyRegistrationShapeTest(unittest.TestCase):
         self.assertIsNone(_legacy_registration(ast.parse(code.replace('source_root=source',"source_root='/another'")),'D04'))
 
 class LegacyStoreComponentTest(unittest.TestCase):
+    def test_changed_legacy_wrapper_or_selected_factory_rebinding_is_not_reused(self):
+        import hashlib
+        from vnext import ordinary_result_registration as registration
+        original=(ROOT/'tests/vnext/fixtures/saved_result_inline_dispatch_5612.py.txt').read_text()
+        current=update._configuration(ROOT,'marriott_international','D04')
+        mutations={
+            'selected_factory_rebound':original.replace(
+                'return prepare_case(source_root=source,company_id=company_id,metric_id=metric_id)',
+                'prepare_case = another_factory\n            return prepare_case(source_root=source,company_id=company_id,metric_id=metric_id)'),
+            'outer_source_changed':original.replace(
+                '    def prepare(source):',
+                "    source_root = source_root / 'different-source'\n    def prepare(source):",1),
+            'save_arguments_changed':original.replace(
+                'calculation_performed=True, shared_input_root=shared_input_root)',
+                'calculation_performed=False, shared_input_root=shared_input_root)',1),
+        }
+        for name,source in mutations.items():
+            with self.subTest(name=name):
+                self.assertNotEqual(original,source)
+                raw=source.encode();previous=deepcopy(current);previous.pop('saved_result_registration')
+                previous['processing_files'][registration.STORE]=hashlib.sha256(raw).hexdigest()
+                with patch.object(registration,'_old_source',return_value=raw):
+                    self.assertFalse(registration.same_registered_processing(previous,current,{},ROOT))
+
     def test_dispatch_transition_uses_source_and_rejects_changed_or_missing_functions(self):
         import ast
         from vnext import ordinary_result_registration as registration
@@ -122,6 +146,19 @@ class LegacyStoreComponentTest(unittest.TestCase):
                 with patch.object(registration,'_old_source',return_value=original):
                     self.assertFalse(registration.same_registered_processing(previous,current,{},ROOT))
 
+    def test_supplied_case_does_not_consume_the_unused_legacy_create_wrapper(self):
+        import hashlib
+        from vnext import ordinary_result_registration as registration
+        original=(ROOT/'tests/vnext/fixtures/saved_result_inline_dispatch_5612.py.txt').read_text()
+        changed=original.replace('    def prepare(source):',
+            "    source_root = source_root / 'unused'\n    def prepare(source):",1).encode()
+        current=update._configuration(ROOT,'marriott_international','D04',supplied_case=True)
+        current['case_producer']='same-explicit-producer'
+        previous=deepcopy(current);previous.pop('saved_result_registration')
+        previous['processing_files'][registration.STORE]=hashlib.sha256(changed).hexdigest()
+        with patch.object(registration,'_old_source',return_value=changed):
+            self.assertTrue(registration.same_registered_processing(previous,current,{},ROOT))
+
     def test_unavailable_or_wrong_component_never_grants_compatibility(self):
         from vnext import ordinary_result_registration as registration
         current=update._configuration(ROOT,'marriott_international','D04')
@@ -131,6 +168,28 @@ class LegacyStoreComponentTest(unittest.TestCase):
             self.assertFalse(registration.same_registered_processing(previous,current,{},ROOT))
 
 class RegistrationUpdateBehaviorTest(unittest.TestCase):
+    def test_changed_legacy_wrapper_reprocesses_once_then_reuses(self):
+        import hashlib,json
+        from tests.vnext.test_ordinary_current_update import CurrentUpdateTest, update as fixture_update
+        from scripts.vnext import ordinary_result_registration as registration
+        case=CurrentUpdateTest();case.setUp();self.addCleanup(case.doCleanups)
+        original=(ROOT/'tests/vnext/fixtures/saved_result_inline_dispatch_5612.py.txt').read_text()
+        changed=original.replace('    def prepare(source):',
+            "    source_root = source_root / 'different-source'\n    def prepare(source):",1).encode()
+        case.config={'metric_id':'B01','processing_files':{registration.STORE:hashlib.sha256(changed).hexdigest()}}
+        first=case.run_update()
+        (Path(first['result_root'])/'manifest.json').write_text(json.dumps(case.records[first['result_root']]['manifest']))
+        case.config={**case.config,'saved_result_registration':saved.selected_case_registration('B01')}
+        with patch.object(registration,'_old_source',return_value=changed):
+            second=case.run_update()
+        self.assertEqual('CANDIDATE_READY',second['status'],second)
+        self.assertEqual(2,case.calculations);self.assertNotEqual(first['result_id'],second['result_id'])
+        with patch.object(fixture_update,'create_saved_result',side_effect=AssertionError('No repeated processing')):
+            again=case.run_update()
+        self.assertEqual('NO_SOURCE_CONTENT_CHANGE',again['status'])
+        self.assertEqual(second['result_id'],again['result_id'])
+        self.assertEqual(first['result_id'],case.records[first['result_root']]['result']['result_id'])
+
     def test_default_record_changed_to_current_factory_processes_once_then_reuses(self):
         import hashlib
         from tests.vnext.test_ordinary_current_update import CurrentUpdateTest, update as fixture_update
