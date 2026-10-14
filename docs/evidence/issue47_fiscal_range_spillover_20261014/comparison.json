@@ -1,0 +1,150 @@
+{
+  "actual_main": "190e2f9011d264c5d6527e2bb59efd6b1b9aa3c5",
+  "tested_program": "02454771fea9223c2447c9cd5126b6198a6fce37",
+  "planning_module_unchanged_from_main": "scripts/vnext/company_fiscal_range.py",
+  "module_sha256": "785b0ef665197bc4d6ad45e82de2a1a8f3afd2f751de6ff3c11160f1ee007433",
+  "results": [
+    {
+      "name": "single-2022",
+      "seconds": 10.56471308300388,
+      "exit_code": 0,
+      "arguments": [
+        "sources",
+        "--company",
+        "macys",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--fiscal-year-start",
+        "2022",
+        "--fiscal-year-end",
+        "2022",
+        "--metric",
+        "B01"
+      ],
+      "status": "FISCAL_RANGE_RESOLVED",
+      "tasks": [
+        {
+          "fiscal_year": 2022,
+          "status": "FISCAL_YEAR_RESOLVED",
+          "limitations": [],
+          "report_end": "2023-01-28"
+        }
+      ],
+      "calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "metric_executed": false,
+      "fetch_authorized": false
+    },
+    {
+      "name": "five-2021-2025",
+      "seconds": 9.711998167011188,
+      "exit_code": 2,
+      "arguments": [
+        "sources",
+        "--company",
+        "macys",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--fiscal-year-start",
+        "2021",
+        "--fiscal-year-end",
+        "2025",
+        "--metric",
+        "B01"
+      ],
+      "status": "FISCAL_RANGE_UNRESOLVED",
+      "tasks": [
+        {
+          "fiscal_year": 2021,
+          "status": "FISCAL_YEAR_SOURCE_UNRESOLVED",
+          "limitations": [
+            {
+              "phase": "FISCAL_LABEL",
+              "report_end": "2020-02-01",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000079436720000040/m-0201202010xk.htm",
+              "saved_status": "MISSING_SAVED_SOURCE",
+              "reason": "MISSING_SAVED_SOURCE",
+              "category": "SOURCE_UNAVAILABLE"
+            }
+          ],
+          "report_end": null
+        },
+        {
+          "fiscal_year": 2022,
+          "status": "FISCAL_YEAR_SOURCE_UNRESOLVED",
+          "limitations": [
+            {
+              "phase": "FISCAL_LABEL",
+              "report_end": "2020-02-01",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000079436720000040/m-0201202010xk.htm",
+              "saved_status": "MISSING_SAVED_SOURCE",
+              "reason": "MISSING_SAVED_SOURCE",
+              "category": "SOURCE_UNAVAILABLE"
+            }
+          ],
+          "report_end": null
+        },
+        {
+          "fiscal_year": 2023,
+          "status": "FISCAL_YEAR_SOURCE_UNRESOLVED",
+          "limitations": [
+            {
+              "phase": "FISCAL_LABEL",
+              "report_end": "2020-02-01",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000079436720000040/m-0201202010xk.htm",
+              "saved_status": "MISSING_SAVED_SOURCE",
+              "reason": "MISSING_SAVED_SOURCE",
+              "category": "SOURCE_UNAVAILABLE"
+            }
+          ],
+          "report_end": null
+        },
+        {
+          "fiscal_year": 2024,
+          "status": "FISCAL_YEAR_SOURCE_UNRESOLVED",
+          "limitations": [
+            {
+              "phase": "FISCAL_LABEL",
+              "report_end": "2020-02-01",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000079436720000040/m-0201202010xk.htm",
+              "saved_status": "MISSING_SAVED_SOURCE",
+              "reason": "MISSING_SAVED_SOURCE",
+              "category": "SOURCE_UNAVAILABLE"
+            }
+          ],
+          "report_end": null
+        },
+        {
+          "fiscal_year": 2025,
+          "status": "FISCAL_YEAR_SOURCE_UNRESOLVED",
+          "limitations": [
+            {
+              "phase": "FISCAL_LABEL",
+              "report_end": "2020-02-01",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000079436720000040/m-0201202010xk.htm",
+              "saved_status": "MISSING_SAVED_SOURCE",
+              "reason": "MISSING_SAVED_SOURCE",
+              "category": "SOURCE_UNAVAILABLE"
+            }
+          ],
+          "report_end": null
+        }
+      ],
+      "calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "metric_executed": false,
+      "fetch_authorized": false
+    }
+  ],
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
