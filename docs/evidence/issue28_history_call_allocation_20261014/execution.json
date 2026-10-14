@@ -1,0 +1,19 @@
+{
+  "tested_base": "190e2f9011d264c5d6527e2bb59efd6b1b9aa3c5",
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics",
+  "execution": "base plus named uncommitted production differences; later commit is not claimed as tested SHA",
+  "production_sha256": {
+    "scripts/vnext/continuous_call_ledger.py": "2874036aaf057dfbf25af1e093252cc56d55f75b24bb2b48b7754e576b45604f",
+    "scripts/vnext/continuous_call_allocation.py": "bcab86cae31d8c230e653c3cce2fe7bdd807dea3a5cdef9f93cdcffcc9090e4f"
+  },
+  "fixed_scope_commit": "7e4ee18c46172c760fc9401bb4610e6e63db6936",
+  "full_scope_private_path": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/history-allocation-20261014/scope_table.csv",
+  "full_scope_sha256": "1002246c10f8ff849aaee3f3684aae2b826be8a380a2d021fdfd25b2127cd237",
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ],
+  "final_source_ledger_reopen": "Same195 claims, no stops,143/143/52 used,81/81/1 reserved,16/16/27 unallocated",
+  "accepted_main_production_test_overlay": "97005a378b8195b0003a154bd3abd44ce26de43b; all14 changed runtime/test blobs verified; main docs/evidence inherited in public tree"
+}
