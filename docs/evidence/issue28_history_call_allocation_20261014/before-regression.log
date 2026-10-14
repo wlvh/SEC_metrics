@@ -1,0 +1,14 @@
+F
+======================================================================
+FAIL: test_unallocated_claim_cannot_spend_reserved_balance (tests.vnext.test_continuous_call_allocation.ContinuousAllocationTest.test_unallocated_claim_cannot_spend_reserved_balance)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_continuous_call_allocation.py", line 52, in test_unallocated_claim_cannot_spend_reserved_balance
+    with self.assertRaisesRegex(ValueError,'RESERVED_BALANCE'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.006s
+
+FAILED (failures=1)

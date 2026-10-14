@@ -132,7 +132,7 @@ class CallLedger:
                 stopped.remove(('PROVIDER', recovery['original_ordinal']))
             else:
                 batch_duplicate = False
-                if batch is not None:
+                if batch is not None and 'budget_allocation_id' not in intent:
                     from .continuous_batch33 import observe_claim
                     batch_duplicate = observe_claim(authorization=batch, progress=batch_progress,
                         intent=intent, stops=stopped, requests=requests,
@@ -179,14 +179,25 @@ class CallLedger:
         self._recovery172_observation = recovery172
         self._repair189_observation = repair189
         self._b13_v4_enphase_observation = v4_enphase
-        return {'counts':total,'stopped_channels':sorted({channel for channel, _ in stopped}),'requests':requests,
-                'previous_intent_id':previous,'rows':rows}
+        state = {'counts':total,'stopped_channels':sorted({channel for channel, _ in stopped}),'requests':requests,
+                 'previous_intent_id':previous,'rows':rows}
+        from .continuous_call_allocation import observe
+        allocation = observe(self, claims, total)
+        if allocation is not None:
+            state['allocation'] = allocation
+        return state
 
     def claim(self, *, channel, request_digest, requirement, plan_id, purpose,
               batch_group_id=None, batch_repair_receipt=None,
-              batch_b13_v4_receipt=None):
+              batch_b13_v4_receipt=None, budget_allocation_id=None,
+              budget_allocation_task=None, allocation_executor=None,
+              estimated_input_tokens=None):
         state = self.snapshot()
         need(channel in {'PROVIDER','SEC'}, 'CONTINUOUS_CHANNEL_INVALID')
+        from .continuous_call_allocation import claim_fields as allocation_claim_fields
+        allocation_fields = allocation_claim_fields(self,state,channel=channel,
+            allocation_id=budget_allocation_id,task=budget_allocation_task,
+            executor=allocation_executor,input_tokens=estimated_input_tokens)
         recovery, consumed, stops = self._recovery_observation
         batch, progress = self._batch_observation
         recovery172 = self._recovery172_observation
@@ -196,7 +207,7 @@ class CallLedger:
                       and request_digest == recovery['request_digest']
                       and stops == {('PROVIDER', recovery['original_ordinal'])})
         batch_fields = {}; batch_duplicate = False
-        if batch is not None and channel == 'PROVIDER':
+        if batch is not None and channel == 'PROVIDER' and not allocation_fields:
             need(type(batch_group_id) is str, 'BATCH33_GROUP_REQUIRED')
             need(batch_repair_receipt is None or
                  (repair189 is not None and batch_repair_receipt == repair189),
@@ -239,6 +250,7 @@ class CallLedger:
         if recovering:
             body['recovery_authorization_id'] = recovery['authorization_id']
         body.update(batch_fields)
+        body.update(allocation_fields)
         intent = _identified(body,'intent_id')
         path = self.root/'calls'/('%04d' % ordinal)
         # Separate append-only claim log detects a removed last slot as well
