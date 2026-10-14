@@ -1,0 +1,1150 @@
+{
+ "requested": 50,
+ "counts": {
+  "SAME_OK": 29,
+  "CHANGED_OK": 0,
+  "FAIL_TO_OK": 0,
+  "OK_TO_FAIL": 0,
+  "SAME_FAIL": 19,
+  "CHANGED_FAIL": 2,
+  "NOT_COMPARED": 0
+ },
+ "unexpected_results": [],
+ "entries": [
+  {
+   "sample": "marriott_international:2021",
+   "category": "SAME_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 5.579,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 6.629,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "marriott_international:2022",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 6.384,
+    "requests": 1,
+    "request_ids": [
+     "sha256:8bf580d1ce9afcfe415829631e4de55ae7476ef64c0d0e8960d4d90c6a0a7c0c"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 7.543,
+    "requests": 1,
+    "request_ids": [
+     "sha256:8bf580d1ce9afcfe415829631e4de55ae7476ef64c0d0e8960d4d90c6a0a7c0c"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "marriott_international:2023",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 6.25,
+    "requests": 1,
+    "request_ids": [
+     "sha256:40cc95bddac752807e4bdd9caa8ee93b3c7db1452fe9baed3d7425052b2206c3"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 7.289,
+    "requests": 1,
+    "request_ids": [
+     "sha256:40cc95bddac752807e4bdd9caa8ee93b3c7db1452fe9baed3d7425052b2206c3"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "marriott_international:2024",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 6.417,
+    "requests": 1,
+    "request_ids": [
+     "sha256:cf2e9ded867a651f0da50da53a4ce0d5b1f5f14405d8fb057090f641bedc5996"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 7.424,
+    "requests": 1,
+    "request_ids": [
+     "sha256:cf2e9ded867a651f0da50da53a4ce0d5b1f5f14405d8fb057090f641bedc5996"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "marriott_international:2025",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 4.731,
+    "requests": 1,
+    "request_ids": [
+     "sha256:dba7b7e7c3448da3e47500acee94a555ba558d8da64d1e912bc66ae4eb20441e"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 5.594,
+    "requests": 1,
+    "request_ids": [
+     "sha256:dba7b7e7c3448da3e47500acee94a555ba558d8da64d1e912bc66ae4eb20441e"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "southwest_airlines:2021",
+   "category": "SAME_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 7.04,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 8.473,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "southwest_airlines:2022",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 8.591,
+    "requests": 1,
+    "request_ids": [
+     "sha256:7f5c8a0e45cc46207f616ffd7c0f0995d59a64584822a0c22cbc5135a49c58c3"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 10.41,
+    "requests": 1,
+    "request_ids": [
+     "sha256:7f5c8a0e45cc46207f616ffd7c0f0995d59a64584822a0c22cbc5135a49c58c3"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "southwest_airlines:2023",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 8.146,
+    "requests": 1,
+    "request_ids": [
+     "sha256:71f5e6544b1b7faa511c8adc39ea194de88468f3e73e0594f30ddd2c4312e403"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 9.914,
+    "requests": 1,
+    "request_ids": [
+     "sha256:71f5e6544b1b7faa511c8adc39ea194de88468f3e73e0594f30ddd2c4312e403"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "southwest_airlines:2024",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 8.339,
+    "requests": 1,
+    "request_ids": [
+     "sha256:86977e800088f6883f11b295ec4e34656f1955d448a74610ddef00d6fe8e4b7f"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 10.028,
+    "requests": 1,
+    "request_ids": [
+     "sha256:86977e800088f6883f11b295ec4e34656f1955d448a74610ddef00d6fe8e4b7f"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "southwest_airlines:2025",
+   "category": "SAME_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 4.526,
+    "error": {
+     "category": "IMPLEMENTATION_REQUIRED",
+     "module": "vnext.d02_reviewed_source",
+     "reason": "D02_HISTORICAL_AMENDMENT_OR_SUCCESSOR_NOT_RECEIVED",
+     "type": "ReviewedLegalSourceError"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 5.333,
+    "error": {
+     "category": "IMPLEMENTATION_REQUIRED",
+     "module": "vnext.d02_reviewed_source",
+     "reason": "D02_HISTORICAL_AMENDMENT_OR_SUCCESSOR_NOT_RECEIVED",
+     "type": "ReviewedLegalSourceError"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "ford_motor_company:2021",
+   "category": "SAME_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 11.572,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 12.988,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "ford_motor_company:2022",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 13.981,
+    "requests": 1,
+    "request_ids": [
+     "sha256:2bb1130507b0dafc2e5dc6de01130fdcdd8aef7060257bfed0e21ccefb899b8e"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 15.879,
+    "requests": 1,
+    "request_ids": [
+     "sha256:2bb1130507b0dafc2e5dc6de01130fdcdd8aef7060257bfed0e21ccefb899b8e"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "ford_motor_company:2023",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 13.317,
+    "requests": 1,
+    "request_ids": [
+     "sha256:beef9fc88db78de11538c7821196666af89cb6c54795781f25a078e32e70d7cd"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 15.03,
+    "requests": 1,
+    "request_ids": [
+     "sha256:beef9fc88db78de11538c7821196666af89cb6c54795781f25a078e32e70d7cd"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "ford_motor_company:2024",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 13.29,
+    "requests": 1,
+    "request_ids": [
+     "sha256:0f8eb6545883ac4d11a3e9c43f34ea9610c1e29850eba7de585ec919415492f9"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 14.951,
+    "requests": 1,
+    "request_ids": [
+     "sha256:0f8eb6545883ac4d11a3e9c43f34ea9610c1e29850eba7de585ec919415492f9"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "ford_motor_company:2025",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 9.662,
+    "requests": 1,
+    "request_ids": [
+     "sha256:7f0d2be204ae60689397a55ac102ec07f3ad0923c57ab00db59060abd9fe8908"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 10.812,
+    "requests": 1,
+    "request_ids": [
+     "sha256:7f0d2be204ae60689397a55ac102ec07f3ad0923c57ab00db59060abd9fe8908"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "pfizer:2021",
+   "category": "SAME_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 12.102,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 13.453,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "pfizer:2022",
+   "category": "SAME_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 11.81,
+    "error": {
+     "category": null,
+     "module": "vnext.text_business_candidates",
+     "reason": "D02_REFERENCED_LETTERED_SUBNOTE_NOT_MIGRATED",
+     "type": "TextBusinessCandidateError"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 13.134,
+    "error": {
+     "category": null,
+     "module": "vnext.text_business_candidates",
+     "reason": "D02_REFERENCED_LETTERED_SUBNOTE_NOT_MIGRATED",
+     "type": "TextBusinessCandidateError"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "pfizer:2023",
+   "category": "SAME_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 11.571,
+    "error": {
+     "category": null,
+     "module": "vnext.text_business_candidates",
+     "reason": "D02_REFERENCED_LETTERED_SUBNOTE_NOT_MIGRATED",
+     "type": "TextBusinessCandidateError"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 12.972,
+    "error": {
+     "category": null,
+     "module": "vnext.text_business_candidates",
+     "reason": "D02_REFERENCED_LETTERED_SUBNOTE_NOT_MIGRATED",
+     "type": "TextBusinessCandidateError"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "pfizer:2024",
+   "category": "SAME_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 11.596,
+    "error": {
+     "category": null,
+     "module": "vnext.d02_text_results_v3",
+     "reason": "TEXT_V2_LEGAL_SOURCE_NAVIGATION_INCOMPLETE",
+     "type": "TextResultV2Error"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 12.682,
+    "error": {
+     "category": null,
+     "module": "vnext.d02_text_results_v3",
+     "reason": "TEXT_V2_LEGAL_SOURCE_NAVIGATION_INCOMPLETE",
+     "type": "TextResultV2Error"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "pfizer:2025",
+   "category": "SAME_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 8.206,
+    "error": {
+     "category": null,
+     "module": "vnext.text_business_candidates",
+     "reason": "D02_REFERENCED_LETTERED_SUBNOTE_NOT_MIGRATED",
+     "type": "TextBusinessCandidateError"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 8.888,
+    "error": {
+     "category": null,
+     "module": "vnext.text_business_candidates",
+     "reason": "D02_REFERENCED_LETTERED_SUBNOTE_NOT_MIGRATED",
+     "type": "TextBusinessCandidateError"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "jpmorgan_chase:2021",
+   "category": "SAME_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 55.154,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 58.195,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "jpmorgan_chase:2022",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 56.863,
+    "requests": 1,
+    "request_ids": [
+     "sha256:4048abedea1be4b6aee65735e1288aea0f4c266cdf422490c533b6e4d00ef7ca"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 59.981,
+    "requests": 1,
+    "request_ids": [
+     "sha256:4048abedea1be4b6aee65735e1288aea0f4c266cdf422490c533b6e4d00ef7ca"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "jpmorgan_chase:2023",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 49.603,
+    "requests": 1,
+    "request_ids": [
+     "sha256:f5183bfead81a90930e6fc0ab06e9ec6e10f595586dcdd31d4708569619595ee"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 52.198,
+    "requests": 1,
+    "request_ids": [
+     "sha256:f5183bfead81a90930e6fc0ab06e9ec6e10f595586dcdd31d4708569619595ee"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "jpmorgan_chase:2024",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 41.813,
+    "requests": 1,
+    "request_ids": [
+     "sha256:19f2af2ee951bde4c88c6767aa17114e79e7c98e273b292b7f959c33502a3ce9"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 43.921,
+    "requests": 1,
+    "request_ids": [
+     "sha256:19f2af2ee951bde4c88c6767aa17114e79e7c98e273b292b7f959c33502a3ce9"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "jpmorgan_chase:2025",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 27.566,
+    "requests": 1,
+    "request_ids": [
+     "sha256:bbd18a7f950b7ad585b0ebf3c0126216e36bf91b0725d1715f198721459d7aeb"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 27.224,
+    "requests": 1,
+    "request_ids": [
+     "sha256:bbd18a7f950b7ad585b0ebf3c0126216e36bf91b0725d1715f198721459d7aeb"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "salesforce:2021",
+   "category": "SAME_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 7.199,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 7.219,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "salesforce:2022",
+   "category": "SAME_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 7.173,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 7.175,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "salesforce:2023",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 8.518,
+    "requests": 1,
+    "request_ids": [
+     "sha256:8bb4c7ddaa14dfb5a237bc2124b41791aa3103e2158af2d7a9f82abe3848da6c"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 8.382,
+    "requests": 1,
+    "request_ids": [
+     "sha256:8bb4c7ddaa14dfb5a237bc2124b41791aa3103e2158af2d7a9f82abe3848da6c"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "salesforce:2024",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 8.299,
+    "requests": 1,
+    "request_ids": [
+     "sha256:b39e956b39e7a5e893e243b05245cf5be4a0c68c6e4e9f877110bf6b0b93279d"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 7.965,
+    "requests": 1,
+    "request_ids": [
+     "sha256:b39e956b39e7a5e893e243b05245cf5be4a0c68c6e4e9f877110bf6b0b93279d"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "salesforce:2025",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 7.755,
+    "requests": 1,
+    "request_ids": [
+     "sha256:0f561c627611a5dfde3ef4bcda5b76bdccf8f4d8f1a879bb5f69e7e67063d342"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 7.419,
+    "requests": 1,
+    "request_ids": [
+     "sha256:0f561c627611a5dfde3ef4bcda5b76bdccf8f4d8f1a879bb5f69e7e67063d342"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "lumen_technologies:2021",
+   "category": "SAME_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 8.335,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 7.888,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "lumen_technologies:2022",
+   "category": "CHANGED_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 9.116,
+    "error": {
+     "category": null,
+     "module": "vnext.d02_text_results_v3",
+     "reason": "TEXT_V2_LEGAL_SOURCE_NAVIGATION_INCOMPLETE",
+     "type": "TextResultV2Error"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 9.636,
+    "error": {
+     "category": "IMPLEMENTATION_REQUIRED",
+     "module": "vnext.d02_reviewed_source",
+     "reason": "D02_REVIEW_CANDIDATES_OUTSIDE_ELIGIBLE_POOL",
+     "type": "ReviewedLegalSourceError"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "lumen_technologies:2023",
+   "category": "CHANGED_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 8.972,
+    "error": {
+     "category": null,
+     "module": "vnext.d02_text_results_v3",
+     "reason": "TEXT_V2_LEGAL_SOURCE_NAVIGATION_INCOMPLETE",
+     "type": "TextResultV2Error"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 9.398,
+    "error": {
+     "category": "IMPLEMENTATION_REQUIRED",
+     "module": "vnext.d02_reviewed_source",
+     "reason": "D02_REVIEW_CANDIDATES_OUTSIDE_ELIGIBLE_POOL",
+     "type": "ReviewedLegalSourceError"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "lumen_technologies:2024",
+   "category": "SAME_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 10.926,
+    "error": {
+     "category": "IMPLEMENTATION_REQUIRED",
+     "module": "vnext.d02_reviewed_source",
+     "reason": "D02_REVIEW_CANDIDATES_OUTSIDE_ELIGIBLE_POOL",
+     "type": "ReviewedLegalSourceError"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 9.867,
+    "error": {
+     "category": "IMPLEMENTATION_REQUIRED",
+     "module": "vnext.d02_reviewed_source",
+     "reason": "D02_REVIEW_CANDIDATES_OUTSIDE_ELIGIBLE_POOL",
+     "type": "ReviewedLegalSourceError"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "lumen_technologies:2025",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 8.847,
+    "requests": 1,
+    "request_ids": [
+     "sha256:316e7b13b89e7b272983a7f7193d084ad2b331e6f68bdcdfb08f19fbbc0c95ce"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 8.053,
+    "requests": 1,
+    "request_ids": [
+     "sha256:316e7b13b89e7b272983a7f7193d084ad2b331e6f68bdcdfb08f19fbbc0c95ce"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "macys:2021",
+   "category": "SAME_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 14.758,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 13.242,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "macys:2022",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 10.546,
+    "requests": 1,
+    "request_ids": [
+     "sha256:02a2701f516e9d3e32a71423582e32ed65752fed1e958ff509e0bc42e8a9cb43"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 9.606,
+    "requests": 1,
+    "request_ids": [
+     "sha256:02a2701f516e9d3e32a71423582e32ed65752fed1e958ff509e0bc42e8a9cb43"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "macys:2023",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 7.986,
+    "requests": 1,
+    "request_ids": [
+     "sha256:06dbd045fc38e924fd5a2a7abb8f6e4034e0ac6b6374f67deac6891d0fb58bae"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 7.147,
+    "requests": 1,
+    "request_ids": [
+     "sha256:06dbd045fc38e924fd5a2a7abb8f6e4034e0ac6b6374f67deac6891d0fb58bae"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "macys:2024",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 7.783,
+    "requests": 1,
+    "request_ids": [
+     "sha256:b53fa769bae0122b51bff273a7b5913bd93405f2bcf126b2f990ca58a2001876"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 6.865,
+    "requests": 1,
+    "request_ids": [
+     "sha256:b53fa769bae0122b51bff273a7b5913bd93405f2bcf126b2f990ca58a2001876"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "macys:2025",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 8.11,
+    "requests": 1,
+    "request_ids": [
+     "sha256:a602bbac95562c086ade4dd4477df84ae4513acb85e25af897911f8c488cd544"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 6.921,
+    "requests": 1,
+    "request_ids": [
+     "sha256:a602bbac95562c086ade4dd4477df84ae4513acb85e25af897911f8c488cd544"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "paramount_skydance_paramount_global:2021",
+   "category": "SAME_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 11.965,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 9.956,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "paramount_skydance_paramount_global:2022",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 14.615,
+    "requests": 1,
+    "request_ids": [
+     "sha256:0db8067419780e5c49696a59350a4886f23e04ee9b3ff6d53472c371f657a3b4"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 11.995,
+    "requests": 1,
+    "request_ids": [
+     "sha256:0db8067419780e5c49696a59350a4886f23e04ee9b3ff6d53472c371f657a3b4"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "paramount_skydance_paramount_global:2023",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 13.568,
+    "requests": 1,
+    "request_ids": [
+     "sha256:74bd11ab191833c603e3a98e413dc38b3a02d34a019f42ef1bb203af207fe23e"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 11.256,
+    "requests": 1,
+    "request_ids": [
+     "sha256:74bd11ab191833c603e3a98e413dc38b3a02d34a019f42ef1bb203af207fe23e"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "paramount_skydance_paramount_global:2024",
+   "category": "SAME_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 11.433,
+    "error": {
+     "category": "IMPLEMENTATION_REQUIRED",
+     "module": "vnext.d02_reviewed_source",
+     "reason": "D02_HISTORICAL_AMENDMENT_OR_SUCCESSOR_NOT_RECEIVED",
+     "type": "ReviewedLegalSourceError"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 9.375,
+    "error": {
+     "category": "IMPLEMENTATION_REQUIRED",
+     "module": "vnext.d02_reviewed_source",
+     "reason": "D02_HISTORICAL_AMENDMENT_OR_SUCCESSOR_NOT_RECEIVED",
+     "type": "ReviewedLegalSourceError"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "paramount_skydance_paramount_global:2025",
+   "category": "SAME_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 7.894,
+    "error": {
+     "category": "IMPLEMENTATION_REQUIRED",
+     "module": "vnext.d02_reviewed_source",
+     "reason": "D02_HISTORICAL_AMENDMENT_OR_SUCCESSOR_NOT_RECEIVED",
+     "type": "ReviewedLegalSourceError"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 6.528,
+    "error": {
+     "category": "IMPLEMENTATION_REQUIRED",
+     "module": "vnext.d02_reviewed_source",
+     "reason": "D02_HISTORICAL_AMENDMENT_OR_SUCCESSOR_NOT_RECEIVED",
+     "type": "ReviewedLegalSourceError"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "enphase_energy:2021",
+   "category": "SAME_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 8.891,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 7.396,
+    "error": {
+     "category": null,
+     "module": "vnext.text_coverage",
+     "reason": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING",
+     "type": "TextCoverageError"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "enphase_energy:2022",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 10.485,
+    "requests": 1,
+    "request_ids": [
+     "sha256:22137bbc9d31130f6e352d894b84488743dc1ed52675f0d3f5018b63a217bb09"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 8.878,
+    "requests": 1,
+    "request_ids": [
+     "sha256:22137bbc9d31130f6e352d894b84488743dc1ed52675f0d3f5018b63a217bb09"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "enphase_energy:2023",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 10.099,
+    "requests": 1,
+    "request_ids": [
+     "sha256:ca482aeb30f8e5376dc4670e5dd678d7645d39bb4323a2e4ca6975d26c4456ae"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 8.535,
+    "requests": 1,
+    "request_ids": [
+     "sha256:ca482aeb30f8e5376dc4670e5dd678d7645d39bb4323a2e4ca6975d26c4456ae"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "enphase_energy:2024",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 10.048,
+    "requests": 1,
+    "request_ids": [
+     "sha256:92120e5faedac32e73a21cc30de08e56f3f7c67f026bac8c7a0e09d4522c4781"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 8.425,
+    "requests": 1,
+    "request_ids": [
+     "sha256:92120e5faedac32e73a21cc30de08e56f3f7c67f026bac8c7a0e09d4522c4781"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "enphase_energy:2025",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 7.428,
+    "requests": 1,
+    "request_ids": [
+     "sha256:fb9809f83a5fe34edf74e17c9ea888487f6ce6c4a27b1201251ed767cca84cbe"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 6.245,
+    "requests": 1,
+    "request_ids": [
+     "sha256:fb9809f83a5fe34edf74e17c9ea888487f6ce6c4a27b1201251ed767cca84cbe"
+    ]
+   },
+   "changes": []
+  }
+ ],
+ "all_samples_compared": true
+}
