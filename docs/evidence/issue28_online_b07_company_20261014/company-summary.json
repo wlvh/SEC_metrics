@@ -1,0 +1,377 @@
+{
+  "actual_companies": [
+    {
+      "base_main": "65a5d6475da9ec3ddc8602fac44f63e1ad8a426b",
+      "code_state": "named uncommitted allowed explicit B07 / preserved default / CLI help changes",
+      "code_files": {
+        "scripts/vnext/company_online.py": "115ea6c227625a1e6b4554f9005f9a15b287e1681e6f99487678b8786b9b9e97",
+        "tools/vnext_company.py": "e9166c6a03b3a12424c08775fe27151d191988568b5db314dc78406a18de8c34",
+        "tests/vnext/test_company_online.py": "5eac65bb90fc0cf80bc9e1aadf7ba700fab8cb68be2e7cab18f97e5c9132fa38"
+      },
+      "read_seconds": 0.11987658400903456,
+      "rows": [
+        {
+          "company": "Marriott International",
+          "cik": "1048286",
+          "metric_id": "B07",
+          "metric_name": "Interest coverage ratio",
+          "value": "5.118665018541409147095179234",
+          "unit": "ratio",
+          "status": "OK",
+          "source_class": "DERIVED",
+          "formula": "",
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31",
+          "fiscal_year": "2025",
+          "fiscal_period": "ANNUAL",
+          "accession": "0001048286-26-000007",
+          "form": "10-K",
+          "filed_date": "2026-02-10",
+          "concept_or_section": "Interest coverage ratio",
+          "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2025, \"period_end\": \"2025-12-31\", \"period_start\": \"2025-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"coverage\": \"deterministic_source_set\", \"fiscal_year\": 2025}, \"selection\": null, \"source_reference_ids\": [\"sha256:8483c531940100379bd44f9d4f6c3fc1ed47986590151c30f340f2b4a305ef9f\", \"sha256:40127921b5837f721fb7ec41028d9eeeefb0855d09261b0fef4a1985f5298d4b\", \"sha256:3109bea68ae11f5e3c6ebd77114cda1d6f17d60e772b2630baffdb2639c483e9\"]}",
+          "confidence": "",
+          "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS. Recorded source refresh test using preexisting SEC content; no new SEC acquisition.",
+          "company_id": "marriott_international",
+          "result_id": "sha256:54161ad20ee494f2ce91cfc611be31bd9eb9a1c301da3f6fee092a76236b8450",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b07-marriott-20261014/task/company-state/updates/B07/results/6fa7b69d956b4796aacb28c20fbe1aca",
+          "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b07-marriott-20261014/task/sources",
+          "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+          "period_role": "REQUESTED_RESULT",
+          "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+          "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+          "defect_holds": "[]",
+          "requested_in_latest_execution": "True"
+        }
+      ],
+      "result_files_preserved": 7,
+      "result_bytes": 21430,
+      "isolated_recorded_counts": [
+        0,
+        0,
+        7
+      ],
+      "new_real_calls": [
+        0,
+        0,
+        0
+      ],
+      "production_authorized": false,
+      "external_boundary": "existing RecordedSecHttpClient only; all discovery/capture/selection/calculation/save/read real",
+      "original_source_and_real_ledger_files_preserved": {
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs/evidence/requests_log.csv": "1c9f81687e591f07f745ca5bf4543af70ef26af146cc7746859d515a1d4e18e6",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs/config/company_registry.csv": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/claims.jsonl": "6023bf1790b31d5895dad3ef824b3d102d56b0381140f6b79463d8e97964f6eb",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/binding.json": "bc7a7f252e1152f6eb4ce20f60845968285018bbe7b2bd225f6bc9f8a132e2af"
+      },
+      "operations": [
+        {
+          "phase": "first",
+          "exit_code": 0,
+          "seconds": 9.007445416995324,
+          "status": "FLOW_COMPLETED",
+          "metrics": [
+            {
+              "metric_id": "B07",
+              "status": "CANDIDATE_READY",
+              "result_id": "sha256:54161ad20ee494f2ce91cfc611be31bd9eb9a1c301da3f6fee092a76236b8450",
+              "calculation_performed": true,
+              "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b07-marriott-20261014/task/company-state/updates/B07/results/6fa7b69d956b4796aacb28c20fbe1aca"
+            }
+          ],
+          "discovery": {
+            "status": "SOURCES_READY_FOR_SELECTED_METRICS",
+            "filing": {
+              "accessionNumber": "0001048286-26-000007",
+              "filingDate": "2026-02-10",
+              "reportDate": "2025-12-31",
+              "acceptanceDateTime": "2026-02-10T18:35:55.000Z",
+              "act": "34",
+              "form": "10-K",
+              "fileNumber": "001-13881",
+              "filmNumber": "26614897",
+              "items": "",
+              "core_type": "XBRL",
+              "size": 12393244,
+              "isXBRL": 1,
+              "isInlineXBRL": 1,
+              "isXBRLNumeric": null,
+              "primaryDocument": "mar-20251231.htm",
+              "primaryDocDescription": "10-K"
+            },
+            "metric_ids": [
+              "B07"
+            ],
+            "metric_limitations": [],
+            "all_39_sources_proven": false
+          },
+          "simulated_sec_claims": 5
+        },
+        {
+          "phase": "repeat-forbidden-factory",
+          "exit_code": 0,
+          "seconds": 2.12447991699446,
+          "status": "FLOW_COMPLETED",
+          "metrics": [
+            {
+              "metric_id": "B07",
+              "status": "NO_SOURCE_CONTENT_CHANGE",
+              "result_id": "sha256:54161ad20ee494f2ce91cfc611be31bd9eb9a1c301da3f6fee092a76236b8450",
+              "calculation_performed": false,
+              "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b07-marriott-20261014/task/company-state/updates/B07/results/6fa7b69d956b4796aacb28c20fbe1aca"
+            }
+          ],
+          "discovery": {
+            "status": "SOURCES_READY_FOR_SELECTED_METRICS",
+            "filing": {
+              "accessionNumber": "0001048286-26-000007",
+              "filingDate": "2026-02-10",
+              "reportDate": "2025-12-31",
+              "acceptanceDateTime": "2026-02-10T18:35:55.000Z",
+              "act": "34",
+              "form": "10-K",
+              "fileNumber": "001-13881",
+              "filmNumber": "26614897",
+              "items": "",
+              "core_type": "XBRL",
+              "size": 12393244,
+              "isXBRL": 1,
+              "isInlineXBRL": 1,
+              "isXBRLNumeric": null,
+              "primaryDocument": "mar-20251231.htm",
+              "primaryDocDescription": "10-K"
+            },
+            "metric_ids": [
+              "B07"
+            ],
+            "metric_limitations": [],
+            "all_39_sources_proven": false
+          },
+          "simulated_sec_claims": 2
+        }
+      ],
+      "full_private_receipt": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b07-marriott-20261014/summary.json"
+    },
+    {
+      "base_main": "65a5d6475da9ec3ddc8602fac44f63e1ad8a426b",
+      "code_state": "named uncommitted allowed explicit B07 / preserved default / CLI help changes",
+      "code_files": {
+        "scripts/vnext/company_online.py": "115ea6c227625a1e6b4554f9005f9a15b287e1681e6f99487678b8786b9b9e97",
+        "tools/vnext_company.py": "e9166c6a03b3a12424c08775fe27151d191988568b5db314dc78406a18de8c34",
+        "tests/vnext/test_company_online.py": "5eac65bb90fc0cf80bc9e1aadf7ba700fab8cb68be2e7cab18f97e5c9132fa38"
+      },
+      "read_seconds": 0.11894420799217187,
+      "rows": [
+        {
+          "company": "Salesforce",
+          "cik": "1108524",
+          "metric_id": "B07",
+          "metric_name": "Interest coverage ratio",
+          "value": "25.71296296296296296296296296",
+          "unit": "ratio",
+          "status": "OK",
+          "source_class": "DERIVED",
+          "formula": "",
+          "period_start": "2025-02-01",
+          "period_end": "2026-01-31",
+          "fiscal_year": "2026",
+          "fiscal_period": "ANNUAL",
+          "accession": "0001108524-26-000060",
+          "form": "10-K",
+          "filed_date": "2026-03-02",
+          "concept_or_section": "Interest coverage ratio",
+          "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2026, \"period_end\": \"2026-01-31\", \"period_start\": \"2025-02-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"coverage\": \"deterministic_source_set\", \"fiscal_year\": 2026}, \"selection\": null, \"source_reference_ids\": [\"sha256:cab1ae90553ad34778d4e1d102a87edab091ffa087ef67350eae2dfbfc186100\", \"sha256:92c50df49d0a3e20b61a31bddbf5d82ce8d61ed2e2f2752cb78fc6afffb4506c\", \"sha256:7e357b7e0f442af5ba845d6a7e47b6fe332ba51b2afb1b2e036f3daeb8fc9a1f\"]}",
+          "confidence": "",
+          "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS. Fiscal label follows the explicit issuer definition; original DEI/Company Facts labels remain in the source binding. Recorded source refresh test using preexisting SEC content; no new SEC acquisition.",
+          "company_id": "salesforce",
+          "result_id": "sha256:d60feff0c239911ad8da51bcc81d26a281c44fd8993d6be9e9dd13b35dcd5bb2",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b07-salesforce-20261014/task/company-state/updates/B07/results/f3dc811e4ff4427192291a8471644e71",
+          "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b07-salesforce-20261014/task/sources",
+          "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+          "period_role": "REQUESTED_RESULT",
+          "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+          "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+          "defect_holds": "[]",
+          "requested_in_latest_execution": "True"
+        }
+      ],
+      "result_files_preserved": 7,
+      "result_bytes": 21313,
+      "isolated_recorded_counts": [
+        0,
+        0,
+        7
+      ],
+      "new_real_calls": [
+        0,
+        0,
+        0
+      ],
+      "production_authorized": false,
+      "external_boundary": "existing RecordedSecHttpClient only; all discovery/capture/selection/calculation/save/read real",
+      "original_source_and_real_ledger_files_preserved": {
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs/evidence/requests_log.csv": "1c9f81687e591f07f745ca5bf4543af70ef26af146cc7746859d515a1d4e18e6",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs/config/company_registry.csv": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/claims.jsonl": "6023bf1790b31d5895dad3ef824b3d102d56b0381140f6b79463d8e97964f6eb",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/binding.json": "bc7a7f252e1152f6eb4ce20f60845968285018bbe7b2bd225f6bc9f8a132e2af"
+      },
+      "operations": [
+        {
+          "phase": "first",
+          "exit_code": 0,
+          "seconds": 10.222589832992526,
+          "status": "FLOW_COMPLETED",
+          "metrics": [
+            {
+              "metric_id": "B07",
+              "status": "CANDIDATE_READY",
+              "result_id": "sha256:d60feff0c239911ad8da51bcc81d26a281c44fd8993d6be9e9dd13b35dcd5bb2",
+              "calculation_performed": true,
+              "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b07-salesforce-20261014/task/company-state/updates/B07/results/f3dc811e4ff4427192291a8471644e71"
+            }
+          ],
+          "discovery": {
+            "status": "SOURCES_READY_FOR_SELECTED_METRICS",
+            "filing": {
+              "accessionNumber": "0001108524-26-000060",
+              "filingDate": "2026-03-02",
+              "reportDate": "2026-01-31",
+              "acceptanceDateTime": "2026-03-02T21:24:59.000Z",
+              "act": "34",
+              "form": "10-K",
+              "fileNumber": "001-32224",
+              "filmNumber": "26708076",
+              "items": "",
+              "core_type": "XBRL",
+              "size": 14681239,
+              "isXBRL": 1,
+              "isInlineXBRL": 1,
+              "isXBRLNumeric": null,
+              "primaryDocument": "crm-20260131.htm",
+              "primaryDocDescription": "10-K"
+            },
+            "metric_ids": [
+              "B07"
+            ],
+            "metric_limitations": [],
+            "all_39_sources_proven": false
+          },
+          "simulated_sec_claims": 5
+        },
+        {
+          "phase": "repeat-forbidden-factory",
+          "exit_code": 0,
+          "seconds": 2.9282310830021743,
+          "status": "FLOW_COMPLETED",
+          "metrics": [
+            {
+              "metric_id": "B07",
+              "status": "NO_SOURCE_CONTENT_CHANGE",
+              "result_id": "sha256:d60feff0c239911ad8da51bcc81d26a281c44fd8993d6be9e9dd13b35dcd5bb2",
+              "calculation_performed": false,
+              "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b07-salesforce-20261014/task/company-state/updates/B07/results/f3dc811e4ff4427192291a8471644e71"
+            }
+          ],
+          "discovery": {
+            "status": "SOURCES_READY_FOR_SELECTED_METRICS",
+            "filing": {
+              "accessionNumber": "0001108524-26-000060",
+              "filingDate": "2026-03-02",
+              "reportDate": "2026-01-31",
+              "acceptanceDateTime": "2026-03-02T21:24:59.000Z",
+              "act": "34",
+              "form": "10-K",
+              "fileNumber": "001-32224",
+              "filmNumber": "26708076",
+              "items": "",
+              "core_type": "XBRL",
+              "size": 14681239,
+              "isXBRL": 1,
+              "isInlineXBRL": 1,
+              "isXBRLNumeric": null,
+              "primaryDocument": "crm-20260131.htm",
+              "primaryDocDescription": "10-K"
+            },
+            "metric_ids": [
+              "B07"
+            ],
+            "metric_limitations": [],
+            "all_39_sources_proven": false
+          },
+          "simulated_sec_claims": 2
+        }
+      ],
+      "full_private_receipt": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b07-salesforce-20261014/summary.json"
+    }
+  ],
+  "failure_recovery": {
+    "old_result_files_preserved": 7,
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "source_failure_not_cached_as_success": true,
+    "operations": [
+      {
+        "phase": "source-503",
+        "seconds": 0.04888012498850003,
+        "exit_code": 2,
+        "discovery": {
+          "status": "SOURCE_DISCOVERY_FAILED",
+          "error_type": "AnnualUpdateError",
+          "reason": "LATEST_SOURCE_REQUEST_FAILED: https://data.sec.gov/submissions/CIK0001048286.json"
+        },
+        "metrics": [
+          {
+            "status": "INPUT_OR_EXECUTION_FAILED",
+            "reason": "LATEST_SOURCE_REQUEST_FAILED:https://data.sec.gov/submissions/CIK0001048286.json"
+          }
+        ]
+      },
+      {
+        "phase": "source-restored",
+        "seconds": 2.048177165997913,
+        "exit_code": 0,
+        "discovery": {
+          "status": "SOURCES_READY_FOR_SELECTED_METRICS",
+          "filing": {
+            "accessionNumber": "0001048286-26-000007",
+            "filingDate": "2026-02-10",
+            "reportDate": "2025-12-31",
+            "acceptanceDateTime": "2026-02-10T18:35:55.000Z",
+            "act": "34",
+            "form": "10-K",
+            "fileNumber": "001-13881",
+            "filmNumber": "26614897",
+            "items": "",
+            "core_type": "XBRL",
+            "size": 12393244,
+            "isXBRL": 1,
+            "isInlineXBRL": 1,
+            "isXBRLNumeric": null,
+            "primaryDocument": "mar-20251231.htm",
+            "primaryDocDescription": "10-K"
+          },
+          "metric_ids": [
+            "B07"
+          ],
+          "metric_limitations": [],
+          "all_39_sources_proven": false
+        },
+        "metrics": [
+          {
+            "status": "NO_SOURCE_CONTENT_CHANGE",
+            "result_id": "sha256:54161ad20ee494f2ce91cfc611be31bd9eb9a1c301da3f6fee092a76236b8450",
+            "calculation_performed": false
+          }
+        ]
+      }
+    ]
+  },
+  "timing_note": "Same host, independent isolated tasks launched together. Timings are scenario observations, not a speedup comparison or solo benchmark.",
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ]
+}

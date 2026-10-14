@@ -21,8 +21,8 @@ from .normal_annual_input import _registry_rows, select_filing
 from .normal_governance_input import _filings, _history_index, history_body_alignment
 from .normal_source_requirements import _instance_names
 
-ONLINE_METRICS = frozenset({'B01', 'B02', 'B04'})
-# Preserve existing no-metric invocations; B04 requires explicit selection.
+ONLINE_METRICS = frozenset({'B01', 'B02', 'B04', 'B07'})
+# Preserve existing no-metric invocations; statement metrics require explicit selection.
 DEFAULT_ONLINE_METRICS = frozenset({'B01', 'B02'})
 
 
