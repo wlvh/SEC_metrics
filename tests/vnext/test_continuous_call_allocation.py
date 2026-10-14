@@ -142,6 +142,12 @@ class ContinuousAllocationTest(unittest.TestCase):
         sec={'task_id':'macys/SEC/FY2019','channel':'SEC','company_id':'macys','url':'recorded-test-only'}
         with self.ledger.locked():
             value=self.reservation(tasks=self.tasks+[sec],counts=(1,1,1));self.install_fixture(value)
+            with self.assertRaisesRegex(ValueError,'REQUEST_SCOPE_INVALID'):
+                self.ledger.claim(channel='SEC',request_digest=content_hash(value='wrong-sec'),
+                    requirement=existing.REQ,plan_id=content_hash(value='wrong-sec-plan'),
+                    purpose='remaining_development_feasibility',budget_allocation_id=value['allocation_id'],
+                    budget_allocation_task={**sec,'url':'outside-the-approved-url'},allocation_executor='issue47')
+            self.assertEqual([0,0,0],self.ledger.snapshot()['counts'])
             path,intent=self.ledger.claim(channel='SEC',request_digest=content_hash(value='sec'),
                 requirement=existing.REQ,plan_id=content_hash(value='sec-plan'),
                 purpose='remaining_development_feasibility',budget_allocation_id=value['allocation_id'],

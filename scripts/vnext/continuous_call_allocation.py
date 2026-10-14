@@ -6,6 +6,7 @@ transport/source permission. Claims and original stop rules remain in CallLedger
 from .canonical import content_hash, strict_json_file
 from .continuous_call_policy import need
 from .invocation_control import _exclusive_write_json
+from pathlib import Path
 
 RECORD_PATH = 'history-20261014-allocation.json'
 
@@ -29,19 +30,17 @@ def _validate(ledger, value):
     need(value.get('maximum_counts') == [provider,provider,sec],
          'ALLOCATION_TASK_COUNTS_DIFFER')
     if ledger.live:
-        need(value['maximum_counts'] == [81,81,1]
-             and all(t.get('metric_id') in {'D02','E01'} for t in tasks if t['channel'] == 'PROVIDER')
-             and sum(t['channel'] == 'PROVIDER' and t.get('metric_id') == 'D02' for t in tasks) == 43
-             and sum(t['channel'] == 'PROVIDER' and t.get('metric_id') == 'E01' for t in tasks) == 38
+        scope = strict_json_file(path=Path(__file__).resolve().parents[2]/
+                                 'config/history_call_allocation_20261014.json')
+        fields = ('maximum_counts','approval_url','execution_scope_url',
+                  'maximum_request_input_tokens','maximum_total_input_tokens','maximum_output_tokens')
+        need(all(value.get(key) == scope[key] for key in fields)
+             and all(t.get('metric_id') in scope['counts_by_metric']
+                     for t in tasks if t['channel'] == 'PROVIDER')
+             and all(sum(t['channel'] == 'PROVIDER' and t.get('metric_id') == metric for t in tasks) == count
+                     for metric,count in scope['counts_by_metric'].items())
              and next(t for t in tasks if t['channel'] == 'SEC').get('url') ==
-                 'https://www.sec.gov/Archives/edgar/data/794367/000079436720000040/m-0201202010xk.htm'
-             and value.get('approval_url') ==
-                 'https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-6170123741'
-             and value.get('execution_scope_url') ==
-                 'https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-6170138586'
-             and value.get('maximum_request_input_tokens') == 200000
-             and value.get('maximum_total_input_tokens') == 9000000
-             and value.get('maximum_output_tokens') == 4096,
+                 scope['sec_url'],
              'ALLOCATION_APPROVED_HISTORY_SCOPE_DIFFER')
     for key in ('maximum_request_input_tokens','maximum_total_input_tokens','maximum_output_tokens'):
         need(type(value.get(key)) is int and value[key] > 0, 'ALLOCATION_INPUT_LIMIT_INVALID')
