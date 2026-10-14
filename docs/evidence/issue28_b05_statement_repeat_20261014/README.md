@@ -1,0 +1,35 @@
+# B05 original-component property and duplicate annual disclosure
+
+Progress on #28; shared with #47. Base actually read main `cb27e5d1108237bf535567ce83c92b647e6bcb3d`. This adds the B05 source-property seam needed by the existing Part III historical consumer. It does not create a B05 company result, change the free-cash-flow formula, clear annual continuity, or reopen any failed model request.
+
+The initial local B05 role-only patch is `bd988580`: its legitimate clean property passes, but the actual Paramount FY2024 amendment contains a reported operating-cash-flow amount and is still refused by the additional-disclosure guard. That refusal is retained. The [peer's fixed source investigation](https://github.com/wlvh/SEC_metrics/blob/a4517b07a02bddcba0db2c3f55bb5d4579bef02e/docs/evidence/issue47_partiii_statement_consumer_20261013/b05-source-relationship/README.md) is reference material, not injected runtime operands or company acceptance.
+
+## Implemented relation
+
+`inspect_statement_metric_amendment(scope, raw, *, metric_id='B05', original_raw=...)` verifies original raw identity before rereading its approved CFO concept, exact CIK, full original annual interval, no dimensions, official taxonomy and USD unit. The native amount must lie in the original issuer's consolidated cash-flow statement, under the actual year column and unit caption, with an unqualified total CFO row. A continuing/discontinued subtotal, foreign unit, changed amount, missing period/title, or ambiguous native value does not establish the relation.
+
+For one unadjusted first-person reported CFO highlight, the immediate bullet-list introduction must explicitly bind the Company's same fiscal year; the amount, currency/scale and role must match that original total. Local period/subject qualifiers, quoted claims, adjusted/subset amounts and unknown context remain unresolved. Both introduction and statement spans/cells are retained. This is a deliberately finite source relationship, not a general English classifier; it never inserts an amendment amount into the Calculator or uses an adjusted compensation target.
+
+The original required component roles are CFO and capex. Unknown additional capex or CFO table disclosures remain refused. B04/B07's existing clean outputs and default income/instant callers retain their behavior. Omitting `original_raw` does not waive the relation check. No Scope is rewritten or relabelled as blanket financial approval.
+
+## Actually executed
+
+- `before-api.log` records the new complete positive failing before implementation because the optional original input was unsupported. The actual saved-source refusal is retained in the existing private diagnostic and described above.
+- `controls.log`: **158 tests, 1.577 seconds, zero failures/errors/skips**, using the required-test runner. Covers the new nonempty duplicate relation and changed amount/unit/sign/subtotal, wrong claimant/year, local period/subject, quotation and raw changes; retains component correction, table amount, flag, note, identity, original income, selected-income, historical-statement and update/recovery controls.
+- `earlier-command-error.log` preserves an invocation mistake (`tests.vnext.test_selector_registry` does not exist). Corrected to `tests.test_selector_registry`; it is not reported as a production regression or a passing check.
+- `actual-properties.json/log`: **13.631 seconds** through actual saved source selection, original/amendment loading, full Scope reconstruction and both existing source proofs. Original scope `2aad479a...` and further-review status are unchanged. B04/B07 still pass; B05 now obtains one duplicate relation: amendment block539, explicit issuer/year introduction525, original full-year native ordinal379, **752,000,000 USD**. Source/raw/header/log/registry checks pass. The original protected source root is read-only; network, DNS, Calculator and claim are forbidden.
+- Receipt records local tested base, dirty-tree status, actual code/root/source-root and API SHA256 `c2f382689306a08ebf569a47975417dbb3242f897055842534326c78287448b0`. Testing occurred before this commit; publication of the same source tree does not turn it into an exact-SHA CI run. Raw answer files and all call counts remain unchanged.
+- `actual-selector.json` confirms the existing fast whole-module selector really loads both new test methods; no parallel CI framework or duplicate selector was added.
+
+```sh
+PYTHONPATH=scripts:tools:. python3.12 tests/required_unittests.py tests.vnext.test_statement_metric_amendment tests.vnext.test_income_amendment_paragraph_dispatch tests.vnext.test_instant_amendment_paragraph_api tests.vnext.test_historical_statement_cases tests.vnext.test_selected_income_source_v1 tests.vnext.test_amendment_note_layout tests.vnext.test_ordinary_current_update tests.test_selector_registry
+PYTHONPATH=scripts:tools:. python3.12 docs/evidence/issue28_b05_statement_repeat_20261014/verify_saved_properties.py --source-root /absolute/restored/source-inputs --company paramount_skydance_paramount_global --fiscal-year 2024 --receipt /absolute/new/property.json
+```
+
+Restore the two original filings through existing #47 source recovery; no supplied reference number or precomputed Result is needed. The private absolute root in the executed receipt identifies that run's material, not a portable prerequisite.
+
+## Consumer and acceptance boundary
+
+#28 owns this public source helper; #47 owns the historical consumer. The consumer must pass the actual original bytes, retain the original Scope and property separately, include the changed helper's processing dependency, and then continue approved original CFO/capex selection, continuity, formula, saving, forbidden-factory repeat and independent company `results`/CSV. The known original values **752 minus263 equals489 million** are a source reference only; **adjusted STIP560** is not an operand. Those company-level steps are not proved here and remain the next integration work.
+
+Receiver independently reviews this finite new relation. No author independent-review claim, no business adoption, no Ready/merge/deployment. New SEC/provider/paid calls **0/0/0**; original ledger limits and failed-request opportunities unchanged. Existing unaffected long chains are reused, not rerun.

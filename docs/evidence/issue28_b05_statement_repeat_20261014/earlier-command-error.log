@@ -1,0 +1,16 @@
+..............................................................E
+======================================================================
+ERROR: test_selector_registry (unittest.loader._FailedTest.test_selector_registry)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_selector_registry
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.12/3.12.10/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'tests.vnext.test_selector_registry'
+
+
+----------------------------------------------------------------------
+Ran 63 tests in 0.951s
+
+FAILED (errors=1)

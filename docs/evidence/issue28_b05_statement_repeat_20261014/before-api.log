@@ -1,0 +1,14 @@
+E
+======================================================================
+ERROR: test_b05_duplicate_disclosure_is_bound_to_original_total_period_subject_and_units (tests.vnext.test_statement_metric_amendment.StatementMetricAmendmentTest.test_b05_duplicate_disclosure_is_bound_to_original_total_period_subject_and_units)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/profitloss-note/SEC_metrics/tests/vnext/test_statement_metric_amendment.py", line 72, in test_b05_duplicate_disclosure_is_bound_to_original_total_period_subject_and_units
+    value=inspect_statement_metric_amendment(scope,raw,metric_id='B05',original_raw=original_raw)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: inspect_statement_metric_amendment() got an unexpected keyword argument 'original_raw'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.007s
+
+FAILED (errors=1)
