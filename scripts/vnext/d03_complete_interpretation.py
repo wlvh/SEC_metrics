@@ -38,7 +38,7 @@ def _finding_needs_review(finding, context_only):
 
 
 def validate_complete_interpretation(*, prepared_input, response_bytes_by_request,
-                                     repo_root=ROOT):
+                                     repo_root=ROOT, source_root=None):
     """Return source-linked model proposals; do not create Candidate/Result/Run."""
     _need(Path(repo_root).resolve() == ROOT
           and type(prepared_input) is dict
@@ -47,7 +47,8 @@ def validate_complete_interpretation(*, prepared_input, response_bytes_by_reques
     _need(type(prepared_input.get('company_id')) is str,
           'D03_COMPLETE_INTERPRETATION_INPUT_INVALID')
     responses = dict(response_bytes_by_request)
-    expected = prepare_native_input(company_id=prepared_input['company_id'])
+    rooted = {} if source_root is None else {'source_root':Path(source_root).resolve()}
+    expected = prepare_native_input(company_id=prepared_input['company_id'],**rooted)
     _need(prepared_input == expected,
           'D03_COMPLETE_INTERPRETATION_PREPARATION_CHANGED')
     groups = expected['groups']
@@ -69,7 +70,8 @@ def validate_complete_interpretation(*, prepared_input, response_bytes_by_reques
         if group['source_anchor_successor']:
             checked = validate_candidate_response(
                 original_request=original, source=expected['source'],
-                request=request, raw_response=raw, repo_root=ROOT)
+                request=request, raw_response=raw,
+                repo_root=ROOT if source_root is None else Path(source_root).resolve())
             _need(checked['source_fact_current_status_proven_by_program'] is False,
                   'D03_COMPLETE_INTERPRETATION_OLD_FACT_CREDIT_RESTORED')
         else:
@@ -110,7 +112,7 @@ def validate_complete_interpretation(*, prepared_input, response_bytes_by_reques
 
 
 def replay_recorded_complete_interpretation(*, packet_root, expected_packet_id,
-                                            company_id, repo_root=ROOT):
+                                            company_id, repo_root=ROOT, source_root=None):
     """Bind an authenticated offline response set to the complete proposal.
 
     The packet indexes raw bytes by original request ID. Current preparation
@@ -124,11 +126,12 @@ def replay_recorded_complete_interpretation(*, packet_root, expected_packet_id,
           and bool(company_id) and type(expected_packet_id) is str
           and bool(expected_packet_id),
           'D03_RECORDED_INTERPRETATION_INPUT_INVALID')
+    rooted = {} if source_root is None else {'source_root':Path(source_root).resolve()}
     packet = replay_offline_set(packet_root=packet_root,
-                                expected_packet_id=expected_packet_id)
+                                expected_packet_id=expected_packet_id,**rooted)
     metadata = strict_json_loads(text=(Path(packet_root) / 'packet.json')
                                  .read_text(encoding='utf-8'))
-    prepared = prepare_native_input(company_id=company_id)
+    prepared = prepare_native_input(company_id=company_id,**rooted)
     groups = prepared['groups']
     original_ids = [row['original_request_id'] for row in groups]
     effective_ids = [row['effective_request_id'] for row in groups]
@@ -144,7 +147,7 @@ def replay_recorded_complete_interpretation(*, packet_root, expected_packet_id,
                  packet['raw_response_bytes'][group['original_request_id']]
                  for group in groups}
     checked = validate_complete_interpretation(prepared_input=prepared,
-        response_bytes_by_request=responses)
+        response_bytes_by_request=responses,**rooted)
     _need(checked['source_id'] == prepared['source_id']
           and checked['input_id'] == prepared['input_id']
           and checked['provider_execution_identity_verified'] is False

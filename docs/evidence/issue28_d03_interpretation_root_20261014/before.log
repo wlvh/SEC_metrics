@@ -1,0 +1,15 @@
+test_legacy_default_is_preserved_and_missing_group_is_rejected (tests.vnext.test_d03_interpretation_source_root.D03InterpretationSourceRootTest.test_legacy_default_is_preserved_and_missing_group_is_rejected) ... ok
+test_prepare_and_interpret_use_the_same_external_source_root (tests.vnext.test_d03_interpretation_source_root.D03InterpretationSourceRootTest.test_prepare_and_interpret_use_the_same_external_source_root) ... ERROR
+
+======================================================================
+ERROR: test_prepare_and_interpret_use_the_same_external_source_root (tests.vnext.test_d03_interpretation_source_root.D03InterpretationSourceRootTest.test_prepare_and_interpret_use_the_same_external_source_root)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_d03_interpretation_source_root.py", line 26, in test_prepare_and_interpret_use_the_same_external_source_root
+    actual=prepare.prepare_native_input(company_id='constructed',source_root=data)
+TypeError: prepare_native_input() got an unexpected keyword argument 'source_root'
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+FAILED (errors=1)

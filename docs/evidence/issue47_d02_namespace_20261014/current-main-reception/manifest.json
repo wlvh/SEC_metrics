@@ -1,0 +1,1105 @@
+{
+ "record_type": "D02_PREPARATION_COMPARISON",
+ "tool_sha256": "53bba2d7345e749db4574570249fc82d33bf7c8dee87e51577d52433022a09b6",
+ "entry": "vnext.d02_reviewed_source.prepare_historical_legal_sources",
+ "versions": {
+  "baseline": {
+   "ref": "cb27e5d1108237bf535567ce83c92b647e6bcb3d",
+   "commit": "cb27e5d1108237bf535567ce83c92b647e6bcb3d",
+   "tree": "323bb97859dc9c058221993e3a585f28d295ab61",
+   "parents": [
+    "07a5f4e9e5d13a7c5804230ac900f4b6634b24d6",
+    "6d9c4cd6262df74b1a9945616334a4ca923a90ec"
+   ]
+  },
+  "candidate": {
+   "ref": "89c4901e1f19b82262f6eac01ef49c1f5911c1f6",
+   "commit": "89c4901e1f19b82262f6eac01ef49c1f5911c1f6",
+   "tree": "f856ef0fe0b1b78a8f23e3056f3a48c82efcdf9f",
+   "parents": [
+    "3f17fd6df20ea352f1e0bf269b7514fa662aaf1e",
+    "3d4c60451de273ff5e7708f03a4607f48e32d583"
+   ]
+  }
+ },
+ "inputs": {
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "source_root_before": {
+   "digest": "sha256:a1975d771d350efb537f036dd0d24c19b86d475a3594520d38db7bd9e4ce2fb7",
+   "files": 4505,
+   "symlinks": 0,
+   "bytes": 1148630267,
+   "directories": 2173,
+   "directory_digest": "sha256:318f0ca619745d71392fe1c6e02c619ce6a5497ae3842099e1ff3f16b0e3914b"
+  },
+  "source_root_after": {
+   "digest": "sha256:a1975d771d350efb537f036dd0d24c19b86d475a3594520d38db7bd9e4ce2fb7",
+   "files": 4505,
+   "symlinks": 0,
+   "bytes": 1148630267,
+   "directories": 2173,
+   "directory_digest": "sha256:318f0ca619745d71392fe1c6e02c619ce6a5497ae3842099e1ff3f16b0e3914b"
+  },
+  "unchanged_during_run": true
+ },
+ "scope": {
+  "companies": [
+   "marriott_international",
+   "southwest_airlines",
+   "ford_motor_company",
+   "pfizer",
+   "jpmorgan_chase",
+   "salesforce",
+   "lumen_technologies",
+   "macys",
+   "paramount_skydance_paramount_global",
+   "enphase_energy"
+  ],
+  "fiscal_years": [
+   2021,
+   2022,
+   2023,
+   2024,
+   2025
+  ],
+  "subset_of_registry": false,
+  "outside_baseline_registry": [],
+  "registry_baseline": [
+   "marriott_international",
+   "southwest_airlines",
+   "ford_motor_company",
+   "pfizer",
+   "jpmorgan_chase",
+   "salesforce",
+   "lumen_technologies",
+   "macys",
+   "paramount_skydance_paramount_global",
+   "enphase_energy"
+  ],
+  "registry_candidate": [
+   "marriott_international",
+   "southwest_airlines",
+   "ford_motor_company",
+   "pfizer",
+   "jpmorgan_chase",
+   "salesforce",
+   "lumen_technologies",
+   "macys",
+   "paramount_skydance_paramount_global",
+   "enphase_energy"
+  ]
+ },
+ "environment": {
+  "python": "3.14.7",
+  "implementation": "CPython",
+  "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "git": "git version 2.54.0 (Apple Git-157)",
+  "network": "socket connect/create_connection/getaddrinfo refused in workers",
+  "workers": 4,
+  "timeout_per_sample_seconds": 600
+ },
+ "workers": [
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "marriott_international:2021"
+   ],
+   "seconds": 5.6
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "marriott_international:2022"
+   ],
+   "seconds": 6.4
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "marriott_international:2023"
+   ],
+   "seconds": 6.3
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "marriott_international:2024"
+   ],
+   "seconds": 6.5
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "marriott_international:2025"
+   ],
+   "seconds": 4.9
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "southwest_airlines:2021"
+   ],
+   "seconds": 7.2
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "southwest_airlines:2022"
+   ],
+   "seconds": 8.7
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "southwest_airlines:2023"
+   ],
+   "seconds": 8.3
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "southwest_airlines:2024"
+   ],
+   "seconds": 8.5
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "southwest_airlines:2025"
+   ],
+   "seconds": 4.7
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "ford_motor_company:2021"
+   ],
+   "seconds": 11.6
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "ford_motor_company:2022"
+   ],
+   "seconds": 14.1
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "ford_motor_company:2023"
+   ],
+   "seconds": 13.4
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "ford_motor_company:2024"
+   ],
+   "seconds": 13.2
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "ford_motor_company:2025"
+   ],
+   "seconds": 9.7
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "pfizer:2021"
+   ],
+   "seconds": 12.2
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "pfizer:2022"
+   ],
+   "seconds": 11.9
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "pfizer:2023"
+   ],
+   "seconds": 11.9
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "pfizer:2024"
+   ],
+   "seconds": 11.8
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "pfizer:2025"
+   ],
+   "seconds": 8.3
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "jpmorgan_chase:2021"
+   ],
+   "seconds": 55.4
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "jpmorgan_chase:2022"
+   ],
+   "seconds": 56.8
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "jpmorgan_chase:2023"
+   ],
+   "seconds": 49.6
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "jpmorgan_chase:2024"
+   ],
+   "seconds": 41.8
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "jpmorgan_chase:2025"
+   ],
+   "seconds": 27.2
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "salesforce:2021"
+   ],
+   "seconds": 7.3
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "salesforce:2022"
+   ],
+   "seconds": 7.2
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "salesforce:2023"
+   ],
+   "seconds": 8.4
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "salesforce:2024"
+   ],
+   "seconds": 8.1
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "salesforce:2025"
+   ],
+   "seconds": 7.5
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "lumen_technologies:2021"
+   ],
+   "seconds": 8.0
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "lumen_technologies:2022"
+   ],
+   "seconds": 8.6
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "lumen_technologies:2023"
+   ],
+   "seconds": 8.3
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "lumen_technologies:2024"
+   ],
+   "seconds": 9.8
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "lumen_technologies:2025"
+   ],
+   "seconds": 8.0
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "macys:2021"
+   ],
+   "seconds": 13.2
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "macys:2022"
+   ],
+   "seconds": 9.6
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "macys:2023"
+   ],
+   "seconds": 7.2
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "macys:2024"
+   ],
+   "seconds": 6.9
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "macys:2025"
+   ],
+   "seconds": 7.0
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "paramount_skydance_paramount_global:2021"
+   ],
+   "seconds": 9.7
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "paramount_skydance_paramount_global:2022"
+   ],
+   "seconds": 11.6
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "paramount_skydance_paramount_global:2023"
+   ],
+   "seconds": 10.8
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "paramount_skydance_paramount_global:2024"
+   ],
+   "seconds": 9.0
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "paramount_skydance_paramount_global:2025"
+   ],
+   "seconds": 6.4
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "enphase_energy:2021"
+   ],
+   "seconds": 7.3
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "enphase_energy:2022"
+   ],
+   "seconds": 8.8
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "enphase_energy:2023"
+   ],
+   "seconds": 8.5
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "enphase_energy:2024"
+   ],
+   "seconds": 8.5
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "enphase_energy:2025"
+   ],
+   "seconds": 6.4
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "marriott_international:2021"
+   ],
+   "seconds": 6.9
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "marriott_international:2022"
+   ],
+   "seconds": 6.6
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "marriott_international:2023"
+   ],
+   "seconds": 6.5
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "marriott_international:2024"
+   ],
+   "seconds": 6.6
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "marriott_international:2025"
+   ],
+   "seconds": 4.9
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "southwest_airlines:2021"
+   ],
+   "seconds": 8.9
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "southwest_airlines:2022"
+   ],
+   "seconds": 8.9
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "southwest_airlines:2023"
+   ],
+   "seconds": 8.4
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "southwest_airlines:2024"
+   ],
+   "seconds": 8.6
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "southwest_airlines:2025"
+   ],
+   "seconds": 4.7
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "ford_motor_company:2021"
+   ],
+   "seconds": 14.7
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "ford_motor_company:2022"
+   ],
+   "seconds": 14.3
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "ford_motor_company:2023"
+   ],
+   "seconds": 13.7
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "ford_motor_company:2024"
+   ],
+   "seconds": 13.4
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "ford_motor_company:2025"
+   ],
+   "seconds": 9.9
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "pfizer:2021"
+   ],
+   "seconds": 14.1
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "pfizer:2022"
+   ],
+   "seconds": 12.2
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "pfizer:2023"
+   ],
+   "seconds": 11.9
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "pfizer:2024"
+   ],
+   "seconds": 12.0
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "pfizer:2025"
+   ],
+   "seconds": 8.7
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "jpmorgan_chase:2021"
+   ],
+   "seconds": 63.9
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "jpmorgan_chase:2022"
+   ],
+   "seconds": 57.4
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "jpmorgan_chase:2023"
+   ],
+   "seconds": 50.0
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "jpmorgan_chase:2024"
+   ],
+   "seconds": 42.2
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "jpmorgan_chase:2025"
+   ],
+   "seconds": 27.5
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "salesforce:2021"
+   ],
+   "seconds": 8.9
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "salesforce:2022"
+   ],
+   "seconds": 8.8
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "salesforce:2023"
+   ],
+   "seconds": 8.5
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "salesforce:2024"
+   ],
+   "seconds": 8.2
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "salesforce:2025"
+   ],
+   "seconds": 7.6
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "lumen_technologies:2021"
+   ],
+   "seconds": 8.8
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "lumen_technologies:2022"
+   ],
+   "seconds": 8.6
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "lumen_technologies:2023"
+   ],
+   "seconds": 8.4
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "lumen_technologies:2024"
+   ],
+   "seconds": 10.1
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "lumen_technologies:2025"
+   ],
+   "seconds": 8.1
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "macys:2021"
+   ],
+   "seconds": 16.0
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "macys:2022"
+   ],
+   "seconds": 9.6
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "macys:2023"
+   ],
+   "seconds": 7.2
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "macys:2024"
+   ],
+   "seconds": 7.0
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "macys:2025"
+   ],
+   "seconds": 7.1
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "paramount_skydance_paramount_global:2021"
+   ],
+   "seconds": 12.2
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "paramount_skydance_paramount_global:2022"
+   ],
+   "seconds": 11.8
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "paramount_skydance_paramount_global:2023"
+   ],
+   "seconds": 11.0
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "paramount_skydance_paramount_global:2024"
+   ],
+   "seconds": 8.9
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "paramount_skydance_paramount_global:2025"
+   ],
+   "seconds": 6.4
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "enphase_energy:2021"
+   ],
+   "seconds": 9.1
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "enphase_energy:2022"
+   ],
+   "seconds": 8.9
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "enphase_energy:2023"
+   ],
+   "seconds": 8.6
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "enphase_energy:2024"
+   ],
+   "seconds": 8.5
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "enphase_energy:2025"
+   ],
+   "seconds": 6.5
+  }
+ ],
+ "problems": [],
+ "complete": true
+}
