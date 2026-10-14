@@ -182,6 +182,25 @@ class TextBusinessCandidateTest(unittest.TestCase):
                 self.assertEqual(original, doc)
                 actual = prepare_business_candidates(**source_arguments(raw))
                 self.assertEqual(reference, actual['proposals']['legal_regulatory']['note_references'][0])
+
+    def test_mda_numbered_heading_cannot_supply_a_missing_financial_note(self):
+        styled = ('<p><span style="font-size:9pt;font-weight:700">Note 3</span>'
+                  '<span style="font-size:8pt;font-weight:400">. </span>'
+                  '<span style="font-size:9pt;font-weight:700">Income Taxes</span></p>')
+        mda = ("<h2>Item 7. Management's Discussion and Analysis</h2>"
+               '<h2>2. Critical Accounting Estimates</h2><p>Estimates require judgment.</p>')
+        for lead, ending in ((mda,styled),(mda,'<h2>Note 3. Income Taxes</h2>'),
+                ('<h2>2. Critical Accounting Estimates</h2><p>Estimates require judgment.</p>',styled)):
+            with self.subTest(lead=lead,ending=ending):
+                body = BODY.replace('<h2>Item 8.', lead + '<h2>Item 8.').replace(
+                    '<h2>Note 2. Contingencies</h2>', '<p>Contingencies</p>').replace(
+                    '<h2>Note 3. Income Taxes</h2>', ending)
+                raw = annual(body); doc = document(body); original = copy.deepcopy(doc)
+                ref = legal_risk_candidates(document=doc,raw_bytes=raw)['note_references'][0]
+                self.assertEqual('REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE',ref['status'])
+                self.assertEqual([],ref['range_candidates'])
+                self.assertEqual(original,doc)
+
     def test_split_note_title_requires_matching_original_identifier_format(self):
         def part(text, size=9):
             return '<p><span style="font-size:' + str(size) + 'pt;font-weight:700">' + text + '</span></p>'
