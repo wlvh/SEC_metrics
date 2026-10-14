@@ -1,0 +1,139 @@
+{
+  "commit": "17569516a8be63002f0a6336041421ac14d33459",
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics",
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+  "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/enphase-d04-company-20261014/state",
+  "read_seconds": 0.45270616601919755,
+  "original_files_preserved": 202,
+  "state_files_preserved": 17,
+  "result_files": 7,
+  "result_bytes": 33970,
+  "manifest_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+  },
+  "calls": [
+    0,
+    0,
+    0
+  ],
+  "production_authorized": false,
+  "original_call_ordinals": [
+    173,
+    174,
+    175,
+    176,
+    177,
+    178
+  ],
+  "original_result_id": "sha256:7bf9ea839cb7ef2c636ebf524fb4305056a048447880bd37e2df81664483f99b",
+  "original_summary_sha256": "87a1b75fd68411e6bcd43898f8146022e2b7e7b18315cd663daefed34a33c71d",
+  "source_id": "sha256:6fbbc9244e78b185ff176d9431aefc173cfc8c02d3058fcd41b1ee7fc6761c05",
+  "unit_count": 29,
+  "phases": [
+    {
+      "phase": "first",
+      "seconds": 115.14311849998194,
+      "exit_code": 2,
+      "metrics": [
+        {
+          "metric_id": "D04",
+          "status": "CANDIDATE_WITHHELD",
+          "attempt_id": "84e0edde17f54289b6ee02c3f0361c49",
+          "version": "2e4fdf3b0bbd4f5f9ae6a15876238260",
+          "result_id": "sha256:7bf9ea839cb7ef2c636ebf524fb4305056a048447880bd37e2df81664483f99b",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/enphase-d04-company-20261014/state/updates/D04/results/2e4fdf3b0bbd4f5f9ae6a15876238260",
+          "calculation_performed": true,
+          "new_candidate_created": true,
+          "result_reason_code": "D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE",
+          "source_observation_errors": [],
+          "new_calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "defect_holds": [],
+          "read_result_id": "sha256:7bf9ea839cb7ef2c636ebf524fb4305056a048447880bd37e2df81664483f99b",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/enphase-d04-company-20261014/state/updates/D04/results/2e4fdf3b0bbd4f5f9ae6a15876238260",
+          "program_version": {
+            "commit": "17569516a8be63002f0a6336041421ac14d33459",
+            "has_uncommitted_changes": false
+          }
+        }
+      ]
+    },
+    {
+      "phase": "repeat-forbidden-factory",
+      "seconds": 0.06661258399253711,
+      "exit_code": 2,
+      "metrics": [
+        {
+          "metric_id": "D04",
+          "status": "PREVIOUS_INPUT_WITHHELD",
+          "attempt_id": "8b6b357fd88f494a9dba322d33643829",
+          "version": "2e4fdf3b0bbd4f5f9ae6a15876238260",
+          "result_id": "sha256:7bf9ea839cb7ef2c636ebf524fb4305056a048447880bd37e2df81664483f99b",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/enphase-d04-company-20261014/state/updates/D04/results/2e4fdf3b0bbd4f5f9ae6a15876238260",
+          "result_reason_code": "D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE",
+          "raw_input_unchanged": true,
+          "calculation_performed": false,
+          "new_candidate_created": false,
+          "source_check_versions": {
+            "scripts/vnext/ordinary_current_update.py": "bc039ce9eacd3b1da9a74cda4dfefe8e9a3785225b7fc7cff1243f50d203386a",
+            "scripts/vnext/request_bindings.py": "d0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee",
+            "scripts/vnext/ordinary_update_compatibility.py": "dcd5f7fad86dd36fec7ffc1ce15cb274cd3670dba213777b6cdaa4a4090d80b9",
+            "scripts/vnext/ordinary_result_registration.py": "f14c54709d24812241c5eb3055ab110e3ef0947c55d7148bf53045a6ffc05ad7"
+          },
+          "source_observation_errors": [],
+          "new_calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "defect_holds": [],
+          "read_result_id": "sha256:7bf9ea839cb7ef2c636ebf524fb4305056a048447880bd37e2df81664483f99b",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/enphase-d04-company-20261014/state/updates/D04/results/2e4fdf3b0bbd4f5f9ae6a15876238260",
+          "program_version": {
+            "commit": "17569516a8be63002f0a6336041421ac14d33459",
+            "has_uncommitted_changes": false
+          }
+        }
+      ]
+    }
+  ],
+  "public_row": {
+    "company": "Enphase Energy",
+    "cik": "1463101",
+    "metric_id": "D04",
+    "metric_name": "Going concern source statements and defined-scope assessment",
+    "value": "",
+    "unit": "text",
+    "status": "TEXT_QUAL",
+    "source_class": "10-K",
+    "formula": "source-reported going concern statements",
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31",
+    "fiscal_year": "2025",
+    "fiscal_period": "",
+    "accession": "0001463101-26-000013",
+    "form": "10-K",
+    "filed_date": "2026-02-17",
+    "concept_or_section": "",
+    "context_or_dimension": "",
+    "confidence": "",
+    "notes": "未披露持续经营疑虑：已检查保存的完整年报及本期修订、原生事实和续接对象；这不表示对未来财务状况作保证。",
+    "company_id": "enphase_energy",
+    "result_id": "sha256:7bf9ea839cb7ef2c636ebf524fb4305056a048447880bd37e2df81664483f99b",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/enphase-d04-company-20261014/state/updates/D04/results/2e4fdf3b0bbd4f5f9ae6a15876238260",
+    "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+    "local_metric_status": "PREVIOUS_INPUT_WITHHELD",
+    "period_role": "REQUESTED_RESULT",
+    "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+    "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+    "defect_holds": "[]",
+    "requested_in_latest_execution": "True"
+  }
+}
