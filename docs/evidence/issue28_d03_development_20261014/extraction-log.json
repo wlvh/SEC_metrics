@@ -1,0 +1,54 @@
+{
+  "record_type": "DEVELOPMENT_MODEL_EXTRACTION_LOG",
+  "request_id": "sha256:c4c7d6b1e90979d23a668cece33307b35f1f23624f8338b3fbaac1420267d4f2",
+  "start_time_utc": "2026-10-14T10:18:47.237431+00:00",
+  "end_time_utc": "2026-10-14T10:21:40.017621+00:00",
+  "input_sha256": {
+    "request.json": "1ecd2819b28c64ae65a7113dc3852a58c84fb2e4af922f8ba606bbab860c4b4d",
+    "metric-spec.md": "50c2a2603b4424b7a8e981c04b29cafb7b86115fc8c2e6e8b723420a5f85c0de",
+    "manifest.json": "5b6416b405c5ac1a28b9c8c605347117294176b7f79f3e505fffa94d8a4bc5ec"
+  },
+  "coverage": {
+    "all_supplied_source_text_read": true,
+    "units_read": 3,
+    "blocks_read": 1320,
+    "units": [
+      {
+        "unit_id": "sha256:1971e8a899820d01201d720beb553bf0478a49fb9ac3e7476cfcec07d774bf40",
+        "block_count_read": 401,
+        "first_block_read": 0,
+        "last_block_read": 400,
+        "payload_sha256": "c54d55e906dc83e5420aa5f26ffde46b51ce01cce5e6350a114d41fd36ffd247"
+      },
+      {
+        "unit_id": "sha256:4298bea0f6b6ccac97da587047b082a72d56a118f0efe5effcfeed9007c1683a",
+        "block_count_read": 426,
+        "first_block_read": 401,
+        "last_block_read": 826,
+        "payload_sha256": "d08bb4cc60c18157281258087f7ff535153fb1ea8a11748fc51fec26ea22378d"
+      },
+      {
+        "unit_id": "sha256:57cc67a794da23ff7d50dc7ab620909ed03521f975f41ee11bd73e45b5c1fa0e",
+        "block_count_read": 493,
+        "first_block_read": 827,
+        "last_block_read": 1319,
+        "payload_sha256": "db0fe30855666fb2ca476c1805af6c77f719af129d07dd929b9b153c7a3b19e8"
+      }
+    ],
+    "required_candidate_indices_assessed": 33,
+    "source_fact_candidates_reviewed": 1,
+    "method": "Full sequential block-text rendering and model reading, followed by surrounding-context interpretation. A preliminary metadata dump was truncated; every source block was subsequently rendered in complete bounded ranges."
+  },
+  "tool_call_count": 15,
+  "tool_call_count_basis": "15 functions.exec calls, each invoking one local exec_command; no other tools, network, provider or SEC calls.",
+  "completed": true,
+  "local_structural_checks_passed": true,
+  "response_bytes": 6989,
+  "response_sha256": "b689586af5fa45890f808bee1e35db784997f78175b65189176927c76d095e60",
+  "limitations": [
+    "Only supplied request, metric spec and manifest read; no parent reference, prior answer or source root accessed.",
+    "Partial filing group; Note 30 and other omitted filing units not available. No whole-filing absence conclusion.",
+    "Development-model interpretation only; no DeepSeek/provider receipt, native Run, business credit or production authorization.",
+    "Provider response tokens were not measured; output was kept compact for the configured 4096-token limit."
+  ]
+}

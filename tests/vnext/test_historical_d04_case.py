@@ -46,14 +46,21 @@ class HistoricalD04CaseTest(TestCase):
                         self.assertFalse(again['calculation_performed'])
                         self.assertEqual(first['result_id'],again['result_id'])
                 self.assertEqual(1,len(calls))
-                with patch.object(update,'sha256_file',side_effect=lambda *,path:
-                        'CONSTRUCTED_USED_REPLAY_CHANGE' if path.name=='saved_d04_replay.py' else actual_hash(path=path)):
-                    changed=update.run_once(**args)
-                    self.assertTrue(changed['calculation_performed'])
-                    with patch.object(update,'save_calculated_case',side_effect=AssertionError('No repeated processing')):
-                        repeated=update.run_once(**args)
-                    self.assertEqual('PREVIOUS_INPUT_WITHHELD',repeated['status'])
-                self.assertEqual(2,len(calls))
+                used_changes = set()
+                for module in ('saved_d04_replay.py', 'r6_semantic_review.py', 'text_results.py'):
+                    used_changes.add(module)
+                    with self.subTest(used_module=module), patch.object(
+                            update, 'sha256_file', side_effect=lambda *, path:
+                            'CONSTRUCTED_USED_RULE_CHANGE' if path.name in used_changes
+                            else actual_hash(path=path)):
+                        changed = update.run_once(**args)
+                        self.assertTrue(changed['calculation_performed'])
+                        with patch.object(update, 'save_calculated_case',
+                                          side_effect=AssertionError('No repeated processing')):
+                            repeated = update.run_once(**args)
+                        self.assertEqual('PREVIOUS_INPUT_WITHHELD', repeated['status'])
+                        self.assertEqual(1 + len(used_changes), len(calls))
+                self.assertEqual(4, len(calls))
                 self.assertTrue(old_path.is_dir())
 
     def test_used_historical_catalog_is_a_processing_dependency(self):

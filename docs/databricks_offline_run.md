@@ -1,0 +1,70 @@
+# 在无外网的 Databricks 上计算一家公司的指标
+
+<!-- capability-anchor: CAPABILITY.databricks_offline_package -->
+
+做法：在能上 GitHub 的电脑上，把“程序 + 一家公司已存档的 SEC 原件”打成一个 zip；传到 Databricks 后离线计算，不调用任何模型。
+
+| 文件 | 在哪运行 | 作用 |
+|---|---|---|
+| `tools/databricks/build_offline_package.py` | 能访问 github.com 的电脑（Python 3.8+，只用标准库） | 打包，不向 SEC 发请求 |
+| `tools/databricks/sec_metrics_marriott_international_681b35d8.zip` | — | 用默认版本打好的万豪包，可直接上传 |
+| `tools/databricks/company_metrics_notebook.py` | Databricks | 逐个文件核对后离线计算，不访问外网、不调用模型 |
+
+## 为什么不在打包时直接从 SEC 下载
+
+- 离线计算（`tools/vnext_company.py run --source-root`）只接受请求账本 `evidence/requests_log.csv` 登记过的原件：文件的 SHA-256 和长度必须与 SEC 当初返回时记录的一致。用别的脚本从 SEC 新下载的文件不在账本里，会被拒收。
+- 项目自己的联网采集需要已绑定 #28 授权的调用账本，新电脑上不能直接运行。
+- 仓库已经存档了各公司计算所需的 SEC 原件与账本，打包脚本只从 GitHub 取，`new_sec_requests` 恒为 0。
+
+因此仓库尚未存档的新申报（例如某公司刚发布的年报）不能走这条路，要先经正式采集流程入库。数据只能单向进入：SEC → 受控采集入库 → GitHub → 离线包 → Databricks。
+
+## 第一步：在电脑上打包
+
+万豪可以跳过这一步：仓库里附带了用默认版本打好的包 `tools/databricks/sec_metrics_marriott_international_681b35d8.zip`（SHA-256 `388d49c206d1688a6011e93a8a2c0e47ce93499713713c72e360d9c005049fd4`），在 GitHub 网页上下载后直接用于第二步。它固定在程序版本 `681b35d8`，程序更新后不会跟着更新；`tests.vnext.test_databricks_offline_package` 会检查它与打包脚本的默认版本、请求账本一致。要其他公司或更新的程序版本时，按下面的方法自己打包。
+
+从 GitHub 下载 `tools/databricks/build_offline_package.py` 这一个文件（网页上点 Download raw file 即可），然后：
+
+```
+python3 build_offline_package.py --list-companies                    # 每家公司已存档的请求数与大小
+python3 build_offline_package.py --company marriott_international    # 生成 sec_metrics_marriott_international_681b35d8.zip
+```
+
+- 程序版本固定为脚本里的 `DEFAULT_REF`（端到端验证过的 commit），写进 `PACKAGE.json`。`--ref <commit>` 可以换版本，但新版本可能需要更多运行文件。开发时缺文件都会在计算 notebook 里直接报错，但这不能保证所有情况，换版本后要重新核对结果。
+- 每个文件都按该 commit 的 git blob 哈希核对；SEC 正文另按账本记录的 SHA-256 和长度核对，任何一项不符都不写 zip。
+- 输出里的 `skipped_overwritten_working_copies` 是工作副本（`evidence/submissions/`、`evidence/accession_materials/` 下）后来被新的采集覆盖、内容已与账本对不上的文件，所以不打包。万豪是 2 个，计算用不到。
+- 同一 commit、同一压缩库重打，zip 字节相同；不同电脑的压缩库可能不同，zip 的 SHA-256 也就可能不同。以打包输出里的 `zip_sha256` 为准；notebook 摘要里也会显示它，可以对照。
+- 网络问题：公司代理设 `HTTPS_PROXY`；证书错误设 `SSL_CERT_FILE` 为公司 CA 文件；GitHub API 限流（每小时 60 次）时等一小时或设 `GITHUB_TOKEN`。
+
+## 第二步：在 Databricks 上计算
+
+1. 把 zip 上传到 Unity Catalog Volume（Catalog → 选 volume → Upload to this volume）。
+2. Workspace → Import 导入 `company_metrics_notebook.py`。文件开头的 `# Databricks notebook source` 会让它自动拆成多个单元格。
+3. 改第二格的 `PACKAGE_ZIP`。非万豪的公司要把 `METRICS` 换成该行业适用的指标（B10/B11 是酒店业指标）。然后 Run all。
+   notebook 逐个文件核对 `PACKAGE.json`，能发现上传不完整或损坏；它不鉴别整个 zip 是否被人替换，所以包要放在只有自己能写的位置。
+4. `WORK_ROOT` 用驱动节点本地盘（默认 `/local_disk0/tmp/sec_metrics`），不要用 `/dbfs` 或 `/Volumes`：计算要用文件锁。本地盘不可写时自动改用系统临时目录。`SAVE_TO` 可以把结果另存到 Volume。
+
+摘要应为 `status: PASS`；`calls` 是程序自己统计的本次新调用（provider=模型、paid=付费、sec=SEC 请求）。PASS 要同时满足：程序报告 `FLOW_COMPLETED`、退出码为 0、三项调用都为 0、所选指标都有就绪的结果；否则状态依次是程序给出的流程状态、`CLI_EXIT_NONZERO`、`UNEXPECTED_CALLS` 或 `METRICS_NOT_READY`。万豪（默认程序版本）应得到 2025 财年：
+
+| 指标 | 含义 | 值 |
+|---|---|---|
+| B01 | 营业收入 | 26186000000 美元 |
+| B02 | 收入同比增长 | 0.04326693227091633466135458167 |
+| B04 | 净利润 | 2601000000 美元 |
+| B05 | 自由现金流 | 2608000000 美元 |
+| B10 | 入住率 | 69.3（%） |
+| B11 | 每间可售房收入（RevPAR） | 128.8 美元 |
+
+- 同一集群用同一个包再跑一次，各指标显示 `NO_SOURCE_CONTENT_CHANGE`：来源没变、复用上次结果，不是错误。换了包（字节不同）会用新的状态目录从头计算。
+- 状态不是 PASS 时，摘要的 `flow_status` 是程序给出的流程状态，`metric_failures` 列出没有就绪的指标及原因，`metrics_not_ready` 列出所选但没有就绪结果的指标。
+- `CANDIDATE_READY` 只表示候选结果已生成，不等于业务验收。
+
+## 这个 notebook 证明什么
+
+计算不调用 SecureGPT 或任何模型，所选指标本身也不需要模型。PASS 说明项目代码能在 Databricks 上用离线包算出这些指标，**不**说明项目已经在 Databricks 上用 SecureGPT 计算指标：把内网模型接进指标计算的调用边界（#28 N1）尚未实现。SecureGPT 连通检查要用到公司内部 SDK 的名称，不放在公开仓库；它沿用离线包里的 `tools/probe_securegpt.py` 与 `scripts/securegpt_sdk.py`。
+
+## 已验证范围（2026-10-14）
+
+- 打包：在 `681b35d8` 上为万豪从 GitHub 实际打包，645 个文件、74 次已存档 SEC 请求、40 个原件、排除 2 个被覆盖的工作副本，zip SHA-256 为 `388d49c206d1688a6011e93a8a2c0e47ce93499713713c72e360d9c005049fd4`，重打字节相同。
+- 计算 notebook：用上面的包在 Python 3.10、3.11、3.12、3.13 上运行均为 PASS，数值同上表，调用数全为 0；首次约 30–55 秒，重跑约 5 秒。Python 3.10 对应 Databricks 13.3/14.3 LTS，3.11 对应 15.4 LTS，3.12 对应 16.x 及以后。
+- 仓库测试：见 `TESTING.md`「Databricks 离线包测试」，只用假 GitHub 与桩程序。
+- **未验证**：真实 Databricks 集群（Volume 路径、集群访问模式、本地盘权限）。结果需要在目标环境实际运行后单独报告。

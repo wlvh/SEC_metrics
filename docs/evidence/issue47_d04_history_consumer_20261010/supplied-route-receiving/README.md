@@ -1,6 +1,6 @@
 # Historical D04 consumes the public supplied-route correction
 
-Progress on #47. Actual dependency public PR285 `e0c89c942e83abf5f0d8083bc2b3659ad7cd1448`, based on actualmainccd9. Public default/current dependency dispatch is #28's implementation; this increment only removes unused `current_d04_result.py` from the historical declaration and verifies the consumer. Current-source CF comparison in282 and the upcoming CONTINUOUS_CALL archive compatibility are separate; this consumer still reads the original ISSUE_47 archive and does not relabel it.
+Progress on #47. Current dependency: public PR285 `f377bb18044a28d11bf09dc0a5b6f1510eef6bc5` plus actual main `357039f173b96b170e965bb333b4cb4616f91676`. The earlier `e0c89c94` combination was returned for omitting used shared rules; its measurements below remain evidence only for that earlier version. Public default/current dependency dispatch is #28's implementation; this increment only removes unused `current_d04_result.py` from the historical declaration and verifies the consumer. Current-source CF comparison in282 and the upcoming CONTINUOUS_CALL archive compatibility are separate; this consumer still reads the original ISSUE_47 archive and does not relabel it.
 
 107 affected required tests/1.061s/zero failures/errors/skips. A real configuration/controller with explicitly constructed withholding verifies that current-only module changes do not invoke the historical producer. Actual used saved_d04_replay changes still process once; all unchanged input repeats remain stable. Public285's default and explicitly declared current routes retain their dependencies. No other controller, runner or archive reader is implemented here.
 
@@ -17,3 +17,15 @@ PYTHONPATH=scripts:tools:. python3 docs/evidence/issue47_d04_history_consumer_20
 ```
 
 The adjacent in-memory driver was parameterized after the executed private driver; it retains the same operation and is not claimed as another financial first execution. It is evidence instrumentation using the same company CLI, not a replacement pipeline. Public285 and this consumer still require receiver review; newhead CI is separate. Old failures/media limitations/Run identities and full1950 responsibility remain, no authorReady/merge/adoption/deployment/active.
+
+## Returned shared-rule dependency correction
+
+Responds to receiver6167168976/6167175005. Public owner selected conservative option B in285/f377: remove only current_d04_result and capacity_update_input for a supplied D04 producer, and retain the shared/configuration route. This consumer still removes only its unused current_d04_result declaration. It does not add a parallel controller or claim the earlier e0 configuration was complete.
+
+Normal receipt of f377 and actualmain357 produces the tested c39a15ad combination.108 required controls/1.431s/zero failures, errors or skips use the real public configuration/controller and historical PROCESSING_FILES. The constructed withholding test now changes saved_d04_replay, r6_semantic_review and text_results successively: each used-rule change processes once, then unchanged repeats reuse. Changes to the two current-only modules never invoke the producer. These constructed controls are not filing conclusions.
+
+The existing real Marriott FY2024 task required one ordinary version migration because ordinary_current_update and the retained shared processing dependency set changed from the returned e0 configuration. The actual company command takes12.233s, preserving Result5c4c22ea and D04_SAVED_FILING_MEDIA_COVERAGE_NOT_VERIFIED/null. All63 previous Result files remain unchanged; seven new-version files are added. Forbidden selection/replay/Calculator repeat .663s performs no processing and creates no result. Independent results/CSV read .267s preserves135 state files, all prior FY2023/FY2024 values/status/identities and FY2026's genuine missing-source state. No full16-answer replay or new provider call.
+
+Using that same real migrated task, an in-memory change to both unused current-module hashes repeats in .429s with all historical processing forbidden, keeping all70 Result files. Source registration, original package970c98e6 and SEC ledger/manifest remain unchanged. Network is forbidden throughout. Full receipts, actual commands, CSV and source evidence are in shared-rule-reception. No new financial, image-coverage or whole-filing semantic conclusion was added; no formal adoption/Ready/merge/deploy/active permission.
+
+Re-run the two existing parameterized commands above with a new output directory. They use your registered task, read-only restored originals and original saved call package. The CONTINUOUS_CALL compatibility increment remains PR288, public-owner maintained, outside this returned consumer.

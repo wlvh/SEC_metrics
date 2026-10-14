@@ -625,7 +625,7 @@ class SelectedPeriodUpdateTest(unittest.TestCase):
 
 class D04SelectedProducerDependencyTest(unittest.TestCase):
     """Real configuration/controller; clearly constructed source and results."""
-    def exercise(self, mode, changed_path, expect_processing):
+    def exercise(self, mode, changed_path, expect_processing, declared_files=None):
         from contextlib import ExitStack
         from vnext.ordinary_d04_saved_route import processing_paths
         with tempfile.TemporaryDirectory() as temporary, ExitStack() as stack:
@@ -658,8 +658,9 @@ class D04SelectedProducerDependencyTest(unittest.TestCase):
             options={}
             if mode=='historical':
                 options={'fiscal_year':2024,'case_factory':factory,
-                         'processing_files':('scripts/vnext/saved_d04_replay.py',
-                                             'scripts/vnext/d04_native_assessment.py')}
+                         'processing_files':(declared_files if declared_files is not None else
+                            ('scripts/vnext/saved_d04_replay.py',
+                             'scripts/vnext/d04_native_assessment.py'))}
             elif mode=='current_explicit':
                 # An explicitly supplied producer retains its declared current
                 # route dependencies; supplied_case is not a dependency waiver.
@@ -699,6 +700,14 @@ class D04SelectedProducerDependencyTest(unittest.TestCase):
             for name in ('current_d04_result','capacity_update_input'):
                 with self.subTest(mode=mode,name=name):
                     self.exercise(mode,'scripts/vnext/'+name+'.py',True)
+
+    def test_actual_history_declaration_keeps_all_observed_shared_rules(self):
+        from vnext.historical_d04_case import PROCESSING_FILES
+        for name in ('r6_semantic_review','text_results',
+                     'regulatory_investigation_candidates','capacity_semantic_review','request_limits'):
+            with self.subTest(name=name):
+                self.exercise('historical','scripts/vnext/'+name+'.py',True,
+                              declared_files=PROCESSING_FILES)
 
     def test_historical_producer_keeps_actual_shared_replay_dependencies(self):
         for name in ('saved_d04_replay','d04_native_assessment'):

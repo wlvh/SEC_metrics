@@ -1,0 +1,87 @@
+{
+  "created_before_blind_extraction": "2026-10-14T10:18:12.073021+00:00",
+  "request_id": "sha256:c4c7d6b1e90979d23a668cece33307b35f1f23624f8338b3fbaac1420267d4f2",
+  "scope": "One existing complete group (3 full visible units0..1319). Limited predeclared content reference, not exhaustive whole-group annotation, not whole-filing absence or company acceptance.",
+  "checks": [
+    {
+      "indices": [
+        338
+      ],
+      "criterion": "Risk heading alone is context, not a specific/current process."
+    },
+    {
+      "indices": [
+        339,
+        340
+      ],
+      "criterion": "Explicit JPMorganChase aggregate current involvement in governmental investigations/enforcement is an actual current disclosure for the target; no named case or count is required. No explicit event date; do not borrow a year from filing or other proceedings. Potential consequences are a distinct assertion.",
+      "kind": "CURRENT_REGULATORY_ACTION",
+      "subject": "TARGET_REGISTRANT",
+      "reported_status": "ONGOING_AS_REPORTED",
+      "event_dates": []
+    },
+    {
+      "indices": [
+        174,
+        187,
+        274,
+        310,
+        314
+      ],
+      "criterion": "General enforcement powers, regulatory rules or risks alone do not prove an actual current investigation."
+    },
+    {
+      "indices": [
+        341,
+        342
+      ],
+      "criterion": "Hypothetical resolution penalties or examinations that could lead to proceedings are not proof of an actual current investigation."
+    },
+    {
+      "indices": [
+        343,
+        344,
+        348,
+        864
+      ],
+      "criterion": "Retain source-reported past resolutions/admissions separately from future risk. Do not label ongoing solely from these past/generic facts. Specific cases or dates are not supplied here."
+    },
+    {
+      "indices": [
+        355,
+        356,
+        357,
+        358,
+        359,
+        365,
+        366
+      ],
+      "criterion": "Expected future trends and confidentiality possibilities are not independent affirmative current proceedings; keep split continuations in context."
+    },
+    {
+      "indices": [
+        688,
+        689,
+        690,
+        691,
+        692,
+        693
+      ],
+      "criterion": "Cyber harm and internal attack investigation are not governmental investigation facts; a governmental investigation is only a possible consequence here."
+    },
+    {
+      "indices": [
+        172
+      ],
+      "criterion": "The explicit OCC consent-order obligation/date is real, but alone does not establish an investigation; do not infer an investigation from administrative/remediation obligations without its source link."
+    }
+  ],
+  "additional_findings": "Any model findings outside these checkpoints must be checked against the original before any content claim; this reference is not a complete expected set.",
+  "input_sha256": "1ecd2819b28c64ae65a7113dc3852a58c84fb2e4af922f8ba606bbab860c4b4d",
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "native_or_provider_credit": false
+}
