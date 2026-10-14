@@ -1,0 +1,93 @@
+{
+  "scope": "ACTUAL_EXISTING_D04_TASK_WITH_CONSTRUCTED_CURRENT_CODE_CHANGE",
+  "seconds": 0.3850475829967763,
+  "exit_code": 2,
+  "arguments": [
+    "run",
+    "--company",
+    "marriott_international",
+    "--period",
+    "fiscal-years",
+    "--fiscal-year-start",
+    "2024",
+    "--fiscal-year-end",
+    "2024",
+    "--metric",
+    "D04",
+    "--source-root",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "--saved-call-package",
+    "/Users/lyuhongwang/.codex/worktrees/issue47-history-continue/SEC_metrics/evidence/issue47_model_calls/9a368413797ddef1/model-ledger.tar.gz",
+    "--work-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/d04-history-company-rrx_5uj2/state",
+    "--output-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/d04-supplied-route-receiving-20261014/unused-current-repeat/runs"
+  ],
+  "payload": {
+    "elapsed_seconds": 0.38139604101888835,
+    "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+    "company_id": "marriott_international",
+    "run_id": "20261014T110929Z-b04f04b7",
+    "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+    "selected_metrics": [
+      "D04"
+    ],
+    "metrics": [
+      {
+        "metric_id": "D04",
+        "status": "PREVIOUS_INPUT_WITHHELD",
+        "attempt_id": "79b8d49ce44444beb3521195a747f0d6",
+        "version": "978943e39f8140329b2de0cbda701e1a",
+        "result_id": "sha256:5c4c22eaacf4d9e61e589820acaab3ccf0a1a970e2c4ec70301e069811aa719d",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/d04-history-company-rrx_5uj2/state/updates/D04/periods/FY2024/results/978943e39f8140329b2de0cbda701e1a",
+        "result_reason_code": "D04_SAVED_FILING_MEDIA_COVERAGE_NOT_VERIFIED",
+        "raw_input_unchanged": true,
+        "calculation_performed": false,
+        "new_candidate_created": false,
+        "source_check_versions": {
+          "scripts/vnext/ordinary_current_update.py": "4cb617aeed44fec775dd48787d0ebd662f2a899162ed3d44a76e1ff963cc6f5e",
+          "scripts/vnext/request_bindings.py": "d0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee",
+          "scripts/vnext/ordinary_update_compatibility.py": "dcd5f7fad86dd36fec7ffc1ce15cb274cd3670dba213777b6cdaa4a4090d80b9",
+          "scripts/vnext/ordinary_result_registration.py": "edf88293f2c568efc113703211bf587d3b0fc065a59c90ddbfb302acd681daee"
+        },
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2024,
+        "defect_holds": [],
+        "read_result_id": "sha256:5c4c22eaacf4d9e61e589820acaab3ccf0a1a970e2c4ec70301e069811aa719d",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/d04-history-company-rrx_5uj2/state/updates/D04/periods/FY2024/results/978943e39f8140329b2de0cbda701e1a",
+        "program_version": {
+          "commit": "8bd2867998b65f9fccbee88e35c6b943a1010b70",
+          "has_uncommitted_changes": true
+        }
+      }
+    ],
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/d04-history-company-rrx_5uj2/state",
+    "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/d04-supplied-route-receiving-20261014/unused-current-repeat/runs/20261014T110929Z-b04f04b7",
+    "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false,
+    "selected_fiscal_years": [
+      2024
+    ]
+  },
+  "result_files_unchanged": true,
+  "result_file_count": 63,
+  "source_package_and_ledger_unchanged": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

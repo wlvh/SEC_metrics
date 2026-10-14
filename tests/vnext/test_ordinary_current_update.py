@@ -623,4 +623,95 @@ class SelectedPeriodUpdateTest(unittest.TestCase):
         self.assertEqual((self.root/'current-result.json').read_bytes(),old)
         self.assertFalse((self.root/'periods/FY2024/current-result.json').exists())
 
+class D04SelectedProducerDependencyTest(unittest.TestCase):
+    """Real configuration/controller; clearly constructed source and results."""
+    def exercise(self, mode, changed_path, expect_processing, declared_files=None):
+        from contextlib import ExitStack
+        from vnext.ordinary_d04_saved_route import processing_paths
+        with tempfile.TemporaryDirectory() as temporary, ExitStack() as stack:
+            root=Path(temporary)/'state';records={};calls=[];forbid=[False]
+            def factory(**kwargs):
+                if forbid[0]:raise AssertionError('No repeated producer call')
+                calls.append('producer')
+                return {'constructed_only':True,'target_period':{'fiscal_year':2024}}
+            def save(**kwargs):
+                if forbid[0]:raise AssertionError('No repeated result write')
+                path=kwargs['output_root'];path.mkdir(parents=True)
+                value={'manifest':{'company_id':'marriott_international','metric_id':'D04',
+                                  'source_proofs':[]},
+                       'result':{'company_id':'marriott_international','metric_id':'D04',
+                                 'publication':'WITHHELD','period_end':'2024-12-31',
+                                 'reason_code':'CONSTRUCTED_MEDIA_REVIEW',
+                                 'result_id':'constructed-'+str(len(records))}}
+                records[str(path)]=value
+                (path/'manifest.json').write_text(json.dumps(value['manifest']))
+                (path/'result.json').write_text(json.dumps(value['result']))
+                return value
+            def default(**kwargs):
+                factory();return save(**kwargs)
+            stack.enter_context(patch.object(update,'_source_census',return_value=[]))
+            stack.enter_context(patch.object(update,'_current_sources',return_value=[]))
+            stack.enter_context(patch.object(update,'save_calculated_case',side_effect=save))
+            stack.enter_context(patch.object(update,'create_saved_result',side_effect=default))
+            stack.enter_context(patch.object(update,'read_saved_result',
+                side_effect=lambda **kwargs:records[str(kwargs['output_root'])]))
+            options={}
+            if mode=='historical':
+                options={'fiscal_year':2024,'case_factory':factory,
+                         'processing_files':(declared_files if declared_files is not None else
+                            ('scripts/vnext/saved_d04_replay.py',
+                             'scripts/vnext/d04_native_assessment.py'))}
+            elif mode=='current_explicit':
+                # An explicitly supplied producer retains its declared current
+                # route dependencies; supplied_case is not a dependency waiver.
+                options={'current_case_factory':factory,
+                         'processing_files':tuple(sorted(processing_paths()))}
+            def run():
+                return update.run_once(state_root=root,source_root=ROOT,
+                    company_id='marriott_international',metric_id='D04',**options)
+            first=run();self.assertEqual('CANDIDATE_WITHHELD',first['status'],first)
+            old=Path(first['result_root'])/'result.json';old_bytes=old.read_bytes()
+            forbid[0]=True
+            same=run();self.assertEqual('PREVIOUS_INPUT_WITHHELD',same['status'],same)
+            self.assertEqual(first['result_id'],same['result_id'])
+            original_hash=update.sha256_file
+            with patch.object(update,'sha256_file',side_effect=lambda *,path:
+                    'changed-only-selected-test-file' if Path(path)==ROOT/changed_path
+                    else original_hash(path=path)):
+                forbid[0]=not expect_processing
+                changed=run()
+                self.assertEqual('CANDIDATE_WITHHELD' if expect_processing else
+                                 'PREVIOUS_INPUT_WITHHELD',changed['status'],changed)
+                self.assertEqual(2 if expect_processing else 1,len(calls))
+                forbid[0]=True
+                again=run();self.assertEqual('PREVIOUS_INPUT_WITHHELD',again['status'],again)
+                self.assertEqual(changed['result_id'],again['result_id'])
+            self.assertEqual(old_bytes,old.read_bytes())
+            self.assertEqual(2 if expect_processing else 1,len(records))
+            self.assertEqual({'provider':0,'paid':0,'sec':0},again['new_calls'])
+
+    def test_historical_producer_ignores_unconsumed_current_d04_files(self):
+        for name in ('current_d04_result','capacity_update_input'):
+            with self.subTest(name=name):
+                self.exercise('historical','scripts/vnext/'+name+'.py',False)
+
+    def test_default_and_explicit_current_producers_keep_current_dependencies(self):
+        for mode in ('default','current_explicit'):
+            for name in ('current_d04_result','capacity_update_input'):
+                with self.subTest(mode=mode,name=name):
+                    self.exercise(mode,'scripts/vnext/'+name+'.py',True)
+
+    def test_actual_history_declaration_keeps_all_observed_shared_rules(self):
+        from vnext.historical_d04_case import PROCESSING_FILES
+        for name in ('r6_semantic_review','text_results',
+                     'regulatory_investigation_candidates','capacity_semantic_review','request_limits'):
+            with self.subTest(name=name):
+                self.exercise('historical','scripts/vnext/'+name+'.py',True,
+                              declared_files=PROCESSING_FILES)
+
+    def test_historical_producer_keeps_actual_shared_replay_dependencies(self):
+        for name in ('saved_d04_replay','d04_native_assessment'):
+            with self.subTest(name=name):
+                self.exercise('historical','scripts/vnext/'+name+'.py',True)
+
 if __name__=='__main__':unittest.main()

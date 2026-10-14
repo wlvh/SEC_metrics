@@ -9,7 +9,7 @@ METRICS = ('D04',)
 PROCESSING_FILES = tuple('scripts/vnext/' + name + '.py' for name in (
     'historical_d04_case', 'historical_d04_selection', 'historical_annual_input',
     'historical_dei', 'historical_fiscal_labels', 'normal_period_selection', 'normal_history_catalog',
-    'saved_d04_replay', 'current_d04_result', 'd04_native_assessment',
+    'saved_d04_replay', 'd04_native_assessment',
     'capacity_native_assessment', 'native_unit_index', 'continuous_semantic_calls',
     'continuous_request_context', 'native_request_construction', 'invocation_control',
 )) + ('config/normal_period_selection_v1.json', 'config/normal_fiscal_year_labels_v1.json')

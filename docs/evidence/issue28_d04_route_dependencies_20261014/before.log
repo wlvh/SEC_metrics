@@ -1,0 +1,31 @@
+.FF.
+======================================================================
+FAIL: test_historical_producer_ignores_unconsumed_current_d04_files (tests.vnext.test_ordinary_current_update.D04SelectedProducerDependencyTest.test_historical_producer_ignores_unconsumed_current_d04_files) (name='current_d04_result')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_ordinary_current_update.py", line 695, in test_historical_producer_ignores_unconsumed_current_d04_files
+    self.exercise('historical','scripts/vnext/'+name+'.py',False)
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_ordinary_current_update.py", line 682, in exercise
+    self.assertEqual('CANDIDATE_WITHHELD' if expect_processing else
+AssertionError: 'PREVIOUS_INPUT_WITHHELD' != 'INPUT_OR_EXECUTION_FAILED'
+- PREVIOUS_INPUT_WITHHELD
++ INPUT_OR_EXECUTION_FAILED
+ : {'status': 'INPUT_OR_EXECUTION_FAILED', 'attempt_id': '9fb06108d7534a1394c5cfa73c6d12c1', 'error_type': 'AssertionError', 'reason': 'No repeated producer call', 'previous_result': None, 'new_calls': {'provider': 0, 'paid': 0, 'sec': 0}, 'production_authorized': False, 'requested_fiscal_year': 2024}
+
+======================================================================
+FAIL: test_historical_producer_ignores_unconsumed_current_d04_files (tests.vnext.test_ordinary_current_update.D04SelectedProducerDependencyTest.test_historical_producer_ignores_unconsumed_current_d04_files) (name='capacity_update_input')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_ordinary_current_update.py", line 695, in test_historical_producer_ignores_unconsumed_current_d04_files
+    self.exercise('historical','scripts/vnext/'+name+'.py',False)
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_ordinary_current_update.py", line 682, in exercise
+    self.assertEqual('CANDIDATE_WITHHELD' if expect_processing else
+AssertionError: 'PREVIOUS_INPUT_WITHHELD' != 'INPUT_OR_EXECUTION_FAILED'
+- PREVIOUS_INPUT_WITHHELD
++ INPUT_OR_EXECUTION_FAILED
+ : {'status': 'INPUT_OR_EXECUTION_FAILED', 'attempt_id': '2a4dcf9f881f42829c14fd39a979b3c5', 'error_type': 'AssertionError', 'reason': 'No repeated producer call', 'previous_result': None, 'new_calls': {'provider': 0, 'paid': 0, 'sec': 0}, 'production_authorized': False, 'requested_fiscal_year': 2024}
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.303s
+
+FAILED (failures=2)
