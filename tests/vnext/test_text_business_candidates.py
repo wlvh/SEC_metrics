@@ -110,6 +110,33 @@ class TextBusinessCandidateTest(unittest.TestCase):
         self.assertEqual("Consolidated Balance Sheets", report["closing_heading"]["text"])
         self.assertTrue(any("signature follow" in b["text"] for b in d["blocks"][report["start_block"]:report["end_block_exclusive"]]))
 
+    def test_plain_uppercase_financial_caption_closes_report_before_notes(self):
+        for caption in ('CONSOLIDATED STATEMENTS OF OPERATIONS',
+                        'CONSOLIDATED STATEMENTS OF COMPREHENSIVE INCOME',
+                        'CONSOLIDATED BALANCE SHEETS',
+                        'CONSOLIDATED STATEMENTS OF CASH FLOWS'):
+            with self.subTest(caption=caption):
+                body=BODY.replace('<h2>Consolidated Balance Sheets</h2>', '<p>'+caption+'</p>')
+                d=document(body)
+                block=next(b for b in d['blocks'] if b['text']==caption)
+                self.assertFalse(block['emphasized'])
+                report=going_concern_candidates(document=d)['auditor_report_ranges'][0]
+                self.assertEqual(caption,report['closing_heading']['text'])
+                self.assertTrue(all('defendants in litigation' not in b['text']
+                    for b in d['blocks'][report['start_block']:report['end_block_exclusive']]))
+
+    def test_uppercase_continuation_and_linked_caption_do_not_end_report(self):
+        for prior in ('<p>CONSOLIDATED FINANCIAL STATEMENTS, TAKEN AS A WHOLE, '
+                      'AND WE ARE NOT PROVIDING A SEPARATE OPINION.</p>',
+                      '<p><a href="#statement">CONSOLIDATED BALANCE SHEETS</a></p>'):
+            with self.subTest(prior=prior):
+                body=BODY.replace('<h2>Consolidated Balance Sheets</h2>',
+                    prior+'<p>Our signature and audit procedures remain in this report.</p>'
+                    '<h2>Consolidated Balance Sheets</h2>')
+                d=document(body);report=going_concern_candidates(document=d)['auditor_report_ranges'][0]
+                self.assertEqual('Consolidated Balance Sheets',report['closing_heading']['text'])
+                self.assertTrue(any('signature and audit procedures' in b['text']
+                    for b in d['blocks'][report['start_block']:report['end_block_exclusive']]))
     def test_note_heading_with_plain_punctuation_preserves_the_next_note_boundary(self):
         """Real Pfizer layout reproduced; only punctuation loses emphasis."""
         styled = ('<p><span style="font-size:9pt;font-weight:700">Note 3</span>'
@@ -133,6 +160,29 @@ class TextBusinessCandidateTest(unittest.TestCase):
         self.assertEqual('REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE',
                          refused['note_references'][0]['status'])
         self.assertEqual([], refused['note_references'][0]['range_candidates'])
+
+    def test_split_note_title_requires_matching_original_identifier_format(self):
+        def part(text, size=9):
+            return '<p><span style="font-size:' + str(size) + 'pt;font-weight:700">' + text + '</span></p>'
+        body = part('2') + part('GLOBAL OPERATIONS', 8) + BODY
+        raw = annual(body); doc = document(body); original = copy.deepcopy(doc)
+        proposal = legal_risk_candidates(document=doc, raw_bytes=raw)
+        ref = proposal['note_references'][0]
+        self.assertEqual('LOCATED_NOTE_RANGE', ref['status'])
+        start = next(i for i, b in enumerate(doc['blocks']) if b['text'] == 'Note 2. Contingencies')
+        self.assertEqual([start], [r['start_block'] for r in ref['range_candidates']])
+        self.assertEqual(original, doc)
+        self.assertEqual(ref, prepare_business_candidates(**source_arguments(raw))['proposals']['legal_regulatory']['note_references'][0])
+        for identifier in ('2', 'Note 2'):
+            with self.subTest(identifier=identifier):
+                valid = BODY.replace('<h2>Note 2. Contingencies</h2>', part(identifier) + part('Contingencies'))
+                split = legal_risk_candidates(document=document(valid), raw_bytes=annual(valid))
+                self.assertEqual('LOCATED_NOTE_RANGE', split['note_references'][0]['status'])
+                self.assertEqual(1, len(split['note_references'][0]['range_candidates']))
+        linked = BODY.replace('<h2>Note 2. Contingencies</h2>',
+            part('2') + '<p><a href="#note">' + part('Contingencies') + '</a></p>')
+        rejected = legal_risk_candidates(document=document(linked), raw_bytes=annual(linked))
+        self.assertEqual('REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE', rejected['note_references'][0]['status'])
 
     def test_parenthesized_note_heading_is_navigable_without_claiming_semantic_completeness(self):
         body = BODY.replace("<h2>Note 2. Contingencies</h2>", "<h2>2) Contingencies</h2>").replace("<h2>Note 3. Income Taxes</h2>", "<h2>3) Income Taxes</h2>")

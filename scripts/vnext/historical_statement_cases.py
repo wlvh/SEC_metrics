@@ -98,8 +98,14 @@ STATEMENT_METRIC_PROCESSING_FILES = tuple(dict.fromkeys((*PROCESSING_FILES,
     'scripts/vnext/text_results_v2.py', 'scripts/vnext/xbrl_namespace_policy.py',
     'config/ordinary_income_input_v1.json', 'config/instant_balance_amendment_v1.json')))
 
+FREE_CASH_FLOW_PROCESSING_FILES = tuple(dict.fromkeys((*STATEMENT_METRIC_PROCESSING_FILES,
+    'scripts/vnext/composite_scope.py', 'scripts/vnext/financial_duration.py',
+    'scripts/vnext/financial_structured.py', 'scripts/vnext/selected_revenue_scope_v1.py')))
+
 
 def processing_files_for_statement_metric(metric_id):
+    if metric_id == 'B05':
+        return FREE_CASH_FLOW_PROCESSING_FILES
     return STATEMENT_METRIC_PROCESSING_FILES if metric_id in {'B04','B07'} else PROCESSING_FILES
 
 
@@ -280,7 +286,7 @@ def _statement_amendment_checks(reader, prepared, *, metric_id=None, income_prop
             income_properties.append({'source_scope_id':checked['scope_id'],
                 'metric_id':metric_id, 'income_property':property_check})
             original_values = True
-        if (not original_values and metric_id in {'B04','B07'}
+        if (not original_values and metric_id in {'B04','B05','B07'}
                 and checked['classification'] == 'PART_III_ADDITION_WITH_EXPLICIT_NO_NEW_FINANCIAL_STATEMENTS'):
             _need(type(statement_properties) is list,
                   'HISTORICAL_STATEMENT_METRIC_AMENDMENT_EVIDENCE_TARGET_REQUIRED', 'IMPLEMENTATION_GAP')
@@ -289,13 +295,16 @@ def _statement_amendment_checks(reader, prepared, *, metric_id=None, income_prop
             from .instant_balance_amendment import InstantAmendmentError
             from .canonical import sha256_bytes, sha256_file, strict_json_file
             try:
-                property_check = inspect_statement_metric_amendment(checked, amended['raw_bytes'], metric_id=metric_id)
+                property_check = inspect_statement_metric_amendment(checked, amended['raw_bytes'],
+                    metric_id=metric_id,
+                    **({'original_raw':original_source['raw_bytes']} if metric_id=='B05' else {}))
             except (IncomeInputError, InstantAmendmentError) as error:
                 raise StatementCaseError('HISTORICAL_STATEMENT_METRIC_AMENDMENT_PROPERTY_NOT_PROVEN:'
                     + str(error), 'AMENDMENT_INPUT_NOT_CLEARED') from error
             definition = strict_json_file(path=ROOT/CATALOG_PATH)['metrics'][metric_id]
             roles = sorted({c['role'] for branch in definition['branches'] for c in branch['components']})
             expected_class = {'B04':'ORIGINAL_REPORTED_NET_INCOME_VALUES',
+                              'B05':'ORIGINAL_REPORTED_FREE_CASH_FLOW_COMPONENT_VALUES',
                               'B07':'ORIGINAL_INTEREST_COVERAGE_COMPONENT_VALUES'}[metric_id]
             body = {key:value for key,value in property_check.items() if key!='property_id'}
             _need(property_check.get('record_type')=='ORIGINAL_STATEMENT_METRIC_INPUT_PROPERTY'
@@ -378,7 +387,7 @@ def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fisc
         **({'metric_id':metric_id, 'income_properties':income_amendment_properties}
            if metric_id in {'B01','B02'} else {}),
         **({'metric_id':metric_id, 'statement_properties':statement_metric_properties}
-           if metric_id in {'B04','B07'} else {}))
+           if metric_id in {'B04','B05','B07'} else {}))
     period = prepared['table_input']['target_period']
     documents = installed_ordinary_spec_documents()
     spec = documents[metric_id]['compiled_spec']

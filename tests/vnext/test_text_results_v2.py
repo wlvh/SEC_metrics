@@ -63,6 +63,72 @@ def replace_accrual_raw(args, raw):
 
 
 class TextResultV2SourceTest(unittest.TestCase):
+    def test_d02_explicit_sec_namespace_policy_reaches_both_identity_checks(self):
+        from vnext import d02_text_results_v3 as core
+        from vnext.xbrl_namespace_policy import YEAR_QUARTER_OR_DATE
+        from vnext.text_business_candidates import reported_legal_fact_candidates
+        for uri in ('http://xbrl.sec.gov/dei/2021q4', 'https://xbrl.sec.gov/dei/2021-01-31'):
+            with self.subTest(uri=uri):
+                args = inputs('D02'); old = args['source_references'][0]
+                raw = next(iter(args['raw_bytes_by_id'].values())).replace(
+                    b'http://xbrl.sec.gov/dei/2025', uri.encode())
+                blob, ref, _ = source(raw, accession=old['accession'], filename=old['document_name'])
+                filing = args['source_filings'][old['source_reference_id']]
+                args.update(source_references=[ref], raw_blobs={blob['raw_asset_id']: blob},
+                            raw_bytes_by_id={blob['raw_asset_id']: raw}, source_filings={ref['source_reference_id']: filing})
+                with self.assertRaisesRegex(ValueError, 'TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING'):
+                    core.prepare_business_text_sources(metric_id='D02', **args)
+                prepared = core.prepare_business_text_sources(metric_id='D02', namespace_policy=YEAR_QUARTER_OR_DATE, **args)
+                doc = prepared['documents'][ref['source_reference_id']]
+                self.assertEqual(YEAR_QUARTER_OR_DATE, doc['namespace_policy'])
+                self.assertEqual('2025-12-31', doc['period_end'])
+                self.assertEqual('12345', doc['cik'])
+                facts = reported_legal_fact_candidates(raw_bytes=raw, raw_blob=blob, source_reference=ref,
+                    company_id='sample_entity', cik='12345', filing=filing, namespace_policy=YEAR_QUARTER_OR_DATE)
+                self.assertEqual('REPORTED_LEGAL_FACT_CANDIDATES', facts['record_type'])
+
+    def test_d02_namespace_defaults_stay_exact_and_foreign_or_wrong_identity_refuses(self):
+        from vnext import d02_text_results_v3 as core
+        from vnext.xbrl_namespace_policy import YEAR_ONLY, YEAR_QUARTER_OR_DATE
+        args = inputs('D02')
+        self.assertEqual(core.prepare_business_text_sources(metric_id='D02', **args),
+                         core.prepare_business_text_sources(metric_id='D02', namespace_policy=YEAR_ONLY, **args))
+        for uri, change in (('http://xbrl.sec.gov/dei/2021q5', None),
+                            ('http://foreign.example/dei/2021q4', None),
+                            ('http://xbrl.sec.gov.evil/dei/2021q4', None),
+                            ('http://xbrl.sec.gov/dei/2021q4', 'entity'),
+                            ('http://xbrl.sec.gov/dei/2021q4', 'period')):
+            with self.subTest(uri=uri, change=change):
+                original = inputs('D02'); old = original['source_references'][0]
+                raw = next(iter(original['raw_bytes_by_id'].values())).replace(
+                    b'http://xbrl.sec.gov/dei/2025', uri.encode())
+                if change == 'entity': raw = raw.replace(b'>12345<', b'>99999<')
+                if change == 'period': raw = raw.replace(b'2025-12-31', b'2024-12-31')
+                blob, ref, _ = source(raw, accession=old['accession'], filename=old['document_name'])
+                original.update(source_references=[ref], raw_blobs={blob['raw_asset_id']: blob},
+                    raw_bytes_by_id={blob['raw_asset_id']: raw}, source_filings={ref['source_reference_id']: original['source_filings'][old['source_reference_id']]})
+                with self.assertRaises(ValueError):
+                    core.prepare_business_text_sources(metric_id='D02', namespace_policy=YEAR_QUARTER_OR_DATE, **original)
+
+    def test_d02_expanded_namespace_is_replayed_by_pure_candidate_and_evidence(self):
+        from vnext import d02_text_results_v3 as core
+        from vnext.xbrl_namespace_policy import YEAR_QUARTER_OR_DATE
+        from vnext.specs import compile_spec_file
+        args = inputs('D02'); old = args['source_references'][0]
+        raw = next(iter(args['raw_bytes_by_id'].values())).replace(
+            b'http://xbrl.sec.gov/dei/2025', b'http://xbrl.sec.gov/dei/2021q4')
+        blob, ref, _ = source(raw, accession=old['accession'], filename=old['document_name'])
+        filing = args['source_filings'][old['source_reference_id']]
+        args.update(source_references=[ref], raw_blobs={blob['raw_asset_id']: blob},
+                    raw_bytes_by_id={blob['raw_asset_id']: raw}, source_filings={ref['source_reference_id']: filing},
+                    namespace_policy=YEAR_QUARTER_OR_DATE)
+        spec = compile_spec_file(path=REPO_ROOT/'catalog/r6/D02_legal_disclosures_v1.md', dependency_specs={})
+        candidate = core.create_deterministic_text_candidate(compiled_spec=spec, **args)
+        evidence = core.build_text_evidence(compiled_spec=spec, candidate=candidate, **args)
+        self.assertEqual('PASS', evidence['status'])
+        lost_policy = {k:v for k,v in args.items() if k != 'namespace_policy'}
+        with self.assertRaisesRegex(ValueError, 'TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING'):
+            core.build_text_evidence(compiled_spec=spec, candidate=candidate, **lost_policy)
     def test_d02_whole_note_occurrence_cannot_be_narrowed_by_another_caption_reference(self):
         from tests.vnext.test_text_business_candidates import document
         from vnext.d02_text_results_v3 import select_d02_incorporated_notes

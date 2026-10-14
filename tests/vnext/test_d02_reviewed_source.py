@@ -29,6 +29,23 @@ def constructed_review(request,answer):
 
 
 class ReviewedD02SourceTest(unittest.TestCase):
+    def test_namespace_selection_uses_resolved_original_dei_and_preserves_annual_defaults(self):
+        from vnext.d02_reviewed_source import _source_sec_namespace_policy
+        from vnext.xbrl_namespace_policy import YEAR_ONLY, YEAR_QUARTER_OR_DATE
+        from tests.vnext.test_text_coverage import annual
+        raw = annual('<p>Unrelated text.</p>')
+        self.assertEqual(YEAR_ONLY, _source_sec_namespace_policy(raw))
+        for uri, expected in (('http://xbrl.sec.gov/dei/2021q4', YEAR_QUARTER_OR_DATE),
+                              ('https://xbrl.sec.gov/dei/2021-01-31', YEAR_QUARTER_OR_DATE),
+                              ('http://xbrl.sec.gov/dei/2021q5', YEAR_ONLY),
+                              ('http://foreign.example/dei/2021q4', YEAR_ONLY)):
+            with self.subTest(uri=uri):
+                self.assertEqual(expected, _source_sec_namespace_policy(raw.replace(
+                    b'http://xbrl.sec.gov/dei/2025', uri.encode())))
+        # QName rebinding on the fact is authoritative, not a regex over xmlns.
+        rebound = raw.replace(b'name="dei:EntityCentralIndexKey"',
+            b'xmlns:dei="http://xbrl.sec.gov/dei/2021q4" name="dei:EntityCentralIndexKey"')
+        self.assertEqual(YEAR_QUARTER_OR_DATE, _source_sec_namespace_policy(rebound))
     def test_changed_company_cik_or_report_end_cannot_retarget_source(self):
         args,p=fixture()
         for key,value in (('company_id','wrong'),('entity','98765'),('period_end','2024-12-31')):
