@@ -134,6 +134,28 @@ class TextBusinessCandidateTest(unittest.TestCase):
                          refused['note_references'][0]['status'])
         self.assertEqual([], refused['note_references'][0]['range_candidates'])
 
+    def test_complete_prefixless_note_can_use_a_recovered_explicit_end(self):
+        styled = ('<p><span style="font-size:9pt;font-weight:700">Note 3</span>'
+                  '<span style="font-size:8pt;font-weight:400">. </span>'
+                  '<span style="font-size:9pt;font-weight:700">Income Taxes</span></p>')
+        for title in ('2) Contingencies', '2. Contingencies'):
+            with self.subTest(title=title):
+                body = BODY.replace('<h2>Note 2. Contingencies</h2>', '<h2>' + title + '</h2>').replace(
+                    '<h2>Note 3. Income Taxes</h2>', styled)
+                # A separate page number plus risk heading must stay unproved.
+                body = '<p><b>2</b></p><h2>RISKS RELATED TO LEGAL PROCEEDINGS</h2>' + body
+                raw = annual(body); doc = document(body); original = copy.deepcopy(doc)
+                proposal = legal_risk_candidates(document=doc, raw_bytes=raw)
+                reference = proposal['note_references'][0]
+                self.assertEqual('LOCATED_NOTE_RANGE', reference['status'])
+                expected = next(i for i, b in enumerate(doc['blocks']) if b['text'] == title)
+                end = next(i for i, b in enumerate(doc['blocks']) if b['text'] == 'Note 3. Income Taxes')
+                self.assertEqual([(expected, end)], [(r['start_block'], r['end_block_exclusive'])
+                    for r in reference['range_candidates']])
+                self.assertEqual(original, doc)
+                actual = prepare_business_candidates(**source_arguments(raw))
+                self.assertEqual(reference, actual['proposals']['legal_regulatory']['note_references'][0])
+
     def test_parenthesized_note_heading_is_navigable_without_claiming_semantic_completeness(self):
         body = BODY.replace("<h2>Note 2. Contingencies</h2>", "<h2>2) Contingencies</h2>").replace("<h2>Note 3. Income Taxes</h2>", "<h2>3) Income Taxes</h2>")
         p = legal_risk_candidates(document=document(body), raw_bytes=annual(body))

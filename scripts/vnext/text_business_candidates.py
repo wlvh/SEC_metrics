@@ -273,7 +273,8 @@ def _note_references(document, ranges, raw_bytes=None):
         if match and not _PATTERNS["continued_heading"].search(block["text"]):
             headings.append({"number": match.group(1).upper(), "start": i, "heading_end": end_index,
                              "explicit_prefix": bool(_PATTERNS["explicit_note_prefix"].match(block["text"])),
-                             "punctuation_emphasis": not block.get("emphasized")})
+                             "punctuation_emphasis": not block.get("emphasized"),
+                             "split_identifier": end_index != i})
     result = []
     formats = None
     for number, reference_blocks in sorted(references.items()):
@@ -283,12 +284,12 @@ def _note_references(document, ranges, raw_bytes=None):
         candidates = []
         for h in matched:
             base_number = int(re.match(r"\d+", h["number"])[0])
-            # A recovered mixed-format end may close an explicit Note, but
-            # must not turn a bare page number plus a nearby title into one.
+            # A recovered end can close a complete prefixless title. It must
+            # not validate a heading made from a page number and nearby text.
             possible = [other["start"] for other in headings if other["start"] > h["start"]
                         and int(re.match(r"\d+", other["number"])[0]) == base_number + 1
                         and (not h["explicit_prefix"] or other["explicit_prefix"])
-                        and (not other["punctuation_emphasis"] or h["explicit_prefix"])]
+                        and (not other["punctuation_emphasis"] or not h["split_identifier"])]
             # Without an explicit Note prefix, a same-number subsection and
             # the actual following note are indistinguishable in this view.
             # Do not silently choose the earlier one and truncate disclosure.
