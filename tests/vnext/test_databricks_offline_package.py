@@ -304,13 +304,15 @@ output.mkdir(parents=True, exist_ok=True)
 with (output / 'metrics_matrix.csv').open('w', newline='', encoding='utf-8') as stream:
     writer = csv.DictWriter(stream, fieldnames=['metric_id', 'value', 'status'])
     writer.writeheader()
-    for metric in args.metric:
+    reported = [m for m in args.metric if m not in behaviour.get('drop', [])]
+    for metric in reported:
         writer.writerow({'metric_id': metric, 'value': '7', 'status': 'OK'})
 statuses = behaviour.get('statuses', {})
 print(json.dumps({'status': behaviour.get('status', 'FLOW_COMPLETED'), 'calls': behaviour['calls'],
                   'output_root': str(output),
                   'metrics': [{'metric_id': m, 'status': statuses.get(m, 'CANDIDATE_READY'), 'reason': 'stub'}
-                              for m in args.metric]}))
+                              for m in reported]}))
+sys.exit(behaviour.get('exit_code', 0))
 '''
 
 
@@ -368,6 +370,16 @@ class CompanyMetricsNotebookTest(unittest.TestCase):
         self.assertNotEqual(first['zip_sha256'], second['zip_sha256'])
         self.assertEqual(sorted(path.name for path in (self.temp / 'work').glob('state-*')),
                          sorted(f"state-acme_hotels-{summary['zip_sha256'][:12]}" for summary in (first, second)))
+
+    def test_completed_summary_with_a_nonzero_exit_is_not_pass(self):
+        summary, _, _ = self.run_with({'calls': {'provider': 0, 'paid': 0, 'sec': 0}, 'exit_code': 3})
+        self.assertEqual((summary['flow_status'], summary['cli_exit_code'], summary['status']),
+                         ('FLOW_COMPLETED', 3, 'CLI_EXIT_NONZERO'))
+
+    def test_selected_metric_missing_from_the_result_is_not_pass(self):
+        summary, _, _ = self.run_with({'calls': {'provider': 0, 'paid': 0, 'sec': 0}, 'drop': ['B04']})
+        self.assertEqual((summary['flow_status'], summary['status'], summary['metrics_not_ready']),
+                         ('FLOW_COMPLETED', 'METRICS_NOT_READY', ['B04']))
 
     def test_limited_flow_is_not_pass_and_names_the_metric(self):
         summary, _, _ = self.run_with({'calls': {'provider': 0, 'paid': 0, 'sec': 0},

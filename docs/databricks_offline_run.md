@@ -43,7 +43,7 @@ python3 build_offline_package.py --company marriott_international    # 生成 se
    notebook 先核对 zip 的 SHA-256 等于这个预期值，不符就停止，不解压也不运行；通过后再逐个文件核对 `PACKAGE.json`。预期值必须来自仓库页面或你自己的打包输出，不能取自 zip 本身：`PACKAGE.json` 和程序在同一个 zip 里，只靠它挡不住被整体替换的包。
 4. `WORK_ROOT` 用驱动节点本地盘（默认 `/local_disk0/tmp/sec_metrics`），不要用 `/dbfs` 或 `/Volumes`：计算要用文件锁。本地盘不可写时自动改用系统临时目录。`SAVE_TO` 可以把结果另存到 Volume。
 
-摘要应为 `status: PASS`；`calls` 是程序自己统计的本次新调用（provider=模型、paid=付费、sec=SEC 请求），三项都为 0 才判 PASS，不为 0 或缺失时状态是 `UNEXPECTED_CALLS`。万豪（默认程序版本）应得到 2025 财年：
+摘要应为 `status: PASS`；`calls` 是程序自己统计的本次新调用（provider=模型、paid=付费、sec=SEC 请求）。PASS 要同时满足：程序报告 `FLOW_COMPLETED`、退出码为 0、三项调用都为 0、所选指标都有就绪的结果；否则状态依次是程序给出的流程状态、`CLI_EXIT_NONZERO`、`UNEXPECTED_CALLS` 或 `METRICS_NOT_READY`。万豪（默认程序版本）应得到 2025 财年：
 
 | 指标 | 含义 | 值 |
 |---|---|---|
@@ -55,7 +55,7 @@ python3 build_offline_package.py --company marriott_international    # 生成 se
 | B11 | 每间可售房收入（RevPAR） | 128.8 美元 |
 
 - 同一集群用同一个包再跑一次，各指标显示 `NO_SOURCE_CONTENT_CHANGE`：来源没变、复用上次结果，不是错误。换了包（字节不同）会用新的状态目录从头计算。
-- 状态不是 PASS 时，摘要的 `flow_status` 是程序给出的流程状态，`metric_failures` 列出没有就绪的指标及原因。
+- 状态不是 PASS 时，摘要的 `flow_status` 是程序给出的流程状态，`metric_failures` 列出没有就绪的指标及原因，`metrics_not_ready` 列出所选但没有就绪结果的指标。
 - `CANDIDATE_READY` 只表示候选结果已生成，不等于业务验收。
 
 ## 这个 notebook 证明什么

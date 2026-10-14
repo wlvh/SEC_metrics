@@ -128,8 +128,14 @@ if SAVE_TO:
             (destination / item.relative_to(output_root)).write_bytes(item.read_bytes())
     summary["saved_to"] = str(destination)
 
-calls_zero = all((result.get("calls") or {}).get(kind) == 0 for kind in ("provider", "paid", "sec"))
+# PASS 要同时满足：程序报告完成、退出码为 0、三类调用都为 0、所选指标都有就绪的结果
+not_ready = [m for m in METRICS if m in failures or m not in summary["metrics"] or m not in summary["values"]]
+if not_ready:
+    summary["metrics_not_ready"] = not_ready
+checks = {"CLI_EXIT_NONZERO": completed.returncode == 0,
+          "UNEXPECTED_CALLS": all((result.get("calls") or {}).get(kind) == 0 for kind in ("provider", "paid", "sec")),
+          "METRICS_NOT_READY": not not_ready}
 summary["status"] = (result.get("status") if result.get("status") != "FLOW_COMPLETED"
-                     else "PASS" if calls_zero else "UNEXPECTED_CALLS")  # 离线计算应零调用，不为 0 或未知都不算 PASS
+                     else next((name for name, ok in checks.items() if not ok), "PASS"))
 summary["elapsed_seconds"] = round(time.monotonic() - started, 1)
 print(json.dumps(summary, ensure_ascii=False, indent=2))
