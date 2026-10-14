@@ -44,6 +44,19 @@ class CompanyOnlineTest(unittest.TestCase):
             online._ledger(self.context,'marriott_international',['B04'])
         with self.ledger.locked():self.assertEqual(self.ledger.snapshot()['counts'],[0,0,0])
 
+    def test_explicit_b07_reaches_capture_but_requires_its_existing_context_scope(self):
+        path=self.root/'b07-context.json'
+        path.write_text(json.dumps({**self.context,'metric_ids':['B07']}))
+        with patch.object(online,'Capture',side_effect=LookupError('Stop before HTTP')) as capture:
+            with self.assertRaises(LookupError):
+                online.run_online_company(company_id='marriott_international',
+                    work_dir=self.root/'b07-task',output_dir=self.root/'b07-output',
+                    call_context=path,metric_ids=['B07'])
+        self.assertEqual(['B07'],capture.call_args.args[2]['metric_ids'])
+        with self.assertRaisesRegex(ValueError,'PURPOSE_SCOPE_CHANGED'):
+            online._ledger(self.context,'marriott_international',['B07'])
+        with self.ledger.locked():self.assertEqual([0,0,0],self.ledger.snapshot()['counts'])
+
     def edit_registry(self, company, **changes):
         path=self.capture.source/'config/company_registry.csv'
         with path.open(newline='') as stream:
