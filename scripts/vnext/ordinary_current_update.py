@@ -143,7 +143,10 @@ def _configuration(source, company, metric, *, supplied_case=False):
         paths.update('catalog/r4_v2/'+name+'.md' for name in (
             'A03_liquidity_coverage_ratio','A09_nonperforming_loan_ratio',
             'A11_assets_under_management','A12_trading_exposure','A13_geographic_exposure'))
-    if metric == 'D04':
+    if metric == 'D04' and not supplied_case:
+        # Only the default dispatch uses this current saved-response route.
+        # Supplied producers name their actual dependencies in processing_files;
+        # a supplied current producer may still declare this same complete set.
         from .ordinary_d04_saved_route import processing_paths
         paths.update(processing_paths())
     from .ordinary_registry_scope import registered_company_row
