@@ -7,6 +7,7 @@
 | 文件 | 在哪运行 | 作用 |
 |---|---|---|
 | `tools/databricks/build_offline_package.py` | 能访问 github.com 的电脑（Python 3.8+，只用标准库） | 打包，不向 SEC 发请求 |
+| `tools/databricks/sec_metrics_marriott_international_681b35d8.zip` | — | 用默认版本打好的万豪包，可直接上传 |
 | `tools/databricks/company_metrics_notebook.py` | Databricks | 核对包内每个文件后离线计算，不访问外网、不调用模型 |
 | `tools/databricks/securegpt_check_notebook.py` | Databricks（能跑公司 SecureGPT 测试 notebook 的集群） | 只调用一次 SecureGPT，检查 `scripts/securegpt_sdk.py` |
 
@@ -19,6 +20,8 @@
 因此仓库尚未存档的新申报（例如某公司刚发布的年报）不能走这条路，要先经正式采集流程入库。数据只能单向进入：SEC → 受控采集入库 → GitHub → 离线包 → Databricks。
 
 ## 第一步：在电脑上打包
+
+万豪可以跳过这一步：仓库里附带了用默认版本打好的包 `tools/databricks/sec_metrics_marriott_international_681b35d8.zip`（SHA-256 `388d49c206d1688a6011e93a8a2c0e47ce93499713713c72e360d9c005049fd4`），在 GitHub 网页上下载后直接用于第二步。它固定在程序版本 `681b35d8`，程序更新后不会跟着更新；`tests.vnext.test_databricks_offline_package` 会检查它与打包脚本的默认版本、请求账本一致。要其他公司或更新的程序版本时，按下面的方法自己打包。
 
 从 GitHub 下载 `tools/databricks/build_offline_package.py` 这一个文件（网页上点 Download raw file 即可），然后：
 

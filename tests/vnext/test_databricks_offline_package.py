@@ -210,6 +210,38 @@ class PackageBuilderTest(unittest.TestCase):
         self.assertIn('   1 SEC requests', lines['other_air'])
 
 
+class CommittedPackageTest(unittest.TestCase):
+    """The prebuilt package next to the builder must stay the builder's default package."""
+
+    def test_committed_package_matches_its_listing_the_default_ref_and_the_ledger(self):
+        builder = load_builder()
+        packages = sorted(path.name for path in TOOLS.glob('*.zip'))
+        self.assertEqual(packages, [f'sec_metrics_marriott_international_{builder.DEFAULT_REF[:8]}.zip'])
+        with zipfile.ZipFile(TOOLS / packages[0]) as archive:
+            package = json.loads(archive.read('sec_metrics_package/PACKAGE.json'))
+            files = {name: archive.read('sec_metrics_package/' + name) for name in package['files']}
+            self.assertEqual({name.split('/', 1)[1] for name in archive.namelist()},
+                             set(files) | {'PACKAGE.json'})
+        for name, data in files.items():
+            self.assertEqual(sha256(data), package['files'][name], name)
+        self.assertEqual((package['ref'], package['company_id'], package['new_sec_requests']),
+                         (builder.DEFAULT_REF, 'marriott_international', 0))
+        ledger = files['source/evidence/requests_log.csv']
+        manifest = json.loads(files['source/evidence/requests_log_manifest.json'])
+        self.assertEqual(sha256(ledger), manifest['content_sha256'])
+        # Every packaged SEC body is a response the current, append-only ledger recorded.
+        with (ROOT / 'evidence' / 'requests_log.csv').open(encoding='utf-8', newline='') as stream:
+            recorded = {(row['repo_relative_path'], row['content_sha256'], row['content_length'])
+                        for row in csv.DictReader(stream)}
+        bodies = {name[len('source/'):]: data for name, data in files.items()
+                  if name.startswith('source/evidence/') and not name.endswith('.headers.json')
+                  and name not in ('source/evidence/requests_log.csv',
+                                   'source/evidence/requests_log_manifest.json')}
+        self.assertEqual(len(bodies), package['sec_bodies'])
+        for path, data in bodies.items():
+            self.assertIn((path, sha256(data), str(len(data))), recorded, path)
+
+
 def write_package(path, files, *, listed=None):
     """A minimal zip in the builder's layout; PACKAGE.json lists every file's SHA-256 unless overridden."""
     package = {'record_type': 'SEC_METRICS_OFFLINE_PACKAGE', 'schema_version': 1, 'ref': REF,
