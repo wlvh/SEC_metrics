@@ -1,0 +1,18 @@
+{
+  "base_commit": "681b35d865af9660ad03ffbbb20ec93cd499d9cd",
+  "workflow": ".github/workflows/request-limits.yml",
+  "previous_minutes": 5,
+  "current_minutes": 10,
+  "all_other_workflow_bytes_preserved": true,
+  "test_commands_limits_dependencies_and_failure_gate_changed": false,
+  "evidence_source": "receiver actual comment 6163113131; direct log fetch attempted but transport failed",
+  "original_job": 115697781007,
+  "first_run_terminal": "cancelled",
+  "receiver_reported_elapsed_seconds": 314,
+  "successful_rerun_elapsed_seconds": 218,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

@@ -1,0 +1,22 @@
+test_d02_lettered_note_keeps_nested_numbered_sections_and_full_item8_pool (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_d02_lettered_note_keeps_nested_numbered_sections_and_full_item8_pool) ... ERROR
+test_d02_lettered_note_refuses_ambiguous_missing_and_different_style_siblings (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_d02_lettered_note_refuses_ambiguous_missing_and_different_style_siblings) ... ok
+
+======================================================================
+ERROR: test_d02_lettered_note_keeps_nested_numbered_sections_and_full_item8_pool (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_d02_lettered_note_keeps_nested_numbered_sections_and_full_item8_pool)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_text_results_v2.py", line 88, in test_d02_lettered_note_keeps_nested_numbered_sections_and_full_item8_pool
+    selected = select_d02_incorporated_notes(proposal=proposal, document=doc, raw_bytes=annual(raw))
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/d02_text_results_v3.py", line 311, in select_d02_incorporated_notes
+    _source_need(note['scope_relation'] == 'EXACT_NOTE',
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                 'D02_REFERENCED_LETTERED_SUBNOTE_NOT_MIGRATED')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/text_business_candidates.py", line 50, in _need
+    raise TextBusinessCandidateError(reason)
+vnext.text_business_candidates.TextBusinessCandidateError: D02_REFERENCED_LETTERED_SUBNOTE_NOT_MIGRATED
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.020s
+
+FAILED (errors=1)
