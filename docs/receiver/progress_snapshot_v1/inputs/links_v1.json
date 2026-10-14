@@ -1,0 +1,32 @@
+{
+ "date_utc": "2026-10-14 09:44 UTC 冻结",
+ "main": "681b35d865af9660ad03ffbbb20ec93cd499d9cd",
+ "table": "https://github.com/wlvh/SEC_metrics/blob/b389b3903a30598ce0662a756b4503c0d425cfd7/docs/receiver/progress_snapshot_v1/output/scope_table.csv",
+ "readme": "https://github.com/wlvh/SEC_metrics/blob/b389b3903a30598ce0662a756b4503c0d425cfd7/docs/receiver/progress_snapshot_v1/README.md",
+ "publication_id": "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
+ "adoption_note": "依据：用户 2026-09-10 委托批准的 [发布决定](https://github.com/wlvh/SEC_metrics/pull/40#issuecomment-5611711644) 与 [执行记录](https://github.com/wlvh/SEC_metrics/blob/48b233f875d07145464e078afe686249e38e963b/docs/evidence/annual_formal_adoption/production-execution/README.md)（2 项采纳 + 其余继承；包内“待生产授权”字段按设计不改写，所以不能只看包内字段）",
+ "state_notes": [
+  "冻结时：Enphase、Lumen、Pfizer 跑完并经入口只读导出；JPMorgan（已中止，15 格）、Macy's、Salesforce、Ford（刚开始）为部分运行；Marriott、Paramount、Southwest 未开始。后台继续按公司补跑，补齐后出 v1.1。`NO_OBSERVATION` 只表示本版还没跑到，不按旧结果或发布包填补。",
+  "D02：历史入口只在提供已保存法律审阅时处理 D02，本次未提供，所以 D02 状态取 main 上的准备对照：49 个可准备请求中，Ford FY2025 有能对上的保存回答，其余 38 个需要新回答；11 个准备失败（8 个原件定位/解析，3 个修订年报/继任主体）。"
+ ],
+ "open_notes": [
+  "**Macy's B01/B02**：FY2019 年报正文不在保存原件中，区间规则要求窗口内每份年报都读到财年标签，所以五年全部被阻断（已观察 6 格），已向 #47 补件。",
+  "**B10/B11**：历史入口把非酒店公司也交给酒店模块并以报错结束（已观察 36 格，跑完为 90 格）；参考表这些格都是不适用，正确终态应为结构性不适用，已交 #47。",
+  "**D04**：原因码末尾 `:0` 指账本中该年匹配的保存回答数为 0；#47 账本只有 Marriott FY2023/2024、Paramount FY2024。已问 #28 是否有当期 D04 保存包可复用。",
+  "**E01**：14 格有需要内容确认的 8-K 候选但没有保存回答；已问 #47 是否别处有，否则由用户决定额度。",
+  "`WITHHELD_OTHER` 2 格（Salesforce FY2022 B03、Macy's FY2022 C03）待 #47 说明是合理终态还是开发缺口；其中 Salesforce 那格 #47 旧记录从原件读到了 0.0463。"
+ ],
+ "alignment_notes": [
+  "**Macy's 可能还有未登记的同类错值**：FY2024、FY2025 年报同时标了总收入 `Revenues`（23,006,000,000 / 22,621,000,000）和净销售额，而现行发布 FY2025 B01 = 21,764,000,000（净销售额）、#47 旧读数 FY2024 B01 = 22,293,000,000（净销售额）；FY2023 同类读数已登记为错值。已请 #28 确认登记。FY2021/2022 年报只标了净销售额，当前 main 对这两年取净销售额、FY2023 起取总收入，增长率前后口径不一致，是否统一由用户决定。"
+ ],
+ "requests": [
+  "#47（历史侧）：[补件请求](https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-6165601387) —— Macy's FY2019 年报正文、B10/B11 不适用报错、19 格旧核对需对当前值重读原件、2 格扣留归类、14 格 E01 保存回答、JPMorgan 运行速度。",
+  "#28（当期/发布侧）：[补件请求](https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-6165605691) —— 发布包 10 格已撤回值的处理、Macy's FY2024/2025 收入口径是否登记、发布包 8 行期间不一致、当期 D04 保存包、公司入口当期导出（可选）。",
+  "需要用户决定（不变，汇总于此）：D02 新回答 38 个（#262 合入后 Pfizer 再加 5 个）、D04/E01 新回答（视补件结果）、Macy's FY2019 年报是否新增 1 次 SEC 获取（视 #47 回复）、现行发布中已撤回值是否替换发布（视 #28 方案）。"
+ ],
+ "method": [
+  "生成命令、输入范围与列定义见 [README](https://github.com/wlvh/SEC_metrics/blob/b389b3903a30598ce0662a756b4503c0d425cfd7/docs/receiver/progress_snapshot_v1/README.md)；`output/history_rows.csv` 保存本次全部观察，后续只需补跑未完成公司再重建表。",
+  "当前 main 观察：main `681b35d8` 上公司入口离线运行（网络禁用），每家公司新目录，不写旧状态；冻结后对 689 个逐格记录核对处理文件摘要，与 main 全部一致，新增调用全为 0（`output/run_identity.json`）。",
+  "核对依据按公司、指标、截止日对齐后比较数值（文字按摘要），不按结果编号继承；有登记错值的旧依据单列，不沿用。参考分类直接取参考表原始字段，四类互斥，待确认不并入适用或不适用。"
+ ]
+}

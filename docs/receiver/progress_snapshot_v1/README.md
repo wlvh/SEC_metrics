@@ -13,13 +13,15 @@
 | `output/history_rows.csv` | 本次实际使用的每条“当前 main 观察”（后续更新可直接复用，不必重跑） |
 | `output/history_runs.json` | 每家公司运行的完成情况（完整导出 / 部分状态 / 未运行） |
 | `output/manifest.json` | 输入路径、提交号、摘要与命令行 |
-| `output/comment.md` | 发在 #153 的汇总文字 |
+| `output/comment.md` | 发在 #153 的汇总文字（与已发布评论逐字相同） |
+| `output/run_identity.json` | 冻结后逐格记录的程序身份与调用数核对（处理文件摘要与 main 一致、新增调用 0） |
 | `inputs/periods/*.json` | 财年标签 → 选定年报与实际期间（生产期间选择函数在保存原件上的结果；未能解析的标签保留确切原因） |
 | `inputs/content_checks.json` | 从 #47 PR52（`bcc0c0bc`）`docs/evidence/issue47_history/content-acceptance/` 抽出的逐格原件核对记录 |
 | `inputs/previous-business-readings.json` | #47 statement pilot 的 60 格既有业务读数（含采纳编号） |
 | `inputs/receiver_checks.json` | 接收方在合并记录中逐值核对过的格子（带原评论链接） |
 | `inputs/adoption_records.json` | 仓库内找到的正式采纳记录（2026-09-10 PR40 批准） |
 | `inputs/d02/` | D02 准备对照工具的输出与清单（50 个样本，加 Salesforce FY2026） |
+| `inputs/links_v1.json` | 汇总文字中的固定链接、补件请求链接与说明句（`render_summary.py` 的输入） |
 | `scripts/` | 生成脚本，见“复跑” |
 
 ## 列的含义（`scope_table.csv`）
@@ -82,7 +84,8 @@ python3 scripts/build_snapshot.py --code-root <main检出> --source-root <原件
   --publication <main检出>/outputs/publications/<现行发布包> \
   --content-checks inputs/content_checks.json --prior-readings inputs/previous-business-readings.json \
   --receiver-checks inputs/receiver_checks.json --adoption-records inputs/adoption_records.json --out <新目录>
-python3 scripts/render_summary.py <新目录> <links.json> <新目录>/comment.md
+python3 scripts/check_run_identity.py <main检出> <输出根> <新目录>/run_identity.json
+python3 scripts/render_summary.py <新目录> inputs/links_v1.json <新目录>/comment.md   # 输出可直接发布
 ```
 
 后续更新只需补跑未完成公司的第 2 步，再执行第 5 步；其余输入不变就不必重做。
