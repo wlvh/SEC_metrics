@@ -614,3 +614,7 @@ PR42来源修订短回归：`python3 -m unittest tests.vnext.test_r5_b06_followu
 ## SecureGPT 探针离线测试
 
 `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest -v tests.vnext.test_securegpt_probe`：24项，约3秒，由 `.github/workflows/securegpt-probe.yml` 按路径触发。全部使用临时目录里的模拟 SDK，不联网、不调用任何模型；覆盖消息格式转换与非文本拒绝、只认 nonce/整数和的严格 JSON、错误/截断/Markdown/任意文本不算通过、非 JSON 响应体保存后离线复查、超时/异常/SDK 退出均只调用一次且不重试、SDK 缺失或工作区与环境不符时不发请求、已有输出目录拒绝复用、`--bootstrap` 顺序不依赖 spark。它不证明目标 OpenShift 的真实连通，真实结果按 `docs/securegpt_probe.md` 在目标容器执行并单独报告。
+
+## Databricks 离线包测试
+
+`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest -v tests.vnext.test_databricks_offline_package`：16项，约1秒，由 `tests/feature_selectors/20261014-29-databricks-offline-package.json` 登记进 fast suite。GitHub 为内存中的假仓库，公司计算为桩程序，不联网、不调用 SEC 或任何模型。覆盖：打包只收程序文件与本公司账本哈希一致的 SEC 正文、被覆盖的工作副本列出并排除、他公司正文不入包、同一 commit 重打字节相同、下载内容与 commit 不符/账本与 manifest 不符/headers 与文件名哈希不符时不写包、必须显式 `--company`；计算 notebook 逐文件核对失败时不运行、调用次数取自程序输出而非假定为 0、程序退出码非 0、调用次数不为 0 或缺失、所选指标没有就绪结果时都不报 PASS、换包后使用新的状态目录而不触发任务身份变更、有指标未就绪时不报 PASS、程序无摘要时停止；仓库附带的万豪包逐文件符合其 `PACKAGE.json`、版本等于打包脚本的 `DEFAULT_REF`，其中每个 SEC 正文都能在当前请求账本中找到。它不证明真实 Databricks 集群或真实公司计算可用；端到端结果按 `docs/databricks_offline_run.md` 单独报告。
