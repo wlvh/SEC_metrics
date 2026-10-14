@@ -1,0 +1,85 @@
+{
+ "code_root": "/home/user/acc/p269",
+ "companies": {
+  "macys": {
+   "resolved": {
+    "2020": {
+     "error": "PeriodSelectionError: ORDINARY_PERIOD_SELECTION_CANDIDATE_SOURCE_UNAVAILABLE:2020-02-01:SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/794367/000079436720000040/m-02012"
+    },
+    "2021": {
+     "accession": "0001564590-22-011726",
+     "amendments": [],
+     "filing_date": "2022-03-25",
+     "period_days": 364,
+     "period_start": "2021-01-31",
+     "prior_status": "SAME_CIK_PRIOR_DISCOVERED",
+     "registrant_role": "PRIMARY",
+     "report_end": "2022-01-29",
+     "reporting_cik": "794367"
+    },
+    "2022": {
+     "accession": "0001628280-23-009154",
+     "amendments": [],
+     "filing_date": "2023-03-24",
+     "period_days": 364,
+     "period_start": "2022-01-30",
+     "prior_status": "SAME_CIK_PRIOR_DISCOVERED",
+     "registrant_role": "PRIMARY",
+     "report_end": "2023-01-28",
+     "reporting_cik": "794367"
+    },
+    "2023": {
+     "accession": "0001628280-24-012734",
+     "amendments": [],
+     "filing_date": "2024-03-22",
+     "period_days": 371,
+     "period_start": "2023-01-29",
+     "prior_status": "SAME_CIK_PRIOR_DISCOVERED",
+     "registrant_role": "PRIMARY",
+     "report_end": "2024-02-03",
+     "reporting_cik": "794367"
+    },
+    "2024": {
+     "accession": "0001628280-25-014315",
+     "amendments": [],
+     "filing_date": "2025-03-21",
+     "period_days": 364,
+     "period_start": "2024-02-04",
+     "prior_status": "SAME_CIK_PRIOR_DISCOVERED",
+     "registrant_role": "PRIMARY",
+     "report_end": "2025-02-01",
+     "reporting_cik": "794367"
+    },
+    "2025": {
+     "accession": "0001628280-26-021721",
+     "amendments": [],
+     "filing_date": "2026-03-27",
+     "period_days": 364,
+     "period_start": "2025-02-02",
+     "prior_status": "SAME_CIK_PRIOR_DISCOVERED",
+     "registrant_role": "PRIMARY",
+     "report_end": "2026-01-31",
+     "reporting_cik": "794367"
+    },
+    "2026": {
+     "error": "PeriodSelectionError: ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_MISSING_OR_AMBIGUOUS"
+    },
+    "2027": {
+     "error": "PeriodSelectionError: ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_NOT_IN_SAVED_SUBMISSIONS"
+    }
+   },
+   "window": [
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+   ]
+  }
+ },
+ "source_root": "/home/user/acc/hist-src/source-inputs",
+ "years": [
+  2020,
+  2027
+ ]
+}

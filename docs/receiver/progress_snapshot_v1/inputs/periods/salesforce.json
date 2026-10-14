@@ -1,0 +1,93 @@
+{
+ "code_root": "/home/user/acc/p269",
+ "companies": {
+  "salesforce": {
+   "resolved": {
+    "2020": {
+     "error": "PeriodSelectionError: ORDINARY_PERIOD_SELECTION_CANDIDATE_SOURCE_UNAVAILABLE:2020-01-31:SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1108524/000110852420000014/crm-20"
+    },
+    "2021": {
+     "accession": "0001108524-22-000008",
+     "amendments": [],
+     "filing_date": "2021-03-17",
+     "period_days": 366,
+     "period_start": "2020-02-01",
+     "prior_status": "SAME_CIK_PRIOR_DISCOVERED",
+     "registrant_role": "PRIMARY",
+     "report_end": "2021-01-31",
+     "reporting_cik": "1108524"
+    },
+    "2022": {
+     "accession": "0001108524-22-000013",
+     "amendments": [],
+     "filing_date": "2022-03-11",
+     "period_days": 365,
+     "period_start": "2021-02-01",
+     "prior_status": "SAME_CIK_PRIOR_DISCOVERED",
+     "registrant_role": "PRIMARY",
+     "report_end": "2022-01-31",
+     "reporting_cik": "1108524"
+    },
+    "2023": {
+     "accession": "0001108524-23-000011",
+     "amendments": [],
+     "filing_date": "2023-03-08",
+     "period_days": 365,
+     "period_start": "2022-02-01",
+     "prior_status": "SAME_CIK_PRIOR_DISCOVERED",
+     "registrant_role": "PRIMARY",
+     "report_end": "2023-01-31",
+     "reporting_cik": "1108524"
+    },
+    "2024": {
+     "accession": "0001108524-24-000005",
+     "amendments": [],
+     "filing_date": "2024-03-06",
+     "period_days": 365,
+     "period_start": "2023-02-01",
+     "prior_status": "SAME_CIK_PRIOR_DISCOVERED",
+     "registrant_role": "PRIMARY",
+     "report_end": "2024-01-31",
+     "reporting_cik": "1108524"
+    },
+    "2025": {
+     "accession": "0001108524-25-000006",
+     "amendments": [],
+     "filing_date": "2025-03-05",
+     "period_days": 366,
+     "period_start": "2024-02-01",
+     "prior_status": "SAME_CIK_PRIOR_DISCOVERED",
+     "registrant_role": "PRIMARY",
+     "report_end": "2025-01-31",
+     "reporting_cik": "1108524"
+    },
+    "2026": {
+     "accession": "0001108524-26-000060",
+     "amendments": [],
+     "filing_date": "2026-03-02",
+     "period_days": 365,
+     "period_start": "2025-02-01",
+     "prior_status": "SAME_CIK_PRIOR_DISCOVERED",
+     "registrant_role": "PRIMARY",
+     "report_end": "2026-01-31",
+     "reporting_cik": "1108524"
+    },
+    "2027": {
+     "error": "PeriodSelectionError: ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_NOT_IN_SAVED_SUBMISSIONS"
+    }
+   },
+   "window": [
+    2022,
+    2023,
+    2024,
+    2025,
+    2026
+   ]
+  }
+ },
+ "source_root": "/home/user/acc/hist-src/source-inputs",
+ "years": [
+  2020,
+  2027
+ ]
+}

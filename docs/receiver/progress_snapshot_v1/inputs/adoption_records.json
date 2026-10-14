@@ -1,0 +1,19 @@
+{
+ "record_type": "RECEIVER_ADOPTION_RECORDS_V1",
+ "note": "Formal adoption records found in the repository. A cell is marked adopted only when the active publication carries a row for the same company, metric and period AND an entry here names it; other rows of the active publication are carried over from the predecessor publication (R3 and earlier) without a new per-item adoption.",
+ "active_publication_id": "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
+ "entries": [
+  {"company_id": "marriott_international", "metric_id": "B01", "fiscal_year": 2025, "status": "FORMAL_ADOPTION_2026_09_10",
+   "link": "https://github.com/wlvh/SEC_metrics/pull/40#issuecomment-5611711644"},
+  {"company_id": "marriott_international", "metric_id": "B10", "fiscal_year": 2025, "status": "FORMAL_ADOPTION_2026_09_10",
+   "link": "https://github.com/wlvh/SEC_metrics/pull/40#issuecomment-5611711644"}
+ ],
+ "carried_over_status": "ACTIVE_PUBLICATION_CARRIED_OVER",
+ "carried_over_basis": "docs/evidence/annual_formal_adoption/production-execution/README.md at 48b233f8: 2 adopted + 238 inherited, 327-row public matrix; predecessor R3 kept complete",
+ "links": {
+  "requirement_transition": "https://github.com/wlvh/SEC_metrics/pull/40#issuecomment-5611711476",
+  "publication_decision": "https://github.com/wlvh/SEC_metrics/pull/40#issuecomment-5611711644",
+  "delegation": "https://github.com/wlvh/SEC_metrics/pull/40#issuecomment-5611711815",
+  "execution_record": "https://github.com/wlvh/SEC_metrics/blob/48b233f875d07145464e078afe686249e38e963b/docs/evidence/annual_formal_adoption/production-execution/README.md"
+ }
+}

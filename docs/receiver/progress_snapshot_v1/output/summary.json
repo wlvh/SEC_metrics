@@ -1,0 +1,593 @@
+{
+ "adoption": {
+  "ACTIVE_PUBLICATION_CARRIED_OVER": 321,
+  "FORMAL_ADOPTION_2026_09_10": 2,
+  "NOT_ADOPTED": 1627
+ },
+ "by_company": {
+  "enphase_energy": {
+   "ANSWER_GAP_MODEL_RESPONSE": 7,
+   "ANSWER_GAP_NO_SAVED_D04_CALL": 5,
+   "DEV_GAP_NA_REPORTED_AS_ERROR": 10,
+   "DEV_GAP_NOT_CONNECTED": 15,
+   "DEV_GAP_SOURCE_RELATION": 3,
+   "TERMINAL_NON_NUMERIC": 70,
+   "VALUE": 84,
+   "WITHHELD_BY_CURRENT_RULE": 1
+  },
+  "ford_motor_company": {
+   "ANSWER_GAP_MODEL_RESPONSE": 4,
+   "DEV_GAP_NOT_CONNECTED": 15,
+   "NO_OBSERVATION": 168,
+   "TERMINAL_NON_NUMERIC": 7,
+   "VALUE_PENDING_SAVED_ANSWER": 1
+  },
+  "jpmorgan_chase": {
+   "ANSWER_GAP_MODEL_RESPONSE": 5,
+   "DEV_GAP_NOT_CONNECTED": 15,
+   "DEV_GAP_SOURCE_RELATION": 1,
+   "NO_OBSERVATION": 160,
+   "TERMINAL_NON_NUMERIC": 2,
+   "VALUE": 12
+  },
+  "lumen_technologies": {
+   "ANSWER_GAP_MODEL_RESPONSE": 7,
+   "ANSWER_GAP_NO_SAVED_D04_CALL": 5,
+   "DEV_GAP_NAVIGATION_OR_PARSE": 3,
+   "DEV_GAP_NA_REPORTED_AS_ERROR": 10,
+   "DEV_GAP_NOT_CONNECTED": 15,
+   "DEV_GAP_SOURCE_RELATION": 4,
+   "TERMINAL_NON_NUMERIC": 73,
+   "VALUE": 74,
+   "WITHHELD_BY_CURRENT_RULE": 1,
+   "WITHHELD_CONFLICT_OR_AMBIGUOUS": 3
+  },
+  "macys": {
+   "ANSWER_GAP_MODEL_RESPONSE": 7,
+   "ANSWER_GAP_NO_SAVED_D04_CALL": 2,
+   "DEV_GAP_NA_REPORTED_AS_ERROR": 4,
+   "DEV_GAP_NOT_CONNECTED": 15,
+   "DEV_GAP_SOURCE_RELATION": 3,
+   "INPUT_GAP_SOURCE": 6,
+   "NO_OBSERVATION": 85,
+   "TERMINAL_NON_NUMERIC": 41,
+   "VALUE": 30,
+   "WITHHELD_BY_CURRENT_RULE": 1,
+   "WITHHELD_OTHER": 1
+  },
+  "marriott_international": {
+   "ANSWER_GAP_MODEL_RESPONSE": 5,
+   "DEV_GAP_NOT_CONNECTED": 15,
+   "NO_OBSERVATION": 175
+  },
+  "paramount_skydance_paramount_global": {
+   "ANSWER_GAP_MODEL_RESPONSE": 3,
+   "DEV_GAP_AMENDMENT_OR_SUCCESSOR": 2,
+   "DEV_GAP_NOT_CONNECTED": 15,
+   "NO_OBSERVATION": 175
+  },
+  "pfizer": {
+   "ANSWER_GAP_MODEL_RESPONSE": 4,
+   "ANSWER_GAP_NO_SAVED_D04_CALL": 5,
+   "DEV_GAP_NAVIGATION_OR_PARSE": 5,
+   "DEV_GAP_NA_REPORTED_AS_ERROR": 10,
+   "DEV_GAP_NOT_CONNECTED": 15,
+   "DEV_GAP_SOURCE_RELATION": 5,
+   "TERMINAL_NON_NUMERIC": 70,
+   "VALUE": 77,
+   "WITHHELD_BY_CURRENT_RULE": 3,
+   "WITHHELD_CONFLICT_OR_AMBIGUOUS": 1
+  },
+  "salesforce": {
+   "ANSWER_GAP_MODEL_RESPONSE": 6,
+   "ANSWER_GAP_NO_SAVED_D04_CALL": 1,
+   "DEV_GAP_NA_REPORTED_AS_ERROR": 2,
+   "DEV_GAP_NOT_CONNECTED": 15,
+   "DEV_GAP_SOURCE_RELATION": 1,
+   "NO_OBSERVATION": 130,
+   "TERMINAL_NON_NUMERIC": 23,
+   "VALUE": 14,
+   "WITHHELD_BY_CURRENT_RULE": 1,
+   "WITHHELD_CONFLICT_OR_AMBIGUOUS": 1,
+   "WITHHELD_OTHER": 1
+  },
+  "southwest_airlines": {
+   "ANSWER_GAP_MODEL_RESPONSE": 4,
+   "DEV_GAP_AMENDMENT_OR_SUCCESSOR": 1,
+   "DEV_GAP_NOT_CONNECTED": 15,
+   "NO_OBSERVATION": 175
+  }
+ },
+ "by_metric": {
+  "A01": {
+   "NO_OBSERVATION": 28,
+   "TERMINAL_NON_NUMERIC": 21,
+   "VALUE": 1
+  },
+  "A02": {
+   "NO_OBSERVATION": 28,
+   "TERMINAL_NON_NUMERIC": 21,
+   "VALUE": 1
+  },
+  "A03": {
+   "NO_OBSERVATION": 28,
+   "TERMINAL_NON_NUMERIC": 21,
+   "VALUE": 1
+  },
+  "A04": {
+   "NO_OBSERVATION": 28,
+   "TERMINAL_NON_NUMERIC": 21,
+   "VALUE": 1
+  },
+  "A05": {
+   "DEV_GAP_SOURCE_RELATION": 1,
+   "NO_OBSERVATION": 28,
+   "TERMINAL_NON_NUMERIC": 21
+  },
+  "A06": {
+   "NO_OBSERVATION": 28,
+   "TERMINAL_NON_NUMERIC": 21,
+   "VALUE": 1
+  },
+  "A07": {
+   "NO_OBSERVATION": 28,
+   "TERMINAL_NON_NUMERIC": 21,
+   "VALUE": 1
+  },
+  "A08": {
+   "NO_OBSERVATION": 29,
+   "TERMINAL_NON_NUMERIC": 20,
+   "VALUE": 1
+  },
+  "A09": {
+   "NO_OBSERVATION": 29,
+   "TERMINAL_NON_NUMERIC": 20,
+   "VALUE": 1
+  },
+  "A10": {
+   "NO_OBSERVATION": 29,
+   "TERMINAL_NON_NUMERIC": 20,
+   "VALUE": 1
+  },
+  "A11": {
+   "NO_OBSERVATION": 30,
+   "TERMINAL_NON_NUMERIC": 19,
+   "VALUE": 1
+  },
+  "A12": {
+   "NO_OBSERVATION": 30,
+   "TERMINAL_NON_NUMERIC": 19,
+   "VALUE": 1
+  },
+  "A13": {
+   "NO_OBSERVATION": 30,
+   "TERMINAL_NON_NUMERIC": 19,
+   "VALUE": 1
+  },
+  "B01": {
+   "INPUT_GAP_SOURCE": 3,
+   "NO_OBSERVATION": 30,
+   "TERMINAL_NON_NUMERIC": 1,
+   "VALUE": 16
+  },
+  "B02": {
+   "INPUT_GAP_SOURCE": 3,
+   "NO_OBSERVATION": 30,
+   "TERMINAL_NON_NUMERIC": 1,
+   "VALUE": 14,
+   "WITHHELD_BY_CURRENT_RULE": 2
+  },
+  "B03": {
+   "NO_OBSERVATION": 31,
+   "VALUE": 18,
+   "WITHHELD_OTHER": 1
+  },
+  "B04": {
+   "NO_OBSERVATION": 31,
+   "VALUE": 19
+  },
+  "B05": {
+   "NO_OBSERVATION": 31,
+   "VALUE": 19
+  },
+  "B06": {
+   "DEV_GAP_SOURCE_RELATION": 16,
+   "NO_OBSERVATION": 31,
+   "TERMINAL_NON_NUMERIC": 1,
+   "VALUE": 2
+  },
+  "B07": {
+   "NO_OBSERVATION": 31,
+   "TERMINAL_NON_NUMERIC": 2,
+   "VALUE": 17
+  },
+  "B08": {
+   "NO_OBSERVATION": 32,
+   "VALUE": 18
+  },
+  "B09": {
+   "NO_OBSERVATION": 32,
+   "VALUE": 18
+  },
+  "B10": {
+   "DEV_GAP_NA_REPORTED_AS_ERROR": 18,
+   "NO_OBSERVATION": 32
+  },
+  "B11": {
+   "DEV_GAP_NA_REPORTED_AS_ERROR": 18,
+   "NO_OBSERVATION": 32
+  },
+  "B12": {
+   "NO_OBSERVATION": 32,
+   "TERMINAL_NON_NUMERIC": 17,
+   "VALUE": 1
+  },
+  "B13": {
+   "DEV_GAP_NOT_CONNECTED": 50
+  },
+  "C01": {
+   "NO_OBSERVATION": 32,
+   "VALUE": 18
+  },
+  "C02": {
+   "DEV_GAP_NOT_CONNECTED": 50
+  },
+  "C03": {
+   "NO_OBSERVATION": 32,
+   "VALUE": 13,
+   "WITHHELD_CONFLICT_OR_AMBIGUOUS": 4,
+   "WITHHELD_OTHER": 1
+  },
+  "C04": {
+   "NO_OBSERVATION": 32,
+   "VALUE": 13,
+   "WITHHELD_BY_CURRENT_RULE": 5
+  },
+  "D01": {
+   "NO_OBSERVATION": 32,
+   "VALUE": 18
+  },
+  "D02": {
+   "ANSWER_GAP_MODEL_RESPONSE": 38,
+   "DEV_GAP_AMENDMENT_OR_SUCCESSOR": 3,
+   "DEV_GAP_NAVIGATION_OR_PARSE": 8,
+   "VALUE_PENDING_SAVED_ANSWER": 1
+  },
+  "D03": {
+   "DEV_GAP_NOT_CONNECTED": 50
+  },
+  "D04": {
+   "ANSWER_GAP_NO_SAVED_D04_CALL": 18,
+   "NO_OBSERVATION": 32
+  },
+  "E01": {
+   "ANSWER_GAP_MODEL_RESPONSE": 14,
+   "NO_OBSERVATION": 32,
+   "VALUE": 3,
+   "WITHHELD_CONFLICT_OR_AMBIGUOUS": 1
+  },
+  "E02": {
+   "NO_OBSERVATION": 32,
+   "VALUE": 18
+  },
+  "E03": {
+   "NO_OBSERVATION": 32,
+   "VALUE": 18
+  },
+  "E04": {
+   "NO_OBSERVATION": 32,
+   "VALUE": 18
+  },
+  "E05": {
+   "NO_OBSERVATION": 32,
+   "VALUE": 18
+  }
+ },
+ "cells": 1950,
+ "check_vs_current": {
+  "DIFFERENT_VALUE_DERIVED_FROM_B01_DEFECT": 11,
+  "DIFFERENT_VALUE_OLD_READING_HAS_REGISTERED_DEFECT": 8,
+  "NO_CURRENT_VALUE": 600,
+  "NO_RECORDED_VALUE": 26,
+  "NO_RECORDED_VALUE_CHECKED_VALUE_NOT_MATCHED": 10,
+  "SAME_VALUE": 272
+ },
+ "companies": 10,
+ "content_checks_total": 1087,
+ "content_checks_unmatched_cells": [],
+ "content_checks_unplaced": [],
+ "current_view_alignment": {
+  "NO_ROW|-|-": 63,
+  "ROW_FOR_OTHER_PERIOD:2024-12-31|-|-": 4,
+  "ROW_FOR_OTHER_PERIOD:2025-12-31|-|-": 4,
+  "Y|BOTH_TERMINAL_SAME_STATUS|-": 26,
+  "Y|BOTH_TEXT_RESULT_NOT_COMPARED|-": 3,
+  "Y|BOTH_VALUE_DIFFERENT|DIFFERENT": 3,
+  "Y|BOTH_VALUE_SAME|SAME": 43,
+  "Y|PUB_OPEN__CUR_NONE|-": 7,
+  "Y|PUB_TERMINAL__CUR_NONE|-": 72,
+  "Y|PUB_TERMINAL__CUR_OPEN|-": 7,
+  "Y|PUB_TEXT__CUR_NONE|-": 11,
+  "Y|PUB_TEXT__CUR_OPEN|-": 32,
+  "Y|PUB_VALUE__CUR_NONE|-": 112,
+  "Y|PUB_VALUE__CUR_OPEN|-": 3
+ },
+ "current_view_cells": 390,
+ "d02_ledger_saved_answers": 12,
+ "history_runs": {
+  "enphase_energy": {
+   "exit": null,
+   "mode": "RESULTS_READ_BACK",
+   "run_dir": "/home/user/acc/snap/hist/enphase_energy/results-read"
+  },
+  "ford_motor_company": {
+   "exit": null,
+   "mode": "PARTIAL_STATE",
+   "run_dir": ""
+  },
+  "jpmorgan_chase": {
+   "company": "jpmorgan_chase",
+   "end_fy": 2025,
+   "exit": 143,
+   "mode": "PARTIAL_STATE",
+   "run_dir": "",
+   "seconds": 2653,
+   "start_fy": 2021
+  },
+  "lumen_technologies": {
+   "company": "lumen_technologies",
+   "end_fy": 2025,
+   "exit": 2,
+   "mode": "RESULTS_READ_BACK",
+   "run_dir": "/home/user/acc/snap/hist/lumen_technologies/results-read",
+   "seconds": 3688,
+   "start_fy": 2021
+  },
+  "macys": {
+   "exit": null,
+   "mode": "PARTIAL_STATE",
+   "run_dir": ""
+  },
+  "marriott_international": {
+   "mode": "NOT_RUN"
+  },
+  "paramount_skydance_paramount_global": {
+   "mode": "NOT_RUN"
+  },
+  "pfizer": {
+   "company": "pfizer",
+   "end_fy": 2025,
+   "exit": 2,
+   "mode": "RESULTS_READ_BACK",
+   "run_dir": "/home/user/acc/snap/hist/pfizer/results-read",
+   "seconds": 4323,
+   "start_fy": 2021
+  },
+  "salesforce": {
+   "exit": null,
+   "mode": "PARTIAL_STATE",
+   "run_dir": ""
+  },
+  "southwest_airlines": {
+   "mode": "NOT_RUN"
+  }
+ },
+ "metrics": 39,
+ "original_check_cells": 927,
+ "owner": {
+  "": 7,
+  "#28/#47": 40,
+  "#47": 188,
+  "接收方": 1068,
+  "用户": 52,
+  "用户/#47": 18
+ },
+ "publication": {
+  "formal_remaining_conditions": [
+   "Owner activates the exact pending Requirement and its adoption rule",
+   "Owner authorizes this exact complete publication plan and finite switch directions",
+   "Reviewed implementation is merged unchanged; target and predecessor still match"
+  ],
+  "publication_credit": "CANDIDATE_SPECIFIC_PENDING_PRODUCTION_AUTHORITY",
+  "publication_id": "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
+  "rows": 327,
+  "validation_status": "PASSED"
+ },
+ "publication_values_on_defect_cells": 10,
+ "reference_cells": {
+  "APPLICABLE": 1135,
+  "CONDITIONAL": 15,
+  "NOT_APPLICABLE": 765,
+  "PENDING_CONFIRMATION": 35
+ },
+ "reference_consistency": {},
+ "reference_pairs": {
+  "APPLICABLE": 227,
+  "CONDITIONAL": 3,
+  "NOT_APPLICABLE": 153,
+  "PENDING_CONFIRMATION": 7
+ },
+ "reference_problems": [],
+ "reference_subset_1150_cells": 1150,
+ "registered_defect_cells": 35,
+ "terminal_class": {
+  "ANSWER_GAP_MODEL_RESPONSE": 52,
+  "ANSWER_GAP_NO_SAVED_D04_CALL": 18,
+  "DEV_GAP_AMENDMENT_OR_SUCCESSOR": 3,
+  "DEV_GAP_NAVIGATION_OR_PARSE": 8,
+  "DEV_GAP_NA_REPORTED_AS_ERROR": 36,
+  "DEV_GAP_NOT_CONNECTED": 150,
+  "DEV_GAP_SOURCE_RELATION": 17,
+  "INPUT_GAP_SOURCE": 6,
+  "NO_OBSERVATION": 1068,
+  "TERMINAL_NON_NUMERIC": 286,
+  "VALUE": 291,
+  "VALUE_PENDING_SAVED_ANSWER": 1,
+  "WITHHELD_BY_CURRENT_RULE": 7,
+  "WITHHELD_CONFLICT_OR_AMBIGUOUS": 5,
+  "WITHHELD_OTHER": 2
+ },
+ "terminal_class_by_reference": {
+  "APPLICABLE": {
+   "ANSWER_GAP_MODEL_RESPONSE": 52,
+   "ANSWER_GAP_NO_SAVED_D04_CALL": 18,
+   "DEV_GAP_AMENDMENT_OR_SUCCESSOR": 3,
+   "DEV_GAP_NAVIGATION_OR_PARSE": 8,
+   "DEV_GAP_NOT_CONNECTED": 100,
+   "DEV_GAP_SOURCE_RELATION": 17,
+   "INPUT_GAP_SOURCE": 6,
+   "NO_OBSERVATION": 622,
+   "TERMINAL_NON_NUMERIC": 3,
+   "VALUE": 291,
+   "VALUE_PENDING_SAVED_ANSWER": 1,
+   "WITHHELD_BY_CURRENT_RULE": 7,
+   "WITHHELD_CONFLICT_OR_AMBIGUOUS": 5,
+   "WITHHELD_OTHER": 2
+  },
+  "CONDITIONAL": {
+   "DEV_GAP_NOT_CONNECTED": 10,
+   "NO_OBSERVATION": 5
+  },
+  "NOT_APPLICABLE": {
+   "DEV_GAP_NA_REPORTED_AS_ERROR": 36,
+   "DEV_GAP_NOT_CONNECTED": 5,
+   "NO_OBSERVATION": 441,
+   "TERMINAL_NON_NUMERIC": 283
+  },
+  "PENDING_CONFIRMATION": {
+   "DEV_GAP_NOT_CONNECTED": 35
+  }
+ },
+ "terminal_class_in_subset": {
+  "ANSWER_GAP_MODEL_RESPONSE": 52,
+  "ANSWER_GAP_NO_SAVED_D04_CALL": 18,
+  "DEV_GAP_AMENDMENT_OR_SUCCESSOR": 3,
+  "DEV_GAP_NAVIGATION_OR_PARSE": 8,
+  "DEV_GAP_NOT_CONNECTED": 110,
+  "DEV_GAP_SOURCE_RELATION": 17,
+  "INPUT_GAP_SOURCE": 6,
+  "NO_OBSERVATION": 627,
+  "TERMINAL_NON_NUMERIC": 3,
+  "VALUE": 291,
+  "VALUE_PENDING_SAVED_ANSWER": 1,
+  "WITHHELD_BY_CURRENT_RULE": 7,
+  "WITHHELD_CONFLICT_OR_AMBIGUOUS": 5,
+  "WITHHELD_OTHER": 2
+ },
+ "unresolved_labels": {
+  "enphase_energy": {
+   "2026": "PeriodSelectionError: ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_NOT_IN_SAVED_SUBMISSIONS",
+   "2027": "PeriodSelectionError: ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_NOT_IN_SAVED_SUBMISSIONS"
+  },
+  "ford_motor_company": {
+   "2026": "PeriodSelectionError: ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_NOT_IN_SAVED_SUBMISSIONS",
+   "2027": "PeriodSelectionError: ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_NOT_IN_SAVED_SUBMISSIONS"
+  },
+  "jpmorgan_chase": {
+   "2026": "PeriodSelectionError: ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_NOT_IN_SAVED_SUBMISSIONS",
+   "2027": "PeriodSelectionError: ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_NOT_IN_SAVED_SUBMISSIONS"
+  },
+  "lumen_technologies": {
+   "2026": "PeriodSelectionError: ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_NOT_IN_SAVED_SUBMISSIONS",
+   "2027": "PeriodSelectionError: ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_NOT_IN_SAVED_SUBMISSIONS"
+  },
+  "macys": {
+   "2020": "PeriodSelectionError: ORDINARY_PERIOD_SELECTION_CANDIDATE_SOURCE_UNAVAILABLE:2020-02-01:SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/794367/000079436720000040/m-02012",
+   "2026": "PeriodSelectionError: ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_MISSING_OR_AMBIGUOUS",
+   "2027": "PeriodSelectionError: ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_NOT_IN_SAVED_SUBMISSIONS"
+  },
+  "marriott_international": {
+   "2026": "PeriodSelectionError: ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_NOT_IN_SAVED_SUBMISSIONS",
+   "2027": "PeriodSelectionError: ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_NOT_IN_SAVED_SUBMISSIONS"
+  },
+  "paramount_skydance_paramount_global": {
+   "2026": "PeriodSelectionError: ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_NOT_IN_SAVED_SUBMISSIONS",
+   "2027": "PeriodSelectionError: ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_NOT_IN_SAVED_SUBMISSIONS"
+  },
+  "pfizer": {
+   "2026": "PeriodSelectionError: ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_NOT_IN_SAVED_SUBMISSIONS",
+   "2027": "PeriodSelectionError: ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_NOT_IN_SAVED_SUBMISSIONS"
+  },
+  "salesforce": {
+   "2020": "PeriodSelectionError: ORDINARY_PERIOD_SELECTION_CANDIDATE_SOURCE_UNAVAILABLE:2020-01-31:SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1108524/000110852420000014/crm-20",
+   "2027": "PeriodSelectionError: ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_NOT_IN_SAVED_SUBMISSIONS"
+  },
+  "southwest_airlines": {
+   "2026": "PeriodSelectionError: ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_NOT_IN_SAVED_SUBMISSIONS",
+   "2027": "PeriodSelectionError: ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_NOT_IN_SAVED_SUBMISSIONS"
+  }
+ },
+ "windows": {
+  "enphase_energy": [
+   2021,
+   2022,
+   2023,
+   2024,
+   2025
+  ],
+  "ford_motor_company": [
+   2021,
+   2022,
+   2023,
+   2024,
+   2025
+  ],
+  "jpmorgan_chase": [
+   2021,
+   2022,
+   2023,
+   2024,
+   2025
+  ],
+  "lumen_technologies": [
+   2021,
+   2022,
+   2023,
+   2024,
+   2025
+  ],
+  "macys": [
+   2021,
+   2022,
+   2023,
+   2024,
+   2025
+  ],
+  "marriott_international": [
+   2021,
+   2022,
+   2023,
+   2024,
+   2025
+  ],
+  "paramount_skydance_paramount_global": [
+   2021,
+   2022,
+   2023,
+   2024,
+   2025
+  ],
+  "pfizer": [
+   2021,
+   2022,
+   2023,
+   2024,
+   2025
+  ],
+  "salesforce": [
+   2022,
+   2023,
+   2024,
+   2025,
+   2026
+  ],
+  "southwest_airlines": [
+   2021,
+   2022,
+   2023,
+   2024,
+   2025
+  ]
+ },
+ "year_keyed_checks_unmatched_cells": []
+}
