@@ -130,3 +130,20 @@ python3 scripts/render_v1_1.py output_v1_1 output "<冻结时间>" <main SHA> > 
 ```
 
 实际参数记录在 `output_v1_1/manifest.json` 与 `output_v1_1/published_errors.json`。
+
+## v1.2（2026-10-14 20:31 UTC）
+
+只补 JPMorgan，其余不变：
+
+- **补跑完成**：`jpm_run.sh` 于 20:26 UTC 跑完（五年各 35 项）。退出码 2 与其余九家相同，表示有指标以非成功状态结束。十家公司现在都是完整导出。
+- **输入不变**：其余输入与 v1.1 逐字节相同（见 `output_v1_2/manifest.json` 中的摘要）。重建后 1,950 行里只有 JPMorgan 的 195 行变化，其余 1,755 行逐字段相同。
+- **程序与调用**：`output_v1_2/run_identity.json` 覆盖 1,750 条逐格记录，新增调用全部为 0/0/0；有处理文件清单的记录，文件与 `681b35d8` 逐个相符（JPMorgan 有清单的 66 条，另 109 条在配置前结束，单独计数）。
+- **E01 请求**：`output_v1_2/e01_missing_requests.json` 列出各公司 E01 缺内容确认回答的请求编号和请求长度，共 42 个，即 v1.1 列明的 38 个加 JPMorgan FY2022–2025 的 4 个。
+- **1,150 子集分类**：`scripts/subset_1150.py`，规则与 14:47 UTC 回答相同。
+- **D02 未更新**：准备状态仍取 main `fc0c9a45` 的对照结果（同 v1.1），没有反映今天合入的 #275/#276。#275 让 Lumen D02 FY2022/2023 可以准备请求，见其合并记录。
+
+```sh
+python3 scripts/build_snapshot.py …（参数同 v1.1，--out output_v1_2）
+python3 scripts/check_run_identity.py <681b35d8检出> <补跑根> output_v1_2/run_identity.json
+python3 scripts/subset_1150.py output_v1_2/scope_table.csv output_v1_1/scope_table.csv
+```

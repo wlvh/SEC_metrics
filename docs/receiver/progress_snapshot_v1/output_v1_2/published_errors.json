@@ -1,0 +1,30 @@
+{
+ "publication_id": "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
+ "root_files_equal_bundle": {
+  "metrics_matrix.csv": true,
+  "metric_evidence.csv": true,
+  "REPORT_十公司财务指标.md": true
+ },
+ "rows_on_registered_coordinates": 27,
+ "by_action": {
+  "REPLACE_WITH_VERIFIED_VALUE": 6,
+  "REVIEW_BY_OWNER": 15,
+  "WITHHOLD": 6
+ },
+ "register_sha256": "5f229c14b86f6b670f97d84e8bb3e575b3042f50e61d8651433ecaf9f086cc7d",
+ "replacements_sha256": "f70a0bd0ef77279d1570fbfea02c98cc92f99de0fd75152f54e7cda598885954",
+ "value_checks_sha256": "a5b1c00ea090cd2c64a37eb17f5280687475802848756bda172f6022347229e7",
+ "argv": [
+  "scripts/published_errors.py",
+  "--code-root",
+  "/home/user/acc/wmain",
+  "--source-root",
+  "/home/user/acc/hist-src/source-inputs",
+  "--value-checks",
+  "/home/user/acc/wmain/docs/evidence/issue28_current_publication_read_20261014/source-and-publication-read.json",
+  "--replacements",
+  "inputs/published_error_replacements.json",
+  "--out",
+  "/tmp/claude-0/-home-user-SEC-metrics/07139233-d014-5b73-88ed-671e17e54a51/scratchpad/v11/published_errors.csv"
+ ]
+}
