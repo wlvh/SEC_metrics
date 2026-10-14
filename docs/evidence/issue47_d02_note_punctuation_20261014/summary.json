@@ -1,0 +1,77 @@
+{
+  "head": "840f7a9d9141fb796c695e4642d9fbe4a6305360",
+  "named_working_changes": [],
+  "first": {
+    "seconds": 40.09421637500054,
+    "exit": 2
+  },
+  "metric": {
+    "metric_id": "D02",
+    "status": "INPUT_OR_EXECUTION_FAILED",
+    "attempt_id": "b8524644ae7e45b7abd577517ef3cc3b",
+    "error_type": "ReviewedLegalSourceError",
+    "reason": "D02_COMPLETE_SAVED_REVIEW_SET_MISSING:sha256:2be1e80f2f0f94fc7d362d23c272aaaf36cfa049c741b65e8ecbc3637f177526",
+    "previous_result": null,
+    "new_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false,
+    "requested_fiscal_year": 2021,
+    "error_category": "MODEL_RESPONSE_REQUIRED"
+  },
+  "read": {
+    "seconds": 0.15454024999053217,
+    "exit": 0
+  },
+  "csv_row": {
+    "company": "",
+    "cik": "",
+    "metric_id": "D02",
+    "metric_name": "",
+    "value": "",
+    "unit": "",
+    "status": "INPUT_OR_EXECUTION_FAILED",
+    "source_class": "",
+    "formula": "",
+    "period_start": "",
+    "period_end": "",
+    "fiscal_year": "2021",
+    "fiscal_period": "",
+    "accession": "",
+    "form": "",
+    "filed_date": "",
+    "concept_or_section": "",
+    "context_or_dimension": "",
+    "confidence": "",
+    "notes": "reason: D02_COMPLETE_SAVED_REVIEW_SET_MISSING:sha256:2be1e80f2f0f94fc7d362d23c272aaaf36cfa049c741b65e8ecbc3637f177526; error_type: ReviewedLegalSourceError; error_category: MODEL_RESPONSE_REQUIRED",
+    "company_id": "pfizer",
+    "result_id": "",
+    "record_root": "",
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "local_metric_status": "INPUT_OR_EXECUTION_FAILED",
+    "period_role": "REQUESTED_WITHOUT_RESULT",
+    "result_validity": "NO_CURRENT_RESULT",
+    "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+    "defect_holds": "",
+    "requested_in_latest_execution": "True"
+  },
+  "state_files": 7,
+  "state_read_unchanged": true,
+  "answer_files": 7,
+  "old_answers_unchanged": true,
+  "source_metadata_unchanged": {
+    "evidence/requests_log.csv": "61252ac5844ad1c5917040f753c04a7ed4f6e1d75e2fb0803804773fd6c0eef9",
+    "evidence/requests_log_manifest.json": "e91193401733b86ddc28c69cbae0debd74eeb899a328e60fcfb32532ed6a85ab",
+    "config/company_registry.csv": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a"
+  },
+  "counts": {
+    "actual_source_returns": 1
+  },
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
