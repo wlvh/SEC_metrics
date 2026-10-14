@@ -1,0 +1,32 @@
+FFF
+======================================================================
+FAIL: test_b05_same_amount_alone_does_not_prove_duplicate_disclosure (tests.vnext.test_statement_metric_amendment.StatementMetricAmendmentTest.test_b05_same_amount_alone_does_not_prove_duplicate_disclosure) (case={'disclosure': 'We generated net operating cash flow of $42 million — for 2023.'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/profitloss-note/SEC_metrics/tests/vnext/test_statement_metric_amendment.py", line 100, in test_b05_same_amount_alone_does_not_prove_duplicate_disclosure
+    with self.subTest(case=case),self.assertRaises(ValueError):
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_b05_same_amount_alone_does_not_prove_duplicate_disclosure (tests.vnext.test_statement_metric_amendment.StatementMetricAmendmentTest.test_b05_same_amount_alone_does_not_prove_duplicate_disclosure) (case={'disclosure': 'We generated net operating cash flow of $42 million — for a subsidiary.'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/profitloss-note/SEC_metrics/tests/vnext/test_statement_metric_amendment.py", line 100, in test_b05_same_amount_alone_does_not_prove_duplicate_disclosure
+    with self.subTest(case=case),self.assertRaises(ValueError):
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_b05_same_amount_alone_does_not_prove_duplicate_disclosure (tests.vnext.test_statement_metric_amendment.StatementMetricAmendmentTest.test_b05_same_amount_alone_does_not_prove_duplicate_disclosure) (case={'disclosure': 'We generated net operating cash flow of $42 million — an improvement from 2023 — and the amount excludes a segment.'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/profitloss-note/SEC_metrics/tests/vnext/test_statement_metric_amendment.py", line 100, in test_b05_same_amount_alone_does_not_prove_duplicate_disclosure
+    with self.subTest(case=case),self.assertRaises(ValueError):
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.158s
+
+FAILED (failures=3)

@@ -131,12 +131,23 @@ def _cash_flow_repeat(scope, units, unit, original):
     # Do not borrow the issuer scope for another subject or a qualified measure.
     prefix=text[:match.start()];suffix=text[match.end():]
     if prefix!='We ' and not re.fullmatch(r'We [a-z ,]+including ',prefix):return None
-    # A local date, subject or scope after the amount overrides the list lead-in.
-    if re.split(r'[—–;.]',suffix,maxsplit=1)[0].strip():return None
+    # Do not discard arbitrary text after a dash. Only a closed comparative
+    # aside to an earlier year is supported; other local scope remains unknown.
+    if not re.fullmatch(r'\s*\.?\s*',suffix):
+        comparison=re.fullmatch(r'\s*[—–]\s*(?:an? )?(?:[a-z]+ )*'
+            r'(?:improvement|increase|decrease) (?:from|over) (?P<year>[0-9]{4})'
+            r'\s*[—–]\s+and (?P<activity>.+)',suffix,re.I)
+        fiscal=[f['value'] for f in scope['original']['identity'] if f['name']=='documentfiscalyearfocus']
+        if comparison is None or len(fiscal)!=1 or int(comparison['year'])>=int(fiscal[0]):return None
+        # A separate activity cannot quietly qualify the CFO, its period or
+        # entity. Unrecognized measure/amount/scope text stays unresolved.
+        if re.search(r'\b(?:cash|flow|amount|measure|value|result|exclu\w*|adjusted|'
+                     r'continuing|discontinued|subsidiar\w*|segment\w*|[0-9]{4})\b',
+                     comparison['activity'],re.I):return None
     indices=unit.get('block_indices',[unit.get('block_index')])
     if set(indices)&set(scope['amendment']['quoted_block_indices']):return None
-    if (re.search(r'\b(?:subsidiar\w*|segment\w*|they|their)\b',prefix,re.I)
-            or re.search(r'\b(?:adjusted|continuing|discontinued|excluding|only|limited to)\b',suffix,re.I)):
+    if (re.search(r'\b(?:subsidiar\w*|segment\w*|they|their)\b',prefix+suffix,re.I)
+            or re.search(r'\b(?:adjusted|continuing|discontinued|excluding|only|limited to)\b',prefix+suffix,re.I)):
         return None
     amount=Decimal(match['amount'].replace(',',''))*{
         'million':Decimal(1000000),'billion':Decimal(1000000000),'thousand':Decimal(1000)}[match['scale'].casefold()]
