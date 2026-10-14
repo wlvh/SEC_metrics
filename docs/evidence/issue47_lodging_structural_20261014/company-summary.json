@@ -1,0 +1,759 @@
+{
+  "cases": [
+    {
+      "company": "ford_motor_company",
+      "fiscal_year": 2021,
+      "first": {
+        "arguments": [
+          "run",
+          "--company",
+          "ford_motor_company",
+          "--period",
+          "fiscal-years",
+          "--fiscal-year-start",
+          "2021",
+          "--fiscal-year-end",
+          "2021",
+          "--metric",
+          "B10",
+          "--metric",
+          "B11",
+          "--source-root",
+          "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+          "--work-dir",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/state",
+          "--output-dir",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/runs"
+        ],
+        "seconds": 64.79018529198947,
+        "exit_code": 0,
+        "stdout": "{\n  \"elapsed_seconds\": 64.57169337500818,\n  \"record_type\": \"ORDINARY_COMPANY_EXECUTION_V1\",\n  \"company_id\": \"ford_motor_company\",\n  \"run_id\": \"20261014T123033Z-9af08b52\",\n  \"status\": \"FLOW_COMPLETED\",\n  \"selected_metrics\": [\n    \"B10\",\n    \"B11\"\n  ],\n  \"metrics\": [\n    {\n      \"metric_id\": \"B10\",\n      \"status\": \"CANDIDATE_READY\",\n      \"attempt_id\": \"5e81dce05e624820889726ca781abf5a\",\n      \"version\": \"458924d23f284f4eacc91398a66a7cc7\",\n      \"result_id\": \"sha256:c8e5b79c3b8f126c3a92e2efa6c6ba2c1bc03a123b696b761490abce2bd83c53\",\n      \"result_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/state/updates/B10/periods/FY2021/results/458924d23f284f4eacc91398a66a7cc7\",\n      \"calculation_performed\": true,\n      \"new_candidate_created\": true,\n      \"result_reason_code\": \"TRAIT_NOT_APPLICABLE\",\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"requested_fiscal_year\": 2021,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:c8e5b79c3b8f126c3a92e2efa6c6ba2c1bc03a123b696b761490abce2bd83c53\",\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/state/updates/B10/periods/FY2021/results/458924d23f284f4eacc91398a66a7cc7\",\n      \"program_version\": {\n        \"commit\": \"8e53a5facc5fd587232afdf19c43388a8522d59b\",\n        \"has_uncommitted_changes\": true\n      }\n    },\n    {\n      \"metric_id\": \"B11\",\n      \"status\": \"CANDIDATE_READY\",\n      \"attempt_id\": \"a6fea79b26e443d89196a429ee108a3a\",\n      \"version\": \"4e6d428eac614b6481171d6b45314f92\",\n      \"result_id\": \"sha256:89d1cd924997ba7508e5e3de9eb5a2f9941a8c18c12b736d00ec372a9ba8c2ee\",\n      \"result_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/state/updates/B11/periods/FY2021/results/4e6d428eac614b6481171d6b45314f92\",\n      \"calculation_performed\": true,\n      \"new_candidate_created\": true,\n      \"result_reason_code\": \"TRAIT_NOT_APPLICABLE\",\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"requested_fiscal_year\": 2021,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:89d1cd924997ba7508e5e3de9eb5a2f9941a8c18c12b736d00ec372a9ba8c2ee\",\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/state/updates/B11/periods/FY2021/results/4e6d428eac614b6481171d6b45314f92\",\n      \"program_version\": {\n        \"commit\": \"8e53a5facc5fd587232afdf19c43388a8522d59b\",\n        \"has_uncommitted_changes\": true\n      }\n    }\n  ],\n  \"source_root\": \"/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs\",\n  \"program_root\": \"/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics\",\n  \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/state\",\n  \"output_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/runs/20261014T123033Z-9af08b52\",\n  \"source_mode\": \"SAVED_ONLY_NO_ONLINE_DISCOVERY\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false,\n  \"selected_fiscal_years\": [\n    2021\n  ]\n}\n",
+        "stderr": "{\"prepare_historical_lodging_year_case\": 2, \"prepare_historical_lodging_case\": 2, \"_resolve_historical_lodging_metric\": 2, \"calculate_metric\": 2}\n",
+        "payload": {
+          "elapsed_seconds": 64.57169337500818,
+          "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+          "company_id": "ford_motor_company",
+          "run_id": "20261014T123033Z-9af08b52",
+          "status": "FLOW_COMPLETED",
+          "selected_metrics": [
+            "B10",
+            "B11"
+          ],
+          "metrics": [
+            {
+              "metric_id": "B10",
+              "status": "CANDIDATE_READY",
+              "attempt_id": "5e81dce05e624820889726ca781abf5a",
+              "version": "458924d23f284f4eacc91398a66a7cc7",
+              "result_id": "sha256:c8e5b79c3b8f126c3a92e2efa6c6ba2c1bc03a123b696b761490abce2bd83c53",
+              "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/state/updates/B10/periods/FY2021/results/458924d23f284f4eacc91398a66a7cc7",
+              "calculation_performed": true,
+              "new_candidate_created": true,
+              "result_reason_code": "TRAIT_NOT_APPLICABLE",
+              "source_observation_errors": [],
+              "new_calls": {
+                "provider": 0,
+                "paid": 0,
+                "sec": 0
+              },
+              "production_authorized": false,
+              "requested_fiscal_year": 2021,
+              "defect_holds": [],
+              "read_result_id": "sha256:c8e5b79c3b8f126c3a92e2efa6c6ba2c1bc03a123b696b761490abce2bd83c53",
+              "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/state/updates/B10/periods/FY2021/results/458924d23f284f4eacc91398a66a7cc7",
+              "program_version": {
+                "commit": "8e53a5facc5fd587232afdf19c43388a8522d59b",
+                "has_uncommitted_changes": true
+              }
+            },
+            {
+              "metric_id": "B11",
+              "status": "CANDIDATE_READY",
+              "attempt_id": "a6fea79b26e443d89196a429ee108a3a",
+              "version": "4e6d428eac614b6481171d6b45314f92",
+              "result_id": "sha256:89d1cd924997ba7508e5e3de9eb5a2f9941a8c18c12b736d00ec372a9ba8c2ee",
+              "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/state/updates/B11/periods/FY2021/results/4e6d428eac614b6481171d6b45314f92",
+              "calculation_performed": true,
+              "new_candidate_created": true,
+              "result_reason_code": "TRAIT_NOT_APPLICABLE",
+              "source_observation_errors": [],
+              "new_calls": {
+                "provider": 0,
+                "paid": 0,
+                "sec": 0
+              },
+              "production_authorized": false,
+              "requested_fiscal_year": 2021,
+              "defect_holds": [],
+              "read_result_id": "sha256:89d1cd924997ba7508e5e3de9eb5a2f9941a8c18c12b736d00ec372a9ba8c2ee",
+              "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/state/updates/B11/periods/FY2021/results/4e6d428eac614b6481171d6b45314f92",
+              "program_version": {
+                "commit": "8e53a5facc5fd587232afdf19c43388a8522d59b",
+                "has_uncommitted_changes": true
+              }
+            }
+          ],
+          "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+          "program_root": "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/state",
+          "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/runs/20261014T123033Z-9af08b52",
+          "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+          "calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "selected_fiscal_years": [
+            2021
+          ]
+        },
+        "processing_calls": {
+          "prepare_historical_lodging_year_case": 2,
+          "prepare_historical_lodging_case": 2,
+          "_resolve_historical_lodging_metric": 2,
+          "calculate_metric": 2
+        },
+        "reused_saved_execution": true
+      },
+      "repeat": {
+        "arguments": [
+          "run",
+          "--company",
+          "ford_motor_company",
+          "--period",
+          "fiscal-years",
+          "--fiscal-year-start",
+          "2021",
+          "--fiscal-year-end",
+          "2021",
+          "--metric",
+          "B10",
+          "--metric",
+          "B11",
+          "--source-root",
+          "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+          "--work-dir",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/state",
+          "--output-dir",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/runs"
+        ],
+        "seconds": 0.8236652089981362,
+        "exit_code": 0,
+        "stdout": "{\n  \"elapsed_seconds\": 0.6616092089971062,\n  \"record_type\": \"ORDINARY_COMPANY_EXECUTION_V1\",\n  \"company_id\": \"ford_motor_company\",\n  \"run_id\": \"20261014T123503Z-b9232168\",\n  \"status\": \"FLOW_COMPLETED\",\n  \"selected_metrics\": [\n    \"B10\",\n    \"B11\"\n  ],\n  \"metrics\": [\n    {\n      \"metric_id\": \"B10\",\n      \"status\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"attempt_id\": \"65cc96ee6dc34a3f96a353caf23fd4ff\",\n      \"version\": \"458924d23f284f4eacc91398a66a7cc7\",\n      \"result_id\": \"sha256:c8e5b79c3b8f126c3a92e2efa6c6ba2c1bc03a123b696b761490abce2bd83c53\",\n      \"result_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/state/updates/B10/periods/FY2021/results/458924d23f284f4eacc91398a66a7cc7\",\n      \"result_reason_code\": \"TRAIT_NOT_APPLICABLE\",\n      \"raw_input_unchanged\": true,\n      \"calculation_performed\": false,\n      \"new_candidate_created\": false,\n      \"source_check_versions\": {\n        \"scripts/vnext/ordinary_current_update.py\": \"bc039ce9eacd3b1da9a74cda4dfefe8e9a3785225b7fc7cff1243f50d203386a\",\n        \"scripts/vnext/request_bindings.py\": \"d0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee\",\n        \"scripts/vnext/ordinary_update_compatibility.py\": \"dcd5f7fad86dd36fec7ffc1ce15cb274cd3670dba213777b6cdaa4a4090d80b9\",\n        \"scripts/vnext/ordinary_result_registration.py\": \"edf88293f2c568efc113703211bf587d3b0fc065a59c90ddbfb302acd681daee\"\n      },\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"requested_fiscal_year\": 2021,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:c8e5b79c3b8f126c3a92e2efa6c6ba2c1bc03a123b696b761490abce2bd83c53\",\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/state/updates/B10/periods/FY2021/results/458924d23f284f4eacc91398a66a7cc7\",\n      \"program_version\": {\n        \"commit\": \"8e53a5facc5fd587232afdf19c43388a8522d59b\",\n        \"has_uncommitted_changes\": true\n      }\n    },\n    {\n      \"metric_id\": \"B11\",\n      \"status\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"attempt_id\": \"58b51935e0f54bbbac42ef6360215ce1\",\n      \"version\": \"4e6d428eac614b6481171d6b45314f92\",\n      \"result_id\": \"sha256:89d1cd924997ba7508e5e3de9eb5a2f9941a8c18c12b736d00ec372a9ba8c2ee\",\n      \"result_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/state/updates/B11/periods/FY2021/results/4e6d428eac614b6481171d6b45314f92\",\n      \"result_reason_code\": \"TRAIT_NOT_APPLICABLE\",\n      \"raw_input_unchanged\": true,\n      \"calculation_performed\": false,\n      \"new_candidate_created\": false,\n      \"source_check_versions\": {\n        \"scripts/vnext/ordinary_current_update.py\": \"bc039ce9eacd3b1da9a74cda4dfefe8e9a3785225b7fc7cff1243f50d203386a\",\n        \"scripts/vnext/request_bindings.py\": \"d0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee\",\n        \"scripts/vnext/ordinary_update_compatibility.py\": \"dcd5f7fad86dd36fec7ffc1ce15cb274cd3670dba213777b6cdaa4a4090d80b9\",\n        \"scripts/vnext/ordinary_result_registration.py\": \"edf88293f2c568efc113703211bf587d3b0fc065a59c90ddbfb302acd681daee\"\n      },\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"requested_fiscal_year\": 2021,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:89d1cd924997ba7508e5e3de9eb5a2f9941a8c18c12b736d00ec372a9ba8c2ee\",\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/state/updates/B11/periods/FY2021/results/4e6d428eac614b6481171d6b45314f92\",\n      \"program_version\": {\n        \"commit\": \"8e53a5facc5fd587232afdf19c43388a8522d59b\",\n        \"has_uncommitted_changes\": true\n      }\n    }\n  ],\n  \"source_root\": \"/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs\",\n  \"program_root\": \"/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics\",\n  \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/state\",\n  \"output_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/runs/20261014T123503Z-b9232168\",\n  \"source_mode\": \"SAVED_ONLY_NO_ONLINE_DISCOVERY\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false,\n  \"selected_fiscal_years\": [\n    2021\n  ]\n}\n",
+        "stderr": "{}\n",
+        "payload": {
+          "elapsed_seconds": 0.6616092089971062,
+          "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+          "company_id": "ford_motor_company",
+          "run_id": "20261014T123503Z-b9232168",
+          "status": "FLOW_COMPLETED",
+          "selected_metrics": [
+            "B10",
+            "B11"
+          ],
+          "metrics": [
+            {
+              "metric_id": "B10",
+              "status": "NO_SOURCE_CONTENT_CHANGE",
+              "attempt_id": "65cc96ee6dc34a3f96a353caf23fd4ff",
+              "version": "458924d23f284f4eacc91398a66a7cc7",
+              "result_id": "sha256:c8e5b79c3b8f126c3a92e2efa6c6ba2c1bc03a123b696b761490abce2bd83c53",
+              "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/state/updates/B10/periods/FY2021/results/458924d23f284f4eacc91398a66a7cc7",
+              "result_reason_code": "TRAIT_NOT_APPLICABLE",
+              "raw_input_unchanged": true,
+              "calculation_performed": false,
+              "new_candidate_created": false,
+              "source_check_versions": {
+                "scripts/vnext/ordinary_current_update.py": "bc039ce9eacd3b1da9a74cda4dfefe8e9a3785225b7fc7cff1243f50d203386a",
+                "scripts/vnext/request_bindings.py": "d0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee",
+                "scripts/vnext/ordinary_update_compatibility.py": "dcd5f7fad86dd36fec7ffc1ce15cb274cd3670dba213777b6cdaa4a4090d80b9",
+                "scripts/vnext/ordinary_result_registration.py": "edf88293f2c568efc113703211bf587d3b0fc065a59c90ddbfb302acd681daee"
+              },
+              "source_observation_errors": [],
+              "new_calls": {
+                "provider": 0,
+                "paid": 0,
+                "sec": 0
+              },
+              "production_authorized": false,
+              "requested_fiscal_year": 2021,
+              "defect_holds": [],
+              "read_result_id": "sha256:c8e5b79c3b8f126c3a92e2efa6c6ba2c1bc03a123b696b761490abce2bd83c53",
+              "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/state/updates/B10/periods/FY2021/results/458924d23f284f4eacc91398a66a7cc7",
+              "program_version": {
+                "commit": "8e53a5facc5fd587232afdf19c43388a8522d59b",
+                "has_uncommitted_changes": true
+              }
+            },
+            {
+              "metric_id": "B11",
+              "status": "NO_SOURCE_CONTENT_CHANGE",
+              "attempt_id": "58b51935e0f54bbbac42ef6360215ce1",
+              "version": "4e6d428eac614b6481171d6b45314f92",
+              "result_id": "sha256:89d1cd924997ba7508e5e3de9eb5a2f9941a8c18c12b736d00ec372a9ba8c2ee",
+              "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/state/updates/B11/periods/FY2021/results/4e6d428eac614b6481171d6b45314f92",
+              "result_reason_code": "TRAIT_NOT_APPLICABLE",
+              "raw_input_unchanged": true,
+              "calculation_performed": false,
+              "new_candidate_created": false,
+              "source_check_versions": {
+                "scripts/vnext/ordinary_current_update.py": "bc039ce9eacd3b1da9a74cda4dfefe8e9a3785225b7fc7cff1243f50d203386a",
+                "scripts/vnext/request_bindings.py": "d0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee",
+                "scripts/vnext/ordinary_update_compatibility.py": "dcd5f7fad86dd36fec7ffc1ce15cb274cd3670dba213777b6cdaa4a4090d80b9",
+                "scripts/vnext/ordinary_result_registration.py": "edf88293f2c568efc113703211bf587d3b0fc065a59c90ddbfb302acd681daee"
+              },
+              "source_observation_errors": [],
+              "new_calls": {
+                "provider": 0,
+                "paid": 0,
+                "sec": 0
+              },
+              "production_authorized": false,
+              "requested_fiscal_year": 2021,
+              "defect_holds": [],
+              "read_result_id": "sha256:89d1cd924997ba7508e5e3de9eb5a2f9941a8c18c12b736d00ec372a9ba8c2ee",
+              "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/state/updates/B11/periods/FY2021/results/4e6d428eac614b6481171d6b45314f92",
+              "program_version": {
+                "commit": "8e53a5facc5fd587232afdf19c43388a8522d59b",
+                "has_uncommitted_changes": true
+              }
+            }
+          ],
+          "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+          "program_root": "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/state",
+          "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/runs/20261014T123503Z-b9232168",
+          "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+          "calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "selected_fiscal_years": [
+            2021
+          ]
+        },
+        "processing_calls": {},
+        "reused_saved_execution": true
+      },
+      "read": {
+        "arguments": [
+          "results",
+          "--company",
+          "ford_motor_company",
+          "--state-root",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/state",
+          "--output-root",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/read"
+        ],
+        "seconds": 0.24560908300918527,
+        "exit_code": 0,
+        "stdout": "{\n  \"elapsed_seconds\": 0.0790707919804845,\n  \"record_type\": \"ORDINARY_COMPANY_RESULT_VIEW_V1\",\n  \"company_id\": \"ford_motor_company\",\n  \"source_root\": \"/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs\",\n  \"metrics\": [\n    {\n      \"metric_id\": \"B10\",\n      \"result_id\": \"sha256:c8e5b79c3b8f126c3a92e2efa6c6ba2c1bc03a123b696b761490abce2bd83c53\",\n      \"period_start\": \"2021-01-01\",\n      \"period_end\": \"2021-12-31\",\n      \"fiscal_year\": 2021,\n      \"value\": null,\n      \"unit\": null,\n      \"publication\": \"PUBLISHED\",\n      \"quality\": \"NONE\",\n      \"reason_code\": \"TRAIT_NOT_APPLICABLE\",\n      \"result_validity\": \"SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED\",\n      \"defect_holds\": [],\n      \"latest_observation\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"requested_in_latest_execution\": true,\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/state/updates/B10/periods/FY2021/results/458924d23f284f4eacc91398a66a7cc7\"\n    },\n    {\n      \"metric_id\": \"B11\",\n      \"result_id\": \"sha256:89d1cd924997ba7508e5e3de9eb5a2f9941a8c18c12b736d00ec372a9ba8c2ee\",\n      \"period_start\": \"2021-01-01\",\n      \"period_end\": \"2021-12-31\",\n      \"fiscal_year\": 2021,\n      \"value\": null,\n      \"unit\": null,\n      \"publication\": \"PUBLISHED\",\n      \"quality\": \"NONE\",\n      \"reason_code\": \"TRAIT_NOT_APPLICABLE\",\n      \"result_validity\": \"SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED\",\n      \"defect_holds\": [],\n      \"latest_observation\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"requested_in_latest_execution\": true,\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/state/updates/B11/periods/FY2021/results/4e6d428eac614b6481171d6b45314f92\"\n    }\n  ],\n  \"source_freshness\": \"NOT_CHECKED_BY_SAVED_READER\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false,\n  \"output_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/read\"\n}\n",
+        "stderr": "{}\n",
+        "payload": {
+          "elapsed_seconds": 0.0790707919804845,
+          "record_type": "ORDINARY_COMPANY_RESULT_VIEW_V1",
+          "company_id": "ford_motor_company",
+          "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+          "metrics": [
+            {
+              "metric_id": "B10",
+              "result_id": "sha256:c8e5b79c3b8f126c3a92e2efa6c6ba2c1bc03a123b696b761490abce2bd83c53",
+              "period_start": "2021-01-01",
+              "period_end": "2021-12-31",
+              "fiscal_year": 2021,
+              "value": null,
+              "unit": null,
+              "publication": "PUBLISHED",
+              "quality": "NONE",
+              "reason_code": "TRAIT_NOT_APPLICABLE",
+              "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+              "defect_holds": [],
+              "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+              "requested_in_latest_execution": true,
+              "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/state/updates/B10/periods/FY2021/results/458924d23f284f4eacc91398a66a7cc7"
+            },
+            {
+              "metric_id": "B11",
+              "result_id": "sha256:89d1cd924997ba7508e5e3de9eb5a2f9941a8c18c12b736d00ec372a9ba8c2ee",
+              "period_start": "2021-01-01",
+              "period_end": "2021-12-31",
+              "fiscal_year": 2021,
+              "value": null,
+              "unit": null,
+              "publication": "PUBLISHED",
+              "quality": "NONE",
+              "reason_code": "TRAIT_NOT_APPLICABLE",
+              "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+              "defect_holds": [],
+              "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+              "requested_in_latest_execution": true,
+              "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/state/updates/B11/periods/FY2021/results/4e6d428eac614b6481171d6b45314f92"
+            }
+          ],
+          "source_freshness": "NOT_CHECKED_BY_SAVED_READER",
+          "calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/read"
+        },
+        "processing_calls": {},
+        "reused_saved_execution": true
+      },
+      "rows": [
+        {
+          "company": "Ford Motor Company",
+          "cik": "37996",
+          "metric_id": "B10",
+          "metric_name": "Occupancy rate",
+          "value": "",
+          "unit": "percent",
+          "status": "N_A_STRUCTURAL",
+          "source_class": "NOT_AVAILABLE",
+          "formula": "source-reported lodging table observation",
+          "period_start": "2021-01-01",
+          "period_end": "2021-12-31",
+          "fiscal_year": "2021",
+          "fiscal_period": "STRUCTURAL",
+          "accession": "",
+          "form": "",
+          "filed_date": "",
+          "concept_or_section": "",
+          "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2021, \"period_end\": \"2021-12-31\", \"period_start\": \"2021-01-01\"}, \"measurement_kind\": \"STRUCTURAL\", \"scope\": {\"geography\": \"worldwide\", \"operating_scope\": \"systemwide\", \"property_population\": \"comparable\"}, \"selection\": {\"classification\": \"STRUCTURAL\", \"reason_code\": \"TRAIT_NOT_APPLICABLE\", \"source_extraction_failure\": false, \"statement_values_used\": false}, \"source_reference_ids\": [\"sha256:9fc7f567ee31f33b929df0694303cc3e5522c88e7afb25640fe347d2250c80d6\", \"sha256:c8c87b309c47a1eacbb481254dc031ccad771785063dab9ad376cc7fc286e3d6\", \"sha256:fda780cce9400d09e39d1c0a7f0ea4262348ca6e46b6afc3f3f002398d26c2fb\"]}",
+          "confidence": "",
+          "notes": "Trait applicability is structurally false. No financial measurement is asserted; dates retain the filing group. Native state: PUBLISHED; reason: TRAIT_NOT_APPLICABLE.",
+          "company_id": "ford_motor_company",
+          "result_id": "sha256:c8e5b79c3b8f126c3a92e2efa6c6ba2c1bc03a123b696b761490abce2bd83c53",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/state/updates/B10/periods/FY2021/results/458924d23f284f4eacc91398a66a7cc7",
+          "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+          "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+          "period_role": "REQUESTED_RESULT",
+          "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+          "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+          "defect_holds": "[]",
+          "requested_in_latest_execution": "True"
+        },
+        {
+          "company": "Ford Motor Company",
+          "cik": "37996",
+          "metric_id": "B11",
+          "metric_name": "RevPAR",
+          "value": "",
+          "unit": "USD",
+          "status": "N_A_STRUCTURAL",
+          "source_class": "NOT_AVAILABLE",
+          "formula": "source-reported lodging table observation",
+          "period_start": "2021-01-01",
+          "period_end": "2021-12-31",
+          "fiscal_year": "2021",
+          "fiscal_period": "STRUCTURAL",
+          "accession": "",
+          "form": "",
+          "filed_date": "",
+          "concept_or_section": "",
+          "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2021, \"period_end\": \"2021-12-31\", \"period_start\": \"2021-01-01\"}, \"measurement_kind\": \"STRUCTURAL\", \"scope\": {\"geography\": \"worldwide\", \"operating_scope\": \"systemwide\", \"property_population\": \"comparable\"}, \"selection\": {\"classification\": \"STRUCTURAL\", \"reason_code\": \"TRAIT_NOT_APPLICABLE\", \"source_extraction_failure\": false, \"statement_values_used\": false}, \"source_reference_ids\": [\"sha256:9fc7f567ee31f33b929df0694303cc3e5522c88e7afb25640fe347d2250c80d6\", \"sha256:c8c87b309c47a1eacbb481254dc031ccad771785063dab9ad376cc7fc286e3d6\", \"sha256:fda780cce9400d09e39d1c0a7f0ea4262348ca6e46b6afc3f3f002398d26c2fb\"]}",
+          "confidence": "",
+          "notes": "Trait applicability is structurally false. No financial measurement is asserted; dates retain the filing group. Native state: PUBLISHED; reason: TRAIT_NOT_APPLICABLE.",
+          "company_id": "ford_motor_company",
+          "result_id": "sha256:89d1cd924997ba7508e5e3de9eb5a2f9941a8c18c12b736d00ec372a9ba8c2ee",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/state/updates/B11/periods/FY2021/results/4e6d428eac614b6481171d6b45314f92",
+          "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+          "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+          "period_role": "REQUESTED_RESULT",
+          "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+          "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+          "defect_holds": "[]",
+          "requested_in_latest_execution": "True"
+        }
+      ],
+      "result_files_preserved_on_repeat": 12,
+      "state_files_preserved_on_read": 31
+    },
+    {
+      "company": "salesforce",
+      "fiscal_year": 2024,
+      "first": {
+        "arguments": [
+          "run",
+          "--company",
+          "salesforce",
+          "--period",
+          "fiscal-years",
+          "--fiscal-year-start",
+          "2024",
+          "--fiscal-year-end",
+          "2024",
+          "--metric",
+          "B10",
+          "--metric",
+          "B11",
+          "--source-root",
+          "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+          "--work-dir",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/state",
+          "--output-dir",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/runs"
+        ],
+        "seconds": 28.9567047090095,
+        "exit_code": 0,
+        "stdout": "{\n  \"elapsed_seconds\": 28.765113083005417,\n  \"record_type\": \"ORDINARY_COMPANY_EXECUTION_V1\",\n  \"company_id\": \"salesforce\",\n  \"run_id\": \"20261014T132918Z-6cf8f2e1\",\n  \"status\": \"FLOW_COMPLETED\",\n  \"selected_metrics\": [\n    \"B10\",\n    \"B11\"\n  ],\n  \"metrics\": [\n    {\n      \"metric_id\": \"B10\",\n      \"status\": \"CANDIDATE_READY\",\n      \"attempt_id\": \"44a4d1aeda9b4e73b35070eed94316de\",\n      \"version\": \"a536d7ee9a3747ea970907a0612bd545\",\n      \"result_id\": \"sha256:be6f5c06748507be2b061074521564eb62fa007aaa38e29a2f2575fc0ee2bad4\",\n      \"result_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/state/updates/B10/periods/FY2024/results/a536d7ee9a3747ea970907a0612bd545\",\n      \"calculation_performed\": true,\n      \"new_candidate_created\": true,\n      \"result_reason_code\": \"TRAIT_NOT_APPLICABLE\",\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"requested_fiscal_year\": 2024,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:be6f5c06748507be2b061074521564eb62fa007aaa38e29a2f2575fc0ee2bad4\",\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/state/updates/B10/periods/FY2024/results/a536d7ee9a3747ea970907a0612bd545\",\n      \"program_version\": {\n        \"commit\": \"8e53a5facc5fd587232afdf19c43388a8522d59b\",\n        \"has_uncommitted_changes\": true\n      }\n    },\n    {\n      \"metric_id\": \"B11\",\n      \"status\": \"CANDIDATE_READY\",\n      \"attempt_id\": \"4ca63dd66b0a4118befa1914fc374562\",\n      \"version\": \"81f7a09b65b54fc8acb5fd6d8e75a7c1\",\n      \"result_id\": \"sha256:2356d7708775a1e1631059c66cb9553a22e2036da263664677bd88f0138101e3\",\n      \"result_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/state/updates/B11/periods/FY2024/results/81f7a09b65b54fc8acb5fd6d8e75a7c1\",\n      \"calculation_performed\": true,\n      \"new_candidate_created\": true,\n      \"result_reason_code\": \"TRAIT_NOT_APPLICABLE\",\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"requested_fiscal_year\": 2024,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:2356d7708775a1e1631059c66cb9553a22e2036da263664677bd88f0138101e3\",\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/state/updates/B11/periods/FY2024/results/81f7a09b65b54fc8acb5fd6d8e75a7c1\",\n      \"program_version\": {\n        \"commit\": \"8e53a5facc5fd587232afdf19c43388a8522d59b\",\n        \"has_uncommitted_changes\": true\n      }\n    }\n  ],\n  \"source_root\": \"/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs\",\n  \"program_root\": \"/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics\",\n  \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/state\",\n  \"output_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/runs/20261014T132918Z-6cf8f2e1\",\n  \"source_mode\": \"SAVED_ONLY_NO_ONLINE_DISCOVERY\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false,\n  \"selected_fiscal_years\": [\n    2024\n  ]\n}\n",
+        "stderr": "{\"prepare_historical_lodging_year_case\": 2, \"prepare_historical_lodging_case\": 2, \"_resolve_historical_lodging_metric\": 2, \"calculate_metric\": 2}\n",
+        "payload": {
+          "elapsed_seconds": 28.765113083005417,
+          "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+          "company_id": "salesforce",
+          "run_id": "20261014T132918Z-6cf8f2e1",
+          "status": "FLOW_COMPLETED",
+          "selected_metrics": [
+            "B10",
+            "B11"
+          ],
+          "metrics": [
+            {
+              "metric_id": "B10",
+              "status": "CANDIDATE_READY",
+              "attempt_id": "44a4d1aeda9b4e73b35070eed94316de",
+              "version": "a536d7ee9a3747ea970907a0612bd545",
+              "result_id": "sha256:be6f5c06748507be2b061074521564eb62fa007aaa38e29a2f2575fc0ee2bad4",
+              "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/state/updates/B10/periods/FY2024/results/a536d7ee9a3747ea970907a0612bd545",
+              "calculation_performed": true,
+              "new_candidate_created": true,
+              "result_reason_code": "TRAIT_NOT_APPLICABLE",
+              "source_observation_errors": [],
+              "new_calls": {
+                "provider": 0,
+                "paid": 0,
+                "sec": 0
+              },
+              "production_authorized": false,
+              "requested_fiscal_year": 2024,
+              "defect_holds": [],
+              "read_result_id": "sha256:be6f5c06748507be2b061074521564eb62fa007aaa38e29a2f2575fc0ee2bad4",
+              "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/state/updates/B10/periods/FY2024/results/a536d7ee9a3747ea970907a0612bd545",
+              "program_version": {
+                "commit": "8e53a5facc5fd587232afdf19c43388a8522d59b",
+                "has_uncommitted_changes": true
+              }
+            },
+            {
+              "metric_id": "B11",
+              "status": "CANDIDATE_READY",
+              "attempt_id": "4ca63dd66b0a4118befa1914fc374562",
+              "version": "81f7a09b65b54fc8acb5fd6d8e75a7c1",
+              "result_id": "sha256:2356d7708775a1e1631059c66cb9553a22e2036da263664677bd88f0138101e3",
+              "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/state/updates/B11/periods/FY2024/results/81f7a09b65b54fc8acb5fd6d8e75a7c1",
+              "calculation_performed": true,
+              "new_candidate_created": true,
+              "result_reason_code": "TRAIT_NOT_APPLICABLE",
+              "source_observation_errors": [],
+              "new_calls": {
+                "provider": 0,
+                "paid": 0,
+                "sec": 0
+              },
+              "production_authorized": false,
+              "requested_fiscal_year": 2024,
+              "defect_holds": [],
+              "read_result_id": "sha256:2356d7708775a1e1631059c66cb9553a22e2036da263664677bd88f0138101e3",
+              "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/state/updates/B11/periods/FY2024/results/81f7a09b65b54fc8acb5fd6d8e75a7c1",
+              "program_version": {
+                "commit": "8e53a5facc5fd587232afdf19c43388a8522d59b",
+                "has_uncommitted_changes": true
+              }
+            }
+          ],
+          "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+          "program_root": "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/state",
+          "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/runs/20261014T132918Z-6cf8f2e1",
+          "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+          "calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "selected_fiscal_years": [
+            2024
+          ]
+        },
+        "processing_calls": {
+          "prepare_historical_lodging_year_case": 2,
+          "prepare_historical_lodging_case": 2,
+          "_resolve_historical_lodging_metric": 2,
+          "calculate_metric": 2
+        }
+      },
+      "repeat": {
+        "arguments": [
+          "run",
+          "--company",
+          "salesforce",
+          "--period",
+          "fiscal-years",
+          "--fiscal-year-start",
+          "2024",
+          "--fiscal-year-end",
+          "2024",
+          "--metric",
+          "B10",
+          "--metric",
+          "B11",
+          "--source-root",
+          "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+          "--work-dir",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/state",
+          "--output-dir",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/runs"
+        ],
+        "seconds": 0.7898754999914672,
+        "exit_code": 0,
+        "stdout": "{\n  \"elapsed_seconds\": 0.6288855000166222,\n  \"record_type\": \"ORDINARY_COMPANY_EXECUTION_V1\",\n  \"company_id\": \"salesforce\",\n  \"run_id\": \"20261014T132947Z-13304163\",\n  \"status\": \"FLOW_COMPLETED\",\n  \"selected_metrics\": [\n    \"B10\",\n    \"B11\"\n  ],\n  \"metrics\": [\n    {\n      \"metric_id\": \"B10\",\n      \"status\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"attempt_id\": \"1611e2e8b23f4985b7f0e7e697add296\",\n      \"version\": \"a536d7ee9a3747ea970907a0612bd545\",\n      \"result_id\": \"sha256:be6f5c06748507be2b061074521564eb62fa007aaa38e29a2f2575fc0ee2bad4\",\n      \"result_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/state/updates/B10/periods/FY2024/results/a536d7ee9a3747ea970907a0612bd545\",\n      \"result_reason_code\": \"TRAIT_NOT_APPLICABLE\",\n      \"raw_input_unchanged\": true,\n      \"calculation_performed\": false,\n      \"new_candidate_created\": false,\n      \"source_check_versions\": {\n        \"scripts/vnext/ordinary_current_update.py\": \"bc039ce9eacd3b1da9a74cda4dfefe8e9a3785225b7fc7cff1243f50d203386a\",\n        \"scripts/vnext/request_bindings.py\": \"d0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee\",\n        \"scripts/vnext/ordinary_update_compatibility.py\": \"dcd5f7fad86dd36fec7ffc1ce15cb274cd3670dba213777b6cdaa4a4090d80b9\",\n        \"scripts/vnext/ordinary_result_registration.py\": \"edf88293f2c568efc113703211bf587d3b0fc065a59c90ddbfb302acd681daee\"\n      },\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"requested_fiscal_year\": 2024,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:be6f5c06748507be2b061074521564eb62fa007aaa38e29a2f2575fc0ee2bad4\",\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/state/updates/B10/periods/FY2024/results/a536d7ee9a3747ea970907a0612bd545\",\n      \"program_version\": {\n        \"commit\": \"8e53a5facc5fd587232afdf19c43388a8522d59b\",\n        \"has_uncommitted_changes\": true\n      }\n    },\n    {\n      \"metric_id\": \"B11\",\n      \"status\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"attempt_id\": \"536443cf325e4bdd85fd09773bd17207\",\n      \"version\": \"81f7a09b65b54fc8acb5fd6d8e75a7c1\",\n      \"result_id\": \"sha256:2356d7708775a1e1631059c66cb9553a22e2036da263664677bd88f0138101e3\",\n      \"result_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/state/updates/B11/periods/FY2024/results/81f7a09b65b54fc8acb5fd6d8e75a7c1\",\n      \"result_reason_code\": \"TRAIT_NOT_APPLICABLE\",\n      \"raw_input_unchanged\": true,\n      \"calculation_performed\": false,\n      \"new_candidate_created\": false,\n      \"source_check_versions\": {\n        \"scripts/vnext/ordinary_current_update.py\": \"bc039ce9eacd3b1da9a74cda4dfefe8e9a3785225b7fc7cff1243f50d203386a\",\n        \"scripts/vnext/request_bindings.py\": \"d0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee\",\n        \"scripts/vnext/ordinary_update_compatibility.py\": \"dcd5f7fad86dd36fec7ffc1ce15cb274cd3670dba213777b6cdaa4a4090d80b9\",\n        \"scripts/vnext/ordinary_result_registration.py\": \"edf88293f2c568efc113703211bf587d3b0fc065a59c90ddbfb302acd681daee\"\n      },\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"requested_fiscal_year\": 2024,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:2356d7708775a1e1631059c66cb9553a22e2036da263664677bd88f0138101e3\",\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/state/updates/B11/periods/FY2024/results/81f7a09b65b54fc8acb5fd6d8e75a7c1\",\n      \"program_version\": {\n        \"commit\": \"8e53a5facc5fd587232afdf19c43388a8522d59b\",\n        \"has_uncommitted_changes\": true\n      }\n    }\n  ],\n  \"source_root\": \"/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs\",\n  \"program_root\": \"/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics\",\n  \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/state\",\n  \"output_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/runs/20261014T132947Z-13304163\",\n  \"source_mode\": \"SAVED_ONLY_NO_ONLINE_DISCOVERY\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false,\n  \"selected_fiscal_years\": [\n    2024\n  ]\n}\n",
+        "stderr": "{}\n",
+        "payload": {
+          "elapsed_seconds": 0.6288855000166222,
+          "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+          "company_id": "salesforce",
+          "run_id": "20261014T132947Z-13304163",
+          "status": "FLOW_COMPLETED",
+          "selected_metrics": [
+            "B10",
+            "B11"
+          ],
+          "metrics": [
+            {
+              "metric_id": "B10",
+              "status": "NO_SOURCE_CONTENT_CHANGE",
+              "attempt_id": "1611e2e8b23f4985b7f0e7e697add296",
+              "version": "a536d7ee9a3747ea970907a0612bd545",
+              "result_id": "sha256:be6f5c06748507be2b061074521564eb62fa007aaa38e29a2f2575fc0ee2bad4",
+              "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/state/updates/B10/periods/FY2024/results/a536d7ee9a3747ea970907a0612bd545",
+              "result_reason_code": "TRAIT_NOT_APPLICABLE",
+              "raw_input_unchanged": true,
+              "calculation_performed": false,
+              "new_candidate_created": false,
+              "source_check_versions": {
+                "scripts/vnext/ordinary_current_update.py": "bc039ce9eacd3b1da9a74cda4dfefe8e9a3785225b7fc7cff1243f50d203386a",
+                "scripts/vnext/request_bindings.py": "d0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee",
+                "scripts/vnext/ordinary_update_compatibility.py": "dcd5f7fad86dd36fec7ffc1ce15cb274cd3670dba213777b6cdaa4a4090d80b9",
+                "scripts/vnext/ordinary_result_registration.py": "edf88293f2c568efc113703211bf587d3b0fc065a59c90ddbfb302acd681daee"
+              },
+              "source_observation_errors": [],
+              "new_calls": {
+                "provider": 0,
+                "paid": 0,
+                "sec": 0
+              },
+              "production_authorized": false,
+              "requested_fiscal_year": 2024,
+              "defect_holds": [],
+              "read_result_id": "sha256:be6f5c06748507be2b061074521564eb62fa007aaa38e29a2f2575fc0ee2bad4",
+              "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/state/updates/B10/periods/FY2024/results/a536d7ee9a3747ea970907a0612bd545",
+              "program_version": {
+                "commit": "8e53a5facc5fd587232afdf19c43388a8522d59b",
+                "has_uncommitted_changes": true
+              }
+            },
+            {
+              "metric_id": "B11",
+              "status": "NO_SOURCE_CONTENT_CHANGE",
+              "attempt_id": "536443cf325e4bdd85fd09773bd17207",
+              "version": "81f7a09b65b54fc8acb5fd6d8e75a7c1",
+              "result_id": "sha256:2356d7708775a1e1631059c66cb9553a22e2036da263664677bd88f0138101e3",
+              "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/state/updates/B11/periods/FY2024/results/81f7a09b65b54fc8acb5fd6d8e75a7c1",
+              "result_reason_code": "TRAIT_NOT_APPLICABLE",
+              "raw_input_unchanged": true,
+              "calculation_performed": false,
+              "new_candidate_created": false,
+              "source_check_versions": {
+                "scripts/vnext/ordinary_current_update.py": "bc039ce9eacd3b1da9a74cda4dfefe8e9a3785225b7fc7cff1243f50d203386a",
+                "scripts/vnext/request_bindings.py": "d0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee",
+                "scripts/vnext/ordinary_update_compatibility.py": "dcd5f7fad86dd36fec7ffc1ce15cb274cd3670dba213777b6cdaa4a4090d80b9",
+                "scripts/vnext/ordinary_result_registration.py": "edf88293f2c568efc113703211bf587d3b0fc065a59c90ddbfb302acd681daee"
+              },
+              "source_observation_errors": [],
+              "new_calls": {
+                "provider": 0,
+                "paid": 0,
+                "sec": 0
+              },
+              "production_authorized": false,
+              "requested_fiscal_year": 2024,
+              "defect_holds": [],
+              "read_result_id": "sha256:2356d7708775a1e1631059c66cb9553a22e2036da263664677bd88f0138101e3",
+              "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/state/updates/B11/periods/FY2024/results/81f7a09b65b54fc8acb5fd6d8e75a7c1",
+              "program_version": {
+                "commit": "8e53a5facc5fd587232afdf19c43388a8522d59b",
+                "has_uncommitted_changes": true
+              }
+            }
+          ],
+          "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+          "program_root": "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/state",
+          "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/runs/20261014T132947Z-13304163",
+          "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+          "calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "selected_fiscal_years": [
+            2024
+          ]
+        },
+        "processing_calls": {}
+      },
+      "read": {
+        "arguments": [
+          "results",
+          "--company",
+          "salesforce",
+          "--state-root",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/state",
+          "--output-root",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/read"
+        ],
+        "seconds": 0.22800887501216494,
+        "exit_code": 0,
+        "stdout": "{\n  \"elapsed_seconds\": 0.07065650000004098,\n  \"record_type\": \"ORDINARY_COMPANY_RESULT_VIEW_V1\",\n  \"company_id\": \"salesforce\",\n  \"source_root\": \"/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs\",\n  \"metrics\": [\n    {\n      \"metric_id\": \"B10\",\n      \"result_id\": \"sha256:be6f5c06748507be2b061074521564eb62fa007aaa38e29a2f2575fc0ee2bad4\",\n      \"period_start\": \"2023-02-01\",\n      \"period_end\": \"2024-01-31\",\n      \"fiscal_year\": 2024,\n      \"value\": null,\n      \"unit\": null,\n      \"publication\": \"PUBLISHED\",\n      \"quality\": \"NONE\",\n      \"reason_code\": \"TRAIT_NOT_APPLICABLE\",\n      \"result_validity\": \"SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED\",\n      \"defect_holds\": [],\n      \"latest_observation\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"requested_in_latest_execution\": true,\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/state/updates/B10/periods/FY2024/results/a536d7ee9a3747ea970907a0612bd545\"\n    },\n    {\n      \"metric_id\": \"B11\",\n      \"result_id\": \"sha256:2356d7708775a1e1631059c66cb9553a22e2036da263664677bd88f0138101e3\",\n      \"period_start\": \"2023-02-01\",\n      \"period_end\": \"2024-01-31\",\n      \"fiscal_year\": 2024,\n      \"value\": null,\n      \"unit\": null,\n      \"publication\": \"PUBLISHED\",\n      \"quality\": \"NONE\",\n      \"reason_code\": \"TRAIT_NOT_APPLICABLE\",\n      \"result_validity\": \"SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED\",\n      \"defect_holds\": [],\n      \"latest_observation\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"requested_in_latest_execution\": true,\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/state/updates/B11/periods/FY2024/results/81f7a09b65b54fc8acb5fd6d8e75a7c1\"\n    }\n  ],\n  \"source_freshness\": \"NOT_CHECKED_BY_SAVED_READER\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false,\n  \"output_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/read\"\n}\n",
+        "stderr": "{}\n",
+        "payload": {
+          "elapsed_seconds": 0.07065650000004098,
+          "record_type": "ORDINARY_COMPANY_RESULT_VIEW_V1",
+          "company_id": "salesforce",
+          "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+          "metrics": [
+            {
+              "metric_id": "B10",
+              "result_id": "sha256:be6f5c06748507be2b061074521564eb62fa007aaa38e29a2f2575fc0ee2bad4",
+              "period_start": "2023-02-01",
+              "period_end": "2024-01-31",
+              "fiscal_year": 2024,
+              "value": null,
+              "unit": null,
+              "publication": "PUBLISHED",
+              "quality": "NONE",
+              "reason_code": "TRAIT_NOT_APPLICABLE",
+              "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+              "defect_holds": [],
+              "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+              "requested_in_latest_execution": true,
+              "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/state/updates/B10/periods/FY2024/results/a536d7ee9a3747ea970907a0612bd545"
+            },
+            {
+              "metric_id": "B11",
+              "result_id": "sha256:2356d7708775a1e1631059c66cb9553a22e2036da263664677bd88f0138101e3",
+              "period_start": "2023-02-01",
+              "period_end": "2024-01-31",
+              "fiscal_year": 2024,
+              "value": null,
+              "unit": null,
+              "publication": "PUBLISHED",
+              "quality": "NONE",
+              "reason_code": "TRAIT_NOT_APPLICABLE",
+              "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+              "defect_holds": [],
+              "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+              "requested_in_latest_execution": true,
+              "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/state/updates/B11/periods/FY2024/results/81f7a09b65b54fc8acb5fd6d8e75a7c1"
+            }
+          ],
+          "source_freshness": "NOT_CHECKED_BY_SAVED_READER",
+          "calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/read"
+        },
+        "processing_calls": {}
+      },
+      "rows": [
+        {
+          "company": "Salesforce",
+          "cik": "1108524",
+          "metric_id": "B10",
+          "metric_name": "Occupancy rate",
+          "value": "",
+          "unit": "percent",
+          "status": "N_A_STRUCTURAL",
+          "source_class": "NOT_AVAILABLE",
+          "formula": "source-reported lodging table observation",
+          "period_start": "2023-02-01",
+          "period_end": "2024-01-31",
+          "fiscal_year": "2024",
+          "fiscal_period": "STRUCTURAL",
+          "accession": "",
+          "form": "",
+          "filed_date": "",
+          "concept_or_section": "",
+          "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2024, \"period_end\": \"2024-01-31\", \"period_start\": \"2023-02-01\"}, \"measurement_kind\": \"STRUCTURAL\", \"scope\": {\"geography\": \"worldwide\", \"operating_scope\": \"systemwide\", \"property_population\": \"comparable\"}, \"selection\": {\"classification\": \"STRUCTURAL\", \"reason_code\": \"TRAIT_NOT_APPLICABLE\", \"source_extraction_failure\": false, \"statement_values_used\": false}, \"source_reference_ids\": [\"sha256:fe3bf7cdab815fd58dc64b19aec533b5aa58e43211b3afe820441d2c9a6706f1\", \"sha256:723155e9d5b0cedf5cdd62921925cebd9baa8509bd0c90dcc89147b3c7fe62f3\", \"sha256:f32c313070dba8edd066843d068b3352d9074b6fd89b7e002773dcebf6977d0d\"]}",
+          "confidence": "",
+          "notes": "Trait applicability is structurally false. No financial measurement is asserted; dates retain the filing group. Native state: PUBLISHED; reason: TRAIT_NOT_APPLICABLE.",
+          "company_id": "salesforce",
+          "result_id": "sha256:be6f5c06748507be2b061074521564eb62fa007aaa38e29a2f2575fc0ee2bad4",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/state/updates/B10/periods/FY2024/results/a536d7ee9a3747ea970907a0612bd545",
+          "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+          "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+          "period_role": "REQUESTED_RESULT",
+          "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+          "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+          "defect_holds": "[]",
+          "requested_in_latest_execution": "True"
+        },
+        {
+          "company": "Salesforce",
+          "cik": "1108524",
+          "metric_id": "B11",
+          "metric_name": "RevPAR",
+          "value": "",
+          "unit": "USD",
+          "status": "N_A_STRUCTURAL",
+          "source_class": "NOT_AVAILABLE",
+          "formula": "source-reported lodging table observation",
+          "period_start": "2023-02-01",
+          "period_end": "2024-01-31",
+          "fiscal_year": "2024",
+          "fiscal_period": "STRUCTURAL",
+          "accession": "",
+          "form": "",
+          "filed_date": "",
+          "concept_or_section": "",
+          "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2024, \"period_end\": \"2024-01-31\", \"period_start\": \"2023-02-01\"}, \"measurement_kind\": \"STRUCTURAL\", \"scope\": {\"geography\": \"worldwide\", \"operating_scope\": \"systemwide\", \"property_population\": \"comparable\"}, \"selection\": {\"classification\": \"STRUCTURAL\", \"reason_code\": \"TRAIT_NOT_APPLICABLE\", \"source_extraction_failure\": false, \"statement_values_used\": false}, \"source_reference_ids\": [\"sha256:fe3bf7cdab815fd58dc64b19aec533b5aa58e43211b3afe820441d2c9a6706f1\", \"sha256:723155e9d5b0cedf5cdd62921925cebd9baa8509bd0c90dcc89147b3c7fe62f3\", \"sha256:f32c313070dba8edd066843d068b3352d9074b6fd89b7e002773dcebf6977d0d\"]}",
+          "confidence": "",
+          "notes": "Trait applicability is structurally false. No financial measurement is asserted; dates retain the filing group. Native state: PUBLISHED; reason: TRAIT_NOT_APPLICABLE.",
+          "company_id": "salesforce",
+          "result_id": "sha256:2356d7708775a1e1631059c66cb9553a22e2036da263664677bd88f0138101e3",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/state/updates/B11/periods/FY2024/results/81f7a09b65b54fc8acb5fd6d8e75a7c1",
+          "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+          "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+          "period_role": "REQUESTED_RESULT",
+          "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+          "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+          "defect_holds": "[]",
+          "requested_in_latest_execution": "True"
+        }
+      ],
+      "result_files_preserved_on_repeat": 12,
+      "state_files_preserved_on_read": 31
+    }
+  ],
+  "source_metadata_unchanged": {
+    "config/company_registry.csv": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+    "evidence/requests_log.csv": "61252ac5844ad1c5917040f753c04a7ed4f6e1d75e2fb0803804773fd6c0eef9",
+    "evidence/requests_log_manifest.json": "e91193401733b86ddc28c69cbae0debd74eeb899a328e60fcfb32532ed6a85ab"
+  },
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

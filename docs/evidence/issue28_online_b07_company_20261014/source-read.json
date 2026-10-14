@@ -1,0 +1,33 @@
+{
+  "definition": "Existing B07 approved reported operating income / interest expense; no definition or calculator change.",
+  "marriott": {
+    "primary_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+    "table_order": 25,
+    "fiscal_year": 2025,
+    "period": [
+      "2025-01-01",
+      "2025-12-31"
+    ],
+    "unit": "USD millions",
+    "operating_income": "4141",
+    "interest_expense": "809",
+    "separate_interest_income": "42",
+    "net_interest_expense_not_used": "767"
+  },
+  "salesforce": {
+    "primary_sha256": "d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+    "operating_income_table": 33,
+    "fiscal_year": 2026,
+    "period": [
+      "2025-02-01",
+      "2026-01-31"
+    ],
+    "unit": "USD millions",
+    "operating_income": "8331",
+    "reported_interest_expense": "324",
+    "original_note": "Interest expense, primarily from the Company’s debt instruments for fiscal 2026, 2025, and 2024 was $324 million, $272 million and $283 million, respectively, and is included in other income in the consolidated statements of operations.",
+    "finance_lease_interest_table54": "25",
+    "no_unsupported_disjointness_or_added_amount": "No assumption that 25 is additional to the reported324; no automatic addition or recategorization. Uses existing approved InterestExpenseDebt concept backed by this actual reported-interest-expense wording."
+  },
+  "verification_scope": "Parent direct original table/narrative/CF read, finite source checks; not all finance scope independently certified or a new business policy."
+}

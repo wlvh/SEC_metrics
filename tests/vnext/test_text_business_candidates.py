@@ -110,6 +110,48 @@ class TextBusinessCandidateTest(unittest.TestCase):
         self.assertEqual("Consolidated Balance Sheets", report["closing_heading"]["text"])
         self.assertTrue(any("signature follow" in b["text"] for b in d["blocks"][report["start_block"]:report["end_block_exclusive"]]))
 
+    def test_parenthesized_titles_require_a_financial_note_region(self):
+        endings = ('<p><b>(3) Income Taxes</b></p>',
+                   '<h2>Note 3. Income Taxes</h2>')
+        leads = ("<h2>Item 5. Market for Registrant's Common Equity</h2>"
+                 "<p><b>(2) Dividends</b></p><p>We pay.</p>",
+                 '<h2>Item 1A. Risk Factors</h2>'
+                 '<p><b>(2) Our Strategy</b></p><p>Our strategy follows.</p>')
+        for lead in leads:
+            for ending in endings:
+                with self.subTest(lead=lead, ending=ending):
+                    body = BODY.replace('<h2>Item 8.', lead + '<h2>Item 8.').replace(
+                        '<h2>Note 2. Contingencies</h2>', '<p>Contingencies</p>').replace(
+                        '<h2>Note 3. Income Taxes</h2>', ending)
+                    raw = annual(body)
+                    doc = document(body)
+                    original = copy.deepcopy(doc)
+                    ref = legal_risk_candidates(document=doc, raw_bytes=raw)['note_references'][0]
+                    self.assertEqual('REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE', ref['status'])
+                    self.assertEqual([], ref['range_candidates'])
+                    self.assertEqual(original, doc)
+
+        # Excluding an outside duplicate must not turn ambiguity into success.
+        duplicated = BODY.replace('<h2>Item 8.', leads[0] + '<h2>Item 8.').replace(
+            '<h2>Note 2. Contingencies</h2>', '<p><b>(2) Contingencies</b></p>').replace(
+            '<h2>Note 3. Income Taxes</h2>', endings[0])
+        ref = legal_risk_candidates(document=document(duplicated), raw_bytes=annual(duplicated))[
+            'note_references'][0]
+        self.assertEqual('REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE', ref['status'])
+
+        # Both the actual Item 8 region and appended statements are legitimate.
+        note = BODY.replace('<h2>Note 2. Contingencies</h2>', '<p><b>(2) Contingencies</b></p>').replace(
+            '<h2>Note 3. Income Taxes</h2>', endings[0])
+        item8_note = note.replace(
+            '<h2>Item 9. Changes in and Disagreements with Accountants</h2><p>None.</p>', '') + (
+            '<h2>Item 9. Changes in and Disagreements with Accountants</h2><p>None.</p>')
+        for body in (note, item8_note):
+            with self.subTest(region=body):
+                raw = annual(body)
+                ref = prepare_business_candidates(**source_arguments(raw))[
+                    'proposals']['legal_regulatory']['note_references'][0]
+                self.assertEqual('LOCATED_NOTE_RANGE', ref['status'])
+
     def test_leading_parenthesized_note_heading_uses_the_original_peer_format(self):
         body = BODY.replace('<h2>Note 2. Contingencies</h2>', '<p><b>(2) Contingencies</b></p>').replace(
             '<h2>Note 3. Income Taxes</h2>', '<p><b>(3) Income Taxes</b></p>')
@@ -190,6 +232,97 @@ class TextBusinessCandidateTest(unittest.TestCase):
         self.assertEqual('REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE',
                          refused['note_references'][0]['status'])
         self.assertEqual([], refused['note_references'][0]['range_candidates'])
+
+    def test_appended_note_chain_after_item7_is_not_discarded_as_mda(self):
+        styled = ('<p><span style="font-size:9pt;font-weight:700">Note 3</span>'
+                  '<span style="font-size:8pt;font-weight:400">. </span>'
+                  '<span style="font-size:9pt;font-weight:700">Income Taxes</span></p>')
+        for item in ('7', '7A'):
+            for ending in ('<h2>Note 3. Income Taxes</h2>', styled):
+                with self.subTest(item=item, ending=ending):
+                    body = BODY.replace(
+                        '<h2>Item 8. Financial Statements and Supplementary Data</h2>'
+                        '<p>The financial statements follow the numbered form items.</p>',
+                        '<h2>Item ' + item + '. ' + (
+                            "Management's Discussion and Analysis" if item == '7'
+                            else 'Quantitative and Qualitative Disclosures About Market Risk') + '</h2>').replace(
+                        '<h2>Item 9. Changes in and Disagreements with Accountants</h2><p>None.</p>', ''
+                    ).replace('<h2>Note 2. Contingencies</h2>',
+                              '<h2>2. Contingencies</h2>').replace('<h2>Note 3. Income Taxes</h2>', ending)
+                    raw = annual(body)
+                    doc = document(body)
+                    original = copy.deepcopy(doc)
+                    ref = legal_risk_candidates(document=doc, raw_bytes=raw)['note_references'][0]
+                    self.assertEqual('LOCATED_NOTE_RANGE', ref['status'])
+                    start = next(i for i,b in enumerate(doc['blocks']) if b['text']=='2. Contingencies')
+                    end = next(i for i,b in enumerate(doc['blocks']) if b['text']=='Note 3. Income Taxes')
+                    self.assertEqual([(start,end)],[(r['start_block'],r['end_block_exclusive'])
+                        for r in ref['range_candidates']])
+                    self.assertEqual(original, doc)
+                    # Locating a note does not invent the missing Item 8 coverage.
+                    self.assertIn('ITEM_8_NOT_UNIQUELY_LOCATED',
+                                  legal_risk_candidates(document=doc, raw_bytes=raw)['coverage_reasons'])
+
+    def test_split_explicit_note_can_use_a_recovered_explicit_end(self):
+        styled = ('<p><span style="font-size:9pt;font-weight:700">Note 3</span>'
+                  '<span style="font-size:8pt;font-weight:400">. </span>'
+                  '<span style="font-size:9pt;font-weight:700">Income Taxes</span></p>')
+        body = BODY.replace('<h2>Note 2. Contingencies</h2>',
+                            '<h2>Note 2</h2><h2>Contingencies</h2>').replace(
+            '<h2>Note 3. Income Taxes</h2>', styled)
+        raw = annual(body)
+        doc = document(body)
+        original = copy.deepcopy(doc)
+        proposal = legal_risk_candidates(document=doc, raw_bytes=raw)
+        ref = proposal['note_references'][0]
+        self.assertEqual('LOCATED_NOTE_RANGE', ref['status'])
+        start = next(i for i, b in enumerate(doc['blocks']) if b['text'] == 'Note 2')
+        end = next(i for i, b in enumerate(doc['blocks']) if b['text'] == 'Note 3. Income Taxes')
+        self.assertEqual([(start, end)], [(r['start_block'], r['end_block_exclusive'])
+                                        for r in ref['range_candidates']])
+        actual = prepare_business_candidates(**source_arguments(raw))
+        self.assertEqual(ref, actual['proposals']['legal_regulatory']['note_references'][0])
+        self.assertEqual(original, doc)
+
+    def test_complete_prefixless_note_can_use_a_recovered_explicit_end(self):
+        styled = ('<p><span style="font-size:9pt;font-weight:700">Note 3</span>'
+                  '<span style="font-size:8pt;font-weight:400">. </span>'
+                  '<span style="font-size:9pt;font-weight:700">Income Taxes</span></p>')
+        for title in ('2) Contingencies', '2. Contingencies'):
+            with self.subTest(title=title):
+                body = BODY.replace('<h2>Note 2. Contingencies</h2>', '<h2>' + title + '</h2>').replace(
+                    '<h2>Note 3. Income Taxes</h2>', styled)
+                # A separate page number plus risk heading must stay unproved.
+                body = '<p><b>2</b></p><h2>RISKS RELATED TO LEGAL PROCEEDINGS</h2>' + body
+                raw = annual(body); doc = document(body); original = copy.deepcopy(doc)
+                proposal = legal_risk_candidates(document=doc, raw_bytes=raw)
+                reference = proposal['note_references'][0]
+                self.assertEqual('LOCATED_NOTE_RANGE', reference['status'])
+                expected = next(i for i, b in enumerate(doc['blocks']) if b['text'] == title)
+                end = next(i for i, b in enumerate(doc['blocks']) if b['text'] == 'Note 3. Income Taxes')
+                self.assertEqual([(expected, end)], [(r['start_block'], r['end_block_exclusive'])
+                    for r in reference['range_candidates']])
+                self.assertEqual(original, doc)
+                actual = prepare_business_candidates(**source_arguments(raw))
+                self.assertEqual(reference, actual['proposals']['legal_regulatory']['note_references'][0])
+
+    def test_mda_numbered_heading_cannot_supply_a_missing_financial_note(self):
+        styled = ('<p><span style="font-size:9pt;font-weight:700">Note 3</span>'
+                  '<span style="font-size:8pt;font-weight:400">. </span>'
+                  '<span style="font-size:9pt;font-weight:700">Income Taxes</span></p>')
+        mda = ("<h2>Item 7. Management's Discussion and Analysis</h2>"
+               '<h2>2. Critical Accounting Estimates</h2><p>Estimates require judgment.</p>')
+        for lead, ending in ((mda,styled),(mda,'<h2>Note 3. Income Taxes</h2>'),
+                ('<h2>2. Critical Accounting Estimates</h2><p>Estimates require judgment.</p>',styled)):
+            with self.subTest(lead=lead,ending=ending):
+                body = BODY.replace('<h2>Item 8.', lead + '<h2>Item 8.').replace(
+                    '<h2>Note 2. Contingencies</h2>', '<p>Contingencies</p>').replace(
+                    '<h2>Note 3. Income Taxes</h2>', ending)
+                raw = annual(body); doc = document(body); original = copy.deepcopy(doc)
+                ref = legal_risk_candidates(document=doc,raw_bytes=raw)['note_references'][0]
+                self.assertEqual('REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE',ref['status'])
+                self.assertEqual([],ref['range_candidates'])
+                self.assertEqual(original,doc)
 
     def test_split_note_title_requires_matching_original_identifier_format(self):
         def part(text, size=9):

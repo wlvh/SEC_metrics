@@ -146,6 +146,12 @@ def _configuration(source, company, metric, *, supplied_case=False):
     if metric == 'D04':
         from .ordinary_d04_saved_route import processing_paths
         paths.update(processing_paths())
+        if supplied_case:
+            # Historical D04 still executes the shared response/semantic/result
+            # rules. Only these proved current-only helpers are omitted here;
+            # a supplied producer that uses them retains its explicit declaration.
+            paths.difference_update({'scripts/vnext/current_d04_result.py',
+                                     'scripts/vnext/capacity_update_input.py'})
     from .ordinary_registry_scope import registered_company_row
     # The producer validates the entire program registry's profile mapping.
     # Keep that admission check before reuse; valid unrelated rows still do

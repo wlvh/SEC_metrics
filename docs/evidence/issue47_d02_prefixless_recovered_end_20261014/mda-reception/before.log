@@ -1,0 +1,33 @@
+test_mda_numbered_heading_cannot_supply_a_missing_financial_note (tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_mda_numbered_heading_cannot_supply_a_missing_financial_note) ... 
+  test_mda_numbered_heading_cannot_supply_a_missing_financial_note (tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_mda_numbered_heading_cannot_supply_a_missing_financial_note) (ending='<p><span style="font-size:9pt;font-weight:700">Note 3</span><span style="font-size:8pt;font-weight:400">. </span><span style="font-size:9pt;font-weight:700">Income Taxes</span></p>') ... FAIL
+  test_mda_numbered_heading_cannot_supply_a_missing_financial_note (tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_mda_numbered_heading_cannot_supply_a_missing_financial_note) (ending='<h2>Note 3. Income Taxes</h2>') ... FAIL
+
+======================================================================
+FAIL: test_mda_numbered_heading_cannot_supply_a_missing_financial_note (tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_mda_numbered_heading_cannot_supply_a_missing_financial_note) (ending='<p><span style="font-size:9pt;font-weight:700">Note 3</span><span style="font-size:8pt;font-weight:400">. </span><span style="font-size:9pt;font-weight:700">Income Taxes</span></p>')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_text_business_candidates.py", line 199, in test_mda_numbered_heading_cannot_supply_a_missing_financial_note
+    self.assertEqual('REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE',ref['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE' != 'LOCATED_NOTE_RANGE'
+- REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE
++ LOCATED_NOTE_RANGE
+
+
+======================================================================
+FAIL: test_mda_numbered_heading_cannot_supply_a_missing_financial_note (tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_mda_numbered_heading_cannot_supply_a_missing_financial_note) (ending='<h2>Note 3. Income Taxes</h2>')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_text_business_candidates.py", line 199, in test_mda_numbered_heading_cannot_supply_a_missing_financial_note
+    self.assertEqual('REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE',ref['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE' != 'LOCATED_NOTE_RANGE'
+- REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE
++ LOCATED_NOTE_RANGE
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.005s
+
+FAILED (failures=2)
+{"allowed_skips": 0, "errors": 0, "failures": 2, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_mda_numbered_heading_cannot_supply_a_missing_financial_note"]}

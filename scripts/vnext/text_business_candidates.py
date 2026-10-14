@@ -252,6 +252,17 @@ def _note_heading_formats(document, raw_bytes, *, emphasized_only=False, adjacen
             if not emphasized_only or start in parser.emphasized_titles}
 
 
+def _financial_note_region_start(blocks, ranges, start, form_headings):
+    """Locate Item 8 or a statement caption after the final form heading."""
+    for scope in ranges:
+        if (scope["section_id"] == "ITEM_8"
+                and scope["start_block"] <= start < scope["end_block_exclusive"]):
+            return scope["start_block"]
+    after_form = form_headings[-1]["heading_end_index"] if form_headings else -1
+    return max((i for i in range(after_form + 1, start)
+                if not blocks[i]["linked"] and _financial_report_boundary(blocks[i])), default=None)
+
+
 def _note_references(document, ranges, raw_bytes=None):
     item3 = [r for r in ranges if r["section_id"] == "ITEM_3"]
     references = {}
@@ -294,7 +305,8 @@ def _note_references(document, ranges, raw_bytes=None):
         if match and not _PATTERNS["continued_heading"].search(block["text"]):
             headings.append({"number": match.group(1).upper(), "start": i, "heading_end": end_index,
                              "explicit_prefix": bool(_PATTERNS["explicit_note_prefix"].match(block["text"])),
-                             "punctuation_emphasis": not block.get("emphasized")})
+                             "punctuation_emphasis": not block.get("emphasized"),
+                             "split_identifier": end_index != i})
     result = []
     formats = None
     form_headings = None
@@ -303,27 +315,47 @@ def _note_references(document, ranges, raw_bytes=None):
         parent = re.sub(r"[A-Z]+$", "", number)
         matched = exact or [h for h in headings if h["number"] == parent]
         candidates = []
+        unproved_parenthesized_owner = False
         for h in matched:
             base_number = int(re.match(r"\d+", h["number"])[0])
-            if blocks[h["start"]]["text"].lstrip().startswith("("):
+            if not h["explicit_prefix"]:
                 if form_headings is None:
                     form_headings = [found for i in range(len(blocks))
                                      if (found := _form_heading(blocks,i)) is not None]
                 previous_form = next((found for found in reversed(form_headings)
                                       if found["block_index"] < h["start"]),None)
-                if previous_form is not None and previous_form["item"] in {"7","7A"}:
+                inside_item8 = any(r["section_id"] == "ITEM_8" and
+                    r["start_block"] <= h["start"] < r["end_block_exclusive"] for r in ranges)
+                region_start = _financial_note_region_start(
+                    blocks, ranges, h["start"], form_headings)
+                previous_note = any(other["explicit_prefix"] and
+                    int(re.match(r"\d+", other["number"])[0]) == base_number - 1
+                    and region_start is not None and region_start < other["start"] < h["start"]
+                    for other in headings)
+                # A final Item 7/7A can precede appended statements. Require
+                # their caption and preceding explicit note before rejecting
+                # the heading as a numbered MD&A subsection.
+                if (previous_form is not None and previous_form["item"] in {"7", "7A"}
+                        and not inside_item8 and not previous_note):
                     continue
-            # A recovered mixed-format end may close an explicit Note, but
-            # must not turn a bare page number plus a nearby title into one.
+                if blocks[h["start"]]["text"].lstrip().startswith("(") and region_start is None:
+                    unproved_parenthesized_owner = True
+                    continue
+            # A recovered end can close a complete prefixless title. It must
+            # not validate a heading made from a page number and nearby text.
             possible = [other["start"] for other in headings if other["start"] > h["start"]
                         and int(re.match(r"\d+", other["number"])[0]) == base_number + 1
                         and (not h["explicit_prefix"] or other["explicit_prefix"])
-                        and (not other["punctuation_emphasis"] or h["explicit_prefix"])]
+                        and (not other["punctuation_emphasis"] or h["explicit_prefix"] or not h["split_identifier"])]
             # Without an explicit Note prefix, a same-number subsection and
             # the actual following note are indistinguishable in this view.
             # Do not silently choose the earlier one and truncate disclosure.
             if not h["explicit_prefix"] and len(possible) > 1:
                 continue
+            if not h["explicit_prefix"] and any(other["punctuation_emphasis"]
+                    for other in headings if other["start"] in possible):
+                if not inside_item8 and not previous_note:
+                    continue
             if not h["explicit_prefix"] and possible:
                 following = next(other for other in headings if other["start"] == possible[0])
                 if not following["explicit_prefix"]:
@@ -340,6 +372,10 @@ def _note_references(document, ranges, raw_bytes=None):
                 candidates.append({"section_id": "NOTE_" + h["number"], "start_block": h["start"],
                                    "end_block_exclusive": end, "requested_reference": number,
                                    "scope_relation": "EXACT_NOTE" if h["number"] == number else "WIDER_PARENT_NOTE"})
+        # An outside same-number heading remains ambiguous even if another
+        # heading has a proved owner. Do not filter it into a new success.
+        if unproved_parenthesized_owner:
+            candidates = []
         result.append({"reference": "Note " + number,
             "source_occurrences": [_excerpt(document, b, "ITEM_3", ["NOTE_REFERENCE"]) for b in reference_blocks],
             "heading_candidates": [_excerpt(document, blocks[h["start"]], "FULL_DOCUMENT_NOTES", ["NOTE_HEADING"]) for h in matched],

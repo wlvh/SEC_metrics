@@ -13,6 +13,56 @@ from vnext import historical_d04_case as cases
 
 
 class HistoricalD04CaseTest(TestCase):
+    def test_unused_current_code_keeps_historical_withholding_but_used_replay_reprocesses(self):
+        # Real configuration/controller; source and withheld result are constructed controls.
+        from vnext import ordinary_current_update as update
+        with tempfile.TemporaryDirectory() as folder:
+            state=Path(folder)/'state';records={};calls=[]
+            def factory(**kw):
+                calls.append(kw)
+                return {'target_period':{'fiscal_year':2024}}
+            def save(**kw):
+                path=kw['output_root'];path.mkdir(parents=True)
+                result={'manifest':{'company_id':'marriott_international','metric_id':'D04','source_proofs':[]},
+                    'result':{'company_id':'marriott_international','metric_id':'D04',
+                        'publication':'WITHHELD','period_end':'2024-12-31',
+                        'result_id':'constructed-history-d04-'+str(len(calls))}}
+                records[str(path)]=result
+                return result
+            args=dict(state_root=state,source_root=update.ROOT,company_id='marriott_international',
+                metric_id='D04',fiscal_year=2024,case_factory=factory,processing_files=cases.PROCESSING_FILES)
+            with patch.object(update,'_source_census',return_value=[]), \
+                 patch.object(update,'_current_sources',return_value=[]), \
+                 patch.object(update,'save_calculated_case',side_effect=save), \
+                 patch.object(update,'read_saved_result',side_effect=lambda **kw:records[str(kw['output_root'])]):
+                first=update.run_once(**args);old_path=Path(next(iter(records)))
+                actual_hash=update.sha256_file
+                for changed in ('current_d04_result.py','capacity_update_input.py'):
+                    with self.subTest(module=changed),patch.object(update,'sha256_file',side_effect=lambda *,path:
+                            'CONSTRUCTED_UNUSED_CURRENT_CHANGE' if path.name==changed else actual_hash(path=path)), \
+                         patch.object(update,'save_calculated_case',side_effect=AssertionError('No unused-current replay')):
+                        again=update.run_once(**args)
+                        self.assertEqual('PREVIOUS_INPUT_WITHHELD',again['status'])
+                        self.assertFalse(again['calculation_performed'])
+                        self.assertEqual(first['result_id'],again['result_id'])
+                self.assertEqual(1,len(calls))
+                used_changes = set()
+                for module in ('saved_d04_replay.py', 'r6_semantic_review.py', 'text_results.py'):
+                    used_changes.add(module)
+                    with self.subTest(used_module=module), patch.object(
+                            update, 'sha256_file', side_effect=lambda *, path:
+                            'CONSTRUCTED_USED_RULE_CHANGE' if path.name in used_changes
+                            else actual_hash(path=path)):
+                        changed = update.run_once(**args)
+                        self.assertTrue(changed['calculation_performed'])
+                        with patch.object(update, 'save_calculated_case',
+                                          side_effect=AssertionError('No repeated processing')):
+                            repeated = update.run_once(**args)
+                        self.assertEqual('PREVIOUS_INPUT_WITHHELD', repeated['status'])
+                        self.assertEqual(1 + len(used_changes), len(calls))
+                self.assertEqual(4, len(calls))
+                self.assertTrue(old_path.is_dir())
+
     def test_used_historical_catalog_is_a_processing_dependency(self):
         # Constructed control state, not a financial conclusion. A changed
         # catalog must invalidate this producer's stable withholding once.

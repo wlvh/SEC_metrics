@@ -35,6 +35,49 @@ class SelectedLodgingCalculationTest(unittest.TestCase):
         args.update(changes)
         return calculate_selected_lodging_metric(**args)
 
+    def test_historical_nonhotel_uses_structural_calculator_and_preserves_the_period(self):
+        from vnext import historical_lodging_results as historical
+        from unittest.mock import MagicMock
+        # Constructed preparation/control metadata; no financial claim or saved source credit.
+        reader = MagicMock()
+        reader.records = {}
+        reader.proofs = {}
+        reader.primary.return_value = {'source_reference': {'source_reference_id': 'constructed-control'}}
+        for year, start, end in ((2021, '2021-01-01', '2021-12-31'),
+                                 (2024, '2024-02-04', '2025-02-01')):
+            prepared = {'company_id': 'ford_motor_company', 'entity': '37996',
+                        'filing': {'accessionNumber': '0000037996-25-000001'},
+                        'table_input': {'target_period': {'fiscal_year': year,
+                                       'period_start': start, 'period_end': end}},
+                        'source_proofs': [], 'amendments': [],
+                        'subject_policy': {'mode': 'CONTINUOUS_PRIMARY'}}
+            for metric in ('B10', 'B11'):
+                with self.subTest(metric=metric, year=year), \
+                     patch.object(historical, 'prepare_historical_annual_input', return_value=prepared), \
+                     patch.object(historical, '_Sources', return_value=reader), \
+                     patch.object(historical, 'verify_ordinary_source_proofs', return_value={}), \
+                     patch.object(historical, 'inspect_with_older_introduction',
+                                  side_effect=AssertionError('No lodging table for nonhotel')):
+                    case = historical.prepare_historical_lodging_case(
+                        repo_root=ROOT, company_id='ford_motor_company', metric_id=metric,
+                        period_selection={'constructed_control': True}, rules_root=ROOT)
+                    result = case['results'][metric]
+                    self.assertEqual(('N_A_STRUCTURAL', 'TRAIT_NOT_APPLICABLE', None, None),
+                                     tuple(result[k] for k in ('applicability', 'reason_code', 'value', 'unit')))
+                    self.assertEqual((start, end), (result['period_start'], result['period_end']))
+                    self.assertEqual([], case['observations'])
+                    self.assertEqual('STRUCTURAL', case['selection']['classification'])
+                    self.assertEqual('37996', case['traces'][metric]['calculation_target']['entity'])
+
+    def test_historical_source_failure_does_not_become_structural_na(self):
+        from vnext import historical_lodging_results as historical
+        with patch.object(historical, 'prepare_historical_annual_input',
+                          side_effect=ValueError('CONSTRUCTED_PERIOD_OR_SOURCE_FAILURE')), \
+             self.assertRaisesRegex(ValueError, 'CONSTRUCTED_PERIOD_OR_SOURCE_FAILURE'):
+            historical.prepare_historical_lodging_case(
+                repo_root=ROOT, company_id='ford_motor_company', metric_id='B10',
+                period_selection={'constructed_control': True}, rules_root=ROOT)
+
     def test_both_metrics_reach_calculator_without_selecting_or_reading_again(self):
         with patch('vnext.normal_lodging_results.prepare_saved_annual_input',side_effect=AssertionError('No selection')), \
              patch.object(source,'prepare_saved_lodging_source',side_effect=AssertionError('No reread')):

@@ -1,0 +1,18 @@
+test_split_explicit_note_can_use_a_recovered_explicit_end (tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_split_explicit_note_can_use_a_recovered_explicit_end) ... FAIL
+
+======================================================================
+FAIL: test_split_explicit_note_can_use_a_recovered_explicit_end (tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_split_explicit_note_can_use_a_recovered_explicit_end)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_text_business_candidates.py", line 176, in test_split_explicit_note_can_use_a_recovered_explicit_end
+    self.assertEqual('LOCATED_NOTE_RANGE', ref['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'LOCATED_NOTE_RANGE' != 'REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE'
+- LOCATED_NOTE_RANGE
++ REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.004s
+
+FAILED (failures=1)

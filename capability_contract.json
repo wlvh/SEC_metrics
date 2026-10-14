@@ -420,7 +420,7 @@
         "anchor_id": "CAPABILITY.local_company_run",
         "type": "capability",
         "status": "active",
-        "statement": "保留原生版本的本地run薄编排复用现有发现/capture、公司交接、原生计算及公司冷出口；新固定树从仅登记/规则/空账本开始，不搬入保存财报或#28/#47私人额度。每次摘要和矩阵列配置39项及本次/旧结果身份，缺业务接口与判断不冒充完成；局部更新及来源阶段失败保留可原生读取旧结果。当前仅latest-complete-fy；独立acquire只获取，不重复旧计算。组件明确模拟阶段；实际空源29+2为录制，非真实SEC验收。已有判断按独立输入及原版本认证/来源等价复用，无新模型调用权限。Marriott真实首次、复跑和局部重入已在获准额度内完成（docs/evidence/issue54_company/live2）；不授Merge/部署/发布/active。 main 已接收 PR83 的有限 run/acquire --call-context，接原计数上下文到普通B01/B02计算和CSV；只替换外部HTTP的原件接缝已验证，新轻量在线39项及新AI未接入，不继承原生流程的全部新任务信用。整体状态从run_summary.json读，计算阶段记录单独说明。 本分支候选还允许显式B04复用同一发现/获取/计算/CSV路径，默认指标仍为B01/B02；Marriott FY2025及Salesforce FY2026的完整录制接缝已验证。该能力尚待main接收，不新增真实SEC用途或额度，不代表在线39项齐备。",
+        "statement": "保留原生版本的本地run薄编排复用现有发现/capture、公司交接、原生计算及公司冷出口；新固定树从仅登记/规则/空账本开始，不搬入保存财报或#28/#47私人额度。每次摘要和矩阵列配置39项及本次/旧结果身份，缺业务接口与判断不冒充完成；局部更新及来源阶段失败保留可原生读取旧结果。当前仅latest-complete-fy；独立acquire只获取，不重复旧计算。组件明确模拟阶段；实际空源29+2为录制，非真实SEC验收。已有判断按独立输入及原版本认证/来源等价复用，无新模型调用权限。Marriott真实首次、复跑和局部重入已在获准额度内完成（docs/evidence/issue54_company/live2）；不授Merge/部署/发布/active。 main 已接收 PR83 的有限 run/acquire --call-context，接原计数上下文到普通B01/B02计算和CSV；只替换外部HTTP的原件接缝已验证，新轻量在线39项及新AI未接入，不继承原生流程的全部新任务信用。整体状态从run_summary.json读，计算阶段记录单独说明。 main已接收显式B04到同一发现/获取/计算/CSV路径，默认指标仍为B01/B02。本分支候选另接显式B07，复用已有报表计算；Marriott FY2025及Salesforce FY2026已通过原件HTTP录制、禁计算复跑和独立CSV读取。B07尚待main接收，业务结果未正式采纳，不新增真实SEC用途或额度，不代表在线39项齐备。",
         "audience": [
           "business_user",
           "operator",
@@ -457,6 +457,20 @@
         "test_anchor": "tests/vnext/test_securegpt_probe.py::ProcessTests",
         "test_status": "automated_recorded",
         "since": "2026-10-09"
+      },
+      {
+        "anchor_id": "CAPABILITY.databricks_offline_package",
+        "type": "capability",
+        "status": "active",
+        "statement": "tools/databricks/build_offline_package.py在能访问GitHub的电脑上从固定commit下载程序文件与一家公司已存档的SEC原件，逐个按git blob哈希核对；SEC正文只收与请求账本记录的SHA-256和长度一致的字节，被后来采集覆盖的工作副本列出并排除；生成确定性zip与PACKAGE.json，不向SEC发请求。目录附带用默认commit打好的万豪包，测试核对其与默认commit及请求账本一致。company_metrics_notebook.py在无外网的Databricks上逐个文件核对PACKAGE.json后（只防上传损坏，不鉴别整个zip是否被替换），用tools/vnext_company.py run --source-root离线计算，并如实报告程序统计的provider/paid/sec调用数。仓库测试只用假GitHub与桩计算程序；真实Databricks集群的结果须另行取得。不能获取仓库尚未存档的新申报，计算不调用任何模型，不是#28 N1内网transport，不改变外网DeepSeek路径、调用账本或任何指标调用点。",
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_databricks_offline_package.py::PackageBuilderTest",
+        "test_status": "automated_recorded",
+        "since": "2026-10-14"
       }
     ],
     "capability_boundaries": [

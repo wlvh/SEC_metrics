@@ -17,7 +17,7 @@ from pathlib import Path
 from sec_urls import companyfacts_url, submissions_url
 
 from .annual_sources import saved_source
-from .calculator import metric_is_applicable, withheld_metric_result
+from .calculator import calculate_metric, metric_is_applicable, withheld_metric_result
 from .canonical import content_hash, sha256_file
 from .historical_annual_input import prepare_historical_annual_input
 from . import lodging_table_source as frozen_lodging
@@ -238,55 +238,58 @@ def _resolve_historical_lodging_metric(*, repo_root: Path, company_id: str, metr
     observation, asset, limitation = None, None, None
     selection = None
     if not metric_is_applicable(applicability=spec["compiled"]["applicability"], traits=traits):
-        # Reached only when the dispatcher sends a non-lodging company here.
-        # The structural route owns that answer, so this refuses rather than
-        # producing a second one under a different record type.
-        _need(False, "HISTORICAL_LODGING_METRIC_NOT_APPLICABLE:" + company_id,
-              "IMPLEMENTATION_GAP")
-    # The first shared company receiving slice is unamended lodging only.
-    # Preserve amended filings in the selector and explicitly report the
-    # missing adapter; never replace them or call a missing legacy module.
-    _need(not prepared['amendments'],
-          'HISTORICAL_LODGING_AMENDMENT_ADAPTER_NOT_RECEIVED', 'IMPLEMENTATION_GAP')
-    try:
-        _need(prepared["subject_policy"]["mode"] == "CONTINUOUS_PRIMARY",
-              "HISTORICAL_LODGING_SUCCESSOR_SCOPE_NOT_IMPLEMENTED", "IMPLEMENTATION_GAP")
-        saved = saved_source(repo_root=root, url=table_input["source_url"],
-                             accession=table_input["accession"])
-        proof = saved["proof"]
-        blob = raw_blob_record(repo_root=root,
-                               repo_relative_path=proof["request_repo_relative_path"],
-                               media_type="text/html")
-        reference = primary["source_reference"]
-        _need(reference["raw_asset_id"] == blob["raw_asset_id"],
-              "HISTORICAL_LODGING_PRIMARY_SOURCE_CONFLICT")
-        component = inspect_with_older_introduction(
-            raw=saved["raw"], blob=blob, reference=reference, filing=prepared["filing"],
-            company_id=company_id, cik=prepared["entity"], period=period)
-        fact = component["selection"]["facts"][metric_id]
-        _need(fact["scope"] == scope and fact["period"] == period,
-              "HISTORICAL_LODGING_SCOPE_OR_PERIOD_CHANGED")
+        result, trace, _ = calculate_metric(
+            compiled_spec=spec,
+            target={**target, "accession": prepared["filing"]["accessionNumber"],
+                    "entity": prepared["entity"]},
+            company_traits=traits, structured_facts=[], verified_observations=[])
+        selection = {"classification": "STRUCTURAL", "reason_code": "TRAIT_NOT_APPLICABLE",
+                     "statement_values_used": False, "source_extraction_failure": False}
+    else:
+        # The first shared company receiving slice is unamended lodging only.
+        # Preserve amended filings in the selector and explicitly report the
+        # missing adapter; never replace them or call a missing legacy module.
+        _need(not prepared['amendments'],
+              'HISTORICAL_LODGING_AMENDMENT_ADAPTER_NOT_RECEIVED', 'IMPLEMENTATION_GAP')
         try:
-            calculated = calculate_selected_lodging_metric(
-                prepared=prepared, component=component, reference=reference,
-                metric_id=metric_id, spec=spec, traits=traits)
-        except SelectedLodgingCalculationError as error:
-            raise HistoricalLodgingError(str(error)) from error
-        observation, result, trace = (calculated[key]
-                                     for key in ("observation", "result", "trace"))
-        asset = component["derived_asset"]
-        selection = calculated["selection"]
-    except (HistoricalLodgingError, LodgingSourceError) as error:
-        reason_code = "HISTORICAL_LODGING_SOURCE_ROUTE_UNRESOLVED"
-        if isinstance(error, HistoricalLodgingError) and getattr(error, "category", None) \
-                == "IMPLEMENTATION_GAP":
-            raise
-        result, trace = withheld_metric_result(compiled_spec=spec, target=target,
-                                               reason_code=reason_code)
-        limitation = {"metric_id": metric_id, "reason": str(error),
-                      "category": getattr(error, "category", None) or "SOURCE_UNAVAILABLE"}
-        selection = {"classification": "SOURCE_OR_IMPLEMENTATION_UNRESOLVED",
-                     "reason": str(error), "reason_code": result["reason_code"]}
+            _need(prepared["subject_policy"]["mode"] == "CONTINUOUS_PRIMARY",
+                  "HISTORICAL_LODGING_SUCCESSOR_SCOPE_NOT_IMPLEMENTED", "IMPLEMENTATION_GAP")
+            saved = saved_source(repo_root=root, url=table_input["source_url"],
+                                 accession=table_input["accession"])
+            proof = saved["proof"]
+            blob = raw_blob_record(repo_root=root,
+                                   repo_relative_path=proof["request_repo_relative_path"],
+                                   media_type="text/html")
+            reference = primary["source_reference"]
+            _need(reference["raw_asset_id"] == blob["raw_asset_id"],
+                  "HISTORICAL_LODGING_PRIMARY_SOURCE_CONFLICT")
+            component = inspect_with_older_introduction(
+                raw=saved["raw"], blob=blob, reference=reference, filing=prepared["filing"],
+                company_id=company_id, cik=prepared["entity"], period=period)
+            fact = component["selection"]["facts"][metric_id]
+            _need(fact["scope"] == scope and fact["period"] == period,
+                  "HISTORICAL_LODGING_SCOPE_OR_PERIOD_CHANGED")
+            try:
+                calculated = calculate_selected_lodging_metric(
+                    prepared=prepared, component=component, reference=reference,
+                    metric_id=metric_id, spec=spec, traits=traits)
+            except SelectedLodgingCalculationError as error:
+                raise HistoricalLodgingError(str(error)) from error
+            observation, result, trace = (calculated[key]
+                                         for key in ("observation", "result", "trace"))
+            asset = component["derived_asset"]
+            selection = calculated["selection"]
+        except (HistoricalLodgingError, LodgingSourceError) as error:
+            reason_code = "HISTORICAL_LODGING_SOURCE_ROUTE_UNRESOLVED"
+            if isinstance(error, HistoricalLodgingError) and getattr(error, "category", None) \
+                    == "IMPLEMENTATION_GAP":
+                raise
+            result, trace = withheld_metric_result(compiled_spec=spec, target=target,
+                                                   reason_code=reason_code)
+            limitation = {"metric_id": metric_id, "reason": str(error),
+                          "category": getattr(error, "category", None) or "SOURCE_UNAVAILABLE"}
+            selection = {"classification": "SOURCE_OR_IMPLEMENTATION_UNRESOLVED",
+                         "reason": str(error), "reason_code": result["reason_code"]}
     proofs_by_id = {}
     for entry in [*prepared["source_proofs"],
                   *(value["proof"] for value in reader.proofs.values())]:

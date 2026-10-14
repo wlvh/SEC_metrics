@@ -1,0 +1,19 @@
+E
+======================================================================
+ERROR: test_refreshed_companyfacts_with_same_complete_fiscal_input_and_task_can_reuse (tests.vnext.test_d04_provenance_reuse.D04CompanyfactsProvenanceTest.test_refreshed_companyfacts_with_same_complete_fiscal_input_and_task_can_reuse)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_d04_provenance_reuse.py", line 72, in test_refreshed_companyfacts_with_same_complete_fiscal_input_and_task_can_reuse
+    receipt=source_equivalence(current=current,original=original)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/scripts/vnext/capacity_update_input.py", line 74, in source_equivalence
+    need(_annual_content(current['prepared_annual_input'],ignore_companyfacts_attempt=ignore_attempt)
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/scripts/vnext/capacity_utilization_source.py", line 29, in need
+    if not value:raise ValueError(reason)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: UPDATE_NATIVE_ANNUAL_SELECTION_CHANGED
+
+----------------------------------------------------------------------
+Ran 1 test in 0.008s
+
+FAILED (errors=1)

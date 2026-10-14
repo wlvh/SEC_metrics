@@ -1,0 +1,17 @@
+E
+======================================================================
+ERROR: test_explicit_b07_reaches_capture_but_requires_its_existing_context_scope (tests.vnext.test_company_online.CompanyOnlineTest.test_explicit_b07_reaches_capture_but_requires_its_existing_context_scope)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_company_online.py", line 52, in test_explicit_b07_reaches_capture_but_requires_its_existing_context_scope
+    online.run_online_company(company_id='marriott_international',
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/scripts/vnext/company_online.py", line 230, in run_online_company
+    _need(metrics and len(metrics)==len(set(metrics)) and set(metrics)<=ONLINE_METRICS,'METRIC_NOT_CONNECTED')
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/scripts/vnext/company_online.py", line 31, in _need
+    raise ValueError('COMPANY_ONLINE_' + reason)
+ValueError: COMPANY_ONLINE_METRIC_NOT_CONNECTED
+
+----------------------------------------------------------------------
+Ran 1 test in 0.027s
+
+FAILED (errors=1)
