@@ -2,14 +2,13 @@
 
 <!-- capability-anchor: CAPABILITY.databricks_offline_package -->
 
-做法：在能上 GitHub 的电脑上，把“程序 + 一家公司已存档的 SEC 原件”打成一个 zip；传到 Databricks 后离线计算。另有一个只调用一次 SecureGPT 的检查 notebook，和计算互不依赖。
+做法：在能上 GitHub 的电脑上，把“程序 + 一家公司已存档的 SEC 原件”打成一个 zip；传到 Databricks 后离线计算，不调用任何模型。
 
 | 文件 | 在哪运行 | 作用 |
 |---|---|---|
 | `tools/databricks/build_offline_package.py` | 能访问 github.com 的电脑（Python 3.8+，只用标准库） | 打包，不向 SEC 发请求 |
 | `tools/databricks/sec_metrics_marriott_international_681b35d8.zip` | — | 用默认版本打好的万豪包，可直接上传 |
 | `tools/databricks/company_metrics_notebook.py` | Databricks | 核对包内每个文件后离线计算，不访问外网、不调用模型 |
-| `tools/databricks/securegpt_check_notebook.py` | Databricks（能跑公司 SecureGPT 测试 notebook 的集群） | 只调用一次 SecureGPT，检查 `scripts/securegpt_sdk.py` |
 
 ## 为什么不在打包时直接从 SEC 下载
 
@@ -58,38 +57,13 @@ python3 build_offline_package.py --company marriott_international    # 生成 se
 - 状态不是 PASS 时，摘要的 `flow_status` 是程序给出的流程状态，`metric_failures` 列出没有就绪的指标及原因。
 - `CANDIDATE_READY` 只表示候选结果已生成，不等于业务验收。
 
-## 第三步（可选）：SecureGPT 检查
+## 这个 notebook 证明什么
 
-1. 挂到能跑公司 SecureGPT 测试 notebook 的集群，导入 `securegpt_check_notebook.py`。
-2. 先单独运行 `%pip install thinc` 那一格（公司配置代码需要）。
-3. 改设置格：`PD_ROOT` 是公司 Databricks 代码库所在目录（含 `config.py`、`config/`、`utils/`）；`PACKAGE_ZIP` 同上；`DEPLOYMENT` 默认 `"55"`（gpt-5.5），`None` 表示 SDK 默认模型；`SDK_ENV` 一般保持 `None`，按工作区自动判断 dv/pp/pr。
-4. 运行。全程只取一次令牌、只发一次请求。摘要不含密钥或令牌，可以直接转发。
-
-| 状态 | 含义与处理 |
-|---|---|
-| `PASS` | 消息格式、发送、读回答、读用量都正常；`model` 显示实际服务的部署 |
-| `SETTINGS_INVALID` | `DEPLOYMENT` 不是允许的取值，没有任何调用 |
-| `SEC_METRICS_PACKAGE_FAILED` | zip 路径不对或文件核对不通过 |
-| `COMPANY_CONFIG_FAILED` | 公司配置没加载成功：检查 `PD_ROOT`、`%pip install thinc`，并确认公司自己的测试 notebook 在这个集群上能跑 |
-| `SDK_ENV_UNKNOWN` | 当前工作区在公司配置里没有对应的 dv/pp/pr，在 `SDK_ENV` 里手动填 |
-| `SDK_INIT_FAILED` | `SecureGPT(env)` 初始化失败，多半是该环境缺某个模型地址或 secret 配置 |
-| `TOKEN_FAILED` | 读密钥或令牌服务失败：当前账号读不了 secret scope，或令牌服务拒绝了凭证 |
-| `SEC_METRICS_IMPORT_FAILED` | 没能从包里加载 `probe_securegpt` / `securegpt_sdk` |
-| `REQUEST_FAILED` | 发请求时出错，远端是否已执行未知，**不要直接重跑**；SDK 只把真实原因打印在以 `Error making request to GPT endpoint` 开头的那一行 |
-| `RESPONSE_UNREADABLE` | SDK 返回的对象无法读取 |
-| `SERVICE_RETURNED_ERROR` | 网关或服务返回了错误体：401 常见于订阅密钥或令牌问题；消息提到 api-version 时是该模型地址的接口版本需要更新 |
-| `ANSWER_NOT_USABLE` | 有回答，但不是纯 JSON（例如包了 ```` ```json ```` 代码块）、被过滤或截断，或随机标记/求和不对；看 `assistant_text_preview` |
-
-我们发出的请求体只有 `messages`，不带 `max_tokens`、`temperature` 等参数，因此不会触发新模型对这类参数的限制。公司配置里的模型地址带固定 api-version，较新的模型是否接受该版本只能由真实调用回答；如果 `"55"` 报 api-version 错误，可以把 `DEPLOYMENT` 改为 `None` 再试一次，区分“5.5 地址的问题”和“整体连接的问题”。
-
-## 两个 notebook 证明什么
-
-计算部分不调用 SecureGPT，所选指标本身也不需要模型。两者都 PASS 只说明两件事：项目代码能在 Databricks 上离线计算；`securegpt_sdk` 能和公司 SDK 正常配合。它**不**说明项目已经在 Databricks 上用 SecureGPT 计算指标：把 SecureGPT 接进指标计算的调用边界（#28 N1）尚未实现。检查 notebook 也不覆盖 `securegpt_sdk.open_client` / `bootstrap`（其环境名 dev/pp/prod 与 SDK 的 dv/pp/pr 尚不一致）、探针命令行的子进程与超时，以及 OpenShift。
+计算不调用 SecureGPT 或任何模型，所选指标本身也不需要模型。PASS 说明项目代码能在 Databricks 上用离线包算出这些指标，**不**说明项目已经在 Databricks 上用 SecureGPT 计算指标：把内网模型接进指标计算的调用边界（#28 N1）尚未实现。SecureGPT 连通检查要用到公司内部 SDK 的名称，不放在公开仓库；它沿用离线包里的 `tools/probe_securegpt.py` 与 `scripts/securegpt_sdk.py`。
 
 ## 已验证范围（2026-10-14）
 
 - 打包：在 `681b35d8` 上为万豪从 GitHub 实际打包，645 个文件、74 次已存档 SEC 请求、40 个原件、排除 2 个被覆盖的工作副本，zip SHA-256 为 `388d49c206d1688a6011e93a8a2c0e47ce93499713713c72e360d9c005049fd4`，重打字节相同。
 - 计算 notebook：用上面的包在 Python 3.10、3.11、3.12、3.13 上运行均为 PASS，数值同上表，调用数全为 0；首次约 30–55 秒，重跑约 5 秒。Python 3.10 对应 Databricks 13.3/14.3 LTS，3.11 对应 15.4 LTS，3.12 对应 16.x 及以后。
-- SecureGPT notebook：用公司 SDK 代码的本地抄本（未提交）加模拟的令牌服务、模型网关、dbutils 和 spark 运行，正常回答为 PASS 且请求发往 gpt-5.5 地址；401 错误体、代码块包裹的 JSON 等情况按上表报告，每次只有一次令牌请求与一次对话请求。
-- 仓库测试：见 `TESTING.md`「Databricks 离线包测试」，只用假 GitHub、桩程序与模拟 SDK。
-- **未验证**：真实 Databricks 集群（Volume 路径、集群访问模式、本地盘权限）、真实的 secret scope 与令牌服务、真实的 gpt-5.5 调用。这些结果需要在目标环境实际运行后单独报告。
+- 仓库测试：见 `TESTING.md`「Databricks 离线包测试」，只用假 GitHub 与桩程序。
+- **未验证**：真实 Databricks 集群（Volume 路径、集群访问模式、本地盘权限）。结果需要在目标环境实际运行后单独报告。

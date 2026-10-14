@@ -1,9 +1,9 @@
-"""OFFLINE checks for tools/databricks: the package builder and both Databricks notebooks.
+"""OFFLINE checks for tools/databricks: the package builder, the shipped package and the notebook.
 
-GitHub is an in-memory fake, the company run is a stub CLI and SecureGPT is a
-synthetic SDK, so nothing here reaches the network, SEC or a model. Passing
-these tests is not evidence that a real Databricks cluster, the real company
-run or a real SecureGPT deployment works; see docs/databricks_offline_run.md.
+GitHub is an in-memory fake and the company run is a stub CLI, so nothing here
+reaches the network, SEC or a model. Passing these tests is not evidence that a
+real Databricks cluster or the real company run works; see
+docs/databricks_offline_run.md.
 """
 from contextlib import redirect_stderr, redirect_stdout
 import csv
@@ -11,13 +11,10 @@ import hashlib
 import importlib.util
 import io
 import json
-import os
 from pathlib import Path
 import re
 import runpy
-import sys
 import tempfile
-import types
 import unittest
 from unittest import mock
 import urllib.parse
@@ -365,157 +362,6 @@ class CompanyMetricsNotebookTest(unittest.TestCase):
         self.assertIsNone(summary)
         self.assertIn('differ from PACKAGE.json', str(raised))
         self.assertFalse((self.temp / 'work' / 'state-acme_hotels').exists())
-
-
-FAKE_SECURE_GPT = r'''
-import json, os, re
-from pathlib import Path
-LOG = Path(os.environ['FAKE_SECUREGPT_LOG'])
-
-
-def record(event, **data):
-    with LOG.open('a', encoding='utf-8') as stream:
-        stream.write(json.dumps({'event': event, **data}) + '\n')
-
-
-class SecureGPT:
-    def __init__(self, env):
-        if env not in ('dv', 'pp', 'pr'):
-            raise AttributeError(env)
-        self.env = env
-
-    def get_token(self):
-        record('token', env=self.env)
-
-    def request(self, json_data, url=None):
-        record('request', url=url, keys=sorted(json_data))
-        mode = os.environ['FAKE_SECUREGPT_MODE']
-        if mode == 'sdk_error':
-            raise UnboundLocalError("local variable 'response' referenced before assignment")
-        if mode == 'apim401':
-            return {'statusCode': 401, 'message': 'Access denied due to invalid subscription key.'}
-        text = ''.join(part['text'] for message in json_data['messages'] for part in message['content'])
-        nonce = re.search(r'"([0-9a-f]{24})"', text).group(1)
-        a, b = map(int, re.search(r'(\d+)\D+(\d+)\D*$', text).groups())
-        content = json.dumps({'nonce': nonce, 'sum': a + b})
-        if mode == 'fenced':
-            content = '```json\n' + content + '\n```'
-        return {'choices': [{'finish_reason': 'stop', 'index': 0,
-                             'message': {'role': 'assistant', 'content': content}}],
-                'model': 'deployment-for-' + str(url), 'object': 'chat.completion',
-                'usage': {'prompt_tokens': 80, 'completion_tokens': 11, 'total_tokens': 91}}
-'''
-
-FAKE_COMPANY_CONFIG = r'''
-import json, os
-from pathlib import Path
-
-
-def get_main_config(path, env, flag):
-    with Path(os.environ['FAKE_SECUREGPT_LOG']).open('a', encoding='utf-8') as stream:
-        stream.write(json.dumps({'event': 'config', 'path': path, 'env': env, 'flag': flag}) + '\n')
-'''
-
-FAKE_CONFIG_UTILS = r'''
-def load_config(config, field):
-    assert (config, field) == ('general', 'workspace')
-    return {'environment': {'adb-known.example': 'dv'}}
-'''
-
-SHARED_MODULES = ('config', 'utils', 'utils.config_utils', 'utils.secure_gpt', 'probe_securegpt', 'securegpt_sdk')
-
-
-class SecureGptCheckNotebookTest(unittest.TestCase):
-    notebook = TOOLS / 'securegpt_check_notebook.py'
-
-    def setUp(self):
-        temp = tempfile.TemporaryDirectory()
-        self.addCleanup(temp.cleanup)
-        self.temp = Path(temp.name)
-        pd_root = self.temp / 'company'
-        (pd_root / 'utils').mkdir(parents=True)
-        (pd_root / 'config.py').write_text(FAKE_COMPANY_CONFIG, encoding='utf-8')
-        (pd_root / 'utils' / '__init__.py').write_text('', encoding='utf-8')
-        (pd_root / 'utils' / 'config_utils.py').write_text(FAKE_CONFIG_UTILS, encoding='utf-8')
-        (pd_root / 'utils' / 'secure_gpt.py').write_text(FAKE_SECURE_GPT, encoding='utf-8')
-        self.pd_root = pd_root
-        self.zip_path = self.temp / 'package.zip'
-        write_package(self.zip_path, {
-            'program/tools/probe_securegpt.py': (ROOT / 'tools' / 'probe_securegpt.py').read_bytes(),
-            'program/scripts/securegpt_sdk.py': (ROOT / 'scripts' / 'securegpt_sdk.py').read_bytes()})
-        self.log = self.temp / 'calls.jsonl'
-        # The notebook changes directory, sys.path and these module names, as it does on Databricks;
-        # restore them so other tests in the same process keep their own modules.
-        saved_modules = {name: sys.modules[name] for name in SHARED_MODULES if name in sys.modules}
-        saved_path, saved_cwd = list(sys.path), os.getcwd()
-
-        def restore():
-            os.chdir(saved_cwd)
-            sys.path[:] = saved_path
-            for name in SHARED_MODULES:
-                sys.modules.pop(name, None)
-            sys.modules.update(saved_modules)
-        self.addCleanup(restore)
-        for name in SHARED_MODULES:
-            sys.modules.pop(name, None)
-        # A same-named probe elsewhere on the path must not replace the packaged one.
-        sys.path.insert(0, str(ROOT / 'tools'))
-
-    def run_check(self, mode='answer', *, deployment='55', workspace='adb-known.example', sdk_env=None):
-        spark = types.SimpleNamespace(conf=types.SimpleNamespace(get=lambda key: workspace))
-        settings = {'PD_ROOT': str(self.pd_root), 'PACKAGE_ZIP': str(self.zip_path),
-                    'WORK_ROOT': str(self.temp / 'work'), 'DEPLOYMENT': deployment, 'SDK_ENV': sdk_env}
-        with mock.patch.dict(os.environ, {'FAKE_SECUREGPT_LOG': str(self.log), 'FAKE_SECUREGPT_MODE': mode}):
-            summary, raised, _ = run_notebook(self.notebook, settings, {'spark': spark})
-        events = [json.loads(line) for line in self.log.read_text().splitlines()] if self.log.exists() else []
-        return summary, raised, events
-
-    def requests(self, events):
-        return [event for event in events if event['event'] == 'request']
-
-    def test_one_call_to_the_chosen_deployment_passes(self):
-        summary, raised, events = self.run_check()
-        self.assertIsNone(raised)
-        self.assertEqual(summary['status'], 'PASS')
-        self.assertEqual([event['event'] for event in events], ['config', 'token', 'request'])
-        self.assertEqual((events[0]['env'], events[1]['env']), ('dev', 'dv'))
-        self.assertEqual(self.requests(events), [{'event': 'request', 'url': '55', 'keys': ['messages']}])
-        self.assertEqual((summary['model'], summary['securegpt_calls']), ('deployment-for-55', 1))
-        self.assertEqual(summary['usage']['total_tokens'], 91)
-        self.assertTrue(summary['token_step_attempted'])
-
-    def test_no_deployment_uses_the_sdk_default(self):
-        summary, _, events = self.run_check(deployment=None)
-        self.assertEqual(summary['status'], 'PASS')
-        self.assertEqual([event['url'] for event in self.requests(events)], [None])
-
-    def test_gateway_error_body_is_not_an_answer(self):
-        summary, raised, events = self.run_check('apim401')
-        self.assertEqual(summary['status'], 'SERVICE_RETURNED_ERROR')
-        self.assertEqual(summary['service_error']['statusCode'], 401)
-        self.assertIsNotNone(raised)
-        self.assertEqual(len(self.requests(events)), 1)
-
-    def test_fenced_json_is_not_a_usable_answer(self):
-        summary, _, events = self.run_check('fenced')
-        self.assertEqual(summary['status'], 'ANSWER_NOT_USABLE')
-        self.assertIn('```json', summary['assistant_text_preview'])
-        self.assertEqual(len(self.requests(events)), 1)
-
-    def test_sdk_swallowed_error_is_one_failed_call_with_unknown_remote_outcome(self):
-        summary, _, events = self.run_check('sdk_error')
-        self.assertEqual(summary['status'], 'REQUEST_FAILED')
-        self.assertIn('Error making request to GPT endpoint', summary['message'])
-        self.assertEqual(len(self.requests(events)), 1)
-
-    def test_unknown_workspace_or_bad_setting_makes_no_token_or_call(self):
-        for kwargs, status in (({'workspace': 'adb-other.example'}, 'SDK_ENV_UNKNOWN'),
-                               ({'deployment': '99'}, 'SETTINGS_INVALID')):
-            with self.subTest(status=status):
-                summary, _, events = self.run_check(**kwargs)
-                self.assertEqual(summary['status'], status)
-                self.assertEqual((summary['token_step_attempted'], summary['securegpt_calls']), (False, 0))
-                self.assertEqual([event['event'] for event in events if event['event'] != 'config'], [])
 
 
 if __name__ == '__main__':
