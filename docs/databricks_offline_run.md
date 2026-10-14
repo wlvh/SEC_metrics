@@ -27,7 +27,7 @@ python3 build_offline_package.py --list-companies                    # 每家公
 python3 build_offline_package.py --company marriott_international    # 生成 sec_metrics_marriott_international_681b35d8.zip
 ```
 
-- 程序版本固定为脚本里的 `DEFAULT_REF`（端到端验证过的 commit），写进 `PACKAGE.json`。`--ref <commit>` 可以换版本，但新版本可能需要更多运行文件；缺了会在计算 notebook 里报找不到文件。
+- 程序版本固定为脚本里的 `DEFAULT_REF`（端到端验证过的 commit），写进 `PACKAGE.json`。`--ref <commit>` 可以换版本，但新版本可能需要更多运行文件。开发时缺文件都会在计算 notebook 里直接报错，但这不能保证所有情况，换版本后要重新核对结果。
 - 每个文件都按该 commit 的 git blob 哈希核对；SEC 正文另按账本记录的 SHA-256 和长度核对，任何一项不符都不写 zip。
 - 输出里的 `skipped_overwritten_working_copies` 是工作副本（`evidence/submissions/`、`evidence/accession_materials/` 下）后来被新的采集覆盖、内容已与账本对不上的文件，所以不打包。万豪是 2 个，计算用不到。
 - 同一 commit、同一压缩库重打，zip 字节相同。不同电脑的压缩库可能不同，zip 本身的哈希可能不同；notebook 会逐个文件核对 `PACKAGE.json` 里的哈希，这才是完整性检查。
