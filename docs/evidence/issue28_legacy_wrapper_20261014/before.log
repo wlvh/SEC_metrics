@@ -1,0 +1,36 @@
+test_changed_legacy_wrapper_or_selected_factory_rebinding_is_not_reused (tests.vnext.test_saved_result_registration.LegacyStoreComponentTest.test_changed_legacy_wrapper_or_selected_factory_rebinding_is_not_reused) ... 
+  test_changed_legacy_wrapper_or_selected_factory_rebinding_is_not_reused (tests.vnext.test_saved_result_registration.LegacyStoreComponentTest.test_changed_legacy_wrapper_or_selected_factory_rebinding_is_not_reused) (name='selected_factory_rebound') ... FAIL
+  test_changed_legacy_wrapper_or_selected_factory_rebinding_is_not_reused (tests.vnext.test_saved_result_registration.LegacyStoreComponentTest.test_changed_legacy_wrapper_or_selected_factory_rebinding_is_not_reused) (name='outer_source_changed') ... FAIL
+  test_changed_legacy_wrapper_or_selected_factory_rebinding_is_not_reused (tests.vnext.test_saved_result_registration.LegacyStoreComponentTest.test_changed_legacy_wrapper_or_selected_factory_rebinding_is_not_reused) (name='save_arguments_changed') ... FAIL
+
+======================================================================
+FAIL: test_changed_legacy_wrapper_or_selected_factory_rebinding_is_not_reused (tests.vnext.test_saved_result_registration.LegacyStoreComponentTest.test_changed_legacy_wrapper_or_selected_factory_rebinding_is_not_reused) (name='selected_factory_rebound')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_saved_result_registration.py", line 98, in test_changed_legacy_wrapper_or_selected_factory_rebinding_is_not_reused
+    self.assertFalse(registration.same_registered_processing(previous,current,{},ROOT))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_changed_legacy_wrapper_or_selected_factory_rebinding_is_not_reused (tests.vnext.test_saved_result_registration.LegacyStoreComponentTest.test_changed_legacy_wrapper_or_selected_factory_rebinding_is_not_reused) (name='outer_source_changed')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_saved_result_registration.py", line 98, in test_changed_legacy_wrapper_or_selected_factory_rebinding_is_not_reused
+    self.assertFalse(registration.same_registered_processing(previous,current,{},ROOT))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_changed_legacy_wrapper_or_selected_factory_rebinding_is_not_reused (tests.vnext.test_saved_result_registration.LegacyStoreComponentTest.test_changed_legacy_wrapper_or_selected_factory_rebinding_is_not_reused) (name='save_arguments_changed')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_saved_result_registration.py", line 98, in test_changed_legacy_wrapper_or_selected_factory_rebinding_is_not_reused
+    self.assertFalse(registration.same_registered_processing(previous,current,{},ROOT))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 1 test in 0.028s
+
+FAILED (failures=3)

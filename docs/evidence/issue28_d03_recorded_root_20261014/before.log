@@ -1,0 +1,60 @@
+test_anchor_validation_receives_the_source_root (tests.vnext.test_d03_recorded_source_root.D03RecordedSourceRootTest.test_anchor_validation_receives_the_source_root) ... ERROR
+test_changed_source_partition_or_invalid_mode_is_rejected (tests.vnext.test_d03_recorded_source_root.D03RecordedSourceRootTest.test_changed_source_partition_or_invalid_mode_is_rejected) ... 
+  test_changed_source_partition_or_invalid_mode_is_rejected (tests.vnext.test_d03_recorded_source_root.D03RecordedSourceRootTest.test_changed_source_partition_or_invalid_mode_is_rejected) (rebuilt={'company_id': 'constructed', 'semantic_source_id': 'source', 'request_context_format': 'deepseek-v41-two-message-json-chat-1', 'external_replay_only': True, 'required_unit_ids': ['unit'], 'changed': True}) ... ERROR
+  test_changed_source_partition_or_invalid_mode_is_rejected (tests.vnext.test_d03_recorded_source_root.D03RecordedSourceRootTest.test_changed_source_partition_or_invalid_mode_is_rejected) (rebuilt={'company_id': 'constructed', 'semantic_source_id': 'source', 'request_context_format': 'deepseek-v41-two-message-json-chat-1', 'external_replay_only': True, 'required_unit_ids': ['unit']}) ... ERROR
+test_changed_source_partition_or_invalid_mode_is_rejected (tests.vnext.test_d03_recorded_source_root.D03RecordedSourceRootTest.test_changed_source_partition_or_invalid_mode_is_rejected) ... FAIL
+test_legacy_default_uses_original_unmarked_call (tests.vnext.test_d03_recorded_source_root.D03RecordedSourceRootTest.test_legacy_default_uses_original_unmarked_call) ... ok
+test_registered_reconstruction_keeps_explicit_source_root_and_mode (tests.vnext.test_d03_recorded_source_root.D03RecordedSourceRootTest.test_registered_reconstruction_keeps_explicit_source_root_and_mode) ... ERROR
+
+======================================================================
+ERROR: test_anchor_validation_receives_the_source_root (tests.vnext.test_d03_recorded_source_root.D03RecordedSourceRootTest.test_anchor_validation_receives_the_source_root)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_d03_recorded_source_root.py", line 52, in test_anchor_validation_receives_the_source_root
+    rows=store._checked_rows(source,[request],{'request':raw},source_root=data)
+TypeError: _checked_rows() got an unexpected keyword argument 'source_root'
+
+======================================================================
+ERROR: test_changed_source_partition_or_invalid_mode_is_rejected (tests.vnext.test_d03_recorded_source_root.D03RecordedSourceRootTest.test_changed_source_partition_or_invalid_mode_is_rejected) (rebuilt={'company_id': 'constructed', 'semantic_source_id': 'source', 'request_context_format': 'deepseek-v41-two-message-json-chat-1', 'external_replay_only': True, 'required_unit_ids': ['unit'], 'changed': True})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_d03_recorded_source_root.py", line 43, in test_changed_source_partition_or_invalid_mode_is_rejected
+    store._requests(source,source_root=Path('/external-registered-source'))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: _requests() got an unexpected keyword argument 'source_root'
+
+======================================================================
+ERROR: test_changed_source_partition_or_invalid_mode_is_rejected (tests.vnext.test_d03_recorded_source_root.D03RecordedSourceRootTest.test_changed_source_partition_or_invalid_mode_is_rejected) (rebuilt={'company_id': 'constructed', 'semantic_source_id': 'source', 'request_context_format': 'deepseek-v41-two-message-json-chat-1', 'external_replay_only': True, 'required_unit_ids': ['unit']})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_d03_recorded_source_root.py", line 43, in test_changed_source_partition_or_invalid_mode_is_rejected
+    store._requests(source,source_root=Path('/external-registered-source'))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: _requests() got an unexpected keyword argument 'source_root'
+
+======================================================================
+ERROR: test_registered_reconstruction_keeps_explicit_source_root_and_mode (tests.vnext.test_d03_recorded_source_root.D03RecordedSourceRootTest.test_registered_reconstruction_keeps_explicit_source_root_and_mode)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_d03_recorded_source_root.py", line 25, in test_registered_reconstruction_keeps_explicit_source_root_and_mode
+    self.assertEqual([request],store._requests(source,source_root=data))
+                               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: _requests() got an unexpected keyword argument 'source_root'
+
+======================================================================
+FAIL: test_changed_source_partition_or_invalid_mode_is_rejected (tests.vnext.test_d03_recorded_source_root.D03RecordedSourceRootTest.test_changed_source_partition_or_invalid_mode_is_rejected)
+----------------------------------------------------------------------
+vnext.normal_annual_input.NormalAnnualInputError: COMPANY_NOT_UNIQUE
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_d03_recorded_source_root.py", line 44, in test_changed_source_partition_or_invalid_mode_is_rejected
+    with self.assertRaisesRegex(ValueError,'SOURCE_MODE_INVALID'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "SOURCE_MODE_INVALID" does not match "COMPANY_NOT_UNIQUE"
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.207s
+
+FAILED (failures=1, errors=4)

@@ -4,6 +4,7 @@ No fixed Git head/approval is required. Original saved code must be available
 and match its recorded component digest; unknown logic changes reprocess.
 """
 import ast
+from copy import deepcopy
 from hashlib import sha256
 from pathlib import Path
 import subprocess
@@ -95,6 +96,7 @@ def _legacy_registration(tree, metric):
             if isinstance(item,ast.ImportFrom):
                 imports.update({alias.asname or alias.name:'vnext.'+item.module for alias in item.names})
             elif isinstance(item,ast.Return):selected=item.value;break
+            else:return None
         if selected is not None:break
     if not isinstance(selected,ast.Call) or not isinstance(selected.func,ast.Name):return None
     name=selected.func.id
@@ -118,6 +120,26 @@ def _legacy_registration(tree, metric):
         expected_rules=ast.parse('Path(__file__).resolve().parents[2]',mode='eval').body
         if ast.dump(rules,include_attributes=False)!=ast.dump(expected_rules,include_attributes=False):return None
     return {'module':imports[name],'function':name,'call_style':style}
+
+
+def _wrapper_component(tree, *, registered):
+    """Compare the outer call, keeping only the proven dispatch replacement."""
+    outer=next((n for n in tree.body if isinstance(n,ast.FunctionDef)
+                and n.name=='create_saved_result'),None)
+    if outer is None:return None
+    outer=deepcopy(outer)
+    prepares=[n for n in outer.body if isinstance(n,ast.FunctionDef) and n.name=='prepare']
+    if len(prepares)!=1:return None
+    # Keep the nested function's arguments/decorators; only its old route
+    # branches are replaced by the separately checked registration call.
+    prepares[0].body=[ast.Pass()]
+    if registered:
+        assignment=ast.dump(ast.parse('registration = selected_case_registration(metric_id)').body[0],
+                            include_attributes=False)
+        matches=[n for n in outer.body if ast.dump(n,include_attributes=False)==assignment]
+        if len(matches)!=1:return None
+        outer.body.remove(matches[0])
+    return ast.dump(outer,include_attributes=False)
 
 
 def _dispatch_transition_signature(tree, source):
@@ -154,6 +176,8 @@ def same_registered_processing(previous,current,manifest,root):
         if not {'module','function','call_style'}<=selected.keys():return False
         route=_legacy_registration(before,previous.get('metric_id'))
         if route is None or route!={k:selected[k] for k in ('module','function','call_style')}:return False
+        wrapper=_wrapper_component(before,registered=False)
+        if wrapper is None or wrapper!=_wrapper_component(after,registered=True):return False
         if route['module']=='vnext.ordinary_saved_result':names.append(route['function'])
     if _dispatch_transition_signature(after,current_source) != DISPATCH_TRANSITION_V1:return False
     if _component(before,names) is None or _component(before,names)!=_component(after,names):return False

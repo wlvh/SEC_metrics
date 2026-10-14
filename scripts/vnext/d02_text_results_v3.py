@@ -344,15 +344,22 @@ def select_d02_incorporated_notes(*, proposal, document, raw_bytes):
         _source_need(note['scope_relation'] in {'EXACT_NOTE', 'INCORPORATED_SUBNOTE'},
                      'D02_REFERENCED_LETTERED_SUBNOTE_NOT_MIGRATED')
         start, stop = note['start_block'], note['end_block_exclusive']
-        quoted = {_caption_text(m.group(1)) for occurrence in reference['source_occurrences']
-                  for m in _INCORPORATED_CAPTION.finditer(occurrence['text'])
-                  if not _QUOTED_FORM_REFERENCE.search(occurrence['text'][:m.start()])}
         title = _caption_text(blocks[start]['text'])
         short_title = (re.sub(r'^[a-z]\.\s+', '', title, count=1)
                        if note['scope_relation'] == 'INCORPORATED_SUBNOTE'
                        else _NOTE_TITLE_PREFIX.sub('', title, count=1))
-        quoted.difference_update({title, short_title})
-        quoted = {text for text in quoted if not re.match(r'^(?:part\s+[ivx]+\W+)?item\s+\d{1,2}[a-z]?\b', text)}
+        quoted = set()
+        whole_note = False
+        for occurrence in reference['source_occurrences']:
+            captions = {_caption_text(m.group(1)) for m in _INCORPORATED_CAPTION.finditer(occurrence['text'])
+                        if not _QUOTED_FORM_REFERENCE.search(occurrence['text'][:m.start()])}
+            captions.difference_update({title, short_title})
+            captions = {text for text in captions if not re.match(
+                r'^(?:part\s+[ivx]+\W+)?item\s+\d{1,2}[a-z]?\b', text)}
+            whole_note |= not captions
+            quoted.update(captions)
+        if whole_note:
+            quoted.clear()  # Another occurrence cannot narrow the wider source.
         headings = [i for i in range(start + 1, stop)
                     if _caption_text(blocks[i]['text']) in quoted and _caption_like(document, blocks[i])]
         _source_need(not quoted or quoted <= {_caption_text(blocks[i]['text']) for i in headings},
@@ -362,6 +369,10 @@ def select_d02_incorporated_notes(*, proposal, document, raw_bytes):
         for begin in headings:
             style = _caption_style(raw_bytes, blocks[begin])
             _source_need(bool(style), 'D02_INCORPORATED_CAPTION_FORMAT_NOT_PROVEN')
+            first_body = next((i for i in range(begin + 1, stop)
+                               if _substantive(document, blocks[i])), None)
+            _source_need(first_body is not None and _caption_style(raw_bytes, blocks[first_body]) != style,
+                         'D02_INCORPORATED_CAPTION_HIERARCHY_NOT_PROVEN')
             end = next((i for i in range(begin + 1, stop)
                         if _caption_like(document, blocks[i]) and repeated[_caption_text(blocks[i]['text'])] == 1
                         and _caption_style(raw_bytes, blocks[i]) == style), stop)

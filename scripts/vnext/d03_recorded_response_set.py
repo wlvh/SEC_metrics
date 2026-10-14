@@ -25,17 +25,20 @@ def _need(condition, reason):
         raise ValueError(reason)
 
 
-def _requests(source):
+def _requests(source, *, source_root=ROOT):
     from .continuous_request_context import FORMAT_VERSION
     from .r6_regulatory_semantics import (
         prepare_regulatory_semantic_source, requests_from_source)
     _need(type(source) is dict and type(source.get('company_id')) is str,
           'D03_RECORDED_SET_SOURCE_REQUIRED')
+    _need('external_replay_only' not in source or type(source['external_replay_only']) is bool,
+          'D03_RECORDED_SET_SOURCE_MODE_INVALID')
     _need(source.get('request_context_format') == FORMAT_VERSION,
           'D03_RECORDED_SET_MEASURED_GROUPING_REQUIRED')
-    rebuilt = prepare_regulatory_semantic_source(repo_root=ROOT,
+    rebuilt = prepare_regulatory_semantic_source(repo_root=Path(source_root).resolve(),
         company_id=source['company_id'],
-        request_context_format=source.get('request_context_format'))
+        request_context_format=source.get('request_context_format'),
+        **({'ordinary_registered':True} if source.get('external_replay_only') is True else {}))
     _need(source == rebuilt, 'D03_RECORDED_SET_SAVED_SOURCE_CHANGED')
     requests = requests_from_source(rebuilt)
     _need(bool(requests)
@@ -46,7 +49,7 @@ def _requests(source):
     return requests
 
 
-def _checked_rows(source, requests, responses):
+def _checked_rows(source, requests, responses, *, source_root=ROOT):
     from .r6_regulatory_semantics import validate_response
     from .regulatory_fact_review import validate_candidate_response
     ids = [request['request_id'] for request in requests]
@@ -59,6 +62,7 @@ def _checked_rows(source, requests, responses):
         if original['source_statement_facts']:
             checked, effective = validate_candidate_response(
                 original_request=original, source=source, raw_response=raw,
+                repo_root=Path(source_root).resolve(),
                 return_authenticated_request=True)
             successor = True
         else:
@@ -77,8 +81,12 @@ def _checked_rows(source, requests, responses):
 
 
 def record_offline_set(*, output_root, source, responses_by_original_id,
-                       repo_root=ROOT):
-    """Validate and save every raw response, then seal one packet index last."""
+                       repo_root=ROOT, source_root=None):
+    """Save all raw replies; source_root is data, repo_root is processing code.
+
+    Omitted source_root preserves the old in-code-source behavior. Registered
+    external input must explicitly name its readable source directory.
+    """
     _need(Path(repo_root).resolve() == ROOT,
           'D03_RECORDED_SET_CODE_ROOT_CHANGED')
     root = _root(output_root)
@@ -87,8 +95,9 @@ def record_offline_set(*, output_root, source, responses_by_original_id,
           'D03_RECORDED_SET_MISSING_EXTRA_OR_NONBYTE_RESPONSE')
     source_copy = deepcopy(source)
     responses = dict(responses_by_original_id)
-    requests = _requests(source_copy)
-    rows = _checked_rows(source_copy, requests, responses)
+    data_root = ROOT if source_root is None else Path(source_root).resolve()
+    requests = _requests(source_copy,source_root=data_root)
+    rows = _checked_rows(source_copy, requests, responses,source_root=data_root)
     _need(source == source_copy and responses_by_original_id == responses,
           'D03_RECORDED_SET_INPUT_MUTATED')
     source_bytes = _json_bytes(source_copy)
@@ -115,8 +124,8 @@ def record_offline_set(*, output_root, source, responses_by_original_id,
         'calls': [0, 0, 0], 'native_result_created': False}
 
 
-def replay_offline_set(*, packet_root, expected_packet_id, repo_root=ROOT):
-    """Cold-read exact files and current source; the caller supplies identity."""
+def replay_offline_set(*, packet_root, expected_packet_id, repo_root=ROOT, source_root=None):
+    """Read exact replies and recheck source_root, without granting execution."""
     _need(Path(repo_root).resolve() == ROOT,
           'D03_RECORDED_SET_CODE_ROOT_CHANGED')
     _need(type(expected_packet_id) is str and bool(expected_packet_id),
@@ -135,7 +144,10 @@ def replay_offline_set(*, packet_root, expected_packet_id, repo_root=ROOT):
           and packet['record_type'] ==
               'D03_COMPLETE_OFFLINE_RECORDED_RESPONSE_SET'
           and packet['schema_version'] == VERSION
-          and packet['module_sha256'] == sha256_file(path=Path(__file__))
+          # Creator version is provenance, not approval of today's reader.
+          # Current source/request/response reconstruction below remains mandatory.
+          and type(packet['module_sha256']) is str and len(packet['module_sha256']) == 64
+          and all(c in '0123456789abcdef' for c in packet['module_sha256'])
           and packet['provider_execution_credit'] == 'RECORDED_TEST_ONLY'
           and packet['native_result_created'] is False
           and packet['calls'] == [0, 0, 0]
@@ -162,7 +174,8 @@ def replay_offline_set(*, packet_root, expected_packet_id, repo_root=ROOT):
           and source['company_id'] == packet['company_id']
           and _json_bytes(source) == source_bytes,
           'D03_RECORDED_SET_SOURCE_IDENTITY_CHANGED')
-    requests = _requests(source)
+    data_root = ROOT if source_root is None else Path(source_root).resolve()
+    requests = _requests(source,source_root=data_root)
     responses = {}
     for row in packet['rows']:
         path = root/row['response_file']
@@ -173,7 +186,7 @@ def replay_offline_set(*, packet_root, expected_packet_id, repo_root=ROOT):
               and sha256_bytes(content=raw) == row['response_sha256'],
               'D03_RECORDED_SET_FILE_CHANGED')
         responses[row['original_request_id']] = raw
-    checked = _checked_rows(source, requests, responses)
+    checked = _checked_rows(source, requests, responses,source_root=data_root)
     _need(checked == packet['rows'], 'D03_RECORDED_SET_REPLAY_CHANGED')
     return {'packet_id': packet['packet_id'],
         'request_count': len(checked),
