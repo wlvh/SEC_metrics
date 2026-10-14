@@ -1,0 +1,38 @@
+{
+  "feedback": [
+    "4267961035",
+    "4267974707",
+    "4269388537",
+    "6165704807"
+  ],
+  "patch_scope": "Both existing qualifier families inspect prefix plus suffix, with no new word family",
+  "before": "two wrong acceptances reproduced: adjusted-performance prefix and continuing-operations prefix",
+  "tests": {
+    "run": 158,
+    "seconds": 1.631,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "actual_source": {
+    "seconds": 13.720469082996715,
+    "scope_id": "sha256:2aad479ae1eeaf9b0802a8b41a7fd508ead73758cacecd87be604a2dededb8fb",
+    "further_review_retained": true,
+    "api_sha256": "7d42f7f618938d4a579a23a799b8513155cf766cee3b39477610c188d1f5a933",
+    "property_ids": {
+      "B04": "sha256:ec50b170ee4b7fdf51920ee371b36b4cc4a92cd690aaf957dbe20899ae389225",
+      "B05": "sha256:937fed7de114180e2a934aee1e61eb824d13a31398f6f8d130c6caed13702433",
+      "B07": "sha256:22614d1bfd9db4b3eff6af6fba9ddaa3481c3c678a281c8035b4b11e5646d16c"
+    },
+    "original_proofs_verified": 2,
+    "source_logs_and_registry_unchanged": true
+  },
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "company_result_created": false,
+  "independent_review_or_production_acceptance": false,
+  "command": "PYTHONPATH=scripts:tools:. python3.12 tests/required_unittests.py tests.vnext.test_statement_metric_amendment tests.vnext.test_income_amendment_paragraph_dispatch tests.vnext.test_instant_amendment_paragraph_api tests.vnext.test_historical_statement_cases tests.vnext.test_selected_income_source_v1 tests.vnext.test_amendment_note_layout tests.vnext.test_ordinary_current_update tests.test_selector_registry"
+}

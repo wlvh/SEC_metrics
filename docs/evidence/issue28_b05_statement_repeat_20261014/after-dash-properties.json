@@ -1,0 +1,877 @@
+{
+  "base_commit": "4f564181a7a2104c8b62a993440c90065b018534",
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/profitloss-note/SEC_metrics",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "working_tree_new_api_sha256": "4ccfb320d9df9b218afed465a82fd304eb9a658c74f07d70cad077ec44ee4c4f",
+  "company_id": "paramount_skydance_paramount_global",
+  "fiscal_year": 2024,
+  "elapsed_seconds": 13.426510582998162,
+  "results": [
+    {
+      "scope_id": "sha256:2aad479ae1eeaf9b0802a8b41a7fd508ead73758cacecd87be604a2dededb8fb",
+      "classification": "PART_III_ADDITION_WITH_EXPLICIT_NO_NEW_FINANCIAL_STATEMENTS",
+      "scope_further_review_retained": true,
+      "unchanged_input_classes": [
+        "FISCAL_EVENT_WINDOW"
+      ],
+      "properties": {
+        "B04": {
+          "record_type": "ORIGINAL_STATEMENT_METRIC_INPUT_PROPERTY",
+          "schema_version": 1,
+          "metric_id": "B04",
+          "input_class": "ORIGINAL_REPORTED_NET_INCOME_VALUES",
+          "original_scope_id": "sha256:2aad479ae1eeaf9b0802a8b41a7fd508ead73758cacecd87be604a2dededb8fb",
+          "covered_component_roles": [
+            "net_income"
+          ],
+          "metric_definition_sha256": "09e93627ce4125debfe00872f9e11dc351658b140bbaa13dfeef81b6ac3b2a3c",
+          "amendment_raw_sha256": "ca8bf425a320024aa65885a23bad51b5e97b74f8aadf62bba9968ea13181f845",
+          "original_source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:0f1a9b2a108d1f35340ea3a4a473d82a3a3b8710de577bd4402e408dbe712af5",
+            "raw_asset_id": "sha256:5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+            "company_id": "paramount_skydance_paramount_global",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231.htm",
+            "accession": "0000813828-25-000005",
+            "document_name": "para-20241231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:255bb923386890b3db4f807546f3fac75d33f941ccdc035730d90d98d37c4b6e"
+          },
+          "amendment_source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:abfc5dda276a9f731c9c7551acd16e4a4bb40f846784178b8c06f999cf6c74e7",
+            "raw_asset_id": "sha256:ca8bf425a320024aa65885a23bad51b5e97b74f8aadf62bba9968ea13181f845",
+            "company_id": "paramount_skydance_paramount_global",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000119312525096776/d886907d10ka.htm",
+            "accession": "0001193125-25-096776",
+            "document_name": "d886907d10ka.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:6b270f8c914232d0bfc5fd978e7f19dc4e249956218b93c68bb067e43735a206"
+          },
+          "source_property": {
+            "original_scope_id": "sha256:2aad479ae1eeaf9b0802a8b41a7fd508ead73758cacecd87be604a2dededb8fb",
+            "part_iii_details": {
+              "note_identity": {
+                "registrant": "Paramount Global",
+                "number": "1",
+                "end": "December 31, 2024",
+                "filed": "February 26, 2025",
+                "aliases": "“Paramount,” the “Company,” “we,” “us” and “our”",
+                "scope_name": "Paramount Global"
+              },
+              "correction_cover": {
+                "text": "If securities are registered pursuant to Section 12(b) of the Act, indicate by check mark whether the financial statements of the registrant included in the filing reflect the correction of an error to previously issued financial statements. ☐",
+                "source_blocks": [
+                  {
+                    "text": "If securities are registered pursuant to Section 12(b) of the Act, indicate by check mark whether the financial statements of the registrant included in the filing reflect the",
+                    "linked": false,
+                    "emphasized": false,
+                    "leading_emphasis": null,
+                    "block_index": 58,
+                    "raw_start_byte": 26486,
+                    "raw_end_byte": 26667,
+                    "raw_span_sha256": "0b9fb6df187b9ba6ff6d2e1a5f13bd4d80a19f3aa61d92a99525eeab9de28ac0"
+                  },
+                  {
+                    "text": "correction of an error",
+                    "linked": false,
+                    "emphasized": false,
+                    "leading_emphasis": null,
+                    "block_index": 59,
+                    "raw_start_byte": 26696,
+                    "raw_end_byte": 26718,
+                    "raw_span_sha256": "cf321c24c1f37b19c8c34e80bb2583473d7a015089fef533eef9b5c1ece69afe"
+                  },
+                  {
+                    "text": "to previously issued financial statements. ☐",
+                    "linked": false,
+                    "emphasized": false,
+                    "leading_emphasis": null,
+                    "block_index": 60,
+                    "raw_start_byte": 26724,
+                    "raw_end_byte": 26936,
+                    "raw_span_sha256": "92909e059043041e6b710b6a6916bbffb4d360a9471abfe0c4b6b709bf340807"
+                  }
+                ],
+                "block_indices": [
+                  58,
+                  59,
+                  60
+                ]
+              },
+              "restatement_cover": {
+                "text": "Indicate by check mark whether any of those error corrections are restatements that required a recovery analysis of incentive-based compensation received by any of the registrant’s executive officers during the relevant recovery period pursuant to §240.10D-1(b). ☐",
+                "source_blocks": [
+                  {
+                    "text": "Indicate by check mark whether any of those error corrections are restatements that required a recovery analysis of incentive-based compensation received by any of the registrant’s executive officers during the relevant recovery period pursuant to",
+                    "linked": false,
+                    "emphasized": false,
+                    "leading_emphasis": null,
+                    "block_index": 61,
+                    "raw_start_byte": 27054,
+                    "raw_end_byte": 27308,
+                    "raw_span_sha256": "649a60c6e9f1460a0f529561210cae289df5cfdb8f64698207c4970a47b85f03"
+                  },
+                  {
+                    "text": "§240.10D-1(b).",
+                    "linked": false,
+                    "emphasized": false,
+                    "leading_emphasis": null,
+                    "block_index": 62,
+                    "raw_start_byte": 27356,
+                    "raw_end_byte": 27375,
+                    "raw_span_sha256": "c2c9159901c4222c51bfe64ad6990a5f017abfb922e03654ba41602383be0abf"
+                  },
+                  {
+                    "text": "☐",
+                    "linked": false,
+                    "emphasized": false,
+                    "leading_emphasis": null,
+                    "block_index": 63,
+                    "raw_start_byte": 27381,
+                    "raw_end_byte": 27390,
+                    "raw_span_sha256": "08e84ef81fcd7b76253fe6d060fb8bdecc03b2273aadc875404aaabaa34f0a70"
+                  }
+                ],
+                "block_indices": [
+                  61,
+                  62,
+                  63
+                ]
+              },
+              "native_correction_flag": {
+                "fact": {
+                  "tag": "ix:nonnumeric",
+                  "qualified_name": "dei:DocumentFinStmtErrorCorrectionFlag",
+                  "context_ref": "P01_01_2024To12_31_2024",
+                  "unit_ref": "",
+                  "scale": "0",
+                  "sign": "",
+                  "ordinal": 34,
+                  "text": "☐"
+                },
+                "namespace": "http://xbrl.sec.gov/dei/2024",
+                "native_context": {
+                  "context_ref": "P01_01_2024To12_31_2024",
+                  "dimensions": {},
+                  "entity_identifier": "0000813828",
+                  "period_end": "2024-12-31",
+                  "period_start": "2024-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "P01_01_2024To12_31_2024",
+                  "identifiers": [
+                    {
+                      "value": "0000813828",
+                      "scheme": "http://www.sec.gov/CIK"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2024-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2024-12-31"
+                    }
+                  ],
+                  "dimensions": [],
+                  "typed_dimension_count": 0
+                }
+              },
+              "no_new_statements_declaration": {
+                "text": "No financial statements or supplemental data are filed with this Amendment. See Index to Financial Statements and Supplemental Data of the Initial Form 10-K.",
+                "linked": false,
+                "emphasized": false,
+                "leading_emphasis": null,
+                "block_index": 1806,
+                "raw_start_byte": 1033637,
+                "raw_end_byte": 1033835,
+                "raw_span_sha256": "1b78dd16ad3ef4eddbfa98ff022e7cc767e3d4cadd2c3a50de5b8c113b31bdf6"
+              },
+              "conditional_compensation_references": [
+                {
+                  "block": {
+                    "text": "✓ Clawback Policy: In addition to maintaining a clawback policy as required by the Securities Exchange Act of 1934, as amended (the “Exchange Act”) Rule 10D-1 and Nasdaq listing standards (which we apply beyond executive officers to other senior executives of the Company), provide for forfeiture, repayment or adjustment of incentive compensation in the event of a financial restatement without regard to misconduct in our NEOs’ employment agreements",
+                    "source_blocks": [
+                      {
+                        "text": "✓ Clawback Policy: In addition to maintaining a clawback policy as required by the Securities Exchange Act of 1934, as amended (the “Exchange Act”) Rule 10D-1 and Nasdaq listing standards (which we apply beyond executive officers to other senior executives of the Company), provide for forfeiture, repayment or adjustment of incentive compensation in the event of a financial restatement without regard to misconduct in our NEOs’ employment agreements",
+                        "linked": false,
+                        "emphasized": false,
+                        "leading_emphasis": null,
+                        "block_index": 381,
+                        "raw_start_byte": 152170,
+                        "raw_end_byte": 152706,
+                        "raw_span_sha256": "c6fb66250a91700db3ce1553dd77ac164d3d79e9b17e20a99f3cb4f41ff92662"
+                      }
+                    ],
+                    "block_indices": [
+                      381
+                    ]
+                  },
+                  "conditional_clause": "in the event of a financial restatement without regard to misconduct"
+                }
+              ],
+              "unresolved_correction_blocks": []
+            },
+            "income_correction_blocks": [],
+            "input_class": "ORIGINAL_REPORTED_NET_INCOME_VALUES"
+          },
+          "additional_component_disclosures": [],
+          "original_scope_reclassified": false,
+          "annual_continuity_proven": false,
+          "debt_completeness_proven": false,
+          "metric_result_created": false,
+          "source_acquisition_credit": false,
+          "production_authorized": false,
+          "property_id": "sha256:ec50b170ee4b7fdf51920ee371b36b4cc4a92cd690aaf957dbe20899ae389225"
+        },
+        "B05": {
+          "record_type": "ORIGINAL_STATEMENT_METRIC_INPUT_PROPERTY",
+          "schema_version": 1,
+          "metric_id": "B05",
+          "input_class": "ORIGINAL_REPORTED_FREE_CASH_FLOW_COMPONENT_VALUES",
+          "original_scope_id": "sha256:2aad479ae1eeaf9b0802a8b41a7fd508ead73758cacecd87be604a2dededb8fb",
+          "covered_component_roles": [
+            "capital_expenditures",
+            "operating_cash_flow"
+          ],
+          "metric_definition_sha256": "09e93627ce4125debfe00872f9e11dc351658b140bbaa13dfeef81b6ac3b2a3c",
+          "amendment_raw_sha256": "ca8bf425a320024aa65885a23bad51b5e97b74f8aadf62bba9968ea13181f845",
+          "original_source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:0f1a9b2a108d1f35340ea3a4a473d82a3a3b8710de577bd4402e408dbe712af5",
+            "raw_asset_id": "sha256:5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+            "company_id": "paramount_skydance_paramount_global",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231.htm",
+            "accession": "0000813828-25-000005",
+            "document_name": "para-20241231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:255bb923386890b3db4f807546f3fac75d33f941ccdc035730d90d98d37c4b6e"
+          },
+          "amendment_source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:abfc5dda276a9f731c9c7551acd16e4a4bb40f846784178b8c06f999cf6c74e7",
+            "raw_asset_id": "sha256:ca8bf425a320024aa65885a23bad51b5e97b74f8aadf62bba9968ea13181f845",
+            "company_id": "paramount_skydance_paramount_global",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000119312525096776/d886907d10ka.htm",
+            "accession": "0001193125-25-096776",
+            "document_name": "d886907d10ka.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:6b270f8c914232d0bfc5fd978e7f19dc4e249956218b93c68bb067e43735a206"
+          },
+          "source_property": {
+            "original_scope_id": "sha256:2aad479ae1eeaf9b0802a8b41a7fd508ead73758cacecd87be604a2dededb8fb",
+            "part_iii_details": {
+              "note_identity": {
+                "registrant": "Paramount Global",
+                "number": "1",
+                "end": "December 31, 2024",
+                "filed": "February 26, 2025",
+                "aliases": "“Paramount,” the “Company,” “we,” “us” and “our”",
+                "scope_name": "Paramount Global"
+              },
+              "correction_cover": {
+                "text": "If securities are registered pursuant to Section 12(b) of the Act, indicate by check mark whether the financial statements of the registrant included in the filing reflect the correction of an error to previously issued financial statements. ☐",
+                "source_blocks": [
+                  {
+                    "text": "If securities are registered pursuant to Section 12(b) of the Act, indicate by check mark whether the financial statements of the registrant included in the filing reflect the",
+                    "linked": false,
+                    "emphasized": false,
+                    "leading_emphasis": null,
+                    "block_index": 58,
+                    "raw_start_byte": 26486,
+                    "raw_end_byte": 26667,
+                    "raw_span_sha256": "0b9fb6df187b9ba6ff6d2e1a5f13bd4d80a19f3aa61d92a99525eeab9de28ac0"
+                  },
+                  {
+                    "text": "correction of an error",
+                    "linked": false,
+                    "emphasized": false,
+                    "leading_emphasis": null,
+                    "block_index": 59,
+                    "raw_start_byte": 26696,
+                    "raw_end_byte": 26718,
+                    "raw_span_sha256": "cf321c24c1f37b19c8c34e80bb2583473d7a015089fef533eef9b5c1ece69afe"
+                  },
+                  {
+                    "text": "to previously issued financial statements. ☐",
+                    "linked": false,
+                    "emphasized": false,
+                    "leading_emphasis": null,
+                    "block_index": 60,
+                    "raw_start_byte": 26724,
+                    "raw_end_byte": 26936,
+                    "raw_span_sha256": "92909e059043041e6b710b6a6916bbffb4d360a9471abfe0c4b6b709bf340807"
+                  }
+                ],
+                "block_indices": [
+                  58,
+                  59,
+                  60
+                ]
+              },
+              "restatement_cover": {
+                "text": "Indicate by check mark whether any of those error corrections are restatements that required a recovery analysis of incentive-based compensation received by any of the registrant’s executive officers during the relevant recovery period pursuant to §240.10D-1(b). ☐",
+                "source_blocks": [
+                  {
+                    "text": "Indicate by check mark whether any of those error corrections are restatements that required a recovery analysis of incentive-based compensation received by any of the registrant’s executive officers during the relevant recovery period pursuant to",
+                    "linked": false,
+                    "emphasized": false,
+                    "leading_emphasis": null,
+                    "block_index": 61,
+                    "raw_start_byte": 27054,
+                    "raw_end_byte": 27308,
+                    "raw_span_sha256": "649a60c6e9f1460a0f529561210cae289df5cfdb8f64698207c4970a47b85f03"
+                  },
+                  {
+                    "text": "§240.10D-1(b).",
+                    "linked": false,
+                    "emphasized": false,
+                    "leading_emphasis": null,
+                    "block_index": 62,
+                    "raw_start_byte": 27356,
+                    "raw_end_byte": 27375,
+                    "raw_span_sha256": "c2c9159901c4222c51bfe64ad6990a5f017abfb922e03654ba41602383be0abf"
+                  },
+                  {
+                    "text": "☐",
+                    "linked": false,
+                    "emphasized": false,
+                    "leading_emphasis": null,
+                    "block_index": 63,
+                    "raw_start_byte": 27381,
+                    "raw_end_byte": 27390,
+                    "raw_span_sha256": "08e84ef81fcd7b76253fe6d060fb8bdecc03b2273aadc875404aaabaa34f0a70"
+                  }
+                ],
+                "block_indices": [
+                  61,
+                  62,
+                  63
+                ]
+              },
+              "native_correction_flag": {
+                "fact": {
+                  "tag": "ix:nonnumeric",
+                  "qualified_name": "dei:DocumentFinStmtErrorCorrectionFlag",
+                  "context_ref": "P01_01_2024To12_31_2024",
+                  "unit_ref": "",
+                  "scale": "0",
+                  "sign": "",
+                  "ordinal": 34,
+                  "text": "☐"
+                },
+                "namespace": "http://xbrl.sec.gov/dei/2024",
+                "native_context": {
+                  "context_ref": "P01_01_2024To12_31_2024",
+                  "dimensions": {},
+                  "entity_identifier": "0000813828",
+                  "period_end": "2024-12-31",
+                  "period_start": "2024-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "P01_01_2024To12_31_2024",
+                  "identifiers": [
+                    {
+                      "value": "0000813828",
+                      "scheme": "http://www.sec.gov/CIK"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2024-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2024-12-31"
+                    }
+                  ],
+                  "dimensions": [],
+                  "typed_dimension_count": 0
+                }
+              },
+              "no_new_statements_declaration": {
+                "text": "No financial statements or supplemental data are filed with this Amendment. See Index to Financial Statements and Supplemental Data of the Initial Form 10-K.",
+                "linked": false,
+                "emphasized": false,
+                "leading_emphasis": null,
+                "block_index": 1806,
+                "raw_start_byte": 1033637,
+                "raw_end_byte": 1033835,
+                "raw_span_sha256": "1b78dd16ad3ef4eddbfa98ff022e7cc767e3d4cadd2c3a50de5b8c113b31bdf6"
+              },
+              "conditional_compensation_references": [
+                {
+                  "block": {
+                    "text": "✓ Clawback Policy: In addition to maintaining a clawback policy as required by the Securities Exchange Act of 1934, as amended (the “Exchange Act”) Rule 10D-1 and Nasdaq listing standards (which we apply beyond executive officers to other senior executives of the Company), provide for forfeiture, repayment or adjustment of incentive compensation in the event of a financial restatement without regard to misconduct in our NEOs’ employment agreements",
+                    "source_blocks": [
+                      {
+                        "text": "✓ Clawback Policy: In addition to maintaining a clawback policy as required by the Securities Exchange Act of 1934, as amended (the “Exchange Act”) Rule 10D-1 and Nasdaq listing standards (which we apply beyond executive officers to other senior executives of the Company), provide for forfeiture, repayment or adjustment of incentive compensation in the event of a financial restatement without regard to misconduct in our NEOs’ employment agreements",
+                        "linked": false,
+                        "emphasized": false,
+                        "leading_emphasis": null,
+                        "block_index": 381,
+                        "raw_start_byte": 152170,
+                        "raw_end_byte": 152706,
+                        "raw_span_sha256": "c6fb66250a91700db3ce1553dd77ac164d3d79e9b17e20a99f3cb4f41ff92662"
+                      }
+                    ],
+                    "block_indices": [
+                      381
+                    ]
+                  },
+                  "conditional_clause": "in the event of a financial restatement without regard to misconduct"
+                }
+              ],
+              "unresolved_correction_blocks": []
+            },
+            "income_correction_blocks": [],
+            "input_class": "ORIGINAL_REPORTED_FREE_CASH_FLOW_COMPONENT_VALUES"
+          },
+          "additional_component_disclosures": [],
+          "original_scope_reclassified": false,
+          "annual_continuity_proven": false,
+          "debt_completeness_proven": false,
+          "metric_result_created": false,
+          "source_acquisition_credit": false,
+          "production_authorized": false,
+          "duplicate_component_disclosures": [
+            {
+              "role": "operating_cash_flow",
+              "reported_value": "752000000",
+              "source_unit": {
+                "text": "We strengthened the balance sheet, including generating net operating cash flow of $752 million — a significant improvement from 2023 — and optimizing our asset mix through our continued divestiture of non-core assets, including the sale of our equity interest in Viacom18, which resulted in an attractive financial return.",
+                "source_blocks": [
+                  {
+                    "text": "We strengthened the balance sheet, including generating net operating cash flow of $752 million — a significant improvement from 2023 — and optimizing our asset mix through our continued divestiture of non-core assets, including the sale of our equity interest in Viacom18, which resulted in an attractive financial return.",
+                    "linked": false,
+                    "emphasized": false,
+                    "leading_emphasis": null,
+                    "block_index": 539,
+                    "raw_start_byte": 218848,
+                    "raw_end_byte": 219229,
+                    "raw_span_sha256": "c75a4792bd89976c75a18e7239efca5a11754a00e082e80ac85d79b72c312776"
+                  }
+                ],
+                "block_indices": [
+                  539
+                ]
+              },
+              "period_and_subject_introduction": {
+                "text": "The Committee then evaluated our qualitative performance after receiving the Co-CEOs’ overall assessment of performance against the Company’s 2024 qualitative performance goals, which included the following highlights:",
+                "source_blocks": [
+                  {
+                    "text": "The Committee then evaluated our qualitative performance after receiving the Co-CEOs’ overall assessment of performance against the Company’s 2024 qualitative performance goals, which included the following highlights:",
+                    "linked": false,
+                    "emphasized": false,
+                    "leading_emphasis": null,
+                    "block_index": 525,
+                    "raw_start_byte": 213307,
+                    "raw_end_byte": 213578,
+                    "raw_span_sha256": "2060b1f028a57f20f5f67e3e01e45818bce7fc02d74b63409ba5f43f368f5f53"
+                  }
+                ],
+                "block_indices": [
+                  525
+                ]
+              },
+              "original_fact": {
+                "ordinal": 379,
+                "concept": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+                "reported_value": "752000000",
+                "unit": "USD",
+                "period": {
+                  "period_start": "2024-01-01",
+                  "period_end": "2024-12-31"
+                },
+                "context": {
+                  "context_ref": "c-1",
+                  "identifiers": [
+                    {
+                      "value": "0000813828",
+                      "scheme": "http://www.sec.gov/CIK"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2024-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2024-12-31"
+                    }
+                  ],
+                  "dimensions": [],
+                  "typed_dimension_count": 0
+                },
+                "statement_title": {
+                  "start_byte": 1595391,
+                  "end_byte": 1595589,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "text-align:center"
+                    ]
+                  ],
+                  "inside_table": false,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:1218"
+                  ],
+                  "visible_text": "CONSOLIDATED STATEMENTS OF CASH FLOWS",
+                  "span_sha256": "b7b8b94b8850768dacacd16fbb0487d48094ddff6cfb7bb7fda29e0da497e649"
+                },
+                "issuer_title": {
+                  "start_byte": 1595179,
+                  "end_byte": 1595391,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "margin-bottom:9pt;text-align:center"
+                    ]
+                  ],
+                  "inside_table": false,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:1217"
+                  ],
+                  "visible_text": "PARAMOUNT GLOBAL AND SUBSIDIARIES",
+                  "span_sha256": "54929cde5d2e2d35881ffc2ad5d7a1cc3939d772ca44ce23e1b5538c2555f95f"
+                },
+                "unit_header": {
+                  "start_byte": 1595589,
+                  "end_byte": 1595781,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "margin-bottom:7pt;text-align:center"
+                    ]
+                  ],
+                  "inside_table": false,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:1219"
+                  ],
+                  "visible_text": "(In millions)",
+                  "span_sha256": "898d0ae04e14993a6f7d39b2b2fe2489ec9f74618a9450763775d80676e81a68"
+                },
+                "row_label": "Net cash flow provided by operating activities",
+                "amount_cell": {
+                  "table_id": "table_000056",
+                  "grid_sha256": "sha256:05c43e44e689ec4ac3641247c77b5d1660d9e65d7f86febd66913bf5b8e34480",
+                  "row_index": 27,
+                  "column_index": 6,
+                  "origin_row_index": 27,
+                  "origin_column_index": 6,
+                  "rowspan": 1,
+                  "colspan": 2,
+                  "raw_text": "752&#160;",
+                  "text": "752"
+                },
+                "period_headers": [
+                  {
+                    "table_id": "table_000056",
+                    "grid_sha256": "sha256:05c43e44e689ec4ac3641247c77b5d1660d9e65d7f86febd66913bf5b8e34480",
+                    "row_index": 2,
+                    "column_index": 6,
+                    "origin_row_index": 2,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "raw_text": "2024",
+                    "text": "2024"
+                  }
+                ],
+                "source_reference": {
+                  "record_type": "SOURCE_REFERENCE",
+                  "source_reference_id": "sha256:0f1a9b2a108d1f35340ea3a4a473d82a3a3b8710de577bd4402e408dbe712af5",
+                  "raw_asset_id": "sha256:5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+                  "company_id": "paramount_skydance_paramount_global",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231.htm",
+                  "accession": "0000813828-25-000005",
+                  "document_name": "para-20241231.htm",
+                  "source_role": "target_primary",
+                  "request_attempt_id": "request:attempt:255bb923386890b3db4f807546f3fac75d33f941ccdc035730d90d98d37c4b6e"
+                }
+              },
+              "relation": "DUPLICATE_ORIGINAL_FULL_YEAR_REPORTED_TOTAL",
+              "quantity_substitution_permitted": false
+            }
+          ],
+          "property_id": "sha256:937fed7de114180e2a934aee1e61eb824d13a31398f6f8d130c6caed13702433"
+        },
+        "B07": {
+          "record_type": "ORIGINAL_STATEMENT_METRIC_INPUT_PROPERTY",
+          "schema_version": 1,
+          "metric_id": "B07",
+          "input_class": "ORIGINAL_INTEREST_COVERAGE_COMPONENT_VALUES",
+          "original_scope_id": "sha256:2aad479ae1eeaf9b0802a8b41a7fd508ead73758cacecd87be604a2dededb8fb",
+          "covered_component_roles": [
+            "aggregate_nonoperating",
+            "interest_expense",
+            "operating_income",
+            "pretax_income"
+          ],
+          "metric_definition_sha256": "09e93627ce4125debfe00872f9e11dc351658b140bbaa13dfeef81b6ac3b2a3c",
+          "amendment_raw_sha256": "ca8bf425a320024aa65885a23bad51b5e97b74f8aadf62bba9968ea13181f845",
+          "original_source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:0f1a9b2a108d1f35340ea3a4a473d82a3a3b8710de577bd4402e408dbe712af5",
+            "raw_asset_id": "sha256:5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+            "company_id": "paramount_skydance_paramount_global",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231.htm",
+            "accession": "0000813828-25-000005",
+            "document_name": "para-20241231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:255bb923386890b3db4f807546f3fac75d33f941ccdc035730d90d98d37c4b6e"
+          },
+          "amendment_source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:abfc5dda276a9f731c9c7551acd16e4a4bb40f846784178b8c06f999cf6c74e7",
+            "raw_asset_id": "sha256:ca8bf425a320024aa65885a23bad51b5e97b74f8aadf62bba9968ea13181f845",
+            "company_id": "paramount_skydance_paramount_global",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000119312525096776/d886907d10ka.htm",
+            "accession": "0001193125-25-096776",
+            "document_name": "d886907d10ka.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:6b270f8c914232d0bfc5fd978e7f19dc4e249956218b93c68bb067e43735a206"
+          },
+          "source_property": {
+            "original_scope_id": "sha256:2aad479ae1eeaf9b0802a8b41a7fd508ead73758cacecd87be604a2dededb8fb",
+            "part_iii_details": {
+              "note_identity": {
+                "registrant": "Paramount Global",
+                "number": "1",
+                "end": "December 31, 2024",
+                "filed": "February 26, 2025",
+                "aliases": "“Paramount,” the “Company,” “we,” “us” and “our”",
+                "scope_name": "Paramount Global"
+              },
+              "correction_cover": {
+                "text": "If securities are registered pursuant to Section 12(b) of the Act, indicate by check mark whether the financial statements of the registrant included in the filing reflect the correction of an error to previously issued financial statements. ☐",
+                "source_blocks": [
+                  {
+                    "text": "If securities are registered pursuant to Section 12(b) of the Act, indicate by check mark whether the financial statements of the registrant included in the filing reflect the",
+                    "linked": false,
+                    "emphasized": false,
+                    "leading_emphasis": null,
+                    "block_index": 58,
+                    "raw_start_byte": 26486,
+                    "raw_end_byte": 26667,
+                    "raw_span_sha256": "0b9fb6df187b9ba6ff6d2e1a5f13bd4d80a19f3aa61d92a99525eeab9de28ac0"
+                  },
+                  {
+                    "text": "correction of an error",
+                    "linked": false,
+                    "emphasized": false,
+                    "leading_emphasis": null,
+                    "block_index": 59,
+                    "raw_start_byte": 26696,
+                    "raw_end_byte": 26718,
+                    "raw_span_sha256": "cf321c24c1f37b19c8c34e80bb2583473d7a015089fef533eef9b5c1ece69afe"
+                  },
+                  {
+                    "text": "to previously issued financial statements. ☐",
+                    "linked": false,
+                    "emphasized": false,
+                    "leading_emphasis": null,
+                    "block_index": 60,
+                    "raw_start_byte": 26724,
+                    "raw_end_byte": 26936,
+                    "raw_span_sha256": "92909e059043041e6b710b6a6916bbffb4d360a9471abfe0c4b6b709bf340807"
+                  }
+                ],
+                "block_indices": [
+                  58,
+                  59,
+                  60
+                ]
+              },
+              "restatement_cover": {
+                "text": "Indicate by check mark whether any of those error corrections are restatements that required a recovery analysis of incentive-based compensation received by any of the registrant’s executive officers during the relevant recovery period pursuant to §240.10D-1(b). ☐",
+                "source_blocks": [
+                  {
+                    "text": "Indicate by check mark whether any of those error corrections are restatements that required a recovery analysis of incentive-based compensation received by any of the registrant’s executive officers during the relevant recovery period pursuant to",
+                    "linked": false,
+                    "emphasized": false,
+                    "leading_emphasis": null,
+                    "block_index": 61,
+                    "raw_start_byte": 27054,
+                    "raw_end_byte": 27308,
+                    "raw_span_sha256": "649a60c6e9f1460a0f529561210cae289df5cfdb8f64698207c4970a47b85f03"
+                  },
+                  {
+                    "text": "§240.10D-1(b).",
+                    "linked": false,
+                    "emphasized": false,
+                    "leading_emphasis": null,
+                    "block_index": 62,
+                    "raw_start_byte": 27356,
+                    "raw_end_byte": 27375,
+                    "raw_span_sha256": "c2c9159901c4222c51bfe64ad6990a5f017abfb922e03654ba41602383be0abf"
+                  },
+                  {
+                    "text": "☐",
+                    "linked": false,
+                    "emphasized": false,
+                    "leading_emphasis": null,
+                    "block_index": 63,
+                    "raw_start_byte": 27381,
+                    "raw_end_byte": 27390,
+                    "raw_span_sha256": "08e84ef81fcd7b76253fe6d060fb8bdecc03b2273aadc875404aaabaa34f0a70"
+                  }
+                ],
+                "block_indices": [
+                  61,
+                  62,
+                  63
+                ]
+              },
+              "native_correction_flag": {
+                "fact": {
+                  "tag": "ix:nonnumeric",
+                  "qualified_name": "dei:DocumentFinStmtErrorCorrectionFlag",
+                  "context_ref": "P01_01_2024To12_31_2024",
+                  "unit_ref": "",
+                  "scale": "0",
+                  "sign": "",
+                  "ordinal": 34,
+                  "text": "☐"
+                },
+                "namespace": "http://xbrl.sec.gov/dei/2024",
+                "native_context": {
+                  "context_ref": "P01_01_2024To12_31_2024",
+                  "dimensions": {},
+                  "entity_identifier": "0000813828",
+                  "period_end": "2024-12-31",
+                  "period_start": "2024-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "P01_01_2024To12_31_2024",
+                  "identifiers": [
+                    {
+                      "value": "0000813828",
+                      "scheme": "http://www.sec.gov/CIK"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2024-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2024-12-31"
+                    }
+                  ],
+                  "dimensions": [],
+                  "typed_dimension_count": 0
+                }
+              },
+              "no_new_statements_declaration": {
+                "text": "No financial statements or supplemental data are filed with this Amendment. See Index to Financial Statements and Supplemental Data of the Initial Form 10-K.",
+                "linked": false,
+                "emphasized": false,
+                "leading_emphasis": null,
+                "block_index": 1806,
+                "raw_start_byte": 1033637,
+                "raw_end_byte": 1033835,
+                "raw_span_sha256": "1b78dd16ad3ef4eddbfa98ff022e7cc767e3d4cadd2c3a50de5b8c113b31bdf6"
+              },
+              "conditional_compensation_references": [
+                {
+                  "block": {
+                    "text": "✓ Clawback Policy: In addition to maintaining a clawback policy as required by the Securities Exchange Act of 1934, as amended (the “Exchange Act”) Rule 10D-1 and Nasdaq listing standards (which we apply beyond executive officers to other senior executives of the Company), provide for forfeiture, repayment or adjustment of incentive compensation in the event of a financial restatement without regard to misconduct in our NEOs’ employment agreements",
+                    "source_blocks": [
+                      {
+                        "text": "✓ Clawback Policy: In addition to maintaining a clawback policy as required by the Securities Exchange Act of 1934, as amended (the “Exchange Act”) Rule 10D-1 and Nasdaq listing standards (which we apply beyond executive officers to other senior executives of the Company), provide for forfeiture, repayment or adjustment of incentive compensation in the event of a financial restatement without regard to misconduct in our NEOs’ employment agreements",
+                        "linked": false,
+                        "emphasized": false,
+                        "leading_emphasis": null,
+                        "block_index": 381,
+                        "raw_start_byte": 152170,
+                        "raw_end_byte": 152706,
+                        "raw_span_sha256": "c6fb66250a91700db3ce1553dd77ac164d3d79e9b17e20a99f3cb4f41ff92662"
+                      }
+                    ],
+                    "block_indices": [
+                      381
+                    ]
+                  },
+                  "conditional_clause": "in the event of a financial restatement without regard to misconduct"
+                }
+              ],
+              "unresolved_correction_blocks": []
+            },
+            "income_correction_blocks": [],
+            "input_class": "ORIGINAL_INTEREST_COVERAGE_COMPONENT_VALUES"
+          },
+          "additional_component_disclosures": [],
+          "original_scope_reclassified": false,
+          "annual_continuity_proven": false,
+          "debt_completeness_proven": false,
+          "metric_result_created": false,
+          "source_acquisition_credit": false,
+          "production_authorized": false,
+          "property_id": "sha256:22614d1bfd9db4b3eff6af6fba9ddaa3481c3c678a281c8035b4b11e5646d16c"
+        }
+      }
+    }
+  ],
+  "original_proofs_verified": 2,
+  "source_proofs": [
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231.htm",
+      "accession": "0000813828-25-000005",
+      "document_name": "para-20241231.htm",
+      "content_sha256": "5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+      "request_body_sha256": "5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+      "request_body_size": 3551281,
+      "request_headers_repo_relative_path": "evidence/request_attempts/5e/5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a/para-20241231.htm.18e50b2b72efbb8e685a40e76de53d961dc3e6a7c5f490c9674bb06c94323597.headers.json",
+      "request_headers_sha256": "18e50b2b72efbb8e685a40e76de53d961dc3e6a7c5f490c9674bb06c94323597",
+      "request_headers_size": 1087,
+      "request_locator_kind": "IMMUTABLE_ATTEMPT",
+      "request_repo_relative_path": "evidence/request_attempts/5e/5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a/para-20241231.htm",
+      "request_attempt_id": "request:attempt:255bb923386890b3db4f807546f3fac75d33f941ccdc035730d90d98d37c4b6e"
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000119312525096776/d886907d10ka.htm",
+      "accession": "0001193125-25-096776",
+      "document_name": "d886907d10ka.htm",
+      "content_sha256": "ca8bf425a320024aa65885a23bad51b5e97b74f8aadf62bba9968ea13181f845",
+      "request_body_sha256": "ca8bf425a320024aa65885a23bad51b5e97b74f8aadf62bba9968ea13181f845",
+      "request_body_size": 1042519,
+      "request_headers_repo_relative_path": "evidence/request_attempts/ca/ca8bf425a320024aa65885a23bad51b5e97b74f8aadf62bba9968ea13181f845/d886907d10ka.htm.da77b5b5d9d93fc2435d4901783609cf760cc2d4d7548dfbdd02628db111564f.headers.json",
+      "request_headers_sha256": "da77b5b5d9d93fc2435d4901783609cf760cc2d4d7548dfbdd02628db111564f",
+      "request_headers_size": 1086,
+      "request_locator_kind": "IMMUTABLE_ATTEMPT",
+      "request_repo_relative_path": "evidence/request_attempts/ca/ca8bf425a320024aa65885a23bad51b5e97b74f8aadf62bba9968ea13181f845/d886907d10ka.htm",
+      "request_attempt_id": "request:attempt:6b270f8c914232d0bfc5fd978e7f19dc4e249956218b93c68bb067e43735a206"
+    }
+  ],
+  "source_log_and_registry_unchanged": true,
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "metric_result_created": false,
+  "company_acceptance_completed": false,
+  "production_adopted": false,
+  "tested_tree_committed": false,
+  "working_tree_status": " M scripts/vnext/statement_metric_amendment.py\n M tests/vnext/test_statement_metric_amendment.py\n",
+  "source_property_only": true
+}
