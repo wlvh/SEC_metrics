@@ -329,6 +329,8 @@ def main():
     ap.add_argument('--prior-readings', type=Path, help='#47 previous-business-readings.json')
     ap.add_argument('--receiver-checks', type=Path, help='receiver_checks.json')
     ap.add_argument('--adoption-records', type=Path, help='adoption_records.json')
+    ap.add_argument('--defects-file', type=Path, help='known_result_defects.json to use instead of the one in --code-root '
+                    '(the register is knowledge about results, so a later main may be newer than the observing code)')
     ap.add_argument('--out', required=True, type=Path)
     a = ap.parse_args()
     a.out.mkdir(parents=True, exist_ok=False)
@@ -391,7 +393,8 @@ def main():
     pub, pub_meta = publication_rows(a.publication, name_to_id)
     defects = collections.defaultdict(list)
     defect_values = collections.defaultdict(set)  # the withdrawn value itself, when the register records it
-    for d in json.loads((a.code_root / 'docs/evidence/issue28_continuous/known_result_defects.json').read_text())['defects']:
+    defects_file = a.defects_file or a.code_root / 'docs/evidence/issue28_continuous/known_result_defects.json'
+    for d in json.loads(defects_file.read_text())['defects']:
         key = (d.get('company_id'), d.get('metric_id'), d.get('period_end'))
         defects[key].append(
             d['defect_id'] + ('(released:' + str(len(d['released'] if isinstance(d['released'], list) else [d['released']])) + ')' if d.get('released') else ''))
@@ -646,6 +649,7 @@ def main():
               'adoption_records_sha256': sha256_file(a.adoption_records) if a.adoption_records else None,
               'reference_map_sha256': sha256_file(a.code_root / 'catalog/reference/generated/sic_metric_map.json'),
               'registry_sha256': sha256_file(a.code_root / 'config/company_registry.csv'),
+              'defects_file': str(defects_file), 'defects_sha256': sha256_file(defects_file),
               'builder_sha256': sha256_file(__file__), 'argv': sys.argv,
               'built_at_utc': dt.datetime.now(dt.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}
     (a.out / 'manifest.json').write_text(json.dumps(inputs, ensure_ascii=False, indent=1, sort_keys=True), encoding='utf-8')
