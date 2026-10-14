@@ -18,6 +18,7 @@ from .governance_signals import _FactAttributes
 from .records import validate_record
 from .resource_limits import RESOURCE_LIMITS
 from .text_coverage import build_text_document, _Blocks, _byte_offsets, _heading as _form_heading
+from .xbrl_namespace_policy import YEAR_ONLY, is_sec_namespace
 
 
 _POLICY_PATH = Path(__file__).resolve().parents[2] / "catalog/r6/text_business_candidates_v1.json"
@@ -50,7 +51,9 @@ def _need(condition, reason):
         raise TextBusinessCandidateError(reason)
 
 
-def _bound_source(*, raw_bytes, raw_blob, source_reference, company_id, cik, filing):
+def _bound_source(*, raw_bytes, raw_blob, source_reference, company_id, cik, filing,
+                  namespace_policy=YEAR_ONLY):
+    is_sec_namespace('', taxonomy='dei', namespace_policy=namespace_policy)
     blob, ref = validate_record(record=dict(raw_blob)), validate_record(record=dict(source_reference))
     _need(type(raw_bytes) is bytes and 0 < len(raw_bytes) <= RESOURCE_LIMITS.max_html_bytes,
           "TEXT_BUSINESS_SOURCE_SIZE_INVALID")
@@ -65,7 +68,8 @@ def _bound_source(*, raw_bytes, raw_blob, source_reference, company_id, cik, fil
     parsed = parse_accession_xbrl_source(raw_bytes=raw_bytes)
     metadata = _FactAttributes(); metadata.feed(raw_bytes.decode("utf-8-sig")); metadata.close()
     _need(metadata.ordinal == len(parsed.facts), "TEXT_BUSINESS_NATIVE_METADATA_CONFLICT")
-    dei = [f for f in parsed.facts if re.fullmatch(r"https?://xbrl\.sec\.gov/dei/\d{4}", metadata.facts[f["ordinal"]]["concept"][0])]
+    dei = [f for f in parsed.facts if is_sec_namespace(metadata.facts[f['ordinal']]['concept'][0],
+            taxonomy='dei', namespace_policy=namespace_policy)]
     entities = {str(int(f["text"])) for f in dei if metadata.facts[f["ordinal"]]["concept"][1].casefold() == "entitycentralindexkey" and f["text"].isdigit()}
     forms = {f["text"].upper().replace(" ", "") for f in dei if metadata.facts[f["ordinal"]]["concept"][1].casefold() == "documenttype"}
     _need(entities == {str(int(cik))} and forms == {filing["form"].upper().replace(" ", "")}, "TEXT_BUSINESS_DEI_IDENTITY_CONFLICT")
@@ -414,10 +418,11 @@ def going_concern_candidates(*, document):
     return {**body, "policy_hash": _POLICY_HASH, "proposal_id": content_hash(value={**body, "policy_hash": _POLICY_HASH})}
 
 
-def reported_legal_fact_candidates(*, raw_bytes, raw_blob, source_reference, company_id, cik, filing):
+def reported_legal_fact_candidates(*, raw_bytes, raw_blob, source_reference, company_id, cik, filing,
+                                   namespace_policy=YEAR_ONLY):
     """Expose exact declared fact identities/contexts; do not sum legal exposure."""
     parsed, metadata, _ = _bound_source(raw_bytes=raw_bytes, raw_blob=raw_blob, source_reference=source_reference,
-        company_id=company_id, cik=cik, filing=filing)
+        company_id=company_id, cik=cik, filing=filing, namespace_policy=namespace_policy)
     candidates = []
     for fact in parsed.facts:
         uri, local = metadata.facts[fact["ordinal"]]["concept"]
