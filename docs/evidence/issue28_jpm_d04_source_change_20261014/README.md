@@ -1,0 +1,9 @@
+# JPMorgan current D04: exact saved-input mismatch, no result credit
+
+Clean maincb27e5d1, original calls125--151,27groups/130distinct units, original complete source7a41c8. Formal fresh ordinary company run fails at59.930s with D04_SAVED_COMPANY_SOURCE_MISSING_OR_AMBIGUOUS. No Result, prior success replacement, new claim or model execution. Actual original-file hash comparison passed; failure receipt retained.
+
+One diagnostic preparation saves current source privately and captures the existing equivalence failure: all27 original source packets fail UPDATE_NATIVE_ANNUAL_SELECTION_CHANGED. Complete source fields outside current-input/provenance metadata do not differ. The annual diff is explicit: CompanyFacts descriptor URI changes from e5a944... to73de8c...; fiscal source-inspection companyfacts_sha256 and inspection_id change. Fiscal-inspection fields aside from those provenance fields are exactly equal; same entity/actual2025annual/fiscal label. The whole CompanyFacts bodies are different, not a same-body metadata-attempt refresh.
+
+This identifies a reuse dependency, not proof that new input or old semantic answers are universally equivalent. No source/hash was ignored, old answer relabelled or result accepted. Current source/proof and originalCF bodies remain separate. Next engineering check must establish what D04 actually consumes and bind its full task-level input before any narrow compatibility change; no arbitrary sharedCF-hash removal or paid retry is authorized by this diagnosis.
+
+Full source/diagnostic scripts and original failure at /Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/jpm-d04-company-20261014. Committed artifacts are compact failure/diffs only; no raw answers copied.0/0/0 calls. No company conclusion, model accuracy,390 or adoption credit; local code unchanged.
