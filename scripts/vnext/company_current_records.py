@@ -64,6 +64,7 @@ def run_saved_company(*, company_id, source_root, work_dir, output_dir,
     """Calculate changed inputs and read durable results into ordinary CSVs."""
     from .normal_annual_input import _registry_rows
     from .deterministic_router import shared_xbrl_parses
+    from .normal_annual_input import shared_annual_periods
     source, work, outputs = (Path(p).resolve() for p in (source_root, work_dir, output_dir))
     _need(source.is_dir(), 'COMPANY_SAVED_SOURCE_ROOT_MISSING')
     roots = (source, work, outputs, ROOT.resolve())
@@ -109,7 +110,7 @@ def run_saved_company(*, company_id, source_root, work_dir, output_dir,
     work.mkdir(parents=True, exist_ok=True)
     _need(not (work/'local-company.json').exists() and not (work/'current_source.json').exists(),
           'COMPANY_CURRENT_OLD_TASK_REQUIRES_ORIGINAL_ENTRY')
-    with (work/'company.lock').open('a+b') as lock, shared_xbrl_parses():
+    with (work/'company.lock').open('a+b') as lock, shared_xbrl_parses(), shared_annual_periods():
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         config = {'record_type': 'ORDINARY_COMPANY_TASK_V1', 'company_id': company_id,
                   'source_root': str(source)}

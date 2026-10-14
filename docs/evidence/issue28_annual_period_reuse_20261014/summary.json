@@ -1,0 +1,61 @@
+{
+  "tested_base": "190e2f9011d264c5d6527e2bb59efd6b1b9aa3c5",
+  "execution_tree": "base plus explicitly listed uncommitted production files; tests and evidence committed after execution",
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics",
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+  "private_measurements": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/annual-prepare-profile-20261014",
+  "before": {
+    "metadata_scans": 3,
+    "profiled_seconds": 4.743341791006969,
+    "annual_period_calls": 3,
+    "annual_period_cumulative_seconds": 1.097855375,
+    "source_admission_checks": 9,
+    "source_admission_cumulative_seconds": 0.7080731250000001
+  },
+  "after": {
+    "metadata_scans": 1,
+    "profiled_seconds": 4.5182856660103425,
+    "annual_period_calls": 3,
+    "annual_period_cumulative_seconds": 0.6832748750000001,
+    "source_admission_checks": 9,
+    "source_admission_cumulative_seconds": 0.7632356250000001
+  },
+  "repeat_seconds": 0.11568091699155048,
+  "independent_read_seconds": 0.1296282080002129,
+  "result_files_preserved": 14,
+  "results": [
+    {
+      "metric_id": "B04",
+      "value": "2601000000",
+      "unit": "USD",
+      "fiscal_year": "2025",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "accession": "0001048286-26-000007",
+      "result_id": "sha256:93e0d562375105fa889e094c463667054e32eb24406d7ea01333cc8dc6fba0ea"
+    },
+    {
+      "metric_id": "B07",
+      "value": "5.118665018541409147095179234",
+      "unit": "ratio",
+      "fiscal_year": "2025",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "accession": "0001048286-26-000007",
+      "result_id": "sha256:5d4dc57653daa9ed6668fd22695030c33d7670c61c9681d3ec3e06f8bcc130da"
+    }
+  ],
+  "source_admission_not_cached": true,
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ],
+  "claims_rows": 195,
+  "claims_sha256": "6023bf1790b31d5895dad3ef824b3d102d56b0381140f6b79463d8e97964f6eb",
+  "production_sha256": {
+    "scripts/vnext/normal_annual_input.py": "68a364f25c41b48a807e16f46972fa9a8427a191d1037079bcb8127c25e9ee4e",
+    "scripts/vnext/company_current_records.py": "b3dba7bbc42382d42313ae90a4a9de47b9be29d71f6d58723d7dc34d297a6e21"
+  },
+  "limits": "single profiler observation, not a speedup percentage; no business acceptance, all-company claim or persistent result cache"
+}
