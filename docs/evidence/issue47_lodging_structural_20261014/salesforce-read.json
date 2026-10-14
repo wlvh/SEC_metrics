@@ -1,0 +1,15 @@
+{
+  "arguments": [
+    "results",
+    "--company",
+    "salesforce",
+    "--state-root",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/state",
+    "--output-root",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/read"
+  ],
+  "seconds": 0.22800887501216494,
+  "exit_code": 0,
+  "stdout": "{\n  \"elapsed_seconds\": 0.07065650000004098,\n  \"record_type\": \"ORDINARY_COMPANY_RESULT_VIEW_V1\",\n  \"company_id\": \"salesforce\",\n  \"source_root\": \"/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs\",\n  \"metrics\": [\n    {\n      \"metric_id\": \"B10\",\n      \"result_id\": \"sha256:be6f5c06748507be2b061074521564eb62fa007aaa38e29a2f2575fc0ee2bad4\",\n      \"period_start\": \"2023-02-01\",\n      \"period_end\": \"2024-01-31\",\n      \"fiscal_year\": 2024,\n      \"value\": null,\n      \"unit\": null,\n      \"publication\": \"PUBLISHED\",\n      \"quality\": \"NONE\",\n      \"reason_code\": \"TRAIT_NOT_APPLICABLE\",\n      \"result_validity\": \"SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED\",\n      \"defect_holds\": [],\n      \"latest_observation\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"requested_in_latest_execution\": true,\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/state/updates/B10/periods/FY2024/results/a536d7ee9a3747ea970907a0612bd545\"\n    },\n    {\n      \"metric_id\": \"B11\",\n      \"result_id\": \"sha256:2356d7708775a1e1631059c66cb9553a22e2036da263664677bd88f0138101e3\",\n      \"period_start\": \"2023-02-01\",\n      \"period_end\": \"2024-01-31\",\n      \"fiscal_year\": 2024,\n      \"value\": null,\n      \"unit\": null,\n      \"publication\": \"PUBLISHED\",\n      \"quality\": \"NONE\",\n      \"reason_code\": \"TRAIT_NOT_APPLICABLE\",\n      \"result_validity\": \"SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED\",\n      \"defect_holds\": [],\n      \"latest_observation\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"requested_in_latest_execution\": true,\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/state/updates/B11/periods/FY2024/results/81f7a09b65b54fc8acb5fd6d8e75a7c1\"\n    }\n  ],\n  \"source_freshness\": \"NOT_CHECKED_BY_SAVED_READER\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false,\n  \"output_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/salesforce/read\"\n}\n",
+  "stderr": "{}\n"
+}

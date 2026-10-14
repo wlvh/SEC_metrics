@@ -1,0 +1,106 @@
+test_historical_nonhotel_uses_structural_calculator_and_preserves_the_period (tests.vnext.test_selected_lodging_calculation.SelectedLodgingCalculationTest.test_historical_nonhotel_uses_structural_calculator_and_preserves_the_period) ... 
+  test_historical_nonhotel_uses_structural_calculator_and_preserves_the_period (tests.vnext.test_selected_lodging_calculation.SelectedLodgingCalculationTest.test_historical_nonhotel_uses_structural_calculator_and_preserves_the_period) (metric='B10', year=2021) ... ERROR
+  test_historical_nonhotel_uses_structural_calculator_and_preserves_the_period (tests.vnext.test_selected_lodging_calculation.SelectedLodgingCalculationTest.test_historical_nonhotel_uses_structural_calculator_and_preserves_the_period) (metric='B11', year=2021) ... ERROR
+  test_historical_nonhotel_uses_structural_calculator_and_preserves_the_period (tests.vnext.test_selected_lodging_calculation.SelectedLodgingCalculationTest.test_historical_nonhotel_uses_structural_calculator_and_preserves_the_period) (metric='B10', year=2024) ... ERROR
+  test_historical_nonhotel_uses_structural_calculator_and_preserves_the_period (tests.vnext.test_selected_lodging_calculation.SelectedLodgingCalculationTest.test_historical_nonhotel_uses_structural_calculator_and_preserves_the_period) (metric='B11', year=2024) ... ERROR
+
+======================================================================
+ERROR: test_historical_nonhotel_uses_structural_calculator_and_preserves_the_period (tests.vnext.test_selected_lodging_calculation.SelectedLodgingCalculationTest.test_historical_nonhotel_uses_structural_calculator_and_preserves_the_period) (metric='B10', year=2021)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_selected_lodging_calculation.py", line 61, in test_historical_nonhotel_uses_structural_calculator_and_preserves_the_period
+    case = historical.prepare_historical_lodging_case(
+        repo_root=ROOT, company_id='ford_motor_company', metric_id=metric,
+        period_selection={'constructed_control': True}, rules_root=ROOT)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/historical_lodging_results.py", line 156, in prepare_historical_lodging_case
+    component, prepared = _resolve_historical_lodging_metric(
+                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        repo_root=repo_root, company_id=company_id, metric_id=metric_id,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        period_selection=period_selection, rules_root=rules_root)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/historical_lodging_results.py", line 244, in _resolve_historical_lodging_metric
+    _need(False, "HISTORICAL_LODGING_METRIC_NOT_APPLICABLE:" + company_id,
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          "IMPLEMENTATION_GAP")
+          ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/historical_lodging_results.py", line 128, in _need
+    raise error
+vnext.historical_lodging_results.HistoricalLodgingError: HISTORICAL_LODGING_METRIC_NOT_APPLICABLE:ford_motor_company
+
+======================================================================
+ERROR: test_historical_nonhotel_uses_structural_calculator_and_preserves_the_period (tests.vnext.test_selected_lodging_calculation.SelectedLodgingCalculationTest.test_historical_nonhotel_uses_structural_calculator_and_preserves_the_period) (metric='B11', year=2021)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_selected_lodging_calculation.py", line 61, in test_historical_nonhotel_uses_structural_calculator_and_preserves_the_period
+    case = historical.prepare_historical_lodging_case(
+        repo_root=ROOT, company_id='ford_motor_company', metric_id=metric,
+        period_selection={'constructed_control': True}, rules_root=ROOT)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/historical_lodging_results.py", line 156, in prepare_historical_lodging_case
+    component, prepared = _resolve_historical_lodging_metric(
+                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        repo_root=repo_root, company_id=company_id, metric_id=metric_id,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        period_selection=period_selection, rules_root=rules_root)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/historical_lodging_results.py", line 244, in _resolve_historical_lodging_metric
+    _need(False, "HISTORICAL_LODGING_METRIC_NOT_APPLICABLE:" + company_id,
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          "IMPLEMENTATION_GAP")
+          ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/historical_lodging_results.py", line 128, in _need
+    raise error
+vnext.historical_lodging_results.HistoricalLodgingError: HISTORICAL_LODGING_METRIC_NOT_APPLICABLE:ford_motor_company
+
+======================================================================
+ERROR: test_historical_nonhotel_uses_structural_calculator_and_preserves_the_period (tests.vnext.test_selected_lodging_calculation.SelectedLodgingCalculationTest.test_historical_nonhotel_uses_structural_calculator_and_preserves_the_period) (metric='B10', year=2024)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_selected_lodging_calculation.py", line 61, in test_historical_nonhotel_uses_structural_calculator_and_preserves_the_period
+    case = historical.prepare_historical_lodging_case(
+        repo_root=ROOT, company_id='ford_motor_company', metric_id=metric,
+        period_selection={'constructed_control': True}, rules_root=ROOT)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/historical_lodging_results.py", line 156, in prepare_historical_lodging_case
+    component, prepared = _resolve_historical_lodging_metric(
+                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        repo_root=repo_root, company_id=company_id, metric_id=metric_id,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        period_selection=period_selection, rules_root=rules_root)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/historical_lodging_results.py", line 244, in _resolve_historical_lodging_metric
+    _need(False, "HISTORICAL_LODGING_METRIC_NOT_APPLICABLE:" + company_id,
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          "IMPLEMENTATION_GAP")
+          ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/historical_lodging_results.py", line 128, in _need
+    raise error
+vnext.historical_lodging_results.HistoricalLodgingError: HISTORICAL_LODGING_METRIC_NOT_APPLICABLE:ford_motor_company
+
+======================================================================
+ERROR: test_historical_nonhotel_uses_structural_calculator_and_preserves_the_period (tests.vnext.test_selected_lodging_calculation.SelectedLodgingCalculationTest.test_historical_nonhotel_uses_structural_calculator_and_preserves_the_period) (metric='B11', year=2024)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_selected_lodging_calculation.py", line 61, in test_historical_nonhotel_uses_structural_calculator_and_preserves_the_period
+    case = historical.prepare_historical_lodging_case(
+        repo_root=ROOT, company_id='ford_motor_company', metric_id=metric,
+        period_selection={'constructed_control': True}, rules_root=ROOT)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/historical_lodging_results.py", line 156, in prepare_historical_lodging_case
+    component, prepared = _resolve_historical_lodging_metric(
+                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        repo_root=repo_root, company_id=company_id, metric_id=metric_id,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        period_selection=period_selection, rules_root=rules_root)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/historical_lodging_results.py", line 244, in _resolve_historical_lodging_metric
+    _need(False, "HISTORICAL_LODGING_METRIC_NOT_APPLICABLE:" + company_id,
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          "IMPLEMENTATION_GAP")
+          ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/historical_lodging_results.py", line 128, in _need
+    raise error
+vnext.historical_lodging_results.HistoricalLodgingError: HISTORICAL_LODGING_METRIC_NOT_APPLICABLE:ford_motor_company
+
+----------------------------------------------------------------------
+Ran 1 test in 0.062s
+
+FAILED (errors=4)
