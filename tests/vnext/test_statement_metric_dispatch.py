@@ -25,14 +25,13 @@ class StatementMetricDispatchTest(unittest.TestCase):
                     '--metric','B04','--metric','B05','--metric','B07'])
             self.assertEqual(code,0)
             args=writer.call_args.kwargs
-            for metric in ('B04','B07'):
+            for metric in ('B04','B05','B07'):
                 self.assertEqual(args['processing_files_by_metric'][metric],
                     cases.processing_files_for_statement_metric(metric))
                 self.assertIn('scripts/vnext/statement_metric_amendment.py',
                               args['processing_files_by_metric'][metric])
-            self.assertEqual(args['processing_files_by_metric']['B05'],cases.PROCESSING_FILES)
-            self.assertNotIn('scripts/vnext/statement_metric_amendment.py',
-                            args['processing_files_by_metric']['B05'])
+            self.assertIn('scripts/vnext/financial_duration.py',
+                          args['processing_files_by_metric']['B05'])
             self.assertEqual(args['fiscal_years'],[2024])
 
     def test_new_property_version_reprocesses_only_consuming_metrics(self):
@@ -52,20 +51,21 @@ class StatementMetricDispatchTest(unittest.TestCase):
                 company_id='marriott_international',metric_id=metric,
                 processing_files=cases.processing_files_for_statement_metric(metric))
         with patch.object(update,'create_saved_result',side_effect=create):
-            first={m:run(m) for m in ('B04','B05','B07')}
+            first={m:run(m) for m in ('B04','B05','B07','B01')}
             original_hash=update.sha256_file
             def changed(*,path):
                 return 'changed-property-code' if Path(path).name=='statement_metric_amendment.py' else original_hash(path=path)
             with patch.object(update,'sha256_file',side_effect=changed):
-                second={m:run(m) for m in ('B04','B05','B07')}
+                second={m:run(m) for m in ('B04','B05','B07','B01')}
                 self.assertTrue(second['B04']['calculation_performed'])
                 self.assertTrue(second['B07']['calculation_performed'])
-                self.assertEqual(second['B05']['status'],'NO_SOURCE_CONTENT_CHANGE')
-                self.assertEqual(second['B05']['result_id'],first['B05']['result_id'])
+                self.assertTrue(second['B05']['calculation_performed'])
+                self.assertEqual(second['B01']['status'],'NO_SOURCE_CONTENT_CHANGE')
+                self.assertEqual(second['B01']['result_id'],first['B01']['result_id'])
                 with patch.object(update,'create_saved_result',side_effect=AssertionError('No repeated calculation')):
-                    repeated={m:run(m) for m in ('B04','B05','B07')}
+                    repeated={m:run(m) for m in ('B04','B05','B07','B01')}
                 self.assertTrue(all(not v['calculation_performed'] for v in repeated.values()))
-        self.assertEqual(created,['B04','B05','B07','B04','B07'])
+        self.assertEqual(created,['B04','B05','B07','B01','B04','B05','B07'])
 
 
 if __name__=='__main__':unittest.main()

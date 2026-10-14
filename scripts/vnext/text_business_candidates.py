@@ -18,6 +18,7 @@ from .governance_signals import _FactAttributes
 from .records import validate_record
 from .resource_limits import RESOURCE_LIMITS
 from .text_coverage import build_text_document, _Blocks, _byte_offsets, _heading as _form_heading
+from .xbrl_namespace_policy import YEAR_ONLY, is_sec_namespace
 
 
 _POLICY_PATH = Path(__file__).resolve().parents[2] / "catalog/r6/text_business_candidates_v1.json"
@@ -50,7 +51,9 @@ def _need(condition, reason):
         raise TextBusinessCandidateError(reason)
 
 
-def _bound_source(*, raw_bytes, raw_blob, source_reference, company_id, cik, filing):
+def _bound_source(*, raw_bytes, raw_blob, source_reference, company_id, cik, filing,
+                  namespace_policy=YEAR_ONLY):
+    is_sec_namespace('', taxonomy='dei', namespace_policy=namespace_policy)
     blob, ref = validate_record(record=dict(raw_blob)), validate_record(record=dict(source_reference))
     _need(type(raw_bytes) is bytes and 0 < len(raw_bytes) <= RESOURCE_LIMITS.max_html_bytes,
           "TEXT_BUSINESS_SOURCE_SIZE_INVALID")
@@ -65,7 +68,8 @@ def _bound_source(*, raw_bytes, raw_blob, source_reference, company_id, cik, fil
     parsed = parse_accession_xbrl_source(raw_bytes=raw_bytes)
     metadata = _FactAttributes(); metadata.feed(raw_bytes.decode("utf-8-sig")); metadata.close()
     _need(metadata.ordinal == len(parsed.facts), "TEXT_BUSINESS_NATIVE_METADATA_CONFLICT")
-    dei = [f for f in parsed.facts if re.fullmatch(r"https?://xbrl\.sec\.gov/dei/\d{4}", metadata.facts[f["ordinal"]]["concept"][0])]
+    dei = [f for f in parsed.facts if is_sec_namespace(metadata.facts[f['ordinal']]['concept'][0],
+            taxonomy='dei', namespace_policy=namespace_policy)]
     entities = {str(int(f["text"])) for f in dei if metadata.facts[f["ordinal"]]["concept"][1].casefold() == "entitycentralindexkey" and f["text"].isdigit()}
     forms = {f["text"].upper().replace(" ", "") for f in dei if metadata.facts[f["ordinal"]]["concept"][1].casefold() == "documenttype"}
     _need(entities == {str(int(cik))} and forms == {filing["form"].upper().replace(" ", "")}, "TEXT_BUSINESS_DEI_IDENTITY_CONFLICT")
@@ -166,6 +170,7 @@ class _NoteHeadingFormats(_Blocks):
     def __init__(self, text):
         super().__init__(text)
         self.formats = {}
+        self.adjacent_formats = {}
         self.emphasized_titles = set()
         self.format_stack = []
         self.part_format = None
@@ -217,6 +222,7 @@ class _NoteHeadingFormats(_Blocks):
         super()._flush()
         if len(self.blocks) > count:
             block = self.blocks[-1]
+            self.adjacent_formats[block["start"]] = self.part_format
             if _NOTE_HEADING.match(block["text"]) or _PATTERNS["note_identifier"].fullmatch(block["text"]):
                 self.formats[block["start"]] = self.part_format
                 if emphasized_title:
@@ -224,7 +230,7 @@ class _NoteHeadingFormats(_Blocks):
         self.part_format = None
 
 
-def _note_heading_formats(document, raw_bytes, *, emphasized_only=False):
+def _note_heading_formats(document, raw_bytes, *, emphasized_only=False, adjacent_titles=False):
     if raw_bytes is None:
         return {}
     _need(type(raw_bytes) is bytes and len(raw_bytes) == document["byte_length"]
@@ -233,9 +239,10 @@ def _note_heading_formats(document, raw_bytes, *, emphasized_only=False):
     text = raw_bytes.decode("utf-8-sig")
     parser = _NoteHeadingFormats(text)
     parser.feed(text); parser.close(); parser._flush()
-    offsets = _byte_offsets(text, parser.formats)
+    observed = parser.adjacent_formats if adjacent_titles else parser.formats
+    offsets = _byte_offsets(text, observed)
     bom = 3 if raw_bytes.startswith(b"\xef\xbb\xbf") else 0
-    return {offsets[start] + bom: form for start, form in parser.formats.items()
+    return {offsets[start] + bom: form for start, form in observed.items()
             if not emphasized_only or start in parser.emphasized_titles}
 
 
@@ -249,6 +256,7 @@ def _note_references(document, ranges, raw_bytes=None):
     headings = []
     blocks = document["blocks"]
     emphasized_formats = None
+    split_formats = None
     # Financial statements can be appended after the form's numbered items.
     # Search the complete source structure, not only the small Item 8 pointer.
     for i, block in enumerate(blocks):
@@ -267,7 +275,14 @@ def _note_references(document, ranges, raw_bytes=None):
         end_index = i
         if match is None:
             identifier = _PATTERNS["note_identifier"].fullmatch(block["text"])
-            if identifier and i + 1 < len(blocks) and blocks[i + 1].get("emphasized") and re.match(r"[A-Za-z]", blocks[i + 1]["text"]):
+            if (identifier and i + 1 < len(blocks) and blocks[i + 1].get("emphasized")
+                    and not blocks[i + 1]["linked"] and re.match(r"[A-Za-z]", blocks[i + 1]["text"])):
+                if split_formats is None:
+                    split_formats = _note_heading_formats(document, raw_bytes, adjacent_titles=True)
+                identifier_format = split_formats.get(block["raw_start_byte"])
+                title_format = split_formats.get(blocks[i + 1]["raw_start_byte"])
+                if identifier_format is None or identifier_format != title_format:
+                    continue
                 match = _NOTE_HEADING.match(identifier.group(1) + ". " + blocks[i + 1]["text"])
                 end_index = i + 1
         if match and not _PATTERNS["continued_heading"].search(block["text"]):
@@ -359,6 +374,20 @@ def legal_risk_candidates(*, document, raw_bytes=None):
     return {**body, "policy_hash": _POLICY_HASH, "proposal_id": content_hash(value={**body, "policy_hash": _POLICY_HASH})}
 
 
+def _financial_report_boundary(block):
+    text=block['text'].strip()
+    if block.get('emphasized') and _FINANCIAL_HEADING.match(text):
+        return True
+    # A standalone standard title can be rendered without bold/emphasis.
+    # Do not promote an all-caps continuation sentence or table-of-contents
+    # link into a report ending; links are rejected by the caller below.
+    return re.fullmatch(
+        r'(?:CONSOLIDATED|COMBINED)(?: AND CONSOLIDATED)? '
+        r'(?:BALANCE SHEETS?|STATEMENTS? OF '
+        r'(?:OPERATIONS|(?:COMPREHENSIVE )?(?:INCOME|LOSS)|CASH FLOWS))',
+        text) is not None
+
+
 def going_concern_candidates(*, document):
     """Locate auditor-report context and relevant language without a no-risk inference."""
     _check_document(document)
@@ -370,7 +399,7 @@ def going_concern_candidates(*, document):
     form_boundaries = [i for i in range(len(blocks)) if _form_heading(blocks, i) is not None]
     for start in starts:
         endings = [i for i in range(start + 1, len(blocks))
-                   if (i in starts or blocks[i].get("emphasized") and _FINANCIAL_HEADING.match(blocks[i]["text"]))
+                   if (i in starts or _financial_report_boundary(blocks[i]))
                    and len(blocks[i]["text"]) < 250 and not blocks[i]["linked"]]
         endings.extend(r["end_block_exclusive"] for r in ranges if r["start_block"] <= start < r["end_block_exclusive"])
         endings.extend(i for i in form_boundaries if i > start)
@@ -400,10 +429,11 @@ def going_concern_candidates(*, document):
     return {**body, "policy_hash": _POLICY_HASH, "proposal_id": content_hash(value={**body, "policy_hash": _POLICY_HASH})}
 
 
-def reported_legal_fact_candidates(*, raw_bytes, raw_blob, source_reference, company_id, cik, filing):
+def reported_legal_fact_candidates(*, raw_bytes, raw_blob, source_reference, company_id, cik, filing,
+                                   namespace_policy=YEAR_ONLY):
     """Expose exact declared fact identities/contexts; do not sum legal exposure."""
     parsed, metadata, _ = _bound_source(raw_bytes=raw_bytes, raw_blob=raw_blob, source_reference=source_reference,
-        company_id=company_id, cik=cik, filing=filing)
+        company_id=company_id, cik=cik, filing=filing, namespace_policy=namespace_policy)
     candidates = []
     for fact in parsed.facts:
         uri, local = metadata.facts[fact["ordinal"]]["concept"]

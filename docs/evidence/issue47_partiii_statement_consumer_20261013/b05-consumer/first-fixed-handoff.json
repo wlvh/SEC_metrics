@@ -1,0 +1,42 @@
+{
+  "phase": "first",
+  "seconds": 10.527986458997475,
+  "exit_code": 0,
+  "arguments": [
+    "run",
+    "--company",
+    "paramount_skydance_paramount_global",
+    "--period",
+    "fiscal-years",
+    "--fiscal-year-start",
+    "2024",
+    "--fiscal-year-end",
+    "2024",
+    "--metric",
+    "B05",
+    "--source-root",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "--work-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/period-subject-paramount-20261009/state",
+    "--output-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b05-partiii-consumer-20261014/first-fixed-handoff/runs"
+  ],
+  "stdout": "{\n  \"elapsed_seconds\": 10.52662358400994,\n  \"record_type\": \"ORDINARY_COMPANY_EXECUTION_V1\",\n  \"company_id\": \"paramount_skydance_paramount_global\",\n  \"run_id\": \"20261014T083715Z-9e8862e6\",\n  \"status\": \"FLOW_COMPLETED\",\n  \"selected_metrics\": [\n    \"B05\"\n  ],\n  \"metrics\": [\n    {\n      \"metric_id\": \"B05\",\n      \"status\": \"CANDIDATE_READY\",\n      \"attempt_id\": \"e544183e1c8244dd9e1d77ccdbfeb9ac\",\n      \"version\": \"7e1e4e3995544d7282fa01ede58151c3\",\n      \"result_id\": \"sha256:6b3bc58c6dfdad1f3512597a59832e1fe7a66cd8c371d5312e32f14d36652c91\",\n      \"result_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/period-subject-paramount-20261009/state/updates/B05/periods/FY2024/results/7e1e4e3995544d7282fa01ede58151c3\",\n      \"calculation_performed\": true,\n      \"new_candidate_created\": true,\n      \"result_reason_code\": \"PASS\",\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"requested_fiscal_year\": 2024,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:6b3bc58c6dfdad1f3512597a59832e1fe7a66cd8c371d5312e32f14d36652c91\",\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/period-subject-paramount-20261009/state/updates/B05/periods/FY2024/results/7e1e4e3995544d7282fa01ede58151c3\",\n      \"program_version\": {\n        \"commit\": \"5d0a1fc55159b9e1018b82dbf55ed79715a22618\",\n        \"has_uncommitted_changes\": true\n      }\n    }\n  ],\n  \"source_root\": \"/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs\",\n  \"program_root\": \"/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics\",\n  \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/period-subject-paramount-20261009/state\",\n  \"output_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b05-partiii-consumer-20261014/first-fixed-handoff/runs/20261014T083715Z-9e8862e6\",\n  \"source_mode\": \"SAVED_ONLY_NO_ONLINE_DISCOVERY\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false,\n  \"selected_fiscal_years\": [\n    2024\n  ]\n}\n",
+  "all_old_results_preserved": true,
+  "old_new_result_files": [
+    119,
+    126
+  ],
+  "old_new_state_files": [
+    262,
+    273
+  ],
+  "result_files_unchanged": false,
+  "all_state_unchanged": false,
+  "source_registration_and_ledger_unchanged": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

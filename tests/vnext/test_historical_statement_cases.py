@@ -8,6 +8,25 @@ from vnext import historical_statement_cases as cases
 
 
 class HistoricalStatementScopeTest(unittest.TestCase):
+    def test_b05_selected_case_requests_its_property_before_any_calculation(self):
+        # Constructed handoff control; the actual source/result is checked separately.
+        with patch.object(cases,'resolve_period_selection',return_value={}), \
+             patch.object(cases,'prepare_historical_annual_input',return_value={
+                 'amendments':[{'form':'10-K/A'}], 'entity':'1',
+                 'subject_policy':{'mode':'CONTINUOUS_PRIMARY'}}), \
+             patch.object(cases,'_Sources'), \
+             patch.object(cases,'_statement_amendment_checks',
+                 side_effect=cases.StatementCaseError('CONSTRUCTED_PROPERTY_HANDOFF')) as check, \
+             patch.object(cases,'installed_ordinary_spec_documents') as specs, \
+             patch.object(cases,'_deterministic_metric_graph') as calculate:
+            with self.assertRaisesRegex(cases.StatementCaseError,'CONSTRUCTED_PROPERTY_HANDOFF'):
+                cases.prepare_historical_statement_year_case(repo_root=Path('/constructed'),
+                    company_id='constructed',metric_id='B05',fiscal_year=2024)
+        self.assertEqual('B05',check.call_args.kwargs['metric_id'])
+        self.assertEqual([],check.call_args.kwargs['statement_properties'])
+        specs.assert_not_called()
+        calculate.assert_not_called()
+
     def test_amended_target_and_successor_require_explicit_adaptation(self):
         for amendments, mode in [([{'form': '10-K/A'}], 'CONTINUOUS_PRIMARY'),
                                  ([], 'SUCCESSOR_PREDECESSOR')]:
@@ -927,7 +946,7 @@ class HistoricalStatementAmendmentTest(unittest.TestCase):
 
     def test_part_iii_does_not_implicitly_cover_other_statement_metrics(self):
         from unittest.mock import Mock
-        for metric in (None,'B05','B06'):
+        for metric in (None,'B06'):
             reader=Mock();reader.primary.return_value={'raw_bytes':b'constructed','raw_blob':{},'source_reference':{}}
             with self.subTest(metric=metric), \
                  patch('vnext.annual_amendment_scope_v2.inspect_annual_amendment_scope',return_value=self.part_iii()), \
@@ -967,7 +986,7 @@ class HistoricalStatementAmendmentTest(unittest.TestCase):
             self.assertNotIn('ORIGINAL_STATEMENT_VALUES',checked['unchanged_input_classes'])
 
     def test_metric_property_without_retained_evidence_still_refuses(self):
-        for metric in ('B04','B07'):
+        for metric in ('B04','B05','B07'):
             checked, raw, reader = self.statement_property_source()
             with self.subTest(metric=metric), \
                  patch('vnext.annual_amendment_scope_v2.inspect_annual_amendment_scope',return_value=checked), \
@@ -975,6 +994,53 @@ class HistoricalStatementAmendmentTest(unittest.TestCase):
                 with self.assertRaisesRegex(cases.StatementCaseError,'METRIC_AMENDMENT_EVIDENCE_TARGET_REQUIRED'):
                     cases._statement_amendment_checks(reader,self.prepared(),metric_id=metric)
             typed.assert_not_called()
+
+    def cash_flow_property_source(self, **changes):
+        from tests.vnext.test_statement_metric_amendment import StatementMetricAmendmentTest
+        from unittest.mock import Mock
+        checked, raw, original = StatementMetricAmendmentTest().cash_flow_scope(**changes)
+        reader = Mock()
+        reader.primary.side_effect = [
+            {'raw_bytes':original, 'raw_blob':{},
+             'source_reference':checked['original']['document']['source_reference']},
+            {'raw_bytes':raw, 'raw_blob':{},
+             'source_reference':checked['amendment']['document']['source_reference']}]
+        return checked, reader
+
+    def test_b05_consumer_supplies_original_bytes_and_retains_the_duplicate_relation(self):
+        checked, reader = self.cash_flow_property_source()
+        original = copy.deepcopy(checked)
+        properties = []
+        from tests.vnext.processing_dependency_checks import processing_calls, assert_processing_calls
+        from vnext import ordinary_current_update as update
+        with patch('vnext.annual_amendment_scope_v2.inspect_annual_amendment_scope',return_value=checked), \
+             processing_calls(cases.ROOT) as observed:
+            actual = cases._statement_amendment_checks(reader,self.prepared(),
+                metric_id='B05',statement_properties=properties)
+        self.assertEqual([original],actual)
+        self.assertEqual(original,checked)
+        self.assertTrue(checked['original_statement_admission_requires_further_review'])
+        proof = properties[0]['statement_property']
+        self.assertEqual(['capital_expenditures','operating_cash_flow'],proof['covered_component_roles'])
+        relation = proof['duplicate_component_disclosures'][0]
+        self.assertEqual('42000000',relation['reported_value'])
+        self.assertEqual(checked['original']['period'],relation['original_fact']['period'])
+        self.assertFalse(proof['metric_result_created'])
+        assert_processing_calls(observed,update._configuration(cases.ROOT,'marriott_international','B05'),
+            cases.processing_files_for_statement_metric('B05'))
+
+    def test_b05_consumer_keeps_changed_and_subset_cash_flow_withheld(self):
+        for disclosure in ('We generated net operating cash flow of $43 million.',
+                           'We generated net operating cash flow of $42 million from continuing operations.'):
+            checked, reader = self.cash_flow_property_source(disclosure=disclosure)
+            properties = []
+            with self.subTest(disclosure=disclosure), \
+                 patch('vnext.annual_amendment_scope_v2.inspect_annual_amendment_scope',return_value=checked):
+                with self.assertRaisesRegex(cases.StatementCaseError,'METRIC_AMENDMENT_PROPERTY_NOT_PROVEN') as rejected:
+                    cases._statement_amendment_checks(reader,self.prepared(),
+                        metric_id='B05',statement_properties=properties)
+            self.assertEqual('AMENDMENT_INPUT_NOT_CLEARED',rejected.exception.category)
+            self.assertEqual([],properties)
 
     def test_wrong_metric_scope_roles_raw_reference_definition_or_property_id_are_rejected(self):
         from vnext.statement_metric_amendment import inspect_statement_metric_amendment
@@ -1004,11 +1070,11 @@ class HistoricalStatementAmendmentTest(unittest.TestCase):
             self.assertEqual('AMENDMENT_INPUT_NOT_CLEARED',rejected.exception.category)
 
     def test_statement_metric_dependencies_are_explicit_only_for_the_consumers(self):
-        for metric in ('B04','B07'):
+        for metric in ('B04','B05','B07'):
             paths=cases.processing_files_for_statement_metric(metric)
             self.assertIn('scripts/vnext/statement_metric_amendment.py',paths)
             self.assertIn('scripts/vnext/table_grid.py',paths)
-        for metric in ('B05','B01','B02'):
+        for metric in ('B01','B02'):
             self.assertEqual(cases.PROCESSING_FILES,cases.processing_files_for_statement_metric(metric))
 
     def test_explicit_property_reader_executes_only_declared_source_dependencies(self):

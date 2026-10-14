@@ -1,0 +1,64 @@
+{
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+  "original_request_id": "sha256:d68f64eb9308dee3ea53beaa09abaedf950af570506507cfee764f4598cef4e2",
+  "effective_request_id": "sha256:c4c7d6b1e90979d23a668cece33307b35f1f23624f8338b3fbaac1420267d4f2",
+  "anchor": {
+    "unit_id": "sha256:1971e8a899820d01201d720beb553bf0478a49fb9ac3e7476cfcec07d774bf40",
+    "document_id": "sha256:4a4dce956e908317fc4c082f81521acb1a4b4d508a3d673dcfd812b9de167302",
+    "source_reference_id": "sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff",
+    "block_index": 339,
+    "raw_start_byte": 1419062,
+    "raw_end_byte": 1419419,
+    "raw_span_sha256": "185199a46f8e4dae32972a61de6118cb249d2487a1fa89159a3872b03ed67d6c",
+    "statement_text": "JPMorganChase is named as a defendant or is otherwise involved in many civil and governmental legal proceedings, including class actions, derivative actions and other litigation or disputes with third parties, as well as investigations and enforcement actions by U.S. and non-U.S. governmental authorities, including criminal proceedings.",
+    "subject_binding": {
+      "basis": "EXPLICIT_SAME_NAME_PARENTHETICAL",
+      "support": {
+        "block_index": 140,
+        "document_id": "sha256:4a4dce956e908317fc4c082f81521acb1a4b4d508a3d673dcfd812b9de167302",
+        "labels": [
+          "SOURCE_ENTITY_ALIAS"
+        ],
+        "raw_asset_id": "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+        "raw_end_byte": 1283589,
+        "raw_span_sha256": "34a66111476bf80709b2aea8879fe0453b2b9fc41c09f7729aa3bf56cd055ab5",
+        "raw_start_byte": 1282800,
+        "section_id": "FULL_DOCUMENT_ALIAS_DEFINITION",
+        "source_reference_id": "sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff",
+        "text": "JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”, NYSE: JPM), a financial holding company incorporated under Delaware law in 1968, is a leading financial services firm based in the United States of America (“U.S.”), with operations worldwide. JPMorganChase had $4.4 trillion in assets and $362.4 billion in stockholders’ equity as of December 31, 2025. The Firm is a leader in investment banking, financial services for consumers and small businesses, commercial banking, financial transaction processing and asset management. Under the J.P. Morgan and Chase brands, the Firm serves millions of customers, predominantly in the U.S., and many of the world’s most prominent corporate, institutional and government clients globally."
+      },
+      "text": "JPMorganChase"
+    },
+    "legacy_diagnostic_source_fact_id": "sha256:77d7b5b65c24df407b62efc676ebd41d2155d70d43b9fddacd64fa1aaa60e40f",
+    "candidate_id": "sha256:e7cb26240617404204f0bd93c20138c6b7ecf9a27d4f89b64457e33d49654c11"
+  },
+  "original_fact_status": "SOURCE_REPORTED_FACT",
+  "construct_seconds": 44.02791487501236,
+  "validate_seconds": 39.96857687499141,
+  "raw_bytes": 8115,
+  "findings": 33,
+  "unresolved_count": 4,
+  "old_fact_truth_not_restored": true,
+  "native_result_created": false,
+  "calls": [
+    0,
+    0,
+    0
+  ],
+  "protected_files": 5,
+  "isolated_recorded_reply": true,
+  "raw_anchor_proof": {
+    "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026008131/jpm-20251231.htm",
+    "storage_uri": "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm",
+    "raw_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+    "block_index": 339,
+    "span_sha256": "185199a46f8e4dae32972a61de6118cb249d2487a1fa89159a3872b03ed67d6c",
+    "raw_start_byte": 1419062,
+    "raw_end_byte": 1419419,
+    "statement": "JPMorganChase is named as a defendant or is otherwise involved in many civil and governmental legal proceedings, including class actions, derivative actions and other litigation or disputes with third parties, as well as investigations and enforcement actions by U.S. and non-U.S. governmental authorities, including criminal proceedings.",
+    "no_case_identity_or_current_status_inferred": true
+  },
+  "original_material_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d03-jpm-anchor-20261014",
+  "program_commit": "34c2d74386a957587ba512329061db40079a3567",
+  "complete_company_interpretation_performed": false
+}

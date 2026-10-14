@@ -54,6 +54,22 @@ python3 tools/vnext_company.py sources --company lumen_technologies \
   --source-root /your/saved/source-inputs
 ```
 
+B04 的只读来源预检由 [PR266](https://github.com/wlvh/SEC_metrics/pull/266) 后续接入，**不在本指南开头的旧固定版本 `0e251d56` 中**。使用这一新增入口时，在现有仓库另建代码目录，取已接收版本 `cb27e5d1108237bf535567ce83c92b647e6bcb3d`；目录被占用时另选，不覆盖旧任务：
+
+```bash
+git fetch origin main
+git worktree add ../SEC_metrics-b04-source-review \
+  cb27e5d1108237bf535567ce83c92b647e6bcb3d
+(
+  cd ../SEC_metrics-b04-source-review &&
+  python3 tools/vnext_company.py sources --company macys \
+    --fiscal-year-start 2023 --fiscal-year-end 2024 --metric B04 \
+    --source-root /your/restored/source-inputs
+)
+```
+
+该命令在子 shell 中使用 B04 新版本，完成后当前目录仍是开头固定版本的 `SEC_metrics-history-review`，后续命令继续从该目录执行。它核对 B04 实际需要的已保存输入；Macy’s FY2023 为 2023-01-29 至 2024-02-03（53周），FY2024 为 2024-02-04 至 2025-02-01。金额计算、历史 `export` 范围、缺件自动补齐及在线发现没有因此扩展。独立 B04 不要求无关的前期原件；混选 B01/B04 仍保留 B01 所需输入，缺失财年不能借邻年。[历史真实预检与来源保护记录](https://github.com/wlvh/SEC_metrics/pull/266#issuecomment-6160258656)已完成，修改说明不重复解析或计算财报。本节其余命令继续按开头固定版本解释，不用新功能暗示旧检出具备它。
+
 从上述代码目录运行以下命令。`$PWD` 是可取得的已保存来源根，`$HOME/sec-metrics-review-20261009` 可替换为自己的新外部目录：
 
 ```bash
