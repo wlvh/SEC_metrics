@@ -1,0 +1,62 @@
+{
+  "record_type": "CONSTRUCTED_HISTORY_D04_DEPENDENCY_REPRODUCTION",
+  "verification_scope": "NO_FINANCIAL_ORIGINAL_OR_MODEL_RESULT_ACCEPTANCE",
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "cases": [
+    {
+      "changed_unused_current_module": "scripts/vnext/current_d04_result.py",
+      "included_in_public_configuration": true,
+      "included_in_historical_declaration": true,
+      "public_configuration_changed": true,
+      "current_default_configuration_changed": true,
+      "initial_status": "CANDIDATE_WITHHELD",
+      "same_input_repeat_status": "PREVIOUS_INPUT_WITHHELD",
+      "changed_status": "CANDIDATE_WITHHELD",
+      "changed_calculation_performed": true,
+      "factory_calls": 2,
+      "same_changed_input_repeat_status": "PREVIOUS_INPUT_WITHHELD",
+      "old_result_retained": true
+    },
+    {
+      "changed_unused_current_module": "scripts/vnext/capacity_update_input.py",
+      "included_in_public_configuration": true,
+      "included_in_historical_declaration": false,
+      "public_configuration_changed": true,
+      "current_default_configuration_changed": true,
+      "initial_status": "CANDIDATE_WITHHELD",
+      "same_input_repeat_status": "PREVIOUS_INPUT_WITHHELD",
+      "changed_status": "CANDIDATE_WITHHELD",
+      "changed_calculation_performed": true,
+      "factory_calls": 2,
+      "same_changed_input_repeat_status": "PREVIOUS_INPUT_WITHHELD",
+      "old_result_retained": true
+    }
+  ],
+  "actual_small_saved_replay_modules": [
+    "scripts/vnext/canonical.py",
+    "scripts/vnext/capacity_native_assessment.py",
+    "scripts/vnext/capacity_semantic_review.py",
+    "scripts/vnext/capacity_utilization_source.py",
+    "scripts/vnext/continuous_semantic_calls.py",
+    "scripts/vnext/d04_native_assessment.py",
+    "scripts/vnext/invocation_control.py",
+    "scripts/vnext/native_request_construction.py",
+    "scripts/vnext/native_unit_index.py",
+    "scripts/vnext/normal_annual_input_v2.py",
+    "scripts/vnext/r6_semantic_review.py",
+    "scripts/vnext/r6_semantic_source.py",
+    "scripts/vnext/records.py",
+    "scripts/vnext/regulatory_investigation_candidates.py",
+    "scripts/vnext/request_limits.py",
+    "scripts/vnext/saved_d04_replay.py",
+    "scripts/vnext/scope_contract.py",
+    "scripts/vnext/specs.py"
+  ],
+  "replay_calls_current_producer": false,
+  "replay_calls_current_comparator": false,
+  "seconds": 0.143591333006043
+}
