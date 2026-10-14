@@ -146,8 +146,8 @@ def _cash_flow_repeat(scope, units, unit, original):
                      comparison['activity'],re.I):return None
     indices=unit.get('block_indices',[unit.get('block_index')])
     if set(indices)&set(scope['amendment']['quoted_block_indices']):return None
-    if (re.search(r'\b(?:subsidiar\w*|segment\w*|they|their)\b',prefix,re.I)
-            or re.search(r'\b(?:adjusted|continuing|discontinued|excluding|only|limited to)\b',suffix,re.I)):
+    if (re.search(r'\b(?:subsidiar\w*|segment\w*|they|their)\b',prefix+suffix,re.I)
+            or re.search(r'\b(?:adjusted|continuing|discontinued|excluding|only|limited to)\b',prefix+suffix,re.I)):
         return None
     amount=Decimal(match['amount'].replace(',',''))*{
         'million':Decimal(1000000),'billion':Decimal(1000000000),'thousand':Decimal(1000)}[match['scale'].casefold()]
