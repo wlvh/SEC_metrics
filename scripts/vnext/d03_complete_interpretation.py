@@ -23,17 +23,14 @@ def _need(condition, reason):
 
 
 def _finding_needs_review(finding, context_only):
-    # V6 materializes context_only_source_indices as OTHER_MEANING findings.
-    # Their subject/time placeholders do not describe an action. An explicit
-    # unresolved item or an action whose subject/time is unknown still blocks.
+    # V6 context shorthand and explicit non-action findings express the same
+    # exclusion. Subject/time placeholders do not describe an action in either
+    # representation. Explicit uncertainty and uncertain actual actions block.
     if finding['kind'] == 'UNRESOLVED':
         return True
     if (finding['kind'] == 'OTHER_MEANING'
-            and finding.get('reported_status') == 'NOT_AN_ACTION_STATEMENT'
-            and len(finding['evidence']) == 1):
-        reference = finding['evidence'][0]
-        if (finding['unit_id'], reference['source_index']) in context_only:
-            return False
+            and finding.get('reported_status') == 'NOT_AN_ACTION_STATEMENT'):
+        return False
     return finding['subject'] == 'UNRESOLVED' or finding['timing'] == 'UNRESOLVED'
 
 
