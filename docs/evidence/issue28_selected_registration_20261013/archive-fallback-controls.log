@@ -1,0 +1,14 @@
+test_old_selector_arguments_cannot_be_inferred_from_names_only (tests.vnext.test_saved_result_registration.LegacyRegistrationShapeTest.test_old_selector_arguments_cannot_be_inferred_from_names_only) ... ok
+test_known_old_component_is_reused_but_actual_storage_logic_changes_are_not (tests.vnext.test_saved_result_registration.LegacyStoreComponentTest.test_known_old_component_is_reused_but_actual_storage_logic_changes_are_not) ... ok
+test_unavailable_or_wrong_component_never_grants_compatibility (tests.vnext.test_saved_result_registration.LegacyStoreComponentTest.test_unavailable_or_wrong_component_never_grants_compatibility) ... ok
+test_other_registration_reuses_and_used_registration_reprocesses_once (tests.vnext.test_saved_result_registration.RegistrationUpdateBehaviorTest.test_other_registration_reuses_and_used_registration_reprocesses_once) ... ok
+test_malformed_unrelated_registration_is_still_rejected (tests.vnext.test_saved_result_registration.SavedResultRegistrationTest.test_malformed_unrelated_registration_is_still_rejected) ... ok
+test_selected_registry_still_dispatches_the_same_actual_case (tests.vnext.test_saved_result_registration.SavedResultRegistrationTest.test_selected_registry_still_dispatches_the_same_actual_case) ... ok
+test_unrelated_new_registration_does_not_change_existing_inputs (tests.vnext.test_saved_result_registration.SavedResultRegistrationTest.test_unrelated_new_registration_does_not_change_existing_inputs) ... ok
+test_used_registration_change_is_a_processing_change (tests.vnext.test_saved_result_registration.SavedResultRegistrationTest.test_used_registration_change_is_a_processing_change) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.447s
+
+OK
+{"allowed_skips": 0, "errors": 0, "failures": 0, "run": 8, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_saved_result_registration"]}

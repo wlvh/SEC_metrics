@@ -27,7 +27,7 @@ class D04ProcessingScopeTest(TestCase):
     run_control = state_controls.SelectedHistoryResultStateTest.run_control
     period_root = state_controls.SelectedHistoryResultStateTest.period_root
 
-    def extracted_configuration(self, source, company, metric):
+    def extracted_configuration(self, source, company, metric, **kwargs):
         """Current configuration at the bridge's recorded extracted version.
 
         Later merges may change the shared controller/store bytes; the bridge
@@ -51,9 +51,9 @@ class D04ProcessingScopeTest(TestCase):
             # The old snapshots predate the bounded compatibility helper.
             config['processing_files'].pop('scripts/vnext/ordinary_update_compatibility.py', None)
             return config
-        def old_config(source, company, metric):
+        def old_config(source, company, metric, **kwargs):
             config = configuration_for(BEFORE_D04); config['metric_id'] = metric; return config
-        def new_config(source, company, metric):
+        def new_config(source, company, metric, **kwargs):
             config = configuration_for(AFTER_D04); config['metric_id'] = metric; return config
         with patch.object(update, '_configuration', side_effect=old_config):
             first = [self.run_control(2024), self.run_control(2025, 'B11')]
@@ -85,7 +85,7 @@ class D04ProcessingScopeTest(TestCase):
 
     def test_main_before_extraction_reuses_and_consumed_period_changes_reprocess(self):
         from scripts.vnext import ordinary_update_compatibility as compat
-        def main_before(source, company, metric):
+        def main_before(source, company, metric, **kwargs):
             config = self.actual_configuration(source, company, metric)
             config['processing_files'].pop(compat.BRIDGE)
             config['processing_files'][CONTROLLER],config['processing_files'][STORE] = compat.MAIN_C99
@@ -154,7 +154,7 @@ class D04ProcessingScopeTest(TestCase):
 
     def test_compatible_completion_recovers_without_recalculating_or_rewriting_old_success(self):
         from scripts.vnext import ordinary_update_compatibility as compat
-        def main_before(source,company,metric):
+        def main_before(source,company,metric,**kwargs):
             config=self.actual_configuration(source,company,metric)
             config['processing_files'].pop(compat.BRIDGE)
             config['processing_files'][CONTROLLER],config['processing_files'][STORE]=compat.MAIN_C99

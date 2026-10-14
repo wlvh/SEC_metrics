@@ -192,15 +192,18 @@ class DefaultCurrentConfigurationPreservationTest(unittest.TestCase):
             with self.subTest(metric=metric):
                 expected=namespace['_configuration'](REPO_ROOT,'marriott_international',metric)
                 actual=update._configuration(REPO_ROOT,'marriott_international',metric)
-                self.assertEqual({k:v for k,v in expected.items() if k!='processing_files'},
-                    {k:v for k,v in actual.items() if k!='processing_files'})
+                self.assertEqual({k:v for k,v in expected.items() if k not in {'processing_files','saved_result_registration'}},
+                    {k:v for k,v in actual.items() if k not in {'processing_files','saved_result_registration'}})
+                from vnext.ordinary_saved_result import selected_case_registration
+                self.assertEqual(selected_case_registration(metric),actual['saved_result_registration'])
                 added=set(actual['processing_files'])-set(expected['processing_files'])
                 self.assertTrue(added <= {'scripts/vnext/text_coverage.py',
                     'scripts/vnext/normal_governance_input.py','scripts/vnext/text_results_v2.py',
                     'scripts/vnext/historical_dei.py','scripts/vnext/batch_workflow.py',
                     'scripts/vnext/constraints.py','scripts/vnext/paired_measure_v1.py',
                     'scripts/vnext/scope_contract.py','scripts/vnext/normal_numeric_projection.py',
-                    'config/normal_numeric_projection_v1.json','scripts/sec_urls.py','scripts/sec_http.py'})
+                    'config/normal_numeric_projection_v1.json','scripts/sec_urls.py','scripts/sec_http.py',
+                    'scripts/vnext/ordinary_result_registration.py'})
                 self.assertTrue(set(expected['processing_files']) <= set(actual['processing_files']))
                 self.assertTrue(all(actual['processing_files'][path]==digest
                     for path,digest in expected['processing_files'].items()))
