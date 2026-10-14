@@ -5,6 +5,8 @@ It does not fetch sources, execute metrics, grant source admission or publish.
 The older calendar-only and two-sample entries retain their frozen semantics.
 """
 
+from contextlib import contextmanager
+from contextvars import ContextVar
 from datetime import date, datetime
 from pathlib import Path
 import re
@@ -15,6 +17,23 @@ from .annual_input import AnnualInputError, _registry_rows
 from .annual_sources import AnnualUpdateError, saved_source
 from .canonical import content_hash, strict_json_loads
 from .deterministic_router import parse_accession_xbrl_source
+
+
+_ANNUAL_PERIODS = ContextVar('company_annual_periods', default=None)
+
+
+@contextmanager
+def shared_annual_periods():
+    """Reuse only exact-byte period parsing inside one fixed company operation.
+
+    No filing selection, source admission, latest-request check or answer is
+    cached. Successful period tuples are private and discarded on exit.
+    """
+    token = _ANNUAL_PERIODS.set({})
+    try:
+        yield
+    finally:
+        _ANNUAL_PERIODS.reset(token)
 
 
 class NormalAnnualInputError(ValueError):
@@ -143,6 +162,13 @@ def annual_period(*, raw, cik, filing, dei_release="YEAR_ONLY"):
     """Read original annual contexts; explicit older releases retain checks."""
     namespace_pattern = dei_namespace_pattern(dei_release)
     parsed = parse_accession_xbrl_source(raw_bytes=raw)
+    periods = _ANNUAL_PERIODS.get()
+    if periods is not None:
+        key = (parsed.source_sha256, parsed.source_size, str(cik), dei_release,
+               tuple(filing.get(field) for field in
+                     ('accessionNumber', 'form', 'reportDate', 'filingDate', 'primaryDocument')))
+        if key in periods:
+            return dict(periods[key])
     from .governance_signals import _FactAttributes
     metadata = _FactAttributes()
     metadata.feed(raw.decode("utf-8-sig"))
@@ -191,8 +217,12 @@ def annual_period(*, raw, cik, filing, dei_release="YEAR_ONLY"):
     duration = (_date(end) - _date(start)).days + 1
     _need(duration in {364, 365, 366, 371}, "ANNUAL_DURATION_NOT_IMPLEMENTED",
           "IMPLEMENTATION_GAP")
-    return {"fiscal_year": int(year), "period_start": start,
-            "period_end": end}
+    period = {"fiscal_year": int(year), "period_start": start, "period_end": end}
+    if periods is not None:
+        if len(periods) >= 16:
+            periods.pop(next(iter(periods)))
+        periods[key] = tuple(period.items())
+    return period
 
 
 def prepare_saved_annual_input(*, repo_root: Path, company_id: str):

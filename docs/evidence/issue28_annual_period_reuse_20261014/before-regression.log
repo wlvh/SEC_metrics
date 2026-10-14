@@ -1,0 +1,13 @@
+F
+======================================================================
+FAIL: test_same_operation_reads_one_period_without_mutable_result_alias (tests.vnext.test_annual_period_reuse.AnnualPeriodReuseTest.test_same_operation_reads_one_period_without_mutable_result_alias)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_annual_period_reuse.py", line 37, in test_same_operation_reads_one_period_without_mutable_result_alias
+    self.assertEqual(1,scan.call_count)
+AssertionError: 1 != 2
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
