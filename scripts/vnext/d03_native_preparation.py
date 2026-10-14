@@ -22,12 +22,14 @@ def _need(condition, reason):
         raise ValueError(reason)
 
 
-def prepare_native_input(*, company_id, repo_root=ROOT):
+def prepare_native_input(*, company_id, repo_root=ROOT, source_root=None):
     """Select the bounded successor only where the old source-fact override exists."""
     _need(Path(repo_root).resolve() == ROOT,
           'D03_NATIVE_PREPARATION_CODE_ROOT_CHANGED')
-    source = prepare_regulatory_semantic_source(repo_root=ROOT,
-        company_id=company_id, request_context_format=FORMAT_VERSION)
+    data_root = ROOT if source_root is None else Path(source_root).resolve()
+    source = prepare_regulatory_semantic_source(repo_root=data_root,
+        company_id=company_id, request_context_format=FORMAT_VERSION,
+        **({'ordinary_registered':True} if data_root != ROOT else {}))
     originals = requests_from_source(source)
     _need(bool(originals) and [unit['unit_id'] for request in originals
         for unit in request['units']] == source['required_unit_ids'],
@@ -35,7 +37,8 @@ def prepare_native_input(*, company_id, repo_root=ROOT):
     groups = []
     for index, original in enumerate(originals):
         anchored = bool(original['source_statement_facts'])
-        effective = (candidate_request(original, source=source)
+        effective = (candidate_request(original, source=source,
+                     **({'repo_root':data_root} if source_root is not None else {}))
                      if anchored else original)
         _need(effective['source_id'] == source['semantic_source_id']
               and effective['company_id'] == company_id
