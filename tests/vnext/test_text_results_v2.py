@@ -63,6 +63,169 @@ def replace_accrual_raw(args, raw):
 
 
 class TextResultV2SourceTest(unittest.TestCase):
+    def test_d02_bounded_auditor_litigation_text_is_not_an_item8_admission(self):
+        from vnext import d02_text_results_v3 as current_core
+        from vnext.d02_reviewed_source import item8_requests
+        closing = '<h2>Item 9. Changes in and Disagreements with Accountants</h2><p>None.</p>'
+        audit_text = 'We identified the evaluation of product liability litigation as a critical audit matter.'
+        raw = BODY.replace(closing, '') + closing
+        raw = raw.replace('<h2>Consolidated Balance Sheets</h2>',
+                          '<p>' + audit_text + '</p><h2>Consolidated Balance Sheets</h2>')
+        args = inputs('D02', annual_body=raw)
+        default = current_core.prepare_business_text_sources(metric_id='D02', **args)
+        original = next(iter(default['proposals'].values()))
+        prepared = current_core.prepare_business_text_sources(metric_id='D02', d02_page_furniture=True, **args)
+        selected = next(iter(prepared['proposals'].values()))
+        requests = item8_requests(prepared=prepared, target=args['target'])
+        self.assertIn(audit_text, [c['text'] for c in original['D02']['candidates']])
+        self.assertNotIn(audit_text, [c['text'] for c in selected['D02']['candidates']])
+        self.assertNotIn(audit_text, [b['text'] for r in requests for b in r['blocks']])
+        self.assertEqual(original['D03'], selected['D03'])
+        self.assertEqual(default['documents'], prepared['documents'])
+        self.assertIn('The court has not resolved the matter described in the preceding paragraph.',
+                      [c['text'] for c in selected['D02']['candidates']])
+
+    def test_d02_unproved_auditor_end_remains_a_source_failure(self):
+        """Constructed boundary control, not a financial-report conclusion."""
+        from unittest.mock import patch
+        from tests.vnext.test_text_business_candidates import document
+        from vnext import d02_text_results_v3 as current_core
+        from vnext.d02_reviewed_source import item8_requests
+        closing = '<h2>Item 9. Changes in and Disagreements with Accountants</h2><p>None.</p>'
+        audit_text = 'We evaluated the unresolved litigation as a critical audit matter.'
+        raw = (BODY.replace(closing, '') + closing).replace('<h2>Consolidated Balance Sheets</h2>',
+            '<p>' + audit_text + '</p><h2>Consolidated Balance Sheets</h2>')
+        doc = document(raw)
+        proposal = legal_risk_candidates(document=doc, raw_bytes=annual(raw))
+        item8 = next(r for r in proposal['checked_ranges'] if r['section_id'] == 'ITEM_8')
+        unproved = {'auditor_report_ranges': [{'start_block': item8['start_block'] + 1,
+                                             'status': 'CLOSING_BOUNDARY_NOT_LOCATED'}]}
+        with patch.object(current_core, 'going_concern_candidates', return_value=unproved):
+            self.assertEqual(proposal, current_core._select_d02_auditor_reports(proposal=proposal, document=doc))
+        args = inputs('D02', annual_body=raw)
+        prepared = current_core.prepare_business_text_sources(metric_id='D02', d02_page_furniture=True, **args)
+        with patch('vnext.d02_reviewed_source.going_concern_candidates', return_value=unproved):
+            with self.assertRaisesRegex(ValueError, 'D02_REVIEW_AUDITOR_BOUNDARY_NOT_PROVEN'):
+                item8_requests(prepared=prepared, target=args['target'])
+
+    def test_d02_auditor_form_end_does_not_swallow_unemphasized_financial_statements(self):
+        """Constructed bad-reader boundary based on the real Lumen failure."""
+        from unittest.mock import patch
+        from tests.vnext.test_text_business_candidates import document
+        from vnext import d02_text_results_v3 as current_core
+        closing = '<h2>Item 9. Changes in and Disagreements with Accountants</h2><p>None.</p>'
+        raw = (BODY.replace(closing, '') + closing).replace('<h2>Consolidated Balance Sheets</h2>',
+            '<p>CONSOLIDATED BALANCE SHEETS</p>')
+        raw = raw.replace('<h2>Note 1. Accounting Policies</h2>',
+            '<p>A separate legal proceeding remains pending against the Company.</p>'
+            '<h2>Note 1. Accounting Policies</h2>')
+        args = inputs('D02', annual_body=raw)
+        doc = document(raw)
+        end = doc['sections']['ITEM_8']['candidates'][0]['end_block_exclusive']
+        start = next(b['block_index'] for b in doc['blocks']
+                     if b['text'] == 'Report of Independent Registered Public Accounting Firm')
+        wrong_reader = {'auditor_report_ranges': [{'start_block': start, 'end_block_exclusive': end,
+            'status': 'LOCAL_REPORT_RANGE_LOCATED', 'closing_heading': {'text': doc['blocks'][end]['text']}}]}
+        with patch.object(current_core, 'going_concern_candidates', return_value=wrong_reader):
+            with self.assertRaisesRegex(ValueError, 'D02_AUDITOR_REPORT_CLOSING_SCOPE_NOT_PROVEN'):
+                current_core.prepare_business_text_sources(metric_id='D02', d02_page_furniture=True, **args)
+
+    def test_d02_unused_trailing_auditor_range_keeps_original_preparation(self):
+        """A trailing internal-control report needs no D02 admission removal."""
+        from tests.vnext.test_text_business_candidates import document
+        from vnext import d02_text_results_v3 as core
+        from unittest.mock import patch
+        close = '<h2>Item 9. Changes in and Disagreements with Accountants</h2><p>None.</p>'
+        report = ('<h2>Report of Independent Registered Public Accounting Firm</h2>'
+                  '<p>We audited internal controls and issued our opinion.</p>')
+        raw = BODY.replace(close, '') + report + close
+        doc = document(raw)
+        proposal = core.select_d02_incorporated_notes(
+            proposal=legal_risk_candidates(document=doc, raw_bytes=annual(raw)), document=doc, raw_bytes=annual(raw))
+        start = max(b['block_index'] for b in doc['blocks']
+                    if b['text'] == 'Report of Independent Registered Public Accounting Firm')
+        end = doc['sections']['ITEM_8']['candidates'][0]['end_block_exclusive']
+        unused = {'auditor_report_ranges': [{'start_block': start, 'end_block_exclusive': end,
+            'status': 'LOCAL_REPORT_RANGE_LOCATED', 'closing_heading': {'text': doc['blocks'][end]['text']}}]}
+        with patch.object(core, 'going_concern_candidates', return_value=unused):
+            self.assertEqual(proposal, core._select_d02_auditor_reports(proposal=proposal, document=doc))
+
+    def test_d02_lettered_note_keeps_nested_numbered_sections_and_full_item8_pool(self):
+        from tests.vnext.test_text_business_candidates import document
+        from vnext.d02_text_results_v3 import select_d02_incorporated_notes
+        from vnext import d02_text_results_v3 as current_core
+        from vnext.d02_reviewed_source import item8_requests
+        style = 'font-style:italic;text-decoration:underline'
+        def heading(title):
+            return '<p><span style="' + style + '">' + title + '</span></p>'
+        raw = BODY.replace('Refer to Note 2 for our legal proceedings and pending litigation.',
+                           'Certain legal proceedings are discussed in Note 2A.')
+        raw = raw.replace('<h3>1. Procedural matters</h3>', heading('A1. Patent Litigation'))
+        raw = raw.replace('<h2>Note 2. Contingencies</h2>',
+                          '<h2>Note 2. Contingencies</h2>' + heading('A. Legal Proceedings'))
+        raw = raw.replace('<h2>Note 3. Income Taxes</h2>',
+            heading('A2. Government Investigations') + '<p>The investigation remains unresolved.</p>'
+            + heading('B. Guarantees') + '<p>Guarantees total 100 million with no dispute described.</p>'
+            + heading('C. Commitments') + '<p>Commitments are listed separately.</p>'
+            + '<h2>Note 3. Income Taxes</h2>')
+        closing = '<h2>Item 9. Changes in and Disagreements with Accountants</h2><p>None.</p>'
+        raw = raw.replace(closing, '') + closing
+        doc = document(raw); before = copy.deepcopy(doc)
+        proposal = legal_risk_candidates(document=doc, raw_bytes=annual(raw))
+        selected = select_d02_incorporated_notes(proposal=proposal, document=doc, raw_bytes=annual(raw))
+        self.assertEqual(before, doc)
+        self.assertEqual(proposal['D03'], selected['D03'])
+        scopes = selected['d02_incorporated_note_scopes']['disclosure_scopes']
+        self.assertEqual('NOTE_2A', scopes[0]['section_id'])
+        self.assertEqual('INCORPORATED_SUBNOTE', scopes[0]['scope_relation'])
+        kept = [c['text'] for c in selected['D02']['candidates']]
+        self.assertIn('The court has not resolved the matter described in the preceding paragraph.', kept)
+        self.assertIn('The investigation remains unresolved.', kept)
+        self.assertNotIn('Guarantees total 100 million with no dispute described.', kept)
+        args = inputs('D02', annual_body=raw)
+        prepared = current_core.prepare_business_text_sources(metric_id='D02', d02_page_furniture=True, **args)
+        pooled = [b['text'] for r in item8_requests(prepared=prepared, target=args['target']) for b in r['blocks']]
+        self.assertIn('Guarantees total 100 million with no dispute described.', pooled)
+        self.assertNotIn('The investigation remains unresolved.', pooled)
+        for letter, end_title in (('B', 'C. Commitments'), ('C', 'Note 3. Income Taxes')):
+            with self.subTest(requested_letter=letter):
+                body = raw.replace('discussed in Note 2A.', 'discussed in Note 2' + letter + '.')
+                sibling_doc = document(body)
+                sibling_selected = select_d02_incorporated_notes(
+                    proposal=legal_risk_candidates(document=sibling_doc, raw_bytes=annual(body)),
+                    document=sibling_doc, raw_bytes=annual(body))
+                scope = sibling_selected['d02_incorporated_note_scopes']['disclosure_scopes'][0]
+                self.assertEqual('NOTE_2' + letter, scope['section_id'])
+                self.assertEqual(end_title, sibling_doc['blocks'][scope['end_block_exclusive']]['text'])
+
+    def test_d02_lettered_note_refuses_ambiguous_missing_and_different_style_siblings(self):
+        from tests.vnext.test_text_business_candidates import document
+        from vnext.d02_text_results_v3 import select_d02_incorporated_notes
+        style = 'font-style:italic;text-decoration:underline'
+        def heading(title, declared=style):
+            return '<p><span style="' + declared + '">' + title + '</span></p>'
+        raw = BODY.replace('Refer to Note 2 for our legal proceedings and pending litigation.',
+                           'Certain legal proceedings are discussed in Note 2A.')
+        raw = raw.replace('<h2>Note 2. Contingencies</h2>',
+                          '<h2>Note 2. Contingencies</h2>' + heading('A. Legal Proceedings'))
+        raw = raw.replace('<h2>Note 3. Income Taxes</h2>', heading('B. Guarantees')
+                          + heading('C. Commitments') + '<h2>Note 3. Income Taxes</h2>')
+        variants = {
+            'duplicate': raw.replace(heading('B. Guarantees'), heading('B. Procedural Matters') + heading('B. Guarantees')),
+            'missing': raw.replace(heading('A. Legal Proceedings'), ''),
+            'gap': raw.replace(heading('B. Guarantees'), ''),
+            'different_style': raw.replace(heading('B. Guarantees'), heading('B. Guarantees', 'font-weight:bold')),
+            'different_terminal_style': raw.replace('Note 2A.', 'Note 2B.').replace(
+                heading('C. Commitments'), heading('C. Commitments', 'font-weight:bold')),
+            'no_format': raw.replace(style, ''),
+            'unproved': raw.replace(heading('B. Guarantees'), '').replace(heading('C. Commitments'), ''),
+        }
+        for kind, body in variants.items():
+            with self.subTest(kind=kind):
+                doc = document(body)
+                with self.assertRaisesRegex(ValueError, 'D02_REFERENCED_LETTERED_SUBNOTE_NOT_MIGRATED'):
+                    select_d02_incorporated_notes(proposal=legal_risk_candidates(document=doc, raw_bytes=annual(body)),
+                                                 document=doc, raw_bytes=annual(body))
     def test_d02_explicit_sec_namespace_policy_reaches_both_identity_checks(self):
         from vnext import d02_text_results_v3 as core
         from vnext.xbrl_namespace_policy import YEAR_QUARTER_OR_DATE
