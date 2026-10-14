@@ -122,6 +122,8 @@ python3 tools/vnext_company.py results --company marriott_international \
 
 来源根和任务身份必须对应。较早的两年任务若绑定的根缺 FY2021/FY2022 原件，会准确报告两个网址的缺件；完整恢复根中已经有材料时，不需要重新 GET。不要手改旧任务的来源身份或把两个来源根的 CSV 手工拼成五年成功。上述新普通任务使用完整根，旧任务、成功结果和失败记录保留。这里证明保存来源后的酒店五年入口，不代表历史在线发现／补齐或十家公司39指标完整验收已完成。
 
+酒店指标的结构性不适用修补正在候选分支 `task/issue47-history-lodging-structural-20261014`，尚未进入上述 main 版本。该分支通过同一命令处理非酒店公司的 B10/B11：先核所选申报的主体、实际财年日期和已保存来源，再依原 Spec 的行业规则返回 `N_A_STRUCTURAL/TRAIT_NOT_APPLICABLE`。原生 value/unit 均为 null；CSV 的 percent/USD 是指标单位标签，不表示存在财务测量值。真实 Ford FY2021 和 Salesforce FY2024 的从头处理、零计算复跑和独立 CSV/出处读取见[候选主要记录](evidence/issue47_lodging_structural_20261014/README.md)。该修补不把缺件、错期间或解析失败改成不适用，也不扩展酒店修订或继任主体的金额处理，不证明九家公司全部五年已验收。
+
 ## 四指标五年模式
 
 以下代码已经随 PR75 进入上述 main。完整保存输入来自原 PR52 的 `evidence/issue47_acquired/`；首次恢复使用上节保留分支的 `restore` 命令，直接采用返回的 `data_root`，它才是实际 `source-inputs` 根。不要把源码根、导出目录或恢复父目录误当成这个根。

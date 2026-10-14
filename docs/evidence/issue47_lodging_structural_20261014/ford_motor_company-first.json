@@ -1,0 +1,27 @@
+{
+  "arguments": [
+    "run",
+    "--company",
+    "ford_motor_company",
+    "--period",
+    "fiscal-years",
+    "--fiscal-year-start",
+    "2021",
+    "--fiscal-year-end",
+    "2021",
+    "--metric",
+    "B10",
+    "--metric",
+    "B11",
+    "--source-root",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "--work-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/state",
+    "--output-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/runs"
+  ],
+  "seconds": 64.79018529198947,
+  "exit_code": 0,
+  "stdout": "{\n  \"elapsed_seconds\": 64.57169337500818,\n  \"record_type\": \"ORDINARY_COMPANY_EXECUTION_V1\",\n  \"company_id\": \"ford_motor_company\",\n  \"run_id\": \"20261014T123033Z-9af08b52\",\n  \"status\": \"FLOW_COMPLETED\",\n  \"selected_metrics\": [\n    \"B10\",\n    \"B11\"\n  ],\n  \"metrics\": [\n    {\n      \"metric_id\": \"B10\",\n      \"status\": \"CANDIDATE_READY\",\n      \"attempt_id\": \"5e81dce05e624820889726ca781abf5a\",\n      \"version\": \"458924d23f284f4eacc91398a66a7cc7\",\n      \"result_id\": \"sha256:c8e5b79c3b8f126c3a92e2efa6c6ba2c1bc03a123b696b761490abce2bd83c53\",\n      \"result_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/state/updates/B10/periods/FY2021/results/458924d23f284f4eacc91398a66a7cc7\",\n      \"calculation_performed\": true,\n      \"new_candidate_created\": true,\n      \"result_reason_code\": \"TRAIT_NOT_APPLICABLE\",\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"requested_fiscal_year\": 2021,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:c8e5b79c3b8f126c3a92e2efa6c6ba2c1bc03a123b696b761490abce2bd83c53\",\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/state/updates/B10/periods/FY2021/results/458924d23f284f4eacc91398a66a7cc7\",\n      \"program_version\": {\n        \"commit\": \"8e53a5facc5fd587232afdf19c43388a8522d59b\",\n        \"has_uncommitted_changes\": true\n      }\n    },\n    {\n      \"metric_id\": \"B11\",\n      \"status\": \"CANDIDATE_READY\",\n      \"attempt_id\": \"a6fea79b26e443d89196a429ee108a3a\",\n      \"version\": \"4e6d428eac614b6481171d6b45314f92\",\n      \"result_id\": \"sha256:89d1cd924997ba7508e5e3de9eb5a2f9941a8c18c12b736d00ec372a9ba8c2ee\",\n      \"result_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/state/updates/B11/periods/FY2021/results/4e6d428eac614b6481171d6b45314f92\",\n      \"calculation_performed\": true,\n      \"new_candidate_created\": true,\n      \"result_reason_code\": \"TRAIT_NOT_APPLICABLE\",\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"requested_fiscal_year\": 2021,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:89d1cd924997ba7508e5e3de9eb5a2f9941a8c18c12b736d00ec372a9ba8c2ee\",\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/state/updates/B11/periods/FY2021/results/4e6d428eac614b6481171d6b45314f92\",\n      \"program_version\": {\n        \"commit\": \"8e53a5facc5fd587232afdf19c43388a8522d59b\",\n        \"has_uncommitted_changes\": true\n      }\n    }\n  ],\n  \"source_root\": \"/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs\",\n  \"program_root\": \"/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics\",\n  \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/state\",\n  \"output_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-lodging-structural-company-20261014/ford_motor_company/runs/20261014T123033Z-9af08b52\",\n  \"source_mode\": \"SAVED_ONLY_NO_ONLINE_DISCOVERY\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false,\n  \"selected_fiscal_years\": [\n    2021\n  ]\n}\n",
+  "stderr": "{\"prepare_historical_lodging_year_case\": 2, \"prepare_historical_lodging_case\": 2, \"_resolve_historical_lodging_metric\": 2, \"calculate_metric\": 2}\n"
+}

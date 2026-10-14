@@ -1,0 +1,1146 @@
+[
+  {
+    "company": "ford_motor_company",
+    "fiscal_year": 2021,
+    "metric_id": "B10",
+    "result": {
+      "applicability": "N_A_STRUCTURAL",
+      "company_id": "ford_motor_company",
+      "metric_id": "B10",
+      "period_end": "2021-12-31",
+      "period_start": "2021-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "record_type": "METRIC_RESULT",
+      "result_id": "sha256:c8e5b79c3b8f126c3a92e2efa6c6ba2c1bc03a123b696b761490abce2bd83c53",
+      "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5",
+      "spec_closure_hash": "sha256:1e61acee56a83be8e1fc83b80c8ed3c5f53cc147376a0761280a64fa5a4ac817",
+      "trace_id": "sha256:d80e8d58dc3fb76f98e2275559ec2f7d1b14b5697cf29d961dcfe416eb690607",
+      "unit": null,
+      "value": null
+    },
+    "trace": {
+      "calculation_target": {
+        "accession": "0000037996-22-000013",
+        "company_id": "ford_motor_company",
+        "entity": "37996",
+        "period_end": "2021-12-31",
+        "period_start": "2021-01-01",
+        "scope": {
+          "geography": "worldwide",
+          "operating_scope": "systemwide",
+          "property_population": "comparable"
+        },
+        "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5"
+      },
+      "execution_semantics_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9",
+      "input_observation_ids": [],
+      "metric_id": "B10",
+      "quality": "NONE",
+      "record_type": "EXECUTION_TRACE",
+      "result": null,
+      "result_contract_hash": "sha256:94d8262c75b591db7a15fe32ed1c47dd93f3686d1f4ca2d63ce9621229a3f30d",
+      "spec_closure_hash": "sha256:1e61acee56a83be8e1fc83b80c8ed3c5f53cc147376a0761280a64fa5a4ac817",
+      "steps": [
+        {
+          "event": "N_A_STRUCTURAL"
+        }
+      ],
+      "trace_id": "sha256:d80e8d58dc3fb76f98e2275559ec2f7d1b14b5697cf29d961dcfe416eb690607"
+    },
+    "source_proofs": [
+      {
+        "accession": "",
+        "content_sha256": "2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53",
+        "document_name": "CIK0000037996.json",
+        "request_attempt_id": "request:attempt:aba148c9f3725e411dc9b3a3d98e62c8ab6ab758fecd5616c4106e35cc91bef8",
+        "request_body_sha256": "2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53",
+        "request_body_size": 160015,
+        "request_headers_repo_relative_path": "evidence/request_attempts/2e/2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53/CIK0000037996.json.8ae085d80b07462565087561336d087caa41c1e35ac725ffbdb341bb931b2530.headers.json",
+        "request_headers_sha256": "8ae085d80b07462565087561336d087caa41c1e35ac725ffbdb341bb931b2530",
+        "request_headers_size": 736,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/2e/2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53/CIK0000037996.json",
+        "source_url": "https://data.sec.gov/submissions/CIK0000037996.json"
+      },
+      {
+        "accession": "0000037996-22-000013",
+        "content_sha256": "7b3b9bc7e43800ad49e55ba0c164ca2e005fde16ed5c7545ff88f6921d64ae3d",
+        "document_name": "f-20211231.htm",
+        "request_attempt_id": "request:attempt:105e8be6b7a7bff1992e4fd978f53b795410443a3be9df279d5efcaab758c35c",
+        "request_body_sha256": "7b3b9bc7e43800ad49e55ba0c164ca2e005fde16ed5c7545ff88f6921d64ae3d",
+        "request_body_size": 7024761,
+        "request_headers_repo_relative_path": "evidence/request_attempts/7b/7b3b9bc7e43800ad49e55ba0c164ca2e005fde16ed5c7545ff88f6921d64ae3d/f-20211231.htm.be023f9b547f388b9d45df2b4f3c77097dab2e98965b9ac845560049dc801482.headers.json",
+        "request_headers_sha256": "be023f9b547f388b9d45df2b4f3c77097dab2e98965b9ac845560049dc801482",
+        "request_headers_size": 1635,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/7b/7b3b9bc7e43800ad49e55ba0c164ca2e005fde16ed5c7545ff88f6921d64ae3d/f-20211231.htm",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000013/f-20211231.htm"
+      },
+      {
+        "accession": "0000037996-22-000013",
+        "content_sha256": "db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e",
+        "document_name": "CIK0000037996.json",
+        "request_attempt_id": "request:attempt:c160b39060f39a60f351ad4460665e4036d557e7748c0db18914f5f04fc2568d",
+        "request_body_sha256": "db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e",
+        "request_body_size": 3672318,
+        "request_headers_repo_relative_path": "evidence/request_attempts/db/db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e/CIK0000037996.json.47538fb5f208ed1d28a2c6fc76e8621e7ebe347e6f97e1e8db2221c23ca62960.headers.json",
+        "request_headers_sha256": "47538fb5f208ed1d28a2c6fc76e8621e7ebe347e6f97e1e8db2221c23ca62960",
+        "request_headers_size": 707,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/db/db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e/CIK0000037996.json",
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000037996.json"
+      }
+    ],
+    "target_period": {
+      "fiscal_year": 2021,
+      "period_end": "2021-12-31",
+      "period_start": "2021-01-01"
+    },
+    "compiled_spec": {
+      "body": "\n# Ordinary Occupancy rate\n\nThe economic scope is inherited unchanged; deterministic source replay supplies the observation. No historical AI qualification or new source acquisition credit is claimed.",
+      "compiled": {
+        "applicability": {
+          "all": [
+            "lodging"
+          ],
+          "none": []
+        },
+        "canonical_unit": "ratio",
+        "dependencies": [],
+        "disclosure_group": null,
+        "forbidden_confusions": [
+          "prior_year",
+          "percentage_change",
+          "company_operated",
+          "regional_only"
+        ],
+        "formula": null,
+        "identity_constraints": [],
+        "inputs": {},
+        "kind": "direct_numeric",
+        "legacy_projection": {
+          "allowed_evidence_delta_fields": [
+            "evidence_quote",
+            "extraction_method",
+            "parser_version"
+          ],
+          "allowed_metric_delta_fields": [
+            "formula",
+            "notes"
+          ],
+          "concept_or_section": "MD&A occupancy",
+          "confidence": "0.85",
+          "context_or_dimension": "MD&A occupancy",
+          "evidence_context_style": "constant",
+          "evidence_extraction_method": "deterministic_table_source",
+          "evidence_unit_policy": "projected_result",
+          "fiscal_year": "",
+          "form": "",
+          "formula": "source-reported lodging table observation",
+          "metric_context_style": "constant",
+          "metric_name": "Occupancy rate",
+          "notes_template": "Source-rebuilt current-year comparable systemwide worldwide statistic.",
+          "parser_version": "vnext_projector_v1",
+          "source_class": "MDA",
+          "status_exact": "MDA_OK",
+          "unit": "percent",
+          "value_multiplier": "100"
+        },
+        "metric_id": "B10",
+        "name": "Occupancy rate",
+        "numeric_policy": {
+          "allow_infinity": false,
+          "allow_nan": false,
+          "decimal_precision": 28,
+          "maximum_absolute_scale": 64,
+          "maximum_significant_digits": 128,
+          "normalize_trailing_zeros": true,
+          "percent_to_ratio": "divide_by_100",
+          "rounding": "ROUND_HALF_EVEN",
+          "serialization": "fixed_point"
+        },
+        "quality_rule": {
+          "original_metric_spec": "catalog/metrics/B10_occupancy.md",
+          "original_metric_spec_sha256": "dcc28a5bab74da87a0c20f58a711be3d85d0a7d83fc2c08861ac2fa1fad306e1",
+          "resolver": "ordinary_lodging_table_v1",
+          "source_policy": "config/ordinary_lodging_table_v1.json",
+          "source_policy_sha256": "2cf70a7655585d2ecc26af831f790fe44c3a7cbdbb323182998be566fed1399c"
+        },
+        "reported_unit": "percent",
+        "required_claims": {
+          "geography": "worldwide",
+          "operating_scope": "systemwide",
+          "period_role": "current_fiscal_year",
+          "property_population": "comparable"
+        },
+        "review_policy": "none",
+        "scope_contract": {
+          "allowed_dimensions": [
+            "property_population",
+            "operating_scope",
+            "geography"
+          ],
+          "cross_dimension_constraints": [],
+          "exact_enum_aliases": {
+            "geography": {
+              "worldwide": [
+                "Worldwide"
+              ]
+            },
+            "operating_scope": {
+              "systemwide": [
+                "Comparable Systemwide Properties"
+              ]
+            },
+            "property_population": {
+              "comparable": [
+                "Comparable Systemwide Properties"
+              ]
+            }
+          },
+          "required_dimensions": [
+            "property_population",
+            "operating_scope",
+            "geography"
+          ],
+          "scope_contract_version": "2",
+          "selection_preference": {
+            "dimension_order": [
+              "property_population",
+              "operating_scope",
+              "geography"
+            ],
+            "prefer_complete_required_dimensions": true
+          }
+        },
+        "selection_policy": {
+          "ambiguous_after_tie_break": "AMBIGUOUS_CANDIDATE",
+          "form_rule": "10-K_PREFIX_AND_FY",
+          "period_filter": "target_period",
+          "semantic_version": "1",
+          "target_accession_priority": true,
+          "within_concept_order": [
+            "filed_desc",
+            "accession_desc",
+            "unit_desc"
+          ]
+        },
+        "source_mode": "structured",
+        "top_level_guards": [],
+        "unit_policy": "fixed_canonical"
+      },
+      "prompt_bundle": {
+        "ai_instructions": [],
+        "disclosure_group": null,
+        "prompt_examples": [],
+        "prompt_template_version": "1",
+        "spec_semantic_hash": "sha256:566cfee8b04952941c48f9069fefc5fa19c3024e2f0d61e14b643421b93aad3d"
+      },
+      "prompt_bundle_hash": "sha256:713d5fb31de9355b4c0adf249a6f9129e39df7167b40a273eba916eebf15cb21",
+      "spec_closure_hash": "sha256:1e61acee56a83be8e1fc83b80c8ed3c5f53cc147376a0761280a64fa5a4ac817",
+      "spec_semantic_hash": "sha256:566cfee8b04952941c48f9069fefc5fa19c3024e2f0d61e14b643421b93aad3d"
+    },
+    "source_references": [
+      {
+        "accession": "SUBMISSIONS-37996",
+        "company_id": "ford_motor_company",
+        "document_name": "CIK0000037996.json",
+        "raw_asset_id": "sha256:2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:aba148c9f3725e411dc9b3a3d98e62c8ab6ab758fecd5616c4106e35cc91bef8",
+        "source_reference_id": "sha256:9fc7f567ee31f33b929df0694303cc3e5522c88e7afb25640fe347d2250c80d6",
+        "source_role": "sec_submissions_inventory",
+        "source_url": "https://data.sec.gov/submissions/CIK0000037996.json"
+      },
+      {
+        "accession": "0000037996-22-000013",
+        "company_id": "ford_motor_company",
+        "document_name": "f-20211231.htm",
+        "raw_asset_id": "sha256:7b3b9bc7e43800ad49e55ba0c164ca2e005fde16ed5c7545ff88f6921d64ae3d",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:105e8be6b7a7bff1992e4fd978f53b795410443a3be9df279d5efcaab758c35c",
+        "source_reference_id": "sha256:c8c87b309c47a1eacbb481254dc031ccad771785063dab9ad376cc7fc286e3d6",
+        "source_role": "target_primary",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000013/f-20211231.htm"
+      },
+      {
+        "accession": "0000037996-22-000013",
+        "company_id": "ford_motor_company",
+        "document_name": "CIK0000037996.json",
+        "raw_asset_id": "sha256:db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:c160b39060f39a60f351ad4460665e4036d557e7748c0db18914f5f04fc2568d",
+        "source_reference_id": "sha256:fda780cce9400d09e39d1c0a7f0ea4262348ca6e46b6afc3f3f002398d26c2fb",
+        "source_role": "companyfacts",
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000037996.json"
+      }
+    ]
+  },
+  {
+    "company": "ford_motor_company",
+    "fiscal_year": 2021,
+    "metric_id": "B11",
+    "result": {
+      "applicability": "N_A_STRUCTURAL",
+      "company_id": "ford_motor_company",
+      "metric_id": "B11",
+      "period_end": "2021-12-31",
+      "period_start": "2021-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "record_type": "METRIC_RESULT",
+      "result_id": "sha256:89d1cd924997ba7508e5e3de9eb5a2f9941a8c18c12b736d00ec372a9ba8c2ee",
+      "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5",
+      "spec_closure_hash": "sha256:6f9cab9c1c477f4210dadf7fa4f018ffeb7f67588be5f6811cf50bd6092e94bc",
+      "trace_id": "sha256:6ae3c1a20eb506c681a463488cc6867d0ebf095f0e786cee2f8fc7aebbc08c44",
+      "unit": null,
+      "value": null
+    },
+    "trace": {
+      "calculation_target": {
+        "accession": "0000037996-22-000013",
+        "company_id": "ford_motor_company",
+        "entity": "37996",
+        "period_end": "2021-12-31",
+        "period_start": "2021-01-01",
+        "scope": {
+          "geography": "worldwide",
+          "operating_scope": "systemwide",
+          "property_population": "comparable"
+        },
+        "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5"
+      },
+      "execution_semantics_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9",
+      "input_observation_ids": [],
+      "metric_id": "B11",
+      "quality": "NONE",
+      "record_type": "EXECUTION_TRACE",
+      "result": null,
+      "result_contract_hash": "sha256:6f4b7c45b76a5349bb378f5f1ca38a711f5e35a2c98641360ac5b52523d11494",
+      "spec_closure_hash": "sha256:6f9cab9c1c477f4210dadf7fa4f018ffeb7f67588be5f6811cf50bd6092e94bc",
+      "steps": [
+        {
+          "event": "N_A_STRUCTURAL"
+        }
+      ],
+      "trace_id": "sha256:6ae3c1a20eb506c681a463488cc6867d0ebf095f0e786cee2f8fc7aebbc08c44"
+    },
+    "source_proofs": [
+      {
+        "accession": "",
+        "content_sha256": "2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53",
+        "document_name": "CIK0000037996.json",
+        "request_attempt_id": "request:attempt:aba148c9f3725e411dc9b3a3d98e62c8ab6ab758fecd5616c4106e35cc91bef8",
+        "request_body_sha256": "2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53",
+        "request_body_size": 160015,
+        "request_headers_repo_relative_path": "evidence/request_attempts/2e/2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53/CIK0000037996.json.8ae085d80b07462565087561336d087caa41c1e35ac725ffbdb341bb931b2530.headers.json",
+        "request_headers_sha256": "8ae085d80b07462565087561336d087caa41c1e35ac725ffbdb341bb931b2530",
+        "request_headers_size": 736,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/2e/2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53/CIK0000037996.json",
+        "source_url": "https://data.sec.gov/submissions/CIK0000037996.json"
+      },
+      {
+        "accession": "0000037996-22-000013",
+        "content_sha256": "7b3b9bc7e43800ad49e55ba0c164ca2e005fde16ed5c7545ff88f6921d64ae3d",
+        "document_name": "f-20211231.htm",
+        "request_attempt_id": "request:attempt:105e8be6b7a7bff1992e4fd978f53b795410443a3be9df279d5efcaab758c35c",
+        "request_body_sha256": "7b3b9bc7e43800ad49e55ba0c164ca2e005fde16ed5c7545ff88f6921d64ae3d",
+        "request_body_size": 7024761,
+        "request_headers_repo_relative_path": "evidence/request_attempts/7b/7b3b9bc7e43800ad49e55ba0c164ca2e005fde16ed5c7545ff88f6921d64ae3d/f-20211231.htm.be023f9b547f388b9d45df2b4f3c77097dab2e98965b9ac845560049dc801482.headers.json",
+        "request_headers_sha256": "be023f9b547f388b9d45df2b4f3c77097dab2e98965b9ac845560049dc801482",
+        "request_headers_size": 1635,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/7b/7b3b9bc7e43800ad49e55ba0c164ca2e005fde16ed5c7545ff88f6921d64ae3d/f-20211231.htm",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000013/f-20211231.htm"
+      },
+      {
+        "accession": "0000037996-22-000013",
+        "content_sha256": "db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e",
+        "document_name": "CIK0000037996.json",
+        "request_attempt_id": "request:attempt:c160b39060f39a60f351ad4460665e4036d557e7748c0db18914f5f04fc2568d",
+        "request_body_sha256": "db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e",
+        "request_body_size": 3672318,
+        "request_headers_repo_relative_path": "evidence/request_attempts/db/db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e/CIK0000037996.json.47538fb5f208ed1d28a2c6fc76e8621e7ebe347e6f97e1e8db2221c23ca62960.headers.json",
+        "request_headers_sha256": "47538fb5f208ed1d28a2c6fc76e8621e7ebe347e6f97e1e8db2221c23ca62960",
+        "request_headers_size": 707,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/db/db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e/CIK0000037996.json",
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000037996.json"
+      }
+    ],
+    "target_period": {
+      "fiscal_year": 2021,
+      "period_end": "2021-12-31",
+      "period_start": "2021-01-01"
+    },
+    "compiled_spec": {
+      "body": "\n# Ordinary RevPAR\n\nThe economic scope is inherited unchanged; deterministic source replay supplies the observation. No historical AI qualification or new source acquisition credit is claimed.",
+      "compiled": {
+        "applicability": {
+          "all": [
+            "lodging"
+          ],
+          "none": []
+        },
+        "canonical_unit": "USD",
+        "dependencies": [],
+        "disclosure_group": null,
+        "forbidden_confusions": [
+          "prior_year",
+          "percentage_change",
+          "company_operated",
+          "regional_only"
+        ],
+        "formula": null,
+        "identity_constraints": [],
+        "inputs": {},
+        "kind": "direct_numeric",
+        "legacy_projection": {
+          "allowed_evidence_delta_fields": [
+            "evidence_quote",
+            "extraction_method",
+            "parser_version"
+          ],
+          "allowed_metric_delta_fields": [
+            "formula",
+            "notes"
+          ],
+          "concept_or_section": "MD&A RevPAR",
+          "confidence": "0.85",
+          "context_or_dimension": "MD&A RevPAR",
+          "evidence_context_style": "constant",
+          "evidence_extraction_method": "deterministic_table_source",
+          "evidence_unit_policy": "projected_result",
+          "fiscal_year": "",
+          "form": "",
+          "formula": "source-reported lodging table observation",
+          "metric_context_style": "constant",
+          "metric_name": "RevPAR",
+          "notes_template": "Source-rebuilt current-year comparable systemwide worldwide statistic.",
+          "parser_version": "vnext_projector_v1",
+          "source_class": "MDA",
+          "status_exact": "MDA_OK",
+          "unit": "USD",
+          "value_multiplier": "1"
+        },
+        "metric_id": "B11",
+        "name": "RevPAR",
+        "numeric_policy": {
+          "allow_infinity": false,
+          "allow_nan": false,
+          "decimal_precision": 28,
+          "maximum_absolute_scale": 64,
+          "maximum_significant_digits": 128,
+          "normalize_trailing_zeros": true,
+          "percent_to_ratio": "divide_by_100",
+          "rounding": "ROUND_HALF_EVEN",
+          "serialization": "fixed_point"
+        },
+        "quality_rule": {
+          "original_metric_spec": "catalog/metrics/B11_revpar.md",
+          "original_metric_spec_sha256": "ca03800209951aa6b4a4804d76b8a6eb64e49727ccb03a8b62b445b1c7f9e81c",
+          "resolver": "ordinary_lodging_table_v1",
+          "source_policy": "config/ordinary_lodging_table_v1.json",
+          "source_policy_sha256": "2cf70a7655585d2ecc26af831f790fe44c3a7cbdbb323182998be566fed1399c"
+        },
+        "reported_unit": "USD",
+        "required_claims": {
+          "geography": "worldwide",
+          "operating_scope": "systemwide",
+          "period_role": "current_fiscal_year",
+          "property_population": "comparable"
+        },
+        "review_policy": "none",
+        "scope_contract": {
+          "allowed_dimensions": [
+            "property_population",
+            "operating_scope",
+            "geography"
+          ],
+          "cross_dimension_constraints": [],
+          "exact_enum_aliases": {
+            "geography": {
+              "worldwide": [
+                "Worldwide"
+              ]
+            },
+            "operating_scope": {
+              "systemwide": [
+                "Comparable Systemwide Properties"
+              ]
+            },
+            "property_population": {
+              "comparable": [
+                "Comparable Systemwide Properties"
+              ]
+            }
+          },
+          "required_dimensions": [
+            "property_population",
+            "operating_scope",
+            "geography"
+          ],
+          "scope_contract_version": "2",
+          "selection_preference": {
+            "dimension_order": [
+              "property_population",
+              "operating_scope",
+              "geography"
+            ],
+            "prefer_complete_required_dimensions": true
+          }
+        },
+        "selection_policy": {
+          "ambiguous_after_tie_break": "AMBIGUOUS_CANDIDATE",
+          "form_rule": "10-K_PREFIX_AND_FY",
+          "period_filter": "target_period",
+          "semantic_version": "1",
+          "target_accession_priority": true,
+          "within_concept_order": [
+            "filed_desc",
+            "accession_desc",
+            "unit_desc"
+          ]
+        },
+        "source_mode": "structured",
+        "top_level_guards": [],
+        "unit_policy": "fixed_canonical"
+      },
+      "prompt_bundle": {
+        "ai_instructions": [],
+        "disclosure_group": null,
+        "prompt_examples": [],
+        "prompt_template_version": "1",
+        "spec_semantic_hash": "sha256:cb59832572c7b2aa9a76142b561e75e9df782a50c83f66f9273d464a424b6356"
+      },
+      "prompt_bundle_hash": "sha256:528362cfd6e189671e71cab23c58ad137f057bbf93d55264444252abaa83158b",
+      "spec_closure_hash": "sha256:6f9cab9c1c477f4210dadf7fa4f018ffeb7f67588be5f6811cf50bd6092e94bc",
+      "spec_semantic_hash": "sha256:cb59832572c7b2aa9a76142b561e75e9df782a50c83f66f9273d464a424b6356"
+    },
+    "source_references": [
+      {
+        "accession": "SUBMISSIONS-37996",
+        "company_id": "ford_motor_company",
+        "document_name": "CIK0000037996.json",
+        "raw_asset_id": "sha256:2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:aba148c9f3725e411dc9b3a3d98e62c8ab6ab758fecd5616c4106e35cc91bef8",
+        "source_reference_id": "sha256:9fc7f567ee31f33b929df0694303cc3e5522c88e7afb25640fe347d2250c80d6",
+        "source_role": "sec_submissions_inventory",
+        "source_url": "https://data.sec.gov/submissions/CIK0000037996.json"
+      },
+      {
+        "accession": "0000037996-22-000013",
+        "company_id": "ford_motor_company",
+        "document_name": "f-20211231.htm",
+        "raw_asset_id": "sha256:7b3b9bc7e43800ad49e55ba0c164ca2e005fde16ed5c7545ff88f6921d64ae3d",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:105e8be6b7a7bff1992e4fd978f53b795410443a3be9df279d5efcaab758c35c",
+        "source_reference_id": "sha256:c8c87b309c47a1eacbb481254dc031ccad771785063dab9ad376cc7fc286e3d6",
+        "source_role": "target_primary",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000013/f-20211231.htm"
+      },
+      {
+        "accession": "0000037996-22-000013",
+        "company_id": "ford_motor_company",
+        "document_name": "CIK0000037996.json",
+        "raw_asset_id": "sha256:db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:c160b39060f39a60f351ad4460665e4036d557e7748c0db18914f5f04fc2568d",
+        "source_reference_id": "sha256:fda780cce9400d09e39d1c0a7f0ea4262348ca6e46b6afc3f3f002398d26c2fb",
+        "source_role": "companyfacts",
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000037996.json"
+      }
+    ]
+  },
+  {
+    "company": "salesforce",
+    "fiscal_year": 2024,
+    "metric_id": "B10",
+    "result": {
+      "applicability": "N_A_STRUCTURAL",
+      "company_id": "salesforce",
+      "metric_id": "B10",
+      "period_end": "2024-01-31",
+      "period_start": "2023-02-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "record_type": "METRIC_RESULT",
+      "result_id": "sha256:be6f5c06748507be2b061074521564eb62fa007aaa38e29a2f2575fc0ee2bad4",
+      "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5",
+      "spec_closure_hash": "sha256:1e61acee56a83be8e1fc83b80c8ed3c5f53cc147376a0761280a64fa5a4ac817",
+      "trace_id": "sha256:8ce6e831a77a28476a74bde731a226dc7950618bec0329dc01233d93e91a361c",
+      "unit": null,
+      "value": null
+    },
+    "trace": {
+      "calculation_target": {
+        "accession": "0001108524-24-000005",
+        "company_id": "salesforce",
+        "entity": "1108524",
+        "period_end": "2024-01-31",
+        "period_start": "2023-02-01",
+        "scope": {
+          "geography": "worldwide",
+          "operating_scope": "systemwide",
+          "property_population": "comparable"
+        },
+        "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5"
+      },
+      "execution_semantics_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9",
+      "input_observation_ids": [],
+      "metric_id": "B10",
+      "quality": "NONE",
+      "record_type": "EXECUTION_TRACE",
+      "result": null,
+      "result_contract_hash": "sha256:e7475d3094b5fa647ee4f5cd1b32332ec59c2e061b7b33ff784b01367c3e2026",
+      "spec_closure_hash": "sha256:1e61acee56a83be8e1fc83b80c8ed3c5f53cc147376a0761280a64fa5a4ac817",
+      "steps": [
+        {
+          "event": "N_A_STRUCTURAL"
+        }
+      ],
+      "trace_id": "sha256:8ce6e831a77a28476a74bde731a226dc7950618bec0329dc01233d93e91a361c"
+    },
+    "source_proofs": [
+      {
+        "accession": "",
+        "content_sha256": "2031f3f3b73a0ecacda271618ba72a3ece3b94e02be615a20f1589331e62c51d",
+        "document_name": "CIK0001108524.json",
+        "request_attempt_id": "request:attempt:a483ec50e009556e252d8f0966a11aceb66a0a80a6f38446a0df466b3c1020e3",
+        "request_body_sha256": "2031f3f3b73a0ecacda271618ba72a3ece3b94e02be615a20f1589331e62c51d",
+        "request_body_size": 156325,
+        "request_headers_repo_relative_path": "evidence/request_attempts/20/2031f3f3b73a0ecacda271618ba72a3ece3b94e02be615a20f1589331e62c51d/CIK0001108524.json.4913d47e1c465a0db4185c5fa7f7b09979e7cf5da620545707afb185ae037fb4.headers.json",
+        "request_headers_sha256": "4913d47e1c465a0db4185c5fa7f7b09979e7cf5da620545707afb185ae037fb4",
+        "request_headers_size": 736,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/20/2031f3f3b73a0ecacda271618ba72a3ece3b94e02be615a20f1589331e62c51d/CIK0001108524.json",
+        "source_url": "https://data.sec.gov/submissions/CIK0001108524.json"
+      },
+      {
+        "accession": "0001108524-24-000005",
+        "content_sha256": "5977fa50575667b72c4d6df85493f0ecb0c126ec7f3b7a70b7559a46d7be19be",
+        "document_name": "crm-20240131.htm",
+        "request_attempt_id": "request:attempt:e2a06af8b3dbc6d908c352d406e2a4148d89d127d2eb301e67c3677223f25294",
+        "request_body_sha256": "5977fa50575667b72c4d6df85493f0ecb0c126ec7f3b7a70b7559a46d7be19be",
+        "request_body_size": 2407236,
+        "request_headers_repo_relative_path": "evidence/request_attempts/59/5977fa50575667b72c4d6df85493f0ecb0c126ec7f3b7a70b7559a46d7be19be/crm-20240131.htm.d289e41815534a81e993a03d138cf01efbe4e8e711a582bce15e17320183b5d3.headers.json",
+        "request_headers_sha256": "d289e41815534a81e993a03d138cf01efbe4e8e711a582bce15e17320183b5d3",
+        "request_headers_size": 1685,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/59/5977fa50575667b72c4d6df85493f0ecb0c126ec7f3b7a70b7559a46d7be19be/crm-20240131.htm",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852424000005/crm-20240131.htm"
+      },
+      {
+        "accession": "0001108524-24-000005",
+        "content_sha256": "07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+        "document_name": "CIK0001108524.json",
+        "request_attempt_id": "request:attempt:d491f102d961ff431f729ed22a6061e77031764d68ecb123860e506160642026",
+        "request_body_sha256": "07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+        "request_body_size": 4664726,
+        "request_headers_repo_relative_path": "evidence/request_attempts/07/07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82/CIK0001108524.json.368b5645ffcd4d353f16e10b9015fc52e68830ccbb650db5dda90abb6d858e6a.headers.json",
+        "request_headers_sha256": "368b5645ffcd4d353f16e10b9015fc52e68830ccbb650db5dda90abb6d858e6a",
+        "request_headers_size": 707,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/07/07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82/CIK0001108524.json",
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001108524.json"
+      },
+      {
+        "accession": "",
+        "content_sha256": "f71caf4521bd2c2bc134b0aab2d1bbe9a6fb314a7ec14f74c038ae87227eebfd",
+        "document_name": "CIK0001108524-submissions-001.json",
+        "request_attempt_id": "request:attempt:3c8485aacb51dad300cddf1e0bdacb65708e9c2bc8eed828fbd516c866952bca",
+        "request_body_sha256": "f71caf4521bd2c2bc134b0aab2d1bbe9a6fb314a7ec14f74c038ae87227eebfd",
+        "request_body_size": 307556,
+        "request_headers_repo_relative_path": "evidence/request_attempts/f7/f71caf4521bd2c2bc134b0aab2d1bbe9a6fb314a7ec14f74c038ae87227eebfd/CIK0001108524-submissions-001.json.9ffb7b8d821b3ddfe533eaa021dcbd5479b10871771dc8675cd52f99537d1677.headers.json",
+        "request_headers_sha256": "9ffb7b8d821b3ddfe533eaa021dcbd5479b10871771dc8675cd52f99537d1677",
+        "request_headers_size": 752,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/f7/f71caf4521bd2c2bc134b0aab2d1bbe9a6fb314a7ec14f74c038ae87227eebfd/CIK0001108524-submissions-001.json",
+        "source_url": "https://data.sec.gov/submissions/CIK0001108524-submissions-001.json"
+      }
+    ],
+    "target_period": {
+      "fiscal_year": 2024,
+      "period_end": "2024-01-31",
+      "period_start": "2023-02-01"
+    },
+    "compiled_spec": {
+      "body": "\n# Ordinary Occupancy rate\n\nThe economic scope is inherited unchanged; deterministic source replay supplies the observation. No historical AI qualification or new source acquisition credit is claimed.",
+      "compiled": {
+        "applicability": {
+          "all": [
+            "lodging"
+          ],
+          "none": []
+        },
+        "canonical_unit": "ratio",
+        "dependencies": [],
+        "disclosure_group": null,
+        "forbidden_confusions": [
+          "prior_year",
+          "percentage_change",
+          "company_operated",
+          "regional_only"
+        ],
+        "formula": null,
+        "identity_constraints": [],
+        "inputs": {},
+        "kind": "direct_numeric",
+        "legacy_projection": {
+          "allowed_evidence_delta_fields": [
+            "evidence_quote",
+            "extraction_method",
+            "parser_version"
+          ],
+          "allowed_metric_delta_fields": [
+            "formula",
+            "notes"
+          ],
+          "concept_or_section": "MD&A occupancy",
+          "confidence": "0.85",
+          "context_or_dimension": "MD&A occupancy",
+          "evidence_context_style": "constant",
+          "evidence_extraction_method": "deterministic_table_source",
+          "evidence_unit_policy": "projected_result",
+          "fiscal_year": "",
+          "form": "",
+          "formula": "source-reported lodging table observation",
+          "metric_context_style": "constant",
+          "metric_name": "Occupancy rate",
+          "notes_template": "Source-rebuilt current-year comparable systemwide worldwide statistic.",
+          "parser_version": "vnext_projector_v1",
+          "source_class": "MDA",
+          "status_exact": "MDA_OK",
+          "unit": "percent",
+          "value_multiplier": "100"
+        },
+        "metric_id": "B10",
+        "name": "Occupancy rate",
+        "numeric_policy": {
+          "allow_infinity": false,
+          "allow_nan": false,
+          "decimal_precision": 28,
+          "maximum_absolute_scale": 64,
+          "maximum_significant_digits": 128,
+          "normalize_trailing_zeros": true,
+          "percent_to_ratio": "divide_by_100",
+          "rounding": "ROUND_HALF_EVEN",
+          "serialization": "fixed_point"
+        },
+        "quality_rule": {
+          "original_metric_spec": "catalog/metrics/B10_occupancy.md",
+          "original_metric_spec_sha256": "dcc28a5bab74da87a0c20f58a711be3d85d0a7d83fc2c08861ac2fa1fad306e1",
+          "resolver": "ordinary_lodging_table_v1",
+          "source_policy": "config/ordinary_lodging_table_v1.json",
+          "source_policy_sha256": "2cf70a7655585d2ecc26af831f790fe44c3a7cbdbb323182998be566fed1399c"
+        },
+        "reported_unit": "percent",
+        "required_claims": {
+          "geography": "worldwide",
+          "operating_scope": "systemwide",
+          "period_role": "current_fiscal_year",
+          "property_population": "comparable"
+        },
+        "review_policy": "none",
+        "scope_contract": {
+          "allowed_dimensions": [
+            "property_population",
+            "operating_scope",
+            "geography"
+          ],
+          "cross_dimension_constraints": [],
+          "exact_enum_aliases": {
+            "geography": {
+              "worldwide": [
+                "Worldwide"
+              ]
+            },
+            "operating_scope": {
+              "systemwide": [
+                "Comparable Systemwide Properties"
+              ]
+            },
+            "property_population": {
+              "comparable": [
+                "Comparable Systemwide Properties"
+              ]
+            }
+          },
+          "required_dimensions": [
+            "property_population",
+            "operating_scope",
+            "geography"
+          ],
+          "scope_contract_version": "2",
+          "selection_preference": {
+            "dimension_order": [
+              "property_population",
+              "operating_scope",
+              "geography"
+            ],
+            "prefer_complete_required_dimensions": true
+          }
+        },
+        "selection_policy": {
+          "ambiguous_after_tie_break": "AMBIGUOUS_CANDIDATE",
+          "form_rule": "10-K_PREFIX_AND_FY",
+          "period_filter": "target_period",
+          "semantic_version": "1",
+          "target_accession_priority": true,
+          "within_concept_order": [
+            "filed_desc",
+            "accession_desc",
+            "unit_desc"
+          ]
+        },
+        "source_mode": "structured",
+        "top_level_guards": [],
+        "unit_policy": "fixed_canonical"
+      },
+      "prompt_bundle": {
+        "ai_instructions": [],
+        "disclosure_group": null,
+        "prompt_examples": [],
+        "prompt_template_version": "1",
+        "spec_semantic_hash": "sha256:566cfee8b04952941c48f9069fefc5fa19c3024e2f0d61e14b643421b93aad3d"
+      },
+      "prompt_bundle_hash": "sha256:713d5fb31de9355b4c0adf249a6f9129e39df7167b40a273eba916eebf15cb21",
+      "spec_closure_hash": "sha256:1e61acee56a83be8e1fc83b80c8ed3c5f53cc147376a0761280a64fa5a4ac817",
+      "spec_semantic_hash": "sha256:566cfee8b04952941c48f9069fefc5fa19c3024e2f0d61e14b643421b93aad3d"
+    },
+    "source_references": [
+      {
+        "accession": "SUBMISSIONS-1108524",
+        "company_id": "salesforce",
+        "document_name": "CIK0001108524.json",
+        "raw_asset_id": "sha256:2031f3f3b73a0ecacda271618ba72a3ece3b94e02be615a20f1589331e62c51d",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:a483ec50e009556e252d8f0966a11aceb66a0a80a6f38446a0df466b3c1020e3",
+        "source_reference_id": "sha256:fe3bf7cdab815fd58dc64b19aec533b5aa58e43211b3afe820441d2c9a6706f1",
+        "source_role": "sec_submissions_inventory",
+        "source_url": "https://data.sec.gov/submissions/CIK0001108524.json"
+      },
+      {
+        "accession": "0001108524-24-000005",
+        "company_id": "salesforce",
+        "document_name": "crm-20240131.htm",
+        "raw_asset_id": "sha256:5977fa50575667b72c4d6df85493f0ecb0c126ec7f3b7a70b7559a46d7be19be",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:e2a06af8b3dbc6d908c352d406e2a4148d89d127d2eb301e67c3677223f25294",
+        "source_reference_id": "sha256:723155e9d5b0cedf5cdd62921925cebd9baa8509bd0c90dcc89147b3c7fe62f3",
+        "source_role": "target_primary",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852424000005/crm-20240131.htm"
+      },
+      {
+        "accession": "0001108524-24-000005",
+        "company_id": "salesforce",
+        "document_name": "CIK0001108524.json",
+        "raw_asset_id": "sha256:07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:d491f102d961ff431f729ed22a6061e77031764d68ecb123860e506160642026",
+        "source_reference_id": "sha256:f32c313070dba8edd066843d068b3352d9074b6fd89b7e002773dcebf6977d0d",
+        "source_role": "companyfacts",
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001108524.json"
+      }
+    ]
+  },
+  {
+    "company": "salesforce",
+    "fiscal_year": 2024,
+    "metric_id": "B11",
+    "result": {
+      "applicability": "N_A_STRUCTURAL",
+      "company_id": "salesforce",
+      "metric_id": "B11",
+      "period_end": "2024-01-31",
+      "period_start": "2023-02-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "record_type": "METRIC_RESULT",
+      "result_id": "sha256:2356d7708775a1e1631059c66cb9553a22e2036da263664677bd88f0138101e3",
+      "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5",
+      "spec_closure_hash": "sha256:6f9cab9c1c477f4210dadf7fa4f018ffeb7f67588be5f6811cf50bd6092e94bc",
+      "trace_id": "sha256:37808aca9e549da6eea3e781be97e7488308769d92bafc5df91a0fe68df095fb",
+      "unit": null,
+      "value": null
+    },
+    "trace": {
+      "calculation_target": {
+        "accession": "0001108524-24-000005",
+        "company_id": "salesforce",
+        "entity": "1108524",
+        "period_end": "2024-01-31",
+        "period_start": "2023-02-01",
+        "scope": {
+          "geography": "worldwide",
+          "operating_scope": "systemwide",
+          "property_population": "comparable"
+        },
+        "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5"
+      },
+      "execution_semantics_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9",
+      "input_observation_ids": [],
+      "metric_id": "B11",
+      "quality": "NONE",
+      "record_type": "EXECUTION_TRACE",
+      "result": null,
+      "result_contract_hash": "sha256:2d4d23fb3305fd948843ebf65eb442d5a33cc542a2a1b9c40ff4e440677b3b7a",
+      "spec_closure_hash": "sha256:6f9cab9c1c477f4210dadf7fa4f018ffeb7f67588be5f6811cf50bd6092e94bc",
+      "steps": [
+        {
+          "event": "N_A_STRUCTURAL"
+        }
+      ],
+      "trace_id": "sha256:37808aca9e549da6eea3e781be97e7488308769d92bafc5df91a0fe68df095fb"
+    },
+    "source_proofs": [
+      {
+        "accession": "",
+        "content_sha256": "2031f3f3b73a0ecacda271618ba72a3ece3b94e02be615a20f1589331e62c51d",
+        "document_name": "CIK0001108524.json",
+        "request_attempt_id": "request:attempt:a483ec50e009556e252d8f0966a11aceb66a0a80a6f38446a0df466b3c1020e3",
+        "request_body_sha256": "2031f3f3b73a0ecacda271618ba72a3ece3b94e02be615a20f1589331e62c51d",
+        "request_body_size": 156325,
+        "request_headers_repo_relative_path": "evidence/request_attempts/20/2031f3f3b73a0ecacda271618ba72a3ece3b94e02be615a20f1589331e62c51d/CIK0001108524.json.4913d47e1c465a0db4185c5fa7f7b09979e7cf5da620545707afb185ae037fb4.headers.json",
+        "request_headers_sha256": "4913d47e1c465a0db4185c5fa7f7b09979e7cf5da620545707afb185ae037fb4",
+        "request_headers_size": 736,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/20/2031f3f3b73a0ecacda271618ba72a3ece3b94e02be615a20f1589331e62c51d/CIK0001108524.json",
+        "source_url": "https://data.sec.gov/submissions/CIK0001108524.json"
+      },
+      {
+        "accession": "0001108524-24-000005",
+        "content_sha256": "5977fa50575667b72c4d6df85493f0ecb0c126ec7f3b7a70b7559a46d7be19be",
+        "document_name": "crm-20240131.htm",
+        "request_attempt_id": "request:attempt:e2a06af8b3dbc6d908c352d406e2a4148d89d127d2eb301e67c3677223f25294",
+        "request_body_sha256": "5977fa50575667b72c4d6df85493f0ecb0c126ec7f3b7a70b7559a46d7be19be",
+        "request_body_size": 2407236,
+        "request_headers_repo_relative_path": "evidence/request_attempts/59/5977fa50575667b72c4d6df85493f0ecb0c126ec7f3b7a70b7559a46d7be19be/crm-20240131.htm.d289e41815534a81e993a03d138cf01efbe4e8e711a582bce15e17320183b5d3.headers.json",
+        "request_headers_sha256": "d289e41815534a81e993a03d138cf01efbe4e8e711a582bce15e17320183b5d3",
+        "request_headers_size": 1685,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/59/5977fa50575667b72c4d6df85493f0ecb0c126ec7f3b7a70b7559a46d7be19be/crm-20240131.htm",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852424000005/crm-20240131.htm"
+      },
+      {
+        "accession": "0001108524-24-000005",
+        "content_sha256": "07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+        "document_name": "CIK0001108524.json",
+        "request_attempt_id": "request:attempt:d491f102d961ff431f729ed22a6061e77031764d68ecb123860e506160642026",
+        "request_body_sha256": "07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+        "request_body_size": 4664726,
+        "request_headers_repo_relative_path": "evidence/request_attempts/07/07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82/CIK0001108524.json.368b5645ffcd4d353f16e10b9015fc52e68830ccbb650db5dda90abb6d858e6a.headers.json",
+        "request_headers_sha256": "368b5645ffcd4d353f16e10b9015fc52e68830ccbb650db5dda90abb6d858e6a",
+        "request_headers_size": 707,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/07/07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82/CIK0001108524.json",
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001108524.json"
+      },
+      {
+        "accession": "",
+        "content_sha256": "f71caf4521bd2c2bc134b0aab2d1bbe9a6fb314a7ec14f74c038ae87227eebfd",
+        "document_name": "CIK0001108524-submissions-001.json",
+        "request_attempt_id": "request:attempt:3c8485aacb51dad300cddf1e0bdacb65708e9c2bc8eed828fbd516c866952bca",
+        "request_body_sha256": "f71caf4521bd2c2bc134b0aab2d1bbe9a6fb314a7ec14f74c038ae87227eebfd",
+        "request_body_size": 307556,
+        "request_headers_repo_relative_path": "evidence/request_attempts/f7/f71caf4521bd2c2bc134b0aab2d1bbe9a6fb314a7ec14f74c038ae87227eebfd/CIK0001108524-submissions-001.json.9ffb7b8d821b3ddfe533eaa021dcbd5479b10871771dc8675cd52f99537d1677.headers.json",
+        "request_headers_sha256": "9ffb7b8d821b3ddfe533eaa021dcbd5479b10871771dc8675cd52f99537d1677",
+        "request_headers_size": 752,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/f7/f71caf4521bd2c2bc134b0aab2d1bbe9a6fb314a7ec14f74c038ae87227eebfd/CIK0001108524-submissions-001.json",
+        "source_url": "https://data.sec.gov/submissions/CIK0001108524-submissions-001.json"
+      }
+    ],
+    "target_period": {
+      "fiscal_year": 2024,
+      "period_end": "2024-01-31",
+      "period_start": "2023-02-01"
+    },
+    "compiled_spec": {
+      "body": "\n# Ordinary RevPAR\n\nThe economic scope is inherited unchanged; deterministic source replay supplies the observation. No historical AI qualification or new source acquisition credit is claimed.",
+      "compiled": {
+        "applicability": {
+          "all": [
+            "lodging"
+          ],
+          "none": []
+        },
+        "canonical_unit": "USD",
+        "dependencies": [],
+        "disclosure_group": null,
+        "forbidden_confusions": [
+          "prior_year",
+          "percentage_change",
+          "company_operated",
+          "regional_only"
+        ],
+        "formula": null,
+        "identity_constraints": [],
+        "inputs": {},
+        "kind": "direct_numeric",
+        "legacy_projection": {
+          "allowed_evidence_delta_fields": [
+            "evidence_quote",
+            "extraction_method",
+            "parser_version"
+          ],
+          "allowed_metric_delta_fields": [
+            "formula",
+            "notes"
+          ],
+          "concept_or_section": "MD&A RevPAR",
+          "confidence": "0.85",
+          "context_or_dimension": "MD&A RevPAR",
+          "evidence_context_style": "constant",
+          "evidence_extraction_method": "deterministic_table_source",
+          "evidence_unit_policy": "projected_result",
+          "fiscal_year": "",
+          "form": "",
+          "formula": "source-reported lodging table observation",
+          "metric_context_style": "constant",
+          "metric_name": "RevPAR",
+          "notes_template": "Source-rebuilt current-year comparable systemwide worldwide statistic.",
+          "parser_version": "vnext_projector_v1",
+          "source_class": "MDA",
+          "status_exact": "MDA_OK",
+          "unit": "USD",
+          "value_multiplier": "1"
+        },
+        "metric_id": "B11",
+        "name": "RevPAR",
+        "numeric_policy": {
+          "allow_infinity": false,
+          "allow_nan": false,
+          "decimal_precision": 28,
+          "maximum_absolute_scale": 64,
+          "maximum_significant_digits": 128,
+          "normalize_trailing_zeros": true,
+          "percent_to_ratio": "divide_by_100",
+          "rounding": "ROUND_HALF_EVEN",
+          "serialization": "fixed_point"
+        },
+        "quality_rule": {
+          "original_metric_spec": "catalog/metrics/B11_revpar.md",
+          "original_metric_spec_sha256": "ca03800209951aa6b4a4804d76b8a6eb64e49727ccb03a8b62b445b1c7f9e81c",
+          "resolver": "ordinary_lodging_table_v1",
+          "source_policy": "config/ordinary_lodging_table_v1.json",
+          "source_policy_sha256": "2cf70a7655585d2ecc26af831f790fe44c3a7cbdbb323182998be566fed1399c"
+        },
+        "reported_unit": "USD",
+        "required_claims": {
+          "geography": "worldwide",
+          "operating_scope": "systemwide",
+          "period_role": "current_fiscal_year",
+          "property_population": "comparable"
+        },
+        "review_policy": "none",
+        "scope_contract": {
+          "allowed_dimensions": [
+            "property_population",
+            "operating_scope",
+            "geography"
+          ],
+          "cross_dimension_constraints": [],
+          "exact_enum_aliases": {
+            "geography": {
+              "worldwide": [
+                "Worldwide"
+              ]
+            },
+            "operating_scope": {
+              "systemwide": [
+                "Comparable Systemwide Properties"
+              ]
+            },
+            "property_population": {
+              "comparable": [
+                "Comparable Systemwide Properties"
+              ]
+            }
+          },
+          "required_dimensions": [
+            "property_population",
+            "operating_scope",
+            "geography"
+          ],
+          "scope_contract_version": "2",
+          "selection_preference": {
+            "dimension_order": [
+              "property_population",
+              "operating_scope",
+              "geography"
+            ],
+            "prefer_complete_required_dimensions": true
+          }
+        },
+        "selection_policy": {
+          "ambiguous_after_tie_break": "AMBIGUOUS_CANDIDATE",
+          "form_rule": "10-K_PREFIX_AND_FY",
+          "period_filter": "target_period",
+          "semantic_version": "1",
+          "target_accession_priority": true,
+          "within_concept_order": [
+            "filed_desc",
+            "accession_desc",
+            "unit_desc"
+          ]
+        },
+        "source_mode": "structured",
+        "top_level_guards": [],
+        "unit_policy": "fixed_canonical"
+      },
+      "prompt_bundle": {
+        "ai_instructions": [],
+        "disclosure_group": null,
+        "prompt_examples": [],
+        "prompt_template_version": "1",
+        "spec_semantic_hash": "sha256:cb59832572c7b2aa9a76142b561e75e9df782a50c83f66f9273d464a424b6356"
+      },
+      "prompt_bundle_hash": "sha256:528362cfd6e189671e71cab23c58ad137f057bbf93d55264444252abaa83158b",
+      "spec_closure_hash": "sha256:6f9cab9c1c477f4210dadf7fa4f018ffeb7f67588be5f6811cf50bd6092e94bc",
+      "spec_semantic_hash": "sha256:cb59832572c7b2aa9a76142b561e75e9df782a50c83f66f9273d464a424b6356"
+    },
+    "source_references": [
+      {
+        "accession": "SUBMISSIONS-1108524",
+        "company_id": "salesforce",
+        "document_name": "CIK0001108524.json",
+        "raw_asset_id": "sha256:2031f3f3b73a0ecacda271618ba72a3ece3b94e02be615a20f1589331e62c51d",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:a483ec50e009556e252d8f0966a11aceb66a0a80a6f38446a0df466b3c1020e3",
+        "source_reference_id": "sha256:fe3bf7cdab815fd58dc64b19aec533b5aa58e43211b3afe820441d2c9a6706f1",
+        "source_role": "sec_submissions_inventory",
+        "source_url": "https://data.sec.gov/submissions/CIK0001108524.json"
+      },
+      {
+        "accession": "0001108524-24-000005",
+        "company_id": "salesforce",
+        "document_name": "crm-20240131.htm",
+        "raw_asset_id": "sha256:5977fa50575667b72c4d6df85493f0ecb0c126ec7f3b7a70b7559a46d7be19be",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:e2a06af8b3dbc6d908c352d406e2a4148d89d127d2eb301e67c3677223f25294",
+        "source_reference_id": "sha256:723155e9d5b0cedf5cdd62921925cebd9baa8509bd0c90dcc89147b3c7fe62f3",
+        "source_role": "target_primary",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852424000005/crm-20240131.htm"
+      },
+      {
+        "accession": "0001108524-24-000005",
+        "company_id": "salesforce",
+        "document_name": "CIK0001108524.json",
+        "raw_asset_id": "sha256:07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:d491f102d961ff431f729ed22a6061e77031764d68ecb123860e506160642026",
+        "source_reference_id": "sha256:f32c313070dba8edd066843d068b3352d9074b6fd89b7e002773dcebf6977d0d",
+        "source_role": "companyfacts",
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001108524.json"
+      }
+    ]
+  }
+]
