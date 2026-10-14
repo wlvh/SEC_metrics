@@ -359,6 +359,20 @@ def legal_risk_candidates(*, document, raw_bytes=None):
     return {**body, "policy_hash": _POLICY_HASH, "proposal_id": content_hash(value={**body, "policy_hash": _POLICY_HASH})}
 
 
+def _financial_report_boundary(block):
+    text=block['text'].strip()
+    if block.get('emphasized') and _FINANCIAL_HEADING.match(text):
+        return True
+    # A standalone standard title can be rendered without bold/emphasis.
+    # Do not promote an all-caps continuation sentence or table-of-contents
+    # link into a report ending; links are rejected by the caller below.
+    return re.fullmatch(
+        r'(?:CONSOLIDATED|COMBINED)(?: AND CONSOLIDATED)? '
+        r'(?:BALANCE SHEETS?|STATEMENTS? OF '
+        r'(?:OPERATIONS|(?:COMPREHENSIVE )?(?:INCOME|LOSS)|CASH FLOWS))',
+        text) is not None
+
+
 def going_concern_candidates(*, document):
     """Locate auditor-report context and relevant language without a no-risk inference."""
     _check_document(document)
@@ -370,7 +384,7 @@ def going_concern_candidates(*, document):
     form_boundaries = [i for i in range(len(blocks)) if _form_heading(blocks, i) is not None]
     for start in starts:
         endings = [i for i in range(start + 1, len(blocks))
-                   if (i in starts or blocks[i].get("emphasized") and _FINANCIAL_HEADING.match(blocks[i]["text"]))
+                   if (i in starts or _financial_report_boundary(blocks[i]))
                    and len(blocks[i]["text"]) < 250 and not blocks[i]["linked"]]
         endings.extend(r["end_block_exclusive"] for r in ranges if r["start_block"] <= start < r["end_block_exclusive"])
         endings.extend(i for i in form_boundaries if i > start)
