@@ -1,0 +1,33 @@
+{
+  "task_name": "extract_d03_group_7446ef9",
+  "purpose": "BLIND_DEVELOPMENT_EXTRACTION",
+  "scope_paths": [
+    "input/request.json",
+    "input/metric-spec.md",
+    "input/manifest.json",
+    "blind/raw-response.json",
+    "blind/extraction-log.json"
+  ],
+  "patch_sha": "7446ef978738370edf9e601387aff42094256a6d",
+  "input_sha256": "1ecd2819b28c64ae65a7113dc3852a58c84fb2e4af922f8ba606bbab860c4b4d",
+  "spawned_at": "2026-10-14T10:19:12.584767+00:00",
+  "ended_at": "2026-10-14T10:27:35.725261+00:00",
+  "actual_tool_calls": 17,
+  "max_tools": 80,
+  "max_minutes": 90,
+  "max_messages": 3,
+  "result_path": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d03-development-jpm-20261014/blind",
+  "state": "COMPLETED",
+  "no_reference_answers_given": true,
+  "provider_or_native_credit": false,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "tool_count_source": "reported by extractor, final message",
+  "message_count": 2,
+  "verdict": "BOUNDED_EXTRACTION_AND_ONE_REVISION_COMPLETE; LIMITED_PARENT_CONTENT_CHECK_RECORDED; NO_COMPANY_OR_PROVIDER_CREDIT",
+  "initial_ended_at": "2026-10-14T10:22:10.234227+00:00",
+  "followup_scope": "Review subject certainty for348/351; one feedback-assisted revision, not a new blind run"
+}

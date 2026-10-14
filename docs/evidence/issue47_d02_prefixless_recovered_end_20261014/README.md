@@ -39,3 +39,15 @@ Normal receiveactualmainccd9d7c2721e2f8c2116d0ca784178b96571e21f includes accept
 Official264 full50mainccd→local5ba6fc0cb0502538ff3c96111c78ea85daf59639 is COMPLETE/exit0:44SAME_OK/6SAME_FAIL/0CHANGED_OK/0FAIL_TO_OK/0OK_TO_FAIL/0CHANGED_FAIL/0NOT_COMPARED. All44complete requests/locators remain unchanged, all6failures unverified.4505files/1,148,630,267bytes/a1975beforeafter same, networking blocked. Outputs/controls/original before failure in mda-reception. Old681→77bproof remains its own version and is not used to excuse the newly reproduced wrong ownership.
 
 No real financial/company/model replay or newcalls. Retained absolute execution paths are only non-authoritative location hints; reader uses its restored source root viaCLI and verifies the portable relative-path/content digest. Corrected-headCI and receiver recheck remain separate; noauthorReady/merge/adoption.
+
+## Receiver4270165976: split explicit notes keep recovered boundaries
+
+The receiver's positive counterexample is reproduced before the fix: explicit Note2 and its title in two original same-format blocks, followed by an explicitNote3 with unstyled punctuation, was rejected. This is a real regression from main, not a new unsupported source. The one-condition correction restores explicit_prefix as an alternative to the complete-prefixless condition. It preserves the standalone page-number rejection, same-format requirement, MD&A/Item7A negatives and known lack-of-region boundary controls. The positive also enters prepare_business_candidates and preserves the original document/IDs. It is selected once in the existing exact feature declaration, without a new runner.
+
+106 affected required tests/.831s/zero failures, errors and skips. Normal receipt of actualmain357039f173b96b170e965bb333b4cb4616f91676 includes the received D04/progress defects and offline package changes; no D02 source alteration is introduced by those unrelated increments.
+
+One requested official264 full50 comparison main357→local053869d44f9df52c0708a8a14c6838e246e0ece8 is COMPLETE/exit0:44SAME_OK/6SAME_FAIL, no changed requests, changed failures, newly ready samples or regressions. Source4505 files/1,148,630,267bytes/a1975 is unchanged before and after; worker networking is blocked. Exact outputs and short controls are in split-explicit-reception. Six source failures remain unverified. Saved answers/requests are not altered or given new legal-content credit.
+
+Re-run the existing officialcommand with baseline357039f173b96b170e965bb333b4cb4616f91676 and this PR's returned head, your read-only restored source and a new output directory. This finite correction does not include275. The noItem7/bold-ending wrong-ownership case common to main is a separate existing gap; it is retained in the historical queue for a general financial-note region check, not hidden by the present mechanical acceptance.
+
+New SEC/provider/model0/0/0; no financial/model rerun or authorReady/merge/adoption/deploy/active. Corrected-headCI and receiver recheck remain separate.

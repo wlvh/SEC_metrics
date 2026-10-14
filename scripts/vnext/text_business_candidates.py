@@ -315,7 +315,7 @@ def _note_references(document, ranges, raw_bytes=None):
             possible = [other["start"] for other in headings if other["start"] > h["start"]
                         and int(re.match(r"\d+", other["number"])[0]) == base_number + 1
                         and (not h["explicit_prefix"] or other["explicit_prefix"])
-                        and (not other["punctuation_emphasis"] or not h["split_identifier"])]
+                        and (not other["punctuation_emphasis"] or h["explicit_prefix"] or not h["split_identifier"])]
             # Without an explicit Note prefix, a same-number subsection and
             # the actual following note are indistinguishable in this view.
             # Do not silently choose the earlier one and truncate disclosure.

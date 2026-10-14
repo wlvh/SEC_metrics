@@ -161,6 +161,27 @@ class TextBusinessCandidateTest(unittest.TestCase):
                          refused['note_references'][0]['status'])
         self.assertEqual([], refused['note_references'][0]['range_candidates'])
 
+    def test_split_explicit_note_can_use_a_recovered_explicit_end(self):
+        styled = ('<p><span style="font-size:9pt;font-weight:700">Note 3</span>'
+                  '<span style="font-size:8pt;font-weight:400">. </span>'
+                  '<span style="font-size:9pt;font-weight:700">Income Taxes</span></p>')
+        body = BODY.replace('<h2>Note 2. Contingencies</h2>',
+                            '<h2>Note 2</h2><h2>Contingencies</h2>').replace(
+            '<h2>Note 3. Income Taxes</h2>', styled)
+        raw = annual(body)
+        doc = document(body)
+        original = copy.deepcopy(doc)
+        proposal = legal_risk_candidates(document=doc, raw_bytes=raw)
+        ref = proposal['note_references'][0]
+        self.assertEqual('LOCATED_NOTE_RANGE', ref['status'])
+        start = next(i for i, b in enumerate(doc['blocks']) if b['text'] == 'Note 2')
+        end = next(i for i, b in enumerate(doc['blocks']) if b['text'] == 'Note 3. Income Taxes')
+        self.assertEqual([(start, end)], [(r['start_block'], r['end_block_exclusive'])
+                                        for r in ref['range_candidates']])
+        actual = prepare_business_candidates(**source_arguments(raw))
+        self.assertEqual(ref, actual['proposals']['legal_regulatory']['note_references'][0])
+        self.assertEqual(original, doc)
+
     def test_complete_prefixless_note_can_use_a_recovered_explicit_end(self):
         styled = ('<p><span style="font-size:9pt;font-weight:700">Note 3</span>'
                   '<span style="font-size:8pt;font-weight:400">. </span>'
