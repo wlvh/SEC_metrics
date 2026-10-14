@@ -63,6 +63,54 @@ def replace_accrual_raw(args, raw):
 
 
 class TextResultV2SourceTest(unittest.TestCase):
+    def test_d02_whole_note_occurrence_cannot_be_narrowed_by_another_caption_reference(self):
+        from tests.vnext.test_text_business_candidates import document
+        from vnext.d02_text_results_v3 import select_d02_incorporated_notes
+        first = 'Refer to Note 2 for our legal proceedings and pending litigation.'
+        raw = BODY.replace(first, first + '</p><p>See the “Claims in Courts” caption in Note 2.')
+        raw = raw.replace('<h3>1. Procedural matters</h3>',
+            '<p><span style="text-decoration:underline">Claims in Courts</span></p>')
+        raw = raw.replace('<h2>Note 3. Income Taxes</h2>',
+            '<p><span style="text-decoration:underline">Government Investigations</span></p>'
+            '<p>The additional investigation remains pending against the registrant.</p>'
+            '<h2>Note 3. Income Taxes</h2>')
+        doc = document(raw); original = copy.deepcopy(doc)
+        before = legal_risk_candidates(document=doc, raw_bytes=annual(raw))
+        selected = select_d02_incorporated_notes(proposal=before, document=doc, raw_bytes=annual(raw))
+        self.assertIn('The additional investigation remains pending against the registrant.',
+                      [c['text'] for c in selected['D02']['candidates']])
+        # The wider original reference can retain the original proposal wholly.
+        ranges = selected.get('d02_incorporated_note_scopes', {}).get('disclosure_scopes', selected['checked_ranges'])
+        note = before['note_references'][0]['range_candidates'][0]
+        self.assertIn(note, ranges)
+        self.assertEqual(original, doc); self.assertEqual(before['D03'], selected['D03'])
+        from vnext import d02_text_results_v3 as core
+        from vnext.d02_reviewed_source import item8_requests
+        args = inputs('D02', annual_body=raw)
+        prepared = core.prepare_business_text_sources(metric_id='D02', d02_page_furniture=True, **args)
+        actual = next(iter(prepared['proposals'].values()))
+        self.assertIn('The additional investigation remains pending against the registrant.',
+                      [c['text'] for c in actual['D02']['candidates']])
+        self.assertTrue(item8_requests(prepared=prepared, target=args['target']))
+
+    def test_d02_same_style_short_prose_is_not_proof_of_a_caption_end(self):
+        from tests.vnext.test_text_business_candidates import document
+        from vnext.d02_text_results_v3 import select_d02_incorporated_notes
+        raw = BODY.replace('Refer to Note 2 for our legal proceedings and pending litigation.',
+                           'See the “Claims in Courts” caption in Note 2.')
+        raw = raw.replace('<h3>1. Procedural matters</h3>',
+            '<p style="font-size:10pt">Claims in Courts</p>'
+            '<p style="font-size:10pt">Litigation remains pending</p>')
+        doc = document(raw); original = copy.deepcopy(doc)
+        with self.assertRaisesRegex(ValueError, 'D02_INCORPORATED_CAPTION_HIERARCHY_NOT_PROVEN'):
+            select_d02_incorporated_notes(proposal=legal_risk_candidates(document=doc, raw_bytes=annual(raw)),
+                                         document=doc, raw_bytes=annual(raw))
+        self.assertEqual(original, doc)
+        from vnext import d02_text_results_v3 as core
+        with self.assertRaisesRegex(ValueError, 'D02_INCORPORATED_CAPTION_HIERARCHY_NOT_PROVEN'):
+            core.prepare_business_text_sources(metric_id='D02', d02_page_furniture=True,
+                                                **inputs('D02', annual_body=raw))
+
     def test_d02_each_named_caption_stops_at_its_first_unnamed_peer(self):
         from tests.vnext.test_text_business_candidates import document
         from vnext.d02_text_results_v3 import select_d02_incorporated_notes
