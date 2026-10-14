@@ -462,7 +462,7 @@
         "anchor_id": "CAPABILITY.databricks_offline_package",
         "type": "capability",
         "status": "active",
-        "statement": "tools/databricks/build_offline_package.py在能访问GitHub的电脑上从固定commit下载程序文件与一家公司已存档的SEC原件，逐个按git blob哈希核对；SEC正文只收与请求账本记录的SHA-256和长度一致的字节，被后来采集覆盖的工作副本列出并排除；生成确定性zip与PACKAGE.json，不向SEC发请求。目录附带用默认commit打好的万豪包，测试核对其与默认commit及请求账本一致。company_metrics_notebook.py在无外网的Databricks上逐个文件核对后，用tools/vnext_company.py run --source-root离线计算，并如实报告程序统计的provider/paid/sec调用数。仓库测试只用假GitHub与桩计算程序；真实Databricks集群的结果须另行取得。不能获取仓库尚未存档的新申报，计算不调用任何模型，不是#28 N1内网transport，不改变外网DeepSeek路径、调用账本或任何指标调用点。",
+        "statement": "tools/databricks/build_offline_package.py在能访问GitHub的电脑上从固定commit下载程序文件与一家公司已存档的SEC原件，逐个按git blob哈希核对；SEC正文只收与请求账本记录的SHA-256和长度一致的字节，被后来采集覆盖的工作副本列出并排除；生成确定性zip与PACKAGE.json，不向SEC发请求。目录附带用默认commit打好的万豪包，测试核对其与默认commit及请求账本一致。company_metrics_notebook.py在无外网的Databricks上先核对zip的SHA-256等于独立给出的预期值、再逐个文件核对后，用tools/vnext_company.py run --source-root离线计算，并如实报告程序统计的provider/paid/sec调用数。仓库测试只用假GitHub与桩计算程序；真实Databricks集群的结果须另行取得。不能获取仓库尚未存档的新申报，计算不调用任何模型，不是#28 N1内网transport，不改变外网DeepSeek路径、调用账本或任何指标调用点。",
         "audience": [
           "operator",
           "developer",

@@ -8,7 +8,7 @@
 |---|---|---|
 | `tools/databricks/build_offline_package.py` | 能访问 github.com 的电脑（Python 3.8+，只用标准库） | 打包，不向 SEC 发请求 |
 | `tools/databricks/sec_metrics_marriott_international_681b35d8.zip` | — | 用默认版本打好的万豪包，可直接上传 |
-| `tools/databricks/company_metrics_notebook.py` | Databricks | 核对包内每个文件后离线计算，不访问外网、不调用模型 |
+| `tools/databricks/company_metrics_notebook.py` | Databricks | 先核对 zip 指纹等于预期值、再逐个文件核对后离线计算，不访问外网、不调用模型 |
 
 ## 为什么不在打包时直接从 SEC 下载
 
@@ -32,17 +32,18 @@ python3 build_offline_package.py --company marriott_international    # 生成 se
 - 程序版本固定为脚本里的 `DEFAULT_REF`（端到端验证过的 commit），写进 `PACKAGE.json`。`--ref <commit>` 可以换版本，但新版本可能需要更多运行文件。开发时缺文件都会在计算 notebook 里直接报错，但这不能保证所有情况，换版本后要重新核对结果。
 - 每个文件都按该 commit 的 git blob 哈希核对；SEC 正文另按账本记录的 SHA-256 和长度核对，任何一项不符都不写 zip。
 - 输出里的 `skipped_overwritten_working_copies` 是工作副本（`evidence/submissions/`、`evidence/accession_materials/` 下）后来被新的采集覆盖、内容已与账本对不上的文件，所以不打包。万豪是 2 个，计算用不到。
-- 同一 commit、同一压缩库重打，zip 字节相同。不同电脑的压缩库可能不同，zip 本身的哈希可能不同；notebook 会逐个文件核对 `PACKAGE.json` 里的哈希，这才是完整性检查。
+- 同一 commit、同一压缩库重打，zip 字节相同；不同电脑的压缩库可能不同，zip 的 SHA-256 也就可能不同。以打包输出里的 `zip_sha256` 为准，在第二步填进 notebook。
 - 网络问题：公司代理设 `HTTPS_PROXY`；证书错误设 `SSL_CERT_FILE` 为公司 CA 文件；GitHub API 限流（每小时 60 次）时等一小时或设 `GITHUB_TOKEN`。
 
 ## 第二步：在 Databricks 上计算
 
 1. 把 zip 上传到 Unity Catalog Volume（Catalog → 选 volume → Upload to this volume）。
 2. Workspace → Import 导入 `company_metrics_notebook.py`。文件开头的 `# Databricks notebook source` 会让它自动拆成多个单元格。
-3. 改第二格的 `PACKAGE_ZIP`。非万豪的公司要把 `METRICS` 换成该行业适用的指标（B10/B11 是酒店业指标）。然后 Run all。
+3. 改第二格的 `PACKAGE_ZIP`。`EXPECTED_ZIP_SHA256` 默认是仓库附带万豪包的指纹；用自己打的包时，换成打包输出里的 `zip_sha256`。非万豪的公司要把 `METRICS` 换成该行业适用的指标（B10/B11 是酒店业指标）。然后 Run all。
+   notebook 先核对 zip 的 SHA-256 等于这个预期值，不符就停止，不解压也不运行；通过后再逐个文件核对 `PACKAGE.json`。预期值必须来自仓库页面或你自己的打包输出，不能取自 zip 本身：`PACKAGE.json` 和程序在同一个 zip 里，只靠它挡不住被整体替换的包。
 4. `WORK_ROOT` 用驱动节点本地盘（默认 `/local_disk0/tmp/sec_metrics`），不要用 `/dbfs` 或 `/Volumes`：计算要用文件锁。本地盘不可写时自动改用系统临时目录。`SAVE_TO` 可以把结果另存到 Volume。
 
-摘要应为 `status: PASS`；`calls` 是程序自己统计的本次新调用（provider=模型、paid=付费、sec=SEC 请求），应全为 0。万豪（默认程序版本）应得到 2025 财年：
+摘要应为 `status: PASS`；`calls` 是程序自己统计的本次新调用（provider=模型、paid=付费、sec=SEC 请求），三项都为 0 才判 PASS，不为 0 或缺失时状态是 `UNEXPECTED_CALLS`。万豪（默认程序版本）应得到 2025 财年：
 
 | 指标 | 含义 | 值 |
 |---|---|---|
@@ -53,7 +54,7 @@ python3 build_offline_package.py --company marriott_international    # 生成 se
 | B10 | 入住率 | 69.3（%） |
 | B11 | 每间可售房收入（RevPAR） | 128.8 美元 |
 
-- 同一集群再跑一次，各指标显示 `NO_SOURCE_CONTENT_CHANGE`：来源没变、复用上次结果，不是错误。
+- 同一集群用同一个包再跑一次，各指标显示 `NO_SOURCE_CONTENT_CHANGE`：来源没变、复用上次结果，不是错误。换了包（字节不同）会用新的状态目录从头计算。
 - 状态不是 PASS 时，摘要的 `flow_status` 是程序给出的流程状态，`metric_failures` 列出没有就绪的指标及原因。
 - `CANDIDATE_READY` 只表示候选结果已生成，不等于业务验收。
 

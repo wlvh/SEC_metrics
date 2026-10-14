@@ -235,6 +235,9 @@ class CommittedPackageTest(unittest.TestCase):
                   and name not in ('source/evidence/requests_log.csv',
                                    'source/evidence/requests_log_manifest.json')}
         self.assertEqual(len(bodies), package['sec_bodies'])
+        default = re.search(r'^EXPECTED_ZIP_SHA256 = "([0-9a-f]{64})"',
+                            (TOOLS / 'company_metrics_notebook.py').read_text(encoding='utf-8'), re.M)
+        self.assertEqual(default.group(1), sha256((TOOLS / packages[0]).read_bytes()))
         for path, data in bodies.items():
             self.assertIn((path, sha256(data), str(len(data))), recorded, path)
 
@@ -287,6 +290,11 @@ parser.add_argument('--metric', action='append')
 args = parser.parse_args()
 behaviour = json.loads((Path(args.source_root) / 'behaviour.json').read_text())
 Path(args.work_dir).mkdir(parents=True, exist_ok=True)
+task = Path(args.work_dir) / 'company-task.json'  # the real runner pins its source root like this
+identity = {'company_id': args.company, 'source_root': args.source_root}
+if task.exists() and json.loads(task.read_text()) != identity:
+    sys.exit('COMPANY_CURRENT_TASK_IDENTITY_CHANGED')
+task.write_text(json.dumps(identity))
 (Path(args.work_dir) / 'invocation.json').write_text(json.dumps({'args': vars(args), 'isolated': sys.flags.isolated}))
 if behaviour.get('crash'):
     print('Traceback (most recent call last): boom')
@@ -314,17 +322,20 @@ class CompanyMetricsNotebookTest(unittest.TestCase):
         self.addCleanup(temp.cleanup)
         self.temp = Path(temp.name)
 
-    def run_with(self, behaviour, *, tamper=False, save=False):
+    def run_with(self, behaviour, *, tamper=False, save=False, expected=None):
         files = {'program/tools/vnext_company.py': STUB_COMPANY_CLI.encode(),
                  'source/behaviour.json': json.dumps(behaviour).encode()}
         zip_path = self.temp / 'package.zip'
         write_package(zip_path, files, listed={'source/behaviour.json': '0' * 64} if tamper else None)
-        settings = {'PACKAGE_ZIP': str(zip_path), 'METRICS': ['B01', 'B04'], 'WORK_ROOT': str(self.temp / 'work'),
+        settings = {'PACKAGE_ZIP': str(zip_path), 'EXPECTED_ZIP_SHA256': expected or sha256(zip_path.read_bytes()),
+                    'METRICS': ['B01', 'B04'], 'WORK_ROOT': str(self.temp / 'work'),
                     'SAVE_TO': str(self.temp / 'saved') if save else None}
         return run_notebook(self.notebook, settings)
 
     def invocation(self):
-        return json.loads((self.temp / 'work' / 'state-acme_hotels' / 'invocation.json').read_text())
+        states = sorted((self.temp / 'work').glob('state-acme_hotels-*'))
+        self.assertEqual(len(states), 1)
+        return json.loads((states[0] / 'invocation.json').read_text())
 
     def test_completed_run_passes_and_reports_the_programs_own_call_counts(self):
         calls = {'provider': 0, 'paid': 0, 'sec': 0}
@@ -340,9 +351,23 @@ class CompanyMetricsNotebookTest(unittest.TestCase):
         self.assertTrue(invocation['args']['source_root'].endswith('/sec_metrics_package/source'))
         self.assertTrue((Path(summary['saved_to']) / 'metrics_matrix.csv').is_file())
 
-    def test_call_counts_are_reported_as_measured_not_assumed_zero(self):
-        summary, _, _ = self.run_with({'calls': {'provider': 1, 'paid': 1, 'sec': 2}})
-        self.assertEqual(summary['calls'], {'provider': 1, 'paid': 1, 'sec': 2})
+    def test_nonzero_or_unknown_call_counts_are_reported_and_never_pass(self):
+        for calls in ({'provider': 1, 'paid': 1, 'sec': 2}, {'provider': 0, 'paid': 0, 'sec': None}, {}):
+            with self.subTest(calls=calls):
+                summary, _, _ = self.run_with({'calls': calls})
+                self.assertEqual(summary['calls'], calls)
+                self.assertEqual((summary['flow_status'], summary['status']),
+                                 ('FLOW_COMPLETED', 'UNEXPECTED_CALLS'))
+
+    def test_a_different_package_gets_its_own_state_instead_of_an_identity_error(self):
+        zero = {'provider': 0, 'paid': 0, 'sec': 0}
+        first, _, _ = self.run_with({'calls': zero})
+        second, raised, _ = self.run_with({'calls': zero, 'rebuilt': True})  # different zip bytes
+        self.assertIsNone(raised)
+        self.assertEqual((first['status'], second['status']), ('PASS', 'PASS'))
+        self.assertNotEqual(first['zip_sha256'], second['zip_sha256'])
+        self.assertEqual(sorted(path.name for path in (self.temp / 'work').glob('state-*')),
+                         sorted(f"state-acme_hotels-{summary['zip_sha256'][:12]}" for summary in (first, second)))
 
     def test_limited_flow_is_not_pass_and_names_the_metric(self):
         summary, _, _ = self.run_with({'calls': {'provider': 0, 'paid': 0, 'sec': 0},
@@ -357,11 +382,18 @@ class CompanyMetricsNotebookTest(unittest.TestCase):
         self.assertIn('退出码 3', str(raised))
         self.assertIn('boom', text)
 
+    def test_zip_that_differs_from_the_expected_digest_is_neither_extracted_nor_run(self):
+        summary, raised, _ = self.run_with({'calls': {}}, expected='0' * 64)
+        self.assertIsNone(summary)
+        self.assertIn('EXPECTED_ZIP_SHA256', str(raised))
+        self.assertEqual(list((self.temp / 'work').glob('package-*')), [])
+        self.assertEqual(list((self.temp / 'work').glob('state-*')), [])
+
     def test_package_file_that_differs_from_its_listing_stops_before_running(self):
         summary, raised, _ = self.run_with({'calls': {}}, tamper=True)
         self.assertIsNone(summary)
         self.assertIn('differ from PACKAGE.json', str(raised))
-        self.assertFalse((self.temp / 'work' / 'state-acme_hotels').exists())
+        self.assertEqual(list((self.temp / 'work').glob('state-*')), [])
 
 
 if __name__ == '__main__':
