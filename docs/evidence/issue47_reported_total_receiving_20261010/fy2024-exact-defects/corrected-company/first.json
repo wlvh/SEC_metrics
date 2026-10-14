@@ -1,0 +1,79 @@
+{
+  "elapsed_seconds": 13.204468500014627,
+  "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+  "company_id": "macys",
+  "run_id": "20261014T114558Z-0143fbb7",
+  "status": "FLOW_COMPLETED",
+  "selected_metrics": [
+    "B01",
+    "B02"
+  ],
+  "metrics": [
+    {
+      "metric_id": "B01",
+      "status": "CANDIDATE_READY",
+      "attempt_id": "e070b9259cbd447cb8c7017c138625d4",
+      "version": "420d9bc0734d414d91687d2bae7533b0",
+      "result_id": "sha256:c4ae234050c0bedcec757196b3c2ba16eea5eb01e172464d1f001f790238c105",
+      "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/statement-pilot-macys-20261009/state/updates/B01/periods/FY2024/results/420d9bc0734d414d91687d2bae7533b0",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "result_reason_code": "PASS",
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2024,
+      "defect_holds": [],
+      "read_result_id": "sha256:c4ae234050c0bedcec757196b3c2ba16eea5eb01e172464d1f001f790238c105",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/statement-pilot-macys-20261009/state/updates/B01/periods/FY2024/results/420d9bc0734d414d91687d2bae7533b0",
+      "program_version": {
+        "commit": "a4e3d3355d46a8a261a9d789240871e290f3a552",
+        "has_uncommitted_changes": true
+      }
+    },
+    {
+      "metric_id": "B02",
+      "status": "CANDIDATE_READY",
+      "attempt_id": "13322912c54c4eed8add42d161e968f2",
+      "version": "1cb1f236a70345b3bedfa0340bf6ddd6",
+      "result_id": "sha256:a9fe2a58c273863998e353082944869880088896c1e4410618e0bf56d80f54a1",
+      "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/statement-pilot-macys-20261009/state/updates/B02/periods/FY2024/results/1cb1f236a70345b3bedfa0340bf6ddd6",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "result_reason_code": "PASS",
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2024,
+      "defect_holds": [],
+      "read_result_id": "sha256:a9fe2a58c273863998e353082944869880088896c1e4410618e0bf56d80f54a1",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/statement-pilot-macys-20261009/state/updates/B02/periods/FY2024/results/1cb1f236a70345b3bedfa0340bf6ddd6",
+      "program_version": {
+        "commit": "a4e3d3355d46a8a261a9d789240871e290f3a552",
+        "has_uncommitted_changes": true
+      }
+    }
+  ],
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics",
+  "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/statement-pilot-macys-20261009/state",
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/macys-fy24-actual-repair-20261014/20261014T114558Z-0143fbb7",
+  "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false,
+  "selected_fiscal_years": [
+    2024
+  ]
+}
