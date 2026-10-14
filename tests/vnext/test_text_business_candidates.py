@@ -110,6 +110,29 @@ class TextBusinessCandidateTest(unittest.TestCase):
         self.assertEqual("Consolidated Balance Sheets", report["closing_heading"]["text"])
         self.assertTrue(any("signature follow" in b["text"] for b in d["blocks"][report["start_block"]:report["end_block_exclusive"]]))
 
+    def test_leading_parenthesized_note_heading_uses_the_original_peer_format(self):
+        body = BODY.replace('<h2>Note 2. Contingencies</h2>', '<p><b>(2) Contingencies</b></p>').replace(
+            '<h2>Note 3. Income Taxes</h2>', '<p><b>(3) Income Taxes</b></p>')
+        raw = annual(body); doc = document(body); original = copy.deepcopy(doc)
+        proposal = legal_risk_candidates(document=doc, raw_bytes=raw)
+        reference = proposal['note_references'][0]
+        self.assertEqual('LOCATED_NOTE_RANGE', reference['status'])
+        end = next(i for i, block in enumerate(doc['blocks']) if block['text'] == '(3) Income Taxes')
+        self.assertEqual(end, reference['range_candidates'][0]['end_block_exclusive'])
+        self.assertEqual(original, doc)
+        self.assertFalse(proposal['semantic_scope_completeness_asserted'])
+        actual = prepare_business_candidates(**source_arguments(raw))
+        self.assertEqual(reference, actual['proposals']['legal_regulatory']['note_references'][0])
+        for body in (
+            body.replace('<b>(3) Income Taxes</b>', '<b style="font-size:14pt">(3) Income Taxes</b>'),
+            body.replace('<b>(3) Income Taxes</b>', '<a href="#tax"><b>(3) Income Taxes</b></a>'),
+        ):
+            with self.subTest(ending=body[-110:]):
+                refused = legal_risk_candidates(document=document(body), raw_bytes=annual(body))
+                self.assertEqual('REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE',
+                                 refused['note_references'][0]['status'])
+                self.assertEqual([], refused['note_references'][0]['range_candidates'])
+
     def test_parenthesized_note_heading_is_navigable_without_claiming_semantic_completeness(self):
         body = BODY.replace("<h2>Note 2. Contingencies</h2>", "<h2>2) Contingencies</h2>").replace("<h2>Note 3. Income Taxes</h2>", "<h2>3) Income Taxes</h2>")
         p = legal_risk_candidates(document=document(body), raw_bytes=annual(body))

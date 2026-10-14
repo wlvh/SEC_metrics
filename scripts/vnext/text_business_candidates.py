@@ -160,6 +160,12 @@ def _ranges(document, required):
     return ranges, sorted(set(reasons))
 
 
+def _note_heading_match(text):
+    """Read (18) Title as the existing numbered note syntax; keep raw text."""
+    numbered = re.sub(r"^\((\d{1,3}[A-Z]?)\)(?=\s)", r"\1.", text, count=1, flags=re.I)
+    return _NOTE_HEADING.match(numbered)
+
+
 class _NoteHeadingFormats(_Blocks):
     """Observe heading structure in the same source without changing text IDs."""
 
@@ -212,7 +218,7 @@ class _NoteHeadingFormats(_Blocks):
         super()._flush()
         if len(self.blocks) > count:
             block = self.blocks[-1]
-            if _NOTE_HEADING.match(block["text"]) or _PATTERNS["note_identifier"].fullmatch(block["text"]):
+            if _note_heading_match(block["text"]) or _PATTERNS["note_identifier"].fullmatch(block["text"]):
                 self.formats[block["start"]] = self.part_format
         self.part_format = None
 
@@ -245,12 +251,12 @@ def _note_references(document, ranges, raw_bytes=None):
     for i, block in enumerate(blocks):
         if block["linked"] or not block.get("emphasized") or len(block["text"]) > 300:
             continue
-        match = _NOTE_HEADING.match(block["text"])
+        match = _note_heading_match(block["text"])
         end_index = i
         if match is None:
             identifier = _PATTERNS["note_identifier"].fullmatch(block["text"])
             if identifier and i + 1 < len(blocks) and blocks[i + 1].get("emphasized") and re.match(r"[A-Za-z]", blocks[i + 1]["text"]):
-                match = _NOTE_HEADING.match(identifier.group(1) + ". " + blocks[i + 1]["text"])
+                match = _note_heading_match(identifier.group(1) + ". " + blocks[i + 1]["text"])
                 end_index = i + 1
         if match and not _PATTERNS["continued_heading"].search(block["text"]):
             headings.append({"number": match.group(1).upper(), "start": i, "heading_end": end_index,

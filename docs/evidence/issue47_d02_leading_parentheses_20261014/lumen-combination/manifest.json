@@ -1,0 +1,174 @@
+{
+ "record_type": "D02_PREPARATION_COMPARISON",
+ "tool_sha256": "53bba2d7345e749db4574570249fc82d33bf7c8dee87e51577d52433022a09b6",
+ "entry": "vnext.d02_reviewed_source.prepare_historical_legal_sources",
+ "versions": {
+  "baseline": {
+   "ref": "840f7a9d9141fb796c695e4642d9fbe4a6305360",
+   "commit": "840f7a9d9141fb796c695e4642d9fbe4a6305360",
+   "tree": "2688e73554875ce00dcdb6bc73ca54f5500f8d86",
+   "parents": [
+    "4ecdac245a34e8959fbdfd8e94dc551b732f8812"
+   ]
+  },
+  "candidate": {
+   "ref": "29718155d5c88ba3c0b1b3b8ebb4cc8414ac4008",
+   "commit": "29718155d5c88ba3c0b1b3b8ebb4cc8414ac4008",
+   "tree": "5fce110f83228d5e5ca1d4109cb4705c69fda27b",
+   "parents": [
+    "c79d476c1e2de27302f5e491dfa6786adfc639a4",
+    "a8446c9075a6a9aded6b71a200653ca56f610e11"
+   ]
+  }
+ },
+ "inputs": {
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "source_root_before": {
+   "digest": "sha256:a1975d771d350efb537f036dd0d24c19b86d475a3594520d38db7bd9e4ce2fb7",
+   "files": 4505,
+   "symlinks": 0,
+   "bytes": 1148630267,
+   "directories": 2173,
+   "directory_digest": "sha256:318f0ca619745d71392fe1c6e02c619ce6a5497ae3842099e1ff3f16b0e3914b"
+  },
+  "source_root_after": {
+   "digest": "sha256:a1975d771d350efb537f036dd0d24c19b86d475a3594520d38db7bd9e4ce2fb7",
+   "files": 4505,
+   "symlinks": 0,
+   "bytes": 1148630267,
+   "directories": 2173,
+   "directory_digest": "sha256:318f0ca619745d71392fe1c6e02c619ce6a5497ae3842099e1ff3f16b0e3914b"
+  },
+  "unchanged_during_run": true
+ },
+ "scope": {
+  "companies": [
+   "lumen_technologies"
+  ],
+  "fiscal_years": [
+   2021,
+   2022,
+   2023,
+   2024
+  ],
+  "subset_of_registry": true,
+  "outside_baseline_registry": [],
+  "registry_baseline": [
+   "marriott_international",
+   "southwest_airlines",
+   "ford_motor_company",
+   "pfizer",
+   "jpmorgan_chase",
+   "salesforce",
+   "lumen_technologies",
+   "macys",
+   "paramount_skydance_paramount_global",
+   "enphase_energy"
+  ],
+  "registry_candidate": [
+   "marriott_international",
+   "southwest_airlines",
+   "ford_motor_company",
+   "pfizer",
+   "jpmorgan_chase",
+   "salesforce",
+   "lumen_technologies",
+   "macys",
+   "paramount_skydance_paramount_global",
+   "enphase_energy"
+  ]
+ },
+ "environment": {
+  "python": "3.14.7",
+  "implementation": "CPython",
+  "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "git": "git version 2.54.0 (Apple Git-157)",
+  "network": "socket connect/create_connection/getaddrinfo refused in workers",
+  "workers": 3,
+  "timeout_per_sample_seconds": 600
+ },
+ "workers": [
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "lumen_technologies:2021"
+   ],
+   "seconds": 9.0
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "lumen_technologies:2022"
+   ],
+   "seconds": 8.7
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "lumen_technologies:2023"
+   ],
+   "seconds": 8.5
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "lumen_technologies:2024"
+   ],
+   "seconds": 10.2
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "lumen_technologies:2021"
+   ],
+   "seconds": 9.2
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "lumen_technologies:2022"
+   ],
+   "seconds": 10.1
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "lumen_technologies:2023"
+   ],
+   "seconds": 9.9
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "lumen_technologies:2024"
+   ],
+   "seconds": 10.2
+  }
+ ],
+ "problems": [],
+ "complete": true
+}
