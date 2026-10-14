@@ -1,0 +1,142 @@
+{
+  "commit": "cc5a285c12ed0d2d0439a0794d2967ed8cec983f",
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics",
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+  "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/pfizer-d04-company-20261014/state",
+  "read_seconds": 0.47556387502118014,
+  "original_files_preserved": 230,
+  "state_files_preserved": 17,
+  "result_files": 7,
+  "result_bytes": 37562,
+  "manifest_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+  },
+  "calls": [
+    0,
+    0,
+    0
+  ],
+  "production_authorized": false,
+  "successful_calls": [
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93
+  ],
+  "source_id": "sha256:5a975d9aed8be849994533cc5da23321a3560e7f854516202d3146f028548b89",
+  "required_units": 54,
+  "phases": [
+    {
+      "phase": "first",
+      "seconds": 308.5785535000032,
+      "exit_code": 2,
+      "metrics": [
+        {
+          "metric_id": "D04",
+          "status": "CANDIDATE_WITHHELD",
+          "attempt_id": "59983a1823564d4588018a4cd2c9b1c1",
+          "version": "b2c0cf9ae13e4f638940af525014fb5f",
+          "result_id": "sha256:489a0c23081f27d8b8123a1493544aed2760ce736fc4fc9e6c22882a01e273ca",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/pfizer-d04-company-20261014/state/updates/D04/results/b2c0cf9ae13e4f638940af525014fb5f",
+          "calculation_performed": true,
+          "new_candidate_created": true,
+          "result_reason_code": "D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE",
+          "source_observation_errors": [],
+          "new_calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "defect_holds": [],
+          "read_result_id": "sha256:489a0c23081f27d8b8123a1493544aed2760ce736fc4fc9e6c22882a01e273ca",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/pfizer-d04-company-20261014/state/updates/D04/results/b2c0cf9ae13e4f638940af525014fb5f",
+          "program_version": {
+            "commit": "cc5a285c12ed0d2d0439a0794d2967ed8cec983f",
+            "has_uncommitted_changes": false
+          }
+        }
+      ]
+    },
+    {
+      "phase": "repeat-forbidden-factory",
+      "seconds": 0.07468470800085925,
+      "exit_code": 2,
+      "metrics": [
+        {
+          "metric_id": "D04",
+          "status": "PREVIOUS_INPUT_WITHHELD",
+          "attempt_id": "a948a7d85dc64beda0d4d5d48ddf730e",
+          "version": "b2c0cf9ae13e4f638940af525014fb5f",
+          "result_id": "sha256:489a0c23081f27d8b8123a1493544aed2760ce736fc4fc9e6c22882a01e273ca",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/pfizer-d04-company-20261014/state/updates/D04/results/b2c0cf9ae13e4f638940af525014fb5f",
+          "result_reason_code": "D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE",
+          "raw_input_unchanged": true,
+          "calculation_performed": false,
+          "new_candidate_created": false,
+          "source_check_versions": {
+            "scripts/vnext/ordinary_current_update.py": "bc039ce9eacd3b1da9a74cda4dfefe8e9a3785225b7fc7cff1243f50d203386a",
+            "scripts/vnext/request_bindings.py": "d0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee",
+            "scripts/vnext/ordinary_update_compatibility.py": "dcd5f7fad86dd36fec7ffc1ce15cb274cd3670dba213777b6cdaa4a4090d80b9",
+            "scripts/vnext/ordinary_result_registration.py": "edf88293f2c568efc113703211bf587d3b0fc065a59c90ddbfb302acd681daee"
+          },
+          "source_observation_errors": [],
+          "new_calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "defect_holds": [],
+          "read_result_id": "sha256:489a0c23081f27d8b8123a1493544aed2760ce736fc4fc9e6c22882a01e273ca",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/pfizer-d04-company-20261014/state/updates/D04/results/b2c0cf9ae13e4f638940af525014fb5f",
+          "program_version": {
+            "commit": "cc5a285c12ed0d2d0439a0794d2967ed8cec983f",
+            "has_uncommitted_changes": false
+          }
+        }
+      ]
+    }
+  ],
+  "public_row": {
+    "company": "Pfizer",
+    "cik": "78003",
+    "metric_id": "D04",
+    "metric_name": "Going concern source statements and defined-scope assessment",
+    "value": "",
+    "unit": "text",
+    "status": "TEXT_QUAL",
+    "source_class": "10-K",
+    "formula": "source-reported going concern statements",
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31",
+    "fiscal_year": "2025",
+    "fiscal_period": "",
+    "accession": "0000078003-26-000026",
+    "form": "10-K",
+    "filed_date": "2026-02-26",
+    "concept_or_section": "",
+    "context_or_dimension": "",
+    "confidence": "",
+    "notes": "未披露持续经营疑虑：已检查保存的完整年报及本期修订、原生事实和续接对象；这不表示对未来财务状况作保证。",
+    "company_id": "pfizer",
+    "result_id": "sha256:489a0c23081f27d8b8123a1493544aed2760ce736fc4fc9e6c22882a01e273ca",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/pfizer-d04-company-20261014/state/updates/D04/results/b2c0cf9ae13e4f638940af525014fb5f",
+    "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+    "local_metric_status": "PREVIOUS_INPUT_WITHHELD",
+    "period_role": "REQUESTED_RESULT",
+    "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+    "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+    "defect_holds": "[]",
+    "requested_in_latest_execution": "True"
+  }
+}
