@@ -37,3 +37,8 @@ python3 tools/vnext_company.py results --company lumen_technologies \
 ```
 
 Use the existing historical-guide seven-member restore, changing only the original archive prefix to root/calls/0010/. Expected current outcome is missing matchingFY2023 response, not aFY2025 answer applied to2023. Old responses/failures/Run and Sourcebytes remain. Remaining literal caption mismatch, amendments/successors, matching responses, complete law-content validation and full1950goal are not removed by this parser fix. New SEC/provider/model0/0/0; no authorReady/merge/adoption/deploy/active. New-headCI/receiver review remains separate. Progress on #47.
+
+
+## Current receiving increment
+
+Received main61d2f9c after273/270/272 actual merge records were read. Two finite TBC/test insertion conflicts were resolved by retaining the new parenthesis matcher and all existing emphasized-title/body checks; both test methods remain, no whole-file overwrite. Current99 affected/source/registration controls pass/.992s/zero skips. The existing275 range stays unchanged;273 prefixless/recovered-boundary P2 is nonblocking and a separate follow-up, not patched into275. Because received270/273 modify the shared source path, the accepted264 tool now checks61d→35b13e24 full50; it is running, not yet a reception claim. Original175 and targetedcombined results retain their scope. No model/company first replay or newcalls.

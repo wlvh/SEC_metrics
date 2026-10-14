@@ -1,0 +1,48 @@
+{
+  "period": {
+    "fiscal_year": 2021,
+    "period_start": "2021-01-01",
+    "period_end": "2021-12-31"
+  },
+  "source": [
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:7d168d078d4719ad48a2bf1f5ccc6810144b9512890e75d52043d8df43f151d2",
+      "raw_asset_id": "sha256:a6dc538da8dd8c78563933a612ccb61bcc77ed9d067383ee6ed394612d5f0dd8",
+      "company_id": "pfizer",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800322000027/pfe-20211231.htm",
+      "accession": "0000078003-22-000027",
+      "document_name": "pfe-20211231.htm",
+      "source_role": "target_primary",
+      "request_attempt_id": "request:attempt:1ae0d92ddb2cb055a2562790d6dde11178b66fb19252f932c58905e173af3d41"
+    }
+  ],
+  "requests": [
+    {
+      "id": "sha256:2be1e80f2f0f94fc7d362d23c272aaaf36cfa049c741b65e8ecbc3637f177526",
+      "blocks": 1733
+    }
+  ],
+  "scopes": [
+    {
+      "containers": [
+        {
+          "section_id": "NOTE_16",
+          "start_block": 3599,
+          "end_block_exclusive": 3748,
+          "requested_reference": "16A",
+          "scope_relation": "WIDER_PARENT_NOTE"
+        }
+      ],
+      "disclosure_scopes": [
+        {
+          "section_id": "NOTE_16A",
+          "start_block": 3601,
+          "end_block_exclusive": 3732,
+          "requested_reference": "16A",
+          "scope_relation": "INCORPORATED_SUBNOTE"
+        }
+      ]
+    }
+  ]
+}

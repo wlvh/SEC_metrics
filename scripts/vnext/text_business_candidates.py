@@ -172,6 +172,7 @@ class _NoteHeadingFormats(_Blocks):
     def __init__(self, text):
         super().__init__(text)
         self.formats = {}
+        self.emphasized_titles = set()
         self.format_stack = []
         self.part_format = None
 
@@ -215,15 +216,21 @@ class _NoteHeadingFormats(_Blocks):
 
     def _flush(self):
         count = len(self.blocks)
+        # Punctuation and spaces can have a different font weight. Every
+        # letter or digit of a heading must still belong to emphasized text.
+        title_parts = [part for part in self.parts if any(char.isalnum() for char in part[2])]
+        emphasized_title = bool(title_parts) and all(part[4] for part in title_parts)
         super()._flush()
         if len(self.blocks) > count:
             block = self.blocks[-1]
             if _note_heading_match(block["text"]) or _PATTERNS["note_identifier"].fullmatch(block["text"]):
                 self.formats[block["start"]] = self.part_format
+                if emphasized_title:
+                    self.emphasized_titles.add(block["start"])
         self.part_format = None
 
 
-def _note_heading_formats(document, raw_bytes):
+def _note_heading_formats(document, raw_bytes, *, emphasized_only=False):
     if raw_bytes is None:
         return {}
     _need(type(raw_bytes) is bytes and len(raw_bytes) == document["byte_length"]
@@ -234,7 +241,8 @@ def _note_heading_formats(document, raw_bytes):
     parser.feed(text); parser.close(); parser._flush()
     offsets = _byte_offsets(text, parser.formats)
     bom = 3 if raw_bytes.startswith(b"\xef\xbb\xbf") else 0
-    return {offsets[start] + bom: form for start, form in parser.formats.items()}
+    return {offsets[start] + bom: form for start, form in parser.formats.items()
+            if not emphasized_only or start in parser.emphasized_titles}
 
 
 def _note_references(document, ranges, raw_bytes=None):
@@ -246,11 +254,21 @@ def _note_references(document, ranges, raw_bytes=None):
                 references.setdefault(match.group(1).upper(), []).append(block)
     headings = []
     blocks = document["blocks"]
+    emphasized_formats = None
     # Financial statements can be appended after the form's numbered items.
     # Search the complete source structure, not only the small Item 8 pointer.
     for i, block in enumerate(blocks):
-        if block["linked"] or not block.get("emphasized") or len(block["text"]) > 300:
+        if block["linked"] or len(block["text"]) > 300:
             continue
+        if not block.get("emphasized"):
+            # Keep plain prose excluded. Only an explicit Note heading whose
+            # visible words are emphasized may ignore unstyled punctuation.
+            if not _PATTERNS["explicit_note_prefix"].match(block["text"]) or not _note_heading_match(block["text"]):
+                continue
+            if emphasized_formats is None:
+                emphasized_formats = _note_heading_formats(document, raw_bytes, emphasized_only=True)
+            if block["raw_start_byte"] not in emphasized_formats:
+                continue
         match = _note_heading_match(block["text"])
         end_index = i
         if match is None:
@@ -260,7 +278,8 @@ def _note_references(document, ranges, raw_bytes=None):
                 end_index = i + 1
         if match and not _PATTERNS["continued_heading"].search(block["text"]):
             headings.append({"number": match.group(1).upper(), "start": i, "heading_end": end_index,
-                             "explicit_prefix": bool(_PATTERNS["explicit_note_prefix"].match(block["text"]))})
+                             "explicit_prefix": bool(_PATTERNS["explicit_note_prefix"].match(block["text"])),
+                             "punctuation_emphasis": not block.get("emphasized")})
     result = []
     formats = None
     for number, reference_blocks in sorted(references.items()):
@@ -270,9 +289,12 @@ def _note_references(document, ranges, raw_bytes=None):
         candidates = []
         for h in matched:
             base_number = int(re.match(r"\d+", h["number"])[0])
+            # A recovered mixed-format end may close an explicit Note, but
+            # must not turn a bare page number plus a nearby title into one.
             possible = [other["start"] for other in headings if other["start"] > h["start"]
                         and int(re.match(r"\d+", other["number"])[0]) == base_number + 1
-                        and (not h["explicit_prefix"] or other["explicit_prefix"])]
+                        and (not h["explicit_prefix"] or other["explicit_prefix"])
+                        and (not other["punctuation_emphasis"] or h["explicit_prefix"])]
             # Without an explicit Note prefix, a same-number subsection and
             # the actual following note are indistinguishable in this view.
             # Do not silently choose the earlier one and truncate disclosure.
