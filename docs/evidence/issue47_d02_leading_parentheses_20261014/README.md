@@ -1,0 +1,71 @@
+# D02 leading-parenthesis note headings
+
+This main-only increment reads the existing numbered note grammar for '(18) Title' while retaining original source text, byte positions, document IDs, policy bytes, same-format peer proof, linked-heading rejection and ambiguous navigation refusal. It changes only the existing text_business_candidates.py note matcher and an existing test class. It does not add a second source selector, model caller, controller or company pipeline. Base main175 was consumed, then maina844 (CI-only) and currentmaincc5a285c (received269 wrapper compatibility) were received normally. None changes the D02 source preparation paths. Original production comparison keeps its actual175 version scope; no source/financial first run is repeated for those increments.
+
+The exact constructed leading-parenthesis source first failed. Repaired positive enters prepare_business_candidates, preserving the document and semantic_scope_completeness_assertedFalse. Linked next titles and incompatible next-title formats remain rejected. Main-only five modules81/.724s/zero skips pass; the normal combination with the existing candidates passes96/.988s/zero skips. The minimal commit495337ac contains two files only; the receiving branch also includes accepted268/269 and this record, with only the two own business/test files differing from currentmaincc5.
+
+Current accepted264tool production comparison main175→495 completes allregistered50/exit0:29SAME_OK/0CHANGED_OK/0FAIL_TO_OK/0OK_TO_FAIL/19SAME_FAIL/2CHANGED_FAIL. The two changed failures are Lumen22/23: note navigation now passes, then the pre-existing auditor/request-pool boundary fails. All currently ready complete requests/source locators stay identical. The21still-failed samples are unverified. Original summary/manifest/comparison are in main-production-comparison; the same4505file/a1975source root is unchanged. Main-only source preparation is not claimed complete for Lumen.
+
+Real source controls reuse the captured originals, without reparsing financial sources or using model responses as input. Lumen23 raw57782a31cafe37915ffb44e2204a3a0ffa6c11674dac7c0e16baf77bbf8af7ac, accession0000018926-24-000016/lumn-20231231.htm: Note18=2612..2666, Principal Proceedings=2617..2646, Other Proceedings, Disputes and Contingencies=2646..2653. Changed-functions check.285648s preserves Doc/D03. Lumen21 rawd71a12108032256fd7ee6b95bd70b4cb4fb24e6652a57b3e8b8852651c81b7d4: Note18=2528..2579 now navigates, but Item3 names Pending Matters/Other Proceedings and Disputes while actual headings are Principal Proceedings/Other Proceedings, Disputes and Contingencies. This genuine literal conflict remains D02_INCORPORATED_CAPTION_NOT_FOUND (.291922s); no synonym, year-specific mapping or artificial success.
+
+Actual consumer depends on public265 report locator and historical262 used-report client; quarter267 is needed for FY2021. Normal composition includes270/273 unchanged, and currentmaina844 only adds CI. Formal targeted840→29718155 LumenFY21–24 comparison is COMPLETE/exit0:2FAIL_TO_OK(FY22/23),1SAME_OK(FY24),1CHANGED_FAIL(FY21 accuratecaption conflict),zero CHANGED_OK/OK_TO_FAIL; explicitly SUBSET, not a new full50 claim. Original outputs are in lumen-combination. After269 reception,96 affected/source/registration controls pass/.940s/zero skips; forbidden-source/network same-task results .097201s preserves all7state SHAs and the same exact missing-response reason. Its main-cc5-read-control.json is here. No zero-calculation rerun is claimed. Existing candidate heads remain unchanged.
+
+A fresh ordinary LumenFY2023 company run on the fixed compositionc79d476c enters realSource once,24.811299s/exit2, yielding the full1438-block request1e36f014691120b4756b62cb14fa5ca63ecffe10a325cbd9f85498c87afdf50f. The original spent-call0010 request9d73ac44 is FY2025 and cannot be borrowed. Only its seven original members are restored byte-for-byte from the retained970c98archive; no ledger/allowance is copied or created. Calculator, finish and network are forbidden. The CLI saves preciseMODEL_RESPONSE_REQUIRED/noResult, then independentresults/CSV.150894s/exit0 preserves7state/7answer files and source registry/ledger/manifest. Source-ready is not legal-content acceptance, stable withholding, or zero-computation repeat. summaries here retain actual execution version; a844 pureCI does not change its business files.
+
+## Runnable entrance and inputs
+
+Restore the existing SEC root by #52 evidence/issue47_acquired, or use an already restored root read-only. Fetch the branch, then use the existing received comparison tool:
+
+```bash
+git fetch origin task/issue47-d02-parenthesized-note-main-20261014
+python3 tools/compare_d02_preparation.py --baseline cc5a285c12ed0d2d0439a0794d2967ed8cec983f \
+  --candidate origin/task/issue47-d02-parenthesized-note-main-20261014 \
+  --source-root /your/restored/source-inputs --output-dir /your/new/comparison \
+  --fail-on OK_TO_FAIL
+```
+
+Once the declared265/262 dependencies are present in the same company code, use:
+
+```bash
+python3 tools/vnext_company.py run --company lumen_technologies --period fiscal-years \
+  --fiscal-year-start 2023 --fiscal-year-end 2023 --metric D02 \
+  --source-root /your/restored/source-inputs \
+  --saved-legal-reviews /your/restored/original-call0010 \
+  --work-dir /your/new/lumen2023/state --output-dir /your/new/lumen2023/run
+python3 tools/vnext_company.py results --company lumen_technologies \
+  --state-root /your/new/lumen2023/state --output-root /your/new/lumen2023/read
+```
+
+Use the existing historical-guide seven-member restore, changing only the original archive prefix to root/calls/0010/. Expected current outcome is missing matchingFY2023 response, not aFY2025 answer applied to2023. Old responses/failures/Run and Sourcebytes remain. Remaining literal caption mismatch, amendments/successors, matching responses, complete law-content validation and full1950goal are not removed by this parser fix. New SEC/provider/model0/0/0; no authorReady/merge/adoption/deploy/active. New-headCI/receiver review remains separate. Progress on #47.
+
+
+## Current receiving increment
+
+Received main61d2f9c after273/270/272 actual merge records were read. Two finite TBC/test insertion conflicts were resolved by retaining the new parenthesis matcher and all existing emphasized-title/body checks; both test methods remain, no whole-file overwrite. Current99 affected/source/registration controls pass/.992s/zero skips. The existing275 range stays unchanged;273 prefixless/recovered-boundary P2 is nonblocking and a separate follow-up, not patched into275. Because received270/273 modify the shared source path, the accepted264 tool checks61d→35b13e24 full50 and finishesCOMPLETE/exit0:29SAME_OK/0CHANGED_OK/0FAIL_TO_OK/0OK_TO_FAIL/19SAME_FAIL/2CHANGED_FAIL. The two Lumen22/23 expected guard changes remain unverified; source4505/a1975stays unchanged. Original outputs are in current-main-comparison. Original175 and targetedcombined results retain their scope. No model/company first replay or newcalls.
+
+Received doc-only271/07a and public266/cb27 normally. Existing historicalB04 preflight evidence6160258656 is reused;266 adds onlyB04 to the source choices, not D02 preparation. No Source/companyfirst or full financial replay for these increments. Current candidate keeps the original275 scope;273 prefixless P2 remains separate.
+
+Automatic regression protection: the old96fa head green did not list this newTextBusinessCandidate method infast/source selectors. One exactfast featureselector now routes it through the existing runner,once. This does not change production or repeat the original50/source/company executions; remote new-head selected_selector andexecution must be read before claiming automatic protection. Existingworkflow triggers everypull_request,including test/selector-only changes.
+
+
+## Current main receiving after262
+
+Read receiver6166370449;262is nowmainccd9d7c2721e2f8c2116d0ca784178b96571e21f. Normal merge retains main original-format/link/namespace/lettered/auditor rules and leading-parenthesis normalization; no276recovered-end logic is included.91affected required controls/.866s/zero failures/errors/skips. Original Lumen23company/old response/Media limits are reused, not replayed.
+
+The requested full comparison actualmainccd→local81159dd4 completed all50:44SAME_OK/2FAIL_TO_OK(LumenFY2022/FY2023)/0CHANGED_OK/0OK_TO_FAIL/3SAME_FAIL/1CHANGED_FAIL. LumenFY2021 now reaches the precise incorporated-caption mismatch and stays refused; SW25/Param24/25 remain unsupported amendment/successor failures. All4remain unverified, not metrics.4505files/1,148,630,267bytes/a1975beforeafter same, full requests/locators retained, network blocked.
+
+Proactive check of276feedback also found this newparenthesis path could mistake Item7(2)CriticalAccountingEstimates for missingNote2. Exact originalfixture first failed, now only leading-parenthesis candidates inside explicitMD&A7/7A are withheld; original validnote/sibling-style/link tests stay. This finite post-comparison correction is local59c14aaf. Its existing exactfastmethod also executes the new negative, no runner or selector platform. Targeted official811→59 LumenFY21–23 SUBSET is COMPLETE/2SAME_OK/1SAME_FAIL/no changes/regressions; both newly prepared complete requests same, oldFY21caption conflict preserved. Full50 is not relabelled as a59 execution. Outputs/controls/before failure are here,0newcalls.
+
+Absolute source/code/record/output paths in these retained execution artifacts are non-authoritative local location hints; the portable source identity is their relative-path/content tree digesta1975and root-relative SEC proofs. Supply your restored source root/new outputs through the officialcommand, not the original machine path. Source/input/answer/Run history is unchanged. Current headCI and receiver recheck separate, noauthorReady/merge/adoption.
+
+## General financial-note ownership, received main276
+
+Responds to6166998120: Item5 (2) Dividends and Item1A (2) Our Strategy, with either a numbered peer or explicitNote3 ending, first produce the wrong range (four failures). A parenthesized start now requires locatedItem8 or the financial statement caption after the final form heading. Unproved outside duplicates remain ambiguous; they are not filtered into a new success. Actual Item8 and appended-note positives, original-format/link/page controls and MD&A+true-note behavior remain.
+
+Actualmain97005a37 contains accepted276/291/285+287/290/289. Normal receipt resolves one finite source conflict by keeping main's complete/split/recovered boundary controls and275's matcher/ownership rule. New nonblocking276P2 (4271926771/4272074954) is included at this same ownership seam: a proved appended statement/explicit preceding note after7/7A can locate the reference; missingItem8 coverage remains incomplete. One shared financial-region helper serves both checks, no second classifier or selector.109 required controls/.893s/zero failures/errors/skips. Both new methods are in existing exactfeature selectors.
+
+Official264 full50 main970→local8170ae782410a056baad20b59c66c64422136468 is COMPLETE:44SAME_OK,2FAIL_TO_OK(Lumen22/23),0CHANGED_OK/OK_TO_FAIL,3SAME_FAIL and1CHANGED_FAIL(Lumen21 retains literalcaption mismatch). Additional approvedSalesforceFY2026 subset is COMPLETE/1SAME_OK. Source4505/a1975 unchanged, workers offline; full receipts and approved-43-impact.json are in general-note-region.
+
+The user-approved43D02 coordinate list is taken from the actual original-budget allocation record and joined to those official comparisons: every one is SAME_OK, one request and exact same requestID/content. The two newly ready Lumen22/23 requests are not in the81call grant and are explicitly excluded. Readiness/compatibility is not model or legal-content acceptance. Original35 calls/answers/failures/Run remain; no newrealcall, Ready/merge/adoption/deploy/active.
+
+Use actualbaseline97005a37 and the returned head with the existing officialcommand and restored source/new output directory. Main's original6failures remain documented; after275four remain unverified. NewheadCI and receiver comparison are separate. Pending293 occupancy is not a functioning D02/E01 transport; execution still needs the one public adapter and exact responses through the company consumer.

@@ -1,0 +1,57 @@
+{
+  "period": {
+    "fiscal_year": 2023,
+    "period_start": "2023-01-01",
+    "period_end": "2023-12-31"
+  },
+  "references": [
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:b4e4067bc0670fe6e348da70f6e1ceb3749deda5c938434cb1c09a0318ace8aa",
+      "raw_asset_id": "sha256:57782a31cafe37915ffb44e2204a3a0ffa6c11674dac7c0e16baf77bbf8af7ac",
+      "company_id": "lumen_technologies",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892624000016/lumn-20231231.htm",
+      "accession": "0000018926-24-000016",
+      "document_name": "lumn-20231231.htm",
+      "source_role": "target_primary",
+      "request_attempt_id": "request:attempt:c434dbfe584da9403107e275179dd6cf7ef5d0b7568c2b7f55bdd72b40f8fc29"
+    }
+  ],
+  "requests": [
+    {
+      "request_id": "sha256:1e36f014691120b4756b62cb14fa5ca63ecffe10a325cbd9f85498c87afdf50f",
+      "blocks": 1438
+    }
+  ],
+  "scopes": [
+    {
+      "containers": [
+        {
+          "section_id": "NOTE_18",
+          "start_block": 2612,
+          "end_block_exclusive": 2666,
+          "requested_reference": "18",
+          "scope_relation": "EXACT_NOTE"
+        }
+      ],
+      "disclosure_scopes": [
+        {
+          "section_id": "NOTE_18_CAPTION_2617",
+          "start_block": 2617,
+          "end_block_exclusive": 2646,
+          "requested_reference": "18",
+          "scope_relation": "INCORPORATED_CAPTION",
+          "caption_text": "Principal Proceedings"
+        },
+        {
+          "section_id": "NOTE_18_CAPTION_2646",
+          "start_block": 2646,
+          "end_block_exclusive": 2653,
+          "requested_reference": "18",
+          "scope_relation": "INCORPORATED_CAPTION",
+          "caption_text": "Other Proceedings, Disputes and Contingencies"
+        }
+      ]
+    }
+  ]
+}

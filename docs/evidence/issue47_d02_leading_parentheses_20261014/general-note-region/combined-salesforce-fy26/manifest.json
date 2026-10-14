@@ -1,0 +1,112 @@
+{
+ "record_type": "D02_PREPARATION_COMPARISON",
+ "tool_sha256": "53bba2d7345e749db4574570249fc82d33bf7c8dee87e51577d52433022a09b6",
+ "entry": "vnext.d02_reviewed_source.prepare_historical_legal_sources",
+ "versions": {
+  "baseline": {
+   "ref": "97005a378b8195b0003a154bd3abd44ce26de43b",
+   "commit": "97005a378b8195b0003a154bd3abd44ce26de43b",
+   "tree": "3b51a401d09a61aeab13bf576f7015396ee221bc",
+   "parents": [
+    "6f8ba16698db2e2cfc78897e08ed0dbf0b7f770c",
+    "a2908dae4bd0a47d67923f0cab8e7634dd562d72"
+   ]
+  },
+  "candidate": {
+   "ref": "8170ae782410a056baad20b59c66c64422136468",
+   "commit": "8170ae782410a056baad20b59c66c64422136468",
+   "tree": "faaa2d178b9e52514e17283536a6c100a927c1e7",
+   "parents": [
+    "f0d1d9045abdbc01b76df6c44d29a8b29d956a2d",
+    "988ca4d6c8aca63e3e28c360072ca4ef3afb26f3"
+   ]
+  }
+ },
+ "inputs": {
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "source_root_before": {
+   "digest": "sha256:a1975d771d350efb537f036dd0d24c19b86d475a3594520d38db7bd9e4ce2fb7",
+   "files": 4505,
+   "symlinks": 0,
+   "bytes": 1148630267,
+   "directories": 2173,
+   "directory_digest": "sha256:318f0ca619745d71392fe1c6e02c619ce6a5497ae3842099e1ff3f16b0e3914b"
+  },
+  "source_root_after": {
+   "digest": "sha256:a1975d771d350efb537f036dd0d24c19b86d475a3594520d38db7bd9e4ce2fb7",
+   "files": 4505,
+   "symlinks": 0,
+   "bytes": 1148630267,
+   "directories": 2173,
+   "directory_digest": "sha256:318f0ca619745d71392fe1c6e02c619ce6a5497ae3842099e1ff3f16b0e3914b"
+  },
+  "unchanged_during_run": true
+ },
+ "scope": {
+  "companies": [
+   "salesforce"
+  ],
+  "fiscal_years": [
+   2026
+  ],
+  "subset_of_registry": true,
+  "outside_baseline_registry": [],
+  "registry_baseline": [
+   "marriott_international",
+   "southwest_airlines",
+   "ford_motor_company",
+   "pfizer",
+   "jpmorgan_chase",
+   "salesforce",
+   "lumen_technologies",
+   "macys",
+   "paramount_skydance_paramount_global",
+   "enphase_energy"
+  ],
+  "registry_candidate": [
+   "marriott_international",
+   "southwest_airlines",
+   "ford_motor_company",
+   "pfizer",
+   "jpmorgan_chase",
+   "salesforce",
+   "lumen_technologies",
+   "macys",
+   "paramount_skydance_paramount_global",
+   "enphase_energy"
+  ]
+ },
+ "environment": {
+  "python": "3.14.7",
+  "implementation": "CPython",
+  "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "git": "git version 2.54.0 (Apple Git-157)",
+  "network": "socket connect/create_connection/getaddrinfo refused in workers",
+  "workers": 2,
+  "timeout_per_sample_seconds": 600
+ },
+ "workers": [
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "salesforce:2026"
+   ],
+   "seconds": 5.8
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "salesforce:2026"
+   ],
+   "seconds": 5.8
+  }
+ ],
+ "problems": [],
+ "complete": true
+}

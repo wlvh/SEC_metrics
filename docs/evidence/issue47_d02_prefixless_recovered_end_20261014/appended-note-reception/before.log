@@ -1,0 +1,58 @@
+test_appended_note_chain_after_item7_is_not_discarded_as_mda (tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_appended_note_chain_after_item7_is_not_discarded_as_mda) ... 
+  test_appended_note_chain_after_item7_is_not_discarded_as_mda (tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_appended_note_chain_after_item7_is_not_discarded_as_mda) (item='7', ending='<h2>Note 3. Income Taxes</h2>') ... FAIL
+  test_appended_note_chain_after_item7_is_not_discarded_as_mda (tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_appended_note_chain_after_item7_is_not_discarded_as_mda) (item='7', ending='<p><span style="font-size:9pt;font-weight:700">Note 3</span><span style="font-size:8pt;font-weight:400">. </span><span style="font-size:9pt;font-weight:700">Income Taxes</span></p>') ... FAIL
+  test_appended_note_chain_after_item7_is_not_discarded_as_mda (tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_appended_note_chain_after_item7_is_not_discarded_as_mda) (item='7A', ending='<h2>Note 3. Income Taxes</h2>') ... FAIL
+  test_appended_note_chain_after_item7_is_not_discarded_as_mda (tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_appended_note_chain_after_item7_is_not_discarded_as_mda) (item='7A', ending='<p><span style="font-size:9pt;font-weight:700">Note 3</span><span style="font-size:8pt;font-weight:400">. </span><span style="font-size:9pt;font-weight:700">Income Taxes</span></p>') ... FAIL
+
+======================================================================
+FAIL: test_appended_note_chain_after_item7_is_not_discarded_as_mda (tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_appended_note_chain_after_item7_is_not_discarded_as_mda) (item='7', ending='<h2>Note 3. Income Taxes</h2>')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_text_business_candidates.py", line 184, in test_appended_note_chain_after_item7_is_not_discarded_as_mda
+    self.assertEqual('LOCATED_NOTE_RANGE', ref['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'LOCATED_NOTE_RANGE' != 'REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE'
+- LOCATED_NOTE_RANGE
++ REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE
+
+
+======================================================================
+FAIL: test_appended_note_chain_after_item7_is_not_discarded_as_mda (tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_appended_note_chain_after_item7_is_not_discarded_as_mda) (item='7', ending='<p><span style="font-size:9pt;font-weight:700">Note 3</span><span style="font-size:8pt;font-weight:400">. </span><span style="font-size:9pt;font-weight:700">Income Taxes</span></p>')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_text_business_candidates.py", line 184, in test_appended_note_chain_after_item7_is_not_discarded_as_mda
+    self.assertEqual('LOCATED_NOTE_RANGE', ref['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'LOCATED_NOTE_RANGE' != 'REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE'
+- LOCATED_NOTE_RANGE
++ REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE
+
+
+======================================================================
+FAIL: test_appended_note_chain_after_item7_is_not_discarded_as_mda (tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_appended_note_chain_after_item7_is_not_discarded_as_mda) (item='7A', ending='<h2>Note 3. Income Taxes</h2>')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_text_business_candidates.py", line 184, in test_appended_note_chain_after_item7_is_not_discarded_as_mda
+    self.assertEqual('LOCATED_NOTE_RANGE', ref['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'LOCATED_NOTE_RANGE' != 'REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE'
+- LOCATED_NOTE_RANGE
++ REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE
+
+
+======================================================================
+FAIL: test_appended_note_chain_after_item7_is_not_discarded_as_mda (tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_appended_note_chain_after_item7_is_not_discarded_as_mda) (item='7A', ending='<p><span style="font-size:9pt;font-weight:700">Note 3</span><span style="font-size:8pt;font-weight:400">. </span><span style="font-size:9pt;font-weight:700">Income Taxes</span></p>')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_text_business_candidates.py", line 184, in test_appended_note_chain_after_item7_is_not_discarded_as_mda
+    self.assertEqual('LOCATED_NOTE_RANGE', ref['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'LOCATED_NOTE_RANGE' != 'REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE'
+- LOCATED_NOTE_RANGE
++ REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.008s
+
+FAILED (failures=4)

@@ -2,6 +2,7 @@
   "fast": [
     "tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_complete_prefixless_note_can_use_a_recovered_explicit_end",
     "tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_mda_numbered_heading_cannot_supply_a_missing_financial_note",
-    "tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_split_explicit_note_can_use_a_recovered_explicit_end"
+    "tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_split_explicit_note_can_use_a_recovered_explicit_end",
+    "tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_appended_note_chain_after_item7_is_not_discarded_as_mda"
   ]
 }

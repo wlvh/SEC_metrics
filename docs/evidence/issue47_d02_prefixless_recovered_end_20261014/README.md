@@ -51,3 +51,11 @@ One requested official264 full50 comparison main357→local053869d44f9df52c0708a
 Re-run the existing officialcommand with baseline357039f173b96b170e965bb333b4cb4616f91676 and this PR's returned head, your read-only restored source and a new output directory. This finite correction does not include275. The noItem7/bold-ending wrong-ownership case common to main is a separate existing gap; it is retained in the historical queue for a general financial-note region check, not hidden by the present mechanical acceptance.
 
 New SEC/provider/model0/0/0; no financial/model rerun or authorReady/merge/adoption/deploy/active. Corrected-headCI and receiver recheck remain separate.
+
+## Appended note chain after final Item 7/7A
+
+New Codex4271926771 and receiver4272074954 identify an actual failure-closed regression. A true financial statement caption, preceding explicitNote1, complete prefixlessNote2 and explicitNote3 after the finalItem7/7A was incorrectly discarded whenItem8 was absent. Four constructed7/7A and bold/recovered-end combinations first fail; the correction considers the existing financial region/previous-note proof before assigning the heading to MD&A. It preserves the document and the missingItem8 coverage limitation, plus all original MD&A/page-number/format negatives.107required controls/.822s/zero failures/errors/skips. The general region helper can be reused by275; no company/year rule or monetary input.
+
+Official264 actualmain190→local16453f12adcafd187e27d3ae7107f4615025579c full50 is COMPLETE/44SAME_OK/6SAME_FAIL/zero changes or regressions. Additional approvedSalesforceFY2026 subset is COMPLETE/1SAME_OK. Source4505/a1975 unchanged, workers network blocked. Both receipts are in appended-note-reception, baseline/candidate retain actual execution versions. These comparisons include every user-authorized D02 coordinate (43) plus unrelated registered controls; no approved request changes. They do not prove275's later combination yet, nor authorize Lumen22/23.
+
+While this correction was being prepared,276/a290 was independently received into main97005a37; it is therefore retained as a follow-up, not pushed to the closedPR. The pending275 general ownership consumer is the natural same-family integration point. No new model/SEC call or old answer/Run modification; no authorReady/merge/adoption.

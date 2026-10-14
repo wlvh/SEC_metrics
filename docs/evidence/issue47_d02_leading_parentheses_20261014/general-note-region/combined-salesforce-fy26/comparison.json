@@ -1,0 +1,37 @@
+{
+ "requested": 1,
+ "counts": {
+  "SAME_OK": 1,
+  "CHANGED_OK": 0,
+  "FAIL_TO_OK": 0,
+  "OK_TO_FAIL": 0,
+  "SAME_FAIL": 0,
+  "CHANGED_FAIL": 0,
+  "NOT_COMPARED": 0
+ },
+ "unexpected_results": [],
+ "entries": [
+  {
+   "sample": "salesforce:2026",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 5.704,
+    "requests": 1,
+    "request_ids": [
+     "sha256:31a0354280d320cad7d27beaf3698d3f7bd5705ad273735bfaf7394aa9d82d5b"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 5.687,
+    "requests": 1,
+    "request_ids": [
+     "sha256:31a0354280d320cad7d27beaf3698d3f7bd5705ad273735bfaf7394aa9d82d5b"
+    ]
+   },
+   "changes": []
+  }
+ ],
+ "all_samples_compared": true
+}

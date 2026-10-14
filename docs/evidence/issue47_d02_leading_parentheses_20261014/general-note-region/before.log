@@ -1,0 +1,58 @@
+test_parenthesized_titles_require_a_financial_note_region (tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_parenthesized_titles_require_a_financial_note_region) ... 
+  test_parenthesized_titles_require_a_financial_note_region (tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_parenthesized_titles_require_a_financial_note_region) (lead="<h2>Item 5. Market for Registrant's Common Equity</h2><p><b>(2) Dividends</b></p><p>We pay.</p>", ending='<p><b>(3) Income Taxes</b></p>') ... FAIL
+  test_parenthesized_titles_require_a_financial_note_region (tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_parenthesized_titles_require_a_financial_note_region) (lead="<h2>Item 5. Market for Registrant's Common Equity</h2><p><b>(2) Dividends</b></p><p>We pay.</p>", ending='<h2>Note 3. Income Taxes</h2>') ... FAIL
+  test_parenthesized_titles_require_a_financial_note_region (tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_parenthesized_titles_require_a_financial_note_region) (lead='<h2>Item 1A. Risk Factors</h2><p><b>(2) Our Strategy</b></p><p>Our strategy follows.</p>', ending='<p><b>(3) Income Taxes</b></p>') ... FAIL
+  test_parenthesized_titles_require_a_financial_note_region (tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_parenthesized_titles_require_a_financial_note_region) (lead='<h2>Item 1A. Risk Factors</h2><p><b>(2) Our Strategy</b></p><p>Our strategy follows.</p>', ending='<h2>Note 3. Income Taxes</h2>') ... FAIL
+
+======================================================================
+FAIL: test_parenthesized_titles_require_a_financial_note_region (tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_parenthesized_titles_require_a_financial_note_region) (lead="<h2>Item 5. Market for Registrant's Common Equity</h2><p><b>(2) Dividends</b></p><p>We pay.</p>", ending='<p><b>(3) Income Taxes</b></p>')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_text_business_candidates.py", line 130, in test_parenthesized_titles_require_a_financial_note_region
+    self.assertEqual('REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE', ref['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE' != 'LOCATED_NOTE_RANGE'
+- REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE
++ LOCATED_NOTE_RANGE
+
+
+======================================================================
+FAIL: test_parenthesized_titles_require_a_financial_note_region (tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_parenthesized_titles_require_a_financial_note_region) (lead="<h2>Item 5. Market for Registrant's Common Equity</h2><p><b>(2) Dividends</b></p><p>We pay.</p>", ending='<h2>Note 3. Income Taxes</h2>')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_text_business_candidates.py", line 130, in test_parenthesized_titles_require_a_financial_note_region
+    self.assertEqual('REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE', ref['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE' != 'LOCATED_NOTE_RANGE'
+- REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE
++ LOCATED_NOTE_RANGE
+
+
+======================================================================
+FAIL: test_parenthesized_titles_require_a_financial_note_region (tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_parenthesized_titles_require_a_financial_note_region) (lead='<h2>Item 1A. Risk Factors</h2><p><b>(2) Our Strategy</b></p><p>Our strategy follows.</p>', ending='<p><b>(3) Income Taxes</b></p>')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_text_business_candidates.py", line 130, in test_parenthesized_titles_require_a_financial_note_region
+    self.assertEqual('REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE', ref['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE' != 'LOCATED_NOTE_RANGE'
+- REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE
++ LOCATED_NOTE_RANGE
+
+
+======================================================================
+FAIL: test_parenthesized_titles_require_a_financial_note_region (tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_parenthesized_titles_require_a_financial_note_region) (lead='<h2>Item 1A. Risk Factors</h2><p><b>(2) Our Strategy</b></p><p>Our strategy follows.</p>', ending='<h2>Note 3. Income Taxes</h2>')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_text_business_candidates.py", line 130, in test_parenthesized_titles_require_a_financial_note_region
+    self.assertEqual('REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE', ref['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE' != 'LOCATED_NOTE_RANGE'
+- REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE
++ LOCATED_NOTE_RANGE
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.016s
+
+FAILED (failures=4)

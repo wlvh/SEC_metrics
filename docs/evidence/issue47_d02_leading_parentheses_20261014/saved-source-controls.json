@@ -1,0 +1,159 @@
+{
+  "kind": "Changed functions on saved originals, not company or financial execution",
+  "rows": [
+    {
+      "year": 2021,
+      "raw_asset_id": "sha256:d71a12108032256fd7ee6b95bd70b4cb4fb24e6652a57b3e8b8852651c81b7d4",
+      "document_id": "sha256:d5f101b8e0d68346bd268b35312fad462f3ebef4b4c4d3f0708a7381a649848f",
+      "reference": {
+        "reference": "Note 18",
+        "source_occurrences": [
+          {
+            "source_reference_id": "sha256:d626b0f1499ffac5781242462a1f5a490d64a1f31ebd15508c5b9c123310e02c",
+            "raw_asset_id": "sha256:d71a12108032256fd7ee6b95bd70b4cb4fb24e6652a57b3e8b8852651c81b7d4",
+            "document_id": "sha256:d5f101b8e0d68346bd268b35312fad462f3ebef4b4c4d3f0708a7381a649848f",
+            "section_id": "ITEM_3",
+            "labels": [
+              "NOTE_REFERENCE"
+            ],
+            "block_index": 537,
+            "text": "The information contained under the subheadings \"Pending Matters\" and \"Other Proceedings and Disputes\" in Note 18\u2014Commitments, Contingencies and Other Items to our consolidated financial statements included in Item 8 of Part II of this report is incorporated herein by reference.",
+            "raw_start_byte": 810577,
+            "raw_end_byte": 810862,
+            "raw_span_sha256": "6417c260f040a48fa084367eb873bc0613d35f14e013672c98e7b9d5043adc01"
+          }
+        ],
+        "heading_candidates": [
+          {
+            "source_reference_id": "sha256:d626b0f1499ffac5781242462a1f5a490d64a1f31ebd15508c5b9c123310e02c",
+            "raw_asset_id": "sha256:d71a12108032256fd7ee6b95bd70b4cb4fb24e6652a57b3e8b8852651c81b7d4",
+            "document_id": "sha256:d5f101b8e0d68346bd268b35312fad462f3ebef4b4c4d3f0708a7381a649848f",
+            "section_id": "FULL_DOCUMENT_NOTES",
+            "labels": [
+              "NOTE_HEADING"
+            ],
+            "block_index": 2528,
+            "text": "(18) Commitments, Contingencies and Other Items",
+            "raw_start_byte": 3906239,
+            "raw_end_byte": 3906798,
+            "raw_span_sha256": "e0dd45839352e439f25274bd8ee0aaeddfd1a5e4db7e84ac509d37bd20661fa1"
+          }
+        ],
+        "range_candidates": [
+          {
+            "section_id": "NOTE_18",
+            "start_block": 2528,
+            "end_block_exclusive": 2579,
+            "requested_reference": "18",
+            "scope_relation": "EXACT_NOTE"
+          }
+        ],
+        "status": "LOCATED_NOTE_RANGE"
+      },
+      "new_calls": [
+        0,
+        0,
+        0
+      ],
+      "status": "CAPTION_SOURCE_CONFLICT",
+      "reason": "D02_INCORPORATED_CAPTION_NOT_FOUND",
+      "requested_names": [
+        "Pending Matters",
+        "Other Proceedings and Disputes"
+      ],
+      "actual_names": [
+        "Principal Proceedings",
+        "Other Proceedings, Disputes and Contingencies"
+      ],
+      "seconds": 0.29192150000017136,
+      "Doc_and_D03_unchanged": true
+    },
+    {
+      "year": 2023,
+      "raw_asset_id": "sha256:57782a31cafe37915ffb44e2204a3a0ffa6c11674dac7c0e16baf77bbf8af7ac",
+      "document_id": "sha256:440beee5e547037ad01a916400c34acfa18853071309dcccb827e477e808a1f9",
+      "reference": {
+        "reference": "Note 18",
+        "source_occurrences": [
+          {
+            "source_reference_id": "sha256:b4e4067bc0670fe6e348da70f6e1ceb3749deda5c938434cb1c09a0318ace8aa",
+            "raw_asset_id": "sha256:57782a31cafe37915ffb44e2204a3a0ffa6c11674dac7c0e16baf77bbf8af7ac",
+            "document_id": "sha256:440beee5e547037ad01a916400c34acfa18853071309dcccb827e477e808a1f9",
+            "section_id": "ITEM_3",
+            "labels": [
+              "NOTE_REFERENCE"
+            ],
+            "block_index": 575,
+            "text": "The information contained under the subheadings \"Principal Proceedings\" and \"Other Proceedings, Disputes and Contingencies\" in Note 18\u2014Commitments, Contingencies and Other Items to our consolidated financial statements included in Item 8 of Part II of this report is incorporated herein by reference.",
+            "raw_start_byte": 779247,
+            "raw_end_byte": 779553,
+            "raw_span_sha256": "be5b5bdfd58bfd2fdb8ed1ce3c09d7bb6426dbd7951221134d1495a150b1fd26"
+          }
+        ],
+        "heading_candidates": [
+          {
+            "source_reference_id": "sha256:b4e4067bc0670fe6e348da70f6e1ceb3749deda5c938434cb1c09a0318ace8aa",
+            "raw_asset_id": "sha256:57782a31cafe37915ffb44e2204a3a0ffa6c11674dac7c0e16baf77bbf8af7ac",
+            "document_id": "sha256:440beee5e547037ad01a916400c34acfa18853071309dcccb827e477e808a1f9",
+            "section_id": "FULL_DOCUMENT_NOTES",
+            "labels": [
+              "NOTE_HEADING"
+            ],
+            "block_index": 2612,
+            "text": "(18) Commitments, Contingencies and Other Items",
+            "raw_start_byte": 2907286,
+            "raw_end_byte": 2907499,
+            "raw_span_sha256": "877e54367599f2c191d1b505b77c43c65e236f7ecae6e48c05703f984f044bba"
+          }
+        ],
+        "range_candidates": [
+          {
+            "section_id": "NOTE_18",
+            "start_block": 2612,
+            "end_block_exclusive": 2666,
+            "requested_reference": "18",
+            "scope_relation": "EXACT_NOTE"
+          }
+        ],
+        "status": "LOCATED_NOTE_RANGE"
+      },
+      "new_calls": [
+        0,
+        0,
+        0
+      ],
+      "status": "SELECTED_CAPTIONS",
+      "selected_scopes": {
+        "containers": [
+          {
+            "section_id": "NOTE_18",
+            "start_block": 2612,
+            "end_block_exclusive": 2666,
+            "requested_reference": "18",
+            "scope_relation": "EXACT_NOTE"
+          }
+        ],
+        "disclosure_scopes": [
+          {
+            "section_id": "NOTE_18_CAPTION_2617",
+            "start_block": 2617,
+            "end_block_exclusive": 2646,
+            "requested_reference": "18",
+            "scope_relation": "INCORPORATED_CAPTION",
+            "caption_text": "Principal Proceedings"
+          },
+          {
+            "section_id": "NOTE_18_CAPTION_2646",
+            "start_block": 2646,
+            "end_block_exclusive": 2653,
+            "requested_reference": "18",
+            "scope_relation": "INCORPORATED_CAPTION",
+            "caption_text": "Other Proceedings, Disputes and Contingencies"
+          }
+        ]
+      },
+      "seconds": 0.2856477909954265,
+      "Doc_and_D03_unchanged": true
+    }
+  ]
+}
