@@ -1,0 +1,22 @@
+E
+======================================================================
+ERROR: test_continuous_and_historical_nonempty_profiles_preserve_their_origins (tests.vnext.test_saved_d04_replay.ContinuousSavedD04ReplayTest.test_continuous_and_historical_nonempty_profiles_preserve_their_origins) (profile='continuous_fixture')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_saved_d04_replay.py", line 194, in test_continuous_and_historical_nonempty_profiles_preserve_their_origins
+    before=dict(files);result=self.replay(files,source,calls)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/tests/vnext/test_saved_d04_replay.py", line 144, in replay
+    return read_saved_d04_assessment(saved_call_package=path, original_source=source,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/scripts/vnext/saved_d04_replay.py", line 66, in read_saved_d04_assessment
+    need(binding['record_type'] == 'ISSUE_47_HISTORICAL_MODEL_ALLOWANCE',
+  File "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics/scripts/vnext/capacity_utilization_source.py", line 29, in need
+    if not value:raise ValueError(reason)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: SAVED_D04_ORIGINAL_BINDING_TYPE_UNSUPPORTED
+
+----------------------------------------------------------------------
+Ran 1 test in 0.023s
+
+FAILED (errors=1)

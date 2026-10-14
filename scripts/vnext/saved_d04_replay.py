@@ -63,8 +63,18 @@ def read_saved_d04_assessment(*, saved_call_package, original_source,
 
         binding = json('root/binding.json')
         _identity(binding, 'binding_id')
-        need(binding['record_type'] == 'ISSUE_47_HISTORICAL_MODEL_ALLOWANCE',
-             'SAVED_D04_ORIGINAL_BINDING_TYPE_UNSUPPORTED')
+        # Select the saved artifact format explicitly. Neither format creates
+        # a new allowance or rewrites an old call into the other issue's type.
+        contract = {
+            'ISSUE_47_HISTORICAL_MODEL_ALLOWANCE': (
+                'ISSUE_47_HISTORICAL_MODEL_CALL_INTENT',
+                'ISSUE_47_HISTORICAL_MODEL_CALL_TERMINAL', 'allowance_binding_id', 'sha256:'),
+            'CONTINUOUS_CALL_ALLOWANCE': (
+                'CONTINUOUS_CALL_INTENT', 'CONTINUOUS_CALL_TERMINAL', 'binding_id', ''),
+        }.get(binding.get('record_type'))
+        need(contract is not None, 'SAVED_D04_ORIGINAL_BINDING_TYPE_UNSUPPORTED')
+        intent_type, terminal_type, binding_field, digest_prefix = contract
+        continuous = binding['record_type'] == 'CONTINUOUS_CALL_ALLOWANCE'
         seen = set()
         for call in original_call_members:
             ordinal = call['ordinal']
@@ -83,13 +93,14 @@ def read_saved_d04_assessment(*, saved_call_package, original_source,
             intent = json(root + '/intent.json')
             terminal = json(root + '/terminal.json')
             _identity(intent, 'intent_id'); _identity(terminal, 'terminal_id')
-            need(intent['record_type'] == 'ISSUE_47_HISTORICAL_MODEL_CALL_INTENT'
+            need(intent['record_type'] == intent_type
                  and intent['ordinal'] == ordinal
-                 and intent['allowance_binding_id'] == binding['binding_id']
+                 and intent[binding_field] == binding['binding_id']
+                 and (not continuous or intent.get('channel') == 'PROVIDER')
                  and intent['purpose'] in binding['purposes']
-                 and intent['automatic_retry_count'] == 0
+                 and (continuous or intent['automatic_retry_count'] == 0)
                  and intent['execution_mode'] == binding['execution_mode']
-                 and terminal['record_type'] == 'ISSUE_47_HISTORICAL_MODEL_CALL_TERMINAL'
+                 and terminal['record_type'] == terminal_type
                  and terminal['intent_id'] == intent['intent_id']
                  and terminal['status'] == 'SUCCEEDED' and not terminal['stop_reason'],
                  'SAVED_D04_ORIGINAL_CALL_NOT_SUCCESSFUL')
@@ -100,17 +111,22 @@ def read_saved_d04_assessment(*, saved_call_package, original_source,
             _identity(plan, 'ai_invocation_plan_id')
             need(plan['ai_invocation_plan_id'] == intent['plan_id']
                  and plan['requirement_id'] == intent['requirement_id']
+                 and (not continuous or plan['requirement_closure_hash']
+                      == intent.get('requirement_closure_hash'))
+                 and (not continuous or plan.get('invocation_policy', {}).get('automatic_retry_count') == 0)
                  and plan['source_identity_hash'] == original_source['semantic_source_id']
                  and plan['selected_representation_hash'] == request['request_id']
                  and plan['output_schema_hash'] == content_hash(value=request['response_protocol']),
                  'SAVED_D04_ORIGINAL_PLAN_BINDING_CHANGED')
-            key = intent['request_identity'][7:]
+            request_identity = (plan['provider_request_identity'] if continuous
+                                else intent['request_identity'])
+            key = request_identity[7:]
             wire_request = read(root + '/invocation_control/requests/' + key + '.bin')
             wire_hash = sha256_bytes(content=wire_request)
-            need(intent['request_digest'] == 'sha256:' + wire_hash
+            need((continuous or intent['request_digest'] == digest_prefix + wire_hash)
                  and wire_hash == plan['provider_request_body_sha256'],
                  'SAVED_D04_ORIGINAL_WIRE_CHANGED')
-            need(plan['provider_request_identity'] == intent['request_identity']
+            need(plan['provider_request_identity'] == request_identity
                  == content_hash(value={'provider_request_body_sha256': wire_hash,
                      'provider': plan['provider'], 'model': plan['model'], 'api': plan['api']}),
                  'SAVED_D04_ORIGINAL_PROVIDER_IDENTITY_CHANGED')
@@ -122,11 +138,21 @@ def read_saved_d04_assessment(*, saved_call_package, original_source,
                  and len(payload['messages']) == 2 and payload['messages'][1]['role'] == 'user'
                  and strict_json_loads(text=payload['messages'][1]['content']) == expected_payload,
                  'SAVED_D04_ORIGINAL_REQUEST_PAYLOAD_CHANGED')
+            if continuous:
+                # #28's ledger digest is the established business-request
+                # identity, distinct from the HTTP body hash checked above.
+                # Reproduce its original output setting, never today's default.
+                from .continuous_semantic_calls import request_digest
+                from .request_limits import RequestLimits
+                digest = request_digest(request, SimpleNamespace(model=plan['model']),
+                    limits=RequestLimits(output_tokens=payload['max_tokens']))
+                need(intent['request_digest'] == digest,
+                     'SAVED_D04_ORIGINAL_BUSINESS_REQUEST_DIGEST_CHANGED')
             response = read(root + '/invocation_control/responses/' + key + '/response.bin')
             success = json(root + '/invocation_control/responses/' + key + '/receipt.json')
             _identity(success, 'success_response_receipt_id')
             need(success['ai_invocation_plan_id'] == plan['ai_invocation_plan_id']
-                 and success['provider_request_identity'] == intent['request_identity']
+                 and success['provider_request_identity'] == request_identity
                  and success['provider_request_body_sha256'] == plan['provider_request_body_sha256']
                  and success['response_body_sha256'] == sha256_bytes(content=response)
                  and success['response_body_size'] == len(response),
@@ -138,7 +164,7 @@ def read_saved_d04_assessment(*, saved_call_package, original_source,
             _identity(execution, 'execution_receipt_id')
             need(execution['execution_receipt_id'] == terminal['execution_receipt_id']
                  and execution['ai_invocation_plan_id'] == plan['ai_invocation_plan_id']
-                 and execution['provider_request_identity'] == intent['request_identity']
+                 and execution['provider_request_identity'] == request_identity
                  and execution['status'] == 'SUCCEEDED'
                  and execution['success_response_receipt_id'] == success['success_response_receipt_id'],
                  'SAVED_D04_ORIGINAL_EXECUTION_BINDING_CHANGED')
