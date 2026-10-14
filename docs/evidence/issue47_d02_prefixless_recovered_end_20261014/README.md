@@ -17,3 +17,5 @@ python3 tools/compare_d02_preparation.py --baseline cb27e5d1108237bf535567ce83c9
 ```
 
 Uses the same companyD02 source path. No new financial/company/model first or original answer replay is needed for this format correction; original company execution keeps its earlier version and unresolved response boundary. PR275 stays scope-stable and is not included; pending262/265/267 source preparation, literal caption conflicts, amendments/successors, missing matching answers, legal-content acceptance and full1950 goal continue. New SEC/provider/model0/0/0; no authorReady/merge/adoption/deploy/active. New-headCI and receiver's actual repeat remain separate. Progress on #47.
+
+Automatic protection correction: olda152CI did not include the newTBC method in its selectedfast/source entries. One exactfastfeatureselector now loads this method once through the existing runner; production unchanged, original50 source proof stays at751. Existingworkflow is allpull_request,includingselector/test-only changes. Newhead must show actualselector/execution; oldgreen does not prove this newly registered case.
