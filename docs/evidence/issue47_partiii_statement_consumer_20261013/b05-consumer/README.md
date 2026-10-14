@@ -27,3 +27,10 @@ PYTHONPATH=scripts:tools:. python3 tools/vnext_company.py results --company para
 `company.py` adds network prohibition, preservation checks and forbidden-factory/Calculator repeat and read phases to those same public commands. Its state directory must already be a registered company task; its output directories must be new. It is evidence instrumentation, not an alternative company pipeline.
 
 PR279 must first return its qualifier correction and the consumer must verify the affected relation. Old evidence remains tied to the executed version; it is not re-labelled as the corrected helper's result. This increment does not prove all Part III amendments, other companies or five-year business completion. Existing model requests/answers and other unresolved metrics remain unchanged.
+
+
+## Returned CI dependency-state expectations
+
+Actual81260ec2 CI fast115764809647 and history115764809247 exposed two retained tests that still classified B05 as a nonconsumer of the statement property. The production seam now deliberately consumes it, so changed property code must reprocess B05 as well as B04/B07. The corrected tests retain a genuine nonconsumer B01: it keeps its old ID and has zero computation while the three explicit consumers process once, then all four repeat without calculation. company-current115766070362 only summarized the history failure; it was not a separate financial defect.
+
+125 affected required tests/1.677s/zero failures/errors/skips cover the two returned modules, prior source/dispatch cases and selectors. This finite test repair does not change production/Source/Result or repeat the actual financial calculation. Corrected-head CI remains separate. Public279 now has another exact negative: a dash tail asserting for2023 must not be waived, while the real Paramount improvement from2023 is a comparison. The public single writer is fixing it; this consumer keeps reception withheld until the returned helper is consumed.

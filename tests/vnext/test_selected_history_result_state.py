@@ -134,15 +134,15 @@ class SelectedHistoryResultStateTest(TestCase):
         target = ROOT / 'scripts/vnext/statement_metric_amendment.py'
         def changed_hash(*, path):
             return 'CONSTRUCTED_STATEMENT_PROPERTY_VERSION_CHANGE' if path == target else original_hash(path=path)
-        for metric in ('B04','B07','B05'):
+        for metric in ('B04','B07','B05','B01'):
             files = processing_files_for_statement_metric(metric)
             self.forbid_factory = False
             first = self.run_control(2024,metric,files)
             count = len(self.factory_calls)
             with self.subTest(metric=metric),patch.object(update,'sha256_file',side_effect=changed_hash):
-                self.forbid_factory = metric == 'B05'
+                self.forbid_factory = metric == 'B01'
                 after = self.run_control(2024,metric,files)
-                expected = metric != 'B05'
+                expected = metric != 'B01'
                 self.assertEqual(expected,after['calculation_performed'])
                 self.assertEqual(count + int(expected),len(self.factory_calls))
                 self.assertEqual(expected,after['version'] != first['version'])
@@ -150,7 +150,7 @@ class SelectedHistoryResultStateTest(TestCase):
                 repeat = self.run_control(2024,metric,files)
                 self.assertEqual('NO_SOURCE_CONTENT_CHANGE',repeat['status'])
                 self.assertEqual(after['version'],repeat['version'])
-            self.assertEqual(count + int(metric != 'B05'),len(self.factory_calls))
+            self.assertEqual(count + int(metric != 'B01'),len(self.factory_calls))
 
     def test_private_historical_dependencies_reprocess_then_reuse(self):
         from vnext import historical_geography_cases as geography, historical_b03_case as b03
