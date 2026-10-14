@@ -1,0 +1,27 @@
+test_d02_whole_note_occurrence_cannot_be_narrowed_by_another_caption_reference (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_d02_whole_note_occurrence_cannot_be_narrowed_by_another_caption_reference) ... FAIL
+test_d02_same_style_short_prose_is_not_proof_of_a_caption_end (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_d02_same_style_short_prose_is_not_proof_of_a_caption_end) ... FAIL
+
+======================================================================
+FAIL: test_d02_whole_note_occurrence_cannot_be_narrowed_by_another_caption_reference (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_d02_whole_note_occurrence_cannot_be_narrowed_by_another_caption_reference)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_text_results_v2.py", line 80, in test_d02_whole_note_occurrence_cannot_be_narrowed_by_another_caption_reference
+    self.assertIn('The additional investigation remains pending against the registrant.',
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  [c['text'] for c in selected['D02']['candidates']])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'The additional investigation remains pending against the registrant.' not found in ['Refer to Note 2 for our legal proceedings and pending litigation.', 'See the “Claims in Courts” caption in Note 2.', 'Claims in Courts', 'The court has not resolved the matter described in the preceding paragraph.']
+
+======================================================================
+FAIL: test_d02_same_style_short_prose_is_not_proof_of_a_caption_end (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_d02_same_style_short_prose_is_not_proof_of_a_caption_end)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_text_results_v2.py", line 97, in test_d02_same_style_short_prose_is_not_proof_of_a_caption_end
+    with self.assertRaisesRegex(ValueError, 'D02_INCORPORATED_CAPTION_HIERARCHY_NOT_PROVEN'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.011s
+
+FAILED (failures=2)

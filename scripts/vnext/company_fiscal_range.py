@@ -18,7 +18,7 @@ from .normal_source_requirements import _Requirements,source_dependency_satisfie
 from .selected_source_requirements import (discover_selected_annual_requirements,
     discover_selected_source_requirements,_component_source_observation_matches)
 
-METRIC_IDS = frozenset({'B01', 'B02', 'B03'})
+METRIC_IDS = frozenset({'B01', 'B02', 'B03', 'B04'})
 SOURCE_METRIC_IDS = METRIC_IDS | frozenset({'E01'})
 RANGE_CASE_METRIC_IDS = frozenset({'B01', 'B02'})
 PROCESSING_FILES = (

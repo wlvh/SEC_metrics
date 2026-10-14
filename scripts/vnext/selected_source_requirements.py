@@ -1,4 +1,4 @@
-"""Read-only source preflight for one selected annual B01/B02/B03 task.
+"""Read-only source preflight for one selected annual B01/B02/B03/B04 task.
 
 This names source dependencies from existing saved metadata, not financial
 answers or a fetch allowance. Report end is an SEC metadata date; fiscal-year
@@ -18,7 +18,7 @@ from .normal_period_selection import resolve_period_selection
 from .normal_source_authority import ROOT
 from .normal_source_requirements import _Requirements, _instance_names, _same_source_observation
 
-METRIC_IDS = frozenset({'B01', 'B02', 'B03'})
+METRIC_IDS = frozenset({'B01', 'B02', 'B03', 'B04'})
 SOURCE_METRIC_IDS = METRIC_IDS | frozenset({'E01'})
 
 
@@ -72,30 +72,31 @@ def _catalog_requirements(plan, selection):
             selection['period_registrant']['primary_catalog']['loaded_inventories'])
 
 
-def _annual_requirements(plan, filing, role, errors):
-    """Keep the entire selected primary/index/instance set; never select an answer."""
+def _annual_requirements(plan, filing, role, errors, *, include_instances=True):
+    """Keep the required selected original set; optional native files retain the old default."""
     cik, accession = plan.company['primary_cik'], filing['accessionNumber']
     primary_url = accession_document_url(cik=int(cik), accession=accession,
                                          document_name=filing['primaryDocument'])
     primary = plan.require(primary_url, role+'_primary', 'text/html', accession)
-    index_url = accession_directory_url(cik=int(cik), accession=accession)
-    index = plan.require(index_url, role+'_accession_index', 'application/json', accession)
     documents = []
-    if index is None:
-        errors.append({'phase':'ACCESSION_INDEX', 'accession':accession,
-            'source_url':index_url, 'reason':'INSTANCE_DOCUMENT_NAMES_NOT_YET_DISCOVERED',
-            'category':'SOURCE_UNAVAILABLE'})
-    else:
-        try:
-            names = _instance_names(strict_json_loads(text=index['raw_bytes'].decode('utf-8')),
-                                    plan.company, filing)
-            for name in names:
-                source = plan.require(accession_document_url(cik=int(cik),
-                    accession=accession, document_name=name), role+'_instance',
-                    'application/xml', accession)
-                if source is not None:documents.append(source)
-        except ValueError as error:
-            _limitation(errors, 'ACCESSION_INDEX', error, accession=accession)
+    if include_instances:
+        index_url = accession_directory_url(cik=int(cik), accession=accession)
+        index = plan.require(index_url, role+'_accession_index', 'application/json', accession)
+        if index is None:
+            errors.append({'phase':'ACCESSION_INDEX', 'accession':accession,
+                'source_url':index_url, 'reason':'INSTANCE_DOCUMENT_NAMES_NOT_YET_DISCOVERED',
+                'category':'SOURCE_UNAVAILABLE'})
+        else:
+            try:
+                names = _instance_names(strict_json_loads(text=index['raw_bytes'].decode('utf-8')),
+                                        plan.company, filing)
+                for name in names:
+                    source = plan.require(accession_document_url(cik=int(cik),
+                        accession=accession, document_name=name), role+'_instance',
+                        'application/xml', accession)
+                    if source is not None:documents.append(source)
+            except ValueError as error:
+                _limitation(errors, 'ACCESSION_INDEX', error, accession=accession)
     period = None
     if filing['form'] == '10-K' and primary is not None:
         try:
@@ -176,11 +177,12 @@ def discover_selected_annual_requirements(*, repo_root, company_id, report_end, 
         plan.company = {**company, 'primary_cik':selection['reporting_cik']}
         from .normal_governance_input import _Sources
         plan.reader = _Sources(source, company_id, selection['reporting_cik'])
-        current = _annual_requirements(plan, selection['current_filing'], 'target_annual', errors)
+        current = _annual_requirements(plan, selection['current_filing'], 'target_annual', errors,
+            include_instances=set(metric_ids)!={'B04'})
         current_period = current['period']
         for filing in selection['current_amendments']:
-            if set(metric_ids)=={'B03'}:
-                # B03's existing amendment relation reader consumes the whole
+            if set(metric_ids)<={'B03','B04'}:
+                # B03 and B04 amendment relation readers consume the whole
                 # inline primary. It does not consume an amendment instance
                 # or directory; do not invent unused required dependencies.
                 plan.require(accession_document_url(cik=int(selection['reporting_cik']),
