@@ -288,9 +288,11 @@ def _note_references(document, ranges, raw_bytes=None):
         if match and not _PATTERNS["continued_heading"].search(block["text"]):
             headings.append({"number": match.group(1).upper(), "start": i, "heading_end": end_index,
                              "explicit_prefix": bool(_PATTERNS["explicit_note_prefix"].match(block["text"])),
-                             "punctuation_emphasis": not block.get("emphasized")})
+                             "punctuation_emphasis": not block.get("emphasized"),
+                             "split_identifier": end_index != i})
     result = []
     formats = None
+    form_headings = None
     for number, reference_blocks in sorted(references.items()):
         exact = [h for h in headings if h["number"] == number]
         parent = re.sub(r"[A-Z]+$", "", number)
@@ -298,17 +300,43 @@ def _note_references(document, ranges, raw_bytes=None):
         candidates = []
         for h in matched:
             base_number = int(re.match(r"\d+", h["number"])[0])
-            # A recovered mixed-format end may close an explicit Note, but
-            # must not turn a bare page number plus a nearby title into one.
+            if not h["explicit_prefix"]:
+                if form_headings is None:
+                    form_headings = [found for i in range(len(blocks))
+                                     if (found := _form_heading(blocks,i)) is not None]
+                previous_form = next((found for found in reversed(form_headings)
+                                      if found["block_index"] < h["start"]),None)
+                # A numbered MD&A heading is not a financial note, even if
+                # an actual following Note heading exists later in the file.
+                if previous_form is not None and previous_form["item"] in {"7","7A"}:
+                    continue
+            # A recovered end can close a complete prefixless title. It must
+            # not validate a heading made from a page number and nearby text.
             possible = [other["start"] for other in headings if other["start"] > h["start"]
                         and int(re.match(r"\d+", other["number"])[0]) == base_number + 1
                         and (not h["explicit_prefix"] or other["explicit_prefix"])
-                        and (not other["punctuation_emphasis"] or h["explicit_prefix"])]
+                        and (not other["punctuation_emphasis"] or h["explicit_prefix"] or not h["split_identifier"])]
             # Without an explicit Note prefix, a same-number subsection and
             # the actual following note are indistinguishable in this view.
             # Do not silently choose the earlier one and truncate disclosure.
             if not h["explicit_prefix"] and len(possible) > 1:
                 continue
+            if not h["explicit_prefix"] and any(other["punctuation_emphasis"]
+                    for other in headings if other["start"] in possible):
+                inside_item8 = any(r["section_id"]=="ITEM_8" and
+                    r["start_block"] <= h["start"] < r["end_block_exclusive"] for r in ranges)
+                # Appended statements may lie after the form items. In that
+                # layout require the preceding explicit note in a statement
+                # region opened after the last form heading.
+                after_form = previous_form["heading_end_index"] if previous_form is not None else -1
+                statement_starts = [i for i in range(after_form+1,h["start"])
+                    if not blocks[i]["linked"] and _financial_report_boundary(blocks[i])]
+                previous_note = any(other["explicit_prefix"] and
+                    int(re.match(r"\d+",other["number"])[0]) == base_number-1 and
+                    statement_starts and max(statement_starts) < other["start"] < h["start"]
+                    for other in headings)
+                if not inside_item8 and not previous_note:
+                    continue
             if not h["explicit_prefix"] and possible:
                 following = next(other for other in headings if other["start"] == possible[0])
                 if not following["explicit_prefix"]:
