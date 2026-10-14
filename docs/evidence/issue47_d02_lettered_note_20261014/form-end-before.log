@@ -1,0 +1,15 @@
+test_d02_auditor_form_end_does_not_swallow_unemphasized_financial_statements (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_d02_auditor_form_end_does_not_swallow_unemphasized_financial_statements) ... FAIL
+
+======================================================================
+FAIL: test_d02_auditor_form_end_does_not_swallow_unemphasized_financial_statements (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_d02_auditor_form_end_does_not_swallow_unemphasized_financial_statements)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_text_results_v2.py", line 117, in test_d02_auditor_form_end_does_not_swallow_unemphasized_financial_statements
+    with self.assertRaisesRegex(ValueError, 'D02_AUDITOR_REPORT_CLOSING_SCOPE_NOT_PROVEN'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.010s
+
+FAILED (failures=1)

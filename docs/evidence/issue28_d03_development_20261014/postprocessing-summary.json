@@ -1,0 +1,435 @@
+{
+  "observations": [
+    {
+      "status": "POSTPROCESS_ACCEPTED",
+      "elapsed_seconds": 42.310320250020595,
+      "code_root": "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics",
+      "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+      "request_id": "sha256:c4c7d6b1e90979d23a668cece33307b35f1f23624f8338b3fbaac1420267d4f2",
+      "input_sha256": "1ecd2819b28c64ae65a7113dc3852a58c84fb2e4af922f8ba606bbab860c4b4d",
+      "response_sha256": "b689586af5fa45890f808bee1e35db784997f78175b65189176927c76d095e60",
+      "response_bytes": 6989,
+      "reference_output_tokens": 1780,
+      "tokenizer_fallback": null,
+      "fits_4096_reference_output": true,
+      "actual_provider_usage": null,
+      "protected_files_unchanged": 6,
+      "new_calls": [
+        0,
+        0,
+        0
+      ],
+      "development_response_not_deepseek": true,
+      "company_or_production_acceptance": false,
+      "normalized_findings": 13,
+      "unresolved": [
+        {
+          "unit_id": "sha256:57cc67a794da23ff7d50dc7ab620909ed03521f975f41ee11bd73e45b5c1fa0e",
+          "reason": "Note 30 cross-referenced at block 997 is not supplied. This partial group cannot establish complete filing coverage, individual case counts or whole-filing absence."
+        }
+      ],
+      "old_source_fact_credit": false,
+      "native_result_created": false,
+      "aggregation_observations": [
+        {
+          "kind": "OTHER_MEANING",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "UNRESOLVED",
+          "reported_status": "NOT_AN_ACTION_STATEMENT",
+          "indices": [
+            172
+          ],
+          "before_review": true,
+          "after_review": false
+        },
+        {
+          "kind": "CURRENT_REGULATORY_ACTION",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "reported_status": "ONGOING_AS_REPORTED",
+          "indices": [
+            140,
+            339,
+            340
+          ],
+          "before_review": false,
+          "after_review": false
+        },
+        {
+          "kind": "HISTORICAL_STATEMENT",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "HISTORICAL",
+          "reported_status": "NOT_STATED",
+          "indices": [
+            343,
+            344
+          ],
+          "before_review": false,
+          "after_review": false
+        },
+        {
+          "kind": "CONDITIONAL_OR_BOILERPLATE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CONDITIONAL",
+          "reported_status": "CONDITIONAL",
+          "indices": [
+            174,
+            187,
+            274,
+            308,
+            310,
+            314,
+            342,
+            343,
+            344,
+            355,
+            356,
+            357,
+            358,
+            359,
+            360,
+            364,
+            365,
+            366,
+            374,
+            384
+          ],
+          "before_review": false,
+          "after_review": false
+        },
+        {
+          "kind": "OTHER_ENTITY",
+          "subject": "OTHER_ENTITY",
+          "timing": "UNRESOLVED",
+          "reported_status": "NOT_STATED",
+          "indices": [
+            348,
+            351
+          ],
+          "before_review": true,
+          "after_review": true
+        },
+        {
+          "kind": "OTHER_MEANING",
+          "subject": "UNRESOLVED",
+          "timing": "UNRESOLVED",
+          "reported_status": "NOT_AN_ACTION_STATEMENT",
+          "indices": [
+            338
+          ],
+          "before_review": false,
+          "after_review": false
+        },
+        {
+          "kind": "OTHER_MEANING",
+          "subject": "UNRESOLVED",
+          "timing": "UNRESOLVED",
+          "reported_status": "NOT_AN_ACTION_STATEMENT",
+          "indices": [
+            341
+          ],
+          "before_review": false,
+          "after_review": false
+        },
+        {
+          "kind": "CONDITIONAL_OR_BOILERPLATE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CONDITIONAL",
+          "reported_status": "CONDITIONAL",
+          "indices": [
+            504,
+            507,
+            681,
+            690,
+            729,
+            730,
+            782,
+            789
+          ],
+          "before_review": false,
+          "after_review": false
+        },
+        {
+          "kind": "OTHER_MEANING",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "UNRESOLVED",
+          "reported_status": "NOT_AN_ACTION_STATEMENT",
+          "indices": [
+            692,
+            693
+          ],
+          "before_review": true,
+          "after_review": false
+        },
+        {
+          "kind": "HISTORICAL_STATEMENT",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "HISTORICAL",
+          "reported_status": "NOT_STATED",
+          "indices": [
+            864
+          ],
+          "before_review": false,
+          "after_review": false
+        },
+        {
+          "kind": "CONDITIONAL_OR_BOILERPLATE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CONDITIONAL",
+          "reported_status": "CONDITIONAL",
+          "indices": [
+            864,
+            870,
+            871,
+            879,
+            885
+          ],
+          "before_review": false,
+          "after_review": false
+        },
+        {
+          "kind": "UNRESOLVED",
+          "subject": "UNRESOLVED",
+          "timing": "UNRESOLVED",
+          "reported_status": "UNRESOLVED",
+          "indices": [
+            997
+          ],
+          "before_review": true,
+          "after_review": true
+        },
+        {
+          "kind": "OTHER_MEANING",
+          "subject": "UNRESOLVED",
+          "timing": "UNRESOLVED",
+          "reported_status": "NOT_AN_ACTION_STATEMENT",
+          "indices": [
+            878
+          ],
+          "before_review": false,
+          "after_review": false
+        }
+      ]
+    },
+    {
+      "status": "POSTPROCESS_ACCEPTED",
+      "elapsed_seconds": 41.92380104199401,
+      "code_root": "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics",
+      "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+      "request_id": "sha256:c4c7d6b1e90979d23a668cece33307b35f1f23624f8338b3fbaac1420267d4f2",
+      "input_sha256": "1ecd2819b28c64ae65a7113dc3852a58c84fb2e4af922f8ba606bbab860c4b4d",
+      "response_sha256": "02754da5cc4953a655254f6023b982a0585f69b04512bbf3481acfe515d97f2a",
+      "response_bytes": 7018,
+      "reference_output_tokens": 1789,
+      "tokenizer_fallback": null,
+      "fits_4096_reference_output": true,
+      "actual_provider_usage": null,
+      "protected_files_unchanged": 6,
+      "new_calls": [
+        0,
+        0,
+        0
+      ],
+      "development_response_not_deepseek": true,
+      "company_or_production_acceptance": false,
+      "normalized_findings": 13,
+      "unresolved": [
+        {
+          "unit_id": "sha256:57cc67a794da23ff7d50dc7ab620909ed03521f975f41ee11bd73e45b5c1fa0e",
+          "reason": "Note 30 cross-referenced at block 997 is not supplied. This partial group cannot establish complete filing coverage, individual case counts or whole-filing absence."
+        }
+      ],
+      "old_source_fact_credit": false,
+      "native_result_created": false,
+      "aggregation_observations": [
+        {
+          "kind": "OTHER_MEANING",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "UNRESOLVED",
+          "reported_status": "NOT_AN_ACTION_STATEMENT",
+          "indices": [
+            172
+          ],
+          "before_review": true,
+          "after_review": false
+        },
+        {
+          "kind": "CURRENT_REGULATORY_ACTION",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "reported_status": "ONGOING_AS_REPORTED",
+          "indices": [
+            140,
+            339,
+            340
+          ],
+          "before_review": false,
+          "after_review": false
+        },
+        {
+          "kind": "HISTORICAL_STATEMENT",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "HISTORICAL",
+          "reported_status": "NOT_STATED",
+          "indices": [
+            343,
+            344
+          ],
+          "before_review": false,
+          "after_review": false
+        },
+        {
+          "kind": "CONDITIONAL_OR_BOILERPLATE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CONDITIONAL",
+          "reported_status": "CONDITIONAL",
+          "indices": [
+            174,
+            187,
+            274,
+            308,
+            310,
+            314,
+            342,
+            343,
+            344,
+            355,
+            356,
+            357,
+            358,
+            359,
+            360,
+            364,
+            365,
+            366,
+            374,
+            384
+          ],
+          "before_review": false,
+          "after_review": false
+        },
+        {
+          "kind": "HISTORICAL_STATEMENT",
+          "subject": "UNRESOLVED",
+          "timing": "HISTORICAL",
+          "reported_status": "NOT_STATED",
+          "indices": [
+            348,
+            351
+          ],
+          "before_review": true,
+          "after_review": true
+        },
+        {
+          "kind": "OTHER_MEANING",
+          "subject": "UNRESOLVED",
+          "timing": "UNRESOLVED",
+          "reported_status": "NOT_AN_ACTION_STATEMENT",
+          "indices": [
+            338
+          ],
+          "before_review": false,
+          "after_review": false
+        },
+        {
+          "kind": "OTHER_MEANING",
+          "subject": "UNRESOLVED",
+          "timing": "UNRESOLVED",
+          "reported_status": "NOT_AN_ACTION_STATEMENT",
+          "indices": [
+            341
+          ],
+          "before_review": false,
+          "after_review": false
+        },
+        {
+          "kind": "CONDITIONAL_OR_BOILERPLATE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CONDITIONAL",
+          "reported_status": "CONDITIONAL",
+          "indices": [
+            504,
+            507,
+            681,
+            690,
+            729,
+            730,
+            782,
+            789
+          ],
+          "before_review": false,
+          "after_review": false
+        },
+        {
+          "kind": "OTHER_MEANING",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "UNRESOLVED",
+          "reported_status": "NOT_AN_ACTION_STATEMENT",
+          "indices": [
+            692,
+            693
+          ],
+          "before_review": true,
+          "after_review": false
+        },
+        {
+          "kind": "HISTORICAL_STATEMENT",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "HISTORICAL",
+          "reported_status": "NOT_STATED",
+          "indices": [
+            864
+          ],
+          "before_review": false,
+          "after_review": false
+        },
+        {
+          "kind": "CONDITIONAL_OR_BOILERPLATE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CONDITIONAL",
+          "reported_status": "CONDITIONAL",
+          "indices": [
+            864,
+            870,
+            871,
+            879,
+            885
+          ],
+          "before_review": false,
+          "after_review": false
+        },
+        {
+          "kind": "UNRESOLVED",
+          "subject": "UNRESOLVED",
+          "timing": "UNRESOLVED",
+          "reported_status": "UNRESOLVED",
+          "indices": [
+            997
+          ],
+          "before_review": true,
+          "after_review": true
+        },
+        {
+          "kind": "OTHER_MEANING",
+          "subject": "UNRESOLVED",
+          "timing": "UNRESOLVED",
+          "reported_status": "NOT_AN_ACTION_STATEMENT",
+          "indices": [
+            878
+          ],
+          "before_review": false,
+          "after_review": false
+        }
+      ]
+    }
+  ],
+  "scope": "The existing public source-authenticating candidate validator ran on both responses. Predicate observations reuse those normalized outputs; they are not a new source validation or complete 38-group replay.",
+  "unchanged_full_source_validation_code_head": "17fa27f78866d243aff760cd71990e9f24ca106c",
+  "tested_patch_base": "7446ef978738370edf9e601387aff42094256a6d",
+  "working_tree_diff_at_test": "two named source/test files; controls.log records previous actual execution",
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

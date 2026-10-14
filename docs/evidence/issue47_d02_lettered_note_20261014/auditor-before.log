@@ -1,0 +1,19 @@
+test_d02_bounded_auditor_litigation_text_is_not_an_item8_admission (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_d02_bounded_auditor_litigation_text_is_not_an_item8_admission) ... ERROR
+
+======================================================================
+ERROR: test_d02_bounded_auditor_litigation_text_is_not_an_item8_admission (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_d02_bounded_auditor_litigation_text_is_not_an_item8_admission)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_text_results_v2.py", line 79, in test_d02_bounded_auditor_litigation_text_is_not_an_item8_admission
+    requests = item8_requests(prepared=prepared, target=args['target'])
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/d02_reviewed_source.py", line 150, in item8_requests
+    _need(set(admitted)<=set(pool),'D02_REVIEW_CANDIDATES_OUTSIDE_ELIGIBLE_POOL','IMPLEMENTATION_REQUIRED')
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/d02_reviewed_source.py", line 87, in _need
+    raise ReviewedLegalSourceError(reason,category)
+vnext.d02_reviewed_source.ReviewedLegalSourceError: D02_REVIEW_CANDIDATES_OUTSIDE_ELIGIBLE_POOL
+
+----------------------------------------------------------------------
+Ran 1 test in 0.017s
+
+FAILED (errors=1)

@@ -7,7 +7,7 @@ semantic normalization API and cannot purchase a replacement execution.
 from copy import deepcopy
 from dataclasses import replace
 from pathlib import Path
-from sec_urls import submissions_url
+from sec_urls import submissions_url, companyfacts_url
 
 from .canonical import content_hash, sha256_file, strict_json_file, strict_json_loads
 from .capacity_utilization_source import need
@@ -18,16 +18,21 @@ _META = {'semantic_source_id','original_source_packet_id','inherited_complete_so
          'module_sha256','capacity_module_sha256'}
 
 
-def _annual_content(value, *, ignore_companyfacts_attempt=False):
+def _annual_content(value, *, ignore_companyfacts_attempt=False, ignore_companyfacts_label_provenance=False):
     value=deepcopy(value)
     value.pop('input_id',None);value.pop('source_proofs',None)
     if isinstance(value.get('original_input'),dict):
         value['original_input'].pop('input_id',None)
         value['original_input'].pop('source_proofs',None)
-    if ignore_companyfacts_attempt:
+    if ignore_companyfacts_attempt or ignore_companyfacts_label_provenance:
         for annual in (value, value.get('original_input', {})):
             if isinstance(annual,dict) and isinstance(annual.get('companyfacts_input'),dict):
                 annual['companyfacts_input'].pop('request_attempt_id',None)
+                if ignore_companyfacts_label_provenance:
+                    annual['companyfacts_input'].pop('source_repo_relative_path',None)
+        if ignore_companyfacts_label_provenance:
+            inspection=value['fiscal_year_label_resolution']['source_inspection']
+            inspection.pop('companyfacts_sha256',None);inspection.pop('inspection_id',None)
     return value
 
 
@@ -46,8 +51,41 @@ def _companyfacts_attempt_is_bound(source):
     return True
 
 
+def _d04_companyfacts_fiscal_input_is_bound(source):
+    """Bind the complete consumed fiscal inspection, not all Company Facts values.
+
+    D04's full text/native units and substantive requests are still compared
+    below. Original/raw proofs stay original; this only identifies supporting
+    metadata whose complete task input may be unchanged after a refresh.
+    """
+    if source['metric_id']!='D04' or not _companyfacts_attempt_is_bound(source):return False
+    annual=source['prepared_annual_input'];entity=str(annual.get('entity',''))
+    if not entity.isdigit():return False
+    descriptor=annual.get('companyfacts_input');filing=annual.get('filing',{})
+    inspection=annual.get('fiscal_year_label_resolution',{}).get('source_inspection')
+    if not isinstance(descriptor,dict) or not isinstance(inspection,dict):return False
+    if descriptor.get('source_url')!=companyfacts_url(cik=int(entity)):return False
+    if (descriptor.get('company_id')!=source['company_id']
+            or descriptor.get('accession')!=filing.get('accessionNumber')):return False
+    cf=[p for p in source['source_proofs'] if all(p.get(pk)==descriptor.get(dk) for pk,dk in (
+        ('source_url','source_url'),('accession','accession'),('document_name','document_name'),
+        ('request_attempt_id','request_attempt_id'),('request_repo_relative_path','source_repo_relative_path')))]
+    primary=[p for p in source['source_proofs'] if p.get('accession')==filing.get('accessionNumber')
+             and p.get('document_name')==filing.get('primaryDocument')]
+    period=annual.get('table_input',{}).get('target_period',{})
+    return (len(cf)==len(primary)==1
+        and inspection.get('record_type')=='FISCAL_YEAR_LABEL_SOURCE_INSPECTION'
+        and inspection.get('schema_version')==1
+        and inspection.get('inspection_id')==content_hash(value={k:v for k,v in inspection.items() if k!='inspection_id'})
+        and inspection.get('companyfacts_sha256')==cf[0].get('content_sha256')
+        and inspection.get('primary_sha256')==primary[0].get('content_sha256')
+        and inspection.get('entity')==str(int(entity))
+        and inspection.get('accession')==filing.get('accessionNumber')
+        and inspection.get('actual_period')=={k:period.get(k) for k in ('period_start','period_end')})
+
+
 def source_equivalence(*,current,original):
-    """Require complete identical substantive input, never changed source data."""
+    """Require complete identical task input; retain separately bound raw refreshes."""
     from .continuous_semantic_calls import source_requests
     for source in (current,original):
         need(source['metric_id'] in {'B13','D04'} and source['source_serialization_complete'] is True
@@ -57,22 +95,27 @@ def source_equivalence(*,current,original):
          and 'HISTORICAL' not in current['record_type'], 'UPDATE_NATIVE_SOURCE_TYPE_CHANGED')
     need(all(current[k]==original[k] for k in current if k not in _META),
          'UPDATE_NATIVE_SUBSTANTIVE_SOURCE_CHANGED')
+    ignore_cf_label_provenance=(_d04_companyfacts_fiscal_input_is_bound(current)
+                               and _d04_companyfacts_fiscal_input_is_bound(original))
     def bodies(source):
         entity=source['prepared_annual_input'].get('entity')
         discovery_url=(submissions_url(cik=int(entity))
             if source['metric_id']=='D04' and str(entity).isdigit() else None)
+        cf_url=companyfacts_url(cik=int(entity)) if ignore_cf_label_provenance else None
         return sorted((p['source_url'],p['accession'],p['document_name'],
-            None if p['source_url']==discovery_url and p['accession']==''
-                and p['document_name']==discovery_url.rsplit('/',1)[-1]
-            else p['content_sha256']) for p in source['source_proofs'])
+            None if (p['source_url']==discovery_url and p['accession']==''
+                and p['document_name']==discovery_url.rsplit('/',1)[-1])
+                or p['source_url']==cf_url else p['content_sha256']) for p in source['source_proofs'])
     # A same-body D04 capture already permits a fresh proof attempt. Its
     # companyfacts descriptor repeats that provenance, not a selection rule.
     # Keep the full descriptor and B13 default comparison otherwise unchanged.
     ignore_attempt=(current['metric_id']=='D04' and bodies(current)==bodies(original)
                     and _companyfacts_attempt_is_bound(current)
                     and _companyfacts_attempt_is_bound(original))
-    need(_annual_content(current['prepared_annual_input'],ignore_companyfacts_attempt=ignore_attempt)
-         ==_annual_content(original['prepared_annual_input'],ignore_companyfacts_attempt=ignore_attempt),
+    need(_annual_content(current['prepared_annual_input'],ignore_companyfacts_attempt=ignore_attempt,
+             ignore_companyfacts_label_provenance=ignore_cf_label_provenance)
+         ==_annual_content(original['prepared_annual_input'],ignore_companyfacts_attempt=ignore_attempt,
+             ignore_companyfacts_label_provenance=ignore_cf_label_provenance),
          'UPDATE_NATIVE_ANNUAL_SELECTION_CHANGED')
     need(bodies(current)==bodies(original),'UPDATE_NATIVE_SOURCE_BODY_SET_CHANGED')
     def requests(source):
@@ -90,7 +133,10 @@ def source_equivalence(*,current,original):
             (p['source_url'],p['accession'],p['document_name'])],
             'current_sha256':p['content_sha256']} for p in current['source_proofs']
             if p['content_sha256']!=previous[(p['source_url'],p['accession'],p['document_name'])]]
-        if refreshed:body['discovery_only_body_changes']=refreshed
+        discovery=[r for r in refreshed if '/submissions/' in r['source_url']]
+        companyfacts=[r for r in refreshed if '/api/xbrl/companyfacts/' in r['source_url']]
+        if discovery:body['discovery_only_body_changes']=discovery
+        if companyfacts:body['companyfacts_label_input_body_changes']=companyfacts
     return {**body,'equivalence_id':content_hash(value=body)}
 
 

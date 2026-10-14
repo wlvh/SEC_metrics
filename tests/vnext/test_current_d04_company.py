@@ -283,7 +283,7 @@ class D04SavedResponseOnlyBoundaryTest(unittest.TestCase):
 
 
 class CurrentD04SavedRequestSelectionTest(unittest.TestCase):
-    def select(self, *, second_succeeded=True):
+    def select(self, *, second_succeeded=True, source_comparisons=None):
         import json
         from contextlib import nullcontext
         from types import SimpleNamespace
@@ -304,6 +304,9 @@ class CurrentD04SavedRequestSelectionTest(unittest.TestCase):
             ledger=SimpleNamespace(root=root,locked=lambda:nullcontext(),snapshot=lambda:{'rows':rows})
             template=SimpleNamespace(source_bytes=json.dumps(source).encode())
             selected=[]
+            def equivalent(**kwargs):
+                if source_comparisons is not None:source_comparisons.append(kwargs['original'])
+                return {'same':True}
             class StopAtPartition(Exception):pass
             validate=index.validate_request_partition
             def inspect(source, actual):
@@ -311,7 +314,7 @@ class CurrentD04SavedRequestSelectionTest(unittest.TestCase):
                 validate(source,actual)
                 raise StopAtPartition()
             with patch.object(calls,'prepare_requests',return_value=[template]), \
-                 patch('vnext.capacity_update_input.source_equivalence',return_value={'same':True}), \
+                 patch('vnext.capacity_update_input.source_equivalence',side_effect=equivalent), \
                  patch.object(index,'reconstruct_requests',return_value=requests[1:]), \
                  patch.object(index,'validate_request_partition',side_effect=inspect):
                 try:current.prepare_current_d04_case(source_root=root,company_id='sample',ledger=ledger)
@@ -320,6 +323,11 @@ class CurrentD04SavedRequestSelectionTest(unittest.TestCase):
 
     def test_historical_failed_overlap_does_not_join_complete_successful_partition(self):
         self.assertEqual(['one','two'],self.select())
+
+    def test_identical_original_source_is_compared_once_but_all_groups_still_checked(self):
+        comparisons=[]
+        self.assertEqual(['one','two'],self.select(source_comparisons=comparisons))
+        self.assertEqual(len(comparisons),1)
 
     def test_failed_only_required_group_is_still_incomplete(self):
         with self.assertRaisesRegex(ValueError,'NATIVE_REQUEST_PARTITION_INCOMPLETE'):

@@ -1,0 +1,66 @@
+{
+  "record_type": "FEEDBACK_ASSISTED_DEVELOPMENT_REVISION",
+  "request_id": "sha256:c4c7d6b1e90979d23a668cece33307b35f1f23624f8338b3fbaac1420267d4f2",
+  "completed": true,
+  "end_time_utc": "2026-10-14T10:26:20.947265+00:00",
+  "original_response_sha256": "b689586af5fa45890f808bee1e35db784997f78175b65189176927c76d095e60",
+  "original_extraction_log_sha256": "53a76c10a22f1506ef15ada6e245cd1a0dd62bdbac60fdf9132c38eb57db1ee9",
+  "revised_response_sha256": "02754da5cc4953a655254f6023b982a0585f69b04512bbf3481acfe515d97f2a",
+  "changed_finding": {
+    "unit_index": 0,
+    "finding_index": 4,
+    "before": {
+      "kind": "OTHER_ENTITY",
+      "subject": "OTHER_ENTITY",
+      "event_dates": [],
+      "reported_status": "NOT_STATED",
+      "evidence": [
+        {
+          "kind": "VISIBLE_BLOCK",
+          "source_index": 348
+        },
+        {
+          "kind": "VISIBLE_BLOCK",
+          "source_index": 351
+        }
+      ],
+      "reason": "Government officials have brought criminal actions against financial institutions and required guilty pleas in resolving investigations/enforcement. The passage gives industry context and possible collateral consequences; it does not identify JPMorganChase as the prosecuted institution or state individual dates/status."
+    },
+    "after": {
+      "kind": "HISTORICAL_STATEMENT",
+      "subject": "UNRESOLVED",
+      "event_dates": [],
+      "reported_status": "NOT_STATED",
+      "evidence": [
+        {
+          "kind": "VISIBLE_BLOCK",
+          "source_index": 348
+        },
+        {
+          "kind": "VISIBLE_BLOCK",
+          "source_index": 351
+        }
+      ],
+      "reason": "Historical industry statement: government officials have brought criminal actions and required financial institutions to plead guilty. It does not establish whether JPMorganChase is included or excluded; no individual institution, event date or present case status is identified. The continuation describes conditional collateral consequences."
+    }
+  },
+  "source_basis": {
+    "reread_block_range": [
+      335,
+      366
+    ],
+    "action_statement_block": 348,
+    "continuation_block": 351,
+    "interpretation": "The present-perfect industry statement supports historical governmental criminal actions. Financial institutions is generic and neither includes nor excludes the registrant explicitly. Thus the investigated subject remains UNRESOLVED, rather than established OTHER_ENTITY. No date or current case status is supplied."
+  },
+  "all_other_response_content_unchanged": true,
+  "original_outputs_unchanged": true,
+  "tool_calls_this_revision": 2,
+  "cumulative_tool_call_count": 17,
+  "tool_call_count_basis": "Original 15 plus 2 functions.exec calls, each containing one local exec_command.",
+  "limitations": [
+    "One bounded feedback-assisted review; not independent holdout performance, a new blind trial, or evidence of prompt-method improvement.",
+    "No other extraction content, missing Note 30 uncertainty, or original coverage was changed.",
+    "No network/provider/SEC/native Run/business credit; parent mechanical validation remains separate."
+  ]
+}

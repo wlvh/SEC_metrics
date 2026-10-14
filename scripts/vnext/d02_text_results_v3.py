@@ -18,8 +18,8 @@ import re
 from .canonical import canonical_json_bytes, content_hash, sha256_bytes, strict_json_file
 from .records import validate_record
 from .text_business_candidates import (
-    governance_source_document, board_composition_candidates, legal_risk_candidates,
-    reported_legal_fact_candidates, _NOTE_HEADING, _check_document,
+    governance_source_document, board_composition_candidates, legal_risk_candidates, going_concern_candidates,
+    reported_legal_fact_candidates, _NOTE_HEADING, _FINANCIAL_HEADING, _AUDIT_HEADING, _check_document,
     _need as _source_need, _excerpt, _substantive,
 )
 from .text_coverage import build_text_document
@@ -267,6 +267,7 @@ _NOTE_TITLE_PREFIX = re.compile(r'^(?:note\s+)?\(?\d{1,3}[a-z]?\)?\s*[.:\u2014\u
 _CAPTION_SPAN = re.compile(rb'<(?:span|p|div)([^<>]*)>\s*$')
 _CAPTION_STYLE = re.compile(rb'style="([^"]*)"')
 _QUOTED_FORM_REFERENCE = re.compile(r'\b(?:part\s+[ivx]+\s*,?\s*)?item\s+\d{1,2}[a-z]?\s*[,.:\u2014\u2013-]?\s*$', re.I)
+_LETTERED_NOTE_TITLE = re.compile(r'^([A-Z])\.\s+\S')
 
 
 def _caption_text(text):
@@ -289,6 +290,36 @@ def _caption_like(document, block):
             and not text.endswith(('.', ':', ';', ',', '\u3002')))
 
 
+def _lettered_note_range(document, raw_bytes, parent):
+    """Read one letter in a proved, consecutive list of original headings.
+
+    A1/A2 remain inside A. Missing or duplicate siblings cannot prove its end.
+    """
+    reason = 'D02_REFERENCED_LETTERED_SUBNOTE_NOT_MIGRATED'
+    requested = re.fullmatch(r'(\d{1,3})([A-Z])', parent['requested_reference'])
+    _source_need(requested is not None and parent['section_id'] == 'NOTE_' + requested[1], reason)
+    blocks = document['blocks']
+    headings = []
+    for i in range(parent['start_block'] + 1, parent['end_block_exclusive']):
+        block = blocks[i]
+        match = _LETTERED_NOTE_TITLE.match(block['text'])
+        if match and not block['linked'] and _caption_like(document, block):
+            headings.append((match[1], i, _caption_style(raw_bytes, block)))
+    starts = [h for h in headings if h[0] == requested[2]]
+    _source_need(len(starts) == 1 and bool(starts[0][2]), reason)
+    style = starts[0][2]
+    siblings = [h for h in headings if h[2] == style]
+    _source_need(len(siblings) == len(headings), reason)
+    letters = [h[0] for h in siblings]
+    _source_need(len(siblings) >= 2 and letters ==
+                 [chr(ord('A') + i) for i in range(len(siblings))], reason)
+    position = letters.index(requested[2])
+    end = siblings[position + 1][1] if position + 1 < len(siblings) else parent['end_block_exclusive']
+    return {**parent, 'section_id': 'NOTE_' + parent['requested_reference'],
+            'start_block': starts[0][1], 'end_block_exclusive': end,
+            'scope_relation': 'INCORPORATED_SUBNOTE'}
+
+
 def select_d02_incorporated_notes(*, proposal, document, raw_bytes):
     """Reuse the retained note/caption ownership rule in the ordinary reader.
 
@@ -308,17 +339,22 @@ def select_d02_incorporated_notes(*, proposal, document, raw_bytes):
     if any(reference['status'] != 'LOCATED_NOTE_RANGE' for reference in proposal['note_references']):
         return proposal  # The existing source-completeness refusal remains authoritative.
     for reference in proposal['note_references']:
-        note = reference['range_candidates'][0]
-        _source_need(note['scope_relation'] == 'EXACT_NOTE',
+        container = reference['range_candidates'][0]
+        note = (_lettered_note_range(document, raw_bytes, container)
+                if container['scope_relation'] == 'WIDER_PARENT_NOTE' else container)
+        _source_need(note['scope_relation'] in {'EXACT_NOTE', 'INCORPORATED_SUBNOTE'},
                      'D02_REFERENCED_LETTERED_SUBNOTE_NOT_MIGRATED')
         start, stop = note['start_block'], note['end_block_exclusive']
         title = _caption_text(blocks[start]['text'])
+        short_title = (re.sub(r'^[a-z]\.\s+', '', title, count=1)
+                       if note['scope_relation'] == 'INCORPORATED_SUBNOTE'
+                       else _NOTE_TITLE_PREFIX.sub('', title, count=1))
         quoted = set()
         whole_note = False
         for occurrence in reference['source_occurrences']:
             captions = {_caption_text(m.group(1)) for m in _INCORPORATED_CAPTION.finditer(occurrence['text'])
                         if not _QUOTED_FORM_REFERENCE.search(occurrence['text'][:m.start()])}
-            captions.difference_update({title, _NOTE_TITLE_PREFIX.sub('', title, count=1)})
+            captions.difference_update({title, short_title})
             captions = {text for text in captions if not re.match(
                 r'^(?:part\s+[ivx]+\W+)?item\s+\d{1,2}[a-z]?\b', text)}
             whole_note |= not captions
@@ -345,10 +381,10 @@ def select_d02_incorporated_notes(*, proposal, document, raw_bytes):
                            'start_block': begin, 'end_block_exclusive': end,
                            'scope_relation': 'INCORPORATED_CAPTION', 'caption_text': blocks[begin]['text']})
         scopes = scopes or [note]
-        contained = any(r['section_id'] == 'ITEM_8' and r['start_block'] <= start
-                        and stop <= r['end_block_exclusive'] for r in ranges)
-        changed |= contained or scopes != [note]
-        containers.append(note)
+        contained = any(r['section_id'] == 'ITEM_8' and r['start_block'] <= container['start_block']
+                        and container['end_block_exclusive'] <= r['end_block_exclusive'] for r in ranges)
+        changed |= contained or note != container or scopes != [note]
+        containers.append(container)
         captured.extend(scopes)
     if not changed:
         return proposal
@@ -376,6 +412,36 @@ def select_d02_incorporated_notes(*, proposal, document, raw_bytes):
     body['checked_ranges'] = ranges
     body['D02'] = {**proposal['D02'], 'candidates': candidates}
     body['d02_incorporated_note_scopes'] = {'containers': containers, 'disclosure_scopes': captured}
+    return {**body, 'proposal_id': content_hash(value=body)}
+
+
+def _select_d02_auditor_reports(*, proposal, document):
+    """Align admissions with the existing proved report exclusion in Item8.
+
+    The document and complete request retain their established scope. Unproved
+    report endings remain for the existing request boundary to reject.
+    """
+    item8 = [r for r in proposal['checked_ranges'] if r['section_id'] == 'ITEM_8']
+    reports = [r for r in going_concern_candidates(document=document)['auditor_report_ranges']
+               if r['status'] == 'LOCAL_REPORT_RANGE_LOCATED' and any(
+                   scope['start_block'] <= r['start_block'] < r['end_block_exclusive'] <= scope['end_block_exclusive']
+                   for scope in item8)]
+    removed = [c for c in proposal['D02']['candidates'] if c['section_id'] == 'ITEM_8'
+               and any(r['start_block'] <= c['block_index'] < r['end_block_exclusive'] for r in reports)]
+    if not removed:
+        return proposal  # Do not change an unused trailing report's old path.
+    used = [r for r in reports if any(r['start_block'] <= c['block_index'] < r['end_block_exclusive']
+                                    for c in removed)]
+    # A form-item fallback can span the registrant's financial statements and
+    # notes when their captions are not emphasized. It cannot justify deleting
+    # litigation admissions as auditor text, even with a LOCATED status.
+    _source_need(all(_FINANCIAL_HEADING.match(r['closing_heading']['text'])
+                     or _AUDIT_HEADING.fullmatch(r['closing_heading']['text']) for r in used),
+                 'D02_AUDITOR_REPORT_CLOSING_SCOPE_NOT_PROVEN')
+    body = {k: v for k, v in proposal.items() if k != 'proposal_id'}
+    body['D02'] = {**proposal['D02'], 'candidates': [c for c in proposal['D02']['candidates'] if c not in removed]}
+    body['d02_auditor_report_exclusions'] = {'ranges': used,
+        'candidate_block_indexes': [c['block_index'] for c in removed]}
     return {**body, 'proposal_id': content_hash(value=body)}
 
 
@@ -587,6 +653,7 @@ def prepare_business_text_sources(*, metric_id, target, source_references, raw_b
         proposal = legal_risk_candidates(document=annual, raw_bytes=raw)
         if d02_page_furniture:
             proposal = select_d02_incorporated_notes(proposal=proposal, document=annual, raw_bytes=raw)
+            proposal = _select_d02_auditor_reports(proposal=proposal, document=annual)
             proposal = select_d02_page_furniture(proposal=proposal, document=annual)
         if d02_select is not None:
             proposal = d02_select(proposal=proposal)

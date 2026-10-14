@@ -41,8 +41,57 @@ def pair(metric='D04'):
         annual['companyfacts_input']['request_attempt_id'] = 'new-capture'
     return seal(current), original
 
+def fiscal_pair():
+    current,original=pair()
+    for source in (original,current):
+        a=source['prepared_annual_input'];period=a['table_input']['target_period']
+        a['filing']={'accessionNumber':'annual','primaryDocument':'annual.htm'}
+        a['company_id']=source['company_id']
+        proof={'source_url':'https://www.sec.gov/Archives/edgar/data/1463101/annual/annual.htm',
+            'accession':'annual','document_name':'annual.htm','content_sha256':'c'*64}
+        source['source_proofs'].append(proof)
+        body={'record_type':'FISCAL_YEAR_LABEL_SOURCE_INSPECTION','schema_version':1,
+            'primary_sha256':'c'*64,'companyfacts_sha256':'a'*64,'entity':'1463101','accession':'annual',
+            'actual_period':{k:period[k] for k in ('period_start','period_end')},
+            'status':'METADATA_LABEL_ONLY','dei_fiscal_year':2025,
+            'companyfacts_fiscal_year_values':[2025],
+            'companyfacts_rows':[{'locator':{'taxonomy':'us-gaap','concept':'Assets','unit':'USD','index':0},
+                                 'fiscal_year_raw':2025,'period_end':'2025-12-31'}]}
+        a['fiscal_year_label_resolution']['source_inspection']={**body,'inspection_id':content_hash(value=body)}
+    current['source_proofs'][0].update(content_sha256='b'*64,request_repo_relative_path='saved/refreshed-companyfacts.json')
+    for a in (current['prepared_annual_input'],current['prepared_annual_input']['original_input']):
+        a['companyfacts_input']['source_repo_relative_path']='saved/refreshed-companyfacts.json'
+    i=current['prepared_annual_input']['fiscal_year_label_resolution']['source_inspection'];i['companyfacts_sha256']='b'*64
+    i['inspection_id']=content_hash(value={k:v for k,v in i.items() if k!='inspection_id'})
+    return seal(current),seal(original)
+
 
 class D04CompanyfactsProvenanceTest(unittest.TestCase):
+    def test_refreshed_companyfacts_with_same_complete_fiscal_input_and_task_can_reuse(self):
+        current,original=fiscal_pair();saved=deepcopy(original)
+        receipt=source_equivalence(current=current,original=original)
+        self.assertEqual(receipt['companyfacts_label_input_body_changes'][0]['original_sha256'],'a'*64)
+        self.assertEqual(receipt['companyfacts_label_input_body_changes'][0]['current_sha256'],'b'*64)
+        self.assertFalse(receipt['original_provider_bytes_rewritten'])
+        self.assertFalse(receipt['new_provider_execution'])
+        self.assertEqual(saved,original)
+
+    def test_companyfacts_refresh_does_not_hide_fiscal_rows_body_period_or_binding_changes(self):
+        for change in ('rows','label','inspection-id','proof-hash','body','period','descriptor','foreign-url','primary-hash'):
+            current,original=fiscal_pair();a=current['prepared_annual_input'];i=a['fiscal_year_label_resolution']['source_inspection']
+            if change=='rows':i['companyfacts_rows'][0]['period_end']='2024-12-31'
+            elif change=='label':i['dei_fiscal_year']=2026
+            elif change=='inspection-id':i['inspection_id']='sha256:'+'f'*64
+            elif change=='proof-hash':current['source_proofs'][0]['content_sha256']='e'*64
+            elif change=='body':current['source_proofs'][1]['content_sha256']='e'*64
+            elif change=='period':a['table_input']['target_period']['period_end']='2026-12-31'
+            elif change=='descriptor':a['companyfacts_input']['source_repo_relative_path']='unbound.json'
+            elif change=='foreign-url':current['source_proofs'][0]['source_url']='https://data.sec.gov/api/xbrl/companyfacts/CIK0009999999.json'
+            else:i['primary_sha256']='e'*64
+            if change not in {'inspection-id'}:i['inspection_id']=content_hash(value={k:v for k,v in i.items() if k!='inspection_id'})
+            with self.subTest(change=change),self.assertRaises(ValueError):
+                source_equivalence(current=seal(current),original=original)
+
     def test_same_body_attempt_change_reuses_complete_original(self):
         current, original = pair()
         saved = deepcopy(original)
