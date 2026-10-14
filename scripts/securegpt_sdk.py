@@ -1,14 +1,17 @@
 """Company SecureGPT SDK edge: text messages, optional bootstrap, one request.
 
 Purpose:
-    Hold the only repository code that touches the corporate ``SecureGPT``
-    SDK, so the connectivity probe and the later internal-mode transport
-    (Issue #28 N1) send and read the same thing. Standard library only; the
+    Hold the shared repository code for the corporate ``SecureGPT`` SDK, so
+    the connectivity checks and the later internal-mode transport (Issue #28
+    N1) send and read the same thing. Standard library only; the
     SDK, its configuration and credentials come from the corporate runtime and
     are imported lazily, never at module import time.
 
 Call relationships:
-    ``tools/probe_securegpt.py`` is the current caller. N1 is expected to call
+    ``tools/probe_securegpt.py`` is the current caller; the Databricks check
+    ``tools/databricks/securegpt_check_notebook.py`` reuses it but builds the
+    SDK client itself, since ``open_client`` still names environments
+    dev/pp/prod while the SDK accepts dv/pp/pr. N1 is expected to call
     ``send``/``assistant_content`` from inside the existing provider boundary
     and WB-3 ledger; that transport is not implemented here.
 
