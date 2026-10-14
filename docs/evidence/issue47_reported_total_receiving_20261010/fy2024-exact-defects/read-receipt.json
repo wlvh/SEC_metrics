@@ -1,0 +1,87 @@
+{
+  "seconds": 0.18644116699579172,
+  "exit_code": 0,
+  "state_files_unchanged": 557,
+  "exact_matches": {
+    "B01": [
+      "MACYS_FY2024_B01_NET_SALES_SUBTOTAL_IN_TOTAL_REVENUE_TASK"
+    ],
+    "B02": [
+      "MACYS_FY2024_B02_NET_SALES_SUBTOTAL_IN_TOTAL_REVENUE_TASK"
+    ]
+  },
+  "rows": [
+    {
+      "company": "Macy's",
+      "cik": "794367",
+      "metric_id": "B01",
+      "metric_name": "Revenue",
+      "value": "",
+      "unit": "",
+      "status": "WITHHELD_KNOWN_DEFECT",
+      "source_class": "STD_XBRL",
+      "formula": "direct",
+      "period_start": "2024-02-04",
+      "period_end": "2025-02-01",
+      "fiscal_year": "2024",
+      "fiscal_period": "ANNUAL",
+      "accession": "0001628280-25-014315",
+      "form": "10-K",
+      "filed_date": "2025-03-21",
+      "concept_or_section": "RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2024, \"period_end\": \"2025-02-01\", \"period_start\": \"2024-02-04\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"entity_scope\": \"registrant\", \"period_basis\": \"source_annual_duration\"}, \"selection\": null, \"source_reference_ids\": [\"sha256:bda4fee952c97c0a8f9ff51423551e575d045b61ac6b079ddc6c9267eb6249a6\", \"sha256:f4ab1a06f4defda3612d67c8ce20995cd849527646f612d53144363543ae4daf\", \"sha256:ac6c418f3c4e691eab08058ef17c544704dc1788feef6d97d2d055455703a92e\"]}",
+      "confidence": "",
+      "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.; MACYS_FY2024_B01_NET_SALES_SUBTOTAL_IN_TOTAL_REVENUE_TASK",
+      "company_id": "macys",
+      "result_id": "sha256:cc5c6aa92146831e2999ab6d2b6f6d41c1dcb55cb5a4426dd90d446d54a357ea",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/statement-pilot-macys-20261009/state/updates/B01/periods/FY2024/results/233172eb18c145009738ef8151fda59b",
+      "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "local_metric_status": "NOT_REQUESTED_IN_LATEST_EXECUTION",
+      "period_role": "SAVED_RESULT_NOT_REQUESTED",
+      "result_validity": "CONFIRMED_INVALID",
+      "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+      "defect_holds": "[\"MACYS_FY2024_B01_NET_SALES_SUBTOTAL_IN_TOTAL_REVENUE_TASK\"]",
+      "requested_in_latest_execution": "False"
+    },
+    {
+      "company": "Macy's",
+      "cik": "794367",
+      "metric_id": "B02",
+      "metric_name": "Revenue YoY growth",
+      "value": "",
+      "unit": "",
+      "status": "WITHHELD_KNOWN_DEFECT",
+      "source_class": "DERIVED",
+      "formula": "",
+      "period_start": "2024-02-04",
+      "period_end": "2025-02-01",
+      "fiscal_year": "2024",
+      "fiscal_period": "ANNUAL",
+      "accession": "0001628280-25-014315;0001628280-24-012734",
+      "form": "10-K",
+      "filed_date": "2025-03-21;2024-03-22",
+      "concept_or_section": "Revenue YoY growth",
+      "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2024, \"period_end\": \"2025-02-01\", \"period_start\": \"2024-02-04\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"coverage\": \"deterministic_source_set\", \"fiscal_year\": 2024}, \"selection\": null, \"source_reference_ids\": [\"sha256:bda4fee952c97c0a8f9ff51423551e575d045b61ac6b079ddc6c9267eb6249a6\", \"sha256:f4ab1a06f4defda3612d67c8ce20995cd849527646f612d53144363543ae4daf\", \"sha256:ac6c418f3c4e691eab08058ef17c544704dc1788feef6d97d2d055455703a92e\", \"sha256:d96b6b700eede53248bc2246f5bcb3e5b8bef0b1e0643076c96589ff9a0b46c5\", \"sha256:3d0d63f27fb9550bcb2cc95c2e0df7e03c6db07c1da190fb4a1ef46f38e56328\"]}",
+      "confidence": "",
+      "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.; MACYS_FY2024_B02_NET_SALES_SUBTOTAL_IN_TOTAL_REVENUE_TASK",
+      "company_id": "macys",
+      "result_id": "sha256:2b4353018b1f1f6d2835869a0e4ead07c8ce3bc86887f4223835b7daf9230bdb",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/statement-pilot-macys-20261009/state/updates/B02/periods/FY2024/results/652e9f76f684460b9cf56d15772d1f66",
+      "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "local_metric_status": "NOT_REQUESTED_IN_LATEST_EXECUTION",
+      "period_role": "SAVED_RESULT_NOT_REQUESTED",
+      "result_validity": "CONFIRMED_INVALID",
+      "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+      "defect_holds": "[\"MACYS_FY2024_B02_NET_SALES_SUBTOTAL_IN_TOTAL_REVENUE_TASK\"]",
+      "requested_in_latest_execution": "False"
+    }
+  ],
+  "all_rows": 23,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "new_metric_result_created": false,
+  "source_read_reference_only": true
+}
