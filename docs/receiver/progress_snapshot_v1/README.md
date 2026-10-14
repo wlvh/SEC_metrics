@@ -96,3 +96,37 @@ python3 scripts/render_summary.py <新目录> inputs/links_v1.json <新目录>/c
 - 4 份 #47 核对文件结构不是逐格记录，未解析：`b06-not-independently-readable.json`（说明为何无法独立读取）、`d02-both-directions-read.json`（无逐格结论）、`marriott-2025-statements.json`（已被替代）、`unread-value-triage.json`（分诊说明）。
 - 发布包的文字结论（`TEXT_QUAL`）在矩阵中没有值，文字在证据表，本版未逐字比较，只标 `BOTH_TEXT_RESULT_NOT_COMPARED`。
 - 当期视图只取现行发布包；#28 私有状态中的公司入口当期结果不在接收方环境中。
+
+## v1.1（2026-10-14 12:44 UTC）
+
+在 v1 基础上做有限修正，不重做范围：
+
+- **补跑**：Ford、Southwest、Paramount、Marriott 已跑完，用原命令 `scripts/run_history_lanes.sh` 续跑。JPMorgan 用 `jpm_run.sh`，同样的参数，超时更长，仍在运行。
+- **比较规则**：`build_snapshot.compare_checks`（测试见 `scripts/test_compare_checks.py`，运行 `cd scripts && python3 -m unittest test_compare_checks`）。
+  - 值、期间、单位、主体、申报必须在同一条核对记录上同时相符；
+  - 可用记录之间互相冲突时记为 `CONFLICTING_CHECKS`，不确认；
+  - 读数等于已登记错值时不作依据（`NO_USABLE_CHECK_READING_IS_REGISTERED_ERROR`）；
+  - 判定旧结果错、但原件读数与当前值相同的，记为 `SAME_VALUE_AS_CORRECTING_READING`；
+  - 已声明的百分数和比率两种写法按换算后比较。
+- **新输入**：
+  - `--defects-file`：使用比观察代码更新的缺陷登记；
+  - `--d02-side baseline` 配合 `inputs/d02/cmp44-main-fc0c9a45-comparison.json`：读取当前 main 的 D02 准备结果；
+  - `--current-results inputs/current_results_v1_1.json`：#28 报告的当期 D04 结果，接收方未复现；
+  - `--publication-errors`：`scripts/published_errors.py` 的输出。
+- **发布出口错值**：`scripts/published_errors.py` 读取 active 发布包、根目录镜像与报告、缺陷登记，以及 #28 的数值核对。替代值按 `inputs/published_error_replacements.json` 从各公司原 10-K 的 XBRL 重算。
+
+```sh
+python3 -I scripts/published_errors.py --code-root <main检出> --source-root <原件根> \
+  --value-checks <main检出>/docs/evidence/issue28_current_publication_read_20261014/source-and-publication-read.json \
+  --replacements inputs/published_error_replacements.json --out <临时>/published_errors.csv
+python3 scripts/build_snapshot.py --code-root <681b35d8检出> --source-root <原件根> --periods inputs/periods \
+  --history-root <补跑根> --d02-comparison inputs/d02/cmp44-main-fc0c9a45-comparison.json \
+  --d02-comparison inputs/d02/sf2026-comparison.json --d02-side baseline --d02-ledger <账本包> \
+  --publication <681b35d8检出>/outputs/publications/publication_24bf8f… --content-checks inputs/content_checks.json \
+  --prior-readings inputs/previous-business-readings.json --receiver-checks inputs/receiver_checks.json \
+  --adoption-records inputs/adoption_records.json --defects-file <main检出>/docs/evidence/issue28_continuous/known_result_defects.json \
+  --current-results inputs/current_results_v1_1.json --publication-errors <临时>/published_errors.csv --out output_v1_1
+python3 scripts/render_v1_1.py output_v1_1 output "<冻结时间>" <main SHA> > output_v1_1/comment.md
+```
+
+实际参数记录在 `output_v1_1/manifest.json` 与 `output_v1_1/published_errors.json`。

@@ -1,0 +1,1105 @@
+{
+ "record_type": "D02_PREPARATION_COMPARISON",
+ "tool_sha256": "53bba2d7345e749db4574570249fc82d33bf7c8dee87e51577d52433022a09b6",
+ "entry": "vnext.d02_reviewed_source.prepare_historical_legal_sources",
+ "versions": {
+  "baseline": {
+   "ref": "fc0c9a45bad2b9c8ee312e862b68e553463b48e3",
+   "commit": "fc0c9a45bad2b9c8ee312e862b68e553463b48e3",
+   "tree": "b44b1958506a541dea3be38128029b921344cd82",
+   "parents": [
+    "b32f4153da7319fe66d7e9ab4ebe61e205f29903",
+    "8d702838ca9c1429d9992006a18728cc7478d0ee"
+   ]
+  },
+  "candidate": {
+   "ref": "7e14619358bf69a179209745ec81f486b17a4ab6",
+   "commit": "7e14619358bf69a179209745ec81f486b17a4ab6",
+   "tree": "3f43a644d7865fff934accebd3e1fc4181e9d71e",
+   "parents": [
+    "fc0c9a45bad2b9c8ee312e862b68e553463b48e3",
+    "25f330749a51d52ec58f213acb05f1d377acb2d2"
+   ]
+  }
+ },
+ "inputs": {
+  "source_root": "/home/user/acc/hist-src/source-inputs",
+  "source_root_before": {
+   "digest": "sha256:a1975d771d350efb537f036dd0d24c19b86d475a3594520d38db7bd9e4ce2fb7",
+   "files": 4505,
+   "symlinks": 0,
+   "bytes": 1148630267,
+   "directories": 2173,
+   "directory_digest": "sha256:318f0ca619745d71392fe1c6e02c619ce6a5497ae3842099e1ff3f16b0e3914b"
+  },
+  "source_root_after": {
+   "digest": "sha256:a1975d771d350efb537f036dd0d24c19b86d475a3594520d38db7bd9e4ce2fb7",
+   "files": 4505,
+   "symlinks": 0,
+   "bytes": 1148630267,
+   "directories": 2173,
+   "directory_digest": "sha256:318f0ca619745d71392fe1c6e02c619ce6a5497ae3842099e1ff3f16b0e3914b"
+  },
+  "unchanged_during_run": true
+ },
+ "scope": {
+  "companies": [
+   "marriott_international",
+   "southwest_airlines",
+   "ford_motor_company",
+   "pfizer",
+   "jpmorgan_chase",
+   "salesforce",
+   "lumen_technologies",
+   "macys",
+   "paramount_skydance_paramount_global",
+   "enphase_energy"
+  ],
+  "fiscal_years": [
+   2021,
+   2022,
+   2023,
+   2024,
+   2025
+  ],
+  "subset_of_registry": false,
+  "outside_baseline_registry": [],
+  "registry_baseline": [
+   "marriott_international",
+   "southwest_airlines",
+   "ford_motor_company",
+   "pfizer",
+   "jpmorgan_chase",
+   "salesforce",
+   "lumen_technologies",
+   "macys",
+   "paramount_skydance_paramount_global",
+   "enphase_energy"
+  ],
+  "registry_candidate": [
+   "marriott_international",
+   "southwest_airlines",
+   "ford_motor_company",
+   "pfizer",
+   "jpmorgan_chase",
+   "salesforce",
+   "lumen_technologies",
+   "macys",
+   "paramount_skydance_paramount_global",
+   "enphase_energy"
+  ]
+ },
+ "environment": {
+  "python": "3.13.16",
+  "implementation": "CPython",
+  "platform": "Linux-6.18.44-fc-v114-x86_64-with-glibc2.39",
+  "git": "git version 2.43.0",
+  "network": "socket connect/create_connection/getaddrinfo refused in workers",
+  "workers": 2,
+  "timeout_per_sample_seconds": 600
+ },
+ "workers": [
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "marriott_international:2021"
+   ],
+   "seconds": 17.9
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "marriott_international:2022"
+   ],
+   "seconds": 16.4
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "marriott_international:2023"
+   ],
+   "seconds": 18.4
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "marriott_international:2024"
+   ],
+   "seconds": 17.8
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "marriott_international:2025"
+   ],
+   "seconds": 13.9
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "southwest_airlines:2021"
+   ],
+   "seconds": 25.3
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "southwest_airlines:2022"
+   ],
+   "seconds": 24.3
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "southwest_airlines:2023"
+   ],
+   "seconds": 23.1
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "southwest_airlines:2024"
+   ],
+   "seconds": 24.0
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "southwest_airlines:2025"
+   ],
+   "seconds": 11.5
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "ford_motor_company:2021"
+   ],
+   "seconds": 39.5
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "ford_motor_company:2022"
+   ],
+   "seconds": 39.7
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "ford_motor_company:2023"
+   ],
+   "seconds": 37.6
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "ford_motor_company:2024"
+   ],
+   "seconds": 36.9
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "ford_motor_company:2025"
+   ],
+   "seconds": 41.8
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "pfizer:2021"
+   ],
+   "seconds": 75.9
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "pfizer:2022"
+   ],
+   "seconds": 83.5
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "pfizer:2023"
+   ],
+   "seconds": 80.2
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "pfizer:2024"
+   ],
+   "seconds": 75.6
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "pfizer:2025"
+   ],
+   "seconds": 57.6
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "jpmorgan_chase:2021"
+   ],
+   "seconds": 382.2
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "jpmorgan_chase:2022"
+   ],
+   "seconds": 351.9
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "jpmorgan_chase:2023"
+   ],
+   "seconds": 266.1
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "jpmorgan_chase:2024"
+   ],
+   "seconds": 232.5
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "jpmorgan_chase:2025"
+   ],
+   "seconds": 264.5
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "salesforce:2021"
+   ],
+   "seconds": 75.7
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "salesforce:2022"
+   ],
+   "seconds": 94.5
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "salesforce:2023"
+   ],
+   "seconds": 85.9
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "salesforce:2024"
+   ],
+   "seconds": 85.8
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "salesforce:2025"
+   ],
+   "seconds": 77.9
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "lumen_technologies:2021"
+   ],
+   "seconds": 72.0
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "lumen_technologies:2022"
+   ],
+   "seconds": 67.9
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "lumen_technologies:2023"
+   ],
+   "seconds": 63.7
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "lumen_technologies:2024"
+   ],
+   "seconds": 80.4
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "lumen_technologies:2025"
+   ],
+   "seconds": 67.8
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "macys:2021"
+   ],
+   "seconds": 174.2
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "macys:2022"
+   ],
+   "seconds": 101.3
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "macys:2023"
+   ],
+   "seconds": 73.2
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "macys:2024"
+   ],
+   "seconds": 70.6
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "macys:2025"
+   ],
+   "seconds": 70.0
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "paramount_skydance_paramount_global:2021"
+   ],
+   "seconds": 128.4
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "paramount_skydance_paramount_global:2022"
+   ],
+   "seconds": 128.7
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "paramount_skydance_paramount_global:2023"
+   ],
+   "seconds": 117.2
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "paramount_skydance_paramount_global:2024"
+   ],
+   "seconds": 95.9
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "paramount_skydance_paramount_global:2025"
+   ],
+   "seconds": 65.1
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "enphase_energy:2021"
+   ],
+   "seconds": 93.2
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "enphase_energy:2022"
+   ],
+   "seconds": 92.8
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "enphase_energy:2023"
+   ],
+   "seconds": 92.1
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "enphase_energy:2024"
+   ],
+   "seconds": 92.7
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "baseline",
+   "samples": [
+    "enphase_energy:2025"
+   ],
+   "seconds": 69.2
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "marriott_international:2021"
+   ],
+   "seconds": 73.6
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "marriott_international:2022"
+   ],
+   "seconds": 69.1
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "marriott_international:2023"
+   ],
+   "seconds": 67.4
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "marriott_international:2024"
+   ],
+   "seconds": 69.6
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "marriott_international:2025"
+   ],
+   "seconds": 50.1
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "southwest_airlines:2021"
+   ],
+   "seconds": 91.8
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "southwest_airlines:2022"
+   ],
+   "seconds": 91.7
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "southwest_airlines:2023"
+   ],
+   "seconds": 88.2
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "southwest_airlines:2024"
+   ],
+   "seconds": 91.5
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "southwest_airlines:2025"
+   ],
+   "seconds": 47.6
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "ford_motor_company:2021"
+   ],
+   "seconds": 156.8
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "ford_motor_company:2022"
+   ],
+   "seconds": 154.5
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "ford_motor_company:2023"
+   ],
+   "seconds": 151.9
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "ford_motor_company:2024"
+   ],
+   "seconds": 147.4
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "ford_motor_company:2025"
+   ],
+   "seconds": 108.3
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "pfizer:2021"
+   ],
+   "seconds": 178.7
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "pfizer:2022"
+   ],
+   "seconds": 160.7
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "pfizer:2023"
+   ],
+   "seconds": 151.3
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "pfizer:2024"
+   ],
+   "seconds": 152.3
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "pfizer:2025"
+   ],
+   "seconds": 115.7
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "jpmorgan_chase:2021"
+   ],
+   "seconds": 460.7
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "jpmorgan_chase:2022"
+   ],
+   "seconds": 405.4
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "jpmorgan_chase:2023"
+   ],
+   "seconds": 269.9
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "jpmorgan_chase:2024"
+   ],
+   "seconds": 232.2
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "jpmorgan_chase:2025"
+   ],
+   "seconds": 156.6
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "salesforce:2021"
+   ],
+   "seconds": 50.1
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "salesforce:2022"
+   ],
+   "seconds": 48.2
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "salesforce:2023"
+   ],
+   "seconds": 45.1
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "salesforce:2024"
+   ],
+   "seconds": 46.8
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "salesforce:2025"
+   ],
+   "seconds": 43.4
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "lumen_technologies:2021"
+   ],
+   "seconds": 53.1
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "lumen_technologies:2022"
+   ],
+   "seconds": 52.5
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "lumen_technologies:2023"
+   ],
+   "seconds": 49.5
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "lumen_technologies:2024"
+   ],
+   "seconds": 59.0
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "lumen_technologies:2025"
+   ],
+   "seconds": 45.4
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "macys:2021"
+   ],
+   "seconds": 97.3
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "macys:2022"
+   ],
+   "seconds": 53.9
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "macys:2023"
+   ],
+   "seconds": 39.1
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "macys:2024"
+   ],
+   "seconds": 35.8
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "macys:2025"
+   ],
+   "seconds": 37.1
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "paramount_skydance_paramount_global:2021"
+   ],
+   "seconds": 65.8
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "paramount_skydance_paramount_global:2022"
+   ],
+   "seconds": 63.3
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "paramount_skydance_paramount_global:2023"
+   ],
+   "seconds": 57.3
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "paramount_skydance_paramount_global:2024"
+   ],
+   "seconds": 47.6
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "paramount_skydance_paramount_global:2025"
+   ],
+   "seconds": 35.5
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "enphase_energy:2021"
+   ],
+   "seconds": 51.4
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "enphase_energy:2022"
+   ],
+   "seconds": 49.4
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "enphase_energy:2023"
+   ],
+   "seconds": 47.0
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "enphase_energy:2024"
+   ],
+   "seconds": 45.2
+  },
+  {
+   "returncode": 0,
+   "timeout": false,
+   "stderr_tail": "",
+   "label": "candidate",
+   "samples": [
+    "enphase_energy:2025"
+   ],
+   "seconds": 27.4
+  }
+ ],
+ "problems": [],
+ "complete": true
+}

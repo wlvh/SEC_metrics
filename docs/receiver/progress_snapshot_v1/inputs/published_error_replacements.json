@@ -1,0 +1,27 @@
+{
+  "purpose": "Receiver check of replacement values for published rows whose old value is a confirmed error. Each value is recomputed from the company's own original 10-K XBRL instance (undimensioned, fiscal-year duration). Not a production result and not an adoption.",
+  "cells": [
+    {"company_id": "lumen_technologies", "metric_id": "B01", "period_end": "2025-12-31",
+     "formula": "Revenues", "facts": {"Revenues": ["lumen_technologies_18926_000001892626000014/lumn-20251231_htm.xml", "2025-01-01", "2025-12-31"]}},
+    {"company_id": "lumen_technologies", "metric_id": "B02", "period_end": "2025-12-31",
+     "formula": "Revenues / PriorRevenues - 1",
+     "facts": {"Revenues": ["lumen_technologies_18926_000001892626000014/lumn-20251231_htm.xml", "2025-01-01", "2025-12-31"],
+               "PriorRevenues": ["lumen_technologies_18926_000001892625000010/lumn-20241231_htm.xml", "2024-01-01", "2024-12-31", "Revenues"]}},
+    {"company_id": "lumen_technologies", "metric_id": "B03", "period_end": "2025-12-31",
+     "formula": "(OperatingIncomeLoss + DepreciationAndAmortization) / Revenues",
+     "facts": {"Revenues": ["lumen_technologies_18926_000001892626000014/lumn-20251231_htm.xml", "2025-01-01", "2025-12-31"],
+               "OperatingIncomeLoss": ["lumen_technologies_18926_000001892626000014/lumn-20251231_htm.xml", "2025-01-01", "2025-12-31"],
+               "DepreciationAndAmortization": ["lumen_technologies_18926_000001892626000014/lumn-20251231_htm.xml", "2025-01-01", "2025-12-31"]}},
+    {"company_id": "macys", "metric_id": "B01", "period_end": "2026-01-31",
+     "formula": "Revenues", "facts": {"Revenues": ["macy_s_794367_000162828026021721/m-20260131_htm.xml", "2025-02-02", "2026-01-31"]}},
+    {"company_id": "macys", "metric_id": "B02", "period_end": "2026-01-31",
+     "formula": "Revenues / PriorRevenues - 1",
+     "facts": {"Revenues": ["macy_s_794367_000162828026021721/m-20260131_htm.xml", "2025-02-02", "2026-01-31"],
+               "PriorRevenues": ["macy_s_794367_000162828025014315/m-20250201_htm.xml", "2024-02-04", "2025-02-01", "Revenues"]}},
+    {"company_id": "macys", "metric_id": "B03", "period_end": "2026-01-31",
+     "formula": "(OperatingIncomeLoss + DepreciationDepletionAndAmortization) / Revenues",
+     "facts": {"Revenues": ["macy_s_794367_000162828026021721/m-20260131_htm.xml", "2025-02-02", "2026-01-31"],
+               "OperatingIncomeLoss": ["macy_s_794367_000162828026021721/m-20260131_htm.xml", "2025-02-02", "2026-01-31"],
+               "DepreciationDepletionAndAmortization": ["macy_s_794367_000162828026021721/m-20260131_htm.xml", "2025-02-02", "2026-01-31"]}}
+  ]
+}

@@ -160,7 +160,7 @@ def history_observations(history_root, metrics=(), windows_by_company=None):
     return obs, runs
 
 
-def d02_observations(comparison_paths, ledger):
+def d02_observations(comparison_paths, ledger, side='candidate'):
     """{(company, fy): {'outcome','reason','request_ids','saved_answer'}} from compare outputs."""
     saved = {}
     if ledger and Path(ledger).is_file():
@@ -179,7 +179,7 @@ def d02_observations(comparison_paths, ledger):
         data = json.loads(Path(path).read_text())
         for e in data['entries']:
             company, fy = e['sample'].rsplit(':', 1)
-            cand = e['candidate']
+            cand = e[side]  # 'baseline' reads the main side of a main-vs-PR comparison
             rec = {'outcome': cand.get('outcome'), 'source': str(path)}
             if cand.get('outcome') == 'OK':
                 ids = cand.get('request_ids', [])
@@ -231,6 +231,13 @@ REASON_CODE_CLASS = {  # exact reason codes seen in runs; checked before the reg
     'D02_REFERENCED_LETTERED_SUBNOTE_NOT_MIGRATED': 'DEV_GAP_NAVIGATION_OR_PARSE',
     'TEXT_V2_LEGAL_SOURCE_NAVIGATION_INCOMPLETE': 'DEV_GAP_NAVIGATION_OR_PARSE',
     'D02_HISTORICAL_AMENDMENT_OR_SUCCESSOR_NOT_RECEIVED': 'DEV_GAP_AMENDMENT_OR_SUCCESSOR',
+    # v1.1: codes first seen in the Ford/Southwest/Paramount/Marriott runs
+    'D04_SAVED_FILING_MEDIA_COVERAGE_NOT_VERIFIED': 'WITHHELD_BY_CURRENT_RULE',  # #147: accurate hold until media verified
+    'HISTORICAL_PRIOR_INPUT_UNRESOLVED': 'DEV_GAP_SOURCE_RELATION',
+    'HISTORICAL_CURRENT_ANNUAL_INPUT_UNRESOLVED': 'DEV_GAP_SOURCE_RELATION',
+    'HISTORICAL_PAIRED_REVENUE_SCOPE_UNRESOLVED': 'DEV_GAP_SOURCE_RELATION',
+    # left for the developer to classify (WITHHELD_OTHER): B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN,
+    # ALL_BRANCHES_REJECTED, C03_TARGET_FACT_INVALID, C03_TARGET_PERIOD_NOT_FOUND
 }
 ACCESSION = re.compile(r'^\d{10}-\d{2}-\d{6}$')
 CODE = re.compile(r'\b[A-Z][A-Z0-9]*(?:_[A-Z0-9]+)+\b')  # upper-case code tokens, in order of appearance
@@ -293,6 +300,7 @@ OWNER_NEXT = {
     'DEV_GAP_NA_REPORTED_AS_ERROR': ('#47', '行业不适用却以报错结束，应输出结构性不适用'),
     'ANSWER_GAP_NO_SAVED_D04_CALL': ('用户/#47', '该年没有已保存的 D04 回答；新增调用由用户决定，#47 确认含义'),
     'NO_OBSERVATION': ('接收方', '本次快照未取得观察（运行未完成或未覆盖）'),
+    'CURRENT_ROUTE_RESULT_REPORTED': ('#28', '当期路线已有原回答与结果（#28 报告，接收方未复现）；历史入口无需为最新一年重复调用'),
 }
 
 
@@ -315,6 +323,72 @@ def same_value(recorded, current):
     return str(recorded).strip() == str(current).strip()
 
 
+READING_VERDICTS = {'MATCH', 'MATCH_BOTH_BASES', 'DIFFERS', 'READ_AND_A_DEFECT_WAS_FOUND', 'ACCEPTED', 'RECORDED'}
+CORRECTING_VERDICTS = {'DIFFERS', 'READ_AND_A_DEFECT_WAS_FOUND'}  # the old result was wrong, the reading is the original fact
+CONFIRMING = ('SAME_VALUE', 'SAME_VALUE_AS_CORRECTING_READING')
+
+
+def compare_checks(cur, records, wrong_values, cur_unit='', cur_period_start='', cur_filings=(), cur_cik='',
+                   cell_has_defect=False):
+    """Compare one cell's current value with its recorded original-source checks.
+
+    Every condition must hold on one and the same record: value (or text digest),
+    unit, period start, entity and filing whenever both sides record them. A record
+    is usable only if it carries an original reading; a reading equal to a value
+    registered as wrong for this cell was taken from the wrong concept and is not
+    evidence. Usable readings that disagree with each other are reported as a
+    conflict and never confirm anything.
+    """
+    usable, excluded = [], []
+    for r in records:
+        if r['verdict'] not in READING_VERDICTS or (r['value'] in (None, '') and not r.get('digest')):
+            excluded.append('NO_READING')
+        elif r['value'] not in (None, '') and any(same_value(w, r['value']) for w in wrong_values):
+            excluded.append('READING_IS_REGISTERED_ERROR')
+        elif r.get('defects'):
+            excluded.append('READING_HAS_KNOWN_DEFECT')
+        else:
+            usable.append(r)
+    if not usable:
+        if not records:
+            return ''
+        return 'NO_USABLE_CHECK' + ('_READING_IS_REGISTERED_ERROR' if 'READING_IS_REGISTERED_ERROR' in excluded else '')
+    values = [r['value'] for r in usable if r['value'] not in (None, '')]
+    digests = {r['digest'] for r in usable if r.get('digest') and r['verdict'] in ('MATCH', 'MATCH_BOTH_BASES')}
+    if any(not same_value(x, y) and not same_value(y, x) for x in values for y in values) or len(digests) > 1:
+        return 'CONFLICTING_CHECKS'
+    if cur in ('', None):
+        return 'NO_CURRENT_VALUE'
+    cur_digest = hashlib.sha256(cur.encode('utf-8')).hexdigest()
+    partial = []
+    for r in usable:
+        units = {(r.get('unit') or '').lower(), (cur_unit or '').lower()}
+        scaled = cur
+        if units == {'percent', 'ratio'}:  # declared percent->ratio presentation (D-05, e.g. B10 occupancy)
+            n = to_number(cur)
+            scaled = cur if n is None else repr(n / 100 if cur_unit.lower() == 'percent' else n * 100)
+        if not ((r['value'] not in (None, '') and same_value(r['value'], scaled)) or r.get('digest') == cur_digest):
+            continue
+        misses = []
+        if r.get('unit') and cur_unit and r['unit'].lower() != cur_unit.lower() and units != {'percent', 'ratio'}:
+            misses.append('UNIT')
+        if r.get('period_start') and cur_period_start and r['period_start'] != cur_period_start:
+            misses.append('PERIOD')
+        if r.get('entities') and cur_cik and str(int(cur_cik)) not in {str(int(e)) for e in r['entities'] if str(e).isdigit()}:
+            misses.append('ENTITY')
+        if r.get('filings') and cur_filings and not set(r['filings']) & set(cur_filings):
+            misses.append('FILING')
+        if not misses:
+            return 'SAME_VALUE_AS_CORRECTING_READING' if r['verdict'] in CORRECTING_VERDICTS else 'SAME_VALUE'
+        partial.append(misses)
+    if partial:
+        return 'SAME_VALUE_DIFFERENT_' + '_'.join(sorted({m for p in partial for m in p}))
+    if any(same_value(w, cur) for w in wrong_values):
+        return 'DIFFERENT_VALUE_CURRENT_IS_REGISTERED_ERROR'
+    # a registered defect on this cell whose wrong value the register does not state explains, not proves
+    return 'DIFFERENT_VALUE' + ('_CELL_HAS_REGISTERED_DEFECT' if cell_has_defect else '')
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--code-root', required=True, type=Path)
@@ -329,6 +403,10 @@ def main():
     ap.add_argument('--prior-readings', type=Path, help='#47 previous-business-readings.json')
     ap.add_argument('--receiver-checks', type=Path, help='receiver_checks.json')
     ap.add_argument('--adoption-records', type=Path, help='adoption_records.json')
+    ap.add_argument('--d02-side', choices=('candidate', 'baseline'), default='candidate',
+                    help='side of each --d02-comparison to read (baseline = main in a main-vs-PR run)')
+    ap.add_argument('--current-results', type=Path, help='JSON entries for results reported in an owner current route')
+    ap.add_argument('--publication-errors', type=Path, help='published_errors.py output CSV')
     ap.add_argument('--defects-file', type=Path, help='known_result_defects.json to use instead of the one in --code-root '
                     '(the register is knowledge about results, so a later main may be newer than the observing code)')
     ap.add_argument('--out', required=True, type=Path)
@@ -389,7 +467,15 @@ def main():
             r = dict(hist[key]); r.setdefault('company_id', key[0]); r['fiscal_year'] = str(key[2])
             wr.writerow({k: r.get(k, '') for k in hist_fields})
     (a.out / 'history_runs.json').write_text(json.dumps(runs, indent=1, sort_keys=True))
-    d02, ledger_answers = d02_observations(a.d02_comparison, a.d02_ledger)
+    d02, ledger_answers = d02_observations(a.d02_comparison, a.d02_ledger, a.d02_side)
+    reported = {}  # cells whose result exists in an owner's current route but cannot be read here
+    if a.current_results:
+        for e in json.loads(a.current_results.read_text())['entries']:
+            reported[(e['company_id'], e['metric_id'], int(e['fiscal_year']))] = e
+    pub_errors = {}
+    if a.publication_errors:
+        for e in read_csv(a.publication_errors):
+            pub_errors[(e['company_id'], e['metric_id'], e['period_end'])] = e
     pub, pub_meta = publication_rows(a.publication, name_to_id)
     defects = collections.defaultdict(list)
     defect_values = collections.defaultdict(set)  # the withdrawn value itself, when the register records it
@@ -398,8 +484,9 @@ def main():
         key = (d.get('company_id'), d.get('metric_id'), d.get('period_end'))
         defects[key].append(
             d['defect_id'] + ('(released:' + str(len(d['released'] if isinstance(d['released'], list) else [d['released']])) + ')' if d.get('released') else ''))
-        if d.get('reported_value') not in (None, ''):
-            defect_values[key].add(str(d['reported_value']))
+        for field in ('reported_value', 'actual_selected_value'):  # the register names the wrong value either way
+            if d.get(field) not in (None, ''):
+                defect_values[key].add(str(d[field]))
     content = json.loads(a.content_checks.read_text()) if a.content_checks else {'checks': [], 'commit': None}
     prior = json.loads(a.prior_readings.read_text()) if a.prior_readings else []
     receiver = json.loads(a.receiver_checks.read_text()) if a.receiver_checks else {'entries': []}
@@ -424,7 +511,9 @@ def main():
         read = c.get('read')
         if read in (None, '') and c['verdict'] in ('MATCH', 'MATCH_BOTH_BASES'):
             read = c.get('published')
-        rec = ('CONTENT_READ', c['verdict'], read, c.get('filings') or [], c['file'], c.get('value_sha256'))
+        rec = {'basis': 'CONTENT_READ', 'verdict': c['verdict'], 'value': read, 'filings': c.get('filings') or [],
+               'source': c['file'], 'digest': (c.get('value_sha256') or '').split(':', 1)[-1] or None,
+               'unit': c.get('unit'), 'period_start': c.get('period_start'), 'entities': c.get('entities') or []}
         year = (c.get('position_key') or '').rsplit('-', 1)[-1]
         if company and c.get('metric_id') and c.get('period_end'):
             by_period[(company, c['metric_id'], c['period_end'])].append(rec)
@@ -434,10 +523,12 @@ def main():
             content_unplaced.append({k: c.get(k) for k in ('file', 'path', 'verdict')})
     for r in prior:
         by_period[(r['company_id'], r['metric_id'], r['period_end'])].append(
-            ('PRIOR_ACCEPTED_READING', r['acceptance_id'], r['accepted_value'], [], 'previous-business-readings.json', None))
+            {'basis': 'PRIOR_ACCEPTED_READING', 'verdict': 'ACCEPTED', 'label': r['acceptance_id'],
+             'value': r['accepted_value'], 'filings': [], 'source': 'previous-business-readings.json',
+             'unit': r.get('unit'), 'period_start': r.get('period_start'), 'defects': r.get('known_defect_ids') or []})
     for r in receiver['entries']:
         by_year[(r['company_id'], r['metric_id'], r['fiscal_year'])].append(
-            (r['basis'], 'RECORDED', r['value'], [], r['link'], None))
+            {'basis': r['basis'], 'verdict': 'RECORDED', 'value': r['value'], 'filings': [], 'source': r['link']})
 
     fields = ['company_id', 'company_name', 'industry_profile', 'sic', 'metric_id', 'metric_name_zh',
               'fiscal_year_label', 'window_index', 'current_view', 'period_start', 'period_end', 'period_days',
@@ -448,7 +539,8 @@ def main():
               'obs_result_id', 'd02_prep_outcome', 'd02_saved_answer',
               'pub_row', 'pub_status', 'pub_value', 'pub_unit', 'pub_period_end', 'pub_accession', 'pub_source_class',
               'align_period', 'align_accession', 'align_status', 'align_value',
-              'terminal_class', 'registered_defects', 'pub_defect_flag', 'reference_consistency',
+              'terminal_class', 'registered_defects', 'pub_defect_flag', 'pub_error_action', 'pub_verified_replacement',
+              'reference_consistency',
               'original_check_basis', 'check_recorded_values', 'check_vs_current', 'check_sources',
               'adoption_status', 'owner', 'next_step']
     table = []
@@ -492,6 +584,9 @@ def main():
                         cls = 'VALUE_PENDING_SAVED_ANSWER' if t['d02_saved_answer'].startswith('MATCHED') else 'ANSWER_GAP_MODEL_RESPONSE'
                     else:
                         cls = classify('', '', '', t['d02_prep_outcome'], '')
+                if (cid, m, fy) in reported and cls in ('ANSWER_GAP_NO_SAVED_D04_CALL', 'NO_OBSERVATION'):
+                    cls = 'CURRENT_ROUTE_RESULT_REPORTED'
+                    t['obs_reason'] = (reported[(cid, m, fy)].get('basis') or '')[:300]
                 t['terminal_class'] = cls
                 t['registered_defects'] = ';'.join(defects.get((cid, m, t['period_end']), []))
                 # current view: publication row aligned on the same period end
@@ -500,6 +595,10 @@ def main():
                     t.update(pub_row='Y', pub_status=p['status'], pub_value=p['value'], pub_unit=p['unit'],
                              pub_period_end=p['period_end'], pub_accession=p['accession'], pub_source_class=p['source_class'])
                     t['align_period'] = 'SAME'  # rows of other periods never reach here
+                    pe = pub_errors.get((cid, m, t['period_end']))
+                    if pe:
+                        t['pub_error_action'] = pe['proposed_action']
+                        t['pub_verified_replacement'] = pe.get('verified_replacement', '')
                     if t['registered_defects'] and p['value'] not in ('', None):
                         withdrawn = defect_values.get((cid, m, t['period_end']), set())
                         t['pub_defect_flag'] = ('PUBLICATION_VALUE_EQUALS_REGISTERED_DEFECT_VALUE' if p['value'] in withdrawn else
@@ -553,28 +652,17 @@ def main():
             t['original_check_basis'] = ''
             t['check_vs_current'] = ''
             continue
-        kinds = collections.Counter(r[0] + ':' + str(r[1]) for r in recs)
+        kinds = collections.Counter(r['basis'] + ':' + str(r.get('label') or r['verdict']) for r in recs)
         t['original_check_basis'] = '; '.join('%s x%d' % (k, n) for k, n in sorted(kinds.items()))
-        t['check_sources'] = '; '.join(sorted({str(r[4]) for r in recs}))
-        values = [r[2] for r in recs if r[2] not in (None, '')]
-        # a text result is recorded by the digest of the checked value; only a MATCH reading confirms it
-        digests = {r[5].split(':', 1)[-1] for r in recs if r[5] and r[1] in ('MATCH', 'MATCH_BOTH_BASES')}
-        other_digests = {r[5].split(':', 1)[-1] for r in recs if r[5]} - digests
-        t['check_recorded_values'] = '; '.join(sorted({str(v) for v in values} | {'sha256:' + d[:12] for d in digests}))[:200]
-        filings = {f for r in recs for f in r[3]}
-        cur = t.get('obs_value', '')
-        cur_digest = hashlib.sha256(cur.encode('utf-8')).hexdigest() if cur not in ('', None) else None
+        t['check_sources'] = '; '.join(sorted({str(r['source']) for r in recs}))
+        t['check_recorded_values'] = '; '.join(sorted({str(r['value']) for r in recs if r['value'] not in (None, '')}
+                                                      | {'sha256:' + r['digest'][:12] for r in recs if r.get('digest')}))[:200]
         # only real accession numbers are compared; event counts cite the submissions index instead
         used = {x for x in (t.get('obs_accession') or '').split(';') if ACCESSION.match(x)}
-        filing_note = '' if not filings or not used or used & filings else '_DIFFERENT_FILING'
-        if not values and not digests:
-            t['check_vs_current'] = 'NO_RECORDED_VALUE' + ('_CHECKED_VALUE_NOT_MATCHED' if other_digests else '')
-        elif cur in ('', None):
-            t['check_vs_current'] = 'NO_CURRENT_VALUE'
-        elif any(same_value(v, cur) for v in values) or cur_digest in digests:
-            t['check_vs_current'] = 'SAME_VALUE' + filing_note
-        else:
-            t['check_vs_current'] = 'DIFFERENT_VALUE' + ('_OLD_READING_HAS_REGISTERED_DEFECT' if t.get('registered_defects') else '')
+        t['check_vs_current'] = compare_checks(
+            t.get('obs_value', ''), recs, defect_values.get((t['company_id'], t['metric_id'], t['period_end']), set()),
+            cur_unit=t.get('obs_unit', ''), cur_period_start=t.get('obs_period_start', ''),
+            cur_filings=used, cur_cik=t.get('reporting_cik', ''), cell_has_defect=bool(t.get('registered_defects')))
     # revenue years with a registered B01 defect (whether or not this run produced a current B01)
     b01_defect = {(t['company_id'], t['fiscal_year_label']) for t in table if t['metric_id'] == 'B01'
                   and t.get('registered_defects')}
@@ -639,7 +727,9 @@ def main():
               'history_root': str(a.history_root) if a.history_root else None,
               'history_rows': str(a.history_rows) if a.history_rows else None,
               'periods': str(a.periods) if a.periods else None,
-              'd02_comparison': a.d02_comparison, 'd02_ledger': a.d02_ledger,
+              'd02_comparison': a.d02_comparison, 'd02_side': a.d02_side, 'd02_ledger': a.d02_ledger,
+              'current_results_sha256': sha256_file(a.current_results) if a.current_results else None,
+              'publication_errors_sha256': sha256_file(a.publication_errors) if a.publication_errors else None,
               'd02_ledger_sha256': sha256_file(a.d02_ledger) if a.d02_ledger else None,
               'publication': str(a.publication) if a.publication else None,
               'content_checks': str(a.content_checks) if a.content_checks else None,
