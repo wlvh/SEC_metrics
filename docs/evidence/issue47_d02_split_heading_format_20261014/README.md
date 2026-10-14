@@ -33,3 +33,6 @@ python3 tools/vnext_company.py results --company pfizer \
 ```
 
 Originalcall17 has seven members restored from retained970c98archive; no ledger or quota is copied. Expected outcome is precise missingFY2024 request, not use ofFY2025answer.275/276heads stay unchanged; Source/layout,caption conflicts, amendments/successor,matching answers/legal acceptance and full1950goal continue. New SEC/provider/model0/0/0; no authorReady/merge/adoption/deploy/active. New-headCI/receiver recheck remains separate. Progress on #47.
+
+
+Automatic regression registration correction: the original4995head17CIchecks succeeded, but its newTextBusinessCandidate method was not in the actualfast/source selectors; the40Source-module tests alone did not exercise it. A feature selector now registers the exact small method once in the existingfast layer. Existingworkflow triggers everypull_request, so changes only to the selector/test are covered; no runner/workflow policy change. Actualpartition lists it once and run_fast_suite on that selected method returns1test/zero skips/.010479s. Production bytes and original50source outcomes remain unchanged. New remote head must prove actualselected_selector execution separately; old green is not assigned to it.
