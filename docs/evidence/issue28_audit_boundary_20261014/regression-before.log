@@ -1,0 +1,48 @@
+test_plain_uppercase_financial_caption_closes_report_before_notes (tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_plain_uppercase_financial_caption_closes_report_before_notes) ... 
+  test_plain_uppercase_financial_caption_closes_report_before_notes (tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_plain_uppercase_financial_caption_closes_report_before_notes) (caption='CONSOLIDATED STATEMENTS OF OPERATIONS') ... ERROR
+  test_plain_uppercase_financial_caption_closes_report_before_notes (tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_plain_uppercase_financial_caption_closes_report_before_notes) (caption='CONSOLIDATED STATEMENTS OF COMPREHENSIVE INCOME') ... ERROR
+  test_plain_uppercase_financial_caption_closes_report_before_notes (tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_plain_uppercase_financial_caption_closes_report_before_notes) (caption='CONSOLIDATED BALANCE SHEETS') ... ERROR
+  test_plain_uppercase_financial_caption_closes_report_before_notes (tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_plain_uppercase_financial_caption_closes_report_before_notes) (caption='CONSOLIDATED STATEMENTS OF CASH FLOWS') ... ERROR
+test_uppercase_continuation_and_linked_caption_do_not_end_report (tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_uppercase_continuation_and_linked_caption_do_not_end_report) ... ok
+
+======================================================================
+ERROR: test_plain_uppercase_financial_caption_closes_report_before_notes (tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_plain_uppercase_financial_caption_closes_report_before_notes) (caption='CONSOLIDATED STATEMENTS OF OPERATIONS')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/profitloss-note/SEC_metrics/tests/vnext/test_text_business_candidates.py", line 124, in test_plain_uppercase_financial_caption_closes_report_before_notes
+    self.assertEqual(caption,report['closing_heading']['text'])
+                             ~~~~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'closing_heading'
+
+======================================================================
+ERROR: test_plain_uppercase_financial_caption_closes_report_before_notes (tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_plain_uppercase_financial_caption_closes_report_before_notes) (caption='CONSOLIDATED STATEMENTS OF COMPREHENSIVE INCOME')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/profitloss-note/SEC_metrics/tests/vnext/test_text_business_candidates.py", line 124, in test_plain_uppercase_financial_caption_closes_report_before_notes
+    self.assertEqual(caption,report['closing_heading']['text'])
+                             ~~~~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'closing_heading'
+
+======================================================================
+ERROR: test_plain_uppercase_financial_caption_closes_report_before_notes (tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_plain_uppercase_financial_caption_closes_report_before_notes) (caption='CONSOLIDATED BALANCE SHEETS')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/profitloss-note/SEC_metrics/tests/vnext/test_text_business_candidates.py", line 124, in test_plain_uppercase_financial_caption_closes_report_before_notes
+    self.assertEqual(caption,report['closing_heading']['text'])
+                             ~~~~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'closing_heading'
+
+======================================================================
+ERROR: test_plain_uppercase_financial_caption_closes_report_before_notes (tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_plain_uppercase_financial_caption_closes_report_before_notes) (caption='CONSOLIDATED STATEMENTS OF CASH FLOWS')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/profitloss-note/SEC_metrics/tests/vnext/test_text_business_candidates.py", line 124, in test_plain_uppercase_financial_caption_closes_report_before_notes
+    self.assertEqual(caption,report['closing_heading']['text'])
+                             ~~~~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'closing_heading'
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.009s
+
+FAILED (errors=4)
+{"allowed_skips": 0, "errors": 4, "failures": 0, "run": 2, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_plain_uppercase_financial_caption_closes_report_before_notes", "tests.vnext.test_text_business_candidates.TextBusinessCandidateTest.test_uppercase_continuation_and_linked_caption_do_not_end_report"]}

@@ -46,3 +46,14 @@ Received main61d2f9c after273/270/272 actual merge records were read. Two finite
 Received doc-only271/07a and public266/cb27 normally. Existing historicalB04 preflight evidence6160258656 is reused;266 adds onlyB04 to the source choices, not D02 preparation. No Source/companyfirst or full financial replay for these increments. Current candidate keeps the original275 scope;273 prefixless P2 remains separate.
 
 Automatic regression protection: the old96fa head green did not list this newTextBusinessCandidate method infast/source selectors. One exactfast featureselector now routes it through the existing runner,once. This does not change production or repeat the original50/source/company executions; remote new-head selected_selector andexecution must be read before claiming automatic protection. Existingworkflow triggers everypull_request,including test/selector-only changes.
+
+
+## Current main receiving after262
+
+Read receiver6166370449;262is nowmainccd9d7c2721e2f8c2116d0ca784178b96571e21f. Normal merge retains main original-format/link/namespace/lettered/auditor rules and leading-parenthesis normalization; no276recovered-end logic is included.91affected required controls/.866s/zero failures/errors/skips. Original Lumen23company/old response/Media limits are reused, not replayed.
+
+The requested full comparison actualmainccd→local81159dd4 completed all50:44SAME_OK/2FAIL_TO_OK(LumenFY2022/FY2023)/0CHANGED_OK/0OK_TO_FAIL/3SAME_FAIL/1CHANGED_FAIL. LumenFY2021 now reaches the precise incorporated-caption mismatch and stays refused; SW25/Param24/25 remain unsupported amendment/successor failures. All4remain unverified, not metrics.4505files/1,148,630,267bytes/a1975beforeafter same, full requests/locators retained, network blocked.
+
+Proactive check of276feedback also found this newparenthesis path could mistake Item7(2)CriticalAccountingEstimates for missingNote2. Exact originalfixture first failed, now only leading-parenthesis candidates inside explicitMD&A7/7A are withheld; original validnote/sibling-style/link tests stay. This finite post-comparison correction is local59c14aaf. Its existing exactfastmethod also executes the new negative, no runner or selector platform. Targeted official811→59 LumenFY21–23 SUBSET is COMPLETE/2SAME_OK/1SAME_FAIL/no changes/regressions; both newly prepared complete requests same, oldFY21caption conflict preserved. Full50 is not relabelled as a59 execution. Outputs/controls/before failure are here,0newcalls.
+
+Absolute source/code/record/output paths in these retained execution artifacts are non-authoritative local location hints; the portable source identity is their relative-path/content tree digesta1975and root-relative SEC proofs. Supply your restored source root/new outputs through the officialcommand, not the original machine path. Source/input/answer/Run history is unchanged. Current headCI and receiver recheck separate, noauthorReady/merge/adoption.

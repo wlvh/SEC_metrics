@@ -20,7 +20,8 @@ jobs:
   request-limits:
     name: Request format, context and observed usage
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    # Leave setup and runner overhead outside the unchanged test time limits.
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:

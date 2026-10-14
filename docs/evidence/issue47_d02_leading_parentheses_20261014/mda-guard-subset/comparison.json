@@ -1,0 +1,83 @@
+{
+ "requested": 3,
+ "counts": {
+  "SAME_OK": 2,
+  "CHANGED_OK": 0,
+  "FAIL_TO_OK": 0,
+  "OK_TO_FAIL": 0,
+  "SAME_FAIL": 1,
+  "CHANGED_FAIL": 0,
+  "NOT_COMPARED": 0
+ },
+ "unexpected_results": [],
+ "entries": [
+  {
+   "sample": "lumen_technologies:2021",
+   "category": "SAME_FAIL",
+   "baseline": {
+    "outcome": "ERROR",
+    "seconds": 9.351,
+    "error": {
+     "category": null,
+     "module": "vnext.text_business_candidates",
+     "reason": "D02_INCORPORATED_CAPTION_NOT_FOUND",
+     "type": "TextBusinessCandidateError"
+    }
+   },
+   "candidate": {
+    "outcome": "ERROR",
+    "seconds": 9.274,
+    "error": {
+     "category": null,
+     "module": "vnext.text_business_candidates",
+     "reason": "D02_INCORPORATED_CAPTION_NOT_FOUND",
+     "type": "TextBusinessCandidateError"
+    }
+   },
+   "changes": []
+  },
+  {
+   "sample": "lumen_technologies:2022",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 10.269,
+    "requests": 1,
+    "request_ids": [
+     "sha256:0c67c9d4a28eab5aaa519886dab3e9b81ac8c933c6f54c039a799b33e220fc92"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 10.145,
+    "requests": 1,
+    "request_ids": [
+     "sha256:0c67c9d4a28eab5aaa519886dab3e9b81ac8c933c6f54c039a799b33e220fc92"
+    ]
+   },
+   "changes": []
+  },
+  {
+   "sample": "lumen_technologies:2023",
+   "category": "SAME_OK",
+   "baseline": {
+    "outcome": "OK",
+    "seconds": 9.991,
+    "requests": 1,
+    "request_ids": [
+     "sha256:1e36f014691120b4756b62cb14fa5ca63ecffe10a325cbd9f85498c87afdf50f"
+    ]
+   },
+   "candidate": {
+    "outcome": "OK",
+    "seconds": 9.887,
+    "requests": 1,
+    "request_ids": [
+     "sha256:1e36f014691120b4756b62cb14fa5ca63ecffe10a325cbd9f85498c87afdf50f"
+    ]
+   },
+   "changes": []
+  }
+ ],
+ "all_samples_compared": true
+}
