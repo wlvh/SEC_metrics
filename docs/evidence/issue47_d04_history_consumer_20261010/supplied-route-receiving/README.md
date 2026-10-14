@@ -1,0 +1,19 @@
+# Historical D04 consumes the public supplied-route correction
+
+Progress on #47. Actual dependency public PR285 `e0c89c942e83abf5f0d8083bc2b3659ad7cd1448`, based on actualmainccd9. Public default/current dependency dispatch is #28's implementation; this increment only removes unused `current_d04_result.py` from the historical declaration and verifies the consumer. Current-source CF comparison in282 and the upcoming CONTINUOUS_CALL archive compatibility are separate; this consumer still reads the original ISSUE_47 archive and does not relabel it.
+
+107 affected required tests/1.061s/zero failures/errors/skips. A real configuration/controller with explicitly constructed withholding verifies that current-only module changes do not invoke the historical producer. Actual used saved_d04_replay changes still process once; all unchanged input repeats remain stable. Public285's default and explicitly declared current routes retain their dependencies. No other controller, runner or archive reader is implemented here.
+
+The existing Marriott task had genuinely changed historical producer/configuration versions, so only FY2024 was normally migrated once. Independent before-read .236s protects its old state. Update11.109s preserves full Result5c4c22ea and **D04_SAVED_FILING_MEDIA_COVERAGE_NOT_VERIFIED/null**. The original56 Result files remain and seven new-version files are added. Factory/selection/replay/two-Calculator forbidden repeat .582s does no processing/new result. Independent process read .235s keeps all122 state files unchanged and preserves FY2023's original media hold and FY2026's genuine missing-source failure. Other years/companies and the complete16-answer batch are not replayed.
+
+On that migrated real task, an in-memory change to both current_d04_result and capacity_update_input hashes, with all historical factories/replay/Calculator entrypoints forbidden, repeats in .385s without processing/new result. All63 Result files stay identical. The hash perturbation is a constructed control; the old task/result is real. Original package SHA970c98e6, source registry, SEC ledger and manifest remain unchanged, network forbidden, new SEC/provider/paid0/0/0. No image or whole-filing absence credit is added.
+
+`actual-company.json`, `unused-current-repeat.json`, controls and CSV/出处 identify the executed8bd28679 code and original input/output locations. Those absolute paths are non-authoritative execution-location hints. Use your restored source, registered task/package and new output directories:
+
+```sh
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts:tools:. python3 tests/required_unittests.py tests.vnext.test_historical_d04_case tests.vnext.test_historical_d04_selection tests.vnext.test_saved_d04_replay tests.vnext.test_d04_processing_scope tests.vnext.test_ordinary_current_update tests.vnext.test_history_company_dispatch
+PYTHONPATH=scripts:tools:. python3 docs/evidence/issue47_d04_history_consumer_20261010/main-951-receiving/verify_existing_year.py --source-root /your/restored/source-inputs --state-root /your/existing/task --saved-call-package /your/original/model-ledger.tar.gz --output-root /your/new/receiving
+PYTHONPATH=scripts:tools:. python3 docs/evidence/issue47_d04_history_consumer_20261010/supplied-route-receiving/unused_current_repeat.py --state-root /your/existing/task --saved-call-package /your/original/model-ledger.tar.gz --output-root /your/new/unused-current-control
+```
+
+The adjacent in-memory driver was parameterized after the executed private driver; it retains the same operation and is not claimed as another financial first execution. It is evidence instrumentation using the same company CLI, not a replacement pipeline. Public285 and this consumer still require receiver review; newhead CI is separate. Old failures/media limitations/Run identities and full1950 responsibility remain, no authorReady/merge/adoption/deployment/active.
