@@ -470,7 +470,7 @@ flowchart LR
 - 外部网络依赖仅为 `www.sec.gov`、`data.sec.gov`，以及 explicit live vNext 的 `api.deepseek.com`。
 - 公司内网 SecureGPT 只经 `scripts/securegpt_sdk.py` 接触：标准库模块，公司 SDK（`utils.secure_gpt` 等）、配置与认证由目标运行环境提供并在调用时才导入；一次 `send` 即一次 `SecureGPT(env).request`，无重试、无 provider 回退，不传未证实的 model/timeout 字段。当前唯一调用者是操作者连通性探针 `tools/probe_securegpt.py`（独立子进程、外层超时、私有输出目录，见 `docs/securegpt_probe.md`）；#28 N1 内网 transport 尚未实现，届时在现有 provider 边界与 WB-3 账本内复用该模块。外网 DeepSeek 路径与现有指标调用点不变。
 <!-- capability-anchor: CAPABILITY.securegpt_connectivity_probe -->
-- 无外网的 Databricks 只经离线包运行：`tools/databricks/build_offline_package.py` 在能访问 GitHub 的电脑上从固定 commit 取程序文件与一家公司已存档的 SEC 原件（逐个按 git blob 哈希核对，SEC 正文只收与请求账本 SHA-256/长度一致的字节），生成确定性 zip；`company_metrics_notebook.py` 先核对 zip 的 SHA-256 等于独立给出的预期值，再解压这份字节、逐文件核对后以 `tools/vnext_company.py run --source-root` 离线计算。数据只能 SEC → 受控采集入库 → GitHub → 离线包 → Databricks 单向进入；计算不访问 SEC 或任何模型，见 `docs/databricks_offline_run.md`。
+- 无外网的 Databricks 只经离线包运行：`tools/databricks/build_offline_package.py` 在能访问 GitHub 的电脑上从固定 commit 取程序文件与一家公司已存档的 SEC 原件（逐个按 git blob 哈希核对，SEC 正文只收与请求账本 SHA-256/长度一致的字节），生成确定性 zip；`company_metrics_notebook.py` 解压并逐文件核对后以 `tools/vnext_company.py run --source-root` 离线计算。数据只能 SEC → 受控采集入库 → GitHub → 离线包 → Databricks 单向进入；计算不访问 SEC 或任何模型，见 `docs/databricks_offline_run.md`。
 <!-- capability-anchor: CAPABILITY.databricks_offline_package -->
 - SEC organization 固定为 `axaxl`；contact email 默认自动读取 `config/sec_config.json.contact_email`，显式 `SEC_CONTACT_EMAIL` 环境变量优先。`SecHttpClient` 与 acceptance runner 共用同一个 identity validator，选中值缺失、畸形或使用 reserved domain 时在联网前失败。邮箱是公开 User-Agent 身份；API key 仍只从环境读取。
 <!-- capability-anchor: BEHAVIOR.sec_identity_shared_fail_fast -->

@@ -3,17 +3,15 @@
 # MAGIC ## SEC_metrics：在 Databricks 上离线计算一家公司的指标
 # MAGIC
 # MAGIC 输入是笔记本上 `tools/databricks/build_offline_package.py` 生成的 zip（程序 + 这家公司已保存的 SEC 原件）。
-# MAGIC 本 notebook 不访问外网、不调用 SEC 或任何模型：先核对 zip 的 SHA-256 等于设置里的预期值（预期值来自仓库页面
-# MAGIC 或你自己的打包输出，不能取自 zip 本身），再解压、逐个文件核对哈希，然后用项目自己的
+# MAGIC 本 notebook 不访问外网、不调用 SEC 或任何模型：解压、逐个文件核对哈希，再用项目自己的
 # MAGIC `tools/vnext_company.py run --source-root` 计算，最后显示结果表。
 # MAGIC
-# MAGIC 用法：把 zip 上传到 Unity Catalog Volume，改下一格开头的 `PACKAGE_ZIP`（用自己打的包时再改 `EXPECTED_ZIP_SHA256`）后运行。
+# MAGIC 用法：把 zip 上传到 Unity Catalog Volume（放在只有自己能写的位置），改下一格开头的 `PACKAGE_ZIP` 后运行。
 
 # COMMAND ----------
 
 # ===== 只需要改这里 =====
 PACKAGE_ZIP = "/Volumes/<catalog>/<schema>/<volume>/sec_metrics_<company_id>_<ref前8位>.zip"
-EXPECTED_ZIP_SHA256 = "388d49c206d1688a6011e93a8a2c0e47ce93499713713c72e360d9c005049fd4"  # 仓库附带的万豪包；自己打的包填打包输出里的 zip_sha256
 METRICS = ["B01", "B02", "B04", "B05", "B10", "B11"]  # 万豪（酒店业）验证过的六项；B10/B11 是酒店业指标，其他行业要换
 WORK_ROOT = "/local_disk0/tmp/sec_metrics"  # 驱动节点本地盘；不要用 /dbfs 或 /Volumes（计算要用文件锁）
 SAVE_TO = None  # 结果另存目录，例如 "/Volumes/<catalog>/<schema>/<volume>/sec_metrics_outputs"；None 不另存
@@ -21,7 +19,6 @@ SAVE_TO = None  # 结果另存目录，例如 "/Volumes/<catalog>/<schema>/<volu
 
 import csv
 import hashlib
-import io
 import json
 import subprocess
 import sys
@@ -48,18 +45,15 @@ def usable_work_root(path):
     raise RuntimeError(f"No writable work directory: {path}")
 
 
-def extract_package(zip_path, work_root, expected_sha256):
-    """Check the zip against the expected SHA-256, extract those exact bytes once, then verify every file."""
+def extract_package(zip_path, work_root):
+    """Extract once per zip content into a directory named by its SHA-256, then verify every file."""
     data = Path(zip_path).read_bytes()
     digest = hashlib.sha256(data).hexdigest()
-    if digest != expected_sha256.strip().lower():
-        raise RuntimeError(f"zip 的 SHA-256 是 {digest}，与 EXPECTED_ZIP_SHA256 不符，没有解压也没有运行。"
-                           "确认上传的是哪个包；用自己打的包时，把打包输出里的 zip_sha256 填进设置。")
     target = Path(work_root).resolve() / f"package-{digest[:12]}"
     root = target / "sec_metrics_package"
     if not (root / "PACKAGE.json").is_file():
         partial = Path(work_root).resolve() / f".extracting-{digest[:12]}-{int(time.time())}"
-        with zipfile.ZipFile(io.BytesIO(data)) as archive:  # 解压的就是刚核对过的这份字节
+        with zipfile.ZipFile(zip_path) as archive:
             archive.extractall(partial)
         partial.rename(target)
     package = json.loads((root / "PACKAGE.json").read_text(encoding="utf-8"))
@@ -71,7 +65,7 @@ def extract_package(zip_path, work_root, expected_sha256):
 
 
 WORK_ROOT = usable_work_root(WORK_ROOT)
-root, package, zip_sha256 = extract_package(PACKAGE_ZIP, WORK_ROOT, EXPECTED_ZIP_SHA256)
+root, package, zip_sha256 = extract_package(PACKAGE_ZIP, WORK_ROOT)
 company = package["company_id"]
 summary.update(company_id=company, package_ref=package["ref"], zip_sha256=zip_sha256,
                verified_files=len(package["files"]), sec_bodies=package["sec_bodies"])

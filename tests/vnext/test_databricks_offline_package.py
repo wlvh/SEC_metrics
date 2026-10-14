@@ -235,9 +235,6 @@ class CommittedPackageTest(unittest.TestCase):
                   and name not in ('source/evidence/requests_log.csv',
                                    'source/evidence/requests_log_manifest.json')}
         self.assertEqual(len(bodies), package['sec_bodies'])
-        default = re.search(r'^EXPECTED_ZIP_SHA256 = "([0-9a-f]{64})"',
-                            (TOOLS / 'company_metrics_notebook.py').read_text(encoding='utf-8'), re.M)
-        self.assertEqual(default.group(1), sha256((TOOLS / packages[0]).read_bytes()))
         for path, data in bodies.items():
             self.assertIn((path, sha256(data), str(len(data))), recorded, path)
 
@@ -324,13 +321,12 @@ class CompanyMetricsNotebookTest(unittest.TestCase):
         self.addCleanup(temp.cleanup)
         self.temp = Path(temp.name)
 
-    def run_with(self, behaviour, *, tamper=False, save=False, expected=None):
+    def run_with(self, behaviour, *, tamper=False, save=False):
         files = {'program/tools/vnext_company.py': STUB_COMPANY_CLI.encode(),
                  'source/behaviour.json': json.dumps(behaviour).encode()}
         zip_path = self.temp / 'package.zip'
         write_package(zip_path, files, listed={'source/behaviour.json': '0' * 64} if tamper else None)
-        settings = {'PACKAGE_ZIP': str(zip_path), 'EXPECTED_ZIP_SHA256': expected or sha256(zip_path.read_bytes()),
-                    'METRICS': ['B01', 'B04'], 'WORK_ROOT': str(self.temp / 'work'),
+        settings = {'PACKAGE_ZIP': str(zip_path), 'METRICS': ['B01', 'B04'], 'WORK_ROOT': str(self.temp / 'work'),
                     'SAVE_TO': str(self.temp / 'saved') if save else None}
         return run_notebook(self.notebook, settings)
 
@@ -393,13 +389,6 @@ class CompanyMetricsNotebookTest(unittest.TestCase):
         self.assertIsNone(summary)
         self.assertIn('退出码 3', str(raised))
         self.assertIn('boom', text)
-
-    def test_zip_that_differs_from_the_expected_digest_is_neither_extracted_nor_run(self):
-        summary, raised, _ = self.run_with({'calls': {}}, expected='0' * 64)
-        self.assertIsNone(summary)
-        self.assertIn('EXPECTED_ZIP_SHA256', str(raised))
-        self.assertEqual(list((self.temp / 'work').glob('package-*')), [])
-        self.assertEqual(list((self.temp / 'work').glob('state-*')), [])
 
     def test_package_file_that_differs_from_its_listing_stops_before_running(self):
         summary, raised, _ = self.run_with({'calls': {}}, tamper=True)
