@@ -1,0 +1,54 @@
+{
+  "elapsed_seconds": 0.06580250000115484,
+  "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+  "company_id": "ford_motor_company",
+  "run_id": "20261013T163627Z-ecabf6d8",
+  "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+  "selected_metrics": [
+    "D04"
+  ],
+  "metrics": [
+    {
+      "metric_id": "D04",
+      "status": "PREVIOUS_INPUT_WITHHELD",
+      "attempt_id": "b5921d8d143e42df9dd4eb7acde7f7ea",
+      "version": "3973841e34c64282896d34526a4a5db8",
+      "result_id": "sha256:9581bcb5f55170cdc084263fc2533f16eb772fd9b56229756d7b61f5bbf11fdb",
+      "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/ford-d04-company-20261014/state/updates/D04/results/3973841e34c64282896d34526a4a5db8",
+      "result_reason_code": "D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE",
+      "raw_input_unchanged": true,
+      "calculation_performed": false,
+      "new_candidate_created": false,
+      "source_check_versions": {
+        "scripts/vnext/ordinary_current_update.py": "92b1a74127eb0a5855c174bae3896aa4487e702d49fcc6416a1a5e2ffc074caa",
+        "scripts/vnext/request_bindings.py": "d0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee",
+        "scripts/vnext/ordinary_update_compatibility.py": "dcd5f7fad86dd36fec7ffc1ce15cb274cd3670dba213777b6cdaa4a4090d80b9"
+      },
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "defect_holds": [],
+      "read_result_id": "sha256:9581bcb5f55170cdc084263fc2533f16eb772fd9b56229756d7b61f5bbf11fdb",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/ford-d04-company-20261014/state/updates/D04/results/3973841e34c64282896d34526a4a5db8",
+      "program_version": {
+        "commit": "c25872ee388c933b697d9d3a9764e5eb7d1859e3",
+        "has_uncommitted_changes": true
+      }
+    }
+  ],
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/profitloss-note/SEC_metrics",
+  "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/ford-d04-company-20261014/state",
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/ford-d04-company-20261014/output/20261013T163627Z-ecabf6d8",
+  "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}

@@ -134,6 +134,36 @@ class SelectedSourceRequirementsTest(unittest.TestCase):
         self.assertNotIn(self.urls[2024],[r['source_url'] for r in value['requirements']])
         self.assertEqual(value['unique_known_get_count'],5)
 
+    def test_b04_names_only_consumed_current_primary_facts_and_metadata(self):
+        self.record(self.urls[2024],b'failed',503,'unused prior unavailable')
+        current=self.filings[0]
+        index=accession_directory_url(cik=CIK,accession=current['accessionNumber'])
+        self.remove_get(index)
+        before=self.digest_tree();value=self.plan(('B04',))
+        self.assertEqual('SAVED_SOURCE_BYTES_AVAILABLE',value['status'])
+        urls={r['source_url'] for r in value['requirements']}
+        self.assertEqual({self.urls[2025],submissions_url(cik=CIK),companyfacts_url(cik=CIK)},urls)
+        self.assertNotIn(self.urls[2024],urls)
+        self.assertFalse(value['metric_executed']);self.assertFalse(value['fetch_authorized'])
+        self.assertFalse(value['metric_acceptance_proven']);self.assertEqual(before,self.digest_tree())
+        self.remove_get(companyfacts_url(cik=CIK));missing=self.plan(('B04',))
+        self.assertIn(companyfacts_url(cik=CIK),missing['unresolved_dependency_urls'])
+        # A mixed revenue request still needs the existing native source set.
+        mixed=self.plan(('B01','B04'))
+        self.assertIn(index,mixed['unresolved_dependency_urls'])
+
+    def test_formal_b04_source_preflight_is_read_only_and_keeps_b05_unconnected(self):
+        args=['sources','--company',COMPANY,'--source-root',str(self.root),
+              '--report-end','2025-12-31','--metric','B04']
+        before=self.digest_tree()
+        with patch('sys.stdout',new_callable=io.StringIO) as output:
+            self.assertEqual(main(args),0)
+        value=json.loads(output.getvalue())
+        self.assertEqual(['B04'],value['metric_ids']);self.assertFalse(value['fetch_authorized'])
+        self.assertEqual(before,self.digest_tree())
+        with patch('sys.stderr',new_callable=io.StringIO),self.assertRaises(SystemExit):
+            main(args[:-1]+['B05'])
+
     def test_b03_names_target_originals_without_requiring_b02_prior(self):
         self.record(self.urls[2024],b'failed',503,'unused prior unavailable')
         before=self.digest_tree();value=self.plan(('B03',))
@@ -172,8 +202,10 @@ class SelectedSourceRequirementsTest(unittest.TestCase):
         self.assertEqual(code,0)
         value=json.loads(output.getvalue());self.assertEqual(value['metric_ids'],['B03'])
         self.assertFalse(value['metric_executed']);self.assertFalse(value['fetch_authorized'])
-        from vnext.company_online import ONLINE_METRICS
-        self.assertEqual(ONLINE_METRICS,frozenset({'B01','B02'}))
+        from vnext.company_online import ONLINE_METRICS, DEFAULT_ONLINE_METRICS
+        self.assertEqual(DEFAULT_ONLINE_METRICS,frozenset({'B01','B02'}))
+        self.assertEqual(ONLINE_METRICS,frozenset({'B01','B02','B04'}))
+        self.assertNotIn('B03',ONLINE_METRICS)
 
     def test_missing_target_is_named_without_running_full_preparation(self):
         self.remove_get(self.urls[2025]);value=self.plan()

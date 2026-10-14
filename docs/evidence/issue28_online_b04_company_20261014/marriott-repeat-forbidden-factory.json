@@ -1,0 +1,141 @@
+{
+  "elapsed_seconds": 1.0666427079995628,
+  "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+  "company_id": "marriott_international",
+  "run_id": "20261013T165938Z-4268e4f8",
+  "status": "FLOW_COMPLETED",
+  "selected_metrics": [
+    "B04"
+  ],
+  "metrics": [
+    {
+      "metric_id": "B04",
+      "status": "NO_SOURCE_CONTENT_CHANGE",
+      "attempt_id": "8f563f2de101433fb34b973bdd1da6a4",
+      "version": "13fbfaefea8e45df98c4d21264c3e920",
+      "result_id": "sha256:58ed6c58f8142b7d36f6c66c85d129ecb6826fe1a431bce4f3b7839eadb579cc",
+      "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b04-company-20261014/task/company-state/updates/B04/results/13fbfaefea8e45df98c4d21264c3e920",
+      "result_reason_code": "PASS",
+      "raw_input_unchanged": true,
+      "calculation_performed": false,
+      "new_candidate_created": false,
+      "source_check_versions": {
+        "scripts/vnext/ordinary_current_update.py": "92b1a74127eb0a5855c174bae3896aa4487e702d49fcc6416a1a5e2ffc074caa",
+        "scripts/vnext/request_bindings.py": "d0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee",
+        "scripts/vnext/ordinary_update_compatibility.py": "dcd5f7fad86dd36fec7ffc1ce15cb274cd3670dba213777b6cdaa4a4090d80b9"
+      },
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "defect_holds": [],
+      "read_result_id": "sha256:58ed6c58f8142b7d36f6c66c85d129ecb6826fe1a431bce4f3b7839eadb579cc",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b04-company-20261014/task/company-state/updates/B04/results/13fbfaefea8e45df98c4d21264c3e920",
+      "program_version": {
+        "commit": "c25872ee388c933b697d9d3a9764e5eb7d1859e3",
+        "has_uncommitted_changes": true
+      }
+    }
+  ],
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b04-company-20261014/task/sources",
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/record-dispatch/SEC_metrics",
+  "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b04-company-20261014/task/company-state",
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b04-company-20261014/output/20261013T165938Z-4268e4f8",
+  "source_mode": "ONLINE_DISCOVERY_WITH_ORDINARY_RECORDS",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false,
+  "discovery": {
+    "status": "SOURCES_READY_FOR_SELECTED_METRICS",
+    "filing": {
+      "accessionNumber": "0001048286-26-000007",
+      "filingDate": "2026-02-10",
+      "reportDate": "2025-12-31",
+      "acceptanceDateTime": "2026-02-10T18:35:55.000Z",
+      "act": "34",
+      "form": "10-K",
+      "fileNumber": "001-13881",
+      "filmNumber": "26614897",
+      "items": "",
+      "core_type": "XBRL",
+      "size": 12393244,
+      "isXBRL": 1,
+      "isInlineXBRL": 1,
+      "isXBRLNumeric": null,
+      "primaryDocument": "mar-20251231.htm",
+      "primaryDocDescription": "10-K"
+    },
+    "metric_ids": [
+      "B04"
+    ],
+    "metric_limitations": [],
+    "all_39_sources_proven": false
+  },
+  "simulated_sec_claims": 2,
+  "execution_mode": "RECORDED_TEST_ONLY",
+  "unknown_capture_ordinal": null,
+  "source_capture_receipts": [
+    {
+      "record_type": "ORDINARY_COMPANY_SEC_RECEIPT",
+      "intent_id": "sha256:37d989987439733a5166173975f5dfbb7f9d000c1ec433f25c86be08be8b24dc",
+      "execution_mode": "RECORDED_TEST_ONLY",
+      "actual_sec_egress_count": 0,
+      "automatic_retry_count": 0,
+      "status": "SUCCEEDED",
+      "stop_reason": "",
+      "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b04-company-20261014/task/sources",
+      "ledger_row_index": 5,
+      "ledger_row": {
+        "timestamp_utc": "2026-10-13T16:59:37.250704+00:00",
+        "method": "GET",
+        "source_url": "https://data.sec.gov/submissions/CIK0001048286.json",
+        "status_code": "200",
+        "purpose": "RECORDED_TEST_ONLY_ORDINARY_COMPANY",
+        "repo_relative_path": "evidence/request_attempts/76/76cd1c3621618173eebcc404ed4d01a0d744971d1d7f0f9b6e4962ed1bafa161/CIK0001048286.json",
+        "headers_repo_relative_path": "evidence/request_attempts/76/76cd1c3621618173eebcc404ed4d01a0d744971d1d7f0f9b6e4962ed1bafa161/CIK0001048286.json.74a539e97400d3367c54eb19e147badf3df6b1b5762b8f2d686339eb61b1d615.headers.json",
+        "content_length": "147569",
+        "content_sha256": "76cd1c3621618173eebcc404ed4d01a0d744971d1d7f0f9b6e4962ed1bafa161",
+        "accession": "",
+        "document_name": "CIK0001048286.json",
+        "user_agent": "axaxl 12@qq.com",
+        "retry_attempt": "0",
+        "error": ""
+      },
+      "receipt_id": "sha256:71eb4f15c882a0c8fd69849110b5661d94566b44e00c14a673bfaa9c7814071b"
+    },
+    {
+      "record_type": "ORDINARY_COMPANY_SEC_RECEIPT",
+      "intent_id": "sha256:a3fa3e593c3dc5ab06ac3b9c534960a15c138ff44a42ebcb8a4eca7b933114dd",
+      "execution_mode": "RECORDED_TEST_ONLY",
+      "actual_sec_egress_count": 0,
+      "automatic_retry_count": 0,
+      "status": "SUCCEEDED",
+      "stop_reason": "",
+      "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/online-b04-company-20261014/task/sources",
+      "ledger_row_index": 6,
+      "ledger_row": {
+        "timestamp_utc": "2026-10-13T16:59:38.264208+00:00",
+        "method": "GET",
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+        "status_code": "200",
+        "purpose": "RECORDED_TEST_ONLY_ORDINARY_COMPANY",
+        "repo_relative_path": "evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json",
+        "headers_repo_relative_path": "evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json.f61ed6daf72826be09bb0c91ad9ec9befc48ddc081d1a9f681e54a61fced1135.headers.json",
+        "content_length": "3269111",
+        "content_sha256": "af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+        "accession": "",
+        "document_name": "CIK0001048286.json",
+        "user_agent": "axaxl 12@qq.com",
+        "retry_attempt": "0",
+        "error": ""
+      },
+      "receipt_id": "sha256:a1b51dfbc28e86834a8f28d59421cb397806ab02cea1c66531277e4c4c766f0c"
+    }
+  ]
+}

@@ -20,7 +20,7 @@ from .records import validate_record
 from .text_business_candidates import (
     governance_source_document, board_composition_candidates, legal_risk_candidates,
     reported_legal_fact_candidates, _NOTE_HEADING, _check_document,
-    _need as _source_need,
+    _need as _source_need, _excerpt, _substantive,
 )
 from .text_coverage import build_text_document
 from .text_results import text_policy as _text_policy
@@ -261,6 +261,123 @@ def _page_structure_furniture(blocks):
     return furniture
 
 
+_INCORPORATED_CAPTION = re.compile(r'["\u201c\u2018\']([^"\u201c\u201d\u2018\u2019\']{4,120})["\u201d\u2019\']')
+_NOTE_TITLE_PREFIX = re.compile(r'^(?:note\s+)?\(?\d{1,3}[a-z]?\)?\s*[.:\u2014\u2013-]?\s*', re.I)
+_CAPTION_SPAN = re.compile(rb'<(?:span|p|div)([^<>]*)>\s*$')
+_CAPTION_STYLE = re.compile(rb'style="([^"]*)"')
+_QUOTED_FORM_REFERENCE = re.compile(r'\b(?:part\s+[ivx]+\s*,?\s*)?item\s+\d{1,2}[a-z]?\s*[,.:\u2014\u2013-]?\s*$', re.I)
+
+
+def _caption_text(text):
+    return " ".join(text.split()).strip(" .:;,\u2014-").casefold()
+
+
+def _caption_style(raw_bytes, block):
+    """Retained pure reader: compare this filing's own caption style."""
+    span = _CAPTION_SPAN.search(raw_bytes[max(block['raw_start_byte'] - 300, 0):block['raw_start_byte']])
+    style = _CAPTION_STYLE.search(span.group(1)) if span else None
+    if style is None:
+        return None
+    parts = sorted(part.strip() for part in style.group(1).decode('utf-8', 'replace').split(';') if part.strip())
+    return '; '.join(part for part in parts if not part.startswith('color'))
+
+
+def _caption_like(document, block):
+    text = block['text'].strip()
+    return (_substantive(document, block) and len(text) <= 120
+            and not text.endswith(('.', ':', ';', ',', '\u3002')))
+
+
+def select_d02_incorporated_notes(*, proposal, document, raw_bytes):
+    """Reuse the retained note/caption ownership rule in the ordinary reader.
+
+    A container inside Item8 keeps its note ownership; only the incorporated
+    caption supplies disclosures. D03 and all original document fields stay
+    unchanged. This cannot make an unmatched saved model response applicable.
+    """
+    _check_document(document)
+    _source_need(len(raw_bytes) == document['byte_length']
+                 and 'sha256:' + sha256_bytes(content=raw_bytes) == document['raw_asset_id'],
+                 'D02_INCORPORATED_NOTE_SOURCE_CHANGED')
+    blocks = document['blocks']
+    ranges = list(proposal['checked_ranges'])
+    captured = []
+    containers = []
+    changed = False
+    if any(reference['status'] != 'LOCATED_NOTE_RANGE' for reference in proposal['note_references']):
+        return proposal  # The existing source-completeness refusal remains authoritative.
+    for reference in proposal['note_references']:
+        note = reference['range_candidates'][0]
+        _source_need(note['scope_relation'] == 'EXACT_NOTE',
+                     'D02_REFERENCED_LETTERED_SUBNOTE_NOT_MIGRATED')
+        start, stop = note['start_block'], note['end_block_exclusive']
+        title = _caption_text(blocks[start]['text'])
+        quoted = set()
+        whole_note = False
+        for occurrence in reference['source_occurrences']:
+            captions = {_caption_text(m.group(1)) for m in _INCORPORATED_CAPTION.finditer(occurrence['text'])
+                        if not _QUOTED_FORM_REFERENCE.search(occurrence['text'][:m.start()])}
+            captions.difference_update({title, _NOTE_TITLE_PREFIX.sub('', title, count=1)})
+            captions = {text for text in captions if not re.match(
+                r'^(?:part\s+[ivx]+\W+)?item\s+\d{1,2}[a-z]?\b', text)}
+            whole_note |= not captions
+            quoted.update(captions)
+        if whole_note:
+            quoted.clear()  # Another occurrence cannot narrow the wider source.
+        headings = [i for i in range(start + 1, stop)
+                    if _caption_text(blocks[i]['text']) in quoted and _caption_like(document, blocks[i])]
+        _source_need(not quoted or quoted <= {_caption_text(blocks[i]['text']) for i in headings},
+                     'D02_INCORPORATED_CAPTION_NOT_FOUND')
+        scopes = []
+        repeated = Counter(_caption_text(blocks[i]['text']) for i in range(start, stop))
+        for begin in headings:
+            style = _caption_style(raw_bytes, blocks[begin])
+            _source_need(bool(style), 'D02_INCORPORATED_CAPTION_FORMAT_NOT_PROVEN')
+            first_body = next((i for i in range(begin + 1, stop)
+                               if _substantive(document, blocks[i])), None)
+            _source_need(first_body is not None and _caption_style(raw_bytes, blocks[first_body]) != style,
+                         'D02_INCORPORATED_CAPTION_HIERARCHY_NOT_PROVEN')
+            end = next((i for i in range(begin + 1, stop)
+                        if _caption_like(document, blocks[i]) and repeated[_caption_text(blocks[i]['text'])] == 1
+                        and _caption_style(raw_bytes, blocks[i]) == style), stop)
+            scopes.append({**note, 'section_id': note['section_id'] + '_CAPTION_' + str(begin),
+                           'start_block': begin, 'end_block_exclusive': end,
+                           'scope_relation': 'INCORPORATED_CAPTION', 'caption_text': blocks[begin]['text']})
+        scopes = scopes or [note]
+        contained = any(r['section_id'] == 'ITEM_8' and r['start_block'] <= start
+                        and stop <= r['end_block_exclusive'] for r in ranges)
+        changed |= contained or scopes != [note]
+        containers.append(note)
+        captured.extend(scopes)
+    if not changed:
+        return proposal
+    # Checked disclosure ranges own only the incorporated text. The remainder
+    # stays eligible Item8 input rather than being deleted by a whole container.
+    ranges = [r for r in ranges if r not in containers]
+    for scope in captured:
+        if scope not in ranges:
+            ranges.append(scope)
+    note_indexes = {i for scope in containers for i in range(scope['start_block'], scope['end_block_exclusive'])}
+    captured_indexes = {i for scope in captured for i in range(scope['start_block'], scope['end_block_exclusive'])}
+    candidates = [c for c in proposal['D02']['candidates']
+                  if c['section_id'] == 'ITEM_3' or (
+                      c['block_index'] not in captured_indexes
+                      and not (c['block_index'] in note_indexes and c['section_id'].startswith('NOTE_')))]
+    emitted = set()
+    for scope in captured:
+        for i in range(scope['start_block'], scope['end_block_exclusive']):
+            block = blocks[i]
+            if i not in emitted and (_substantive(document, block)
+                                     or block['linked'] and _substantive(document, {**block, 'linked': False})):
+                candidates.append(_excerpt(document, block, scope['section_id'], ['INCORPORATED_NOTE_SOURCE_TEXT']))
+                emitted.add(i)
+    body = {k: v for k, v in proposal.items() if k != 'proposal_id'}
+    body['checked_ranges'] = ranges
+    body['D02'] = {**proposal['D02'], 'candidates': candidates}
+    body['d02_incorporated_note_scopes'] = {'containers': containers, 'disclosure_scopes': captured}
+    return {**body, 'proposal_id': content_hash(value=body)}
+
+
 def select_d02_page_furniture(*, proposal, document):
     """Remove only page furniture from D02, preserving the original D03.
 
@@ -458,6 +575,7 @@ def prepare_business_text_sources(*, metric_id, target, source_references, raw_b
     else:
         proposal = legal_risk_candidates(document=annual, raw_bytes=raw)
         if d02_page_furniture:
+            proposal = select_d02_incorporated_notes(proposal=proposal, document=annual, raw_bytes=raw)
             proposal = select_d02_page_furniture(proposal=proposal, document=annual)
         if d02_select is not None:
             proposal = d02_select(proposal=proposal)

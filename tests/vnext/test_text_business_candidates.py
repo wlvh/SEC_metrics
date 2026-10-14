@@ -137,6 +137,29 @@ class TextBusinessCandidateTest(unittest.TestCase):
                 self.assertEqual('Consolidated Balance Sheets',report['closing_heading']['text'])
                 self.assertTrue(any('signature and audit procedures' in b['text']
                     for b in d['blocks'][report['start_block']:report['end_block_exclusive']]))
+    def test_note_heading_with_plain_punctuation_preserves_the_next_note_boundary(self):
+        """Real Pfizer layout reproduced; only punctuation loses emphasis."""
+        styled = ('<p><span style="font-size:9pt;font-weight:700">Note 3</span>'
+                  '<span style="font-size:8pt;font-weight:400">. </span>'
+                  '<span style="font-size:9pt;font-weight:700">Income Taxes</span></p>')
+        body = ('<p><b>2</b></p><h2>RISKS RELATED TO LEGAL PROCEEDINGS</h2>'
+                + BODY.replace('<h2>Note 3. Income Taxes</h2>', styled))
+        doc = document(body); original = copy.deepcopy(doc)
+        ending = next(i for i, b in enumerate(doc['blocks']) if b['text'] == 'Note 3. Income Taxes')
+        self.assertFalse(doc['blocks'][ending]['emphasized'])
+        proposal = legal_risk_candidates(document=doc, raw_bytes=annual(body))
+        reference = proposal['note_references'][0]
+        self.assertEqual('LOCATED_NOTE_RANGE', reference['status'])
+        self.assertEqual(ending, reference['range_candidates'][0]['end_block_exclusive'])
+        self.assertNotIn('Taxes are reported in this section.', [c['text'] for c in proposal['D02']['candidates']])
+        self.assertEqual(original, doc)
+        # A bold note identifier followed by plain words is still prose.
+        prose = body.replace('font-size:9pt;font-weight:700">Income Taxes',
+                             'font-size:9pt;font-weight:400">Income Taxes')
+        refused = legal_risk_candidates(document=document(prose), raw_bytes=annual(prose))
+        self.assertEqual('REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE',
+                         refused['note_references'][0]['status'])
+        self.assertEqual([], refused['note_references'][0]['range_candidates'])
 
     def test_parenthesized_note_heading_is_navigable_without_claiming_semantic_completeness(self):
         body = BODY.replace("<h2>Note 2. Contingencies</h2>", "<h2>2) Contingencies</h2>").replace("<h2>Note 3. Income Taxes</h2>", "<h2>3) Income Taxes</h2>")

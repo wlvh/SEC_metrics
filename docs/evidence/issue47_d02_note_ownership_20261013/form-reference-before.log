@@ -1,0 +1,22 @@
+test_d02_quoted_form_item_title_is_not_a_note_caption (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_d02_quoted_form_item_title_is_not_a_note_caption) ... ERROR
+
+======================================================================
+ERROR: test_d02_quoted_form_item_title_is_not_a_note_caption (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_d02_quoted_form_item_title_is_not_a_note_caption)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_text_results_v2.py", line 77, in test_d02_quoted_form_item_title_is_not_a_note_caption
+    selected = select_d02_incorporated_notes(proposal=before, document=doc, raw_bytes=annual(raw))
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/d02_text_results_v3.py", line 320, in select_d02_incorporated_notes
+    _source_need(not quoted or quoted <= {_caption_text(blocks[i]['text']) for i in headings},
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                 'D02_INCORPORATED_CAPTION_NOT_FOUND')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/text_business_candidates.py", line 50, in _need
+    raise TextBusinessCandidateError(reason)
+vnext.text_business_candidates.TextBusinessCandidateError: D02_INCORPORATED_CAPTION_NOT_FOUND
+
+----------------------------------------------------------------------
+Ran 1 test in 0.008s
+
+FAILED (errors=1)
+{"allowed_skips": 0, "errors": 1, "failures": 0, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_d02_quoted_form_item_title_is_not_a_note_caption"]}

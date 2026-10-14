@@ -1,0 +1,65 @@
+{
+  "seconds": 1.3953288329939824,
+  "source_sha256": "sha256:d7988e8cef357233d4b7d737003dc1224c87048c21b457718dd0158dff81c5a9",
+  "source_reference": {
+    "record_type": "SOURCE_REFERENCE",
+    "source_reference_id": "sha256:83ec286fd1e142ae2e016198a81f711b147dd6841a4f785add8b0b800226d11a",
+    "raw_asset_id": "sha256:d7988e8cef357233d4b7d737003dc1224c87048c21b457718dd0158dff81c5a9",
+    "company_id": "hyatt_hotels",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1468174/000146817426000007/h-20251231.htm",
+    "accession": "0001468174-26-000007",
+    "document_name": "h-20251231.htm",
+    "source_role": "target_primary",
+    "request_attempt_id": "request:attempt:ef18282c967c008981cd02b05c8ef2349f5daa15c74deb2412b0d8db6387921b"
+  },
+  "same_complete_proposal": true,
+  "same_page_selection": true,
+  "same_exact_requests": true,
+  "requests": [
+    {
+      "request_id": "sha256:bebc1e467e196eb675723638c9c0488de74907458e3146892040001f34dba5da",
+      "blocks": 1
+    }
+  ],
+  "references": [
+    [
+      {
+        "source_reference_id": "sha256:83ec286fd1e142ae2e016198a81f711b147dd6841a4f785add8b0b800226d11a",
+        "raw_asset_id": "sha256:d7988e8cef357233d4b7d737003dc1224c87048c21b457718dd0158dff81c5a9",
+        "document_id": "sha256:521cb77e83f7b4f10b2a2e691719d6ca8aa6e82d3c93ca67717bd8f0d56beb2c",
+        "section_id": "ITEM_3",
+        "labels": [
+          "NOTE_REFERENCE"
+        ],
+        "block_index": 1100,
+        "text": "See Part IV, Item 15, \"Exhibits and Financial Statement Schedule\u2014Note 14 and Note 15 to our Consolidated Financial Statements\" for additional information related to tax and legal contingencies, respectively.",
+        "raw_start_byte": 1336735,
+        "raw_end_byte": 1336948,
+        "raw_span_sha256": "d79869696e456b991db342f01ac9dd4500d77334551cc9801034f33f64fd03e2"
+      }
+    ],
+    [
+      {
+        "source_reference_id": "sha256:83ec286fd1e142ae2e016198a81f711b147dd6841a4f785add8b0b800226d11a",
+        "raw_asset_id": "sha256:d7988e8cef357233d4b7d737003dc1224c87048c21b457718dd0158dff81c5a9",
+        "document_id": "sha256:521cb77e83f7b4f10b2a2e691719d6ca8aa6e82d3c93ca67717bd8f0d56beb2c",
+        "section_id": "ITEM_3",
+        "labels": [
+          "NOTE_REFERENCE"
+        ],
+        "block_index": 1100,
+        "text": "See Part IV, Item 15, \"Exhibits and Financial Statement Schedule\u2014Note 14 and Note 15 to our Consolidated Financial Statements\" for additional information related to tax and legal contingencies, respectively.",
+        "raw_start_byte": 1336735,
+        "raw_end_byte": 1336948,
+        "raw_span_sha256": "d79869696e456b991db342f01ac9dd4500d77334551cc9801034f33f64fd03e2"
+      }
+    ]
+  ],
+  "existing_qualification_source_only": true,
+  "no_new_company_registry_goal_model_or_result": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

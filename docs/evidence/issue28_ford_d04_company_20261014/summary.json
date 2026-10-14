@@ -1,0 +1,102 @@
+{
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/profitloss-note/SEC_metrics",
+  "base_main": "c25872ee388c933b697d9d3a9764e5eb7d1859e3",
+  "code_state": "named uncommitted current_d04_result status filter and two regression tests",
+  "code_files": {
+    "scripts/vnext/current_d04_result.py": "7eb6810ccc1769eeb45830858ce1c1817b440d0a9627ffb4e135187c6c6332d4",
+    "tests/vnext/test_current_d04_company.py": "16c9a5a4121bb0b50d567008426f45f1dc62cf9a8c513ca0ca2e4a226fbfd40f"
+  },
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+  "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/ford-d04-company-20261014/state",
+  "first_seconds": 291.71492754199426,
+  "repeat_seconds": 0.06580250000115484,
+  "read_wall_seconds": 0.4472932910139207,
+  "reader_reported_seconds": 0.013957499992102385,
+  "result_files": 7,
+  "result_bytes": 37405,
+  "state_files_preserved": 25,
+  "result": {
+    "applicability": "APPLICABLE",
+    "company_id": "ford_motor_company",
+    "metric_id": "D04",
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "publication": "WITHHELD",
+    "quality": "NONE",
+    "reason_code": "D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE",
+    "record_type": "METRIC_RESULT",
+    "result_id": "sha256:9581bcb5f55170cdc084263fc2533f16eb772fd9b56229756d7b61f5bbf11fdb",
+    "scope_key": "sha256:67535b8a9820504920a8438781c188f880158f05a55cc222a801becf9b588d93",
+    "spec_closure_hash": "sha256:b72e137f2ba802a2ca8c2e8874f9e3388114600acb19c976aeaff4c309aa05ba",
+    "text_payload": null,
+    "trace_id": "sha256:273b7a141d19452f37c4aa3e35b0300b15bff90d6a6a7c8d5d0b545021068a2e",
+    "unit": null,
+    "value": null,
+    "value_kind": "TEXT_V1"
+  },
+  "rows": [
+    {
+      "company": "Ford Motor Company",
+      "cik": "37996",
+      "metric_id": "D04",
+      "metric_name": "Going concern source statements and defined-scope assessment",
+      "value": "",
+      "unit": "text",
+      "status": "TEXT_QUAL",
+      "source_class": "10-K",
+      "formula": "source-reported going concern statements",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "fiscal_year": "2025",
+      "fiscal_period": "",
+      "accession": "0000037996-26-000015",
+      "form": "10-K",
+      "filed_date": "2026-02-11",
+      "concept_or_section": "",
+      "context_or_dimension": "",
+      "confidence": "",
+      "notes": "\u672a\u62ab\u9732\u6301\u7eed\u7ecf\u8425\u7591\u8651\uff1a\u5df2\u68c0\u67e5\u4fdd\u5b58\u7684\u5b8c\u6574\u5e74\u62a5\u53ca\u672c\u671f\u4fee\u8ba2\u3001\u539f\u751f\u4e8b\u5b9e\u548c\u7eed\u63a5\u5bf9\u8c61\uff1b\u8fd9\u4e0d\u8868\u793a\u5bf9\u672a\u6765\u8d22\u52a1\u72b6\u51b5\u4f5c\u4fdd\u8bc1\u3002",
+      "company_id": "ford_motor_company",
+      "result_id": "sha256:9581bcb5f55170cdc084263fc2533f16eb772fd9b56229756d7b61f5bbf11fdb",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/ford-d04-company-20261014/state/updates/D04/results/3973841e34c64282896d34526a4a5db8",
+      "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+      "local_metric_status": "PREVIOUS_INPUT_WITHHELD",
+      "period_role": "REQUESTED_RESULT",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+      "defect_holds": "[]",
+      "requested_in_latest_execution": "True"
+    }
+  ],
+  "manifest_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+  },
+  "response_group_ordinals": [
+    70,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81
+  ],
+  "required_units": 52,
+  "initial_failures_kept": [
+    "TOKENIZER_DEPENDENCY_UNAVAILABLE",
+    "NATIVE_REQUEST_PARTITION_INCOMPLETE"
+  ],
+  "first_driver_original_source_and_call_hash_assertions": "executed successfully before reporting-only METRIC_RESULT typo; original log retained",
+  "summary_recovery": "reads existing records only; did not invoke producer or repeat first calculation",
+  "calls": [
+    0,
+    0,
+    0
+  ],
+  "production_authorized": false
+}
